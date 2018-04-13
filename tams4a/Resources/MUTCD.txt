@@ -1,0 +1,897 @@
+2A-14A	State Route
+2A-14B	State Route
+2A-14C	State Route
+ADOPT-1	Miscellaneous sign
+AP-1	Miscellaneous sign
+AP-2	Miscellaneous sign
+AP-3	Miscellaneous sign; symbol for state DOT
+AP-4	Miscellaneous sign
+CD-1	Evacuation Route
+CD-2	Area Closed
+CD-3	Associated with a stop sign
+CD-4	Regulatory Sign
+CD-5	Regulatory Sign
+CD-6	Regulatory Sign
+CD-7	Give Directions to the Fallout Shelter
+D1-1	Directional sign
+D1-1A	Directional sign with distance
+D1-1BL	Directional sign w/ distance and black banding
+D1-1BR	Directional sign w/ distance and black banding
+D1-1C	Street sign w/ black banding
+D1-2	Directional sign w/ multiple bits of information
+D1-2A	Directional sign w/ distances and multiple info
+D1-3	Multi-Directional sign
+D1-3A	Multi-Directional sign w/ distances
+D1-X1	Guide sign
+D1-X2	Guide sign
+D1-X3	Guide sign
+D1-X4	Guide sign
+D1-X5	Guide sign
+D1-X6	Guide sign
+D1-X7	Guide sign
+D1-XMR1	Enter county name at top
+D1-XMR2	Enter county name at top; fill in the blanks
+D10-1	Mile Marker-one digit
+D10-2	Mile Marker-two digit
+D10-3	Mile Marker-three digit
+D10-4	Mile Marker-four digit
+D11-1	Bike Route
+D12-1	Informational sign
+D12-2	Informational sign
+D12-3	Informational sign
+D13-1	Directional sign
+D13-2	Directional sign
+D2-1	Directional sign w/ distance
+D2-2	Multi-Directional sign w/ distances-two
+D2-3	Multi-Directional sign w/ distances-three
+D3	Street sign
+D4-1	Directs people to parking
+D4-2	Carpool parking area
+D4-2A	Guide sign
+D4-3	Directs people to bicycle parking
+D5-1	Directional sign
+D5-2	Directs people to the rest area - arrow right
+D5-3	Directional sign
+D5-4	Directs people to the rest area - arrow right
+D5-5	Roadside table
+D5-5A	Picnic Area
+D5-X1	Guide sign
+D5-X1B	Guide sign
+D5-X2	Guide sign
+D6-1	Directional sign
+D6-2	Directional sign
+D6-3	Directional sign
+D6-3A	Guide sign
+D7-X1	Guide sign
+D7-X10	Guide sign
+D7-X13	Guide sign; slalom skiing
+D7-X14	Guide sign; cross-country skiing
+D7-X1A	Guide sign
+D7-X2	Guide sign; arrow to left of number
+D7-X2A	Guide sign
+D7-X3	Guide sign
+D7-X3A	Guide sign
+D7-X4	Guide sign
+D7-X5	Guide sign
+D7-X5A	Guide sign
+D7-X6	Guide sign
+D7-X7	"Variable text and distance, has boat ramp & arrow"
+D7-X7A	"Variable text and distance, arrow & man w/ canoe"
+D7-X8	Guide sign; trailblazer
+D7-X8A	Guide sign; trailblazer
+D7-X9	Guide sign
+D8-1	Directional sign
+D8-2	Exit sign for weigh station
+D8-3	Guide sign; arrow 45 deg counterclockwise
+D9-1	Informational sign
+D9-10	Informational sign - question mark
+D9-10A	Guide sign
+D9-11	Informational sign - gas pump
+D9-12	Informational sign - RV dump area
+D9-12P	Guide sign
+D9-13	Medical symbol (snake around rod)
+D9-14	Police
+D9-15	L-P Gas
+D9-1A	Telephone w/ arrow pointing right
+D9-1B	Telephone w/ distance
+D9-2A	Guide sign; arrow at bottom of sign
+D9-2B	Hospital sign
+D9-2G	Hospital sign
+D9-3	Camping area sign
+D9-3A	Camping
+D9-3P	Guide sign
+D9-4	Trash receptacle
+D9-6	Handicapped
+D9-7	Gas pump
+D9-8	Restaurants
+D9-9	Sleeping accommodations
+D9-A	Guide sign; only arrow on sign
+D9-X1	"Wheelchair on left, arrow points top/right corner"
+D9-X2	Guide sign
+D9-X3	Arrows left/right
+D9-X4	Arrows left/right
+D9-X5	Guide sign
+D9-X6	Guide sign
+D9-X9P	Guide sign
+E1-1	"Directional sign w/ distance, route #, city"
+E1-1A	"Directional sign w/ distance, route #, city,exits"
+E1-2	Directional sign
+E1-3	Directional sign
+E1-5	Directional sign
+E1-6	Guide sign
+E10-10	Arrows left/right
+E10-11	Arrows left/right
+E10-3	Guide sign; can substitute next/second right
+E10-4	Guide sign
+E10-5	Arrows left/right
+E10-6	Arrows left/right
+E10-7	Arrows left/right
+E10-8	Arrows left/right
+E10-9	Arrows left/right
+E11-1	Exit only panel
+E11-1A	Exit only panel
+E11-1B	Guide sign
+E11-1C	Guide sign
+E11-X1	Guide sign
+E11-X2	Guide sign
+E12-1	Guide sign
+E2-1	Guide sign
+E2-1A	Guide sign w/ two lines of text
+E5-1	Arrow 45 deg counterclockwise
+E5-1A	Arrow 45 deg counterclockwise
+E5-2	Informational sign w/ black banding
+E6-2	Pull-thru sign
+E6-2A	Pull-thru sign
+E7	3 post interchange distance sign
+E8-1	Next three interchanges and distance
+E8-2	Community interchange identification
+E9	Next exits area sign
+G20-1	Construction sign
+G20-2A	Construction sign
+G20-4	Construction sign
+I-10	Winter Recreation Area
+I-2	State Line
+I-3	River
+I-4	Informational sign
+I-4P	Guide sign
+I-5	Informational sign
+I-5A	"Variation on I-5, but I-5 is preferred"
+I-5P	Guide sign
+I-6	Informational sign
+I-6P	Guide sign
+I-7	Informational sign
+I-7P	Guide sign
+I-8	Informational sign
+I-8P	Guide sign; mandatory
+I-9	Harbor
+I1-1	Informational sign
+I2-10	State name appears below welcome to
+I2-11	State name appears below welcome to
+I2-3	"City name above ""POP _____"""
+I2-4	"City name above ""CITY LIMITS……"""
+I2-5	"County name above ""COUNTY"""
+I3-1	Guide sign
+M-01	Miscellaneous sign
+M-02	Miscellaneous sign
+M-03	Miscellaneous sign
+M-04	Miscellaneous sign
+M-05	Miscellaneous sign
+M-06	Miscellaneous sign; insert county name at start
+M-07	Miscellaneous sign
+M-08	Miscellaneous sign
+M-09	Miscellaneous sign
+M-10	Miscellaneous sign
+M-11	Miscellaneous sign
+M-12	Miscellaneous sign
+M-13	Miscellaneous sign
+M-14	Miscellaneous sign
+M-15	Generic caution sign
+M-16	Generic warning sign
+M-17	"Red ellipse around ""DANGER"""
+M-18	No digging
+M-19	Miscellaneous sign
+M-20	Miscellaneous sign
+M-21	Miscellaneous sign
+M-22	Miscellaneous sign; arrow points down
+M1-1	Blue shield w/ red top 1/4
+M1-2	Informational sign 2-digit
+M1-3	Informational sign 3-digit
+M1-4	Route sign
+M1-4A	Route sign
+M1-5	Route sign
+M1-6	County Route sign
+M1-7	Informational sign
+M1-8	Bike path route sign
+M1-9	National route marker
+M2-1	Informational sign
+M2-1I	Informational sign
+M2-2	Informational sign
+M3-1	Informational sign
+M3-1I	Informational sign
+M3-2	Informational sign
+M3-2I	Informational sign
+M3-3	Informational sign
+M3-3I	Informational sign
+M3-4	Informational sign
+M3-4I	Informational sign
+M4-1	Informational sign
+M4-10L	Construction/Informational sign
+M4-10R	Construction/Informational sign
+M4-11	Informational sign
+M4-12	Informational sign
+M4-13	Informational sign
+M4-1A	Informational sign
+M4-2	Informational sign
+M4-3	Informational sign
+M4-4	Informational sign
+M4-5	Informational sign
+M4-5I	Informational sign
+M4-6	Informational sign
+M4-6I	Route sign
+M4-7	Informational sign
+M4-7I	Informational sign
+M4-8	Informational sign
+M4-8A	Informational sign
+M4-8B	Informational sign
+M4-9L	Informational sign
+M4-9R	Informational sign
+M4-9R2	Informational sign
+M5-1	Bent arrow left - 90 deg
+M5-1I	Bent arrow left - 90 deg
+M5-2	Bent arrow left - 45 deg
+M5-2I	Bent arrow left - 45 deg
+M6-1	Informational sign
+M6-1I	Informational sign
+M6-2	Arrow at 45 deg
+M6-2I	Arrow at 45 deg
+M6-3	Informational sign
+M6-3I	Informational sign
+M6-4	Double arrow - left/right
+M6-4I	Double arrow - left/right
+M6-5	Double arrow - 45 deg counterclockwise
+M6-5I	Double arrow - 45 deg counterclockwise
+M6-6	One straight other right at 90 deg from each other
+M6-6I	One straight other right at 90 deg from the other
+M6-7	One straight other 45 deg to the right
+M6-7I	One straight other 45 deg to the right
+M7-1	Informational sign w/ black banding
+M7-1G	Informational sign
+M7-2	Informational sign w/ black banding
+M7-2G	Informational sign
+M7-3	Double arrow - 45 deg counterclockwise
+M7-3G	Double arrow - 45 deg counterclockwise
+M7-4	Arrow at 45 deg
+M7-4G	Arrow at 45 deg
+M7-5	Double arrow - left/right - black banding
+M7-5G	Double arrow - left/right
+M7-6	One straight other right at 90 deg from other
+M7-6G	One straight other right at 90 deg from the other
+M7-7	One straight other 45 deg to the right
+M7-7G	One straight other 45 deg to the right
+OM-1V1	"Object marker, type 1, version 1"
+OM-1V2	"Object marker, type 1, version 2"
+OM-1V3	"Object marker, type 1, version 3"
+OM-2H1	"Object marker, type 2, horizontal with reflectors"
+OM-2H2	"Object marker, type 2, horizontal"
+OM-2V1	"Object marker, type 2, vertical with reflectors"
+OM-2V2	"Object marker, type 2, vertical"
+OM-3L	Stay left
+OM-3R	Stay right
+OM-E1	"Object marker, type 3, end with reflectors"
+OM-E2	"Object marker, type 3, end with reflectors"
+OM-E3	"Object marker, type 3, end"
+R1-1	Stop Sign
+R1-2	Yield Sign
+R1-3	Regulatory sign
+R1-4	Regulatory sign
+R1-X1	Regulatory sign
+R1-X2	Regulatory sign
+R10-1	Regulatory sign
+R10-10L	Regulatory sign
+R10-10R	Regulatory sign
+R10-11	Regulatory sign
+R10-11A	Regulatory sign w/ bigger lettering and border
+R10-12	Regulatory sign
+R10-13	Parking sign
+R10-14	Parking sign
+R10-2	Regulatory sign
+R10-2A	Regulatory sign
+R10-3	Regulatory sign
+R10-3A	"Regulatory sign; arrow is to the left of ""street"""
+R10-3B	Regulatory sign
+R10-4	Regulatory sign
+R10-4A	"Regulatory sign; arrow is to the right of ""street"""
+R10-4B	Regulatory sign - ped/crosswalk - arrow right
+R10-4C	Regulatory sign
+R10-5	Regulatory sign
+R10-6	Regulatory sign - arrow 45 deg counterclockwise
+R10-6A	Arrow bend from right down toward the bottom
+R10-7	Regulatory sign
+R10-7A	Regulatory sign
+R10-8	Regulatory sign
+R10-X2	Regulatory sign
+R10-X3	Regulatory sign
+R10-X4	Regulatory sign; optional dates
+R10-X5L	Regulatory sign
+R10-X5R	Regulatory sign
+R10-X6	Regulatory sign; ramp metering use only
+R10-X7	Regulatory sign
+R10-X8	"Arrow 60 deg clockwise, ramp metering use only"
+R10-X9	"Arrow 60 deg counterclockwise, ramp metering use"
+R11-1	Regulatory sign
+R11-2	Regulatory sign
+R11-2A	Regulatory sign
+R11-3	Regulatory sign
+R11-3A	Regulatory sign
+R11-4	Regulatory sign
+R11-X1	Regulatory sign
+R11-X2	Regulatory sign
+R12-1	Regulatory sign
+R12-1A	Regulatory sign
+R12-1B	"Per vehicle; per truck, semi-truck, combination"
+R12-1C	"Single vehicle, single over 3 axles, combination"
+R12-2	Regulatory sign
+R12-3	Regulatory sign
+R12-4	Regulatory sign
+R12-5	Regulatory sign - limits for different truck types
+R12-X1	Regulatory sign
+R12-X2	Regulatory sign
+R12-X2A	"Miles ahead, per vehicle, combination"
+R12-X2B	"_ Miles ahead, per vehicle, veh. > 3 axles, comb."
+R12-X3	Regulatory sign
+R12-X3A	Regulatory sign
+R12-X4	"Miles ahead, weight limit, clearance"
+R12-X4A	Regulatory sign
+R12-X5	Regulatory sign
+R13-1	Regulatory sign
+R14-1	Regulatory sign
+R14-2	Regulatory sign - circle green w/ open center
+R14-3	Regulatory sign
+R14-4	"Green circle around back of semi, National network"
+R14-5	"""NO"" symbol around back of semi, Nat. net. prohibi"
+R15-1	Regulatory sign
+R15-2	Regulatory sign
+R15-3	Regulatory sign
+R16-1	Regulatory sign
+R16-X1	Regulatory sign
+R16-X10	Regulatory sign
+R16-X11	Regulatory sign
+R16-X12	Generic Regulatory sign
+R16-X2	Maintain ___ foot intervals
+R16-X3	Regulatory sign
+R16-X4	"No peds, bikes, motorized bikes, non-motor traffic"
+R16-X5	Regulatory sign
+R16-X6	Regulatory sign
+R16-X7	Regulatory sign
+R16-X8	Regulatory sign
+R16-X9	Regulatory sign
+R2-1	Regulatory sign
+R2-1-10	Regulatory Sign
+R2-1-15	Regulatory Sign
+R2-1-20	Regulatory Sign
+R2-1-25	Regulatory Sign
+R2-1-30	Regulatory Sign
+R2-1-35	Regulatory Sign
+R2-1-40	Regulatory Sign
+R2-1-45	Regulatory Sign
+R2-1-5	Regulatory Sign
+R2-1-50	Regulatory Sign
+R2-1-55	Regulatory Sign
+R2-1-60	Regulatory Sign
+R2-1-65	Regulatory Sign
+R2-1-70	Regulatory Sign
+R2-1-75	Regulatory Sign
+R2-10	No Tractors
+R2-2	Regulatory sign - truck speed limit
+R2-26	Regulatory sign
+R2-3	Regulatory sign - night speed limit
+R2-4	Regulatory sign
+R2-4A	Regulatory sign -min/max combined speed limit sign
+R2-5A	Regulatory sign
+R2-5B	Regulatory sign
+R2-5C	Speed Zone Ahead
+R2-6	Regulatory sign
+R2-6A	Regulatory sign
+R2-7A	Regulatory sign
+R2-X1	Regulatory sign
+R2-X2	Regulatory sign
+R2-X3	Regulatory sign
+R2-X4	Regulatory sign
+R2-X5	Regulatory sign
+R2-X6P	Regulatory sign
+R3-1	Regulatory sign - no right turn
+R3-10	Regulatory sign
+R3-11	Regulatory sign
+R3-12	Regulatory sign
+R3-13	Regulatory sign
+R3-14	Regulatory sign
+R3-15	Regulatory sign
+R3-16	Regulatory sign - also diamond symbol
+R3-17	Regulatory sign - designate bike lane
+R3-2	Arrow bends to the left 90 deg
+R3-3	Regulatory sign
+R3-4	Regulatory sign
+R3-5L	Left Turn Only
+R3-5R	Right Turn Only
+R3-6	One straight other bending left
+R3-7L	Regulatory sign
+R3-7R	Regulatory sign
+R3-8	"Three arrows: two bending left, one straight attac"
+R3-8A	"Two arrows bend left, Third bends right"
+R3-8B	"One arrow bends left, two bend left"
+R3-8C	"Two arrows bend left, two bend right"
+R3-8D	"Triple arrow, one bends left, right, and straight"
+R3-8E	"One arrow bends left, the other bends right"
+R3-8F	"Both arrows bend left, but right arrow is longer"
+R3-8G	"Two arrows bend left, one straight, one right"
+R3-9A	"Bottom arrow bending left, top arrow bending right"
+R3-9B	"Bottom arrow bending left, top arrow bending right"
+R3-X1	Regulatory sign
+R3-X2	Regulatory sign
+R3-X3	Regulatory sign
+R4-1	Regulatory sign
+R4-2	Regulatory sign
+R4-3	Regulatory sign
+R4-4	Regulatory sign w/ arrow 45 deg counterclockwise
+R4-5	Regulatory sign
+R4-6	Regulatory sign
+R4-7	Regulatory sign with arrow
+R4-7A	Regulatory sign
+R4-7B	Regulatory sign w/ arrow 45 deg counterclockwise
+R4-7P	Regulatory sign
+R4-8	Median w/ arrow to stay left
+R4-8P	Regulatory sign
+R4-9	Regulatory sign
+R4-X1	Regulatory sign
+R4-X2	Regulatory sign
+R4-X3	Regulatory sign
+R4-X4	Regulatory sign
+R4-X5	Regulatory sign
+R4-X6	Regulatory sign
+R5-1	Regulatory sign w/ red circle
+R5-10A	Regulatory sign
+R5-10B	Regulatory sign
+R5-10C	Regulatory sign
+R5-10D	Regulatory sign
+R5-1A	Regulatory sign
+R5-2	Regulatory sign w/ red circle and cross hash
+R5-2A	Optional dates and times
+R5-2A1	Regulatory sign
+R5-2P	Regulatory sign
+R5-3	Regulatory sign
+R5-4	Regulatory sign
+R5-5	Regulatory sign
+R5-6	Regulatory sign w/ red circle and cross hash
+R5-6P	Regulatory sign
+R5-7	Regulatory sign
+R5-8	Regulatory sign
+R5-9	Regulatory sign w/ double arrow - left/right
+R5-9A	Regulatory sign w/ arrow left
+R5-X1	Red circle w/ cross hash over snowmobile
+R5-X1P	Regulatory sign
+R5-X2	Regulatory sign
+R5-X4	Regulatory sign
+R6-1L	Regulatory sign w/ white arrow - left
+R6-1R	Regulatory sign
+R6-2L	Regulatory sign w/ arrow - right
+R6-2R	Regulatory sign w/ arrow - right
+R6-3	"Arrows: top - left, bottom - right, line connects"
+R6-3A	"Arrows: top - left, bottom - right, line connects"
+R6-X1	Regulatory sign
+R7-1	Regulatory sign w/ double red arrow - left/right
+R7-100	Parking sign
+R7-101A	Double arrow left/right
+R7-101B	Generic no parking sign
+R7-107	Regulatory sign w/ red arrow - right
+R7-107A	"Top: BUS, Middle: No Parking, Bottom: arrow-right"
+R7-108	Double arrow - left/right; limited time parking
+R7-11	Parking sign
+R7-12	Parking sign
+R7-13	Parking sign
+R7-13A	Parking sign
+R7-14	Parking sign
+R7-15	Parking sign
+R7-2	Parking sign
+R7-201A	Regulatory sign
+R7-2A	Regulatory sign
+R7-2B	Parking sign
+R7-3	Parking sign
+R7-4	Regulatory sign w/ red double arrow - left/right
+R7-5	Regulatory sign w/ green double arrow - left/right
+R7-5A	Parking sign
+R7-5B	Parking sign
+R7-5C	Optional time limit
+R7-6	Parking sign
+R7-6P1	Parking sign
+R7-7	Parking sign
+R7-8	Regulatory sign w/ green double arrow - left/right
+R7-8A	Parking sign
+R7-8A1	Parking sign
+R7-8A1P	Parking sign
+R7-8AP	Parking sign
+R7-8B	Parking sign
+R7-8C	Parking sign; handicapped access
+R7-9	Regulatory sign
+R7-9A	Regulatory sign
+R7-X2	Parking sign
+R7-X4	Parking sign
+R8-1	Regulatory sign
+R8-10	Parking sign
+R8-11	Parking sign
+R8-12	Parking sign
+R8-14	Parking sign
+R8-14A	Parking sign
+R8-15	Parking sign
+R8-16	Parking sign
+R8-17	Parking sign
+R8-18	Parking sign
+R8-19	Parking sign
+R8-2	Regulatory sign
+R8-20	Parking sign
+R8-21	Parking sign
+R8-22	Parking sign
+R8-23	Parking sign
+R8-24	Parking sign
+R8-25	Parking sign
+R8-26	Parking sign
+R8-27	Parking sign
+R8-28	Parking sign
+R8-29	Parking sign
+R8-3	Regulatory sign
+R8-30	Parking sign
+R8-31	Parking sign
+R8-32	Parking sign
+R8-33	Parking sign
+R8-34	Parking sign
+R8-35	Parking sign
+R8-36	Parking sign
+R8-37	Parking sign
+R8-38	Parking sign
+R8-39	Parking sign
+R8-3A	Regulatory sign w/ no parking sign over on bridge
+R8-4	Regulatory sign
+R8-40	Parking sign
+R8-41	Parking sign
+R8-42	Parking sign
+R8-49	Parking sign
+R8-5	Regulatory sign
+R8-50	Parking sign
+R8-51	Parking sign
+R8-52	Parking sign
+R8-53	Parking sign
+R8-55	Parking sign
+R8-56	Parking sign
+R8-57	Parking sign
+R8-58	Parking sign
+R8-59	Parking sign
+R8-6	Regulatory sign
+R8-60	Parking sign
+R8-61	Parking sign
+R8-62	Parking sign
+R8-63	Parking sign
+R8-64	Parking sign
+R8-7	Regulatory sign
+R8-8	Regulatory sign
+R8-9	Regulatory sign
+R8-SUP	Regulatory sign
+R9-1	Regulatory sign
+R9-2	Regulatory sign
+R9-3	Regulatory sign
+R9-3A	No pedestrian crossing symbol
+R9-3AP	Regulatory sign
+R9-3BL	Regulatory sign
+R9-3BR	Regulatory sign
+R9-4	Regulatory sign
+R9-4A	Regulatory sign
+R9-4AP	Regulatory sign
+R9-5	Regulatory sign
+R9-6	Regulatory sign
+R9-7	"Ped on left, bike on right w/ left/right above"
+R9-X1	Regulatory sign
+R9-X2	Regulatory sign
+RA-010	Informational sign -- Airport
+RA-020	Bus stop
+RA-030	Informational sign -- Campground
+RA-040	Elevator
+RA-050	Kennel
+RA-060	Laundry
+RA-070	Locker
+RA-080	Parking
+RA-090	Restrooms (men)
+RA-100	Restrooms (women)
+RA-110	Informational sign
+RA-120	Informational sign
+RA-130	Informational sign
+RG-010	Automobile
+RG-020	Informational sign
+RG-030	Informational sign
+RG-040	Informational sign
+RG-050	Drinking water
+RG-060	Environmental study area
+RG-070	Informational sign
+RG-080	Informational sign
+RG-090	Fish hatchery
+RG-100	Informational sign
+RG-110	leashed pets
+RG-120	Informational sign
+RG-130	Litter container
+RG-140	Lookout tower
+RG-150	Ped Xing
+RG-160	Point of interest
+RG-170	Informational sign:  Ranger station
+RG-180	Smoking
+RG-190	Truck
+RG-200	Tunnel
+RL-010	Amphitheater
+RL-020	Climbing
+RL-030	Climbing (Rock)
+RL-040	Park & Recreation
+RL-050	Playground
+RL-060	Rock Collecting
+RL-070	Spelunking
+RL-080	Stable
+RL-090	Trail (bicycle)
+RL-100	Park & Recreation
+RL-110	Park & Recreation
+RL-120	"Trailer (interperative, auto)"
+RL-130	Trail
+RL-140	Trail\Road
+RL-150	Trail (trail bike)
+RL-160	Tramway
+RM-010	Park & Recreation
+RM-020	Park & Recreation
+RM-030	Ferry
+RM-040	Park & Recreation
+RM-050	Informational sign
+RM-060	Gas
+RM-070	Grocery Store
+RM-080	Handicapped
+RM-090	Lodging
+RM-100	Mechanic
+RM-110	Post Office
+RM-120	Picnic Area
+RM-130	Picnic Shelter
+RM-140	Informational sign
+RM-150	Telephone
+RM-160	Informational sign
+RM-170	Park & Recreation
+RS-010	Informational sign
+RS-020	Ski Jumping
+RS-030	Skiing (Bobbing)
+RS-040	Skiing (Cross Country
+RS-050	Skiing (Downhill)
+RS-060	Informational sign
+RS-070	Informational sign
+RS-080	Snowshoeing
+RS-090	Winter recreation area
+RW-010	Boat Tours
+RW-020	Informational sign
+RW-030	Diving
+RW-040	Diving (Scuba)
+RW-050	Park & Recreation
+RW-060	Marine recreation area
+RW-070	Motor Boating
+RW-080	Informational sign
+RW-090	Row Boating
+RW-100	Park & Recreation
+RW-110	Skiing (water)
+RW-120	Surfing
+RW-130	Informational sign
+RW-140	Wading
+S1-1	Warning Sign
+S1-1P	Warning sign
+S2-1	Warning Sign w/ crosswalk symbol
+S2-1P	Warning sign
+S2-2P	Arrow 45 deg counterclockwise
+S2-P2	Arrow 45 deg counterclockwise
+S3-1	Warning Sign
+S3-2	Warning sign
+S3-3	Warning sign
+S4-1	Regulatory sign
+S4-2	Regulatory sign
+S4-3	Warning Sign
+S4-4	Regulatory sign
+S5	Made up of three signs
+S5-1	Warning Sign
+S5-2	Informational/regulatory sign
+TA-1	Regulatory sign
+W1-1L	Arrow bends 90 deg left
+W1-1R	Arrow bends 90 deg right
+W1-2L	Arrow bends left
+W1-2R	Arrow bends right
+W1-3L	Arrow bends left (90) and then to straight again
+W1-3R	Arrow bends right (90) and then to straight again
+W1-4L	Arrow bends  and left then to straight again
+W1-4R	Arrow bends right and then to straight again
+W1-5L	Curvy road
+W1-5R	Curvy road
+W1-6	Warning sign
+W1-7	Double arrow - left/right
+W1-8L	Chevron Left
+W1-8R	Chevron Right
+W10-1	Warning Sign
+W10-1A	Warning sign
+W10-2	Railroad crossing on right spur
+W10-3	Railroad crossing on right spur
+W10-4	"Bottom down, railroad on right spur"
+W10-X1	Warning sign; track angle
+W10-X2	Warning sign
+W10-X3	Warning sign; arrows left/right
+W11-1	Warning Sign
+W11-10	Warning sign; truck crossing
+W11-10P	Warning sign
+W11-1P	Warning sign
+W11-2	Warning sign
+W11-3	Warning Sign
+W11-3P	Warning sign
+W11-4	Warning Sign
+W11-4P	Warning sign
+W11-5	Warning Sign
+W11-5P	Warning sign
+W11-6	Warning sign
+W11-6P	Warning sign
+W11-8	Warning sign
+W11-8P	Warning sign
+W11-9	Warning sign; advance
+W11-9A	Warning sign; crossing
+W11-9AP	Warning sign
+W11-X1	Warning sign; equestrian crossing
+W11-X1P	Warning sign
+W11-X2	Warning sign; horse & buggy
+W11-X2P	Warning sign
+W11-X3	Warning sign
+W11-X4	Warning sign
+W11-X5	Warning sign
+W11-X6	Warning sign
+W11-X7	Warning sign
+W11-X8	Warning sign
+W11A-2	Warning Sign
+W11AP-2	Warning sign
+W12-1	Arrows: both rotated 45 deg toward bottom
+W12-2	Arrows point up/down
+W12-2P	Warning sign
+W12-X1	Warning sign
+W12-X2	Arrows point to bottom corners respectively
+W13-1	Warning Sign
+W13-2	Warning Sign
+W13-3	Warning Sign
+W13-4	Warning Sign
+W14-1	Warning Sign
+W14-1A	Warning sign
+W14-1P	Warning Sign
+W14-2	Warning Sign
+W14-2P	Warning Sign
+W14-3	Triangle points to the right
+W14-4	Warning sign
+W14-5	Warning sign
+W14-7	Warning sign
+W14-8	Warning sign
+W14-X1	Warning sign
+W14-X2	Warning sign
+W14-X3	Warning sign
+W15-1	Warning sign
+W15-1P	Warning sign
+W15-4	Warning sign
+W16-1	Warning sign
+W16-1P	Warning sign
+W2-1	Warning sign
+W2-1AL	Warning sign; offset left
+W2-1AR	Warning sign; offset right
+W2-2	Warning sign
+W2-3	Warning sign
+W2-4	Warning sign
+W2-5	Warning sign
+W2-6	Warning sign
+W2-7	Warning sign
+W2-X1	Warning sign
+W20-1	Construction/Warning sign
+W20-2	Construction/Warning sign
+W20-3	Construction/Warning sign
+W20-4	Construction/Warning sign
+W20-5	Construction/Warning sign
+W20-5A	Construction/Warning sign
+W20-7	Flagger
+W20-7A	Two signs:  Flagger and Text
+W20-7B	Be Prepared to Stop
+W21-1	Construction/Warning sign
+W21-1A	Construction/Warning sign
+W21-2	Construction/Warning sign
+W21-3	Construction/Warning sign
+W21-4	Construction/Warning sign
+W21-5	Construction/Warning sign
+W21-5A	Construction/Warning sign
+W21-5B	Construction/Warning sign
+W21-6	Construction/Warning sign
+W21-7	Warning sign
+W21-X8	Warning sign
+W22-1	Construction/Warning sign
+W22-2	Construction/Warning sign
+W22-3	Construction/Warning sign
+W23-1	Warning sign
+W3-1	Warning sign
+W3-1A	Stop ahead: arrow and stop sign
+W3-1AP	Warning sign
+W3-2	Warning sign
+W3-2A	Yield ahead: arrow and yield sign
+W3-2AP	Warning sign
+W3-3	Warning sign
+W3-3A	Warning sign
+W3-3P	Warning sign
+W3-X1	Warning sign
+W3-X2	Warning sign; mount with W20-X2
+W4-1	Merge sign
+W4-1A	Warning sign
+W4-1P	Warning sign
+W4-2	Warning sign
+W4-3	Warning sign
+W41-1	General Warning sign
+W41-5	Warning sign
+W5-1	Warning sign
+W5-2	Warning sign
+W5-2A	Warning sign
+W5-2AP	Warning sign
+W5-3	Warning sign
+W5-4	Warning sign
+W6-1	Beginning of divided highway
+W6-2	End of divided highway
+W6-3	"Two arrows, the left pointing up the right down"
+W6-3OR	"Two arrows, the left pointing up the right down"
+W7-1	Steep truck grade
+W7-1A	Steep truck grade
+W7-1B	Steep truck grade w/ grade given
+W7-1P	Warning sign
+W7-2B	Warning sign
+W7-3	Warning sign
+W7-3A	Warning sign
+W7-3B	Warning sign
+W7-4	Warning sign
+W7-4A	Arrow 45 deg counterclockwise
+W7-5	Steep bike grade
+W8-1	Warning sign
+W8-10	Warning sign
+W8-11	Warning sign
+W8-12	Warning sign
+W8-1A	Warning sign
+W8-1B	Warning sign
+W8-2	Warning sign
+W8-3	Warning sign
+W8-3A	Warning sign
+W8-3AP	Warning sign
+W8-4	Warning sign
+W8-5	Slippery when wet marks behind the car
+W8-5P	Warning sign
+W8-5P1	Warning sign
+W8-6	Warning sign
+W8-7	Warning sign
+W8-8	Warning sign
+W8-9	Warning sign
+W8-9A	Warning sign; car tilted to show low shoulder
+W8-9A1	Warning sign
+W8-9AP	Warning sign
+W8-X1	Warning sign
+W8-X2	Warning sign
+W9-1	Warning sign
+W9-11	Warning sign
+W9-12	Warning sign
+W9-13	Warning sign
+W9-2	Warning sign
+W9-3	Warning sign
+X1-1	"""X"" series sign"
+X1-2	"""X"" series sign; arrow left of ""HERE"""
+X1-3	"""X"" series sign"
+X1-4	"""X"" series sign; fill in city at beginning of sign"
+X1-4A	"""X"" series sign; fill in city at beginning"
+X1-5	"""X"" series sign"
+X1-7	"""X"" series sign"
+X1-8	"""X"" series sign"
+X3-1	Right of way boundary marker w/ green triangle
+X3-1A	Tile marker
+X3-2	"""X"" series sign"
+X3-3	Scenic easement marker
+X3-4	Scenic easement marker
+X4-10	Ramp number plate
+X4-11	Object marker for end of roadway
+X4-2	Hazard marker; open circles spaced evenly
+X4-5	"Black triangle: base on bottom, top at top of sign"
+X4-6	Guide marker plate
+X4-9	Median opening marker

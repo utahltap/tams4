@@ -1,0 +1,524 @@
+mutcd_code,description,sign_text,category
+R1-1,stop,STOP,regulatory_rw
+R1-2,yield,YIELD,regulatory_rw
+R1-2a,oncomming,TO ONCOMMING TRAFFIC,regulatory_bw
+R1-3,4-way,4-WAY,regulatory_rw
+R1-4,all way,ALL WAY,regulatory_rw
+R1-5L,yield to pedestrian,YIELD HERE TO ,regulatory_rw
+R1-5aL,yield to pedestrian,YIELD HERE TO PEDESTRIANS,regulatory_rw
+R1-5R,yield to pedestrian,YIELD HERE TO,regulatory_rw
+R1-5aR,yield to pedestrian,YIELD HERE TO PEDESTRIANS,regulatory_rw
+R1-6,state law yield,STATE LAW YEILD TO WITHIN CROSSWALK,regulatory_rw
+R1-6a,state law stop,STATE LAW STOP FOR WITHIN CROSSWALK,regulatory_rw
+R2-1,speed limit,SPEED LIMIT [[speed]],regulatory_bw
+R2-2,truck limit,TRUCK [[speed]],regulatory_bw
+R2-3,night limit [[speed]],NIGHT,regulatory_bw
+R2-4,minimum speed,MINIMUM SPEED [[speed]],regulatory_bw
+R2-4a,maxmin speed limit,SPEED LIMIT [[speed]] MINIMUM [[speed]],regulatory_bw
+R2-6,fines,HIGHER FINES,regulatory_bw
+R3-1,no right, ,regulatory_bw
+R3-2,no left, ,regulatory_bw
+R3-3,no turns,NO TURNS,regulatory_bw
+R3-4,no uturns, ,regulatory_bw
+R3-5L,left only,ONLY,regulatory_bw
+R3-5R,right only,ONLY,regulatory_bw
+R3-5a,through only,ONLY,regulatory_bw
+R3-5b,left lane,LEFT LANE,regulatory_bw
+R3-5c,HOV lane,HOV 2+,regulatory_bw
+R3-5d,taxi lane,TAXI LANE,regulatory_bw
+R3-5e,center lane,CENTER LANE,regulatory_bw
+R3-5f,right lane,RIGHT LANE,regulatory_bw
+R3-5g,bus lane,BUS LANE,regulatory_bw
+R3-6L,left or through, ,regulatory_bw
+R3-6R,right or through, ,regulatory_bw
+R3-7L,left must turn,LEFT LANE MUST TURN LEFT,regulatory_bw
+R3-7R,right must turn,RIGHT LANE MUST TURN RIGHT,reguatory_bw
+R3-8,left turn instructions,ONLY,regulatory_bw
+R3-8a,all lane instructions,ONLY ONLY,regulatory_bw
+R3-8b,all lane instructions restrictive,ONLY ONLY ONLY,regulatory_bw
+R3-9a,turn left only,ONLY,regulatory_bw
+R3-9b,center lane turn left,CENTER LANE ONLY,regulatory_bw
+R3-9d,reversible 1, ,regulatory_bw
+R3-9e,reversible 2, ,regulatory_bw
+R3-9f,restrict center lane,CENTER LANE DO NOT USE,regulatory_bw
+R3-9g,end reverse,END REVERSE LANE [[distance or address]],regulatory_bw
+R3-9h,begin reverse,BEGIN REVERSE LANE [[distance or address]],regulatory_bw
+R3-9i,reverse ends,ONLY END REVERSE LANE,regulatory_bw
+R3-10,hov 1,HOV 2+ ONLY 2 OR MORE PERSONS PER VEHICLE,regulatory_bw
+R3-10a,bus ahead,BUS LANE AHEAD,regulatory_bw
+R3-10b,low emission,LOW EMISSION VEHICLES ALLOWED,regulatory_bw
+R3-11,hov 2,HOV 2+ ONLY [[time range]],regulatory_bw
+R3-11a,hov center,CENTER LANE HOV 2+ ONLY,regulatory_bw
+R3-11b,bus center,CENTER LANE BUSES ONLY,regulatory_bw
+R3-11c,hov 3,HOV 2+ ONLY 24 HOURS,regulatory_bw
+R3-12,hov ahead,HOV 2+ LANE AHEAD,regulatory_bw
+R3-12a,hov end,HOV LANE ENDS,regulatory_bw
+R3-12b,hov ends ahead,HOV LANE ENDS 1/2 MILE,regulatory_bw
+R3-13,hov 4,HOV 2+ ONLY 2 OR MORE PERSONS PER VEHICLE,regulatory_bw
+R3-13a,hov 5,HOV 2+ ONLY 2 OR MORE PERSONS PER VIHICLE [[time range]],regulatory_bw
+R3-14,hov 6,HOV 2+ ONLY [[time range]],regulatory_bw
+R3-14a,hov 7,HOV 2+ only [[time range]],regulatory_bw
+R3-14b,bus and taxi,BUS AND TAXI ONLY [[time range]],regulatory_bw
+R3-15,hov ahead 2,HOV LANE AHEAD,regulatory_bw
+R3-15a,hov end 2,HOV LANE ENDS,regulatory_bw
+R3-18,no left or uturn, ,regulatory_bw
+R3-16,bike ahead,LANE AHEAD,regulatory_bw
+R3-16a,bike ends,LANE ENDS,regulatory_bw
+R3-17,bike lane,BIKE LANE,regulatory_bw
+R3-17a,ahead,AHEAD,regulatory_bw
+R3-17b,ends,ENDS,regulatory_bw
+R4-1,do not pass,DO NOT PASS,regulatory_bw
+R4-2,pass with care,PASS WITH CARE,regulatory_bw
+R4-3,slower traffic,SLOWER TRAFFIC KEEP RIGHT,regulatory_bw
+R4-4,begin turn lane,BEGIN TURN LANE YIELD TO BIKES,regulatory_bw
+R4-5,trucks keep right,TRUCKS USE RIGHT LANE,regulatory_bw
+R4-6,truck lane ahead,TRUCK LANE [[distance]],regulatory_bw
+R4-7,keep right textless, ,regulatory_bw
+R4-7a,keep right,KEEP RIGHT,regulatory_bw
+R4-8,keep left textless, ,regulatory_bw
+R4-8a,keep left,KEEP LEFT,regulatory_bw
+R4-9,stay,STAY IN LANE,regulatory_bw
+R4-10,runaway only,RUNAWAY VEHICLES ONLY,regulatory_bw
+R5-1,do not enter,DO NOT ENTER,regulatory_rw
+R5-1a,wrong way,WRONG WAY,regulatory_rw
+R5-1b,bike wrong way,WRONG WAY,regulatory_rw
+R5-2,no trucks textless, ,regulatory_bw
+R5-2a,no trucks,NO TRUCKS,regulatory_bw
+R5-3,no motor,NO MOTOR VEHICLES,regulatory_bw
+R5-4,exclude commercial,COMMERCIAL VEHICLES EXCLUDED,regulatory_bw
+R5-5,prohibit lugs,VEHICLES WITH LUGS PROHIBITED,regulatory_bw
+R5-6,no bikes, ,regulatory_bw
+R5-7,prohibit non-motorized,NON MOTORIZED TRAFFIC PROHIBITED,regulatory_bw
+R5-8,prohibit motor cycles,MOTOR DRIVEN CYCLES PROHIBITED,regulatory_bw
+R5-10a,prohibit pedestrians and cycles,PEDESTRIANS BICYCLES MOTOR-DRIVEN CYCLES PROHIBITED,regulatory_bw
+R5-10b,prohibit pedestrians and bicycles,PEDESTRIANS AND BICYCLES PROHIBITED,regulatory_bw
+R5-10c,prohibit pedestrians,PEDESTRIANS PROHIBITED,regulatory_bw
+R6-1R,one way right,ONE WAY,regulatory_bw
+R6-1L,one way left,ONE WAY,regulatory_bw
+R6-2R,one way right 2,ONE WAY,regulatory_bw
+R6-2L,one way left 2,ONE WAY,regulatory_bw
+R6-3,divided highway,DIVIDED HIGHWAY,regulatory_bw
+R7-1,no parking any time,NO PARKING ANY TIME,regulatory_rw
+R7-2,no parking day,NO PARKING [[time range]],regulatory_rw
+R7-2a,no parking day 2,[[time range]],regulatory_rw
+R7-3,no parking except,NO PARKING EXCEPT SUNDAYS AND HOLIDAYS,regulatory_rw
+R7-4,no standing,NO STANDING ANYTIME,regulatory_rw
+R7-5,hour parking,ONE HOUR PARKING,regulatory_bw
+R7-6,no parking load zone,NO PARKING LOADING ZONE,regulatory_rw
+R7-7,no parking bus stop,NO PARKING BUS STOP,regulatory_rw
+R7-8,reserved for disability,RESERVED PARKING,regulatory_bw
+R7-8a,van accessible,VAN ACCESSIBLE,regulatory_bw
+R7-8b,van accessible blue,VAN ACCESSIBLE,regulatory_bw
+R7-9,no parking bike,NO PARKING BIKE LANE,regulatory_rw
+R7-9a,no parking bike alt,BIKE LANE,regulatory_rw
+R7-107,no parking bus stop alt,NO PARKING BUS STOP,regulatory_rw
+R7-107a,no parking bus stop textless, ,regulatory_rw
+R7-108,time limit parking,[[time limit]] PARKING [[time range]],regulatory_bw
+R7-200,parking instruction,[[required text]],regulatory_bw
+R7-201,tow zone,TOW-AWAY-ZONE,regulatory_bw
+R7-201a,tow zone textless, ,regulatory_bw
+R7-202,this side,THIS SIDE OF SIGN,regulatory_bw
+R7-203,emergency snow route,EMERGENCY SNOW ROUTE NO PARKING OF OVER TWO INCES,regulatory_rw
+R8-1,no parking pavement,NO PARKING ON PAVEMENT,regulatory_rw
+R8-2,no parking shoulder,NO PARKING EXCEPT ON SHOULDER,regulatory_rw
+R8-3,no parking,NO PARKING,regulatory_rw
+R8-3a,no parking textless, ,regulatory_rw
+R8-3b,parking restrictions,[[info]],regulatory_rw
+R8-3c,on pavement,ON PAVEMENT,regulatory_rw
+R8-3d,on bridge,ON BRIDGE,regulatory_rw
+R8-4,emergency parking,EMERGENCY PARKING ONLY,regulatory_bw
+R8-5,no stopping pavement,NO STOPPING ON PAVEMENT,regulatory_rw
+R8-6,no stopping shoulder,NO STOPPING EXCEPT ON SHOULDER,regulatory_rw
+R8-7,emergency stopping,EMERGENCY STOPPING ONLY,regulatory_bw
+R8-8,don't stop tracks,DO NOT STOP ON TRACKS,regulatory_bw
+R8-9,tracks out of service,TRACKS OUT OF SERVICE,regulatory_bw
+R8-10,stop here,STOP HERE WHEN FLASHING,regulatory_rw
+R9-1,walk on left,WALK ON LEFT FACING TRAFFIC,regulatory_pedestrian
+R9-2,cross at crosswalk,CROSS ONLY AT CROSS WALKS,regulatory_pedestrian
+R9-3,no pedestrian crossing,NO PEDESTRIAN CROSSING,regulatory_pedestrian
+R9-3a,no pedestrians, ,regulatory_bw
+R9-3b,use crosswalk,USE CROSSWALK,regulatory_pedestrian
+R9-3c,ride with traffic,RIDE WITH TRAFFIC,regulatory_pedestrian
+R9-4,no hitch hiking,NO HITCH HIKING,regulatory_pedestrian
+R9-4a,no hitch hiking textless, ,regulatory_pedestrian
+R9-5,use ped signal,USE PED SIGNAL,regulatory_pedestrian
+R9-6,yeild to peds,YIELD TO PEDS,regulatory_pedestrian
+R9-7,keep left/right,KEEP LEFT RIGHT,regulatory_pedestrian
+R9-8,pedestrian crosswalk,PEDESTRIAN CROSSWALK,regulatory_pedestrian
+R9-9,sidewalk closed,SIDEWALK CLOSED,regulatory_pedestrian
+R9-10,sidewalk closed use other,SIDEWALK CLOSED USE OTHER SIDE,regulatory_pedestrian
+R9-11,sidewalk closed cross ahead,SIDEWALK CLOSED AHEAD CROSS HERE,regulatory_pedestrian
+R9-11a,sidewalk closed cross,SIDEWALK CLOSED CROSS HERE,regulatory_pedestrian
+R10-1,cross on green,CROSS ON GREEN LIGHT ONLY,regulatory_pedestrian
+R10-2a,cross on signal,CROSS ONLY ON SIGNAL,regulatory_pedestrian
+R10-3,push for green,PUSH BUTTON FOR GREEN LIGHT,regulatory_pedestrian
+R10-3a,push and wait for green,TO CROSS STREET PUSH BUTTON AND WAIT FOR GREEN LIGHT,regulatory_pedestrian
+R10-3b,crossing info,[[instructions]],regulatory_pedestrian
+R10-3c,crossing info text,[[instructions]],regulatory_pedestrian	
+R10-4,push for walk,PUSH BUTTON WAIT FOR WALK SIGNAL,regulatory_pedestrian
+R10-4a,push and wait for walk,TO CROSS STREET PUSH BUTTON WAIT FOR WALK SIGNAL,regulatory_pedestrian
+R10-4b,push for,PUSH BUTTON FOR,regulatory_pedestrian
+R10-5,left on green,LEFT TURN ON GREEN ARROW ONLY,regulatory_bw
+R10-6,stop here on red,STOP HERE ON RED,regulatory_bw
+R10-6a,stop here alt,STOP HERE ON RED,regulatory_bw
+R10-7,do not block,DO NOT BLOCK INTERSECTION,regulatory_bw
+R10-8,use lane with green,USE LANE WITH GREEN ARROW,regulatory_bw
+R10-10L,left turn signal,LEFT TURN SIGNAL,regulatory_bw
+R10-10R,right turn signal,RIGHT TURN SIGNAL,regulatory_bw
+R10-11,no turn red 1,NO TURN ON RED,regulatory_bw
+R10-11a,no turn red 2,NO TURN ON RED,regulatory_bw
+R10-11b,no turn red 3,NO TURN ON RED,regulatory_bw
+R10-12,left yield on green,LEFT TURN YIELD ON GREEN,regulatory_bw
+R10-13,emergency signal,EMERGENCY SIGNAL,regulatory_bw
+R10-14,energency signal stop,EMERGENCY SIGNAL STOP WHEN FLASHING RED,regulatory_bw
+R10-16,uturn yield,U-TURN TO RIGHT TURN,regulatory_bw
+R10-18,photo enforced,TRAFFIC LAWS PHOTO ENFORCED,regulatory_bw
+R10-19,photo enforced terse,PHOTO ENFORCED,regulatory_bw
+R10-21,left turn signal and yield,LEFT TURN SIGNAL YEILD ON GREEN,regulatory_bw
+R10-22,wait on line,TO REQUEST GREEN WAIT ON,regulatory_bw
+R11-1,keep off median,KEEP OFF MEDIAN,regulatory_bw
+R11-2,road closed,ROAD CLOSED,regulatory_bw
+R11-3a,road closed local only,ROAD CLOSED AHEAD LOCAL TRAFFIC ONLY,regulatory_bw
+R11-3b,bridge out,BRIDGE OUT AHEAD LOCAL TRAFFIC ONLY,regulatory_bw
+R11-4,road closed thru,ROAD CLOSED TO THRU TRAFFIC,regulatory_bw
+R12-1,weight limit,WEIGHT LIMIT [[weight]],regulatory_bw
+R12-2,axle weight,AXLE WEIGHT LIMIT [[weight]],regulatory_bw
+R12-3,no trucks over,NO TRUCKS OVER [[weight]],regulatory_bw
+R12-4,weight per axle,WEIGHT LIMIT [[weight]] PER AXLE [[wieght]] GROSS,regulatory_bw
+R12-5,weight limit multi,WEIGHT LIMIT [[info]],regulatory_bw
+R13-1,all trucks next right,ALL TRUCKS COMMERCIAL VEHICLES NEXT RIGHT,regulatory_bw
+R14-1,truck route,TRUCK ROUTE,regulatory_bw
+R14-2,hazardous material allowed, ,regulatory_bw
+R14-3,hazardous material not allowed, ,regulatory_bw
+R14-4,trucks allowed, ,regulatory_bw
+R14-5,trucks not allowed, ,regulatory_bw
+R15-1,railroad crossing,RAILROAD CROSSING,rail
+R15-2,track count,[[number]] TRACKS,rail
+R15-3,exempt,EXEMPT,regulatory_bw
+R15-4a,right lane rail,RIGHT LANE ONLY,rail
+R15-4b,left lane rail,LEFT LANE ONLY,rail
+R15-4c,center lane rail,CENTER LANE ONLY,rail
+R15-5,do not pass,DO NOT PASS,rail
+R15-5a,do not pass train,DO NOT PASS STOPPED TRAIN,rail
+R15-6,do not drive on tracks textless, ,rail
+R15-6a,do not drive on tracks,DO NOT DRIVE ON TRACKS,rail
+R15-7,divided highway rail,DIVIDED HIGHWAY,rail
+R15-8,look bothways,LOOK,rail
+R16-1,seatbelt required, ,regulatory_bw
+S1-1,school zone, ,school_pedestrian
+W16-7P,crosswalk here, ,school_pedestrian
+S3-1,schoolbus top,SCHOOL BUS STOP AHEAD,school_pedestrian
+S4-5,school zone ahead,SHOOL SPEED LIMIT 20,school_pedestrian
+S4-5a,school zone ahead alt,20 MPH SCHOOL ZONE AHEAD,school_pedestrian
+S4-3,school,SCHOOL,school_pedestrian
+S4-1,time range,[[TIME RANGE]],regulatory_bw
+S4-2,children,WHEN CHILDREN ARE PRESENT,school_pedestrian
+S4-4,when flashing,WHEN FLASHING,school_pedestrian
+S4-6,mon-fri,MON-FRI,regulatory_bw
+S5-2,end school zone,END SCHOOL ZONE,school_pedestrian
+S5-1,school speed limit,SCHOOL SPEED LIMIT 15 WHEN FLASHING,school_pedestrian
+W1-1L,road turns left, ,warning
+W1-1R,road turns right, ,warning
+W1-2L,road curves left, ,warning
+W1-2R,road curves right, ,warning
+W1-3L,road bends left, ,warning
+W1-3R,road bends right, ,warning
+W1-4L,road strafes left, ,warning
+W1-4R,road strafes right, ,warning
+W1-5L,winding road, ,warning
+W1-5R,winding road 2, ,warning
+W1-6L,warning left, ,warning
+W1-6R,warning right, ,warning
+W1-7,warning both ways, ,warning
+W1-8L,move left, ,warning
+W1-8R,move right, ,warning
+W1-9L,slow down for left turn, ,warning
+W1-9R,slow down for right turn, ,warning
+W1-10L,left curve with side road, ,warning
+W1-10R,right curve with side road, ,warning
+W1-11,180 degree curve, ,warning
+W1-13,rollover warning, ,warning
+W1-15,loop ahead, ,warning
+W2-1,intersection ahead, ,warning
+W2-2R,right turn ahead, ,warning
+W2-2L,left turn ahead, ,warning
+W2-3L,left fork, ,warning
+W2-3R,right fork, ,warning
+W2-4,T-intersection ahead, ,warning
+W2-5,fork ahead, ,warning
+W2-6,roundabout, ,warning
+W3-1,stop sign ahead, ,warning
+W3-1a,stop ahead,STOP AHEAD,warning
+W3-2,yield sign ahead, ,warning
+W3-2a,yield ahead,YIELD AHEAD,warning
+W3-3,stoplight ahead, ,warning
+W3-3a,signal ahead,SIGNAL AHEAD,warning
+W3-4,prepare to stop,BE PREPARED TO STOP,warning
+W3-5,reduce speed,SPEED LIMIT [[speed]],warning
+W3-5a,slower zone ahead,[[speed]] SPEED ZONE AHEAD,warning
+W3-6,draw bridge,DRAW BRIDGE AHEAD,warning
+W4-1L,merges from left, ,warning
+W4-1R,merges from right, ,warning
+W4-2L,merge right, ,warning
+W4-2R,merge left, ,warning
+W4-3L,roads join left, ,warning
+W4-3R,roads join right, ,warning
+W4-5,merge at angle, ,warning
+W4-6,roads join at angle, ,warning
+W4-4a,traffic from left,TRAFFIC FROM LEFT,warning
+W4-4b,oncoming traffic,ONCOMING TRAFFIC,warning
+W4-4c,cross traffic,CROSS TRAFFIC DOES NOT STOP,warning
+W5-1,road narrows,ROAD NARROWS,warning
+W5-2,narrow bridge,NARROW BRIDGE,warning
+W5-3,one lane bridge,ONE LANE BRIDGE,warning
+W5-4,ramp narrows,RAMP NARROWS,warning
+W5-4a,bikeway narrows,BIKEWAY NARROWS,warning
+W6-1,divider ahead, ,warning
+W6-1a,divided highway,DIVIDED HIGHWAY,warning
+W6-1b,divided road,DIVIDED ROAD,warning
+W6-2,divider ends, ,warning
+W6-2a,divided highway ends,DIVIDED HIGHWAY ENDS,warning
+W6-2b,divided road ends,DIVIDED ROAD ENDS,warning
+W6-3,oncoming traffic textless, ,warning
+W6-4,oncoming traffic temp, ,worker
+W7-1,hill warning, ,warning
+W7-1a,hill,HILL,warning
+W7-1b,hill grade,[[grade]],warning
+W7-2,use low gear,USE LOW GEAR,warning
+W7-2b,trucks use low gear,TRUCKS USE LOW GEAR,warning
+W7-3,grade,[[grade]] GRADE,warning
+W7-3a,next miles,NEXT [[distance]] MILES,warning
+W7-3b,grade next miles,[[grade]] GRADE [[distance]] MILES,warning
+W7-4,runaway truck ramp ahead,RUNAWAY TRUCK RAMP 1 MILE,warning
+W7-4b,runaway truck ramp,RUNAWAY TRUCK RAMP,warning
+W7-4c,truck escape,TRUCK ESCAPE RAMP,warning
+W7-4d,sand,SAND,warning
+W7-4e,gravel,GRAVEL,warning
+W7-4f,paved,PAVED,warning
+W7-5,bike hill, ,warning
+W7-6,blocks view,HILL BLOCKS VIEW,warning
+W7-5a,hill alt,HILL,warning
+W8-1,bump,BUMP,warning
+W8-2,dip,DIP,warning
+W8-3,pavement ends,PAVEMENT ENDS,warning
+W8-4,soft shoulder,SOFT SHOULDER,warning
+W8-5,skid risk, ,warning
+W8-6,truck crossing,TRUCK CROSSING,warning
+W8-7,loose gravel,LOOSE GRAVEL,warning
+W8-8,rough,ROUGH ROAD,warning
+W8-9,low,LOW SHOULDER,warning
+W8-9A,shoulder drops,SHOULDER DROP OFF,warning
+W8-10,skid bike, ,warning
+W8-10a,slippery,SLIPPERY WHEN WET,warning
+W8-11,uneven lanes,UNEVEN LANES,warning
+W8-12,no center,NO CENTER STRIPE,warning
+W8-13,icy bridge,BRIDGE ICES BEFORE ROAD,warning
+W9-1R,right ends,RIGHT LANE ENDS,warning
+W9-1L,left ends,LEFT LANE ENDS,warning
+W9-2L,left ends 2,LANE ENDS MERGE LEFT,warning
+W9-2R,right ends 2,LANE ENDS MERGE RIGHT,warning
+W9-3,center closed,CENTER LANE CLOSED AHEAD,worker
+W9-3L,left closed,LEFT LANE CLOSED AHEAD,worker
+W9-3R,right closed,RIGHT LANE CLOSED AHEAD,worker
+W9-3a,lane closed, ,worker
+W10-1,railroad,R R,rail
+W10-1a,exempt,EXEMPT,warning
+W10-2R,tracks on right, ,rail
+W10-2L,tracks on left, ,rail
+W10-3R,tracks on right 2, ,rail
+W10-3L,tracks on left 2, ,rail
+W10-4R,tracks on right T, ,rail
+W10-4L,tracks on left T, ,rail
+W10-5,hitch might catch, ,rail
+W10-8,fast trains,TRAINS MAY EXCEED 80 MPH,rail
+W10-9,train no horn,NO TRAIN HORN,rail
+W10-10,no signal,NO SIGNAL,warning
+W10-11,tracks at T, ,rail
+W10-11a,tracks and highway,[[distance]] FEET BETWEEN TRACKS AND HIGHWAY,rail
+W10-11b,tracks and highway behind,[[distance]] FEET BETWEEN TRACKS AND HIGHWAY BEHIND YOU,rail
+W10-12,tracks at angle, ,rail
+W11-1,bicycles, ,school_pedestrian
+W11-2,pedestrian, ,school_pedestrian
+W11-3,deer, ,warning
+W11-4,livestock, ,warning
+W11-5,tractors, ,warning
+W11-5a,tractors alt, ,warning
+W11-6,recreational vehicles, ,warning
+W11-7,horses, ,warning
+W11-8,large vehicles, ,warning
+W11-9,accessiblity ramp, ,school_pedestrian
+W11-10,trucks, ,warning
+W11-11,golf cart, ,warning
+W11-12p,emergency signal ahead, ,warning
+W11-14,carriage, ,warning
+W12-1,double arrow, ,warning
+W12-2,clearance,[[height]],warning
+W12-2p,clearance alt,[[height]],warning
+W13-1,reccommended speed,[[speed]] warning,warning
+W13-2,reccommended exit,EXIT [[speed]] MPH,warning
+W13-3,reccommended ramp,RAMP [[speed]] MPH,warning
+W13-4,on ramp,ON RAMP,worker
+W13-5,reccommended curve,CURVE [[speed]] MPH,warning
+W14-1,dead end,DEAD END,warning
+W14-1aR,dead end right,DEAD END,warning
+W14-1aL,dead end left,DEAD END,warning
+W14-2,no outlet,NO OUTLET,warning
+W14-3,no passing,NO PASSING ZONE,warning
+W15-1,children, ,school_pedestrian
+W16-1,share,SHARE THE ROAD,warning
+W16-2,distance feet,[[distance]] FEET,warning
+W16-2a,distance ft,[[distance]] FT,warning
+W16-3,distance miles,[[distance]] MILES,warning
+W16-3a,distance mi,[[distance]] MILES,warning
+W16-4,next distance,NEXT [[distance]] FT,warning
+W16-5pL,arrow left, ,warning
+W16-5pR,arrow right, ,warning
+W16-6pL,on left turn, ,warning
+W16-6pR,on right turn, ,warning
+W16-7pL,on left, ,warning
+W16-7pR,on right, ,warning
+W16-8,street ahead,[[street]],warning
+W16-8a,street ahead alt,[[street]] [[street]],warning
+W16-9p,ahead,AHEAD,warning
+W16-13,when flashing,WHEN FLASHING,warning
+W16-12p,circle,TRAFFIC CIRCLE,warning
+W17-1,speed hump,SPEED HUMP,warning
+W18-1,no signs,NO TRAFFIC SIGNS,warning
+W25-1,oncoming green,ONCOMING TRAFFIC HAS EXTENDED GREEN,warning
+W25-2,oncoming green maybe,ONCOMING TRAFFIC MAY HAVE EXTENDED GREEN,warning
+M1-1,interstate,INTERSTATE [[number]],highway
+M1-2,business loop,BUSINESS LOOP [[number]],highway
+M1-3,business spur,BUSINESS SPUR [[number]],highway
+M1-4,highway,[[number]],highway
+M1-5,route,[[number]],highway
+M1-6,county,[[county]],locational
+M1-7,national forest,National Forest,recreation
+M1-8,bike route,[[number]],locational
+M1-9,scenic bike route,[[number]],recreation
+M1-10,interstate system,[[interstate]],locational
+M1-10a,interstate system alt,[[interstate]],locational
+M2-1,junction,JCT,locational
+M2-2,junction,JUNCTION [[highway]] [[route]],locational
+M3-1,north,NORTH,locational
+M3-2,east,EAST,locational
+M3-3,south,SOUTH,locational
+M3-4,west,WEST,locational
+M4-1,alternate,ALTERNATE,locational
+M4-1a,alt,ALT,locational
+M4-2,bypass,BY-PASS,locational
+M4-3,business,BUSINESS,locational
+M4-5,to,TO,locational
+M4-4,truck,TRUCK,locational
+M4-6,end,END,locational
+M4-7,temporary,TEMPORARY,locational
+M4-11,begin,BEGIN,locational
+M4-12,end,END,locational
+M4-13,to,TO,locational
+M5-1L,service arrow, ,service
+M5-1R,service arrow, ,service
+M5-2L,service arrow, ,service
+M5-2R,service arrow, ,service
+M6-1,service arrow, ,service
+M16-2R,service arrow, ,service
+M16-2L,service arrow, ,service
+M6-3,service arrow, ,service
+M6-4,double service arrow, ,service
+M6-5R,double service arrow, ,service
+M6-5L,double service arrow, ,service
+M6-6L,double service arrow, ,service
+M6-6R,double service arrow, ,service
+M6-7,arrows, ,locational
+M6-9,arrows, ,locational
+M7-1,directional arrow, ,locational
+M7-2,directional arrow, ,locational
+M7-3R,double directional arrow, ,locational
+M7-3L,double directional arrow, ,locational
+M7-4R,directional arrow, ,locational
+M7-4L,directional arrow, ,locational
+M7-5,double directional arrow, ,locational
+M7-6R,double directional arrow, ,locational
+M7-6L,double directional arrow, ,locational
+D1-1,destination,[[destination]],locational
+D1-1a,destination distance,[[destination]] [[distance]],locational
+D1-c,street sign,[[street]],locational
+D1-bL,destination left,[[destination]],locational
+D1-bR,destination right,[[destination]],locational
+D1-2,double destination,[[destination]] [[destination]],locational
+D1-2a,double destination distance,[[destination]] [[distance]] [[destination]] [[disatnce]],locational
+D1-3,triple destination,[[destination]] [[destination]] [[destination]],locational
+D1-3a,triple destination distances,[[destination]] [[distance]] [[destination]] [[distance]] [[destination]] [[distance]],locational
+D2-1,destination distance no arrow,[[destination]] [[distance]],locational
+D2-2,double destination distance no arrow,[[destination]] [[distance]] [[destination]] [[distance]],locational
+D2-3,triple destination distance no arrow,[[destination]] [[distance]] [[destination]] [[distance]] [[destination]] [[distance]],locational
+D3,street sign,[[street]],locational
+D4-1,parking,PARKING,service
+D4-2,park and right,PARK AND RIDE,service
+D4-3,bike parking,PARKING,service
+D5-1,rest area,REST AREA [[distance]],service
+D5-1a,rest area alt,REST AREA [[distance]],service
+D5-2,rest area exit,REST AREA,service
+D5-3,parking ahead,PARKING AREA [[distance]],service
+D5-4,parking exit,PARKING AREA,service
+D5-5,roadside table,ROADSIDE TABLE,service
+D5-5a,table, ,service
+D5-5b,roadside park,ROADSIDE PARK,service
+D5-7,rest plus tourist,REST AREA TOURIST INFO CENTER [[distance]],service
+D5-7a,tourist info,TOURIST INFO CENTER,service
+D5-9a,welcome center,[[location]] WELCOME CENTER,service
+D5-8,rest and tourist exit,REST AREA TOURIST INFO CENTER,service
+D5-9,rest plus welcome,REST AREA [[location]] WELCOME CENTER [[distance]],service
+D5-10,rest and welcom exit,REST AREA [[location]] WELCOME CENTER,service
+D6-1,scenic area,SCENIC AREA,service
+D6-2,scenic overlook,SCENIC OVERLOOK [[distance]],service
+D6-3,scenic exit,SCENIC OVERLOOK,service
+D7-1,national park ahead,[[park]] NATIONAL PARK DISTANCE,recreation
+D7-2,national park,[[park]] NATIONAL PARK,recreation
+D8-1,weigh station ahead,WEIGH STATION [[distance]],locational
+D8-2,weigh station next,WEIGH STATION NEXT RIGHT OPEN CLOSED,locational
+D8-3,weigh station exit,WEIGH STATION,locational
+D9-1,public phone, ,service
+D9-1a,public phone alt, ,service
+D9-1b,public phone distance,[[distance]],service
+D9-2,hospital, ,service
+D9-3,camping, ,service
+D9-3a,rv camping, ,service
+D9-4,rubbish bin, ,service
+D9-6,accessible, ,service
+D9-7,gas, ,service
+D9-8,food, ,service
+D9-9,lodging, ,service
+D9-10,info, ,service
+D9-11,diesel, ,service
+D9-11a,alternative fuel, ,service
+D9-12,septic dump station, ,service
+D9-13,emergency care, ,service
+D9-14,police,POLICE,service
+D9-15,propane, ,service
+D9-16,truck parking, ,service
+D9-18,multi-service, ,service
+D10-1,single digit mile marker,MILE [[digit]],locational
+D10-2,double digit mile marker,MILE [[digit]] [[digit]],locational
+D10-2a,decimal mile marker,MILE [[digit]] [[digit]] [[point digit]],locational
+D10-3,triple digit mile marker,MILE [[digit]] [[digit]] [[digit]],locational
+D10-3a,decimal triple mile maker,MILE [[digit]] [[digit]] [[digit]] [[point digit]],locational
+D11-1,bike route,BIKE ROUTE,locational
+D12-1,weather stations,WEATHER INFO TUNE RADIO TO [[station]],service
+D12-2,car pool,CAR POOL INFO [[number]],service
+D12-3,cb radio,[[text]],service
+D12-5,travel info,TRAVELER INFO CALL 511,service
+D13-1,crossover,CROSSOVER,locational
+D13-2,crossover distance,CROSSOVER [[distance]],locational
+I1-1,signal set for,SIGNALS SET FOR [[speed]],service
+I-2,state line,[[state]] STATE LINE,locational
+I-3,river,[[river]],locational
+I-4,hiking trail, ,locational
+I-5,airport, ,locational
+I-6,bus station, ,locational
+I-7,train station, ,locational
+I-8,library textless, ,locational
+I-8P,library,LIBRARY,locational
+I-9,port, ,locational
+I-10,winter, ,locational
+I-11,recycling center, ,locational
+I-13,to report emergency,[[text]],service
+I-13a,report emergency terse,[[text]],service

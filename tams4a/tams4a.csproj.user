@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PublishUrlHistory>\\www.utahltap.org\websites\www_LTAP\software\published\tams4\|\\www.utahltap.org\websites\www_LTAP_dev\software\published\tams4\|\\www.utahltap.org\websites\updates\tams4\|publish\</PublishUrlHistory>
+    <InstallUrlHistory>https://www.utahltap.org/software/published/tams4/|http://www.utahltap.org/software/published/tams4/</InstallUrlHistory>
+    <SupportUrlHistory>http://www.utahltap.org</SupportUrlHistory>
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory>http://www.utahltap.org/software/</ErrorReportUrlHistory>
+    <FallbackCulture>en-US</FallbackCulture>
+    <VerifyUploadedFiles>true</VerifyUploadedFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>
+    </StartArguments>
+    <StartWorkingDirectory>
+    </StartWorkingDirectory>
+  </PropertyGroup>
+</Project>
