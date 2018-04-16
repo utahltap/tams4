@@ -517,5 +517,24 @@ namespace tams4a.Classes
         {
             UnsavedChanges = true;
         }
+
+        public void deactivate()
+        {
+            if (Layer != null)
+            {
+                Layer.SelectionEnabled = false;
+            }
+        }
+
+        /// <summary>
+        /// set's the module as the current active module.
+        /// </summary>
+        public void activate()
+        {
+            if (Layer != null)
+            {
+                Layer.SelectionEnabled = true;
+            }
+        }
     }
 }

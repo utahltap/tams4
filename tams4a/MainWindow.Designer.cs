@@ -331,7 +331,7 @@
             this.tabControlControls.SelectedIndex = 0;
             this.tabControlControls.Size = new System.Drawing.Size(224, 732);
             this.tabControlControls.TabIndex = 0;
-            this.tabControlControls.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlControls_Selected);
+            this.tabControlControls.SelectedIndexChanged += new System.EventHandler(this.tabControlControls_SelectedIndexChanged);
             // 
             // tabPage1
             // 

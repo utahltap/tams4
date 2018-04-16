@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -118,7 +119,45 @@ namespace tams4a.Classes
             signPanel.comboBoxMaterial.DisplayMember = "material";
             signPanel.comboBoxMaterial.ValueMember = "id";
 
+            DataTable signBacking = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign_backing");
+            DataRow blankBackingRow = signBacking.NewRow();
+            signBacking.Rows.InsertAt(blankBackingRow, 0);
+            signPanel.comboBoxBacking.DataSource = signBacking;
+            signPanel.comboBoxBacking.DisplayMember = "material";
+            signPanel.comboBoxBacking.ValueMember = "id";
+
+            DataTable signSheeting = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign_sheeting");
+            DataRow blankSheetingRow = signSheeting.NewRow();
+            signBacking.Rows.InsertAt(blankSheetingRow, 0);
+            signPanel.comboBoxSheeting.DataSource = signBacking;
+            signPanel.comboBoxSheeting.DisplayMember = "material";
+            signPanel.comboBoxSheeting.ValueMember = "id";
+
+            setSymbolizer();
+            disableSignDisplay();
+
             return true;
+        }
+
+        protected override void controlChanged(object sender, EventArgs e)
+        {
+            Panel_Sign signPanel = getSignControls();
+        }
+
+        private Panel_Sign getSignControls()
+        {
+            Panel_Sign controls;
+
+            try
+            {
+                controls = (Panel_Sign)ControlsPage.Controls["ROADCONTROLS"];
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not retrieve controls page.\n" + e.ToString());
+                throw new Exception("Could not retrieve controls page.\n" + e.ToString());
+            }
+            return controls;
         }
 
         protected override void ShpToDatabase()
@@ -155,6 +194,29 @@ namespace tams4a.Classes
                 Database.InsertRow(Project.conn, values, "sign_support");
             }
             Cursor.Current = Cursors.Arrow;
+        }
+
+        private void setSymbolizer()
+        {
+            PointScheme sgnScheme = new PointScheme();
+        }
+
+        private void disableSignDisplay()
+        {
+            Panel_Sign signControls = getSignControls();
+            resetSaveCondition();
+            signControls.groupBoxSupport.Enabled = false;
+            signControls.groupBoxSign.Enabled = false;
+            signControls.toolStrip.Enabled = false;
+        }
+
+        private void resetSaveCondition()
+        {
+            UnsavedChanges = false;
+            Panel_Sign signControls = getSignControls();
+            
+            signControls.toolStripButtonSave.Enabled = false;
+            signControls.toolStripButtonSave.BackColor = default(Color);
         }
     }
 }

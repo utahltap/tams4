@@ -113,6 +113,16 @@ namespace tams4a.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap broke {
+            get {
+                object obj = ResourceManager.GetObject("broke", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap calendar {
             get {
                 object obj = ResourceManager.GetObject("calendar", resourceCulture);
@@ -203,6 +213,16 @@ namespace tams4a.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fault {
+            get {
+                object obj = ResourceManager.GetObject("fault", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap find {
             get {
                 object obj = ResourceManager.GetObject("find", resourceCulture);
@@ -216,6 +236,16 @@ namespace tams4a.Properties {
         internal static System.Drawing.Bitmap go {
             get {
                 object obj = ResourceManager.GetObject("go", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap highway {
+            get {
+                object obj = ResourceManager.GetObject("highway", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -246,6 +276,16 @@ namespace tams4a.Properties {
         internal static System.Drawing.Bitmap layout {
             get {
                 object obj = ResourceManager.GetObject("layout", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap locational {
+            get {
+                object obj = ResourceManager.GetObject("locational", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -379,6 +419,56 @@ namespace tams4a.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap rail {
+            get {
+                object obj = ResourceManager.GetObject("rail", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap recreation {
+            get {
+                object obj = ResourceManager.GetObject("recreation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap regulatory_bw {
+            get {
+                object obj = ResourceManager.GetObject("regulatory_bw", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap regulatory_pedestrian {
+            get {
+                object obj = ResourceManager.GetObject("regulatory_pedestrian", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap regulatory_rw {
+            get {
+                object obj = ResourceManager.GetObject("regulatory_rw", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap report1 {
             get {
                 object obj = ResourceManager.GetObject("report1", resourceCulture);
@@ -409,6 +499,26 @@ namespace tams4a.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap school_pedestrian {
+            get {
+                object obj = ResourceManager.GetObject("school_pedestrian", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap service {
+            get {
+                object obj = ResourceManager.GetObject("service", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap spalling {
             get {
                 object obj = ResourceManager.GetObject("spalling", resourceCulture);
@@ -432,6 +542,26 @@ namespace tams4a.Properties {
         internal static System.Drawing.Bitmap transverse {
             get {
                 object obj = ResourceManager.GetObject("transverse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap warning {
+            get {
+                object obj = ResourceManager.GetObject("warning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap worker {
+            get {
+                object obj = ResourceManager.GetObject("worker", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

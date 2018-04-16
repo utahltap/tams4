@@ -63,10 +63,11 @@ namespace tams4a
             ToolStripMenuItem[] lcs = { importRoadsToolStripMenuItem, generalReportToolStripMenuItem, roadsWithPotholesToolStripMenuItem, budgetToolStripMenuItem };
             ToolStripMenuItem[] lcsn = { };
             ModuleRoads road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
-            //ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
-            Project.addModule(road, "road", tabControlControls);
-            //Project.addModule(sign, "sign", tabControlControls);
-            road.load();
+            ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
+            Project.addModule(road, "Roads", tabControlControls);
+            Project.addModule(sign, "Signs", tabControlControls);
+
+            Project.selectModule("Roads");
 
             toolStripStatusLabel1.Text = Project.projectFilePath;
             toolStripStatusLabel2.Visible = false;
@@ -244,11 +245,6 @@ namespace tams4a
                 return;
             }
             Project.mapSelectionChanged(sender, e);
-        }
-        
-        private void tabControlControls_Selected(object sender, TabControlEventArgs e)
-        {
-            
         }
 
         // settings dialog
@@ -432,6 +428,11 @@ namespace tams4a
             {
                 Program.Close();
             }
+        }
+
+        private void tabControlControls_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Project.selectModule(tabControlControls.SelectedTab.Text);
         }
     }
 }

@@ -558,6 +558,7 @@
     </Content>
     <None Include="Resources\blank.png" />
     <None Include="Resources\blocking.jpg" />
+    <None Include="Resources\broke.png" />
     <Content Include="Resources\Distresses\blank.png" />
     <Content Include="Resources\Distresses\blocking.jpg" />
     <Content Include="Resources\Distresses\conlong.png" />
@@ -590,7 +591,19 @@
     <None Include="Resources\spalling.bmp" />
     <None Include="Resources\spalling.jpg" />
     <None Include="Resources\MUTCD.txt" />
+    <None Include="Resources\fault.png" />
+    <None Include="Resources\highway.png" />
+    <None Include="Resources\locational.png" />
+    <None Include="Resources\rail.png" />
+    <None Include="Resources\recreation.png" />
+    <None Include="Resources\regulatory_bw.png" />
+    <None Include="Resources\regulatory_pedestrian.png" />
+    <None Include="Resources\regulatory_rw.png" />
+    <None Include="Resources\school_pedestrian.png" />
+    <None Include="Resources\service.png" />
     <Content Include="Resources\spalling.png" />
+    <None Include="Resources\warning.png" />
+    <None Include="Resources\worker.png" />
     <Content Include="Resources\zoom_select.png" />
     <None Include="Resources\zoom_select1.png" />
     <Content Include="x64\SQLite.Interop.dll">

@@ -33,6 +33,7 @@
             this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonSurveyDate = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonNotes = new System.Windows.Forms.ToolStripButton();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -85,7 +86,6 @@
             this.comboBoxSheeting = new System.Windows.Forms.ComboBox();
             this.labelSheeting = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
-            this.toolStripButtonNotes = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
@@ -144,6 +144,16 @@
             this.toolStripButtonSurveyDate.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonSurveyDate.Text = "Survey Date";
             this.toolStripButtonSurveyDate.ToolTipText = "Select Survey Date";
+            // 
+            // toolStripButtonNotes
+            // 
+            this.toolStripButtonNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonNotes.Image = global::tams4a.Properties.Resources.notes;
+            this.toolStripButtonNotes.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonNotes.Name = "toolStripButtonNotes";
+            this.toolStripButtonNotes.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonNotes.Text = "Notes";
+            this.toolStripButtonNotes.ToolTipText = "Add a Note";
             // 
             // groupBoxSupport
             // 
@@ -740,16 +750,6 @@
             this.labelType.TabIndex = 0;
             this.labelType.Text = "MUTCD code";
             // 
-            // toolStripButtonNotes
-            // 
-            this.toolStripButtonNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonNotes.Image = global::tams4a.Properties.Resources.notes;
-            this.toolStripButtonNotes.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonNotes.Name = "toolStripButtonNotes";
-            this.toolStripButtonNotes.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonNotes.Text = "Notes";
-            this.toolStripButtonNotes.ToolTipText = "Add a Note";
-            // 
             // Panel_Sign
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -777,14 +777,10 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ToolStrip toolStrip;
         public System.Windows.Forms.ToolStripButton toolStripButtonCancel;
         public System.Windows.Forms.ToolStripButton toolStripButtonSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButtonSurveyDate;
-        private System.Windows.Forms.GroupBox groupBoxSupport;
-        private System.Windows.Forms.GroupBox groupBoxSign;
         public System.Windows.Forms.Label labelSurveyDate;
         private System.Windows.Forms.Label labelAddress;
         private System.Windows.Forms.Label labelMaterial;
@@ -836,5 +832,8 @@
         private System.Windows.Forms.Label labelDescription;
         public System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripButton toolStripButtonNotes;
+        public System.Windows.Forms.ToolStrip toolStrip;
+        public System.Windows.Forms.GroupBox groupBoxSupport;
+        public System.Windows.Forms.GroupBox groupBoxSign;
     }
 }
