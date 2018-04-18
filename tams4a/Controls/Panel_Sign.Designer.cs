@@ -32,7 +32,9 @@
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonSurveyDate = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonSurveyDate = new System.Windows.Forms.ToolStripDropDownButton();
+            this.setTodayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setOtherDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonNotes = new System.Windows.Forms.ToolStripButton();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -118,7 +120,7 @@
             this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSave.Name = "toolStripButtonSave";
             this.toolStripButtonSave.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonSave.Text = "toolStripButtonSave";
+            this.toolStripButtonSave.Text = "Save";
             this.toolStripButtonSave.ToolTipText = "Save Sign Data";
             // 
             // toolStripButtonCancel
@@ -138,12 +140,27 @@
             // toolStripButtonSurveyDate
             // 
             this.toolStripButtonSurveyDate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSurveyDate.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setTodayToolStripMenuItem,
+            this.setOtherDateToolStripMenuItem});
             this.toolStripButtonSurveyDate.Image = global::tams4a.Properties.Resources.calendar;
             this.toolStripButtonSurveyDate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSurveyDate.Name = "toolStripButtonSurveyDate";
-            this.toolStripButtonSurveyDate.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonSurveyDate.Size = new System.Drawing.Size(29, 22);
             this.toolStripButtonSurveyDate.Text = "Survey Date";
             this.toolStripButtonSurveyDate.ToolTipText = "Select Survey Date";
+            // 
+            // setTodayToolStripMenuItem
+            // 
+            this.setTodayToolStripMenuItem.Name = "setTodayToolStripMenuItem";
+            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.setTodayToolStripMenuItem.Text = "Set Today";
+            // 
+            // setOtherDateToolStripMenuItem
+            // 
+            this.setOtherDateToolStripMenuItem.Name = "setOtherDateToolStripMenuItem";
+            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.setOtherDateToolStripMenuItem.Text = "Set Other Date";
             // 
             // toolStripButtonNotes
             // 
@@ -532,10 +549,8 @@
             this.comboBoxReflectivity.FormattingEnabled = true;
             this.comboBoxReflectivity.Items.AddRange(new object[] {
             "",
-            "Bright",
-            "Visible",
-            "Dim",
-            "Dark"});
+            "pass",
+            "fail"});
             this.comboBoxReflectivity.Location = new System.Drawing.Point(86, 227);
             this.comboBoxReflectivity.Name = "comboBoxReflectivity";
             this.comboBoxReflectivity.Size = new System.Drawing.Size(112, 21);
@@ -780,9 +795,7 @@
         public System.Windows.Forms.ToolStripButton toolStripButtonCancel;
         public System.Windows.Forms.ToolStripButton toolStripButtonSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSurveyDate;
         public System.Windows.Forms.Label labelSurveyDate;
-        private System.Windows.Forms.Label labelAddress;
         private System.Windows.Forms.Label labelMaterial;
         private System.Windows.Forms.Label labelCondition;
         private System.Windows.Forms.Label labelOffset;
@@ -835,5 +848,9 @@
         public System.Windows.Forms.ToolStrip toolStrip;
         public System.Windows.Forms.GroupBox groupBoxSupport;
         public System.Windows.Forms.GroupBox groupBoxSign;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripButtonSurveyDate;
+        public System.Windows.Forms.ToolStripMenuItem setOtherDateToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem setTodayToolStripMenuItem;
+        public System.Windows.Forms.Label labelAddress;
     }
 }

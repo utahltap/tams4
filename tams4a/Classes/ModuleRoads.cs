@@ -20,10 +20,8 @@ namespace tams4a.Classes
         private DataTable surfaceTypes;
         private DataTable roadTypes;
         private DataTable surfaceDistresses;
-        private DateTime RecordingDate;
         private string notes;
         private List<string> tamsids;
-        private FormSurveyDate dateForm;
         // used to override the base class SelectionSql
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
                     FROM
@@ -43,7 +41,7 @@ namespace tams4a.Classes
         public ModuleRoads(TamsProject theProject, TabPage controlPage, ToolStripMenuItem[] boundButtons) : base(theProject, controlPage, boundButtons, RoadSelectionSql)
         {
             ModuleName = "road";
-            RecordingDate = DateTime.Now;   // default value
+            surveyDate = DateTime.Now;   // default value
             notes = "";
             boundButtons[2].Click += potholeReport;
             boundButtons[1].Click += generalReport;
@@ -125,6 +123,7 @@ namespace tams4a.Classes
             injectSettings();       // add these new settings to the project settings.
 
             if (!base.openFile(thePath, type)) { return false; }
+            Project.map.Layers.Move(Layer, 0);
 
             // don't need to remove the old event handler because it was registered in this class
             ControlsPage.Controls.Remove(ControlsPage.Controls["ROADADD"]);
@@ -132,12 +131,11 @@ namespace tams4a.Classes
             roadPanel.Name = "ROADCONTROLS";
             roadPanel.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(roadPanel);
-            disableRoadDisplay();   // disabled until something is selected
 
             // set event handlers
             #region eventhandlers
             roadPanel.buttonSave.Click += saveHandler;
-            roadPanel.buttonReset.Click += selectionChanged;    // just pretend we re-selected it
+            roadPanel.buttonReset.Click += selectionChanged;
             roadPanel.pictureBoxPhoto.Click += clickPhotoBox;
             roadPanel.toolStripButtonAnalysis.Click += reportSelected;
 
@@ -196,12 +194,9 @@ namespace tams4a.Classes
             applyColorizedProperties();
             setSymbolizer();
             disableRoadDisplay();
+            resetRoadDisplay();
+            resetSaveCondition();
             return true;
-        }
-
-        private void setDate(object sender, EventArgs args)
-        {
-            RecordingDate = dateForm.getDate();
         }
 
         /// <summary>
@@ -227,16 +222,14 @@ namespace tams4a.Classes
 
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
-            Dictionary<string, string> values = new Dictionary<string, string>();
             
-            // If they clicked on a blank spot, we're done.
             if (shpSelection.Count <= 0) {
                 disableRoadDisplay();
                 return;
             }
 
-            enableControls();   // must have something selected, so enable controls
-            values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
+            enableControls();
+            Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
             
             updateRoadDisplay(values);
 
@@ -249,7 +242,6 @@ namespace tams4a.Classes
             }
 
             Panel_Road roadControls = getRoadControls();
-            //Control roadNameLabel = ControlsPage.Controls.Find("labelName", true).FirstOrDefault() as Control;
             if (shpSelection.Count > 1)  
             {
                 // Change color to indicate multiple selection
@@ -258,8 +250,6 @@ namespace tams4a.Classes
                 roadControls.labelName.Text = "Multiple";
                 roadControls.textBoxRoadName.Enabled = false;
                 roadControls.textBoxRoadName.Text = "";
-
-                // TODO: Set tooltip
             }
             
 
@@ -297,7 +287,7 @@ namespace tams4a.Classes
             Panel_Road roadControls = getRoadControls();
 
             roadControls.textBoxRoadName.Text = Util.DictionaryItemString(values, "name");
-            roadControls.labelSurvDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
+            roadControls.labelSurveyDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
             roadControls.numericUpDownSpeedLimit.Value = Util.ToInt(Util.DictionaryItemString(values, "speed_limit"));
             roadControls.numericUpDownLanes.Value = Util.ToInt(Util.DictionaryItemString(values, "lanes"));
             roadControls.textBoxFrom.Text = Util.DictionaryItemString(values, "from_address");
@@ -457,7 +447,7 @@ namespace tams4a.Classes
             Panel_Road roadControls = getRoadControls();
 
             roadControls.textBoxRoadName.Text = "";
-            roadControls.labelSurvDate.Text = "";
+            roadControls.labelSurveyDate.Text = "";
             roadControls.numericUpDownSpeedLimit.Value = 25;
             roadControls.numericUpDownLanes.Value = 2;
             roadControls.textBoxFrom.Text = "";
@@ -552,7 +542,7 @@ namespace tams4a.Classes
             Panel_Road roadControls = getRoadControls();
             Dictionary<string, string> values = new Dictionary<string, string>();
             values["name"] = roadControls.textBoxRoadName.Text;
-            values["survey_date"] = Util.SortableDate(RecordingDate);
+            values["survey_date"] = Util.SortableDate(surveyDate);
             values["speed_limit"] = roadControls.numericUpDownSpeedLimit.Value != 0? roadControls.numericUpDownSpeedLimit.Value.ToString(): "";
             values["lanes"] = roadControls.numericUpDownLanes.Value != 0? roadControls.numericUpDownLanes.Value.ToString(): "";
             values["width"] = roadControls.textBoxWidth.Text;
@@ -738,7 +728,7 @@ namespace tams4a.Classes
         }
 
 
-        private void selectRecordDate(object sender, EventArgs e)
+        protected void selectRecordDate(object sender, EventArgs e)
         {
             dateForm.Show();
             Panel_Road roadControls = getRoadControls();
@@ -746,15 +736,17 @@ namespace tams4a.Classes
             roadControls.setOtherDateToolStripMenuItem.Checked = true;
         }
 
-
-        private void resetRecordDate(object sender, EventArgs e)
+        protected void resetRecordDate(object sender, EventArgs e)
         {
-            RecordingDate = DateTime.Now;
+            surveyDate = DateTime.Now;
             Panel_Road roadControls = getRoadControls();
             roadControls.setTodayToolStripMenuItem.Checked = true;
             roadControls.setOtherDateToolStripMenuItem.Checked = false;
         }
 
+        /// <summary>
+        /// Sets the data properties used to colour surveyed roads on the map. Roads are coloured based RSL
+        /// </summary>
         private void applyColorizedProperties()
         {
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
@@ -763,6 +755,7 @@ namespace tams4a.Classes
             DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             selectionTable.DefaultView.Sort = tamsidcolumn + " asc";
+            selectionTable = selectionTable.DefaultView.ToTable();
             if (!selectionTable.Columns.Contains("TAMSROADRSL"))
             {
                 selectionTable.Columns.Add("TAMSROADRSL");
@@ -772,7 +765,6 @@ namespace tams4a.Classes
                 selectionTable.Columns.Add("TAMSTREATMENT");
             }
             string roadSQL = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
-            selectionTable = selectionTable.DefaultView.ToTable();
             DataTable tamsTable = Database.GetDataByQuery(Project.conn, roadSQL);
             tamsTable.DefaultView.Sort = "TAMSID asc";
             tamsTable = tamsTable.DefaultView.ToTable();
@@ -822,7 +814,7 @@ namespace tams4a.Classes
             
             int[] rslfloor = {0, 1, 5,  9, 13, 17 };
             int[] rslceil = { 0, 4, 8, 12, 16, 20 };
-            int[] r = { 255, 240, 250,  90,  5,  35 };
+            int[] r = { 255, 240, 250,  100,  5,  35 };
             int[] g = {  5,  130, 250, 200, 255, 100 };
             int[] b = {  5,   5,   5,   30, 10, 255 };
             

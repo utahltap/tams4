@@ -513,6 +513,9 @@ CREATE TABLE mutcd_lookup (mutcd_code TEXT PRIMARY KEY, description TEXT, sign_t
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_5_immute
+            #region db_update_6_immute
+
+            #endregion db_update_6_immute
             return true;
         }
 

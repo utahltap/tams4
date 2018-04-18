@@ -31,16 +31,13 @@ namespace tams4a
             InitializeComponent();
             setEventHandlers();
             InitializeProject();
-            createWebLayer();
+            //createWebLayer();
         }
 
         private void InitializeProject()
         {
             Project = new TamsProject(uxMap);
             tabControlControls.TabPages.Clear();
-
-            
-            
 
             if (Program.cmdArgs.Length > 0)
             {

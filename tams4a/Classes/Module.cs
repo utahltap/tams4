@@ -24,6 +24,8 @@ namespace tams4a.Classes
         public String IdText { get; protected set; }
         public Boolean UnsavedChanges { get; protected set; }
         protected List<Dictionary<String, String>> selectionValues;
+        protected DateTime surveyDate;
+        protected FormSurveyDate dateForm;
         // button to enable after shp file is opened
         private ToolStripMenuItem[] linkedComponents;
 
@@ -469,13 +471,6 @@ namespace tams4a.Classes
                 {
                     consolidateDictionary(resultsTable, ref returnDictionary);
                 }
-                /*foreach (KeyValuePair<String, String> pair in shpValuesKeyed)
-                {
-                    if (!returnDictionary.ContainsKey(pair.Key) && (pair.Value != null) )
-                    {
-                        returnDictionary[pair.Key] = pair.Value;
-                    }
-                }*/
             }
             catch (Exception e)
             {
@@ -535,6 +530,16 @@ namespace tams4a.Classes
             {
                 Layer.SelectionEnabled = true;
             }
+        }
+
+        /// <summary>
+        /// Sets the survey date for the module to the current selected date in the dateform
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        protected void setDate(object sender, EventArgs args)
+        {
+            surveyDate = dateForm.getDate();
         }
     }
 }

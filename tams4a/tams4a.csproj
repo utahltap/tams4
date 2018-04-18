@@ -592,6 +592,7 @@
     <None Include="Resources\spalling.jpg" />
     <None Include="Resources\MUTCD.txt" />
     <None Include="Resources\fault.png" />
+    <None Include="Resources\empty_post.png" />
     <None Include="Resources\highway.png" />
     <None Include="Resources\locational.png" />
     <None Include="Resources\rail.png" />
