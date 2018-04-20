@@ -384,11 +384,6 @@ namespace tams4a.Classes
         {
            Panel_Road roadControls = getRoadControls();
 
-            // TODO: don't change anything if we already have it set
-            // have to change the order here.
-            // was causing problems due to order
-            //if (roadControls.comboBoxSurface.Text == surface) { return; }
-
             // hide all controls
             foreach (Control control in roadControls.groupBoxDistress.Controls)
             {
@@ -538,7 +533,7 @@ namespace tams4a.Classes
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
-
+            
             Panel_Road roadControls = getRoadControls();
             Dictionary<string, string> values = new Dictionary<string, string>();
             values["name"] = roadControls.textBoxRoadName.Text;
@@ -549,14 +544,28 @@ namespace tams4a.Classes
             values["length"] = roadControls.textBoxLength.Text;
             values["from_address"] = roadControls.textBoxFrom.Text;
             values["to_address"] = roadControls.textBoxTo.Text;
-            values["type"] = roadControls.comboBoxType.Text;
             values["surface"] = roadControls.comboBoxSurface.Text;
             values["photo"] = roadControls.textBoxPhotoFile.Text;
+
+            bool emptyFields = false;
+            foreach (string value in values.Values)
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    emptyFields = true;
+                }
+            }
             values["notes"] = notes;
+            values["type"] = roadControls.comboBoxType.Text;
 
             if (!string.IsNullOrWhiteSpace(roadControls.textBoxPhotoFile.Text))
             {
                 Properties.Settings.Default.lastPhoto = roadControls.textBoxPhotoFile.Text;
+            }
+
+            if (emptyFields && selectionValues.Count <= 1)
+            {
+                MessageBox.Show("Some properties have not been set for this road. The analysis and report may be incomplete as a result.", "Warning: Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             // Distress values                                                                                          //  Asphalt         Unpaved         Concrete
@@ -583,7 +592,7 @@ namespace tams4a.Classes
                     row["TAMSTREATMENT"] = values["suggested_treatment"];
                 }
             }
-
+            
             for (int i = 0; i < tamsids.Count; i++)
             {
                 values["TAMSID"] = tamsids[i];
@@ -1282,6 +1291,16 @@ namespace tams4a.Classes
             {
                 selectionLayer.SelectByAttribute(tamsidcolumn + " = " + id);
             }
+        }
+
+        protected override void clearControlPanel()
+        {
+            ControlsPage.Controls.Remove(ControlsPage.Controls["ROADCONTROLS"]);
+            Panel_Module_OpenShp signAdd = new Panel_Module_OpenShp("Road");
+            signAdd.Name = "ROADADD";
+            signAdd.SetHandler(new EventHandler(openFileHandler));
+            signAdd.Dock = DockStyle.Fill;
+            ControlsPage.Controls.Add(signAdd);
         }
 
     }

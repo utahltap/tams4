@@ -330,12 +330,6 @@
     <Compile Include="Forms\FormCustomMessage.Designer.cs">
       <DependentUpon>FormCustomMessage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormDateSelect.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormDateSelect.Designer.cs">
-      <DependentUpon>FormDateSelect.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\FormFutureTreatment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -439,9 +433,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCustomMessage.resx">
       <DependentUpon>FormCustomMessage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormDateSelect.resx">
-      <DependentUpon>FormDateSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormFutureTreatment.resx">
       <DependentUpon>FormFutureTreatment.cs</DependentUpon>
@@ -602,6 +593,7 @@
     <None Include="Resources\regulatory_rw.png" />
     <None Include="Resources\school_pedestrian.png" />
     <None Include="Resources\service.png" />
+    <None Include="Resources\jointseal.png" />
     <Content Include="Resources\spalling.png" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\worker.png" />

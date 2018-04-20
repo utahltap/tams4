@@ -189,7 +189,18 @@ namespace tams4a.Classes
             if (openDialogResult != DialogResult.OK) { return false; }
 
             // now try to open the file
-            if (!openFile(openDialog.FileName, type)) { return false; }
+            try
+            {
+                openFile(openDialog.FileName, type);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("An error occured while trying to open the shape file. Please ensure the file is of the correct type for the module used.");
+                Log.Error("Could not open shape file. " + Environment.NewLine + e.ToString());
+                close();
+                return false;
+            }
+
 
             // @TO-DO load data from shpfile to db
             if (Properties.Settings.Default.newProject)
@@ -289,7 +300,7 @@ namespace tams4a.Classes
         /// <returns>false if file path is null or empty.</returns>
         public Boolean isOpen()
         {
-            if (String.IsNullOrEmpty(Filepath))
+            if (string.IsNullOrEmpty(Filepath))
             {
                 return false;
             }
@@ -360,10 +371,18 @@ namespace tams4a.Classes
             Project.map.Layers.Remove(Layer);
             Filepath = "";
             Layer = null;
-
-            // TODO: Should also remove settings that were added at open
+            foreach (ProjectSetting setting in ModuleSettings)
+            {
+                setting.Value = "";
+                Project.settings.SetSetting(setting);
+            }
+            clearControlPanel();
         }
 
+        protected virtual void clearControlPanel()
+        {
+
+        }
 
         // modifies returnDictionary to have any new values included in DataTable data
         // consolidates data 

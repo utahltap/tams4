@@ -553,7 +553,13 @@ CREATE TABLE mutcd_lookup (mutcd_code TEXT PRIMARY KEY, description TEXT, sign_t
             throw new Exception("Could not open connection.");
         }
 
-        // issues REPLACE command for table with keyVals<column, value>
+        /// <summary>
+        /// Issues the replace command to the database
+        /// </summary>
+        /// <param name="conn">The database connection</param>
+        /// <param name="keyVals">the key value pairs</param>
+        /// <param name="table">the table to insert or replace into</param>
+        /// <returns></returns>
         public static Boolean ReplaceRow(SQLiteConnection conn, Dictionary<string, string> keyVals, string table)
         {
             if (!IsOpen(conn)) { throw new Exception("Database not connected"); }
@@ -721,8 +727,14 @@ CREATE TABLE mutcd_lookup (mutcd_code TEXT PRIMARY KEY, description TEXT, sign_t
             }
         }
         
-        // attempts to get values with a simple query
-        // WHERE keyColumn = key 
+        /// <summary>
+        /// Attempts to get data from the datatable given specific key.
+        /// </summary>
+        /// <param name="conn">The database connection</param>
+        /// <param name="table">the table to search</param>
+        /// <param name="keyColumn">the collumn to check</param>
+        /// <param name="key">the key to search for</param>
+        /// <returns></returns>
         public static DataTable GetDataByKey(SQLiteConnection conn, string table, string keyColumn, string key)
         {
             if (!IsOpen(conn)) { throw new Exception("Database not connected"); }

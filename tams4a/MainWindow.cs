@@ -71,7 +71,7 @@ namespace tams4a
             toolStripProgressBar1.Visible = false;
 
             CurrentMode = uxMap.FunctionMode;
-            maxWidth = (int)uxMap.ViewExtents.Width;
+            maxWidth = (int)uxMap.ViewExtents.Width + 10;
         }
 
         private void createWebLayer()
@@ -128,7 +128,7 @@ namespace tams4a
         private void toolStripZoomExt_Click(object sender, EventArgs e)
         {
             uxMap.ZoomToMaxExtent();
-            maxWidth = (int)uxMap.ViewExtents.Width;
+            maxWidth = (int)uxMap.ViewExtents.Width + 10;
             UpdateZoomButtons(sender, e);
         }
 

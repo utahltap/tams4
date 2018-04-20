@@ -30,7 +30,7 @@
         {
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelNote = new System.Windows.Forms.Label();
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -51,17 +51,17 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Survey Date:";
             // 
-            // label2
+            // labelNote
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 42);
-            this.label2.MaximumSize = new System.Drawing.Size(280, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(274, 26);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "NOTE:  This date will automatically be used for future survey entries until anoth" +
+            this.labelNote.AutoSize = true;
+            this.labelNote.Location = new System.Drawing.Point(14, 42);
+            this.labelNote.MaximumSize = new System.Drawing.Size(280, 0);
+            this.labelNote.Name = "labelNote";
+            this.labelNote.Size = new System.Drawing.Size(274, 26);
+            this.labelNote.TabIndex = 2;
+            this.labelNote.Text = "NOTE:  This date will automatically be used for future survey entries until anoth" +
     "er date (or \"Today\") is selected.";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelNote.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // buttonConfirm
             // 
@@ -80,7 +80,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(302, 127);
             this.Controls.Add(this.buttonConfirm);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelNote);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateTimePicker1);
             this.MaximumSize = new System.Drawing.Size(318, 166);
@@ -96,7 +96,7 @@
 
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         public System.Windows.Forms.Button buttonConfirm;
+        private System.Windows.Forms.Label labelNote;
     }
 }

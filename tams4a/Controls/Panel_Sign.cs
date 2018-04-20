@@ -21,6 +21,7 @@ namespace tams4a.Controls
             numericUpDownOffset.ValueChanged += moduleValueChanged;
             numericUpDownHeight.ValueChanged += moduleValueChanged;
             textBoxType.TextChanged += moduleValueChanged;
+            textBoxDescription.TextChanged += moduleValueChanged;
             comboBoxSheeting.SelectedValueChanged += moduleValueChanged;
             comboBoxBacking.SelectedValueChanged += moduleValueChanged;
             numericUpDownHeigthSign.ValueChanged += moduleValueChanged;

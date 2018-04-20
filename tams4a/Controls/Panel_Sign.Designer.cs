@@ -54,7 +54,7 @@
             this.labelAddress = new System.Windows.Forms.Label();
             this.labelSurveyDate = new System.Windows.Forms.Label();
             this.groupBoxSign = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonInstallDate = new System.Windows.Forms.Button();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.labelDescription = new System.Windows.Forms.Label();
             this.pictureBoxPhoto = new System.Windows.Forms.PictureBox();
@@ -116,6 +116,7 @@
             // toolStripButtonSave
             // 
             this.toolStripButtonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSave.Enabled = false;
             this.toolStripButtonSave.Image = global::tams4a.Properties.Resources.save;
             this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSave.Name = "toolStripButtonSave";
@@ -126,6 +127,7 @@
             // toolStripButtonCancel
             // 
             this.toolStripButtonCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonCancel.Enabled = false;
             this.toolStripButtonCancel.Image = global::tams4a.Properties.Resources.cancel;
             this.toolStripButtonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonCancel.Name = "toolStripButtonCancel";
@@ -376,7 +378,7 @@
             // 
             // groupBoxSign
             // 
-            this.groupBoxSign.Controls.Add(this.button1);
+            this.groupBoxSign.Controls.Add(this.buttonInstallDate);
             this.groupBoxSign.Controls.Add(this.textBoxDescription);
             this.groupBoxSign.Controls.Add(this.labelDescription);
             this.groupBoxSign.Controls.Add(this.pictureBoxPhoto);
@@ -418,14 +420,14 @@
             this.groupBoxSign.TabStop = false;
             this.groupBoxSign.Text = "Sign";
             // 
-            // button1
+            // buttonInstallDate
             // 
-            this.button1.Image = global::tams4a.Properties.Resources.calendar;
-            this.button1.Location = new System.Drawing.Point(86, 182);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(20, 20);
-            this.button1.TabIndex = 46;
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonInstallDate.Image = global::tams4a.Properties.Resources.calendar;
+            this.buttonInstallDate.Location = new System.Drawing.Point(86, 182);
+            this.buttonInstallDate.Name = "buttonInstallDate";
+            this.buttonInstallDate.Size = new System.Drawing.Size(20, 20);
+            this.buttonInstallDate.TabIndex = 46;
+            this.buttonInstallDate.UseVisualStyleBackColor = true;
             // 
             // textBoxDescription
             // 
@@ -592,6 +594,7 @@
             // 
             // textBoxInstall
             // 
+            this.textBoxInstall.Enabled = false;
             this.textBoxInstall.Location = new System.Drawing.Point(108, 182);
             this.textBoxInstall.Name = "textBoxInstall";
             this.textBoxInstall.Size = new System.Drawing.Size(90, 20);
@@ -637,10 +640,10 @@
             // 
             this.numericUpDownMountHeight.DecimalPlaces = 1;
             this.numericUpDownMountHeight.Increment = new decimal(new int[] {
-            5,
+            25,
             0,
             0,
-            65536});
+            131072});
             this.numericUpDownMountHeight.Location = new System.Drawing.Point(86, 159);
             this.numericUpDownMountHeight.Name = "numericUpDownMountHeight";
             this.numericUpDownMountHeight.Size = new System.Drawing.Size(83, 20);
@@ -800,7 +803,6 @@
         private System.Windows.Forms.Label labelCondition;
         private System.Windows.Forms.Label labelOffset;
         public System.Windows.Forms.Label labelSigns;
-        private System.Windows.Forms.Button buttonAdd;
         public System.Windows.Forms.ComboBox comboBoxSigns;
         public System.Windows.Forms.NumericUpDown numericUpDownOffset;
         public System.Windows.Forms.ComboBox comboBoxCondition;
@@ -843,7 +845,7 @@
         public System.Windows.Forms.TextBox textBoxPhotoFile;
         public System.Windows.Forms.TextBox textBoxDescription;
         private System.Windows.Forms.Label labelDescription;
-        public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.Button buttonInstallDate;
         private System.Windows.Forms.ToolStripButton toolStripButtonNotes;
         public System.Windows.Forms.ToolStrip toolStrip;
         public System.Windows.Forms.GroupBox groupBoxSupport;
@@ -852,5 +854,6 @@
         public System.Windows.Forms.ToolStripMenuItem setOtherDateToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem setTodayToolStripMenuItem;
         public System.Windows.Forms.Label labelAddress;
+        public System.Windows.Forms.Button buttonAdd;
     }
 }

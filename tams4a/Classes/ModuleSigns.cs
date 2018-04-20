@@ -16,9 +16,13 @@ namespace tams4a.Classes
 
         
         private string notes;
+        private string postCat;
         private int maxSuppID;
         private int maxSignID;
         private DataTable signsOnPost;
+        private List<Dictionary<string, string>> signChanges;
+        private Dictionary<string, int> catRank;
+        private bool suppressChanges = false;
 
         private const string SignSelectionSql = @"SELECT * from sign_support WHERE support_id IN ([[IDLIST]]);";
 
@@ -52,6 +56,22 @@ namespace tams4a.Classes
 
             Project.map.ResetBuffer();
             Project.map.Update();
+
+            catRank = new Dictionary<string, int>()
+            {
+                { "regulatory_rw", 1 },
+                { "school_pedestrian", 2 },
+                { "rail", 3 },
+                { "regulatory_bw", 4 },
+                { "warning", 5 },
+                { "regulatory_pedestrian", 6 },
+                { "worker", 7 },
+                { "highway", 8 },
+                { "locational", 9 },
+                { "service", 10 },
+                { "recreation", 11 },
+                { "empty_post", 12 }
+            };
         }
 
         public override bool openFile(string thePath = "", string type = "point")
@@ -85,10 +105,26 @@ namespace tams4a.Classes
             ControlsPage.Controls.Add(signPanel);
 
             #region eventhandlers
-
             signPanel.setChangedHandler(controlChanged);
-            signPanel.toolStripButtonSave.Click += selectionChanged;
+            signPanel.toolStripButtonSave.Click += saveHandler;
+            signPanel.toolStripButtonCancel.Click += selectionChanged;
+            signPanel.buttonInstallDate.Click += chooseInstallDate;
 
+            signPanel.comboBoxSigns.SelectionChangeCommitted += signChangeHandler;
+            signPanel.textBoxType.TextChanged += signValueChanged;
+            signPanel.textBoxDescription.TextChanged += signValueChanged;
+            signPanel.comboBoxSheeting.SelectionChangeCommitted += signValueChanged;
+            signPanel.comboBoxBacking.SelectionChangeCommitted += signValueChanged;
+            signPanel.numericUpDownHeigthSign.ValueChanged += signValueChanged;
+            signPanel.numericUpDownWidth.ValueChanged += signValueChanged;
+            signPanel.numericUpDownMountHeight.ValueChanged += signValueChanged;
+            signPanel.textBoxInstall.TextChanged += signValueChanged;
+            signPanel.textBoxText.TextChanged += signValueChanged;
+            signPanel.comboBoxReflectivity.SelectionChangeCommitted += signValueChanged;
+            signPanel.comboBoxConditionSign.SelectionChangeCommitted += signValueChanged;
+            signPanel.comboBoxObstruction.SelectionChangeCommitted += signValueChanged;
+            signPanel.comboBoxDirection.SelectionChangeCommitted += signValueChanged;
+            signPanel.textBoxPhotoFile.TextChanged += signValueChanged;
             #endregion eventhandlers
 
             DataTable supportMaterials = Database.GetDataByQuery(Project.conn, "SELECT * FROM support_materials");
@@ -115,13 +151,35 @@ namespace tams4a.Classes
             applySymbolizedProperty();
             setSymbolizer();
             disableSignDisplay();
+            resetSignDisplay();
+            resetSaveCondition();
 
             return true;
         }
 
+        private void chooseInstallDate(object sender, EventArgs e)
+        {
+            Forms.FormSurveyDate df = new Forms.FormSurveyDate();
+            df.ShowDialog();
+            df.Text = "Select Install Date";
+            df.setText("Select the date when this sign was installed.");
+            getSignControls().textBoxInstall.Text = Util.SortableDate(df.getDate());
+            df.Close();
+        }
+
         protected override void controlChanged(object sender, EventArgs e)
         {
+            if (suppressChanges)
+            {
+                return;
+            }
             Panel_Sign signPanel = getSignControls();
+
+            signPanel.toolStripButtonSave.Enabled = true;
+            signPanel.toolStripButtonSave.BackColor = Color.Red;
+            UnsavedChanges = true;
+
+            signPanel.toolStripButtonCancel.Enabled = true;
         }
 
         private Panel_Sign getSignControls()
@@ -254,7 +312,7 @@ namespace tams4a.Classes
         }
 
         /// <summary>
-        /// Disables road controls.
+        /// Disables sign controls.
         /// </summary>
         private void disableSignDisplay()
         {
@@ -296,6 +354,7 @@ namespace tams4a.Classes
 
         override public void selectionChanged(object sender, EventArgs e)
         {
+            suppressChanges = true;
             if (!isOpen()) { return; }
 
             if (UnsavedChanges)
@@ -317,16 +376,87 @@ namespace tams4a.Classes
             enableControls();
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
             updateSignDisplay(values);
-            
-            Panel_Sign signControls = getSignControls();
+            getSigns();
 
+            suppressChanges = false;
         }
 
         private void updateSignDisplay(Dictionary<string, string> values)
         {
             Panel_Sign signControls = getSignControls();
 
-            signControls.textBoxAddress.Text = values["address"];
+            signControls.textBoxAddress.Text = Util.DictionaryItemString(values, "address");
+            signControls.comboBoxMaterial.Text = Util.DictionaryItemString(values, "material");
+            signControls.labelSurveyDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
+            signControls.comboBoxCondition.Text = Util.DictionaryItemString(values, "condition");
+            signControls.numericUpDownHeight.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "height"));
+            signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "height"));
+
+            
+        }
+
+        private void getSigns()
+        {
+            Panel_Sign signControls = getSignControls();
+            signsOnPost = null;
+            if (selectionValues.Count == 1)
+            {
+                signsOnPost = Database.GetDataByQuery(Project.conn, SignListSql.Replace("[[IDLIST]]", selectionValues[0]["support_id"]));
+                signControls.comboBoxSigns.Enabled = true;
+                signControls.buttonAdd.Enabled = true;
+            }
+            else
+            {
+                signControls.comboBoxSigns.Enabled = false;
+                signControls.buttonAdd.Enabled = false;
+            }
+            if (signsOnPost != null && signsOnPost.Rows.Count > 0)
+            {
+                signControls.comboBoxSigns.DataSource = signsOnPost;
+                signControls.comboBoxSigns.DisplayMember = "description";
+                signControls.comboBoxSigns.ValueMember = "TAMSID";
+                changeSign();
+                clearSignChanges();
+            }
+        }
+
+        private void changeSign()
+        {
+            if (signsOnPost == null || signsOnPost.Rows.Count == 0)
+            {
+                return;
+            }
+            suppressChanges = true;
+            Panel_Sign signPanel = getSignControls();
+            int index = signPanel.comboBoxSigns.SelectedIndex;
+            signPanel.textBoxType.Text = signsOnPost.Rows[index]["mutcd_code"].ToString();
+            signPanel.textBoxDescription.Text = signsOnPost.Rows[index]["description"].ToString();
+            signPanel.comboBoxSheeting.Text = signsOnPost.Rows[index]["sheeting"].ToString();
+            signPanel.comboBoxBacking.Text = signsOnPost.Rows[index]["backing"].ToString();
+            signPanel.numericUpDownHeigthSign.Value = (decimal)Util.ToDouble(signsOnPost.Rows[index]["height"].ToString());
+            signPanel.numericUpDownWidth.Value = (decimal)Util.ToDouble(signsOnPost.Rows[index]["width"].ToString());
+            signPanel.numericUpDownHeigthSign.Value = (decimal)Util.ToDouble(signsOnPost.Rows[index]["mount_height"].ToString());
+            signPanel.textBoxInstall.Text = signsOnPost.Rows[index]["install_date"].ToString();
+            signPanel.textBoxText.Text = signsOnPost.Rows[index]["sign_text"].ToString();
+            signPanel.comboBoxReflectivity.Text = signsOnPost.Rows[index]["reflectivity"].ToString();
+            signPanel.comboBoxConditionSign.Text = signsOnPost.Rows[index]["condition"].ToString();
+            signPanel.comboBoxObstruction.Text = signsOnPost.Rows[index]["obstructions"].ToString();
+            signPanel.comboBoxDirection.Text = signsOnPost.Rows[index]["direction"].ToString();
+            signPanel.textBoxPhotoFile.Text = signsOnPost.Rows[index]["photo"].ToString();
+            suppressChanges = false;
+        }
+
+        private void clearSignChanges()
+        {
+            signChanges = new List<Dictionary<string, string>>();
+            for (int i = 0; i < signsOnPost.Rows.Count; i++)
+            {
+                signChanges.Add(new Dictionary<string, string>());
+                foreach (DataColumn col in signsOnPost.Columns)
+                {
+                    signChanges[i][col.ColumnName] = signsOnPost.Rows[i][col.ColumnName].ToString();
+                }
+            }
         }
 
         private void enableControls()
@@ -338,6 +468,9 @@ namespace tams4a.Classes
             signControls.groupBoxSupport.Enabled = true;
         }
 
+        /// <summary>
+        /// resests the sign control panel back to blank values.
+        /// </summary>
         private void resetSignDisplay()
         {
             Panel_Sign signControls = getSignControls();
@@ -366,6 +499,98 @@ namespace tams4a.Classes
             signControls.labelAddress.BackColor = default(Color);
             signControls.textBoxAddress.Enabled = true;
             signControls.labelAddress.Text = "Address";
+        }
+        
+        protected override void clearControlPanel()
+        {
+            ControlsPage.Controls.Remove(ControlsPage.Controls["SIGNCONTROLS"]);
+            Panel_Module_OpenShp signAdd = new Panel_Module_OpenShp("Sign");
+            signAdd.Name = "SIGNADD";
+            signAdd.SetHandler(new EventHandler(openFileHandler));
+            Button createSigns = new Button();
+            createSigns.Text = "Create Sign SHP File";
+            createSigns.Size = new System.Drawing.Size(196, 54);
+            createSigns.Location = new System.Drawing.Point(10, 74);
+            signAdd.Controls.Add(createSigns);
+            signAdd.Dock = DockStyle.Fill;
+            ControlsPage.Controls.Add(signAdd);
+        }
+
+        public void signValueChanged(object sender, EventArgs e)
+        {
+            if (suppressChanges)
+            {
+                return;
+            }
+            Panel_Sign signControls = getSignControls();
+            int index = signControls.comboBoxSigns.SelectedIndex;
+            if (index == -1)
+            {
+                return;
+            }
+            signChanges[index]["mutcd_code"] = signControls.textBoxType.Text;
+            signChanges[index]["sheeting"] = signControls.comboBoxSheeting.Text;
+            signChanges[index]["backing"] = signControls.comboBoxBacking.Text;
+            signChanges[index]["condition"] = signControls.comboBoxConditionSign.Text;
+            signChanges[index]["width"] = signControls.numericUpDownWidth.Value.ToString();
+            signChanges[index]["height"] = signControls.numericUpDownHeight.Value.ToString();
+            signChanges[index]["mount_height"] = signControls.numericUpDownMountHeight.Value.ToString();
+            signChanges[index]["sign_text"] = signControls.textBoxText.ToString();
+            signChanges[index]["survey_date"] = Util.SortableDate(surveyDate);
+            signChanges[index]["photo"] = signControls.textBoxPhotoFile.Text;
+            signChanges[index]["obstructions"] = signControls.comboBoxObstruction.Text;
+            signChanges[index]["refelectivity"] = signControls.comboBoxReflectivity.Text;
+            signChanges[index]["description"] = signControls.textBoxDescription.Text;
+            signChanges[index]["install_date"] = signControls.textBoxInstall.Text;
+            signChanges[index]["direction"] = signControls.comboBoxDirection.Text;
+            var result = Database.GetDataByQuery(Project.conn, "SELECT category FROM mutcd_lookup WHERE mutcd_code = '" + signControls.textBoxType.Text + "';");
+            signChanges[index]["category"] = result.Rows.Count > 0 ? result.Rows[0]["category"].ToString() : "empty_post";
+
+        }
+
+        public void determinePostCat(object sender, EventArgs e)
+        {
+            Panel_Sign signControls = getSignControls();
+            postCat = "empty_sign";
+            if (signsOnPost == null || signsOnPost.Rows.Count == 0)
+            {
+                return;
+            }
+            postCat = signChanges[0]["category"];
+            for (int i = 0; i < signChanges.Count; i++)
+            {
+                if (catRank[postCat] > catRank[signChanges[i]["category"]])
+                {
+                    postCat = signChanges[i]["category"];
+                }
+            }
+        }
+
+        public void signChangeHandler(object sender, EventArgs e)
+        {
+            changeSign();
+        }
+
+        public void saveHandler(object sender, EventArgs e)
+        {
+            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            ISelection shpSelection = selectionLayer.Selection;
+            string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
+
+            Panel_Sign signControls = getSignControls();
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            values["address"] = signControls.textBoxAddress.Text;
+            values["survey_date"] = Util.SortableDate(surveyDate);
+
+            if (signsOnPost != null && signsOnPost.Rows.Count > 0)
+            {
+                for (int i = 0; i < signChanges.Count; i++)
+                {
+                    Database.ReplaceRow(Project.conn, signChanges[i], "sign");
+                }
+            }
+
+            resetSaveCondition();
         }
     }
 }
