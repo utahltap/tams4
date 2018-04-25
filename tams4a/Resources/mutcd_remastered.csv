@@ -32,7 +32,7 @@ R3-5g,bus lane,BUS LANE,regulatory_bw
 R3-6L,left or through, ,regulatory_bw
 R3-6R,right or through, ,regulatory_bw
 R3-7L,left must turn,LEFT LANE MUST TURN LEFT,regulatory_bw
-R3-7R,right must turn,RIGHT LANE MUST TURN RIGHT,reguatory_bw
+R3-7R,right must turn,RIGHT LANE MUST TURN RIGHT,regulatory_bw
 R3-8,left turn instructions,ONLY,regulatory_bw
 R3-8a,all lane instructions,ONLY ONLY,regulatory_bw
 R3-8b,all lane instructions restrictive,ONLY ONLY ONLY,regulatory_bw
@@ -154,7 +154,7 @@ R10-2a,cross on signal,CROSS ONLY ON SIGNAL,regulatory_pedestrian
 R10-3,push for green,PUSH BUTTON FOR GREEN LIGHT,regulatory_pedestrian
 R10-3a,push and wait for green,TO CROSS STREET PUSH BUTTON AND WAIT FOR GREEN LIGHT,regulatory_pedestrian
 R10-3b,crossing info,[[instructions]],regulatory_pedestrian
-R10-3c,crossing info text,[[instructions]],regulatory_pedestrian	
+R10-3c,crossing info text,[[instructions]],regulatory_pedestrian
 R10-4,push for walk,PUSH BUTTON WAIT FOR WALK SIGNAL,regulatory_pedestrian
 R10-4a,push and wait for walk,TO CROSS STREET PUSH BUTTON WAIT FOR WALK SIGNAL,regulatory_pedestrian
 R10-4b,push for,PUSH BUTTON FOR,regulatory_pedestrian
@@ -206,7 +206,7 @@ R15-7,divided highway rail,DIVIDED HIGHWAY,rail
 R15-8,look bothways,LOOK,rail
 R16-1,seatbelt required, ,regulatory_bw
 S1-1,school zone, ,school_pedestrian
-W16-7P,crosswalk here, ,school_pedestrian
+W16-7P,crosswalk here, ,warning
 S3-1,schoolbus top,SCHOOL BUS STOP AHEAD,school_pedestrian
 S4-5,school zone ahead,SHOOL SPEED LIMIT 20,school_pedestrian
 S4-5a,school zone ahead alt,20 MPH SCHOOL ZONE AHEAD,school_pedestrian
@@ -337,8 +337,8 @@ W10-11,tracks at T, ,rail
 W10-11a,tracks and highway,[[distance]] FEET BETWEEN TRACKS AND HIGHWAY,rail
 W10-11b,tracks and highway behind,[[distance]] FEET BETWEEN TRACKS AND HIGHWAY BEHIND YOU,rail
 W10-12,tracks at angle, ,rail
-W11-1,bicycles, ,school_pedestrian
-W11-2,pedestrian, ,school_pedestrian
+W11-1,bicycles, ,warning
+W11-2,pedestrian, ,warning
 W11-3,deer, ,warning
 W11-4,livestock, ,warning
 W11-5,tractors, ,warning
@@ -364,7 +364,7 @@ W14-1aR,dead end right,DEAD END,warning
 W14-1aL,dead end left,DEAD END,warning
 W14-2,no outlet,NO OUTLET,warning
 W14-3,no passing,NO PASSING ZONE,warning
-W15-1,children, ,school_pedestrian
+W15-1,playground, ,warning
 W16-1,share,SHARE THE ROAD,warning
 W16-2,distance feet,[[distance]] FEET,warning
 W16-2a,distance ft,[[distance]] FT,warning

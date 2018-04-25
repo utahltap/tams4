@@ -73,6 +73,16 @@ namespace tams4a.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap addiconsmall {
+            get {
+                object obj = ResourceManager.GetObject("addiconsmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap barcode {
             get {
                 object obj = ResourceManager.GetObject("barcode", resourceCulture);
@@ -96,6 +106,16 @@ namespace tams4a.Properties {
         internal static byte[] blank_db {
             get {
                 object obj = ResourceManager.GetObject("blank_db", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] blank_db_v6 {
+            get {
+                object obj = ResourceManager.GetObject("blank_db_v6", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -226,6 +246,16 @@ namespace tams4a.Properties {
         internal static System.Drawing.Bitmap fault {
             get {
                 object obj = ResourceManager.GetObject("fault", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap favoriteicon {
+            get {
+                object obj = ResourceManager.GetObject("favoriteicon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -482,6 +512,16 @@ namespace tams4a.Properties {
         internal static System.Drawing.Bitmap regulatory_rw {
             get {
                 object obj = ResourceManager.GetObject("regulatory_rw", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap removeiconsmall {
+            get {
+                object obj = ResourceManager.GetObject("removeiconsmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

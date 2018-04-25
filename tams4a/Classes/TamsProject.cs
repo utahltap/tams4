@@ -119,7 +119,7 @@ namespace tams4a.Classes
         {
             try
             {
-                File.WriteAllBytes(filename, Properties.Resources.blank_db);
+                File.WriteAllBytes(filename, Properties.Resources.blank_db_v6);
             }
             catch
             {

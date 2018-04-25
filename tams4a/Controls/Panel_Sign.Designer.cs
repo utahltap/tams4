@@ -37,6 +37,7 @@
             this.setOtherDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonNotes = new System.Windows.Forms.ToolStripButton();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
+            this.buttonRemove = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
@@ -54,6 +55,7 @@
             this.labelAddress = new System.Windows.Forms.Label();
             this.labelSurveyDate = new System.Windows.Forms.Label();
             this.groupBoxSign = new System.Windows.Forms.GroupBox();
+            this.buttonSearchMUTCD = new System.Windows.Forms.Button();
             this.buttonInstallDate = new System.Windows.Forms.Button();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.labelDescription = new System.Windows.Forms.Label();
@@ -88,6 +90,8 @@
             this.comboBoxSheeting = new System.Windows.Forms.ComboBox();
             this.labelSheeting = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
+            this.buttonFavorite = new System.Windows.Forms.Button();
+            this.buttonSignNote = new System.Windows.Forms.Button();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
@@ -172,10 +176,12 @@
             this.toolStripButtonNotes.Name = "toolStripButtonNotes";
             this.toolStripButtonNotes.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonNotes.Text = "Notes";
-            this.toolStripButtonNotes.ToolTipText = "Add a Note";
+            this.toolStripButtonNotes.ToolTipText = "Add a Note to Support";
             // 
             // groupBoxSupport
             // 
+            this.groupBoxSupport.Controls.Add(this.buttonFavorite);
+            this.groupBoxSupport.Controls.Add(this.buttonRemove);
             this.groupBoxSupport.Controls.Add(this.label1);
             this.groupBoxSupport.Controls.Add(this.label2);
             this.groupBoxSupport.Controls.Add(this.numericUpDownHeight);
@@ -200,10 +206,20 @@
             this.groupBoxSupport.TabStop = false;
             this.groupBoxSupport.Text = "Support";
             // 
+            // buttonRemove
+            // 
+            this.buttonRemove.Image = global::tams4a.Properties.Resources.removeiconsmall;
+            this.buttonRemove.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonRemove.Location = new System.Drawing.Point(62, 153);
+            this.buttonRemove.Name = "buttonRemove";
+            this.buttonRemove.Size = new System.Drawing.Size(24, 24);
+            this.buttonRemove.TabIndex = 19;
+            this.buttonRemove.UseVisualStyleBackColor = true;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(175, 134);
+            this.label1.Location = new System.Drawing.Point(176, 134);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(13, 13);
             this.label1.TabIndex = 18;
@@ -212,7 +228,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(175, 110);
+            this.label2.Location = new System.Drawing.Point(176, 110);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(13, 13);
             this.label2.TabIndex = 17;
@@ -226,7 +242,7 @@
             0,
             0,
             65536});
-            this.numericUpDownHeight.Location = new System.Drawing.Point(86, 131);
+            this.numericUpDownHeight.Location = new System.Drawing.Point(87, 131);
             this.numericUpDownHeight.Maximum = new decimal(new int[] {
             15,
             0,
@@ -244,7 +260,7 @@
             // labelHeight
             // 
             this.labelHeight.AutoSize = true;
-            this.labelHeight.Location = new System.Drawing.Point(12, 134);
+            this.labelHeight.Location = new System.Drawing.Point(10, 134);
             this.labelHeight.Name = "labelHeight";
             this.labelHeight.Size = new System.Drawing.Size(38, 13);
             this.labelHeight.TabIndex = 15;
@@ -252,18 +268,18 @@
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Image = global::tams4a.Properties.Resources.addicon1;
+            this.buttonAdd.Image = global::tams4a.Properties.Resources.addiconsmall;
             this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAdd.Location = new System.Drawing.Point(72, 152);
+            this.buttonAdd.Location = new System.Drawing.Point(85, 153);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(30, 28);
+            this.buttonAdd.Size = new System.Drawing.Size(24, 24);
             this.buttonAdd.TabIndex = 14;
             this.buttonAdd.UseVisualStyleBackColor = true;
             // 
             // labelSigns
             // 
             this.labelSigns.AutoSize = true;
-            this.labelSigns.Location = new System.Drawing.Point(12, 157);
+            this.labelSigns.Location = new System.Drawing.Point(10, 157);
             this.labelSigns.Name = "labelSigns";
             this.labelSigns.Size = new System.Drawing.Size(33, 13);
             this.labelSigns.TabIndex = 13;
@@ -271,11 +287,11 @@
             // 
             // comboBoxSigns
             // 
-            this.comboBoxSigns.DropDownWidth = 150;
+            this.comboBoxSigns.DropDownWidth = 160;
             this.comboBoxSigns.FormattingEnabled = true;
-            this.comboBoxSigns.Location = new System.Drawing.Point(104, 155);
+            this.comboBoxSigns.Location = new System.Drawing.Point(109, 155);
             this.comboBoxSigns.Name = "comboBoxSigns";
-            this.comboBoxSigns.Size = new System.Drawing.Size(94, 21);
+            this.comboBoxSigns.Size = new System.Drawing.Size(90, 21);
             this.comboBoxSigns.TabIndex = 12;
             // 
             // numericUpDownOffset
@@ -286,7 +302,7 @@
             0,
             0,
             65536});
-            this.numericUpDownOffset.Location = new System.Drawing.Point(86, 107);
+            this.numericUpDownOffset.Location = new System.Drawing.Point(87, 107);
             this.numericUpDownOffset.Maximum = new decimal(new int[] {
             10,
             0,
@@ -304,7 +320,7 @@
             // labelOffset
             // 
             this.labelOffset.AutoSize = true;
-            this.labelOffset.Location = new System.Drawing.Point(12, 110);
+            this.labelOffset.Location = new System.Drawing.Point(10, 110);
             this.labelOffset.Name = "labelOffset";
             this.labelOffset.Size = new System.Drawing.Size(35, 13);
             this.labelOffset.TabIndex = 10;
@@ -313,7 +329,7 @@
             // labelMaterial
             // 
             this.labelMaterial.AutoSize = true;
-            this.labelMaterial.Location = new System.Drawing.Point(12, 85);
+            this.labelMaterial.Location = new System.Drawing.Point(10, 85);
             this.labelMaterial.Name = "labelMaterial";
             this.labelMaterial.Size = new System.Drawing.Size(44, 13);
             this.labelMaterial.TabIndex = 8;
@@ -322,7 +338,7 @@
             // comboBoxMaterial
             // 
             this.comboBoxMaterial.FormattingEnabled = true;
-            this.comboBoxMaterial.Location = new System.Drawing.Point(86, 83);
+            this.comboBoxMaterial.Location = new System.Drawing.Point(87, 83);
             this.comboBoxMaterial.Name = "comboBoxMaterial";
             this.comboBoxMaterial.Size = new System.Drawing.Size(112, 21);
             this.comboBoxMaterial.TabIndex = 7;
@@ -330,7 +346,7 @@
             // labelCondition
             // 
             this.labelCondition.AutoSize = true;
-            this.labelCondition.Location = new System.Drawing.Point(12, 59);
+            this.labelCondition.Location = new System.Drawing.Point(10, 59);
             this.labelCondition.Name = "labelCondition";
             this.labelCondition.Size = new System.Drawing.Size(51, 13);
             this.labelCondition.TabIndex = 6;
@@ -346,14 +362,14 @@
             "acceptable",
             "damaged",
             "broken"});
-            this.comboBoxCondition.Location = new System.Drawing.Point(86, 57);
+            this.comboBoxCondition.Location = new System.Drawing.Point(87, 57);
             this.comboBoxCondition.Name = "comboBoxCondition";
             this.comboBoxCondition.Size = new System.Drawing.Size(112, 21);
             this.comboBoxCondition.TabIndex = 5;
             // 
             // textBoxAddress
             // 
-            this.textBoxAddress.Location = new System.Drawing.Point(86, 33);
+            this.textBoxAddress.Location = new System.Drawing.Point(87, 33);
             this.textBoxAddress.Name = "textBoxAddress";
             this.textBoxAddress.Size = new System.Drawing.Size(112, 20);
             this.textBoxAddress.TabIndex = 4;
@@ -361,7 +377,7 @@
             // labelAddress
             // 
             this.labelAddress.AutoSize = true;
-            this.labelAddress.Location = new System.Drawing.Point(12, 37);
+            this.labelAddress.Location = new System.Drawing.Point(10, 37);
             this.labelAddress.Name = "labelAddress";
             this.labelAddress.Size = new System.Drawing.Size(45, 13);
             this.labelAddress.TabIndex = 3;
@@ -370,7 +386,7 @@
             // labelSurveyDate
             // 
             this.labelSurveyDate.AutoSize = true;
-            this.labelSurveyDate.Location = new System.Drawing.Point(12, 18);
+            this.labelSurveyDate.Location = new System.Drawing.Point(10, 18);
             this.labelSurveyDate.Name = "labelSurveyDate";
             this.labelSurveyDate.Size = new System.Drawing.Size(66, 13);
             this.labelSurveyDate.TabIndex = 2;
@@ -378,6 +394,8 @@
             // 
             // groupBoxSign
             // 
+            this.groupBoxSign.Controls.Add(this.buttonSignNote);
+            this.groupBoxSign.Controls.Add(this.buttonSearchMUTCD);
             this.groupBoxSign.Controls.Add(this.buttonInstallDate);
             this.groupBoxSign.Controls.Add(this.textBoxDescription);
             this.groupBoxSign.Controls.Add(this.labelDescription);
@@ -420,18 +438,28 @@
             this.groupBoxSign.TabStop = false;
             this.groupBoxSign.Text = "Sign";
             // 
+            // buttonSearchMUTCD
+            // 
+            this.buttonSearchMUTCD.Image = global::tams4a.Properties.Resources.find;
+            this.buttonSearchMUTCD.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSearchMUTCD.Location = new System.Drawing.Point(86, 18);
+            this.buttonSearchMUTCD.Name = "buttonSearchMUTCD";
+            this.buttonSearchMUTCD.Size = new System.Drawing.Size(23, 22);
+            this.buttonSearchMUTCD.TabIndex = 47;
+            this.buttonSearchMUTCD.UseVisualStyleBackColor = true;
+            // 
             // buttonInstallDate
             // 
             this.buttonInstallDate.Image = global::tams4a.Properties.Resources.calendar;
-            this.buttonInstallDate.Location = new System.Drawing.Point(86, 182);
+            this.buttonInstallDate.Location = new System.Drawing.Point(86, 181);
             this.buttonInstallDate.Name = "buttonInstallDate";
-            this.buttonInstallDate.Size = new System.Drawing.Size(20, 20);
+            this.buttonInstallDate.Size = new System.Drawing.Size(22, 22);
             this.buttonInstallDate.TabIndex = 46;
             this.buttonInstallDate.UseVisualStyleBackColor = true;
             // 
             // textBoxDescription
             // 
-            this.textBoxDescription.Location = new System.Drawing.Point(86, 42);
+            this.textBoxDescription.Location = new System.Drawing.Point(87, 42);
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(112, 20);
             this.textBoxDescription.TabIndex = 45;
@@ -439,7 +467,7 @@
             // labelDescription
             // 
             this.labelDescription.AutoSize = true;
-            this.labelDescription.Location = new System.Drawing.Point(12, 44);
+            this.labelDescription.Location = new System.Drawing.Point(10, 44);
             this.labelDescription.Name = "labelDescription";
             this.labelDescription.Size = new System.Drawing.Size(60, 13);
             this.labelDescription.TabIndex = 44;
@@ -449,7 +477,7 @@
             // 
             this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBoxPhoto.InitialImage = global::tams4a.Properties.Resources.nophoto;
-            this.pictureBoxPhoto.Location = new System.Drawing.Point(108, 347);
+            this.pictureBoxPhoto.Location = new System.Drawing.Point(109, 347);
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
             this.pictureBoxPhoto.Size = new System.Drawing.Size(90, 64);
             this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -459,7 +487,7 @@
             // labelPhoto
             // 
             this.labelPhoto.AutoSize = true;
-            this.labelPhoto.Location = new System.Drawing.Point(11, 323);
+            this.labelPhoto.Location = new System.Drawing.Point(9, 323);
             this.labelPhoto.Name = "labelPhoto";
             this.labelPhoto.Size = new System.Drawing.Size(54, 13);
             this.labelPhoto.TabIndex = 42;
@@ -467,7 +495,7 @@
             // 
             // buttonNextPhoto
             // 
-            this.buttonNextPhoto.Location = new System.Drawing.Point(86, 322);
+            this.buttonNextPhoto.Location = new System.Drawing.Point(87, 322);
             this.buttonNextPhoto.Name = "buttonNextPhoto";
             this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
             this.buttonNextPhoto.TabIndex = 41;
@@ -476,7 +504,7 @@
             // 
             // textBoxPhotoFile
             // 
-            this.textBoxPhotoFile.Location = new System.Drawing.Point(108, 322);
+            this.textBoxPhotoFile.Location = new System.Drawing.Point(109, 322);
             this.textBoxPhotoFile.Name = "textBoxPhotoFile";
             this.textBoxPhotoFile.Size = new System.Drawing.Size(90, 20);
             this.textBoxPhotoFile.TabIndex = 40;
@@ -495,7 +523,7 @@
             "southwest",
             "west",
             "northwest"});
-            this.comboBoxDirection.Location = new System.Drawing.Point(86, 299);
+            this.comboBoxDirection.Location = new System.Drawing.Point(87, 299);
             this.comboBoxDirection.Name = "comboBoxDirection";
             this.comboBoxDirection.Size = new System.Drawing.Size(112, 21);
             this.comboBoxDirection.TabIndex = 39;
@@ -503,7 +531,7 @@
             // labelDirection
             // 
             this.labelDirection.AutoSize = true;
-            this.labelDirection.Location = new System.Drawing.Point(12, 301);
+            this.labelDirection.Location = new System.Drawing.Point(10, 301);
             this.labelDirection.Name = "labelDirection";
             this.labelDirection.Size = new System.Drawing.Size(49, 13);
             this.labelDirection.TabIndex = 38;
@@ -517,7 +545,7 @@
             "clear",
             "partial",
             "severe"});
-            this.comboBoxObstruction.Location = new System.Drawing.Point(86, 275);
+            this.comboBoxObstruction.Location = new System.Drawing.Point(87, 275);
             this.comboBoxObstruction.Name = "comboBoxObstruction";
             this.comboBoxObstruction.Size = new System.Drawing.Size(112, 21);
             this.comboBoxObstruction.TabIndex = 37;
@@ -525,7 +553,7 @@
             // labelObstruction
             // 
             this.labelObstruction.AutoSize = true;
-            this.labelObstruction.Location = new System.Drawing.Point(12, 278);
+            this.labelObstruction.Location = new System.Drawing.Point(10, 278);
             this.labelObstruction.Name = "labelObstruction";
             this.labelObstruction.Size = new System.Drawing.Size(61, 13);
             this.labelObstruction.TabIndex = 36;
@@ -541,7 +569,7 @@
             "acceptable",
             "damaged",
             "broken"});
-            this.comboBoxConditionSign.Location = new System.Drawing.Point(86, 251);
+            this.comboBoxConditionSign.Location = new System.Drawing.Point(87, 251);
             this.comboBoxConditionSign.Name = "comboBoxConditionSign";
             this.comboBoxConditionSign.Size = new System.Drawing.Size(112, 21);
             this.comboBoxConditionSign.TabIndex = 35;
@@ -553,7 +581,7 @@
             "",
             "pass",
             "fail"});
-            this.comboBoxReflectivity.Location = new System.Drawing.Point(86, 227);
+            this.comboBoxReflectivity.Location = new System.Drawing.Point(87, 227);
             this.comboBoxReflectivity.Name = "comboBoxReflectivity";
             this.comboBoxReflectivity.Size = new System.Drawing.Size(112, 21);
             this.comboBoxReflectivity.TabIndex = 34;
@@ -561,7 +589,7 @@
             // labelConditionSign
             // 
             this.labelConditionSign.AutoSize = true;
-            this.labelConditionSign.Location = new System.Drawing.Point(12, 254);
+            this.labelConditionSign.Location = new System.Drawing.Point(10, 254);
             this.labelConditionSign.Name = "labelConditionSign";
             this.labelConditionSign.Size = new System.Drawing.Size(51, 13);
             this.labelConditionSign.TabIndex = 33;
@@ -570,7 +598,7 @@
             // labelReflectivity
             // 
             this.labelReflectivity.AutoSize = true;
-            this.labelReflectivity.Location = new System.Drawing.Point(12, 230);
+            this.labelReflectivity.Location = new System.Drawing.Point(10, 230);
             this.labelReflectivity.Name = "labelReflectivity";
             this.labelReflectivity.Size = new System.Drawing.Size(59, 13);
             this.labelReflectivity.TabIndex = 31;
@@ -578,7 +606,7 @@
             // 
             // textBoxText
             // 
-            this.textBoxText.Location = new System.Drawing.Point(86, 205);
+            this.textBoxText.Location = new System.Drawing.Point(87, 205);
             this.textBoxText.Name = "textBoxText";
             this.textBoxText.Size = new System.Drawing.Size(112, 20);
             this.textBoxText.TabIndex = 30;
@@ -586,7 +614,7 @@
             // labelText
             // 
             this.labelText.AutoSize = true;
-            this.labelText.Location = new System.Drawing.Point(12, 207);
+            this.labelText.Location = new System.Drawing.Point(10, 207);
             this.labelText.Name = "labelText";
             this.labelText.Size = new System.Drawing.Size(52, 13);
             this.labelText.TabIndex = 29;
@@ -595,7 +623,7 @@
             // textBoxInstall
             // 
             this.textBoxInstall.Enabled = false;
-            this.textBoxInstall.Location = new System.Drawing.Point(108, 182);
+            this.textBoxInstall.Location = new System.Drawing.Point(109, 182);
             this.textBoxInstall.Name = "textBoxInstall";
             this.textBoxInstall.Size = new System.Drawing.Size(90, 20);
             this.textBoxInstall.TabIndex = 28;
@@ -603,7 +631,7 @@
             // labelInstall
             // 
             this.labelInstall.AutoSize = true;
-            this.labelInstall.Location = new System.Drawing.Point(12, 184);
+            this.labelInstall.Location = new System.Drawing.Point(10, 184);
             this.labelInstall.Name = "labelInstall";
             this.labelInstall.Size = new System.Drawing.Size(60, 13);
             this.labelInstall.TabIndex = 27;
@@ -612,7 +640,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(175, 162);
+            this.label5.Location = new System.Drawing.Point(176, 162);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(13, 13);
             this.label5.TabIndex = 26;
@@ -621,7 +649,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(175, 139);
+            this.label4.Location = new System.Drawing.Point(176, 139);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(15, 13);
             this.label4.TabIndex = 25;
@@ -630,7 +658,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(175, 116);
+            this.label3.Location = new System.Drawing.Point(176, 116);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(15, 13);
             this.label3.TabIndex = 24;
@@ -644,7 +672,7 @@
             0,
             0,
             131072});
-            this.numericUpDownMountHeight.Location = new System.Drawing.Point(86, 159);
+            this.numericUpDownMountHeight.Location = new System.Drawing.Point(87, 159);
             this.numericUpDownMountHeight.Name = "numericUpDownMountHeight";
             this.numericUpDownMountHeight.Size = new System.Drawing.Size(83, 20);
             this.numericUpDownMountHeight.TabIndex = 23;
@@ -658,7 +686,7 @@
             // 
             this.labelMountHeight.AutoSize = true;
             this.labelMountHeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.labelMountHeight.Location = new System.Drawing.Point(12, 162);
+            this.labelMountHeight.Location = new System.Drawing.Point(10, 162);
             this.labelMountHeight.Name = "labelMountHeight";
             this.labelMountHeight.Size = new System.Drawing.Size(71, 13);
             this.labelMountHeight.TabIndex = 22;
@@ -666,9 +694,9 @@
             // 
             // textBoxType
             // 
-            this.textBoxType.Location = new System.Drawing.Point(86, 19);
+            this.textBoxType.Location = new System.Drawing.Point(109, 19);
             this.textBoxType.Name = "textBoxType";
-            this.textBoxType.Size = new System.Drawing.Size(112, 20);
+            this.textBoxType.Size = new System.Drawing.Size(90, 20);
             this.textBoxType.TabIndex = 21;
             // 
             // numericUpDownWidth
@@ -679,7 +707,7 @@
             0,
             0,
             65536});
-            this.numericUpDownWidth.Location = new System.Drawing.Point(86, 136);
+            this.numericUpDownWidth.Location = new System.Drawing.Point(87, 136);
             this.numericUpDownWidth.Name = "numericUpDownWidth";
             this.numericUpDownWidth.Size = new System.Drawing.Size(83, 20);
             this.numericUpDownWidth.TabIndex = 20;
@@ -692,7 +720,7 @@
             // labelWidth
             // 
             this.labelWidth.AutoSize = true;
-            this.labelWidth.Location = new System.Drawing.Point(12, 139);
+            this.labelWidth.Location = new System.Drawing.Point(10, 139);
             this.labelWidth.Name = "labelWidth";
             this.labelWidth.Size = new System.Drawing.Size(35, 13);
             this.labelWidth.TabIndex = 19;
@@ -706,7 +734,7 @@
             0,
             0,
             65536});
-            this.numericUpDownHeigthSign.Location = new System.Drawing.Point(86, 113);
+            this.numericUpDownHeigthSign.Location = new System.Drawing.Point(87, 113);
             this.numericUpDownHeigthSign.Name = "numericUpDownHeigthSign";
             this.numericUpDownHeigthSign.Size = new System.Drawing.Size(83, 20);
             this.numericUpDownHeigthSign.TabIndex = 18;
@@ -719,7 +747,7 @@
             // labelHeightSign
             // 
             this.labelHeightSign.AutoSize = true;
-            this.labelHeightSign.Location = new System.Drawing.Point(12, 116);
+            this.labelHeightSign.Location = new System.Drawing.Point(10, 116);
             this.labelHeightSign.Name = "labelHeightSign";
             this.labelHeightSign.Size = new System.Drawing.Size(38, 13);
             this.labelHeightSign.TabIndex = 17;
@@ -728,7 +756,7 @@
             // comboBoxBacking
             // 
             this.comboBoxBacking.FormattingEnabled = true;
-            this.comboBoxBacking.Location = new System.Drawing.Point(86, 89);
+            this.comboBoxBacking.Location = new System.Drawing.Point(87, 89);
             this.comboBoxBacking.Name = "comboBoxBacking";
             this.comboBoxBacking.Size = new System.Drawing.Size(112, 21);
             this.comboBoxBacking.TabIndex = 11;
@@ -736,7 +764,7 @@
             // labelBacking
             // 
             this.labelBacking.AutoSize = true;
-            this.labelBacking.Location = new System.Drawing.Point(12, 91);
+            this.labelBacking.Location = new System.Drawing.Point(10, 91);
             this.labelBacking.Name = "labelBacking";
             this.labelBacking.Size = new System.Drawing.Size(46, 13);
             this.labelBacking.TabIndex = 10;
@@ -745,7 +773,7 @@
             // comboBoxSheeting
             // 
             this.comboBoxSheeting.FormattingEnabled = true;
-            this.comboBoxSheeting.Location = new System.Drawing.Point(86, 65);
+            this.comboBoxSheeting.Location = new System.Drawing.Point(87, 65);
             this.comboBoxSheeting.Name = "comboBoxSheeting";
             this.comboBoxSheeting.Size = new System.Drawing.Size(112, 21);
             this.comboBoxSheeting.TabIndex = 8;
@@ -753,7 +781,7 @@
             // labelSheeting
             // 
             this.labelSheeting.AutoSize = true;
-            this.labelSheeting.Location = new System.Drawing.Point(12, 67);
+            this.labelSheeting.Location = new System.Drawing.Point(10, 67);
             this.labelSheeting.Name = "labelSheeting";
             this.labelSheeting.Size = new System.Drawing.Size(49, 13);
             this.labelSheeting.TabIndex = 1;
@@ -762,11 +790,31 @@
             // labelType
             // 
             this.labelType.AutoSize = true;
-            this.labelType.Location = new System.Drawing.Point(12, 21);
+            this.labelType.Location = new System.Drawing.Point(10, 21);
             this.labelType.Name = "labelType";
             this.labelType.Size = new System.Drawing.Size(73, 13);
             this.labelType.TabIndex = 0;
             this.labelType.Text = "MUTCD code";
+            // 
+            // buttonFavorite
+            // 
+            this.buttonFavorite.Image = global::tams4a.Properties.Resources.favoriteicon;
+            this.buttonFavorite.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonFavorite.Location = new System.Drawing.Point(40, 154);
+            this.buttonFavorite.Name = "buttonFavorite";
+            this.buttonFavorite.Size = new System.Drawing.Size(22, 22);
+            this.buttonFavorite.TabIndex = 20;
+            this.buttonFavorite.UseVisualStyleBackColor = true;
+            // 
+            // buttonSignNote
+            // 
+            this.buttonSignNote.Image = global::tams4a.Properties.Resources.notes;
+            this.buttonSignNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSignNote.Location = new System.Drawing.Point(84, 347);
+            this.buttonSignNote.Name = "buttonSignNote";
+            this.buttonSignNote.Size = new System.Drawing.Size(22, 22);
+            this.buttonSignNote.TabIndex = 48;
+            this.buttonSignNote.UseVisualStyleBackColor = true;
             // 
             // Panel_Sign
             // 
@@ -854,6 +902,10 @@
         public System.Windows.Forms.ToolStripMenuItem setOtherDateToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem setTodayToolStripMenuItem;
         public System.Windows.Forms.Label labelAddress;
+        public System.Windows.Forms.Button buttonRemove;
+        public System.Windows.Forms.Button buttonSearchMUTCD;
         public System.Windows.Forms.Button buttonAdd;
+        public System.Windows.Forms.Button buttonFavorite;
+        public System.Windows.Forms.Button buttonSignNote;
     }
 }

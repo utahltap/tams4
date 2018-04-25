@@ -99,7 +99,6 @@ C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Controls.CtlSet
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormBudgetEstimator.resources
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormCategories.resources
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormCustomMessage.resources
-C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormDateSelect.resources
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormFutureTreatment.resources
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormGetDistress.resources
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormHistory.resources
@@ -139,3 +138,5 @@ C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\bin\Debug\DotSpatial.Tools.xml
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\bin\Debug\zh-CN\DotSpatial.Tools.resources.dll
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Controls.Panel_Sign.resources
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormTreatmentEditor.resources
+C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormSignLookup.resources
+C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormNewSign.resources

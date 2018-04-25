@@ -24,6 +24,7 @@ namespace tams4a.Classes
         public String IdText { get; protected set; }
         public Boolean UnsavedChanges { get; protected set; }
         protected List<Dictionary<String, String>> selectionValues;
+        protected List<string> tamsids;
         protected DateTime surveyDate;
         protected FormSurveyDate dateForm;
         // button to enable after shp file is opened

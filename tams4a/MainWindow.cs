@@ -58,7 +58,7 @@ namespace tams4a
 
             Visible = true;
             ToolStripMenuItem[] lcs = { importRoadsToolStripMenuItem, generalReportToolStripMenuItem, roadsWithPotholesToolStripMenuItem, budgetToolStripMenuItem };
-            ToolStripMenuItem[] lcsn = { };
+            ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem };
             ModuleRoads road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
             ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
             Project.addModule(road, "Roads", tabControlControls);

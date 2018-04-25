@@ -74,6 +74,7 @@
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSnapShot = new System.Windows.Forms.ToolStripButton();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.favoriteSignsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -180,10 +181,11 @@
             // 
             this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importRoadsToolStripMenuItem,
-            this.editTreatmentsToolStripMenuItem});
+            this.editTreatmentsToolStripMenuItem,
+            this.favoriteSignsToolStripMenuItem});
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
-            this.advancedToolStripMenuItem.Text = "Advanced";
+            this.advancedToolStripMenuItem.Text = "Ad&vanced";
             // 
             // importRoadsToolStripMenuItem
             // 
@@ -208,7 +210,7 @@
             this.budgetToolStripMenuItem});
             this.analysisToolStripMenuItem.Name = "analysisToolStripMenuItem";
             this.analysisToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
-            this.analysisToolStripMenuItem.Text = "Analysis";
+            this.analysisToolStripMenuItem.Text = "Anal&ysis";
             // 
             // generalReportToolStripMenuItem
             // 
@@ -253,8 +255,8 @@
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(25, 17);
+            this.toolStripStatusLabel2.Text = "dot";
             // 
             // toolStripProgressBar1
             // 
@@ -501,6 +503,13 @@
             this.toolStripButtonSnapShot.ToolTipText = "Take Snap Shot of the Map";
             this.toolStripButtonSnapShot.Click += new System.EventHandler(this.toolStripButtonSnapShot_Click);
             // 
+            // favoriteSignsToolStripMenuItem
+            // 
+            this.favoriteSignsToolStripMenuItem.Enabled = false;
+            this.favoriteSignsToolStripMenuItem.Name = "favoriteSignsToolStripMenuItem";
+            this.favoriteSignsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.favoriteSignsToolStripMenuItem.Text = "&Favorite Signs";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -581,6 +590,7 @@
         private System.Windows.Forms.ToolStripMenuItem editTreatmentsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manuelToolStripMenuItem;
         private DotSpatial.Controls.Map uxMap;
+        private System.Windows.Forms.ToolStripMenuItem favoriteSignsToolStripMenuItem;
     }
 }
 

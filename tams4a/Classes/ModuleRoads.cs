@@ -21,7 +21,6 @@ namespace tams4a.Classes
         private DataTable roadTypes;
         private DataTable surfaceDistresses;
         private string notes;
-        private List<string> tamsids;
         // used to override the base class SelectionSql
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
                     FROM
@@ -135,7 +134,7 @@ namespace tams4a.Classes
             // set event handlers
             #region eventhandlers
             roadPanel.buttonSave.Click += saveHandler;
-            roadPanel.buttonReset.Click += selectionChanged;
+            roadPanel.buttonReset.Click += cancelChanges;
             roadPanel.pictureBoxPhoto.Click += clickPhotoBox;
             roadPanel.toolStripButtonAnalysis.Click += reportSelected;
 
@@ -261,6 +260,11 @@ namespace tams4a.Classes
             }
         }
 
+        private void cancelChanges(object sender, EventArgs e)
+        {
+            resetSaveCondition();
+            selectionChanged(sender, e);
+        }
 
         // returns the ROADCONTROLS collection of controls.
         // does not include the toolstrip
@@ -547,12 +551,12 @@ namespace tams4a.Classes
             values["surface"] = roadControls.comboBoxSurface.Text;
             values["photo"] = roadControls.textBoxPhotoFile.Text;
 
-            bool emptyFields = false;
             foreach (string value in values.Values)
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    emptyFields = true;
+                    MessageBox.Show("Some properties have not been set for this road. The analysis and report may be incomplete as a result.", "Warning: Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    break;
                 }
             }
             values["notes"] = notes;
@@ -563,10 +567,7 @@ namespace tams4a.Classes
                 Properties.Settings.Default.lastPhoto = roadControls.textBoxPhotoFile.Text;
             }
 
-            if (emptyFields && selectionValues.Count <= 1)
-            {
-                MessageBox.Show("Some properties have not been set for this road. The analysis and report may be incomplete as a result.", "Warning: Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            
 
             // Distress values                                                                                          //  Asphalt         Unpaved         Concrete
             if (roadControls.distress1.Visible) { values["distress1"] = roadControls.distress1.Value.ToString(); }   //  Fatigue         Potholes       Spalling
@@ -610,7 +611,7 @@ namespace tams4a.Classes
                     }
                 }
 
-                if (!Database.InsertRow(Project.conn, v, "road"))
+                if (!Database.InsertRow(Project.conn, v, ModuleName))
                 {
                     MessageBox.Show("Could not save data!");
                 }

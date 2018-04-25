@@ -348,6 +348,18 @@
     <Compile Include="Forms\FormHistory.Designer.cs">
       <DependentUpon>FormHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormNewSign.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormNewSign.Designer.cs">
+      <DependentUpon>FormNewSign.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormSignLookup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSignLookup.Designer.cs">
+      <DependentUpon>FormSignLookup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormNotes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -443,6 +455,12 @@
     <EmbeddedResource Include="Forms\FormHistory.resx">
       <DependentUpon>FormHistory.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormNewSign.resx">
+      <DependentUpon>FormNewSign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSignLookup.resx">
+      <DependentUpon>FormSignLookup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormNotes.resx">
       <DependentUpon>FormNotes.cs</DependentUpon>
     </EmbeddedResource>
@@ -492,6 +510,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Resources\blank_db.db" />
+    <None Include="Resources\blank_db_v6.db" />
     <None Include="Resources\mutcd_remastered.csv" />
     <None Include="tams4a_1_TemporaryKey.pfx" />
     <None Include="tams4a_TemporaryKey.pfx" />
@@ -544,6 +563,7 @@
   <ItemGroup>
     <None Include="Resources\addicon.png" />
     <None Include="Resources\addicon1.png" />
+    <None Include="Resources\addiconsmall.png" />
     <Content Include="Resources\attributions.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -594,6 +614,8 @@
     <None Include="Resources\school_pedestrian.png" />
     <None Include="Resources\service.png" />
     <None Include="Resources\jointseal.png" />
+    <None Include="Resources\removeiconsmall.png" />
+    <None Include="Resources\favoriteicon.png" />
     <Content Include="Resources\spalling.png" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\worker.png" />

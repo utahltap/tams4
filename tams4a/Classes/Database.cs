@@ -514,7 +514,33 @@ CREATE TABLE mutcd_lookup (mutcd_code TEXT PRIMARY KEY, description TEXT, sign_t
             }
             #endregion db_update_5_immute
             #region db_update_6_immute
-
+            if (dbVersion == 5)
+            {
+                try
+                {
+                    string cmdString = @"UPDATE road_distresses SET imageName='jointseal' WHERE name='Joint Seal';
+UPDATE road_distresses SET imageName = 'broke' WHERE name = 'Broken';
+UPDATE road_distresses SET imageName = 'fault' WHERE name = 'Faulting';
+ALTER TABLE sign_support ADD notes TEXT;
+ALTER TABLE sign ADD barcode TEXT;
+ALTER TABLE sign ADD favorite TEXT;
+UPDATE mutcd_lookup SET category = 'regulatory_rw' WHERE category = 'reguatory_rw';
+UPDATE mutcd_lookup SET category = 'regulatory_bw' WHERE category = 'reguatory_bw';
+REPLACE INTO mutcd_lookup(mutcd_code, description, sign_text, category) VALUES('R10-3c', 'crossing info text', '[[instructions]]', 'regulatory_pedestrian');";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                    MessageBox.Show("The database could not be updated to the latest version of TAMS please contact the Utah LTAP Center for help.");
+                    return false;
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "6";
+                dbVersion = 6;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
             #endregion db_update_6_immute
             return true;
         }
@@ -574,6 +600,15 @@ CREATE TABLE mutcd_lookup (mutcd_code TEXT PRIMARY KEY, description TEXT, sign_t
             return true;
         }
 
+        /// <summary>
+        /// Issues the update command to the database
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="keyVals"></param>
+        /// <param name="table"></param>
+        /// <param name="column"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public static Boolean UpdateRow(SQLiteConnection conn, Dictionary<string, string> keyVals, string table, string column, string key)
         {
             if (!IsOpen(conn)) { throw new Exception("Database not connected"); }
@@ -592,7 +627,15 @@ CREATE TABLE mutcd_lookup (mutcd_code TEXT PRIMARY KEY, description TEXT, sign_t
             return true;
         }
         
-        public static Boolean DeleteRow(SQLiteConnection conn, string table, string column, string key)
+        /// <summary>
+        /// Executes the DELETE sql command given the parameters.
+        /// </summary>
+        /// <param name="conn">The SQLite connection</param>
+        /// <param name="table">the table containing the row to be deleted</param>
+        /// <param name="column">the name of the column to validate</param>
+        /// <param name="key">the value the column to check for</param>
+        /// <returns></returns>
+        public static bool DeleteRow(SQLiteConnection conn, string table, string column, string key)
         {
             string sql = "DELETE FROM " + table + " WHERE " + column + "=" + key;
             if (!ExecuteNonQuery(conn, sql))

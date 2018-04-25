@@ -15,6 +15,7 @@ namespace tams4a.Controls
         public Panel_Sign()
         {
             InitializeComponent();
+
             textBoxAddress.TextChanged += moduleValueChanged;
             comboBoxCondition.SelectionChangeCommitted += moduleValueChanged;
             comboBoxMaterial.SelectionChangeCommitted += moduleValueChanged;
@@ -34,6 +35,13 @@ namespace tams4a.Controls
             comboBoxObstruction.SelectedValueChanged += moduleValueChanged;
             comboBoxDirection.SelectedValueChanged += moduleValueChanged;
             textBoxPhotoFile.TextChanged += moduleValueChanged;
+
+            new ToolTip().SetToolTip(buttonAdd, "Add New Sign to Post");
+            new ToolTip().SetToolTip(buttonRemove, "Remove Sign from Post");
+            new ToolTip().SetToolTip(buttonInstallDate, "Set Install Date of Sign");
+            new ToolTip().SetToolTip(buttonFavorite, "Add Sign to Favorites");
+            new ToolTip().SetToolTip(buttonSignNote, "Add Note to Sign");
+
             AutoScroll = true;
         }
     }
