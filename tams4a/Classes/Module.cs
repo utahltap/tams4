@@ -96,7 +96,7 @@ namespace tams4a.Classes
 
             if (String.IsNullOrEmpty(thePath))
             {
-                FormCustomMessage.ShowDialog("Invalid filename specified");
+                MessageBox.Show("Invalid filename specified");
                 this.close();
                 return false;
             }
@@ -129,7 +129,7 @@ namespace tams4a.Classes
             }
             catch (Exception e)
             {
-                FormCustomMessage.ShowDialog("Could not open " + thePath + Environment.NewLine + e.ToString());
+                MessageBox.Show("Could not open " + thePath + Environment.NewLine + e.ToString());
                 Log.Error("Could not open SHP file (" + thePath + ") for module " + ModuleName);
                 this.close();
 

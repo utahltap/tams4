@@ -114,6 +114,8 @@ namespace tams4a.Classes
             signPanel.buttonAdd.Click += addNewSign;
             signPanel.buttonRemove.Click += removeSign;
             signPanel.buttonFavorite.Click += faveSign;
+            signPanel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
+            signPanel.toolStripButtonNotes.Click += editNotes;
 
             signPanel.textBoxType.TextChanged += setMUTCDvalues;
             signPanel.comboBoxSigns.SelectionChangeCommitted += signChangeHandler;
@@ -332,7 +334,10 @@ namespace tams4a.Classes
             resetSaveCondition();
             signControls.groupBoxSupport.Enabled = false;
             signControls.groupBoxSign.Enabled = false;
-            signControls.toolStrip.Enabled = false;
+            signControls.toolStripButtonSave.Enabled = false;
+            signControls.toolStripButtonCancel.Enabled = false;
+            signControls.toolStripButtonSurveyDate.Enabled = false;
+            signControls.toolStripButtonNotes.Enabled = false;
         }
 
         /// <summary>
@@ -432,6 +437,11 @@ namespace tams4a.Classes
             signControls.comboBoxCondition.Text = Util.DictionaryItemString(values, "condition");
             signControls.numericUpDownHeight.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "height"));
             signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "height"));
+            notes = Util.DictionaryItemString(values, "notes");
+            if (!string.IsNullOrEmpty(notes))
+            {
+                signControls.toolStripButtonNotes.Checked = true;
+            }
             suppressChanges = false;
         }
 
@@ -511,6 +521,10 @@ namespace tams4a.Classes
             signControls.groupBoxSign.Enabled = true;
             signControls.toolStrip.Enabled = true;
             signControls.groupBoxSupport.Enabled = true;
+            signControls.toolStripButtonSave.Enabled = true;
+            signControls.toolStripButtonCancel.Enabled = true;
+            signControls.toolStripButtonSurveyDate.Enabled = true;
+            signControls.toolStripButtonNotes.Enabled = true;
         }
 
         /// <summary>
@@ -544,6 +558,7 @@ namespace tams4a.Classes
             signControls.labelAddress.ForeColor = default(Color);
             signControls.labelAddress.BackColor = default(Color);
             signControls.textBoxAddress.Enabled = true;
+            signControls.toolStripButtonNotes.Checked = true;
             signControls.labelAddress.Text = "Address";
             signControls.buttonFavorite.BackColor = Control.DefaultBackColor;
         }
@@ -722,7 +737,36 @@ namespace tams4a.Classes
                 }
                 else if (newSignForm.radioButtonFavorites.Checked)
                 {
-
+                    FormSignLookup fave = new FormSignLookup();
+                    DataTable favorites = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign WHERE favorite='true'");
+                    if (favorites.Rows.Count == 0)
+                    {
+                        MessageBox.Show("You cannot create a sign from favorites because you have no favorite signs.", "No Favorite Signs");
+                        return;
+                    }
+                    fave.setData(favorites);
+                    if (fave.ShowDialog() == DialogResult.OK)
+                    {
+                        Dictionary<string, string> newSign = fave.getSelection();
+                        if (newSign != null)
+                        {
+                            maxSignID++;
+                            newSign["TAMSID"] = maxSignID.ToString();
+                            newSign["support_id"] = tamsids[0];
+                            newSign["condition"] = "";
+                            newSign["reflectivity"] = "";
+                            newSign["obstructions"] = "";
+                            newSign["installDate"] = "";
+                            newSign["surveyDate"] = Util.SortableDate(surveyDate);
+                            newSign["photo"] = "";
+                            newSign["barcode"] = "";
+                            newSign["favorite"] = "false";
+                            getSigns();
+                            getSignControls().comboBoxSigns.SelectedIndex = getSignControls().comboBoxSigns.Items.Count - 1;
+                            changeSign();
+                            determinePostCat();
+                        }
+                    }
                 }
                 else if (newSignForm.radioButtonBlank.Checked)
                 {
@@ -776,12 +820,50 @@ namespace tams4a.Classes
             controlChanged(sender, e);
         }
 
-        private void addPost()
+        private void addPost(double lat, double lon)
         {
             MapPointLayer mpl = (MapPointLayer)Layer;
-            
+            double[] xy = { lon, lat};
+            double[] z = { 0 };
+            DotSpatial.Projections.Reproject.ReprojectPoints(xy, z, DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984, mpl.Projection, 0, 1);
+            DotSpatial.Topology.Point newPost = new DotSpatial.Topology.Point(xy[0], xy[1]);
+            DotSpatial.Data.IFeature np = mpl.DataSet.AddFeature(newPost);
+            maxSuppID++;
+            np.DataRow[Project.settings.GetValue(ModuleName + "_f_TAMSID")] = maxSuppID;
+            np.DataRow["TAMSSIGN"] = "empty_post";
+            mpl.DataSet.Save();
         }
 
+        private void enterCoordinates(object sender, EventArgs e)
+        {
+            FormCustomMessage dlg = new FormCustomMessage();
+            dlg.labelMessage.Text = "Enter coordiantes in Latitude and Longitude.";
+            Label lat = new Label();
+            lat.Text = "Latitude:";
+            lat.Location = new Point(32, 54);
+            dlg.groupBoxUser.Controls.Add(lat);
+            Label lon = new Label();
+            lon.Text = "Longitude:";
+            lon.Location = new Point(32, 72);
+            dlg.groupBoxUser.Controls.Add(lon);
+            TextBox latVal = new TextBox();
+            latVal.Text = "0.0";
+            latVal.Location = new Point(134, 54);
+            dlg.groupBoxUser.Controls.Add(latVal);
+            TextBox lonVal = new TextBox();
+            lonVal.Text = "0.0";
+            lonVal.Location = new Point(134, 72);
+            dlg.groupBoxUser.Controls.Add(lonVal);
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                addPost(Util.ToDouble(latVal.Text), Util.ToDouble(lonVal.Text));
+            }
+        }
+
+        /// <summary>
+        /// Brings up a form to allow the user to search for signs.
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<string, string> searchMUTCDlist()
         {
             FormSignLookup mutcd = new FormSignLookup();
@@ -793,6 +875,20 @@ namespace tams4a.Classes
             }
             mutcd.Close();
             return returnValue;
+        }
+
+        private void editNotes(object sender, EventArgs e)
+        {
+            FormNotes noteForm = new FormNotes();
+            noteForm.Value = notes;
+            DialogResult result = noteForm.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                controlChanged(sender, e);
+
+                notes = noteForm.Value;
+            }
         }
     }
 }

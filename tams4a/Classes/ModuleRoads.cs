@@ -722,7 +722,6 @@ namespace tams4a.Classes
         /// <param name="e"></param>
         private void editNotes(object sender, EventArgs e)
         {
-            // show notes dialog form
             Forms.FormNotes noteForm = new Forms.FormNotes();
             noteForm.Value = notes;
             DialogResult result = noteForm.ShowDialog();

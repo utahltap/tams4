@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Panel_Sign));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
@@ -36,7 +37,12 @@
             this.setTodayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setOtherDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonNotes = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripDropDownButtonNewPost = new System.Windows.Forms.ToolStripDropDownButton();
+            this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readGPSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
+            this.buttonFavorite = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -55,6 +61,7 @@
             this.labelAddress = new System.Windows.Forms.Label();
             this.labelSurveyDate = new System.Windows.Forms.Label();
             this.groupBoxSign = new System.Windows.Forms.GroupBox();
+            this.buttonSignNote = new System.Windows.Forms.Button();
             this.buttonSearchMUTCD = new System.Windows.Forms.Button();
             this.buttonInstallDate = new System.Windows.Forms.Button();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
@@ -90,8 +97,8 @@
             this.comboBoxSheeting = new System.Windows.Forms.ComboBox();
             this.labelSheeting = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
-            this.buttonFavorite = new System.Windows.Forms.Button();
-            this.buttonSignNote = new System.Windows.Forms.Button();
+            this.textBoxBarcode = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
@@ -110,7 +117,9 @@
             this.toolStripButtonCancel,
             this.toolStripSeparator1,
             this.toolStripButtonSurveyDate,
-            this.toolStripButtonNotes});
+            this.toolStripButtonNotes,
+            this.toolStripSeparator2,
+            this.toolStripDropDownButtonNewPost});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(224, 25);
@@ -178,6 +187,37 @@
             this.toolStripButtonNotes.Text = "Notes";
             this.toolStripButtonNotes.ToolTipText = "Add a Note to Support";
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripDropDownButtonNewPost
+            // 
+            this.toolStripDropDownButtonNewPost.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripDropDownButtonNewPost.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enterCoordinatesToolStripMenuItem,
+            this.readGPSToolStripMenuItem});
+            this.toolStripDropDownButtonNewPost.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonNewPost.Image")));
+            this.toolStripDropDownButtonNewPost.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButtonNewPost.Name = "toolStripDropDownButtonNewPost";
+            this.toolStripDropDownButtonNewPost.Size = new System.Drawing.Size(29, 22);
+            this.toolStripDropDownButtonNewPost.Text = "New Post";
+            this.toolStripDropDownButtonNewPost.ToolTipText = "Add New Support";
+            // 
+            // enterCoordinatesToolStripMenuItem
+            // 
+            this.enterCoordinatesToolStripMenuItem.Name = "enterCoordinatesToolStripMenuItem";
+            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.enterCoordinatesToolStripMenuItem.Text = "Enter Coordinates";
+            // 
+            // readGPSToolStripMenuItem
+            // 
+            this.readGPSToolStripMenuItem.Enabled = false;
+            this.readGPSToolStripMenuItem.Name = "readGPSToolStripMenuItem";
+            this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.readGPSToolStripMenuItem.Text = "Read GPS";
+            // 
             // groupBoxSupport
             // 
             this.groupBoxSupport.Controls.Add(this.buttonFavorite);
@@ -205,6 +245,16 @@
             this.groupBoxSupport.TabIndex = 1;
             this.groupBoxSupport.TabStop = false;
             this.groupBoxSupport.Text = "Support";
+            // 
+            // buttonFavorite
+            // 
+            this.buttonFavorite.Image = global::tams4a.Properties.Resources.favoriteicon;
+            this.buttonFavorite.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonFavorite.Location = new System.Drawing.Point(40, 154);
+            this.buttonFavorite.Name = "buttonFavorite";
+            this.buttonFavorite.Size = new System.Drawing.Size(22, 22);
+            this.buttonFavorite.TabIndex = 20;
+            this.buttonFavorite.UseVisualStyleBackColor = true;
             // 
             // buttonRemove
             // 
@@ -394,6 +444,8 @@
             // 
             // groupBoxSign
             // 
+            this.groupBoxSign.Controls.Add(this.label6);
+            this.groupBoxSign.Controls.Add(this.textBoxBarcode);
             this.groupBoxSign.Controls.Add(this.buttonSignNote);
             this.groupBoxSign.Controls.Add(this.buttonSearchMUTCD);
             this.groupBoxSign.Controls.Add(this.buttonInstallDate);
@@ -437,6 +489,16 @@
             this.groupBoxSign.TabIndex = 0;
             this.groupBoxSign.TabStop = false;
             this.groupBoxSign.Text = "Sign";
+            // 
+            // buttonSignNote
+            // 
+            this.buttonSignNote.Image = global::tams4a.Properties.Resources.notes;
+            this.buttonSignNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSignNote.Location = new System.Drawing.Point(84, 347);
+            this.buttonSignNote.Name = "buttonSignNote";
+            this.buttonSignNote.Size = new System.Drawing.Size(22, 22);
+            this.buttonSignNote.TabIndex = 48;
+            this.buttonSignNote.UseVisualStyleBackColor = true;
             // 
             // buttonSearchMUTCD
             // 
@@ -707,7 +769,7 @@
             0,
             0,
             65536});
-            this.numericUpDownWidth.Location = new System.Drawing.Point(87, 136);
+            this.numericUpDownWidth.Location = new System.Drawing.Point(87, 113);
             this.numericUpDownWidth.Name = "numericUpDownWidth";
             this.numericUpDownWidth.Size = new System.Drawing.Size(83, 20);
             this.numericUpDownWidth.TabIndex = 20;
@@ -720,7 +782,7 @@
             // labelWidth
             // 
             this.labelWidth.AutoSize = true;
-            this.labelWidth.Location = new System.Drawing.Point(10, 139);
+            this.labelWidth.Location = new System.Drawing.Point(10, 116);
             this.labelWidth.Name = "labelWidth";
             this.labelWidth.Size = new System.Drawing.Size(35, 13);
             this.labelWidth.TabIndex = 19;
@@ -734,7 +796,7 @@
             0,
             0,
             65536});
-            this.numericUpDownHeigthSign.Location = new System.Drawing.Point(87, 113);
+            this.numericUpDownHeigthSign.Location = new System.Drawing.Point(87, 136);
             this.numericUpDownHeigthSign.Name = "numericUpDownHeigthSign";
             this.numericUpDownHeigthSign.Size = new System.Drawing.Size(83, 20);
             this.numericUpDownHeigthSign.TabIndex = 18;
@@ -747,7 +809,7 @@
             // labelHeightSign
             // 
             this.labelHeightSign.AutoSize = true;
-            this.labelHeightSign.Location = new System.Drawing.Point(10, 116);
+            this.labelHeightSign.Location = new System.Drawing.Point(10, 139);
             this.labelHeightSign.Name = "labelHeightSign";
             this.labelHeightSign.Size = new System.Drawing.Size(38, 13);
             this.labelHeightSign.TabIndex = 17;
@@ -796,25 +858,21 @@
             this.labelType.TabIndex = 0;
             this.labelType.Text = "MUTCD code";
             // 
-            // buttonFavorite
+            // textBoxBarcode
             // 
-            this.buttonFavorite.Image = global::tams4a.Properties.Resources.favoriteicon;
-            this.buttonFavorite.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFavorite.Location = new System.Drawing.Point(40, 154);
-            this.buttonFavorite.Name = "buttonFavorite";
-            this.buttonFavorite.Size = new System.Drawing.Size(22, 22);
-            this.buttonFavorite.TabIndex = 20;
-            this.buttonFavorite.UseVisualStyleBackColor = true;
+            this.textBoxBarcode.Location = new System.Drawing.Point(87, 414);
+            this.textBoxBarcode.Name = "textBoxBarcode";
+            this.textBoxBarcode.Size = new System.Drawing.Size(112, 20);
+            this.textBoxBarcode.TabIndex = 49;
             // 
-            // buttonSignNote
+            // label6
             // 
-            this.buttonSignNote.Image = global::tams4a.Properties.Resources.notes;
-            this.buttonSignNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSignNote.Location = new System.Drawing.Point(84, 347);
-            this.buttonSignNote.Name = "buttonSignNote";
-            this.buttonSignNote.Size = new System.Drawing.Size(22, 22);
-            this.buttonSignNote.TabIndex = 48;
-            this.buttonSignNote.UseVisualStyleBackColor = true;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 417);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(47, 13);
+            this.label6.TabIndex = 50;
+            this.label6.Text = "Barcode";
             // 
             // Panel_Sign
             // 
@@ -894,11 +952,9 @@
         public System.Windows.Forms.TextBox textBoxDescription;
         private System.Windows.Forms.Label labelDescription;
         public System.Windows.Forms.Button buttonInstallDate;
-        private System.Windows.Forms.ToolStripButton toolStripButtonNotes;
         public System.Windows.Forms.ToolStrip toolStrip;
         public System.Windows.Forms.GroupBox groupBoxSupport;
         public System.Windows.Forms.GroupBox groupBoxSign;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripButtonSurveyDate;
         public System.Windows.Forms.ToolStripMenuItem setOtherDateToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem setTodayToolStripMenuItem;
         public System.Windows.Forms.Label labelAddress;
@@ -907,5 +963,13 @@
         public System.Windows.Forms.Button buttonAdd;
         public System.Windows.Forms.Button buttonFavorite;
         public System.Windows.Forms.Button buttonSignNote;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonNewPost;
+        public System.Windows.Forms.ToolStripMenuItem enterCoordinatesToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem readGPSToolStripMenuItem;
+        public System.Windows.Forms.ToolStripDropDownButton toolStripButtonSurveyDate;
+        public System.Windows.Forms.ToolStripButton toolStripButtonNotes;
+        private System.Windows.Forms.Label label6;
+        public System.Windows.Forms.TextBox textBoxBarcode;
     }
 }
