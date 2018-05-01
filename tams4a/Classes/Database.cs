@@ -425,7 +425,7 @@ UPDATE treatments SET average_boost = 5 where name = 'Single Chip Seal';
 UPDATE treatments SET average_boost = 4 where name = 'Scrub Seal';
 UPDATE road_distresses set rsl1 = 16, rsl2 = 16, rsl3 = 16, rsl4 = 16, rsl5 = 16, rsl6 = 16, rsl7 = 16, rsl8 = 16, rsl9 = 16 WHERE name = 'Potholes';
 UPDATE road_distresses set rsl6 = 8 WHERE name = 'Block';
-CREATE TABLE sign(ID INTEGER PRIMARY KEY AUTOINCREMENT, TAMSID INTEGER, sheeting TEXT, backing TEXT, width NUMERIC, height NUMERIC, mount_height NUMERIC, type TEXT, sign_text TEXT, photo TEXT, obstructions TEXT, reflectivity NUMERIC, condition TEXT, install_date TEXT, survey_date TEXT, direction TEXT, support_id INTEGER);
+CREATE TABLE sign(ID INTEGER PRIMARY KEY AUTOINCREMENT, TAMSID INTEGER, sheeting TEXT, backing TEXT, width NUMERIC, height NUMERIC, mount_height NUMERIC, type TEXT, sign_text TEXT, photo TEXT, obstructions TEXT, reflectivity TEXT, condition TEXT, install_date TEXT, survey_date TEXT, direction TEXT, support_id INTEGER);
 CREATE TABLE sign_support(ID INTEGER PRIMARY KEY AUTOINCREMENT, support_id INTEGER, material TEXT, condition TEXT, address TEXT, road_offset NUMERIC, height NUMERIC, survey_date TEXT);";
                     SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
                     cmd.ExecuteNonQuery();

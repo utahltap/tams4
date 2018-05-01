@@ -1,5 +1,6 @@
 ﻿using DotSpatial.Controls;
 using DotSpatial.Symbology;
+using DotSpatial.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,8 +19,8 @@ namespace tams4a.Classes
         
         private string notes;
         private string postCat;
-        private int maxSuppID;
-        private int maxSignID;
+        private int maxSuppID = 0;
+        private int maxSignID = 0;
         private DataTable signsOnPost;
         private List<Dictionary<string, string>> signChanges;
         private Dictionary<string, int> catRank;
@@ -41,6 +42,7 @@ namespace tams4a.Classes
             createSigns.Text = "Create Sign SHP File";
             createSigns.Size = new System.Drawing.Size(196, 54);
             createSigns.Location = new System.Drawing.Point(10, 74);
+            createSigns.Click += newSHPFile;
             signAdd.Controls.Add(createSigns);
             signAdd.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(signAdd);
@@ -73,6 +75,9 @@ namespace tams4a.Classes
                 { "recreation", 11 },
                 { "empty_post", 12 }
             };
+
+            boundButtons[0].Click += clickManageFavorites;
+            boundButtons[1].Click += generateReport;
         }
 
         public override bool openFile(string thePath = "", string type = "point")
@@ -166,6 +171,46 @@ namespace tams4a.Classes
             return true;
         }
 
+        private bool createSHPFile(string filename)
+        {
+            PointShapefile pointLayer = new PointShapefile();
+            pointLayer.Projection = DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984;
+            pointLayer.DataTable.Columns.Add("FID");
+            pointLayer.DataTable.Columns.Add("TAMSID");
+            pointLayer.DataTable.Columns.Add("TAMSSIGN");
+            pointLayer.DataTable.Columns.Add("address");
+            pointLayer.DataTable.Columns.Add("offset");
+            try
+            {
+                pointLayer.SaveAs(filename, false);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not create ShapeFile" + Environment.NewLine + e.ToString());
+                return false;
+            }
+            return true;
+        }
+
+        private void newSHPFile(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "GIS ShapeFile (*.SHP)|*.shp";
+            if (save.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            string filename = save.FileName;
+            if (createSHPFile(filename))
+            {
+                openFile(filename, "point");
+                ProjectSetting shpSetting = new ProjectSetting(name: ModuleName + "_file", value: Filepath, module: ModuleName);
+                ProjectSetting shpRelative = new ProjectSetting(name: ModuleName + "_relative", value: Util.MakeRelativePath(Properties.Settings.Default.lastProject, Filepath), module: ModuleName);
+                Project.settings.SetSetting(shpSetting);
+                Project.settings.SetSetting(shpRelative);
+            }
+        }
+
         /// <summary>
         /// Function that sets the install date of the active sign.
         /// </summary>
@@ -233,7 +278,6 @@ namespace tams4a.Classes
                     string fieldName = Project.settings.GetValue(pair.Key);
                     if (data.Columns.Contains(fieldName))
                     {
-                        // make a copy in the correct location of anything we DO need
                         values[pair.Value] = row[fieldName].ToString();
                     }
                 }
@@ -248,7 +292,7 @@ namespace tams4a.Classes
         /// </summary>
         private void setSymbolizer()
         {
-            int baseWidth = 32;
+            int baseWidth = 48;
 
             PointScheme sgnScheme = new PointScheme();
             
@@ -308,6 +352,15 @@ namespace tams4a.Classes
             ISelection shpSelection = selectionLayer.Selection;
             DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
+            if (selectionTable.Rows.Count == 0)
+            {
+                if (!selectionTable.Columns.Contains("TAMSSIGN"))
+                {
+                    selectionTable.Columns.Add("TAMSSIGN");
+                    selectionLayer.DataSet.DataTable = selectionTable;
+                }
+                return;
+            }
             selectionTable.DefaultView.Sort = tamsidcolumn + " asc";
             selectionTable = selectionTable.DefaultView.ToTable();
             if (!selectionTable.Columns.Contains("TAMSSIGN"))
@@ -476,12 +529,14 @@ namespace tams4a.Classes
 
         private void changeSign()
         {
+            Panel_Sign signPanel = getSignControls();
             if (signsOnPost == null || signsOnPost.Rows.Count == 0)
             {
+                signPanel.groupBoxSign.Enabled = false;
                 return;
             }
+            signPanel.groupBoxSign.Enabled = true;
             suppressChanges = true;
-            Panel_Sign signPanel = getSignControls();
             int index = signPanel.comboBoxSigns.SelectedIndex;
             signPanel.textBoxType.Text = signChanges[index]["mutcd_code"];
             signPanel.textBoxDescription.Text = signChanges[index]["description"];
@@ -501,6 +556,9 @@ namespace tams4a.Classes
             suppressChanges = false;
         }
 
+        /// <summary>
+        /// sets the values in sign changes to the original values from the sign database.
+        /// </summary>
         private void clearSignChanges()
         {
             signChanges = new List<Dictionary<string, string>>();
@@ -514,6 +572,9 @@ namespace tams4a.Classes
             }
         }
 
+        /// <summary>
+        /// activates the controls when a sign is selected.
+        /// </summary>
         private void enableControls()
         {
             Panel_Sign signControls = getSignControls();
@@ -571,8 +632,8 @@ namespace tams4a.Classes
             signAdd.SetHandler(new EventHandler(openFileHandler));
             Button createSigns = new Button();
             createSigns.Text = "Create Sign SHP File";
-            createSigns.Size = new System.Drawing.Size(196, 54);
-            createSigns.Location = new System.Drawing.Point(10, 74);
+            createSigns.Size = new Size(196, 54);
+            createSigns.Location = new Point(10, 74);
             signAdd.Controls.Add(createSigns);
             signAdd.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(signAdd);
@@ -756,11 +817,12 @@ namespace tams4a.Classes
                             newSign["condition"] = "";
                             newSign["reflectivity"] = "";
                             newSign["obstructions"] = "";
-                            newSign["installDate"] = "";
-                            newSign["surveyDate"] = Util.SortableDate(surveyDate);
+                            newSign["install_date"] = "";
+                            newSign["survey_date"] = Util.SortableDate(surveyDate);
                             newSign["photo"] = "";
                             newSign["barcode"] = "";
                             newSign["favorite"] = "false";
+                            Database.ReplaceRow(Project.conn, newSign, "sign");
                             getSigns();
                             getSignControls().comboBoxSigns.SelectedIndex = getSignControls().comboBoxSigns.Items.Count - 1;
                             changeSign();
@@ -827,37 +889,51 @@ namespace tams4a.Classes
             double[] z = { 0 };
             DotSpatial.Projections.Reproject.ReprojectPoints(xy, z, DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984, mpl.Projection, 0, 1);
             DotSpatial.Topology.Point newPost = new DotSpatial.Topology.Point(xy[0], xy[1]);
-            DotSpatial.Data.IFeature np = mpl.DataSet.AddFeature(newPost);
+            IFeature np = mpl.DataSet.AddFeature(newPost);
             maxSuppID++;
+            if (!np.DataRow.Table.Columns.Contains(Project.settings.GetValue(ModuleName + "_f_TAMSID"))) {
+                np.DataRow.Table.Columns.Add(Project.settings.GetValue(ModuleName + "_f_TAMSID"));
+            }
+            if (!np.DataRow.Table.Columns.Contains("TAMSSIGN"))
+            {
+                np.DataRow.Table.Columns.Add("TAMSSIGN");
+            }
             np.DataRow[Project.settings.GetValue(ModuleName + "_f_TAMSID")] = maxSuppID;
             np.DataRow["TAMSSIGN"] = "empty_post";
+            Dictionary<string, string> values = new Dictionary<string, string>()
+            {
+                {"support_id", maxSuppID.ToString() },
+                {"category", "empty_post" }
+            };
+            Database.ReplaceRow(Project.conn, values, "sign_support");
             mpl.DataSet.Save();
+            mpl.ClearSelection();
+            setSymbolizer();
+            Project.map.Invalidate();
+            Project.map.Refresh();
+            Project.map.ResetBuffer();
+            Project.map.Update();
         }
 
         private void enterCoordinates(object sender, EventArgs e)
         {
-            FormCustomMessage dlg = new FormCustomMessage();
-            dlg.labelMessage.Text = "Enter coordiantes in Latitude and Longitude.";
-            Label lat = new Label();
-            lat.Text = "Latitude:";
-            lat.Location = new Point(32, 54);
-            dlg.groupBoxUser.Controls.Add(lat);
-            Label lon = new Label();
-            lon.Text = "Longitude:";
-            lon.Location = new Point(32, 72);
-            dlg.groupBoxUser.Controls.Add(lon);
-            TextBox latVal = new TextBox();
-            latVal.Text = "0.0";
-            latVal.Location = new Point(134, 54);
-            dlg.groupBoxUser.Controls.Add(latVal);
-            TextBox lonVal = new TextBox();
-            lonVal.Text = "0.0";
-            lonVal.Location = new Point(134, 72);
-            dlg.groupBoxUser.Controls.Add(lonVal);
+            FormLatLon dlg = new FormLatLon();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                addPost(Util.ToDouble(latVal.Text), Util.ToDouble(lonVal.Text));
+                double lat, lon;
+                if (dlg.tabControlDegree.SelectedTab == dlg.tabPageDecimal)
+                {
+                    lat = Util.ToDouble(dlg.textBoxLatitude.Text) * (dlg.radioButtonNorth1.Checked? 1 : -1);
+                    lon = Util.ToDouble(dlg.textBoxLongitude.Text) * (dlg.radioButtonEast1.Checked ? 1 : -1);
+                }
+                else
+                {
+                    lat = (Util.ToDouble(dlg.textBoxLatDeg.Text) + Util.ToDouble(dlg.textBoxLatMin.Text)/60 + Util.ToDouble(dlg.textBoxLatSec.Text)/3600) * (dlg.radioButtonNorth2.Checked ? 1 : -1);
+                    lon = (Util.ToDouble(dlg.textBoxLonDeg.Text) + Util.ToDouble(dlg.textBoxLonMin.Text)/60 + Util.ToDouble(dlg.textBoxLonSec.Text)/3600) * (dlg.radioButtonEast2.Checked ? 1 : -1);
+                }
+                addPost(lat, lon);
             }
+            dlg.Close();
         }
 
         /// <summary>
@@ -888,6 +964,65 @@ namespace tams4a.Classes
                 controlChanged(sender, e);
 
                 notes = noteForm.Value;
+            }
+        }
+
+        private void clickManageFavorites(object sender, EventArgs e)
+        {
+            FormManageFavorites faves = new FormManageFavorites(Project.conn, maxSignID);
+            faves.ShowDialog();
+            maxSignID += faves.virtualSignsCreated();
+        }
+
+        private void generateReport(object sender, EventArgs e)
+        {
+            DataTable general = new DataTable();
+            general.Columns.Add("ID");
+            general.Columns.Add("Sign");
+            general.Columns.Add("Address");
+            general.Columns.Add("Installed");
+            general.Columns.Add("Sheeting");
+            general.Columns.Add("Backing");
+            general.Columns.Add("Reflectivity");
+            general.Columns.Add("Obstructions");
+            general.Columns.Add("Condition");
+            general.Columns.Add("Recommendation");
+            try
+            {
+                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
+                foreach (DataRow row in signsTable.Rows)
+                {
+                    DataRow nr = general.NewRow();
+                    nr["ID"] = row["TAMSID"].ToString();
+                    nr["Sign"] = row["description"].ToString();
+                    nr["Address"] = row["address"].ToString();
+                    nr["Installed"] = row["install_date"].ToString();
+                    nr["Sheeting"] = row["sheeting"].ToString();
+                    nr["Backing"] = row["backing"].ToString();
+                    nr["Reflectivity"] = row["reflectivity"].ToString();
+                    nr["Obstructions"] = row["obstructions"].ToString();
+                    nr["Condition"] = row["condition"].ToString();
+                    nr["Recommendation"] = "";
+                    if (nr["Reflectivity"].ToString().Contains("fail") || nr["Condition"].ToString().Contains("broken"))
+                    {
+                        nr["Recommendation"] = "replace";
+                    }
+                    if (nr["Obstructions"].ToString().Contains("partial") || nr["Obstructions"].ToString().Contains("severe"))
+                    {
+                        nr["Recommendation"] = "remove obstructions";
+                    }
+                    general.Rows.Add(nr);
+                }
+                general.DefaultView.Sort = "Address asc, ID asc, Installed asc";
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = general.DefaultView.ToTable();
+                report.Text = "Sign Report";
+                report.Show();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("An error occured while trying to generate the report.");
+                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
             }
         }
     }

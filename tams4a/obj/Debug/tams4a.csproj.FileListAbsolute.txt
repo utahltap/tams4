@@ -129,3 +129,4 @@ C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\bin\Debug\DotSpatial.NetTopology
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\bin\Debug\DotSpatial.GeoAPI.xml
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\bin\Debug\DotSpatial.NetTopologySuite.xml
 C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormManageFavorites.resources
+C:\Users\A01099401\Desktop\Tams4a\tams4a\tams4a\obj\Debug\tams4a.Forms.FormLatLon.resources

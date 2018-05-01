@@ -356,6 +356,12 @@
     <Compile Include="Forms\FormHistory.Designer.cs">
       <DependentUpon>FormHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormLatLon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormLatLon.Designer.cs">
+      <DependentUpon>FormLatLon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormManageFavorites.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -468,6 +474,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormHistory.resx">
       <DependentUpon>FormHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormLatLon.resx">
+      <DependentUpon>FormLatLon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormManageFavorites.resx">
       <DependentUpon>FormManageFavorites.cs</DependentUpon>

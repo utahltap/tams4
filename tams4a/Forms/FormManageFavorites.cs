@@ -33,11 +33,11 @@ namespace tams4a.Forms
             comboBoxSheeting.DisplayMember = "type";
             comboBoxSheeting.ValueMember = "id";
             DataTable backing = Database.GetDataByQuery(conn, "SELECT * FROM sign_backing");
-            DataRow blankBackingRow = sheeting.NewRow();
+            DataRow blankBackingRow = backing.NewRow();
             backing.Rows.InsertAt(blankBackingRow, 0);
-            comboBoxSheeting.DataSource = backing;
-            comboBoxSheeting.DisplayMember = "material";
-            comboBoxSheeting.ValueMember = "id";
+            comboBoxBacking.DataSource = backing;
+            comboBoxBacking.DisplayMember = "material";
+            comboBoxBacking.ValueMember = "id";
             setSigns();
             selectSign(0);
             new ToolTip().SetToolTip(buttonCreate, "Create virtual sign to add to your favorites from input parameters.");
@@ -132,6 +132,10 @@ namespace tams4a.Forms
 
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
+            if (comboBoxSign.Items.Count == 0)
+            {
+                return;
+            }
             if (selectedSign["support_id"] != "-2")
             {
                 Database.UpdateRow(conn, new Dictionary<string, string>() { { "favorite", "false" } }, "sign", "TAMSID", selectedSign["TAMSID"]);
@@ -140,6 +144,7 @@ namespace tams4a.Forms
                 selectedSign["TAMSID"] = (maxSignID + virtualSigns).ToString();
                 sIndex = favorites.Rows.Count - 1;
             }
+            selectedSign["favorite"] = "true";
             Database.ReplaceRow(conn, selectedSign, "sign");
             setSigns();
             selectSign(sIndex);
@@ -148,6 +153,7 @@ namespace tams4a.Forms
         private void buttonCreate_Click(object sender, EventArgs e)
         {
             selectedSign["support_id"] = "-2";
+            selectedSign["favorite"] = "true";
             virtualSigns++;
             selectedSign["TAMSID"] = (maxSignID + virtualSigns).ToString();
             Database.ReplaceRow(conn, selectedSign, "sign");
@@ -162,6 +168,10 @@ namespace tams4a.Forms
 
         private void buttonRemove_Click(object sender, EventArgs e)
         {
+            if (comboBoxSign.Items.Count == 0)
+            {
+                return;
+            }
             if (selectedSign["support_id"] == "-2")
             {
                 Database.DeleteRow(conn, "sign", "TAMSID", selectedSign["TAMSID"]);

@@ -801,9 +801,7 @@ namespace tams4a.Forms
             {
                 saveDialog.InitialDirectory = Environment.SpecialFolder.MyDocuments.ToString();
             }
-            DialogResult dialogResult = saveDialog.ShowDialog();
-
-            if (dialogResult != DialogResult.OK)
+             if (saveDialog.ShowDialog() != DialogResult.OK)
             {
                 return;
             }

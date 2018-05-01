@@ -48,8 +48,7 @@ namespace tams4a
                     MessageBox.Show("Could not open " + file);
                 } 
             }
-
-            // Before we can start, we must open a project.
+            
             while (!Project.isOpen)
             {
                 FormStartup getProject = new FormStartup(Project);
@@ -58,7 +57,7 @@ namespace tams4a
 
             Visible = true;
             ToolStripMenuItem[] lcs = { importRoadsToolStripMenuItem, generalReportToolStripMenuItem, roadsWithPotholesToolStripMenuItem, budgetToolStripMenuItem };
-            ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem };
+            ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signReportToolStripMenuItem, failedSignsToolStripMenuItem, obstructedSignsToolStripMenuItem, oldSignsToolStripMenuItem, damagedSignsToolStripMenuItem};
             ModuleRoads road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
             ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
             Project.addModule(road, "Roads", tabControlControls);
