@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using tams4a.Controls;
 using tams4a.Forms;
+using System.IO;
 
 namespace tams4a.Classes
 {
@@ -78,6 +79,10 @@ namespace tams4a.Classes
 
             boundButtons[0].Click += clickManageFavorites;
             boundButtons[1].Click += generateReport;
+            boundButtons[2].Click += failedReport;
+            boundButtons[3].Click += obstructedReport;
+            boundButtons[4].Click += oldSignsReport;
+            boundButtons[5].Click += brokenReport;
         }
 
         public override bool openFile(string thePath = "", string type = "point")
@@ -517,6 +522,7 @@ namespace tams4a.Classes
                 signControls.comboBoxSigns.ValueMember = "TAMSID";
                 clearSignChanges();
                 changeSign();
+                determinePostCat();
             }
             else
             {
@@ -554,6 +560,7 @@ namespace tams4a.Classes
             signPanel.textBoxPhotoFile.Text = signChanges[index]["photo"];
             signPanel.buttonFavorite.BackColor = signChanges[index]["favorite"].Contains("true") ? Color.DeepPink : Control.DefaultBackColor;
             suppressChanges = false;
+            updatePhotoPreview();
         }
 
         /// <summary>
@@ -615,6 +622,7 @@ namespace tams4a.Classes
             signControls.comboBoxDirection.SelectedIndex = 0;
             signControls.comboBoxConditionSign.SelectedIndex = 0;
             signControls.textBoxPhotoFile.Text = "";
+            signControls.pictureBoxPhoto.Image = null;
             suppressChanges = false;
             signControls.labelAddress.ForeColor = default(Color);
             signControls.labelAddress.BackColor = default(Color);
@@ -754,9 +762,8 @@ namespace tams4a.Classes
             
             resetSaveCondition();
 
-            //updatePhotoPreview();
+            updatePhotoPreview();
             Properties.Settings.Default.Save();
-
             selectionLayer.ClearSelection();
             selectionLayer.DataSet.Save();
             setSymbolizer();
@@ -974,25 +981,35 @@ namespace tams4a.Classes
             maxSignID += faves.virtualSignsCreated();
         }
 
+        /// <summary>
+        /// Generates a list of all signs to export to .csv file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void generateReport(object sender, EventArgs e)
         {
-            DataTable general = new DataTable();
-            general.Columns.Add("ID");
-            general.Columns.Add("Sign");
-            general.Columns.Add("Address");
-            general.Columns.Add("Installed");
-            general.Columns.Add("Sheeting");
-            general.Columns.Add("Backing");
-            general.Columns.Add("Reflectivity");
-            general.Columns.Add("Obstructions");
-            general.Columns.Add("Condition");
-            general.Columns.Add("Recommendation");
+            DataTable data = new DataTable();
+            data.Columns.Add("ID");
+            data.Columns.Add("Sign");
+            data.Columns.Add("Address");
+            data.Columns.Add("Installed");
+            data.Columns.Add("Sheeting");
+            data.Columns.Add("Backing");
+            data.Columns.Add("Reflectivity");
+            data.Columns.Add("Obstructions");
+            data.Columns.Add("Condition");
+            data.Columns.Add("Recommendation");
             try
             {
                 DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
+                if (signsTable.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no signs where found.");
+                    return;
+                }
                 foreach (DataRow row in signsTable.Rows)
                 {
-                    DataRow nr = general.NewRow();
+                    DataRow nr = data.NewRow();
                     nr["ID"] = row["TAMSID"].ToString();
                     nr["Sign"] = row["description"].ToString();
                     nr["Address"] = row["address"].ToString();
@@ -1002,20 +1019,28 @@ namespace tams4a.Classes
                     nr["Reflectivity"] = row["reflectivity"].ToString();
                     nr["Obstructions"] = row["obstructions"].ToString();
                     nr["Condition"] = row["condition"].ToString();
-                    nr["Recommendation"] = "";
-                    if (nr["Reflectivity"].ToString().Contains("fail") || nr["Condition"].ToString().Contains("broken"))
-                    {
-                        nr["Recommendation"] = "replace";
-                    }
+                    int age = DateTime.Now.Year - Util.ToInt(row["install_date"].ToString().Split('-')[0]);
                     if (nr["Obstructions"].ToString().Contains("partial") || nr["Obstructions"].ToString().Contains("severe"))
                     {
                         nr["Recommendation"] = "remove obstructions";
                     }
-                    general.Rows.Add(nr);
+                    else if (nr["Reflectivity"].ToString().Contains("fail") || nr["Condition"].ToString().Contains("broken"))
+                    {
+                        nr["Recommendation"] = "replace";
+                    }
+                    else if ((age > 5 && (nr["Sheeting"].ToString().Equals("I") || nr["Sheeting"].ToString().Equals("V"))) || age > 9)
+                    {
+                        nr["Recommendation"] = "monitor";
+                    }
+                    else
+                    {
+                        nr["Recommendation"] = "";
+                    }
+                    data.Rows.Add(nr);
                 }
-                general.DefaultView.Sort = "Address asc, ID asc, Installed asc";
+                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
                 FormOutput report = new FormOutput();
-                report.dataGridViewReport.DataSource = general.DefaultView.ToTable();
+                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Sign Report";
                 report.Show();
             }
@@ -1024,6 +1049,290 @@ namespace tams4a.Classes
                 MessageBox.Show("An error occured while trying to generate the report.");
                 Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
             }
+        }
+
+        /// <summary>
+        /// Show only signs that have faild the reflectivity tests.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void failedReport(object sender, EventArgs e)
+        {
+            DataTable data = new DataTable();
+            data.Columns.Add("ID");
+            data.Columns.Add("Sign");
+            data.Columns.Add("Address");
+            data.Columns.Add("Installed");
+            data.Columns.Add("Sheeting");
+            data.Columns.Add("Backing");
+            data.Columns.Add("Reflectivity");
+            data.Columns.Add("Recommendation");
+            try
+            {
+                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
+                if (signsTable.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no signs that failed the retrorefletivity test where found.");
+                    return;
+                }
+                foreach (DataRow row in signsTable.Rows)
+                {
+                    DataRow nr = data.NewRow();
+                    nr["ID"] = row["TAMSID"].ToString();
+                    nr["Sign"] = row["description"].ToString();
+                    nr["Address"] = row["address"].ToString();
+                    nr["Installed"] = row["install_date"].ToString();
+                    nr["Sheeting"] = row["sheeting"].ToString();
+                    nr["Backing"] = row["backing"].ToString();
+                    nr["Reflectivity"] = row["reflectivity"].ToString();
+                    int age = DateTime.Now.Year - Util.ToInt(row["install_date"].ToString().Split('-')[0]);
+                    if (nr["Reflectivity"].ToString().Contains("fail"))
+                    {
+                        nr["Recommendation"] = "replace";
+                        data.Rows.Add(nr);
+                    }
+                }
+                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
+                report.Text = "Sign Report";
+                report.Show();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("An error occured while trying to generate the report.");
+                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+            }
+        }
+
+        /// <summary>
+        /// lists only signs that are at least partially obstructed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void obstructedReport(object sender, EventArgs e)
+        {
+            DataTable data = new DataTable();
+            data.Columns.Add("ID");
+            data.Columns.Add("Sign");
+            data.Columns.Add("Address");
+            data.Columns.Add("Installed");
+            data.Columns.Add("Sheeting");
+            data.Columns.Add("Backing");
+            data.Columns.Add("Obstructions");
+            data.Columns.Add("Recommendation");
+            try
+            {
+                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
+                if (signsTable.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no obstructed signs were found.");
+                    return;
+                }
+                foreach (DataRow row in signsTable.Rows)
+                {
+                    DataRow nr = data.NewRow();
+                    nr["ID"] = row["TAMSID"].ToString();
+                    nr["Sign"] = row["description"].ToString();
+                    nr["Address"] = row["address"].ToString();
+                    nr["Installed"] = row["install_date"].ToString();
+                    nr["Sheeting"] = row["sheeting"].ToString();
+                    nr["Backing"] = row["backing"].ToString();
+                    nr["Obstructions"] = row["obstructions"].ToString();
+                    if (nr["Obstructions"].ToString().Contains("partial") || nr["Obstructions"].ToString().Contains("severe"))
+                    {
+                        nr["Recommendation"] = "remove obstructions";
+                        data.Rows.Add(nr);
+                    }
+                }
+                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
+                report.Text = "Sign Report";
+                report.Show();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("An error occured while trying to generate the report.");
+                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Show only signs that are considered old based, on the expected life sheeting type.
+        /// Old signs may still be servicable as long as they meet the reflectity guidelines.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void oldSignsReport(object sender, EventArgs e)
+        {
+            DataTable data = new DataTable();
+            data.Columns.Add("ID");
+            data.Columns.Add("Sign");
+            data.Columns.Add("Address");
+            data.Columns.Add("Installed");
+            data.Columns.Add("Sheeting");
+            data.Columns.Add("Backing");
+            data.Columns.Add("Recommendation");
+            try
+            {
+                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
+                if (signsTable.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no signs that were old or of unknown age were found.");
+                    return;
+                }
+                foreach (DataRow row in signsTable.Rows)
+                {
+                    DataRow nr = data.NewRow();
+                    nr["ID"] = row["TAMSID"].ToString();
+                    nr["Sign"] = row["description"].ToString();
+                    nr["Address"] = row["address"].ToString();
+                    nr["Installed"] = row["install_date"].ToString();
+                    nr["Sheeting"] = row["sheeting"].ToString();
+                    nr["Backing"] = row["backing"].ToString();
+                    int age = DateTime.Now.Year - Util.ToInt(row["install_date"].ToString().Split('-')[0]);
+                    nr["Recommendation"] = "monitor";
+                    if ((age > 5 && (nr["Sheeting"].ToString().Equals("I") || nr["Sheeting"].ToString().Equals("V"))) || age > 9)
+                    {
+                        data.Rows.Add(nr);
+                    }
+                }
+                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
+                report.Text = "Sign Report";
+                report.Show();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("An error occured while trying to generate the report.");
+                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Shows only signs that are damaged.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void brokenReport(object sender, EventArgs e)
+        {
+            DataTable data = new DataTable();
+            data.Columns.Add("ID");
+            data.Columns.Add("Sign");
+            data.Columns.Add("Address");
+            data.Columns.Add("Installed");
+            data.Columns.Add("Sheeting");
+            data.Columns.Add("Backing");
+            data.Columns.Add("Condition");
+            data.Columns.Add("Recommendation");
+            try
+            {
+                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
+                if (signsTable.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no damaged signs were found.");
+                    return;
+                }
+                foreach (DataRow row in signsTable.Rows)
+                {
+                    DataRow nr = data.NewRow();
+                    nr["ID"] = row["TAMSID"].ToString();
+                    nr["Sign"] = row["description"].ToString();
+                    nr["Address"] = row["address"].ToString();
+                    nr["Installed"] = row["install_date"].ToString();
+                    nr["Sheeting"] = row["sheeting"].ToString();
+                    nr["Backing"] = row["backing"].ToString();
+                    nr["Condition"] = row["condition"].ToString();
+                    if (!nr["Condition"].ToString().Contains("broken") && !nr["Condition"].ToString().Contains("damaged"))
+                    {
+                        continue;
+                    }
+                    if (nr["Condition"].ToString().Contains("broken"))
+                    {
+                        nr["Recommendation"] = "replace";
+                    }
+                    else
+                    {
+                        nr["Recommendaiton"] = "";
+                    }
+                    data.Rows.Add(nr);
+                }
+                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
+                report.Text = "Sign Report";
+                report.Show();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("An error occured while trying to generate the report.");
+                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+            }
+        }
+
+        private void updatePhotoPreview()
+        {
+            Panel_Sign signControls = getSignControls();
+            if (!string.IsNullOrWhiteSpace(signControls.textBoxPhotoFile.Text))
+            {
+                try
+                {
+                    string imageLocation = Project.projectFolderPath + @"\Photos\" + signControls.textBoxPhotoFile.Text;
+                    if (File.Exists(imageLocation))
+                    {
+                        signControls.pictureBoxPhoto.ImageLocation = imageLocation;
+                    }
+                    else
+                    {
+                        Log.Warning("Missing image file: " + imageLocation);
+                        signControls.toolTip.SetToolTip(signControls.pictureBoxPhoto, "Missing: " + imageLocation);
+                        throw new Exception("Missing image file");
+                    }
+                }
+                catch
+                {
+                    signControls.pictureBoxPhoto.Image = Properties.Resources.error;
+                }
+            }
+            else
+            {
+                signControls.pictureBoxPhoto.Image = Properties.Resources.nophoto;
+            }
+        }
+
+        private void clickPhotoBox(object sender, EventArgs e)
+        {
+            Panel_Sign signControls = getSignControls();
+            FormPicture largePic = new FormPicture();
+            if (!string.IsNullOrWhiteSpace(signControls.textBoxPhotoFile.Text))
+            {
+                try
+                {
+                    string imageLocation = Project.projectFolderPath + @"\Photos\" + signControls.textBoxPhotoFile.Text;
+
+                    if (File.Exists(imageLocation))
+                    {
+                        largePic.pictureRoad.ImageLocation = imageLocation;
+                    }
+                    else
+                    {
+                        Log.Warning("Missing image file: " + imageLocation);
+                        signControls.toolTip.SetToolTip(signControls.pictureBoxPhoto, "Missing: " + imageLocation);
+                        throw new Exception("Missing image file");
+                    }
+                }
+                catch
+                {
+                    largePic.pictureRoad.Image = Properties.Resources.error;
+                }
+            }
+            else
+            {
+                largePic.pictureRoad.Image = Properties.Resources.nophoto;
+            }
+            largePic.Show();
         }
     }
 }

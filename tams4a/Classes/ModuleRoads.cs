@@ -360,7 +360,6 @@ namespace tams4a.Classes
                 }
                 catch
                 {
-                    // set to error image.
                     roadControls.pictureBoxPhoto.Image = Properties.Resources.error;
                 }
             }
@@ -1097,6 +1096,11 @@ namespace tams4a.Classes
             try
             {
                 DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
+                if (resultsTable.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no roads with potholes where found.");
+                    return;
+                }
                 foreach (DataRow row in resultsTable.Rows)
                 {
                     if (Util.ToInt(row["distress5"].ToString()) <= 0)
