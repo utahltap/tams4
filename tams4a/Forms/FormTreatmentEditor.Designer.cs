@@ -51,6 +51,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonClose = new System.Windows.Forms.Button();
             this.groupBoxEdit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRSLChange)).BeginInit();
@@ -61,6 +62,7 @@
             // 
             // groupBoxEdit
             // 
+            this.groupBoxEdit.Controls.Add(this.buttonClose);
             this.groupBoxEdit.Controls.Add(this.buttonCreate);
             this.groupBoxEdit.Controls.Add(this.buttonClear);
             this.groupBoxEdit.Controls.Add(this.buttonDelete);
@@ -287,12 +289,24 @@
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
+            // 
+            // buttonClose
+            // 
+            this.buttonClose.Location = new System.Drawing.Point(807, 129);
+            this.buttonClose.Name = "buttonClose";
+            this.buttonClose.Size = new System.Drawing.Size(75, 23);
+            this.buttonClose.TabIndex = 18;
+            this.buttonClose.Text = "Close";
+            this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // FormTreatmentEditor
             // 
@@ -342,5 +356,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.Button buttonCreate;
+        private System.Windows.Forms.Button buttonClose;
     }
 }

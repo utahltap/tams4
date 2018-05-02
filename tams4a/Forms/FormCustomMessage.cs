@@ -21,28 +21,16 @@ namespace tams4a.Forms
             this.MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
         }
 
-        public static void ShowDialog(String message, String title=null, Bitmap image=null)
+        private void buttonOK_Click(object sender, EventArgs e)
         {
-            FormCustomMessage theMessage = new FormCustomMessage();
-            theMessage.uiMessage.Text = message;
+            DialogResult = DialogResult.OK;
+            Hide();
+        }
 
-            if (title != null)
-            {
-                theMessage.Text = title;
-            }
-
-            if (image != null)
-            {
-                theMessage.pictureBoxIcon.Image = image;
-            }
-            else
-            {
-                // hide icon pane
-                theMessage.tableLayoutPanel1.ColumnStyles[0].Width = 1;
-            }
-
-            theMessage.StartPosition = FormStartPosition.CenterParent;
-            theMessage.ShowDialog();
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Hide();
         }
     }
 }

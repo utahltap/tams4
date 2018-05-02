@@ -59,8 +59,6 @@ namespace tams4a.Classes
             }
 
             Database.UpdateDatabase(conn);
-            // load all current settings
-            // add modules before loading settings?
             try
             {
                 settings = new ProjectSettings(conn);
@@ -74,7 +72,6 @@ namespace tams4a.Classes
                 return false;
             }
 
-            // load required modules
             foreach (KeyValuePair<String, ProjectModule> pair in modules)
             {
                 pair.Value.load();      // this should also load the module settings
@@ -113,13 +110,16 @@ namespace tams4a.Classes
             isOpen = false;
         }
 
-        // attempts to create project
-        // opens project database
+        /// <summary>
+        /// Attempts to create a project and connect to a new database
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public Boolean startNew(String filename)
         {
             try
             {
-                File.WriteAllBytes(filename, Properties.Resources.blank_db);
+                File.WriteAllBytes(filename, Properties.Resources.blank_db_v6);
             }
             catch
             {
@@ -131,8 +131,7 @@ namespace tams4a.Classes
             {
                 return false;
             }
-
-            // initialize DB
+            
             return true;
         }
 
@@ -175,16 +174,28 @@ namespace tams4a.Classes
 
             modules.Add(name, module);
             tabControl.TabPages.Add(module.ControlsPage);
+            module.load();
 
-            // if we don't have a current module
-            // select the controls page in the main window
             if (String.IsNullOrEmpty(currentModuleName))
             {
-                currentModuleName = name;
-                module.ControlsPage.Select();
+                selectModule(name);
             }
         }
 
+        /// <summary>
+        /// Select's a module by name
+        /// </summary>
+        /// <param name="name"></param>
+        public void selectModule(string name)
+        {
+            foreach (string key in modules.Keys)
+            {
+                modules[key].deactivate();
+            }
+            currentModuleName = name;
+            modules[name].ControlsPage.Select();
+            modules[name].activate();
+        }
 
         // check version, upgrade if necessary
         // this is the overall version.

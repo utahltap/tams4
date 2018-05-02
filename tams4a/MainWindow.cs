@@ -31,16 +31,13 @@ namespace tams4a
             InitializeComponent();
             setEventHandlers();
             InitializeProject();
-            createWebLayer();
+            //createWebLayer();
         }
 
         private void InitializeProject()
         {
             Project = new TamsProject(uxMap);
             tabControlControls.TabPages.Clear();
-
-            
-            
 
             if (Program.cmdArgs.Length > 0)
             {
@@ -51,8 +48,7 @@ namespace tams4a
                     MessageBox.Show("Could not open " + file);
                 } 
             }
-
-            // Before we can start, we must open a project.
+            
             while (!Project.isOpen)
             {
                 FormStartup getProject = new FormStartup(Project);
@@ -61,19 +57,20 @@ namespace tams4a
 
             Visible = true;
             ToolStripMenuItem[] lcs = { importRoadsToolStripMenuItem, generalReportToolStripMenuItem, roadsWithPotholesToolStripMenuItem, budgetToolStripMenuItem };
-            ToolStripMenuItem[] lcsn = { };
+            ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signReportToolStripMenuItem, failedSignsToolStripMenuItem, obstructedSignsToolStripMenuItem, oldSignsToolStripMenuItem, damagedSignsToolStripMenuItem};
             ModuleRoads road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
-            //ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
-            Project.addModule(road, "road", tabControlControls);
-            //Project.addModule(sign, "sign", tabControlControls);
-            road.load();
+            ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
+            Project.addModule(road, "Roads", tabControlControls);
+            Project.addModule(sign, "Signs", tabControlControls);
+
+            Project.selectModule("Roads");
 
             toolStripStatusLabel1.Text = Project.projectFilePath;
             toolStripStatusLabel2.Visible = false;
             toolStripProgressBar1.Visible = false;
 
             CurrentMode = uxMap.FunctionMode;
-            maxWidth = (int)uxMap.ViewExtents.Width;
+            maxWidth = (int)uxMap.ViewExtents.Width + 10;
         }
 
         private void createWebLayer()
@@ -130,7 +127,7 @@ namespace tams4a
         private void toolStripZoomExt_Click(object sender, EventArgs e)
         {
             uxMap.ZoomToMaxExtent();
-            maxWidth = (int)uxMap.ViewExtents.Width;
+            maxWidth = (int)uxMap.ViewExtents.Width + 10;
             UpdateZoomButtons(sender, e);
         }
 
@@ -244,11 +241,6 @@ namespace tams4a
                 return;
             }
             Project.mapSelectionChanged(sender, e);
-        }
-        
-        private void tabControlControls_Selected(object sender, TabControlEventArgs e)
-        {
-            
         }
 
         // settings dialog
@@ -432,6 +424,11 @@ namespace tams4a
             {
                 Program.Close();
             }
+        }
+
+        private void tabControlControls_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Project.selectModule(tabControlControls.SelectedTab.Text);
         }
     }
 }

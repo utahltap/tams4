@@ -22,6 +22,8 @@ namespace tams4a.Controls
             numericUpDownLanes.ValueChanged += moduleValueChanged;
             textBoxFrom.TextChanged += moduleValueChanged;
             textBoxTo.TextChanged += moduleValueChanged;
+            textBoxRoadName.TextChanged += moduleValueChanged;
+            comboBoxSurface.SelectionChangeCommitted += moduleValueChanged;
             comboBoxType.SelectionChangeCommitted += moduleValueChanged;
             comboBoxTreatment.SelectionChangeCommitted += moduleValueChanged;
             textBoxPhotoFile.TextChanged += moduleValueChanged;

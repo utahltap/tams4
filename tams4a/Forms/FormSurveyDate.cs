@@ -27,5 +27,10 @@ namespace tams4a.Forms
             this.DialogResult = DialogResult.OK;
             this.Hide();
         }
+
+        public void setText(string s)
+        {
+            labelNote.Text = s;
+        }
     }
 }

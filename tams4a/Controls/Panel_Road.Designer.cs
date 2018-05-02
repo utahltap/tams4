@@ -44,6 +44,10 @@ namespace tams4a.Controls
             this.distress2 = new tams4a.Controls.DistressEntry();
             this.distress1 = new tams4a.Controls.DistressEntry();
             this.groupBoxInfo = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelMPH = new System.Windows.Forms.Label();
             this.numericUpDownLanes = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSpeedLimit = new System.Windows.Forms.NumericUpDown();
             this.labelTo = new System.Windows.Forms.Label();
@@ -67,7 +71,7 @@ namespace tams4a.Controls
             this.textBoxWidth = new System.Windows.Forms.TextBox();
             this.labelLanes = new System.Windows.Forms.Label();
             this.labelSpeedLimit = new System.Windows.Forms.Label();
-            this.labelSurvDate = new System.Windows.Forms.Label();
+            this.labelSurveyDate = new System.Windows.Forms.Label();
             this.labelName = new System.Windows.Forms.Label();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.buttonSave = new System.Windows.Forms.ToolStripButton();
@@ -79,10 +83,6 @@ namespace tams4a.Controls
             this.buttonHistory = new System.Windows.Forms.ToolStripButton();
             this.btnNotes = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAnalysis = new System.Windows.Forms.ToolStripButton();
-            this.labelMPH = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBoxDistress.SuspendLayout();
             this.groupBoxInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLanes)).BeginInit();
@@ -318,7 +318,7 @@ namespace tams4a.Controls
             this.groupBoxInfo.Controls.Add(this.textBoxWidth);
             this.groupBoxInfo.Controls.Add(this.labelLanes);
             this.groupBoxInfo.Controls.Add(this.labelSpeedLimit);
-            this.groupBoxInfo.Controls.Add(this.labelSurvDate);
+            this.groupBoxInfo.Controls.Add(this.labelSurveyDate);
             this.groupBoxInfo.Controls.Add(this.labelName);
             this.groupBoxInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxInfo.Location = new System.Drawing.Point(0, 25);
@@ -328,22 +328,54 @@ namespace tams4a.Controls
             this.groupBoxInfo.TabStop = false;
             this.groupBoxInfo.Text = "Road";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(164, 166);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(13, 13);
+            this.label3.TabIndex = 30;
+            this.label3.Text = "ft";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(164, 191);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(13, 13);
+            this.label2.TabIndex = 29;
+            this.label2.Text = "ft";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(164, 216);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(16, 13);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "ft²";
+            // 
+            // labelMPH
+            // 
+            this.labelMPH.AutoSize = true;
+            this.labelMPH.Location = new System.Drawing.Point(159, 61);
+            this.labelMPH.Name = "labelMPH";
+            this.labelMPH.Size = new System.Drawing.Size(31, 13);
+            this.labelMPH.TabIndex = 27;
+            this.labelMPH.Text = "MPH";
+            // 
             // numericUpDownLanes
             // 
             this.numericUpDownLanes.Location = new System.Drawing.Point(82, 83);
             this.numericUpDownLanes.Maximum = new decimal(new int[] {
-            10,
+            12,
             0,
             0,
             0});
             this.numericUpDownLanes.Name = "numericUpDownLanes";
             this.numericUpDownLanes.Size = new System.Drawing.Size(111, 20);
             this.numericUpDownLanes.TabIndex = 26;
-            this.numericUpDownLanes.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
+            this.numericUpDownLanes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // numericUpDownSpeedLimit
             // 
@@ -356,11 +388,7 @@ namespace tams4a.Controls
             this.numericUpDownSpeedLimit.Name = "numericUpDownSpeedLimit";
             this.numericUpDownSpeedLimit.Size = new System.Drawing.Size(76, 20);
             this.numericUpDownSpeedLimit.TabIndex = 25;
-            this.numericUpDownSpeedLimit.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
+            this.numericUpDownSpeedLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // labelTo
             // 
@@ -543,14 +571,14 @@ namespace tams4a.Controls
             this.labelSpeedLimit.TabIndex = 2;
             this.labelSpeedLimit.Text = "Speed Limit";
             // 
-            // labelSurvDate
+            // labelSurveyDate
             // 
-            this.labelSurvDate.AutoSize = true;
-            this.labelSurvDate.Location = new System.Drawing.Point(7, 16);
-            this.labelSurvDate.Name = "labelSurvDate";
-            this.labelSurvDate.Size = new System.Drawing.Size(66, 13);
-            this.labelSurvDate.TabIndex = 1;
-            this.labelSurvDate.Text = "Survey Date";
+            this.labelSurveyDate.AutoSize = true;
+            this.labelSurveyDate.Location = new System.Drawing.Point(7, 16);
+            this.labelSurveyDate.Name = "labelSurveyDate";
+            this.labelSurveyDate.Size = new System.Drawing.Size(66, 13);
+            this.labelSurveyDate.TabIndex = 1;
+            this.labelSurveyDate.Text = "Survey Date";
             // 
             // labelName
             // 
@@ -662,42 +690,6 @@ namespace tams4a.Controls
             this.toolStripButtonAnalysis.Text = "Analysis";
             this.toolStripButtonAnalysis.ToolTipText = "Create Report on Selected Roads";
             // 
-            // labelMPH
-            // 
-            this.labelMPH.AutoSize = true;
-            this.labelMPH.Location = new System.Drawing.Point(159, 61);
-            this.labelMPH.Name = "labelMPH";
-            this.labelMPH.Size = new System.Drawing.Size(31, 13);
-            this.labelMPH.TabIndex = 27;
-            this.labelMPH.Text = "MPH";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(164, 216);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(16, 13);
-            this.label1.TabIndex = 28;
-            this.label1.Text = "ft²";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(164, 191);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(13, 13);
-            this.label2.TabIndex = 29;
-            this.label2.Text = "ft";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(164, 166);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(13, 13);
-            this.label3.TabIndex = 30;
-            this.label3.Text = "ft";
-            // 
             // Panel_Road
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -737,7 +729,7 @@ namespace tams4a.Controls
         public System.Windows.Forms.ToolStripMenuItem setTodayToolStripMenuItem;
         public System.Windows.Forms.ToolStripButton toolStripButtonAnalysis;
         public System.Windows.Forms.Label labelName;
-        public System.Windows.Forms.Label labelSurvDate;
+        public System.Windows.Forms.Label labelSurveyDate;
         private System.Windows.Forms.Label labelSpeedLimit;
         private System.Windows.Forms.Label labelLanes;
         public System.Windows.Forms.TextBox textBoxWidth;
@@ -774,10 +766,10 @@ namespace tams4a.Controls
         public System.Windows.Forms.Label labelSuggestedTreatment;
         public System.Windows.Forms.GroupBox groupBoxDistress;
         public System.Windows.Forms.NumericUpDown numericUpDownLanes;
-        public System.Windows.Forms.NumericUpDown numericUpDownSpeedLimit;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelMPH;
+        public System.Windows.Forms.NumericUpDown numericUpDownSpeedLimit;
     }
 }

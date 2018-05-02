@@ -57,7 +57,6 @@ namespace tams4a.Forms
             }
             catch
             {
-                // TODO: ??
                 Illustration = Properties.Resources.blank;
             }
             pictureBox.Image = Illustration;
