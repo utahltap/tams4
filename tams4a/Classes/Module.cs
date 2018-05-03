@@ -24,6 +24,9 @@ namespace tams4a.Classes
         public String IdText { get; protected set; }
         public Boolean UnsavedChanges { get; protected set; }
         protected List<Dictionary<String, String>> selectionValues;
+        protected List<string> tamsids;
+        protected DateTime surveyDate;
+        protected FormSurveyDate dateForm;
         // button to enable after shp file is opened
         private ToolStripMenuItem[] linkedComponents;
 
@@ -93,7 +96,7 @@ namespace tams4a.Classes
 
             if (String.IsNullOrEmpty(thePath))
             {
-                FormCustomMessage.ShowDialog("Invalid filename specified");
+                MessageBox.Show("Invalid filename specified");
                 this.close();
                 return false;
             }
@@ -126,7 +129,7 @@ namespace tams4a.Classes
             }
             catch (Exception e)
             {
-                FormCustomMessage.ShowDialog("Could not open " + thePath + Environment.NewLine + e.ToString());
+                MessageBox.Show("Could not open " + thePath + Environment.NewLine + e.ToString());
                 Log.Error("Could not open SHP file (" + thePath + ") for module " + ModuleName);
                 this.close();
 
@@ -187,7 +190,18 @@ namespace tams4a.Classes
             if (openDialogResult != DialogResult.OK) { return false; }
 
             // now try to open the file
-            if (!openFile(openDialog.FileName, type)) { return false; }
+            try
+            {
+                openFile(openDialog.FileName, type);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("An error occured while trying to open the shape file. Please ensure the file is of the correct type for the module used.");
+                Log.Error("Could not open shape file. " + Environment.NewLine + e.ToString());
+                close();
+                return false;
+            }
+
 
             // @TO-DO load data from shpfile to db
             if (Properties.Settings.Default.newProject)
@@ -287,7 +301,7 @@ namespace tams4a.Classes
         /// <returns>false if file path is null or empty.</returns>
         public Boolean isOpen()
         {
-            if (String.IsNullOrEmpty(Filepath))
+            if (string.IsNullOrEmpty(Filepath))
             {
                 return false;
             }
@@ -358,10 +372,18 @@ namespace tams4a.Classes
             Project.map.Layers.Remove(Layer);
             Filepath = "";
             Layer = null;
-
-            // TODO: Should also remove settings that were added at open
+            foreach (ProjectSetting setting in ModuleSettings)
+            {
+                setting.Value = "";
+                Project.settings.SetSetting(setting);
+            }
+            clearControlPanel();
         }
 
+        protected virtual void clearControlPanel()
+        {
+
+        }
 
         // modifies returnDictionary to have any new values included in DataTable data
         // consolidates data 
@@ -469,13 +491,6 @@ namespace tams4a.Classes
                 {
                     consolidateDictionary(resultsTable, ref returnDictionary);
                 }
-                /*foreach (KeyValuePair<String, String> pair in shpValuesKeyed)
-                {
-                    if (!returnDictionary.ContainsKey(pair.Key) && (pair.Value != null) )
-                    {
-                        returnDictionary[pair.Key] = pair.Value;
-                    }
-                }*/
             }
             catch (Exception e)
             {
@@ -516,6 +531,35 @@ namespace tams4a.Classes
         protected virtual void controlChanged(object sender, EventArgs e)
         {
             UnsavedChanges = true;
+        }
+
+        public void deactivate()
+        {
+            if (Layer != null)
+            {
+                Layer.SelectionEnabled = false;
+            }
+        }
+
+        /// <summary>
+        /// set's the module as the current active module.
+        /// </summary>
+        public void activate()
+        {
+            if (Layer != null)
+            {
+                Layer.SelectionEnabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Sets the survey date for the module to the current selected date in the dateform
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        protected void setDate(object sender, EventArgs args)
+        {
+            surveyDate = dateForm.getDate();
         }
     }
 }
