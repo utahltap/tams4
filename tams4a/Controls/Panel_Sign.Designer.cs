@@ -61,6 +61,8 @@
             this.labelAddress = new System.Windows.Forms.Label();
             this.labelSurveyDate = new System.Windows.Forms.Label();
             this.groupBoxSign = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBoxBarcode = new System.Windows.Forms.TextBox();
             this.buttonSignNote = new System.Windows.Forms.Button();
             this.buttonSearchMUTCD = new System.Windows.Forms.Button();
             this.buttonInstallDate = new System.Windows.Forms.Button();
@@ -97,8 +99,7 @@
             this.comboBoxSheeting = new System.Windows.Forms.ComboBox();
             this.labelSheeting = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
-            this.textBoxBarcode = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
@@ -197,7 +198,8 @@
             this.toolStripDropDownButtonNewPost.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripDropDownButtonNewPost.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.enterCoordinatesToolStripMenuItem,
-            this.readGPSToolStripMenuItem});
+            this.readGPSToolStripMenuItem,
+            this.clickMapToolStripMenuItem});
             this.toolStripDropDownButtonNewPost.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonNewPost.Image")));
             this.toolStripDropDownButtonNewPost.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonNewPost.Name = "toolStripDropDownButtonNewPost";
@@ -354,7 +356,7 @@
             65536});
             this.numericUpDownOffset.Location = new System.Drawing.Point(87, 107);
             this.numericUpDownOffset.Maximum = new decimal(new int[] {
-            10,
+            30,
             0,
             0,
             0});
@@ -490,6 +492,22 @@
             this.groupBoxSign.TabStop = false;
             this.groupBoxSign.Text = "Sign";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 417);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(47, 13);
+            this.label6.TabIndex = 50;
+            this.label6.Text = "Barcode";
+            // 
+            // textBoxBarcode
+            // 
+            this.textBoxBarcode.Location = new System.Drawing.Point(87, 414);
+            this.textBoxBarcode.Name = "textBoxBarcode";
+            this.textBoxBarcode.Size = new System.Drawing.Size(112, 20);
+            this.textBoxBarcode.TabIndex = 49;
+            // 
             // buttonSignNote
             // 
             this.buttonSignNote.Image = global::tams4a.Properties.Resources.notes;
@@ -605,8 +623,10 @@
             this.comboBoxObstruction.Items.AddRange(new object[] {
             "",
             "clear",
-            "partial",
-            "severe"});
+            "partial (move sign)",
+            "partial (clear obstruction)",
+            "severe (move sign)",
+            "severe (clear obstruction)"});
             this.comboBoxObstruction.Location = new System.Drawing.Point(87, 275);
             this.comboBoxObstruction.Name = "comboBoxObstruction";
             this.comboBoxObstruction.Size = new System.Drawing.Size(112, 21);
@@ -858,21 +878,11 @@
             this.labelType.TabIndex = 0;
             this.labelType.Text = "MUTCD code";
             // 
-            // textBoxBarcode
+            // clickMapToolStripMenuItem
             // 
-            this.textBoxBarcode.Location = new System.Drawing.Point(87, 414);
-            this.textBoxBarcode.Name = "textBoxBarcode";
-            this.textBoxBarcode.Size = new System.Drawing.Size(112, 20);
-            this.textBoxBarcode.TabIndex = 49;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 417);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(47, 13);
-            this.label6.TabIndex = 50;
-            this.label6.Text = "Barcode";
+            this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
+            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.clickMapToolStripMenuItem.Text = "Click Map";
             // 
             // Panel_Sign
             // 
@@ -971,5 +981,6 @@
         public System.Windows.Forms.ToolStripButton toolStripButtonNotes;
         private System.Windows.Forms.Label label6;
         public System.Windows.Forms.TextBox textBoxBarcode;
+        public System.Windows.Forms.ToolStripMenuItem clickMapToolStripMenuItem;
     }
 }

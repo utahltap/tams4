@@ -125,24 +125,25 @@ namespace tams4a.Classes
             signPanel.buttonRemove.Click += removeSign;
             signPanel.buttonFavorite.Click += faveSign;
             signPanel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
+            signPanel.clickMapToolStripMenuItem.Click += clickMap;
             signPanel.toolStripButtonNotes.Click += editNotes;
 
             signPanel.textBoxType.TextChanged += setMUTCDvalues;
-            signPanel.comboBoxSigns.SelectionChangeCommitted += signChangeHandler;
+            signPanel.comboBoxSigns.TextChanged += signChangeHandler;
 
             signPanel.textBoxType.TextChanged += signValueChanged;
             signPanel.textBoxDescription.TextChanged += signValueChanged;
-            signPanel.comboBoxSheeting.SelectionChangeCommitted += signValueChanged;
-            signPanel.comboBoxBacking.SelectionChangeCommitted += signValueChanged;
+            signPanel.comboBoxSheeting.TextChanged += signValueChanged;
+            signPanel.comboBoxBacking.TextChanged += signValueChanged;
             signPanel.numericUpDownHeigthSign.ValueChanged += signValueChanged;
             signPanel.numericUpDownWidth.ValueChanged += signValueChanged;
             signPanel.numericUpDownMountHeight.ValueChanged += signValueChanged;
             signPanel.textBoxInstall.TextChanged += signValueChanged;
             signPanel.textBoxText.TextChanged += signValueChanged;
-            signPanel.comboBoxReflectivity.SelectionChangeCommitted += signValueChanged;
-            signPanel.comboBoxConditionSign.SelectionChangeCommitted += signValueChanged;
-            signPanel.comboBoxObstruction.SelectionChangeCommitted += signValueChanged;
-            signPanel.comboBoxDirection.SelectionChangeCommitted += signValueChanged;
+            signPanel.comboBoxReflectivity.TextChanged += signValueChanged;
+            signPanel.comboBoxConditionSign.TextChanged += signValueChanged;
+            signPanel.comboBoxObstruction.TextChanged += signValueChanged;
+            signPanel.comboBoxDirection.TextChanged += signValueChanged;
             signPanel.textBoxPhotoFile.TextChanged += signValueChanged;
             #endregion eventhandlers
 
@@ -1333,6 +1334,21 @@ namespace tams4a.Classes
                 largePic.pictureRoad.Image = Properties.Resources.nophoto;
             }
             largePic.Show();
+        }
+
+        private void clickMap(object sender, EventArgs e)
+        {
+            Project.map.Click += addPostByClick;
+        }
+
+        private void addPostByClick(object sender, EventArgs e)
+        {
+            var clickCoords = Project.map.PixelToProj(Project.map.PointToClient(Cursor.Position));
+            double[] xy = { clickCoords.X, clickCoords.Y };
+            double[] z = { clickCoords.Z};
+            DotSpatial.Projections.Reproject.ReprojectPoints(xy, z, Project.map.Projection, DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984, 0, 1);
+            addPost(xy[1], xy[0]);
+            Project.map.Click -= addPostByClick;
         }
     }
 }
