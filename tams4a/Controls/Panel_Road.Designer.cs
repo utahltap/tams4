@@ -615,7 +615,6 @@ namespace tams4a.Controls
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(23, 22);
             this.buttonSave.Text = "Save Changes";
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // buttonReset
             // 
@@ -643,21 +642,19 @@ namespace tams4a.Controls
             this.buttonSetDate.Name = "buttonSetDate";
             this.buttonSetDate.Size = new System.Drawing.Size(29, 22);
             this.buttonSetDate.Text = "Set Record Date";
-            this.buttonSetDate.Click += new System.EventHandler(this.buttonSetDate_Click);
             // 
             // setTodayToolStripMenuItem
             // 
             this.setTodayToolStripMenuItem.Checked = true;
             this.setTodayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.setTodayToolStripMenuItem.Name = "setTodayToolStripMenuItem";
-            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.setTodayToolStripMenuItem.Text = "Set Today";
-            this.setTodayToolStripMenuItem.Click += new System.EventHandler(this.setTodayToolStripMenuItem_Click);
             // 
             // setOtherDateToolStripMenuItem
             // 
             this.setOtherDateToolStripMenuItem.Name = "setOtherDateToolStripMenuItem";
-            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.setOtherDateToolStripMenuItem.Text = "Set Other Date";
             // 
             // buttonHistory
@@ -678,7 +675,6 @@ namespace tams4a.Controls
             this.btnNotes.Name = "btnNotes";
             this.btnNotes.Size = new System.Drawing.Size(23, 22);
             this.btnNotes.Text = "Create a Note";
-            this.btnNotes.Click += new System.EventHandler(this.btnNotes_Click);
             // 
             // toolStripButtonAnalysis
             // 

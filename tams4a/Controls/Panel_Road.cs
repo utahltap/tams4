@@ -16,8 +16,7 @@ namespace tams4a.Controls
         public Panel_Road()
         {
             InitializeComponent();
-
-            // These can't be set in UI because they're in the base class
+            
             numericUpDownSpeedLimit.ValueChanged += moduleValueChanged;
             numericUpDownLanes.ValueChanged += moduleValueChanged;
             textBoxFrom.TextChanged += moduleValueChanged;
@@ -27,6 +26,9 @@ namespace tams4a.Controls
             comboBoxType.SelectionChangeCommitted += moduleValueChanged;
             comboBoxTreatment.SelectionChangeCommitted += moduleValueChanged;
             textBoxPhotoFile.TextChanged += moduleValueChanged;
+            textBoxWidth.TextChanged += widthChanged;
+            textBoxLength.TextChanged += lengthChanged;
+            buttonNextPhoto.Click += buttonNextPhoto_Click;
             this.AutoScroll = true;
         }
 
@@ -74,75 +76,41 @@ namespace tams4a.Controls
 
         private void buttonNextPhoto_Click(object sender, EventArgs e)
         {
-            String oldPhoto = Properties.Settings.Default.lastPhoto;
-            if (String.IsNullOrWhiteSpace(oldPhoto))
+            string oldPhoto = Properties.Settings.Default.lastPhoto;
+            if (string.IsNullOrWhiteSpace(oldPhoto))
             {
-                textBoxPhotoFile.Text = "0001";     // We'll just choose this as our default starting point
+                textBoxPhotoFile.Text = "0001";
                 return;
             }
 
-            // if there's a number, then attempt to find the pattern and increment by one
-            String pattern = @"(.*?)(\d+)(.*)";
+            string pattern = @"(.*?)(\d+)(.*)";
             Regex rex = new Regex(pattern, RegexOptions.IgnoreCase);
 
             Match mat = rex.Match(oldPhoto);
             if (!mat.Success)
             {
-                textBoxPhotoFile.Text = oldPhoto + "_0001";     // We'll just choose this as our default starting point
+                textBoxPhotoFile.Text = oldPhoto + "_0001";
                 return;
             }
 
             try
             {
-                String nextPhoto = mat.Groups[1].ToString();    // start with the first bit, whatever it may look like
-
-                // This is the number part.  We'll try to increment it
-                String numPart = mat.Groups[2].ToString();  
+                string nextPhoto = mat.Groups[1].ToString();
+                string numPart = mat.Groups[2].ToString();  
                 int num = Convert.ToInt16(numPart);
                 num++;
-                String numFormat = "D" + numPart.Length.ToString();
+                string numFormat = "D" + numPart.Length.ToString();
                 nextPhoto += num.ToString(numFormat);
-
-                // add on the remaining filename
+                
                 nextPhoto += mat.Groups[3].ToString();
 
                 textBoxPhotoFile.Text = nextPhoto;
             }
             catch 
             {
-                textBoxPhotoFile.Text = oldPhoto + "0001";     // We'll just choose this as our default starting point
+                textBoxPhotoFile.Text = oldPhoto + "0001";
                 return;
             }
-        }
-
-        private void btnNotes_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonSave_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBoxSurface_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonSetDate_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void setSurveyDateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void setTodayToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

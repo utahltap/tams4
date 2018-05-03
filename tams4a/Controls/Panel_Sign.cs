@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace tams4a.Controls
 {
@@ -35,6 +36,7 @@ namespace tams4a.Controls
             comboBoxObstruction.SelectedValueChanged += moduleValueChanged;
             comboBoxDirection.SelectedValueChanged += moduleValueChanged;
             textBoxPhotoFile.TextChanged += moduleValueChanged;
+            buttonNextPhoto.Click += buttonNextPhoto_Click;
 
             new ToolTip().SetToolTip(buttonAdd, "Add New Sign to Post");
             new ToolTip().SetToolTip(buttonRemove, "Remove Sign from Post");
@@ -43,6 +45,45 @@ namespace tams4a.Controls
             new ToolTip().SetToolTip(buttonSignNote, "Add Note to Sign");
 
             AutoScroll = true;
+        }
+
+        private void buttonNextPhoto_Click(object sender, EventArgs e)
+        {
+            string oldPhoto = Properties.Settings.Default.lastPhoto;
+            if (string.IsNullOrWhiteSpace(oldPhoto))
+            {
+                textBoxPhotoFile.Text = "0001";
+                return;
+            }
+
+            string pattern = @"(.*?)(\d+)(.*)";
+            Regex rex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            Match mat = rex.Match(oldPhoto);
+            if (!mat.Success)
+            {
+                textBoxPhotoFile.Text = oldPhoto + "_0001";
+                return;
+            }
+
+            try
+            {
+                string nextPhoto = mat.Groups[1].ToString();
+                string numPart = mat.Groups[2].ToString();
+                int num = Convert.ToInt16(numPart);
+                num++;
+                string numFormat = "D" + numPart.Length.ToString();
+                nextPhoto += num.ToString(numFormat);
+
+                nextPhoto += mat.Groups[3].ToString();
+
+                textBoxPhotoFile.Text = nextPhoto;
+            }
+            catch
+            {
+                textBoxPhotoFile.Text = oldPhoto + "0001";
+                return;
+            }
         }
     }
 }
