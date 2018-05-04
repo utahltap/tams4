@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Deployment.Application;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -72,7 +73,7 @@ namespace tams4a
             CurrentMode = uxMap.FunctionMode;
             maxWidth = (int)uxMap.ViewExtents.Width + 10;
         }
-
+        /*
         private void createWebLayer()
         {
             appManager = new DotSpatial.Controls.AppManager();
@@ -84,7 +85,7 @@ namespace tams4a
             uxMap.Projection = DotSpatial.Projections.KnownCoordinateSystems.Projected.World.WebMercator;
             webService = DotSpatial.Plugins.WebMap.ServiceProviderFactory.Create("GooleMap");
         }
-
+        */
         private void setEventHandlers()
         {
             uxMap.Layers.LayerAdded += LayersChangedEventHandler;
@@ -429,6 +430,20 @@ namespace tams4a
         private void tabControlControls_SelectedIndexChanged(object sender, EventArgs e)
         {
             Project.selectModule(tabControlControls.SelectedTab.Text);
+        }
+
+        private void displayChangeLog()
+        {
+            if (!ApplicationDeployment.IsNetworkDeployed)
+                return;
+
+            if (System.Diagnostics.Debugger.IsAttached || !ApplicationDeployment.CurrentDeployment.IsFirstRun)
+                return;
+
+            if (MessageBox.Show("This appears to be your first time running this version of TAMS would you like to see the latest changes?", "New Version", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes )
+            {
+                System.Diagnostics.Process.Start("https://github.com/utahltap/tams4/blob/master/changelog.md");
+            }
         }
     }
 }
