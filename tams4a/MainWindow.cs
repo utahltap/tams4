@@ -22,7 +22,7 @@ namespace tams4a
         private DotSpatial.Controls.AppManager appManager;
         private DotSpatial.Plugins.WebMap.ServiceProvider webService;
         private DotSpatial.Plugins.WebMap.WebMapPlugin webLayer;
-        private Boolean closeForReal = true;
+        private bool closeForReal = true;
 
         /// <summary>
         /// Constructor: The main window of TAMS4
@@ -31,6 +31,7 @@ namespace tams4a
         {
             InitializeComponent();
             setEventHandlers();
+            displayChangeLog();
             InitializeProject();
             //createWebLayer();
         }

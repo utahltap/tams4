@@ -343,7 +343,7 @@ namespace tams4a.Classes
             }
             foreach (DataRow row in data.Rows)
             {
-                if (string.IsNullOrWhiteSpace(row[tamsidCollumn].ToString()) || row[tamsidCollumn].ToString().Contains("null") || row[tamsidCollumn].ToString().Contains("*"))
+                if (string.IsNullOrWhiteSpace(row[tamsidCollumn].ToString()) || row[tamsidCollumn].ToString().Contains("null") || (!row[tamsidCollumn].ToString().Contains("0") && Util.ToInt(row[tamsidCollumn].ToString()) == 0))
                 {
                     row[tamsidCollumn] = maxSuppID + idIncrementer;
                     idIncrementer++;
