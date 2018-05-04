@@ -1,4 +1,6 @@
-TAMS version 4.0.2
+# TAMS version 4.0.2
+
+Please note that the signs manager is still in the beta stages of development and some features may not work correctly. If you encounter any problems please contact the Utah LTAP center.
 
 CHANGES
 ------------------------------------------------------
@@ -25,3 +27,5 @@ KOWN ISSUES
 * No legend availabe when saving a snapshot of map.
 * rsl may not be calculated if when directly typing in a number into distress box unless the enter key is pressed or another box is clicked.
 * When toggling road colors on and off in project settings, colors do not update until a road has been saved or until tams has been reloaded.
+
+For information on how to use TAMS please see [the instructions manual on utahltap.org] (https://www.utahltap.org/software/help/).
