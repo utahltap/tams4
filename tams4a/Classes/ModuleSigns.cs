@@ -127,6 +127,7 @@ namespace tams4a.Classes
             signPanel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
             signPanel.clickMapToolStripMenuItem.Click += clickMap;
             signPanel.toolStripButtonNotes.Click += editNotes;
+            signPanel.buttonSignNote.Click += signNote;
 
             signPanel.textBoxType.TextChanged += setMUTCDvalues;
             signPanel.comboBoxSigns.TextChanged += signChangeHandler;
@@ -342,7 +343,7 @@ namespace tams4a.Classes
             }
             foreach (DataRow row in data.Rows)
             {
-                if (string.IsNullOrWhiteSpace(row[tamsidCollumn].ToString()) || row[tamsidCollumn].ToString().Contains("null") || row[tamsidCollumn].ToString().Contains("*"))
+                if (string.IsNullOrWhiteSpace(row[tamsidCollumn].ToString()) || row[tamsidCollumn].ToString().Contains("null") || (!row[tamsidCollumn].ToString().Contains("0") && Util.ToInt(row[tamsidCollumn].ToString()) == 0))
                 {
                     row[tamsidCollumn] = maxSuppID + idIncrementer;
                     idIncrementer++;
@@ -497,6 +498,7 @@ namespace tams4a.Classes
             signControls.numericUpDownHeight.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "height"));
             signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "height"));
             notes = Util.DictionaryItemString(values, "notes");
+            postCat = Util.DictionaryItemString(values, "category");
             if (!string.IsNullOrEmpty(notes))
             {
                 signControls.toolStripButtonNotes.Checked = true;
@@ -514,6 +516,7 @@ namespace tams4a.Classes
             if (selectionValues.Count == 1)
             {
                 signsOnPost = Database.GetDataByQuery(Project.conn, SignListSql.Replace("[[IDLIST]]", selectionValues[0]["support_id"]));
+                clearSignChanges();
                 signControls.comboBoxSigns.Enabled = true;
                 signControls.buttonAdd.Enabled = true;
                 signControls.buttonRemove.Enabled = (signsOnPost.Rows.Count > 0);
@@ -521,7 +524,7 @@ namespace tams4a.Classes
                 signControls.comboBoxSigns.DataSource = signsOnPost;
                 signControls.comboBoxSigns.DisplayMember = "description";
                 signControls.comboBoxSigns.ValueMember = "TAMSID";
-                clearSignChanges();
+                clearSignChanges(); // Microsoft visual studio is the worst IDE in the world. Visual Studio's C# complier decided to start skipping this line.
                 changeSign();
                 determinePostCat();
             }
@@ -551,7 +554,7 @@ namespace tams4a.Classes
             signPanel.comboBoxBacking.Text = signChanges[index]["backing"];
             signPanel.numericUpDownHeigthSign.Value = (decimal)Util.ToDouble(signChanges[index]["height"]);
             signPanel.numericUpDownWidth.Value = (decimal)Util.ToDouble(signChanges[index]["width"]);
-            signPanel.numericUpDownHeigthSign.Value = (decimal)Util.ToDouble(signChanges[index]["mount_height"]);
+            signPanel.numericUpDownMountHeight.Value = (decimal)Util.ToDouble(signChanges[index]["mount_height"]);
             signPanel.textBoxInstall.Text = signChanges[index]["install_date"];
             signPanel.textBoxText.Text = signChanges[index]["sign_text"].ToString();
             signPanel.comboBoxReflectivity.Text = signChanges[index]["reflectivity"];
@@ -899,6 +902,10 @@ namespace tams4a.Classes
             DotSpatial.Topology.Point newPost = new DotSpatial.Topology.Point(xy[0], xy[1]);
             IFeature np = mpl.DataSet.AddFeature(newPost);
             maxSuppID++;
+            if (!np.DataRow.Table.Columns.Contains("FID"))
+            {
+                np.DataRow.Table.Columns.Add("FID");
+            }
             if (!np.DataRow.Table.Columns.Contains(Project.settings.GetValue(ModuleName + "_f_TAMSID"))) {
                 np.DataRow.Table.Columns.Add(Project.settings.GetValue(ModuleName + "_f_TAMSID"));
             }
@@ -906,6 +913,7 @@ namespace tams4a.Classes
             {
                 np.DataRow.Table.Columns.Add("TAMSSIGN");
             }
+            np.DataRow["FID"] = maxSuppID;
             np.DataRow[Project.settings.GetValue(ModuleName + "_f_TAMSID")] = maxSuppID;
             np.DataRow["TAMSSIGN"] = "empty_post";
             Dictionary<string, string> values = new Dictionary<string, string>()
@@ -973,6 +981,22 @@ namespace tams4a.Classes
 
                 notes = noteForm.Value;
             }
+            noteForm.Close();
+        }
+
+        private void signNote(object sender, EventArgs e)
+        {
+            FormNotes noteForm = new FormNotes();
+            noteForm.Value = signChanges[getSignControls().comboBoxSigns.SelectedIndex]["notes"];
+            DialogResult result = noteForm.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                controlChanged(sender, e);
+
+                signChanges[getSignControls().comboBoxSigns.SelectedIndex]["notes"] = noteForm.Value;
+            }
+            noteForm.Close();
         }
 
         private void clickManageFavorites(object sender, EventArgs e)
@@ -1021,9 +1045,13 @@ namespace tams4a.Classes
                     nr["Obstructions"] = row["obstructions"].ToString();
                     nr["Condition"] = row["condition"].ToString();
                     int age = DateTime.Now.Year - Util.ToInt(row["install_date"].ToString().Split('-')[0]);
-                    if (nr["Obstructions"].ToString().Contains("partial") || nr["Obstructions"].ToString().Contains("severe"))
+                    if (nr["Obstructions"].ToString().Contains("clear"))
                     {
                         nr["Recommendation"] = "remove obstructions";
+                    }
+                    else if (nr["Obstructions"].ToString().Contains("move"))
+                    {
+                        nr["Recommendation"] = "move sign";
                     }
                     else if (nr["Reflectivity"].ToString().Contains("fail") || nr["Condition"].ToString().Contains("broken"))
                     {
@@ -1174,6 +1202,7 @@ namespace tams4a.Classes
             data.Columns.Add("Installed");
             data.Columns.Add("Sheeting");
             data.Columns.Add("Backing");
+            data.Columns.Add("Reflectivity");
             data.Columns.Add("Recommendation");
             try
             {
@@ -1192,8 +1221,13 @@ namespace tams4a.Classes
                     nr["Installed"] = row["install_date"].ToString();
                     nr["Sheeting"] = row["sheeting"].ToString();
                     nr["Backing"] = row["backing"].ToString();
+                    nr["Reflectivity"] = row["reflectivity"].ToString();
                     int age = DateTime.Now.Year - Util.ToInt(row["install_date"].ToString().Split('-')[0]);
                     nr["Recommendation"] = "monitor";
+                    if (nr["Reflectivity"].ToString().Contains("fail"))
+                    {
+                        nr["Recommendation"] = "replace sign";
+                    }
                     if ((age > 5 && (nr["Sheeting"].ToString().Equals("I") || nr["Sheeting"].ToString().Equals("V"))) || age > 9)
                     {
                         data.Rows.Add(nr);

@@ -399,6 +399,7 @@ namespace tams4a.Classes
 
             roadControls.groupBoxDistress.Enabled = true;
             roadControls.inputRsl.Visible = true;
+            roadControls.inputRsl.Enabled = true;
             roadControls.comboBoxTreatment.Visible = true;
             roadControls.labelSuggestedTreatment.Visible = true;
             roadControls.comboBoxTreatment.Enabled = true;
@@ -565,10 +566,7 @@ namespace tams4a.Classes
             {
                 Properties.Settings.Default.lastPhoto = roadControls.textBoxPhotoFile.Text;
             }
-
-            
-
-            // Distress values                                                                                          //  Asphalt         Unpaved         Concrete
+                                                                                   //  Asphalt         Unpaved         Concrete
             if (roadControls.distress1.Visible) { values["distress1"] = roadControls.distress1.Value.ToString(); }   //  Fatigue         Potholes       Spalling
             if (roadControls.distress2.Visible) { values["distress2"] = roadControls.distress2.Value.ToString(); }   //  Edge            Rutting        Joint Seals
             if (roadControls.distress3.Visible) { values["distress3"] = roadControls.distress3.Value.ToString(); }   //  Longitudional   X-section      Corners
@@ -580,8 +578,7 @@ namespace tams4a.Classes
             if (roadControls.distress9.Visible) { values["distress9"] = roadControls.distress9.Value.ToString(); }   //  Rutting                        Patches
 
             if (roadControls.comboBoxTreatment.Visible) { values["suggested_treatment"] = roadControls.comboBoxTreatment.Text; }
-
-            // also need to update the RSL value in the SHP file's temporary field, for display purposes
+            
             if (!string.IsNullOrWhiteSpace(roadControls.inputRsl.Value.ToString())) {
                 values["rsl"] = roadControls.inputRsl.Value.ToString();
 
@@ -629,7 +626,11 @@ namespace tams4a.Classes
         }
 
 
-        // Changes contrls to reflect change made to surface type
+        /// <summary>
+        /// Changes the display of the road controls to reflect the currently selected road.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void surfaceChanged(object sender, EventArgs e)
         {
             Panel_Road roadControls = getRoadControls();
@@ -639,13 +640,16 @@ namespace tams4a.Classes
         }
 
 
-        // Changes controls to reflect a change made to a distress control
+        /// <summary>
+        /// Changes controls to reflect a change made to a distress control
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void distressChanged(object sender, CustomEventArgs e)
         {
             Panel_Road roadControls = getRoadControls();
             if (roadControls.comboBoxSurface.Text != "")
             {
-                // TODO: Ignore if I changed the RSL while blanking the distressEntry control
                 roadControls.inputRsl.Value = calcRsl().ToString();
 
                 // change save condition
@@ -721,7 +725,7 @@ namespace tams4a.Classes
         /// <param name="e"></param>
         private void editNotes(object sender, EventArgs e)
         {
-            Forms.FormNotes noteForm = new Forms.FormNotes();
+            FormNotes noteForm = new FormNotes();
             noteForm.Value = notes;
             DialogResult result = noteForm.ShowDialog();
 
@@ -733,6 +737,7 @@ namespace tams4a.Classes
 
                 notes = noteForm.Value;
             }
+            noteForm.Close();
         }
 
 

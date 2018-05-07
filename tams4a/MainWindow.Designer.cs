@@ -53,6 +53,7 @@
             this.failedSignsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.obstructedSignsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oldSignsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.damagedSignsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -79,7 +80,6 @@
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSnapShot = new System.Windows.Forms.ToolStripButton();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.damagedSignsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -172,7 +172,8 @@
             // 
             this.manuelToolStripMenuItem.Name = "manuelToolStripMenuItem";
             this.manuelToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.manuelToolStripMenuItem.Text = "Manuel";
+            this.manuelToolStripMenuItem.Text = "Manual";
+            this.manuelToolStripMenuItem.ToolTipText = "View the TAMS4 manual online";
             this.manuelToolStripMenuItem.Click += new System.EventHandler(this.manuelToolStripMenuItem_Click);
             // 
             // reportProblemsToolStripMenuItem
@@ -180,6 +181,7 @@
             this.reportProblemsToolStripMenuItem.Name = "reportProblemsToolStripMenuItem";
             this.reportProblemsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.reportProblemsToolStripMenuItem.Text = "Report Problems";
+            this.reportProblemsToolStripMenuItem.ToolTipText = "Submit a bug report to the TAMS4 development team.";
             this.reportProblemsToolStripMenuItem.Click += new System.EventHandler(this.reportProblemsToolStripMenuItem_Click);
             // 
             // advancedToolStripMenuItem
@@ -198,6 +200,7 @@
             this.importRoadsToolStripMenuItem.Name = "importRoadsToolStripMenuItem";
             this.importRoadsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.importRoadsToolStripMenuItem.Text = "Import &Roads";
+            this.importRoadsToolStripMenuItem.ToolTipText = "Attempt to import road data from TAMS2 or TAMS3";
             this.importRoadsToolStripMenuItem.Click += new System.EventHandler(this.importRoadsToolStripMenuItem_Click);
             // 
             // editTreatmentsToolStripMenuItem
@@ -205,6 +208,7 @@
             this.editTreatmentsToolStripMenuItem.Name = "editTreatmentsToolStripMenuItem";
             this.editTreatmentsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.editTreatmentsToolStripMenuItem.Text = "Edit &Treatments";
+            this.editTreatmentsToolStripMenuItem.ToolTipText = "Opens the treatment editor";
             this.editTreatmentsToolStripMenuItem.Click += new System.EventHandler(this.editTreatmentsToolStripMenuItem_Click);
             // 
             // favoriteSignsToolStripMenuItem
@@ -213,6 +217,7 @@
             this.favoriteSignsToolStripMenuItem.Name = "favoriteSignsToolStripMenuItem";
             this.favoriteSignsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.favoriteSignsToolStripMenuItem.Text = "&Favorite Signs";
+            this.favoriteSignsToolStripMenuItem.ToolTipText = "Manage your favorite signs";
             // 
             // analysisToolStripMenuItem
             // 
@@ -230,7 +235,8 @@
             this.generalReportToolStripMenuItem.Enabled = false;
             this.generalReportToolStripMenuItem.Name = "generalReportToolStripMenuItem";
             this.generalReportToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.generalReportToolStripMenuItem.Text = "General Report";
+            this.generalReportToolStripMenuItem.Text = "Road Report";
+            this.generalReportToolStripMenuItem.ToolTipText = "Creates an exportable list of all roads in the project.";
             // 
             // roadsWithPotholesToolStripMenuItem
             // 
@@ -238,6 +244,7 @@
             this.roadsWithPotholesToolStripMenuItem.Name = "roadsWithPotholesToolStripMenuItem";
             this.roadsWithPotholesToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.roadsWithPotholesToolStripMenuItem.Text = "Potholes Report";
+            this.roadsWithPotholesToolStripMenuItem.ToolTipText = "Creates a list of all roads containing pothols";
             // 
             // budgetToolStripMenuItem
             // 
@@ -245,6 +252,7 @@
             this.budgetToolStripMenuItem.Name = "budgetToolStripMenuItem";
             this.budgetToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.budgetToolStripMenuItem.Text = "Budget Projections";
+            this.budgetToolStripMenuItem.ToolTipText = "Opens the budget estimation tool.";
             // 
             // signReportToolStripMenuItem
             // 
@@ -257,6 +265,7 @@
             this.signReportToolStripMenuItem.Name = "signReportToolStripMenuItem";
             this.signReportToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.signReportToolStripMenuItem.Text = "Sign Report";
+            this.signReportToolStripMenuItem.ToolTipText = "Creates an exportable list of all signs.";
             // 
             // failedSignsToolStripMenuItem
             // 
@@ -264,6 +273,7 @@
             this.failedSignsToolStripMenuItem.Name = "failedSignsToolStripMenuItem";
             this.failedSignsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.failedSignsToolStripMenuItem.Text = "Failed Signs";
+            this.failedSignsToolStripMenuItem.ToolTipText = "Lists only signs that failed the reflectivity test";
             // 
             // obstructedSignsToolStripMenuItem
             // 
@@ -271,6 +281,7 @@
             this.obstructedSignsToolStripMenuItem.Name = "obstructedSignsToolStripMenuItem";
             this.obstructedSignsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.obstructedSignsToolStripMenuItem.Text = "Obstructed Signs";
+            this.obstructedSignsToolStripMenuItem.ToolTipText = "Lists only signs that have an obstructed view.";
             // 
             // oldSignsToolStripMenuItem
             // 
@@ -278,6 +289,16 @@
             this.oldSignsToolStripMenuItem.Name = "oldSignsToolStripMenuItem";
             this.oldSignsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.oldSignsToolStripMenuItem.Text = "Old Signs";
+            this.oldSignsToolStripMenuItem.ToolTipText = "Lists signs older than te expected life of the sheeting and signs of unknown age." +
+    "";
+            // 
+            // damagedSignsToolStripMenuItem
+            // 
+            this.damagedSignsToolStripMenuItem.Enabled = false;
+            this.damagedSignsToolStripMenuItem.Name = "damagedSignsToolStripMenuItem";
+            this.damagedSignsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.damagedSignsToolStripMenuItem.Text = "Damaged Signs";
+            this.damagedSignsToolStripMenuItem.ToolTipText = "Lists only signs that are physically damage.";
             // 
             // statusStrip
             // 
@@ -548,13 +569,6 @@
             this.toolStripButtonSnapShot.Text = "toolStripButtonSnapShot";
             this.toolStripButtonSnapShot.ToolTipText = "Take Snap Shot of the Map";
             this.toolStripButtonSnapShot.Click += new System.EventHandler(this.toolStripButtonSnapShot_Click);
-            // 
-            // damagedSignsToolStripMenuItem
-            // 
-            this.damagedSignsToolStripMenuItem.Enabled = false;
-            this.damagedSignsToolStripMenuItem.Name = "damagedSignsToolStripMenuItem";
-            this.damagedSignsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.damagedSignsToolStripMenuItem.Text = "Damaged Signs";
             // 
             // MainWindow
             // 
