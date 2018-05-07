@@ -21,7 +21,6 @@ namespace tams4a.Classes
         private DataTable roadTypes;
         private DataTable surfaceDistresses;
         private string notes;
-        // used to override the base class SelectionSql
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
                     FROM
                     (
@@ -51,9 +50,7 @@ namespace tams4a.Classes
             roadAdd.SetHandler(new EventHandler(openFileHandler));
             roadAdd.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(roadAdd);
-
-            // Settings needed to open the project
-            // Other settings will be added when we open the file
+            
             ModuleSettings.Add(new ProjectSetting(name:ModuleName + "_file", module:ModuleName));
             ModuleSettings.Add(new ProjectSetting(name:ModuleName + "_relative", module:ModuleName));
 
@@ -326,7 +323,7 @@ namespace tams4a.Classes
             roadControls.distress9.Value = Util.DictionaryItemInt(values, "distress9");
             roadControls.comboBoxTreatment.Text = Util.DictionaryItemString(values, "suggested_treatment");
             // we're taking RSL from DB to later allow manual entry
-            roadControls.inputRsl.Value = Util.DictionaryItemString(values, "rsl");
+            roadControls.inputRsl.Text = Util.DictionaryItemString(values, "rsl");
 
             notes = Util.DictionaryItemString(values, "notes");
             if (!string.IsNullOrEmpty(notes))
@@ -436,7 +433,6 @@ namespace tams4a.Classes
             roadControls.comboBoxTreatment.DataSource = treatments;    //
             roadControls.comboBoxTreatment.DisplayMember = "name";       // sets options
             roadControls.comboBoxTreatment.ValueMember = "id";           //
-            //roadControls.comboBoxTreatment.DropDownWidth = Util.DropDownWidth(roadControls.comboBoxTreatment);
         }
 
 
@@ -447,8 +443,8 @@ namespace tams4a.Classes
 
             roadControls.textBoxRoadName.Text = "";
             roadControls.labelSurveyDate.Text = "";
-            roadControls.numericUpDownSpeedLimit.Value = 25;
-            roadControls.numericUpDownLanes.Value = 2;
+            roadControls.numericUpDownSpeedLimit.Value = 0;
+            roadControls.numericUpDownLanes.Value = 0;
             roadControls.textBoxFrom.Text = "";
             roadControls.textBoxTo.Text = "";
             roadControls.textBoxWidth.Text = "";
@@ -467,7 +463,7 @@ namespace tams4a.Classes
             roadControls.distress7.Value = -1;
             roadControls.distress8.Value = -1;
             roadControls.distress9.Value = -1;
-            roadControls.inputRsl.Value = "";
+            roadControls.inputRsl.Text = "";
             roadControls.btnNotes.Checked = false;
 
             roadControls.labelName.ForeColor = default(Color);
@@ -579,8 +575,8 @@ namespace tams4a.Classes
 
             if (roadControls.comboBoxTreatment.Visible) { values["suggested_treatment"] = roadControls.comboBoxTreatment.Text; }
             
-            if (!string.IsNullOrWhiteSpace(roadControls.inputRsl.Value.ToString())) {
-                values["rsl"] = roadControls.inputRsl.Value.ToString();
+            if (!string.IsNullOrWhiteSpace(roadControls.inputRsl.Text.ToString())) {
+                values["rsl"] = roadControls.inputRsl.Text.ToString();
 
                 string tamsidsCSV = string.Join(",", tamsids.ToArray());
                 foreach (DataRow row in selectionLayer.DataSet.DataTable.Select(tamsidcolumn + " IN (" + tamsidsCSV + ")"))
@@ -650,7 +646,7 @@ namespace tams4a.Classes
             Panel_Road roadControls = getRoadControls();
             if (roadControls.comboBoxSurface.Text != "")
             {
-                roadControls.inputRsl.Value = calcRsl().ToString();
+                roadControls.inputRsl.Text = calcRsl().ToString();
 
                 // change save condition
                 controlChanged(sender, e);
@@ -696,10 +692,7 @@ namespace tams4a.Classes
                         string dbkey = entry.DataId.ToString();
                         string distressName = entry.Name.ToString();
                         string message = "Couldn't find entry #" + distress + " for " + distressName + " (id:" + dbkey + ")";
-
-                        // if we couldn't find it or something, then ignore it
-                        //MessageBox.Show(message);   // TODO: Once function works, remove this
-                        //Log.Warning(message);
+                        
                     }
                 }
                 else if (entry.Enabled && entry.Value == 0)
@@ -763,6 +756,7 @@ namespace tams4a.Classes
         private void applyColorizedProperties()
         {
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            UnsavedChanges = false;
             selectionLayer.SelectAll();
             ISelection shpSelection = selectionLayer.Selection;
             DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;

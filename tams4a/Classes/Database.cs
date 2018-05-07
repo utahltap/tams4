@@ -46,7 +46,7 @@ namespace tams4a.Classes
                 dbVersion = 0;
             }
             #region db_update_1_immute
-            if (dbVersion == 0)
+            if (dbVersion == 0)//creates roads table
             {
                 try
                 {
@@ -357,7 +357,7 @@ namespace tams4a.Classes
             }
             #endregion db_update_1_immute
             #region db_update_2_immute
-            if (dbVersion == 1)
+            if (dbVersion == 1) //adds editable treatments
             {
                 try
                 {
@@ -414,7 +414,7 @@ UPDATE treatments SET min_rsl = 0, max_rsl = 0, average_boost = 20 WHERE name = 
             }
             #endregion db_update_2_immute
             #region db_update_3_immute
-            if (dbVersion == 2)
+            if (dbVersion == 2) //moves patches to separate category
             {
                 try
                 {
@@ -542,6 +542,12 @@ REPLACE INTO mutcd_lookup(mutcd_code, description, sign_text, category) VALUES('
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_6_immute
+            #region db_update_7_immute
+            if (dbVersion == 6)
+            {
+
+            }
+            #endregion db_update_7_immute
             return true;
         }
 

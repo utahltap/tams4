@@ -189,7 +189,7 @@ namespace tams4a.Classes
             pointLayer.DataTable.Columns.Add("offset");
             try
             {
-                pointLayer.SaveAs(filename, false);
+                pointLayer.SaveAs(filename, true);
             }
             catch (Exception e)
             {
@@ -524,7 +524,7 @@ namespace tams4a.Classes
                 signControls.comboBoxSigns.DataSource = signsOnPost;
                 signControls.comboBoxSigns.DisplayMember = "description";
                 signControls.comboBoxSigns.ValueMember = "TAMSID";
-                clearSignChanges(); // Microsoft visual studio is the worst IDE in the world. Visual Studio's C# complier decided to start skipping this line.
+                clearSignChanges(); // Visual Studio's C# complier decided to start skipping this line.
                 changeSign();
                 determinePostCat();
             }
