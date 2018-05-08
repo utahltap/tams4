@@ -83,7 +83,6 @@ namespace tams4a
             appManager.ProgressHandler = new DotSpatial.Controls.SpatialStatusStrip();
             appManager.Map = uxMap;
             appManager.LoadExtensions();
-            uxMap.Projection = DotSpatial.Projections.KnownCoordinateSystems.Projected.World.WebMercator;
             webService = DotSpatial.Plugins.WebMap.ServiceProviderFactory.Create("GooleMap");
         }
         */

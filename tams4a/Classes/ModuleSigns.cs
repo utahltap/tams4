@@ -169,6 +169,11 @@ namespace tams4a.Classes
             signPanel.comboBoxSheeting.DisplayMember = "type";
             signPanel.comboBoxSheeting.ValueMember = "id";
 
+            if (((FeatureLayer)Layer).DataSet.NumRows() == 1)
+            {
+                Layer.Extent.ExpandBy(100, 100);
+            }
+
             applySymbolizedProperty();
             setSymbolizer();
             disableSignDisplay();
@@ -929,6 +934,11 @@ namespace tams4a.Classes
             Project.map.Refresh();
             Project.map.ResetBuffer();
             Project.map.Update();
+            if (mpl.DataSet.NumRows() == 1)
+            {
+                mpl.Extent.SetValues(xy[0] - 100, xy[1] - 100, xy[0] + 100, xy[1] + 100);
+                Project.map.ViewExtents = mpl.Extent;
+            }
         }
 
         private void enterCoordinates(object sender, EventArgs e)
@@ -1372,6 +1382,19 @@ namespace tams4a.Classes
 
         private void clickMap(object sender, EventArgs e)
         {
+            bool hasStreetMap = false;
+            for (int i = 0; i < Project.map.Layers.Count; i++)
+            {
+                if (((FeatureLayer)Project.map.Layers[i]).Name.Contains("road"))
+                {
+                    hasStreetMap = true;
+                }
+            }
+            if (Project.map.GetMaxExtent().IsEmpty() || (Layer.Extent.IsEmpty() && !hasStreetMap))
+            {
+                MessageBox.Show("Map has no view extent, please open a road SHP file or add sign support by coordinates.", "No view extent", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             Project.map.Click += addPostByClick;
         }
 
@@ -1381,6 +1404,11 @@ namespace tams4a.Classes
             double[] xy = { clickCoords.X, clickCoords.Y };
             double[] z = { clickCoords.Z};
             DotSpatial.Projections.Reproject.ReprojectPoints(xy, z, Project.map.Projection, DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984, 0, 1);
+            if (double.IsInfinity(xy[0]) || double.IsInfinity(xy[1]))
+            {
+                MessageBox.Show("There appears to be a problem with the projection of your shapefile. Consider reprojecting your shapefiles using ArcMap or MapWindow.");
+                Log.Error("Coordinate is Infinity or NaN " + Environment.NewLine + Environment.StackTrace);
+            }
             addPost(xy[1], xy[0]);
             Project.map.Click -= addPostByClick;
         }

@@ -443,7 +443,7 @@ CREATE TABLE sign_support(ID INTEGER PRIMARY KEY AUTOINCREMENT, support_id INTEG
             }
             #endregion db_update_3_immute
             #region db_update_4_immute
-            if (dbVersion == 3)
+            if (dbVersion == 3) // fist signs update
             {
                 try
                 {
@@ -485,7 +485,7 @@ INSERT INTO sign_sheeting (name, type, life) VALUES ('', 'XI', 12);";
             }
             #endregion db_update_4_immute
             #region db_update_5_immute
-            if (dbVersion == 4)
+            if (dbVersion == 4) // second signs update
             {
                 try
                 {
@@ -514,7 +514,7 @@ CREATE TABLE mutcd_lookup (mutcd_code TEXT PRIMARY KEY, description TEXT, sign_t
             }
             #endregion db_update_5_immute
             #region db_update_6_immute
-            if (dbVersion == 5)
+            if (dbVersion == 5) // minor database fixes
             {
                 try
                 {
@@ -543,7 +543,7 @@ REPLACE INTO mutcd_lookup(mutcd_code, description, sign_text, category) VALUES('
             }
             #endregion db_update_6_immute
             #region db_update_7_immute
-            if (dbVersion == 6)
+            if (dbVersion == 6) // automatic recommedations
             {
 
             }
@@ -551,7 +551,11 @@ REPLACE INTO mutcd_lookup(mutcd_code, description, sign_text, category) VALUES('
             return true;
         }
 
-        // attempts to connect to the database file
+        /// <summary>
+        /// Attempts to connect to SQLite database, throws an Exception of the connection fails.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public static SQLiteConnection Connect(string filename)
         {
             SQLiteConnection conn;
