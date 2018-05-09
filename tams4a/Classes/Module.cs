@@ -78,13 +78,17 @@ namespace tams4a.Classes
         }
 
 
-        // opens file specified in parameter OR already specified in "filepath" member
-        // TODO:  Is there a case where we need the 2nd option?
+        /// <summary>
+        /// Override this, opens the shapefile and adds it to dotspatial map.
+        /// </summary>
+        /// <param name="thePath"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public virtual Boolean openFile(String thePath="", String type="")
         {
             if (isOpen())
             {
-                Log.Error("Module " + ModuleName + "attempted to open file (" + thePath + ") when file was already opened (" + Filepath + ")"); // Shouldn't even get here.
+                Log.Error("Module " + ModuleName + "attempted to open file (" + thePath + ") when file was already opened (" + Filepath + ")");
                 return false;
             }
             
@@ -116,10 +120,11 @@ namespace tams4a.Classes
                     if (Layer.Projection != DotSpatial.Projections.KnownCoordinateSystems.Projected.World.WebMercator)
                     {
                         MessageBox.Show("Could not reproject SHP file.  Please adjust the projection to WebMercator in a GIS program (such as ArcMap or MapWindow).");
-                        this.close();
+                        close();
                         return false;
                     }
                 }
+                Project.map.Projection = DotSpatial.Projections.KnownCoordinateSystems.Projected.World.WebMercator;
                 foreach (var comp in linkedComponents)
                 {
                     comp.Enabled = true;

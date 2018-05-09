@@ -72,6 +72,7 @@ namespace tams4a.Classes
                 { "worker", 7 },
                 { "highway", 8 },
                 { "locational", 9 },
+                { "location_guide", 9},
                 { "service", 10 },
                 { "recreation", 11 },
                 { "empty_post", 12 }
@@ -315,8 +316,8 @@ namespace tams4a.Classes
             catDef.Symbolizer.ScaleMode = ScaleMode.Geographic;
             sgnScheme.AddCategory(catDef);
 
-            Image[] images = { Properties.Resources.regulatory_rw, Properties.Resources.regulatory_bw, Properties.Resources.warning, Properties.Resources.regulatory_pedestrian, Properties.Resources.school_pedestrian, Properties.Resources.worker, Properties.Resources.rail, Properties.Resources.highway, Properties.Resources.locational, Properties.Resources.service, Properties.Resources.recreation, Properties.Resources.empty_post};
-            string[] signCats = { "regulatory_rw", "regulatory_bw", "warning", "regulatory_pedestrian", "school_pedestrian", "worker", "rail", "highway", "locational", "service", "recreation", "empty_post"};
+            Image[] images = { Properties.Resources.regulatory_rw, Properties.Resources.regulatory_bw, Properties.Resources.warning, Properties.Resources.regulatory_pedestrian, Properties.Resources.school_pedestrian, Properties.Resources.worker, Properties.Resources.rail, Properties.Resources.highway, Properties.Resources.locational, Properties.Resources.locational, Properties.Resources.service, Properties.Resources.recreation, Properties.Resources.empty_post};
+            string[] signCats = { "regulatory_rw", "regulatory_bw", "warning", "regulatory_pedestrian", "school_pedestrian", "worker", "rail", "highway", "locational", "location_guide", "service", "recreation", "empty_post"};
 
             for (int i = 0; i < images.Length; i++)
             {
@@ -1411,6 +1412,11 @@ namespace tams4a.Classes
             }
             addPost(xy[1], xy[0]);
             Project.map.Click -= addPostByClick;
+        }
+
+        private void deletePost(object sender, EventArgs e)
+        {
+
         }
     }
 }

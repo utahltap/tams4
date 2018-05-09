@@ -785,6 +785,6 @@ namespace tams4a.Controls
         public System.Windows.Forms.NumericUpDown numericUpDownSpeedLimit;
         public System.Windows.Forms.Label label4;
         public System.Windows.Forms.TextBox inputRsl;
-        private System.Windows.Forms.Button buttonSuggest;
+        public System.Windows.Forms.Button buttonSuggest;
     }
 }

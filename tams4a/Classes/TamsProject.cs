@@ -46,7 +46,7 @@ namespace tams4a.Classes
         /// </summary>
         /// <param name="filename">The file name of the project to load</param>
         /// <returns>true if successful</returns>
-        public Boolean open(String filename)
+        public bool open(String filename)
         {
             try
             {
@@ -66,7 +66,6 @@ namespace tams4a.Classes
             }
             catch (Exception e)
             {
-               // isOpen = false;
                 MessageBox.Show("Could not load settings.");
                 Log.Error("Could not load settings." + e.ToString());
                 return false;

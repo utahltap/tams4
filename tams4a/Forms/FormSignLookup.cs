@@ -77,6 +77,7 @@ namespace tams4a.Forms
                 { "rail", Properties.Resources.rail },
                 { "highway", Properties.Resources.highway },
                 { "locational", Properties.Resources.locational },
+                { "location_guide", Properties.Resources.locational },
                 { "recreation", Properties.Resources.recreation }
             };
             descriptions = new List<Label>();

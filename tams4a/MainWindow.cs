@@ -38,13 +38,13 @@ namespace tams4a
 
         private void InitializeProject()
         {
+            uxMap.Projection = DotSpatial.Projections.KnownCoordinateSystems.Projected.World.WebMercator;
             Project = new TamsProject(uxMap);
             tabControlControls.TabPages.Clear();
 
             if (Program.cmdArgs.Length > 0)
             {
-                //open project
-                String file = Program.cmdArgs[0];
+                string file = Program.cmdArgs[0];
                 if (!Project.open(file))
                 {
                     MessageBox.Show("Could not open " + file);

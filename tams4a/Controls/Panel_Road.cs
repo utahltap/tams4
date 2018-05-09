@@ -30,7 +30,11 @@ namespace tams4a.Controls
             textBoxWidth.TextChanged += widthChanged;
             textBoxLength.TextChanged += lengthChanged;
             buttonNextPhoto.Click += buttonNextPhoto_Click;
-            this.AutoScroll = true;
+            
+            new ToolTip().SetToolTip(buttonNextPhoto, "Get Next Photo");
+            new ToolTip().SetToolTip(buttonSuggest, "Get TAMS Suggestion");
+
+            AutoScroll = true;
         }
 
 
