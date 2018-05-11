@@ -72,6 +72,7 @@ namespace tams4a.Classes
                 { "worker", 7 },
                 { "highway", 8 },
                 { "locational", 9 },
+                { "location_guide", 9},
                 { "service", 10 },
                 { "recreation", 11 },
                 { "empty_post", 12 }
@@ -92,7 +93,7 @@ namespace tams4a.Classes
 
             #region signSettings
             ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_f_TAMSID", module: ModuleName, value: "",
-                    display_text: "SHP field with a unique identifier.", display_type: "field",
+                    display_text: "SHP field with a unique identifier (TAMSID).", display_type: "field",
                     description: "Show an Icon instead of a basic shape for sign locations.", required:true));
             ModuleSettings.Add(new ProjectSetting(name: "sign_offset", module: ModuleName, value: "",
                     display_text: "SHP field with offset from road?", display_type: "field",
@@ -169,6 +170,11 @@ namespace tams4a.Classes
             signPanel.comboBoxSheeting.DisplayMember = "type";
             signPanel.comboBoxSheeting.ValueMember = "id";
 
+            if (((FeatureLayer)Layer).DataSet.NumRows() == 1)
+            {
+                Layer.Extent.ExpandBy(100, 100);
+            }
+
             applySymbolizedProperty();
             setSymbolizer();
             disableSignDisplay();
@@ -189,7 +195,7 @@ namespace tams4a.Classes
             pointLayer.DataTable.Columns.Add("offset");
             try
             {
-                pointLayer.SaveAs(filename, false);
+                pointLayer.SaveAs(filename, true);
             }
             catch (Exception e)
             {
@@ -310,8 +316,8 @@ namespace tams4a.Classes
             catDef.Symbolizer.ScaleMode = ScaleMode.Geographic;
             sgnScheme.AddCategory(catDef);
 
-            Image[] images = { Properties.Resources.regulatory_rw, Properties.Resources.regulatory_bw, Properties.Resources.warning, Properties.Resources.regulatory_pedestrian, Properties.Resources.school_pedestrian, Properties.Resources.worker, Properties.Resources.rail, Properties.Resources.highway, Properties.Resources.locational, Properties.Resources.service, Properties.Resources.recreation, Properties.Resources.empty_post};
-            string[] signCats = { "regulatory_rw", "regulatory_bw", "warning", "regulatory_pedestrian", "school_pedestrian", "worker", "rail", "highway", "locational", "service", "recreation", "empty_post"};
+            Image[] images = { Properties.Resources.regulatory_rw, Properties.Resources.regulatory_bw, Properties.Resources.warning, Properties.Resources.regulatory_pedestrian, Properties.Resources.school_pedestrian, Properties.Resources.worker, Properties.Resources.rail, Properties.Resources.highway, Properties.Resources.locational, Properties.Resources.locational, Properties.Resources.service, Properties.Resources.recreation, Properties.Resources.empty_post};
+            string[] signCats = { "regulatory_rw", "regulatory_bw", "warning", "regulatory_pedestrian", "school_pedestrian", "worker", "rail", "highway", "locational", "location_guide", "service", "recreation", "empty_post"};
 
             for (int i = 0; i < images.Length; i++)
             {
@@ -524,7 +530,7 @@ namespace tams4a.Classes
                 signControls.comboBoxSigns.DataSource = signsOnPost;
                 signControls.comboBoxSigns.DisplayMember = "description";
                 signControls.comboBoxSigns.ValueMember = "TAMSID";
-                clearSignChanges(); // Microsoft visual studio is the worst IDE in the world. Visual Studio's C# complier decided to start skipping this line.
+                clearSignChanges(); // Visual Studio's C# complier decided to start skipping this line.
                 changeSign();
                 determinePostCat();
             }
@@ -929,6 +935,11 @@ namespace tams4a.Classes
             Project.map.Refresh();
             Project.map.ResetBuffer();
             Project.map.Update();
+            if (mpl.DataSet.NumRows() == 1)
+            {
+                mpl.Extent.SetValues(xy[0] - 100, xy[1] - 100, xy[0] + 100, xy[1] + 100);
+                Project.map.ViewExtents = mpl.Extent;
+            }
         }
 
         private void enterCoordinates(object sender, EventArgs e)
@@ -1372,6 +1383,19 @@ namespace tams4a.Classes
 
         private void clickMap(object sender, EventArgs e)
         {
+            bool hasStreetMap = false;
+            for (int i = 0; i < Project.map.Layers.Count; i++)
+            {
+                if (((FeatureLayer)Project.map.Layers[i]).Name.Contains("road"))
+                {
+                    hasStreetMap = true;
+                }
+            }
+            if (Project.map.GetMaxExtent().IsEmpty() || (Layer.Extent.IsEmpty() && !hasStreetMap))
+            {
+                MessageBox.Show("Map has no view extent, please open a road SHP file or add sign support by coordinates.", "No view extent", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             Project.map.Click += addPostByClick;
         }
 
@@ -1381,8 +1405,18 @@ namespace tams4a.Classes
             double[] xy = { clickCoords.X, clickCoords.Y };
             double[] z = { clickCoords.Z};
             DotSpatial.Projections.Reproject.ReprojectPoints(xy, z, Project.map.Projection, DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984, 0, 1);
+            if (double.IsInfinity(xy[0]) || double.IsInfinity(xy[1]))
+            {
+                MessageBox.Show("There appears to be a problem with the projection of your shapefile. Consider reprojecting your shapefiles using ArcMap or MapWindow.");
+                Log.Error("Coordinate is Infinity or NaN " + Environment.NewLine + Environment.StackTrace);
+            }
             addPost(xy[1], xy[0]);
             Project.map.Click -= addPostByClick;
+        }
+
+        private void deletePost(object sender, EventArgs e)
+        {
+
         }
     }
 }

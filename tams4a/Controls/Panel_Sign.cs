@@ -43,6 +43,7 @@ namespace tams4a.Controls
             new ToolTip().SetToolTip(buttonInstallDate, "Set Install Date of Sign");
             new ToolTip().SetToolTip(buttonFavorite, "Add Sign to Favorites");
             new ToolTip().SetToolTip(buttonSignNote, "Add Note to Sign");
+            new ToolTip().SetToolTip(buttonNextPhoto, "Get Next Photo");
 
             AutoScroll = true;
         }

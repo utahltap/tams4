@@ -77,6 +77,7 @@ namespace tams4a.Forms
                 { "rail", Properties.Resources.rail },
                 { "highway", Properties.Resources.highway },
                 { "locational", Properties.Resources.locational },
+                { "location_guide", Properties.Resources.locational },
                 { "recreation", Properties.Resources.recreation }
             };
             descriptions = new List<Label>();
@@ -138,6 +139,14 @@ namespace tams4a.Forms
         {
             DialogResult = DialogResult.OK;
             Hide();
+        }
+
+        private void pressEnter(object sender, KeyEventArgs e)
+        {
+            if (textBoxFilter.Focused && e.KeyCode == Keys.Enter)
+            {
+                buttonSearch_Click(sender, e);
+            }
         }
     }
 }

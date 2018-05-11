@@ -27,8 +27,7 @@ namespace tams4a.Classes
                 return "";
             }
         }
-
-
+        
         // returns in value or -1 if unsuccessful
         public static int DictionaryItemInt(Dictionary<String, String> dictionary, String key)
         {
@@ -41,12 +40,15 @@ namespace tams4a.Classes
                 return -1;
             }
         }
-
         
-        // returns datetime in sortable format
-        public static String SortableDate (DateTime date)
+        /// <summary>
+        /// Returns the date in a format that will sort correctly as a string.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string SortableDate (DateTime date)
         {
-            return String.Format("{0:yyyy-MM-dd H:mm:ss}", date);
+            return string.Format("{0:yyyy-MM-dd HH:mm:ss}", date);
         }
 
         /// <summary>

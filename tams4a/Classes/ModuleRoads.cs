@@ -21,7 +21,6 @@ namespace tams4a.Classes
         private DataTable roadTypes;
         private DataTable surfaceDistresses;
         private string notes;
-        // used to override the base class SelectionSql
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
                     FROM
                     (
@@ -52,10 +51,8 @@ namespace tams4a.Classes
             roadAdd.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(roadAdd);
 
-            // Settings needed to open the project
-            // Other settings will be added when we open the file
-            ModuleSettings.Add(new ProjectSetting(name:ModuleName + "_file", module:ModuleName));
-            ModuleSettings.Add(new ProjectSetting(name:ModuleName + "_relative", module:ModuleName));
+            ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_file", module: ModuleName));
+            ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_relative", module: ModuleName));
 
             // gives a map from the setting name (containing the shp field) to the database column name
             FieldSettingToDbColumn = new Dictionary<string, string>()
@@ -79,7 +76,7 @@ namespace tams4a.Classes
         // must be type "line" for roads
         public override Boolean openFile(string thePath = "", string type = "line")
         {
-            if (type == "") { type = "line";  }
+            if (type == "") { type = "line"; }
             if (type != "line") { throw new Exception("Roads module requires a line-type shp file"); }
 
             // add in any further required settings
@@ -139,6 +136,7 @@ namespace tams4a.Classes
             roadPanel.toolStripButtonAnalysis.Click += reportSelected;
 
             roadPanel.btnNotes.Click += editNotes;
+            roadPanel.buttonSuggest.Click += automaticTreatmentSuggestion;
 
             roadPanel.comboBoxSurface.SelectionChangeCommitted += surfaceChanged;
             roadPanel.setChangedHandler(controlChanged);
@@ -215,13 +213,13 @@ namespace tams4a.Classes
                 {
                     saveHandler(sender, e);
                 }
-                
+
             }
             resetRoadDisplay();
 
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
-            
+
             if (shpSelection.Count <= 0) {
                 disableRoadDisplay();
                 return;
@@ -229,7 +227,7 @@ namespace tams4a.Classes
 
             enableControls();
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
-            
+
             updateRoadDisplay(values);
 
             if (values.ContainsKey("TAMSID") && !string.IsNullOrWhiteSpace(values["TAMSID"]))
@@ -241,7 +239,7 @@ namespace tams4a.Classes
             }
 
             Panel_Road roadControls = getRoadControls();
-            if (shpSelection.Count > 1)  
+            if (shpSelection.Count > 1)
             {
                 // Change color to indicate multiple selection
                 roadControls.labelName.ForeColor = SystemColors.HighlightText;
@@ -250,7 +248,7 @@ namespace tams4a.Classes
                 roadControls.textBoxRoadName.Enabled = false;
                 roadControls.textBoxRoadName.Text = "";
             }
-            
+
 
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             tamsids = new List<string>();
@@ -296,8 +294,8 @@ namespace tams4a.Classes
             roadControls.numericUpDownLanes.Value = Util.ToInt(Util.DictionaryItemString(values, "lanes"));
             roadControls.textBoxFrom.Text = Util.DictionaryItemString(values, "from_address");
             roadControls.textBoxTo.Text = Util.DictionaryItemString(values, "to_address");
-            roadControls.textBoxWidth.Text = Util.DictionaryItemString(values, "width"); 
-            roadControls.textBoxLength.Text = Util.DictionaryItemString(values, "length"); 
+            roadControls.textBoxWidth.Text = Util.DictionaryItemString(values, "width");
+            roadControls.textBoxLength.Text = Util.DictionaryItemString(values, "length");
 
             roadControls.comboBoxType.Text = Util.DictionaryItemString(values, "type");
             roadControls.comboBoxSurface.Text = Util.DictionaryItemString(values, "surface");
@@ -326,7 +324,7 @@ namespace tams4a.Classes
             roadControls.distress9.Value = Util.DictionaryItemInt(values, "distress9");
             roadControls.comboBoxTreatment.Text = Util.DictionaryItemString(values, "suggested_treatment");
             // we're taking RSL from DB to later allow manual entry
-            roadControls.inputRsl.Value = Util.DictionaryItemString(values, "rsl");
+            roadControls.inputRsl.Text = Util.DictionaryItemString(values, "rsl");
 
             notes = Util.DictionaryItemString(values, "notes");
             if (!string.IsNullOrEmpty(notes))
@@ -385,7 +383,7 @@ namespace tams4a.Classes
         // sets the various distress controls based on the surface
         private void updateDistressControls(string surface)
         {
-           Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = getRoadControls();
 
             // hide all controls
             foreach (Control control in roadControls.groupBoxDistress.Controls)
@@ -400,8 +398,11 @@ namespace tams4a.Classes
             roadControls.groupBoxDistress.Enabled = true;
             roadControls.inputRsl.Visible = true;
             roadControls.inputRsl.Enabled = true;
+            roadControls.buttonSuggest.Visible = true;
+            roadControls.buttonSuggest.Enabled = true;
             roadControls.comboBoxTreatment.Visible = true;
             roadControls.labelSuggestedTreatment.Visible = true;
+            roadControls.labelSuggestedTreatment.Enabled = true;
             roadControls.comboBoxTreatment.Enabled = true;
 
             foreach (DataRow row in surfaceDistresses.Rows)
@@ -436,7 +437,6 @@ namespace tams4a.Classes
             roadControls.comboBoxTreatment.DataSource = treatments;    //
             roadControls.comboBoxTreatment.DisplayMember = "name";       // sets options
             roadControls.comboBoxTreatment.ValueMember = "id";           //
-            //roadControls.comboBoxTreatment.DropDownWidth = Util.DropDownWidth(roadControls.comboBoxTreatment);
         }
 
 
@@ -447,8 +447,8 @@ namespace tams4a.Classes
 
             roadControls.textBoxRoadName.Text = "";
             roadControls.labelSurveyDate.Text = "";
-            roadControls.numericUpDownSpeedLimit.Value = 25;
-            roadControls.numericUpDownLanes.Value = 2;
+            roadControls.numericUpDownSpeedLimit.Value = 0;
+            roadControls.numericUpDownLanes.Value = 0;
             roadControls.textBoxFrom.Text = "";
             roadControls.textBoxTo.Text = "";
             roadControls.textBoxWidth.Text = "";
@@ -467,7 +467,7 @@ namespace tams4a.Classes
             roadControls.distress7.Value = -1;
             roadControls.distress8.Value = -1;
             roadControls.distress9.Value = -1;
-            roadControls.inputRsl.Value = "";
+            roadControls.inputRsl.Text = "";
             roadControls.btnNotes.Checked = false;
 
             roadControls.labelName.ForeColor = default(Color);
@@ -507,10 +507,10 @@ namespace tams4a.Classes
             roadControls.groupBoxInfo.Enabled = true;
             roadControls.groupBoxDistress.Enabled = true;
             roadControls.toolStrip.Enabled = true;
-          
+
         }
 
-        
+
         // handler for changed controls
         protected override void controlChanged(object sender, EventArgs e)
         {
@@ -537,13 +537,13 @@ namespace tams4a.Classes
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
-            
+
             Panel_Road roadControls = getRoadControls();
             Dictionary<string, string> values = new Dictionary<string, string>();
             values["name"] = roadControls.textBoxRoadName.Text;
             values["survey_date"] = Util.SortableDate(surveyDate);
-            values["speed_limit"] = roadControls.numericUpDownSpeedLimit.Value != 0? roadControls.numericUpDownSpeedLimit.Value.ToString(): "";
-            values["lanes"] = roadControls.numericUpDownLanes.Value != 0? roadControls.numericUpDownLanes.Value.ToString(): "";
+            values["speed_limit"] = roadControls.numericUpDownSpeedLimit.Value != 0 ? roadControls.numericUpDownSpeedLimit.Value.ToString() : "";
+            values["lanes"] = roadControls.numericUpDownLanes.Value != 0 ? roadControls.numericUpDownLanes.Value.ToString() : "";
             values["width"] = roadControls.textBoxWidth.Text;
             values["length"] = roadControls.textBoxLength.Text;
             values["from_address"] = roadControls.textBoxFrom.Text;
@@ -566,7 +566,7 @@ namespace tams4a.Classes
             {
                 Properties.Settings.Default.lastPhoto = roadControls.textBoxPhotoFile.Text;
             }
-                                                                                   //  Asphalt         Unpaved         Concrete
+            //  Asphalt         Unpaved         Concrete
             if (roadControls.distress1.Visible) { values["distress1"] = roadControls.distress1.Value.ToString(); }   //  Fatigue         Potholes       Spalling
             if (roadControls.distress2.Visible) { values["distress2"] = roadControls.distress2.Value.ToString(); }   //  Edge            Rutting        Joint Seals
             if (roadControls.distress3.Visible) { values["distress3"] = roadControls.distress3.Value.ToString(); }   //  Longitudional   X-section      Corners
@@ -578,9 +578,9 @@ namespace tams4a.Classes
             if (roadControls.distress9.Visible) { values["distress9"] = roadControls.distress9.Value.ToString(); }   //  Rutting                        Patches
 
             if (roadControls.comboBoxTreatment.Visible) { values["suggested_treatment"] = roadControls.comboBoxTreatment.Text; }
-            
-            if (!string.IsNullOrWhiteSpace(roadControls.inputRsl.Value.ToString())) {
-                values["rsl"] = roadControls.inputRsl.Value.ToString();
+
+            if (!string.IsNullOrWhiteSpace(roadControls.inputRsl.Text.ToString())) {
+                values["rsl"] = roadControls.inputRsl.Text.ToString();
 
                 string tamsidsCSV = string.Join(",", tamsids.ToArray());
                 foreach (DataRow row in selectionLayer.DataSet.DataTable.Select(tamsidcolumn + " IN (" + tamsidsCSV + ")"))
@@ -589,7 +589,7 @@ namespace tams4a.Classes
                     row["TAMSTREATMENT"] = values["suggested_treatment"];
                 }
             }
-            
+
             for (int i = 0; i < tamsids.Count; i++)
             {
                 values["TAMSID"] = tamsids[i];
@@ -636,7 +636,7 @@ namespace tams4a.Classes
             Panel_Road roadControls = getRoadControls();
 
             updateDistressControls(roadControls.comboBoxSurface.Text);
-            
+
         }
 
 
@@ -650,7 +650,7 @@ namespace tams4a.Classes
             Panel_Road roadControls = getRoadControls();
             if (roadControls.comboBoxSurface.Text != "")
             {
-                roadControls.inputRsl.Value = calcRsl().ToString();
+                roadControls.inputRsl.Text = calcRsl().ToString();
 
                 // change save condition
                 controlChanged(sender, e);
@@ -681,7 +681,7 @@ namespace tams4a.Classes
                         string column = "rsl" + entry.Value.ToString();
                         int thisRsl = Convert.ToInt16(surfaceDistresses.Rows.Find(entry.DataId)[column]);
 
-                        if (thisRsl<minrsl)
+                        if (thisRsl < minrsl)
                         {
                             minrsl = thisRsl;
                         }
@@ -697,9 +697,6 @@ namespace tams4a.Classes
                         string distressName = entry.Name.ToString();
                         string message = "Couldn't find entry #" + distress + " for " + distressName + " (id:" + dbkey + ")";
 
-                        // if we couldn't find it or something, then ignore it
-                        //MessageBox.Show(message);   // TODO: Once function works, remove this
-                        //Log.Warning(message);
                     }
                 }
                 else if (entry.Enabled && entry.Value == 0)
@@ -763,6 +760,7 @@ namespace tams4a.Classes
         private void applyColorizedProperties()
         {
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            UnsavedChanges = false;
             selectionLayer.SelectAll();
             ISelection shpSelection = selectionLayer.Selection;
             DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
@@ -783,8 +781,8 @@ namespace tams4a.Classes
             tamsTable = tamsTable.DefaultView.ToTable();
             for (int i = 0; i < selectionTable.Rows.Count; i++)
             {
-                selectionTable.Rows[i]["TAMSROADRSL"] = i >= tamsTable.Rows.Count ? -1: string.IsNullOrWhiteSpace(tamsTable.Rows[i]["rsl"].ToString())? -1: Util.ToInt(tamsTable.Rows[i]["rsl"].ToString());
-                selectionTable.Rows[i]["TAMSTREATMENT"] = i >= tamsTable.Rows.Count ? -1: tamsTable.Rows[i]["suggested_treatment"];
+                selectionTable.Rows[i]["TAMSROADRSL"] = i >= tamsTable.Rows.Count ? -1 : string.IsNullOrWhiteSpace(tamsTable.Rows[i]["rsl"].ToString()) ? -1 : Util.ToInt(tamsTable.Rows[i]["rsl"].ToString());
+                selectionTable.Rows[i]["TAMSTREATMENT"] = i >= tamsTable.Rows.Count ? -1 : tamsTable.Rows[i]["suggested_treatment"];
             }
             selectionLayer.DataSet.DataTable = selectionTable;
         }
@@ -820,17 +818,17 @@ namespace tams4a.Classes
             // default category
             LineCategory catDef = new LineCategory();
             catDef.LegendText = "No RSL Info";
-            
+
             catDef.SelectionSymbolizer = catSelSym;
             catDef.Symbolizer = symDef;
             rdScheme.AddCategory(catDef);
-            
-            int[] rslfloor = {0, 1, 5,  9, 13, 17 };
+
+            int[] rslfloor = { 0, 1, 5, 9, 13, 17 };
             int[] rslceil = { 0, 4, 8, 12, 16, 20 };
-            int[] r = { 255, 240, 250,  100,  5,  35 };
-            int[] g = {  5,  130, 250, 200, 255, 100 };
-            int[] b = {  5,   5,   5,   30, 10, 255 };
-            
+            int[] r = { 255, 240, 250, 100, 5, 35 };
+            int[] g = { 5, 130, 250, 200, 255, 100 };
+            int[] b = { 5, 5, 5, 30, 10, 255 };
+
             // add rsl categories
             if (Project.settings.GetValue("road_colours").Contains("t"))
             {
@@ -888,7 +886,7 @@ namespace tams4a.Classes
 
             FeatureLayer roadFeatures = Layer as FeatureLayer;
             //roadFeatures
-            if (    !string.IsNullOrEmpty(Project.settings.GetValue("road_labels")) &&
+            if (!string.IsNullOrEmpty(Project.settings.GetValue("road_labels")) &&
                     !string.IsNullOrEmpty(Project.settings.GetValue("road_f_streetname"))
                 )
             {
@@ -912,7 +910,7 @@ namespace tams4a.Classes
                 try
                 {
                     string imageLocation = Project.projectFolderPath + @"\Photos\" + roadControls.textBoxPhotoFile.Text;
-                    
+
                     if (File.Exists(imageLocation))
                     {
                         largePic.pictureRoad.ImageLocation = imageLocation;
@@ -959,9 +957,6 @@ namespace tams4a.Classes
 
         public void generalReport(object sender, EventArgs e)
         {
-            string[] da = { "Fatigue", "Edge Cracks", "Longitudinal", "Patches", "Potholes", "Drainage", "Transverse", "Blocking", "Rutting" };
-            string[] dg = { "Potholes", "Rutting", "X-section", "Drainage", "Dust", "Aggregate", "Corrugation" };
-            string[] dc = { "Spalling", "Joint Seals", "Corners", "Breaks", "Faulting", "Longitudinal", "Transverse", "Map Cracks", "Patches" };
             DataTable general = new DataTable();
             general.Columns.Add("ID");
             general.Columns.Add("Name");
@@ -984,42 +979,26 @@ namespace tams4a.Classes
                 foreach (DataRow row in resultsTable.Rows)
                 {
                     DataRow nr = general.NewRow();
-                    string[] seld = da;
                     nr["ID"] = row["TAMSID"];
                     nr["Name"] = row["name"];
                     nr["From Address"] = row["from_address"];
                     nr["To Address"] = row["to_address"];
                     nr["Surface"] = row["surface"];
-                    int distID = 0;
-                    int maxRSL = 20;
-                    if (row["surface"].ToString().Contains("asphalt"))
+                    int[] dvs = new int[9];
+                    for (int i = 0; i < 9; i++)
                     {
-                        distID = 1;
-                        maxRSL = 20;
-                        seld = da;
+                        dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
                     }
-                    else if (row["surface"].ToString().Contains("gravel"))
-                    {
-                        distID = 2;
-                        maxRSL = 10;
-                        seld = dg;
-                    }
-                    else if (row["surface"].ToString().Contains("concrete"))
-                    {
-                        distID = 3;
-                        maxRSL = 20;
-                        seld = dc;
-                    }
-                    nr["Governing Distress"] = "none";
+                    nr["Governing Distress"] = getGoverningDistress(dvs, row["surface"].ToString());
                     nr["Cost"] = 0;
                     if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))
                     {
                         nr["Treatment"] = row["suggested_treatment"];
                         string treatmentCost = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments WHERE name = '" + row["suggested_treatment"].ToString() + "';").Rows[0]["cost"].ToString();
-                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) /9;//Note: Treatment cost is per square yard. Road dimensions are in ft.
+                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;//Note: Treatment cost is per square yard. Road dimensions are in ft.
                         if (estCost > 1000000)
                         {
-                            nr["Cost"] = Math.Round(estCost/1000000, 2).ToString() + "M";
+                            nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
                         }
                         else if (estCost > 1000)
                         {
@@ -1030,21 +1009,6 @@ namespace tams4a.Classes
                             nr["Cost"] = Math.Round(estCost).ToString();
                         }
                         totalCost += (int)estCost;
-                    }
-                    DataTable distresses = Database.GetDataByQuery(Project.conn, "SELECT * FROM road_distresses WHERE surface_id = " + distID.ToString());
-                    for (int i = 1; i <= distresses.Rows.Count; i++)
-                    {
-                        int distValue = Util.ToInt(row["distress" + i.ToString()].ToString());
-                        if (distValue <= 0)
-                        {
-                            continue;
-                        }
-                        int rsl = Util.ToInt(distresses.Rows[i-1]["rsl" + distValue.ToString()].ToString());
-                        if (rsl < maxRSL)
-                        {
-                            maxRSL = rsl;
-                            nr["Governing Distress"] = seld[i-1];
-                        }
                     }
                     nr["Area"] = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
                     general.Rows.Add(nr);
@@ -1083,7 +1047,7 @@ namespace tams4a.Classes
 
         public void potholeReport(object sender, EventArgs e)
         {
-            string[] pd = {"less than 1\"", "less than 2\"", "more than 2\""};
+            string[] pd = { "less than 1\"", "less than 2\"", "more than 2\"" };
             string[] pq = { "less than 2", "less than 5", "more than 5" };
             DataTable potholes = new DataTable("Potholes");
             potholes.Columns.Add("ID");
@@ -1117,8 +1081,8 @@ namespace tams4a.Classes
                     nr["Name"] = row["name"];
                     nr["From Address"] = row["from_address"];
                     nr["To Address"] = row["to_address"];
-                    nr["Depth"] = (Util.ToInt(row["distress5"].ToString()) > 0 ? pd[(Util.ToInt(row["distress5"].ToString()) - 1)/3]: "None");
-                    nr["Quantity"] = (Util.ToInt(row["distress5"].ToString()) > 0 ? pq[(Util.ToInt(row["distress5"].ToString()) - 1) % 3]: "None");
+                    nr["Depth"] = (Util.ToInt(row["distress5"].ToString()) > 0 ? pd[(Util.ToInt(row["distress5"].ToString()) - 1) / 3] : "None");
+                    nr["Quantity"] = (Util.ToInt(row["distress5"].ToString()) > 0 ? pq[(Util.ToInt(row["distress5"].ToString()) - 1) % 3] : "None");
                     nr["Suggested Treatment"] = row["suggested_treatment"].ToString();
                     potholes.Rows.InsertAt(nr, potholes.Rows.Count);
                 }
@@ -1136,11 +1100,40 @@ namespace tams4a.Classes
             selectionLayer.ClearSelection();
         }
 
-        public void reportSelected(object sender, EventArgs e)
+        private void automaticTreatmentSuggestion(object sender, EventArgs e)
         {
-            string[] da = { "Fatigue", "Edge Cracks", "Longitudinal", "Patches", "Potholes", "Drainage", "Transverse", "Blocking", "Rutting" };
-            string[] dg = { "Potholes", "Rutting", "X-section", "Drainage", "Dust", "Aggregate", "Corrugation" };
-            string[] dc = { "Spalling", "Joint Seals", "Corners", "Breaks", "Faulting", "Longitudinal", "Transverse", "Map Cracks", "Patches" };
+            Dictionary<string, Dictionary<string, int>> data = new Dictionary<string, Dictionary<string, int>>()
+            {
+                { "asphalt", new Dictionary<string, int>() { { "Fatigue", 1 }, { "Edge Cracks", 2 }, { "Longitudinal", 3 }, {"Patches", 4 }, { "Potholes", 5 }, { "Drainage", 6 }, { "Transverse", 7 }, { "Blocking", 8 }, { "Rutting", 9 } } },
+                { "gravel", new Dictionary<string, int>() { { "Potholes", 1 }, { "Rutting", 2 }, { "X-section", 3 }, {"Drainage", 4 }, { "Dust", 5 }, { "Aggregate", 6 }, { "Corrugation", 7 } } },
+                { "concrete", new Dictionary<string, int>() { { "Spalling", 1 }, { "Joint Seals", 2 }, { "Corners", 3 }, {"Breaks", 4 }, { "Faulting", 5 }, { "Longitudinal", 6 }, { "Transverse", 7 }, { "Map Cracks", 8 }, { "Patches", 9 } } }
+            };
+            var roadControls = getRoadControls();
+            int[] dvs;
+            if (roadControls.comboBoxSurface.Text.Contains("gravel"))
+            {
+                dvs = new int[7]{ roadControls.distress1.Value, roadControls.distress2.Value, roadControls.distress3.Value, roadControls.distress4.Value, roadControls.distress5.Value, roadControls.distress6.Value, roadControls.distress7.Value};
+            }
+            else
+            {
+                dvs = new int[9] { roadControls.distress1.Value, roadControls.distress2.Value, roadControls.distress3.Value, roadControls.distress4.Value, roadControls.distress5.Value, roadControls.distress6.Value, roadControls.distress7.Value, roadControls.distress8.Value, roadControls.distress9.Value };
+            }
+            string gd = getGoverningDistress(dvs, roadControls.comboBoxSurface.Text);
+            if (string.IsNullOrWhiteSpace(gd)) { return; }
+            int index = data[roadControls.comboBoxSurface.Text][gd] - 1;
+            DataTable suggestion = Database.GetDataByQuery(Project.conn, "SELECT treatment FROM auto_suggest WHERE governing_distress='" + gd +  "' AND distress_value=" + dvs[index].ToString() + ";");
+            if (suggestion.Rows.Count > 0)
+            {
+                roadControls.comboBoxTreatment.Text = suggestion.Rows[0]["treatment"].ToString();
+            }
+            else
+            {
+                roadControls.comboBoxTreatment.Text = "";
+            }
+        }
+
+        private void reportSelected(object sender, EventArgs e)
+        {
             DataTable general = new DataTable();
             general.Columns.Add("ID");
             general.Columns.Add("Name");
@@ -1162,33 +1155,17 @@ namespace tams4a.Classes
                 foreach (DataRow row in resultsTable.Rows)
                 {
                     DataRow nr = general.NewRow();
-                    string[] seld = da;
                     nr["ID"] = row["TAMSID"];
                     nr["Name"] = row["name"];
                     nr["From Address"] = row["from_address"];
                     nr["To Address"] = row["to_address"];
                     nr["Surface"] = row["surface"];
-                    int distID = 0;
-                    int maxRSL = 20;
-                    if (row["surface"].ToString().Contains("asphalt"))
+                    int[] dvs = new int[9];
+                    for (int i = 0; i < 9; i++)
                     {
-                        distID = 1;
-                        maxRSL = 20;
-                        seld = da;
+                        dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
                     }
-                    else if (row["surface"].ToString().Contains("gravel"))
-                    {
-                        distID = 2;
-                        maxRSL = 10;
-                        seld = dg;
-                    }
-                    else if (row["surface"].ToString().Contains("concrete"))
-                    {
-                        distID = 3;
-                        maxRSL = 20;
-                        seld = dc;
-                    }
-                    nr["Governing Distress"] = "none";
+                    nr["Governing Distress"] = getGoverningDistress(dvs, row["surface"].ToString());
                     nr["Cost"] = 0;
                     if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))
                     {
@@ -1208,21 +1185,6 @@ namespace tams4a.Classes
                             nr["Cost"] = Math.Round(estCost).ToString();
                         }
                         totalCost += (int)estCost;
-                    }
-                    DataTable distresses = Database.GetDataByQuery(Project.conn, "SELECT * FROM road_distresses WHERE surface_id = " + distID.ToString());
-                    for (int i = 1; i <= distresses.Rows.Count; i++)
-                    {
-                        int distValue = Util.ToInt(row["distress" + i.ToString()].ToString());
-                        if (distValue <= 0)
-                        {
-                            continue;
-                        }
-                        int rsl = Util.ToInt(distresses.Rows[i - 1]["rsl" + distValue.ToString()].ToString());
-                        if (rsl < maxRSL)
-                        {
-                            maxRSL = rsl;
-                            nr["Governing Distress"] = seld[i - 1];
-                        }
                     }
                     nr["Area"] = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
                     general.Rows.Add(nr);
@@ -1256,6 +1218,50 @@ namespace tams4a.Classes
                 Log.Error("Could not get database values for " + ModuleName + " module.\n" + err.ToString());
                 MessageBox.Show("An error has occured while trying to consolidate data.");
             }
+        }
+
+        private string getGoverningDistress(int[] distValues, string surfType)
+        {
+            string[] da = { "Fatigue", "Edge Cracks", "Longitudinal", "Patches", "Potholes", "Drainage", "Transverse", "Blocking", "Rutting" };
+            string[] dg = { "Potholes", "Rutting", "X-section", "Drainage", "Dust", "Aggregate", "Corrugation" };
+            string[] dc = { "Spalling", "Joint Seals", "Corners", "Breaks", "Faulting", "Longitudinal", "Transverse", "Map Cracks", "Patches" };
+            string[] seld = da;
+            int distID = 1;
+            int maxRSL = 20;
+            if (surfType.Contains("asphalt"))
+            {
+                distID = 1;
+                maxRSL = 20;
+                seld = da;
+            }
+            else if (surfType.Contains("gravel"))
+            {
+                distID = 2;
+                maxRSL = 10;
+                seld = dg;
+            }
+            else if (surfType.Contains("concrete"))
+            {
+                distID = 3;
+                maxRSL = 20;
+                seld = dc;
+            }
+            DataTable distresses = Database.GetDataByQuery(Project.conn, "SELECT * FROM road_distresses WHERE surface_id = " + distID.ToString());
+            string gd = "";
+            for (int i = 1; i <= distresses.Rows.Count; i++)
+            {;
+                if (distValues[i-1] <= 0)
+                {
+                    continue;
+                }
+                int rsl = Util.ToInt(distresses.Rows[i - 1]["rsl" + distValues[i-1]].ToString());
+                if (rsl < maxRSL)
+                {
+                    maxRSL = rsl;
+                    gd = seld[i - 1];
+                }
+            }
+            return gd;
         }
 
         protected void openBudgetTool(object sender, EventArgs e)
@@ -1311,6 +1317,5 @@ namespace tams4a.Classes
             signAdd.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(signAdd);
         }
-
     }
 }

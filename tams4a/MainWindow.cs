@@ -38,13 +38,13 @@ namespace tams4a
 
         private void InitializeProject()
         {
+            uxMap.Projection = DotSpatial.Projections.KnownCoordinateSystems.Projected.World.WebMercator;
             Project = new TamsProject(uxMap);
             tabControlControls.TabPages.Clear();
 
             if (Program.cmdArgs.Length > 0)
             {
-                //open project
-                String file = Program.cmdArgs[0];
+                string file = Program.cmdArgs[0];
                 if (!Project.open(file))
                 {
                     MessageBox.Show("Could not open " + file);
@@ -83,7 +83,6 @@ namespace tams4a
             appManager.ProgressHandler = new DotSpatial.Controls.SpatialStatusStrip();
             appManager.Map = uxMap;
             appManager.LoadExtensions();
-            uxMap.Projection = DotSpatial.Projections.KnownCoordinateSystems.Projected.World.WebMercator;
             webService = DotSpatial.Plugins.WebMap.ServiceProviderFactory.Create("GooleMap");
         }
         */
