@@ -41,6 +41,7 @@
             this.toolStripDropDownButtonNewPost = new System.Windows.Forms.ToolStripDropDownButton();
             this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readGPSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
             this.buttonFavorite = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
@@ -99,7 +100,6 @@
             this.comboBoxSheeting = new System.Windows.Forms.ComboBox();
             this.labelSheeting = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
-            this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
@@ -219,6 +219,12 @@
             this.readGPSToolStripMenuItem.Name = "readGPSToolStripMenuItem";
             this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.readGPSToolStripMenuItem.Text = "Read GPS";
+            // 
+            // clickMapToolStripMenuItem
+            // 
+            this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
+            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.clickMapToolStripMenuItem.Text = "Click Map";
             // 
             // groupBoxSupport
             // 
@@ -484,7 +490,7 @@
             this.groupBoxSign.Controls.Add(this.comboBoxSheeting);
             this.groupBoxSign.Controls.Add(this.labelSheeting);
             this.groupBoxSign.Controls.Add(this.labelType);
-            this.groupBoxSign.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxSign.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBoxSign.Location = new System.Drawing.Point(0, 208);
             this.groupBoxSign.Name = "groupBoxSign";
             this.groupBoxSign.Size = new System.Drawing.Size(224, 461);
@@ -623,10 +629,8 @@
             this.comboBoxObstruction.Items.AddRange(new object[] {
             "",
             "clear",
-            "partial (move sign)",
-            "partial (clear obstruction)",
-            "severe (move sign)",
-            "severe (clear obstruction)"});
+            "partial",
+            "severe"});
             this.comboBoxObstruction.Location = new System.Drawing.Point(87, 275);
             this.comboBoxObstruction.Name = "comboBoxObstruction";
             this.comboBoxObstruction.Size = new System.Drawing.Size(112, 21);
@@ -877,12 +881,6 @@
             this.labelType.Size = new System.Drawing.Size(73, 13);
             this.labelType.TabIndex = 0;
             this.labelType.Text = "MUTCD code";
-            // 
-            // clickMapToolStripMenuItem
-            // 
-            this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
-            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.clickMapToolStripMenuItem.Text = "Click Map";
             // 
             // Panel_Sign
             // 

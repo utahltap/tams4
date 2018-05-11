@@ -20,8 +20,8 @@ namespace tams4a
         private TamsProject Project;
         private int maxWidth;
         private DotSpatial.Controls.AppManager appManager;
-        private DotSpatial.Plugins.WebMap.ServiceProvider webService;
-        private DotSpatial.Plugins.WebMap.WebMapPlugin webLayer;
+        //private DotSpatial.Plugins.WebMap.ServiceProvider webService;
+        //private DotSpatial.Plugins.WebMap.WebMapPlugin webLayer;
         private bool closeForReal = true;
 
         /// <summary>

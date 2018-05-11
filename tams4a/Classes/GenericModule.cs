@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows.Forms;
 using tams4a.Controls;
 using tams4a.Forms;
+using DotSpatial.Data;
 
 namespace tams4a.Classes
 {
@@ -19,9 +20,60 @@ namespace tams4a.Classes
 
         public GenericModule(TamsProject theProject, TabPage controlPage, ToolStripMenuItem[] boundButtons, string mn) : base(theProject, controlPage, boundButtons, itemSelectionSql)
         {
-            moduleName = mn;
+            ModuleName = mn;
             notes = "";
 
+            Panel_Module_OpenShp create = new Panel_Module_OpenShp("other");
+            create.Name = "MODULEADD";
+            create.Controls.Clear();
+            Button newFile = new Button();
+            newFile.Text = "Create Point SHP File";
+            newFile.Size = new Size(196, 54);
+            newFile.Location = new Point(10, 74);
+            newFile.Click += newSHPFile;
+            create.Controls.Add(newFile);
+            create.Dock = DockStyle.Fill;
+            ControlsPage.Controls.Add(create);
+        }
+
+        private void newSHPFile(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "GIS ShapeFile (*.SHP)|*.shp";
+            if (save.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            string filename = save.FileName;
+            if (createSHPFile(filename))
+            {
+                openFile(filename, "point");
+                ProjectSetting shpSetting = new ProjectSetting(name: ModuleName + "_file", value: Filepath, module: ModuleName);
+                ProjectSetting shpRelative = new ProjectSetting(name: ModuleName + "_relative", value: Util.MakeRelativePath(Properties.Settings.Default.lastProject, Filepath), module: ModuleName);
+                Project.settings.SetSetting(shpSetting);
+                Project.settings.SetSetting(shpRelative);
+            }
+        }
+
+        private bool createSHPFile(string filename)
+        {
+            PointShapefile pointLayer = new PointShapefile();
+            pointLayer.Projection = DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984;
+            pointLayer.DataTable.Columns.Add("FID");
+            pointLayer.DataTable.Columns.Add("TAMSID");
+            pointLayer.DataTable.Columns.Add("TAMSSIGN");
+            pointLayer.DataTable.Columns.Add("address");
+            pointLayer.DataTable.Columns.Add("offset");
+            try
+            {
+                pointLayer.SaveAs(filename, true);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not create ShapeFile" + Environment.NewLine + e.ToString());
+                return false;
+            }
+            return true;
         }
     }
 }

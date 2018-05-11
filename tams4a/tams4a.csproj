@@ -247,6 +247,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\GenericModule.cs" />
     <Compile Include="Classes\ImportAccess.cs" />
     <Compile Include="Classes\Database.cs" />
     <Compile Include="Classes\Log.cs" />
@@ -286,6 +287,12 @@
     </Compile>
     <Compile Include="Controls\Panel_Module.Designer.cs">
       <DependentUpon>Panel_Module.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Panel_Other.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Panel_Other.Designer.cs">
+      <DependentUpon>Panel_Other.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Panel_Road.cs">
       <SubType>UserControl</SubType>
@@ -447,6 +454,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Panel_Module_OpenShp.resx">
       <DependentUpon>Panel_Module_OpenShp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Panel_Other.resx">
+      <DependentUpon>Panel_Other.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Panel_Road.resx">
       <DependentUpon>Panel_Road.cs</DependentUpon>

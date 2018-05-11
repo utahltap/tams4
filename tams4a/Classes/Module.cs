@@ -277,7 +277,18 @@ namespace tams4a.Classes
                 {
                     if (!openFile(filename))
                     {
-                        MessageBox.Show("Could not load " + ModuleName + " file (" + filename + ")");
+                        if(MessageBox.Show("Could not load " + ModuleName + " file (" + filename + "). It is possible that the file was moved or deleted. Would you like to manual locate this file?", "File not Found", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            OpenFileDialog openDialog = new OpenFileDialog();
+                            openDialog.Filter = "SHP Files|*.shp";
+                            openDialog.Multiselect = false;
+                            openDialog.Title = "Open " + ModuleName + " SHP File";
+                            if (openDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                filename = openDialog.FileName;
+                                openFile(filename);
+                            }
+                        }
                     }
                 }
             }
@@ -288,7 +299,18 @@ namespace tams4a.Classes
                 {
                     if (!openFile(filename))
                     {
-                        MessageBox.Show("Could not load " + ModuleName + " file (" + filename + ")");
+                        if (MessageBox.Show("Could not load " + ModuleName + " file (" + filename + "). It is possible that the file was moved or deleted. Would you like to manual locate this file?", "File not Found", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            OpenFileDialog openDialog = new OpenFileDialog();
+                            openDialog.Filter = "SHP Files|*.shp";
+                            openDialog.Multiselect = false;
+                            openDialog.Title = "Open " + ModuleName + " SHP File";
+                            if (openDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                filename = openDialog.FileName;
+                                openFile(filename);
+                            }
+                        }
                     }
                 }
                 

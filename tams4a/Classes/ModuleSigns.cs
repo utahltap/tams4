@@ -41,8 +41,8 @@ namespace tams4a.Classes
             signAdd.SetHandler(new EventHandler(openFileHandler));
             Button createSigns = new Button();
             createSigns.Text = "Create Sign SHP File";
-            createSigns.Size = new System.Drawing.Size(196, 54);
-            createSigns.Location = new System.Drawing.Point(10, 74);
+            createSigns.Size = new Size(196, 54);
+            createSigns.Location = new Point(10, 74);
             createSigns.Click += newSHPFile;
             signAdd.Controls.Add(createSigns);
             signAdd.Dock = DockStyle.Fill;
@@ -743,10 +743,18 @@ namespace tams4a.Classes
                     foreach (DataRow row in selectionLayer.DataSet.DataTable.Select(tamsidcolumn + " IN (" + tamsidsCSV + ")"))
                     {
                         row["TAMSSIGN"] = postCat;
+                        if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_address")))
+                        {
+                            row[Project.settings.GetValue("sign_f_address")] = values["address"];
+                        }
+                        if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_offset")))
+                        {
+                            row[Project.settings.GetValue("sign_f_offset")] = values["road_offset"];
+                        }
                     }
                 }
             }
-            
+
             for (int i = 0; i < tamsids.Count; i++)
             {
                 values["support_id"] = tamsids[i];
@@ -918,6 +926,14 @@ namespace tams4a.Classes
             if (!np.DataRow.Table.Columns.Contains("TAMSSIGN"))
             {
                 np.DataRow.Table.Columns.Add("TAMSSIGN");
+            }
+            if (!np.DataRow.Table.Columns.Contains(Project.settings.GetValue("sign_f_address")))
+            {
+                np.DataRow.Table.Columns.Add(Project.settings.GetValue("sign_f_address"));
+            }
+            if (!np.DataRow.Table.Columns.Contains(Project.settings.GetValue("sign_f_offset")))
+            {
+                np.DataRow.Table.Columns.Add(Project.settings.GetValue("sign_f_offset"));
             }
             np.DataRow["FID"] = maxSuppID;
             np.DataRow[Project.settings.GetValue(ModuleName + "_f_TAMSID")] = maxSuppID;
