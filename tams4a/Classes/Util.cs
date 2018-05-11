@@ -27,8 +27,7 @@ namespace tams4a.Classes
                 return "";
             }
         }
-
-
+        
         // returns in value or -1 if unsuccessful
         public static int DictionaryItemInt(Dictionary<String, String> dictionary, String key)
         {
@@ -41,7 +40,6 @@ namespace tams4a.Classes
                 return -1;
             }
         }
-
         
         /// <summary>
         /// Returns the date in a format that will sort correctly as a string.

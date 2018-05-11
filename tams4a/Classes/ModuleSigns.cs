@@ -93,7 +93,7 @@ namespace tams4a.Classes
 
             #region signSettings
             ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_f_TAMSID", module: ModuleName, value: "",
-                    display_text: "SHP field with a unique identifier.", display_type: "field",
+                    display_text: "SHP field with a unique identifier (TAMSID).", display_type: "field",
                     description: "Show an Icon instead of a basic shape for sign locations.", required:true));
             ModuleSettings.Add(new ProjectSetting(name: "sign_offset", module: ModuleName, value: "",
                     display_text: "SHP field with offset from road?", display_type: "field",
