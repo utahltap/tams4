@@ -543,7 +543,7 @@ REPLACE INTO mutcd_lookup(mutcd_code, description, sign_text, category) VALUES('
             }
             #endregion db_update_6_immute
             #region db_update_7_immute
-            if (dbVersion == 6) // automatic recommedations
+            if (dbVersion == 6) // automatic recommendations
             {
                 try
                 {
@@ -636,7 +636,22 @@ UPDATE mutcd_lookup SET category='location_guide' WHERE category='locational';";
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_7_immute
-            
+            #region db_update_8_immute
+            if (dbVersion == 7)
+            {
+                try
+                {
+                    string cmdString = @"";
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                    MessageBox.Show("The database could not be updated to the latest version of TAMS please contact the Utah LTAP Center for help.");
+                    return false;
+                }
+            }
+            #endregion db_update_8_immute
+
             return true;
         }
 

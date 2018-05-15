@@ -34,6 +34,17 @@ namespace tams4a.Classes
             create.Controls.Add(newFile);
             create.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(create);
+
+            ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_file", module: ModuleName));
+            ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_relative", module: ModuleName));
+
+            FieldSettingToDbColumn = new Dictionary<string, string>()
+            {
+                { "sign_f_TAMSID", "support_id" }
+            };
+
+            Project.map.ResetBuffer();
+            Project.map.Update();
         }
 
         private void newSHPFile(object sender, EventArgs e)
@@ -53,6 +64,15 @@ namespace tams4a.Classes
                 Project.settings.SetSetting(shpSetting);
                 Project.settings.SetSetting(shpRelative);
             }
+        }
+
+        public override bool openFile(string thePath = "", string type = "point")
+        {
+            if (type == "") { type = "point"; }
+            if (type != "point") { throw new Exception("Generic module requires a point-type shp file"); }
+
+
+            return true;
         }
 
         private bool createSHPFile(string filename)

@@ -144,7 +144,6 @@ namespace tams4a.Classes
             signPanel.textBoxText.TextChanged += signValueChanged;
             signPanel.comboBoxReflectivity.TextChanged += signValueChanged;
             signPanel.comboBoxConditionSign.TextChanged += signValueChanged;
-            signPanel.comboBoxObstruction.TextChanged += signValueChanged;
             signPanel.comboBoxDirection.TextChanged += signValueChanged;
             signPanel.textBoxPhotoFile.TextChanged += signValueChanged;
             #endregion eventhandlers
