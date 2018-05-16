@@ -79,11 +79,10 @@ namespace tams4a.Classes
             };
 
             boundButtons[0].Click += clickManageFavorites;
-            boundButtons[1].Click += generateReport;
-            boundButtons[2].Click += failedReport;
+            boundButtons[1].Click += failedReport;
+            boundButtons[2].Click += generateReport;
             boundButtons[3].Click += obstructedReport;
-            boundButtons[4].Click += oldSignsReport;
-            boundButtons[5].Click += brokenReport;
+            boundButtons[4].Click += supportReport;
         }
 
         public override bool openFile(string thePath = "", string type = "point")
@@ -95,10 +94,10 @@ namespace tams4a.Classes
             ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_f_TAMSID", module: ModuleName, value: "",
                     display_text: "SHP field with a unique identifier (TAMSID).", display_type: "field",
                     description: "Show an Icon instead of a basic shape for sign locations.", required:true));
-            ModuleSettings.Add(new ProjectSetting(name: "sign_offset", module: ModuleName, value: "",
+            ModuleSettings.Add(new ProjectSetting(name: "sign_f_offset", module: ModuleName, value: "",
                     display_text: "SHP field with offset from road?", display_type: "field",
                     description: "The field in the sign shp file indicating the distance of the support from the road."));
-            ModuleSettings.Add(new ProjectSetting(name: "sign_address", module: ModuleName, value: "",
+            ModuleSettings.Add(new ProjectSetting(name: "sign_f_address", module: ModuleName, value: "",
                     display_text: "SHP field with sign address?", display_type: "field",
                     description: "The field in the sign shp file containing the approximate address of the signpost."));
             //ModuleSettings.Add(new ProjectSetting(name: "sign_icons", module: ModuleName, value: "true",
@@ -1121,13 +1120,20 @@ namespace tams4a.Classes
             data.Columns.Add("Sheeting");
             data.Columns.Add("Backing");
             data.Columns.Add("Reflectivity");
-            data.Columns.Add("Recommendation");
+            data.Columns.Add("Condition");
+            data.Columns.Add("Comment");
             try
             {
                 DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
                 if (signsTable.Rows.Count == 0)
                 {
-                    MessageBox.Show("No list could be generated because no signs that failed the retrorefletivity test where found.");
+                    MessageBox.Show("No list could be generated because no signs that require attention could be found.");
+                    return;
+                }
+                signsTable = signsTable.Select("condition = 'damaged' OR condition='other' OR reflectivity='fail'").CopyToDataTable();
+                if (signsTable.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no signs that require attention could be found.");
                     return;
                 }
                 foreach (DataRow row in signsTable.Rows)
@@ -1140,12 +1146,9 @@ namespace tams4a.Classes
                     nr["Sheeting"] = row["sheeting"].ToString();
                     nr["Backing"] = row["backing"].ToString();
                     nr["Reflectivity"] = row["reflectivity"].ToString();
+                    nr["Condition"] = row["notes"].ToString();
                     int age = DateTime.Now.Year - Util.ToInt(row["install_date"].ToString().Split('-')[0]);
-                    if (nr["Reflectivity"].ToString().Contains("fail"))
-                    {
-                        nr["Recommendation"] = "replace";
-                        data.Rows.Add(nr);
-                    }
+                    data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
                 FormOutput report = new FormOutput();
@@ -1155,8 +1158,7 @@ namespace tams4a.Classes
             }
             catch (Exception err)
             {
-                MessageBox.Show("An error occured while trying to generate the report.");
-                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+                ReportErrMsg();
             }
         }
 
@@ -1208,8 +1210,7 @@ namespace tams4a.Classes
             }
             catch (Exception err)
             {
-                MessageBox.Show("An error occured while trying to generate the report.");
-                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+                ReportErrMsg();
             }
         }
 
@@ -1267,8 +1268,7 @@ namespace tams4a.Classes
             }
             catch (Exception err)
             {
-                MessageBox.Show("An error occured while trying to generate the report.");
-                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+                ReportErrMsg();
             }
         }
 
@@ -1299,13 +1299,13 @@ namespace tams4a.Classes
                 foreach (DataRow row in signsTable.Rows)
                 {
                     DataRow nr = data.NewRow();
-                    nr["ID"] = row["TAMSID"].ToString();
-                    nr["Sign"] = row["description"].ToString();
-                    nr["Address"] = row["address"].ToString();
-                    nr["Installed"] = row["install_date"].ToString();
-                    nr["Sheeting"] = row["sheeting"].ToString();
-                    nr["Backing"] = row["backing"].ToString();
-                    nr["Condition"] = row["condition"].ToString();
+                    nr["ID"] = row["TAMSID"];
+                    nr["Sign"] = row["description"];
+                    nr["Address"] = row["address"];
+                    nr["Installed"] = row["install_date"];
+                    nr["Sheeting"] = row["sheeting"];
+                    nr["Backing"] = row["backing"];
+                    nr["Condition"] = row["condition"];
                     if (!nr["Condition"].ToString().Contains("broken") && !nr["Condition"].ToString().Contains("damaged"))
                     {
                         continue;
@@ -1328,8 +1328,90 @@ namespace tams4a.Classes
             }
             catch (Exception err)
             {
-                MessageBox.Show("An error occured while trying to generate the report.");
-                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+                ReportErrMsg();
+            }
+        }
+
+        private void supportReport(object sender, EventArgs e)
+        {
+            DataTable data = new DataTable();
+            data.Columns.Add("ID");
+            data.Columns.Add("Address");
+            data.Columns.Add("Signs");
+            data.Columns.Add("Material");
+            data.Columns.Add("Condition");
+            data.Columns.Add("Obstructions");
+            data.Columns.Add("Comment");
+            try
+            {
+                DataTable supportTable = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign_support");
+                foreach (DataRow row in supportTable.Rows)
+                {
+                    DataRow nr = data.NewRow();
+                    nr["ID"] = row["support_id"];
+                    nr["Addres"] = row["address"];
+                    nr["signs"] = Database.GetDataByQuery(Project.conn, "SELECT COUNT(suppord_id) FROM sign WHERE support_id = " + nr["ID"].ToString() + ";");
+                    nr["Material"] = row["material"];
+                    nr["Condtion"] = row["condition"];
+                    nr["Obstructions"] = row["obstructions"];
+                    data.Rows.Add(nr);
+                }
+                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
+                report.Text = "Support Report";
+                report.Show();
+            }
+            catch (Exception err)
+            {
+                ReportErrMsg();
+            }
+        }
+
+        private void supportAttention(object sender, EventArgs e)
+        {
+            DataTable data = new DataTable();
+            data.Columns.Add("ID");
+            data.Columns.Add("Address");
+            data.Columns.Add("Signs");
+            data.Columns.Add("Material");
+            data.Columns.Add("Condition");
+            data.Columns.Add("Obstructions");
+            data.Columns.Add("Comment");
+            try
+            {
+                DataTable supportTable = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign_support");
+                if (supportTable.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no signs that require attention could be found.");
+                    return;
+                }
+                supportTable = supportTable.Select("condition = 'damaged' OR condition='other' OR reflectivity='fail'").CopyToDataTable();
+                if (supportTable.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no signs that require attention could be found.");
+                    return;
+                }
+                foreach (DataRow row in supportTable.Rows)
+                {
+                    DataRow nr = data.NewRow();
+                    nr["ID"] = row["support_id"];
+                    nr["Addres"] = row["address"];
+                    nr["signs"] = Database.GetDataByQuery(Project.conn, "SELECT COUNT(suppord_id) FROM sign WHERE support_id = " + nr["ID"].ToString() + ";");
+                    nr["Material"] = row["material"];
+                    nr["Condtion"] = row["condition"];
+                    nr["Obstructions"] = row["obstructions"];
+                    data.Rows.Add(nr);
+                }
+                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
+                report.Text = "Support Report";
+                report.Show();
+            }
+            catch (Exception err)
+            {
+                ReportErrMsg();
             }
         }
 

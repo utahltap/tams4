@@ -50,10 +50,10 @@
             this.roadsWithPotholesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.budgetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.failedSignsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.obstructedSignsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.oldSignsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.damagedSignsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.signsToReplaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.signInventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.supportsToReplaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.supportInventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -198,7 +198,7 @@
             // 
             this.importRoadsToolStripMenuItem.Enabled = false;
             this.importRoadsToolStripMenuItem.Name = "importRoadsToolStripMenuItem";
-            this.importRoadsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.importRoadsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importRoadsToolStripMenuItem.Text = "Import &Roads";
             this.importRoadsToolStripMenuItem.ToolTipText = "Attempt to import road data from TAMS2 or TAMS3";
             this.importRoadsToolStripMenuItem.Click += new System.EventHandler(this.importRoadsToolStripMenuItem_Click);
@@ -206,7 +206,7 @@
             // editTreatmentsToolStripMenuItem
             // 
             this.editTreatmentsToolStripMenuItem.Name = "editTreatmentsToolStripMenuItem";
-            this.editTreatmentsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.editTreatmentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editTreatmentsToolStripMenuItem.Text = "Edit &Treatments";
             this.editTreatmentsToolStripMenuItem.ToolTipText = "Opens the treatment editor";
             this.editTreatmentsToolStripMenuItem.Click += new System.EventHandler(this.editTreatmentsToolStripMenuItem_Click);
@@ -215,7 +215,7 @@
             // 
             this.favoriteSignsToolStripMenuItem.Enabled = false;
             this.favoriteSignsToolStripMenuItem.Name = "favoriteSignsToolStripMenuItem";
-            this.favoriteSignsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.favoriteSignsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.favoriteSignsToolStripMenuItem.Text = "&Favorite Signs";
             this.favoriteSignsToolStripMenuItem.ToolTipText = "Manage your favorite signs";
             // 
@@ -234,7 +234,7 @@
             // 
             this.generalReportToolStripMenuItem.Enabled = false;
             this.generalReportToolStripMenuItem.Name = "generalReportToolStripMenuItem";
-            this.generalReportToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.generalReportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.generalReportToolStripMenuItem.Text = "Road Report";
             this.generalReportToolStripMenuItem.ToolTipText = "Creates an exportable list of all roads in the project.";
             // 
@@ -242,7 +242,7 @@
             // 
             this.roadsWithPotholesToolStripMenuItem.Enabled = false;
             this.roadsWithPotholesToolStripMenuItem.Name = "roadsWithPotholesToolStripMenuItem";
-            this.roadsWithPotholesToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.roadsWithPotholesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.roadsWithPotholesToolStripMenuItem.Text = "Potholes Report";
             this.roadsWithPotholesToolStripMenuItem.ToolTipText = "Creates a list of all roads containing pothols";
             // 
@@ -250,55 +250,55 @@
             // 
             this.budgetToolStripMenuItem.Enabled = false;
             this.budgetToolStripMenuItem.Name = "budgetToolStripMenuItem";
-            this.budgetToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.budgetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.budgetToolStripMenuItem.Text = "Budget Projections";
             this.budgetToolStripMenuItem.ToolTipText = "Opens the budget estimation tool.";
             // 
             // signReportToolStripMenuItem
             // 
             this.signReportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.failedSignsToolStripMenuItem,
-            this.obstructedSignsToolStripMenuItem,
-            this.oldSignsToolStripMenuItem,
-            this.damagedSignsToolStripMenuItem});
+            this.signsToReplaceToolStripMenuItem,
+            this.signInventoryToolStripMenuItem,
+            this.supportsToReplaceToolStripMenuItem,
+            this.supportInventoryToolStripMenuItem});
             this.signReportToolStripMenuItem.Enabled = false;
             this.signReportToolStripMenuItem.Name = "signReportToolStripMenuItem";
-            this.signReportToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.signReportToolStripMenuItem.Text = "Sign Report";
+            this.signReportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.signReportToolStripMenuItem.Text = "Signs";
             this.signReportToolStripMenuItem.ToolTipText = "Creates an exportable list of all signs.";
             // 
-            // failedSignsToolStripMenuItem
+            // signsToReplaceToolStripMenuItem
             // 
-            this.failedSignsToolStripMenuItem.Enabled = false;
-            this.failedSignsToolStripMenuItem.Name = "failedSignsToolStripMenuItem";
-            this.failedSignsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.failedSignsToolStripMenuItem.Text = "Failed Signs";
-            this.failedSignsToolStripMenuItem.ToolTipText = "Lists only signs that failed the reflectivity test";
+            this.signsToReplaceToolStripMenuItem.Enabled = false;
+            this.signsToReplaceToolStripMenuItem.Name = "signsToReplaceToolStripMenuItem";
+            this.signsToReplaceToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.signsToReplaceToolStripMenuItem.Text = "Signs Requiring Attention";
+            this.signsToReplaceToolStripMenuItem.ToolTipText = "Lists only signs that failed the reflectivity test";
             // 
-            // obstructedSignsToolStripMenuItem
+            // signInventoryToolStripMenuItem
             // 
-            this.obstructedSignsToolStripMenuItem.Enabled = false;
-            this.obstructedSignsToolStripMenuItem.Name = "obstructedSignsToolStripMenuItem";
-            this.obstructedSignsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.obstructedSignsToolStripMenuItem.Text = "Obstructed Signs";
-            this.obstructedSignsToolStripMenuItem.ToolTipText = "Lists only signs that have an obstructed view.";
+            this.signInventoryToolStripMenuItem.Enabled = false;
+            this.signInventoryToolStripMenuItem.Name = "signInventoryToolStripMenuItem";
+            this.signInventoryToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.signInventoryToolStripMenuItem.Text = "Sign Inventory";
+            this.signInventoryToolStripMenuItem.ToolTipText = "Lists only signs that have an obstructed view.";
             // 
-            // oldSignsToolStripMenuItem
+            // supportsToReplaceToolStripMenuItem
             // 
-            this.oldSignsToolStripMenuItem.Enabled = false;
-            this.oldSignsToolStripMenuItem.Name = "oldSignsToolStripMenuItem";
-            this.oldSignsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.oldSignsToolStripMenuItem.Text = "Old Signs";
-            this.oldSignsToolStripMenuItem.ToolTipText = "Lists signs older than te expected life of the sheeting and signs of unknown age." +
+            this.supportsToReplaceToolStripMenuItem.Enabled = false;
+            this.supportsToReplaceToolStripMenuItem.Name = "supportsToReplaceToolStripMenuItem";
+            this.supportsToReplaceToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.supportsToReplaceToolStripMenuItem.Text = "Supports Requiring Attention";
+            this.supportsToReplaceToolStripMenuItem.ToolTipText = "Lists signs older than te expected life of the sheeting and signs of unknown age." +
     "";
             // 
-            // damagedSignsToolStripMenuItem
+            // supportInventoryToolStripMenuItem
             // 
-            this.damagedSignsToolStripMenuItem.Enabled = false;
-            this.damagedSignsToolStripMenuItem.Name = "damagedSignsToolStripMenuItem";
-            this.damagedSignsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.damagedSignsToolStripMenuItem.Text = "Damaged Signs";
-            this.damagedSignsToolStripMenuItem.ToolTipText = "Lists only signs that are physically damage.";
+            this.supportInventoryToolStripMenuItem.Enabled = false;
+            this.supportInventoryToolStripMenuItem.Name = "supportInventoryToolStripMenuItem";
+            this.supportInventoryToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.supportInventoryToolStripMenuItem.Text = "Support Inventory";
+            this.supportInventoryToolStripMenuItem.ToolTipText = "Lists only signs that are physically damage.";
             // 
             // statusStrip
             // 
@@ -652,10 +652,10 @@
         private DotSpatial.Controls.Map uxMap;
         private System.Windows.Forms.ToolStripMenuItem favoriteSignsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem signReportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem failedSignsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem obstructedSignsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem oldSignsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem damagedSignsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem signsToReplaceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem signInventoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem supportsToReplaceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem supportInventoryToolStripMenuItem;
     }
 }
 
