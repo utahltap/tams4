@@ -600,6 +600,7 @@
     <None Include="Resources\addicon.png" />
     <None Include="Resources\addicon1.png" />
     <None Include="Resources\addiconsmall.png" />
+    <None Include="Resources\addpost.png" />
     <Content Include="Resources\Altimeter.bmp" />
     <Content Include="Resources\attributions.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -607,6 +608,8 @@
     <None Include="Resources\blank.png" />
     <None Include="Resources\blocking.jpg" />
     <None Include="Resources\broke.png" />
+    <None Include="Resources\baseadd.png" />
+    <None Include="Resources\baseremove.png" />
     <Content Include="Resources\Clock.bmp" />
     <Content Include="Resources\Compass.bmp" />
     <Content Include="Resources\Distresses\blank.png" />
@@ -655,6 +658,7 @@
     <None Include="Resources\jointseal.png" />
     <None Include="Resources\removeiconsmall.png" />
     <None Include="Resources\favoriteicon.png" />
+    <None Include="Resources\removepost.png" />
     <Content Include="Resources\SatelliteSignalBar.bmp" />
     <Content Include="Resources\SatelliteViewer.bmp" />
     <Content Include="Resources\spalling.png" />

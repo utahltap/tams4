@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Panel_Sign));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
@@ -100,6 +99,7 @@
             this.comboBoxSheeting = new System.Windows.Forms.ComboBox();
             this.labelSheeting = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
+            this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
@@ -120,7 +120,8 @@
             this.toolStripButtonSurveyDate,
             this.toolStripButtonNotes,
             this.toolStripSeparator2,
-            this.toolStripDropDownButtonNewPost});
+            this.toolStripDropDownButtonNewPost,
+            this.toolStripButtonRemove});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(224, 25);
@@ -200,7 +201,7 @@
             this.enterCoordinatesToolStripMenuItem,
             this.readGPSToolStripMenuItem,
             this.clickMapToolStripMenuItem});
-            this.toolStripDropDownButtonNewPost.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonNewPost.Image")));
+            this.toolStripDropDownButtonNewPost.Image = global::tams4a.Properties.Resources.addpost;
             this.toolStripDropDownButtonNewPost.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonNewPost.Name = "toolStripDropDownButtonNewPost";
             this.toolStripDropDownButtonNewPost.Size = new System.Drawing.Size(29, 22);
@@ -210,20 +211,20 @@
             // enterCoordinatesToolStripMenuItem
             // 
             this.enterCoordinatesToolStripMenuItem.Name = "enterCoordinatesToolStripMenuItem";
-            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.enterCoordinatesToolStripMenuItem.Text = "Enter Coordinates";
             // 
             // readGPSToolStripMenuItem
             // 
             this.readGPSToolStripMenuItem.Enabled = false;
             this.readGPSToolStripMenuItem.Name = "readGPSToolStripMenuItem";
-            this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.readGPSToolStripMenuItem.Text = "Read GPS";
             // 
             // clickMapToolStripMenuItem
             // 
             this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
-            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clickMapToolStripMenuItem.Text = "Click Map";
             // 
             // groupBoxSupport
@@ -880,6 +881,17 @@
             this.labelType.TabIndex = 0;
             this.labelType.Text = "MUTCD code";
             // 
+            // toolStripButtonRemove
+            // 
+            this.toolStripButtonRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRemove.Enabled = false;
+            this.toolStripButtonRemove.Image = global::tams4a.Properties.Resources.removepost;
+            this.toolStripButtonRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRemove.Name = "toolStripButtonRemove";
+            this.toolStripButtonRemove.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonRemove.Text = "remove support";
+            this.toolStripButtonRemove.ToolTipText = "Remove Support";
+            // 
             // Panel_Sign
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -978,5 +990,6 @@
         private System.Windows.Forms.Label labelObstruction;
         private System.Windows.Forms.Label labelCondition;
         public System.Windows.Forms.ComboBox comboBoxCondition;
+        public System.Windows.Forms.ToolStripButton toolStripButtonRemove;
     }
 }

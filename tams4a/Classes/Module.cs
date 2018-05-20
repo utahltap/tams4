@@ -589,7 +589,7 @@ namespace tams4a.Classes
             surveyDate = dateForm.getDate();
         }
 
-        protected void ReportErrMsg()
+        protected void ReportErrMsg(Exception err)
         {
             MessageBox.Show("An error occured while trying to generate the report.");
             Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());

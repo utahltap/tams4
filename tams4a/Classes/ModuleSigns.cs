@@ -1158,7 +1158,7 @@ namespace tams4a.Classes
             }
             catch (Exception err)
             {
-                ReportErrMsg();
+                ReportErrMsg(err);
             }
         }
 
@@ -1210,7 +1210,7 @@ namespace tams4a.Classes
             }
             catch (Exception err)
             {
-                ReportErrMsg();
+                ReportErrMsg(err);
             }
         }
 
@@ -1268,7 +1268,7 @@ namespace tams4a.Classes
             }
             catch (Exception err)
             {
-                ReportErrMsg();
+                ReportErrMsg(err);
             }
         }
 
@@ -1328,7 +1328,7 @@ namespace tams4a.Classes
             }
             catch (Exception err)
             {
-                ReportErrMsg();
+                ReportErrMsg(err);
             }
         }
 
@@ -1364,7 +1364,7 @@ namespace tams4a.Classes
             }
             catch (Exception err)
             {
-                ReportErrMsg();
+                ReportErrMsg(err);
             }
         }
 
@@ -1411,7 +1411,7 @@ namespace tams4a.Classes
             }
             catch (Exception err)
             {
-                ReportErrMsg();
+                ReportErrMsg(err);
             }
         }
 

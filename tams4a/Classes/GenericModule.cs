@@ -23,7 +23,7 @@ namespace tams4a.Classes
             ModuleName = mn;
             notes = "";
 
-            Panel_Module_OpenShp create = new Panel_Module_OpenShp("other");
+            Panel_Module_OpenShp create = new Panel_Module_OpenShp(ModuleName);
             create.Name = "MODULEADD";
             create.Controls.Clear();
             Button newFile = new Button();
@@ -40,7 +40,7 @@ namespace tams4a.Classes
 
             FieldSettingToDbColumn = new Dictionary<string, string>()
             {
-                { "sign_f_TAMSID", "support_id" }
+                { ModuleName + "_f_TAMSID", "TAMSID" }
             };
 
             Project.map.ResetBuffer();
@@ -71,6 +71,24 @@ namespace tams4a.Classes
             if (type == "") { type = "point"; }
             if (type != "point") { throw new Exception("Generic module requires a point-type shp file"); }
 
+            ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_f_TAMSID", module: ModuleName, value: "",
+                    display_text: "SHP field with a unique identifier (TAMSID).", display_type: "field",
+                    description: "Show an Icon instead of a basic shape for sign locations.", required: true));
+
+            injectSettings();
+
+            if (!base.openFile(thePath, type)) { return false; }
+
+            ControlsPage.Controls.Remove(ControlsPage.Controls["MODULEADD"]);
+            Panel_Other panel = new Panel_Other();
+            panel.Name = "OTHERCONTROLS";
+            panel.Dock = DockStyle.Fill;
+            ControlsPage.Controls.Add(panel);
+
+            #region eventhandlers
+            panel.setChangedHandler(controlChanged);
+            panel.toolStripButtonSave.Click += saveHandler;
+            #endregion
 
             return true;
         }
@@ -94,6 +112,57 @@ namespace tams4a.Classes
                 return false;
             }
             return true;
+        }
+
+        private Panel_Other getOtherControls()
+        {
+            Panel_Other controls;
+
+            try
+            {
+                controls = (Panel_Other)ControlsPage.Controls["SIGNCONTROLS"];
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not retrieve controls page.\n" + e.ToString());
+                throw new Exception("Could not retrieve controls page.\n" + e.ToString());
+            }
+            return controls;
+        }
+
+        private void updatePhotoPreview()
+        {
+            Panel_Other signControls = getOtherControls();
+            if (!string.IsNullOrWhiteSpace(signControls.textBoxPhotoFile.Text))
+            {
+                try
+                {
+                    string imageLocation = Project.projectFolderPath + @"\Photos\" + signControls.textBoxPhotoFile.Text;
+                    if (File.Exists(imageLocation))
+                    {
+                        signControls.pictureBoxPhoto.ImageLocation = imageLocation;
+                    }
+                    else
+                    {
+                        Log.Warning("Missing image file: " + imageLocation);
+                        signControls.toolTip.SetToolTip(signControls.pictureBoxPhoto, "Missing: " + imageLocation);
+                        throw new Exception("Missing image file");
+                    }
+                }
+                catch
+                {
+                    signControls.pictureBoxPhoto.Image = Properties.Resources.error;
+                }
+            }
+            else
+            {
+                signControls.pictureBoxPhoto.Image = Properties.Resources.nophoto;
+            }
+        }
+
+        public void saveHandler(object sender, EventArgs e)
+        {
+
         }
     }
 }

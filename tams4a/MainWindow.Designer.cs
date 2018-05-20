@@ -273,7 +273,7 @@
             this.signsToReplaceToolStripMenuItem.Name = "signsToReplaceToolStripMenuItem";
             this.signsToReplaceToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.signsToReplaceToolStripMenuItem.Text = "Signs Requiring Attention";
-            this.signsToReplaceToolStripMenuItem.ToolTipText = "Lists only signs that failed the reflectivity test";
+            this.signsToReplaceToolStripMenuItem.ToolTipText = "Lists Only Signs that Require Work.";
             // 
             // signInventoryToolStripMenuItem
             // 
@@ -281,7 +281,7 @@
             this.signInventoryToolStripMenuItem.Name = "signInventoryToolStripMenuItem";
             this.signInventoryToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.signInventoryToolStripMenuItem.Text = "Sign Inventory";
-            this.signInventoryToolStripMenuItem.ToolTipText = "Lists only signs that have an obstructed view.";
+            this.signInventoryToolStripMenuItem.ToolTipText = "Lists all Signs in the Database.";
             // 
             // supportsToReplaceToolStripMenuItem
             // 
@@ -289,8 +289,7 @@
             this.supportsToReplaceToolStripMenuItem.Name = "supportsToReplaceToolStripMenuItem";
             this.supportsToReplaceToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.supportsToReplaceToolStripMenuItem.Text = "Supports Requiring Attention";
-            this.supportsToReplaceToolStripMenuItem.ToolTipText = "Lists signs older than te expected life of the sheeting and signs of unknown age." +
-    "";
+            this.supportsToReplaceToolStripMenuItem.ToolTipText = "Lists Only Supports that Require Work.";
             // 
             // supportInventoryToolStripMenuItem
             // 
@@ -298,7 +297,7 @@
             this.supportInventoryToolStripMenuItem.Name = "supportInventoryToolStripMenuItem";
             this.supportInventoryToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.supportInventoryToolStripMenuItem.Text = "Support Inventory";
-            this.supportInventoryToolStripMenuItem.ToolTipText = "Lists only signs that are physically damage.";
+            this.supportInventoryToolStripMenuItem.ToolTipText = "Lists All Supports in the Database.";
             // 
             // statusStrip
             // 
