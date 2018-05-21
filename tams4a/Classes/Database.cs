@@ -716,7 +716,7 @@ INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatmen
 INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 7, 'Base Repair and Pavement Replacement');
 INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 8, 'Base Repair and Pavement Replacement');
 INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 9, 'Base Repair and Pavement Replacement');
-CREATE TABLE miscellaneous (id INTEGER PRIMARY KEY AUTOINCREMENT, TAMSID INTEGER, type TEXT, icon TEXT, address TEXT, description TEXT, photo TEXT, property1 TEXT, property2 TEXT, notes TEXT);";
+CREATE TABLE miscellaneous (TAMSID INTEGER PRIMARY KEY, type TEXT, icon TEXT, address TEXT, description TEXT, photo TEXT, property1 TEXT, property2 TEXT, notes TEXT);";
                     SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
                     cmd.ExecuteNonQuery();
                 }

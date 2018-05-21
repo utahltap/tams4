@@ -659,6 +659,10 @@
     <None Include="Resources\removeiconsmall.png" />
     <None Include="Resources\favoriteicon.png" />
     <None Include="Resources\removepost.png" />
+    <None Include="Resources\feature_flat.png" />
+    <None Include="Resources\important_feature.png" />
+    <None Include="Resources\problem_flat.png" />
+    <None Include="Resources\question.png" />
     <Content Include="Resources\SatelliteSignalBar.bmp" />
     <Content Include="Resources\SatelliteViewer.bmp" />
     <Content Include="Resources\spalling.png" />

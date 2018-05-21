@@ -60,10 +60,13 @@ namespace tams4a
             Visible = true;
             ToolStripMenuItem[] lcs = { importRoadsToolStripMenuItem, generalReportToolStripMenuItem, roadsWithPotholesToolStripMenuItem, budgetToolStripMenuItem };
             ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signsToReplaceToolStripMenuItem, signInventoryToolStripMenuItem, supportsToReplaceToolStripMenuItem, supportInventoryToolStripMenuItem, signReportToolStripMenuItem};
+            ToolStripMenuItem[] lcso = { };
             ModuleRoads road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
             ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
+            GenericModule other = new GenericModule(Project, new TabPage("Other"), lcso);
             Project.addModule(road, "Roads", tabControlControls);
             Project.addModule(sign, "Signs", tabControlControls);
+            Project.addModule(other, "Other", tabControlControls);
 
             Project.selectModule("Roads");
 

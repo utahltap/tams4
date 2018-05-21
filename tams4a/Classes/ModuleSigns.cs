@@ -100,9 +100,6 @@ namespace tams4a.Classes
             ModuleSettings.Add(new ProjectSetting(name: "sign_f_address", module: ModuleName, value: "",
                     display_text: "SHP field with sign address?", display_type: "field",
                     description: "The field in the sign shp file containing the approximate address of the signpost."));
-            //ModuleSettings.Add(new ProjectSetting(name: "sign_icons", module: ModuleName, value: "true",
-            //        display_text: "Show Icons?", display_type: "bool",
-            //        description: "Show an Icon instead of a basic shape for sign locations?"));
             #endregion signSettings
 
             injectSettings();
@@ -597,8 +594,6 @@ namespace tams4a.Classes
             signControls.groupBoxSign.Enabled = true;
             signControls.toolStrip.Enabled = true;
             signControls.groupBoxSupport.Enabled = true;
-            signControls.toolStripButtonSave.Enabled = true;
-            signControls.toolStripButtonCancel.Enabled = true;
             signControls.toolStripButtonSurveyDate.Enabled = true;
             signControls.toolStripButtonNotes.Enabled = true;
         }
@@ -725,6 +720,7 @@ namespace tams4a.Classes
             values["road_offset"] = signControls.numericUpDownOffset.Value.ToString();
             values["height"] = signControls.numericUpDownOffset.Value.ToString();
             values["category"] = postCat;
+            values["notes"] = notes;
 
             if (signsOnPost != null && signsOnPost.Rows.Count > 0)
             {

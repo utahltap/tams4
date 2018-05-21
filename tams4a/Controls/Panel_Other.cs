@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using tams4a.Classes;
 
 namespace tams4a.Controls
 {
@@ -182,6 +183,21 @@ namespace tams4a.Controls
             property2.TextChanged += moduleValueChanged;
         }
 
+        public void updateDisplay(Dictionary<string, string> values)
+        {
+            comboBoxObject.Text = Util.DictionaryItemString(values, "type");
+            comboBoxIcon.Text = Util.DictionaryItemString(values, "icon");
+            textBoxAddress.Text = Util.DictionaryItemString(values, "address");
+            textBoxDescription.Text = Util.DictionaryItemString(values, "description");
+            textBoxPhotoFile.Text = Util.DictionaryItemString(values, "photo");
+            if (controlSets.ContainsKey(Util.DictionaryItemString(values, "type")))
+            {
+                controlSets[values["type"]][0].Text = Util.DictionaryItemString(values, "property1");
+                controlSets[values["type"]][1].Text = Util.DictionaryItemString(values, "property2");
+                controlSets[values["type"]][2].Text = Util.DictionaryItemString(values, "notes");
+            }
+        }
+
         public void chooseAltProperties(string propSet)
         {
             groupBoxProperties.Controls.Clear();
@@ -193,6 +209,7 @@ namespace tams4a.Controls
                 }
                 controlSets[propSet][0].Text = "";
                 controlSets[propSet][1].Text = "";
+                controlSets[propSet][2].Text = "";
             }
             else
             {
@@ -202,7 +219,29 @@ namespace tams4a.Controls
                 }
                 controlSets["Other"][0].Text = "";
                 controlSets["Other"][1].Text = "";
+                controlSets["Other"][2].Text = "";
             }
+        }
+
+        public void clearValues()
+        {
+            textBoxAddress.Text = "";
+            comboBoxObject.Text = "";
+            comboBoxIcon.Text = "";
+            textBoxPhotoFile.Text = "";
+            textBoxDescription.Text = "";
+            for (int i = 0; i < 3; i ++)
+            {
+                foreach (string key in controlSets.Keys)
+                {
+                    controlSets[key][i].Text = "";
+                }
+            }
+        }
+
+        public string getProperty(string type, int index)
+        {
+            return controlSets[type][index].Text;
         }
 
         private void objectChanged(object sender, EventArgs e)

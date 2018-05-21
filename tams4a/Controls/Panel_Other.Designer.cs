@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownAddObject = new System.Windows.Forms.ToolStripDropDownButton();
             this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,22 +51,24 @@
             this.labelObject = new System.Windows.Forms.Label();
             this.labelSurveyDate = new System.Windows.Forms.Label();
             this.groupBoxProperties = new System.Windows.Forms.GroupBox();
-            this.toolStrip1.SuspendLayout();
+            this.toolStrip.SuspendLayout();
             this.groupBoxType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
             this.SuspendLayout();
             // 
-            // toolStrip1
+            // toolStrip
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonSave,
+            this.toolStripButtonCancel,
+            this.toolStripSeparator1,
             this.toolStripDropDownAddObject,
             this.toolStripButtonRemove});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(224, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStrip.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip.Name = "toolStrip";
+            this.toolStrip.Size = new System.Drawing.Size(224, 25);
+            this.toolStrip.TabIndex = 0;
+            this.toolStrip.Text = "toolStrip1";
             // 
             // toolStripButtonSave
             // 
@@ -75,6 +79,21 @@
             this.toolStripButtonSave.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonSave.Text = "Save";
             this.toolStripButtonSave.ToolTipText = "Save Data Entry";
+            // 
+            // toolStripButtonCancel
+            // 
+            this.toolStripButtonCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonCancel.Image = global::tams4a.Properties.Resources.cancel;
+            this.toolStripButtonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonCancel.Name = "toolStripButtonCancel";
+            this.toolStripButtonCancel.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonCancel.Text = "Cancel";
+            this.toolStripButtonCancel.ToolTipText = "Cancel Changes";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripDropDownAddObject
             // 
@@ -104,6 +123,7 @@
             // toolStripButtonRemove
             // 
             this.toolStripButtonRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRemove.Enabled = false;
             this.toolStripButtonRemove.Image = global::tams4a.Properties.Resources.baseremove;
             this.toolStripButtonRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRemove.Name = "toolStripButtonRemove";
@@ -190,6 +210,11 @@
             // comboBoxIcon
             // 
             this.comboBoxIcon.FormattingEnabled = true;
+            this.comboBoxIcon.Items.AddRange(new object[] {
+            "feature",
+            "problem",
+            "important",
+            "question"});
             this.comboBoxIcon.Location = new System.Drawing.Point(89, 61);
             this.comboBoxIcon.Name = "comboBoxIcon";
             this.comboBoxIcon.Size = new System.Drawing.Size(112, 21);
@@ -268,11 +293,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBoxProperties);
             this.Controls.Add(this.groupBoxType);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.toolStrip);
             this.Name = "Panel_Other";
             this.Size = new System.Drawing.Size(224, 669);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
             this.groupBoxType.ResumeLayout(false);
             this.groupBoxType.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).EndInit();
@@ -282,10 +307,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.GroupBox groupBoxType;
-        private System.Windows.Forms.GroupBox groupBoxProperties;
         private System.Windows.Forms.Label labelObject;
         private System.Windows.Forms.Label labelSurveyDate;
         private System.Windows.Forms.Label labelIcon;
@@ -301,8 +322,13 @@
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.ToolStripButton toolStripButtonSave;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownAddObject;
-        private System.Windows.Forms.ToolStripMenuItem enterCoordinatesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clickMapToolStripMenuItem;
         public System.Windows.Forms.ToolStripButton toolStripButtonRemove;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        public System.Windows.Forms.ToolStripButton toolStripButtonCancel;
+        public System.Windows.Forms.ToolStripMenuItem enterCoordinatesToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem clickMapToolStripMenuItem;
+        public System.Windows.Forms.GroupBox groupBoxType;
+        public System.Windows.Forms.GroupBox groupBoxProperties;
+        public System.Windows.Forms.ToolStrip toolStrip;
     }
 }

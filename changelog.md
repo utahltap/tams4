@@ -1,3 +1,16 @@
+# TAMS version 4.0.3.0
+
+CHANGES
+------------------------------------------------------
+
+* Implemnts Generic module
+	* generic module behaves the same as the signs module in most reguards
+	* generic module currently supports 4 specific types and 1 fully generic type.
+	* generic moudle must create a new shape file when used.
+* Changes auto suggestion table to better reflect common treatment reccomenations.
+* Database now up to version 8
+
+
 # TAMS version 4.0.2.2 
 
 Please note that the signs manager is still in the beta stages of development and some features may not work correctly. If you encounter any problems please contact the Utah LTAP center.
