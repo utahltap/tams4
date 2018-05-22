@@ -247,6 +247,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\GenericModule.cs" />
     <Compile Include="Classes\ImportAccess.cs" />
     <Compile Include="Classes\Database.cs" />
     <Compile Include="Classes\Log.cs" />
@@ -286,6 +287,12 @@
     </Compile>
     <Compile Include="Controls\Panel_Module.Designer.cs">
       <DependentUpon>Panel_Module.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Panel_Other.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Panel_Other.Designer.cs">
+      <DependentUpon>Panel_Other.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Panel_Road.cs">
       <SubType>UserControl</SubType>
@@ -448,6 +455,9 @@
     <EmbeddedResource Include="Controls\Panel_Module_OpenShp.resx">
       <DependentUpon>Panel_Module_OpenShp.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Panel_Other.resx">
+      <DependentUpon>Panel_Other.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Panel_Road.resx">
       <DependentUpon>Panel_Road.cs</DependentUpon>
     </EmbeddedResource>
@@ -590,6 +600,7 @@
     <None Include="Resources\addicon.png" />
     <None Include="Resources\addicon1.png" />
     <None Include="Resources\addiconsmall.png" />
+    <None Include="Resources\addpost.png" />
     <Content Include="Resources\Altimeter.bmp" />
     <Content Include="Resources\attributions.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -597,6 +608,8 @@
     <None Include="Resources\blank.png" />
     <None Include="Resources\blocking.jpg" />
     <None Include="Resources\broke.png" />
+    <None Include="Resources\baseadd.png" />
+    <None Include="Resources\baseremove.png" />
     <Content Include="Resources\Clock.bmp" />
     <Content Include="Resources\Compass.bmp" />
     <Content Include="Resources\Distresses\blank.png" />
@@ -645,6 +658,11 @@
     <None Include="Resources\jointseal.png" />
     <None Include="Resources\removeiconsmall.png" />
     <None Include="Resources\favoriteicon.png" />
+    <None Include="Resources\removepost.png" />
+    <None Include="Resources\feature_flat.png" />
+    <None Include="Resources\important_feature.png" />
+    <None Include="Resources\problem_flat.png" />
+    <None Include="Resources\question.png" />
     <Content Include="Resources\SatelliteSignalBar.bmp" />
     <Content Include="Resources\SatelliteViewer.bmp" />
     <Content Include="Resources\spalling.png" />

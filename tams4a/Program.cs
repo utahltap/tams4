@@ -17,12 +17,19 @@ namespace tams4a
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            cmdArgs = args;
+            
+            try
+            {
+                cmdArgs = Environment.GetCommandLineArgs().Skip(1).ToArray();
+            }
+            catch (Exception e)
+            {
+                Classes.Log.Error(e.ToString());
+            }
             Environment.CurrentDirectory = Path.GetDirectoryName(Application.ExecutablePath);
 
             // if new version, bring in the old settings.

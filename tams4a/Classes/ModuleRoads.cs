@@ -424,7 +424,7 @@ namespace tams4a.Classes
                     }
                     catch
                     {
-                        // ??
+                        
                     }
                 }
             }
@@ -532,8 +532,6 @@ namespace tams4a.Classes
         /// <param name="e"></param>
         private void saveHandler(object sender, EventArgs e)
         {
-            // get list of TAMSIDS
-            // TODO: Track this at module level
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
