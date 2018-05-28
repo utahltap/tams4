@@ -594,5 +594,16 @@ namespace tams4a.Classes
             MessageBox.Show("An error occured while trying to generate the report.");
             Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
         }
+
+        protected void PrepareDatatable(DataTable table, string[] columns)
+        {
+            for (int i = 0; i < columns.Length; i++)
+            {
+                if (!table.Columns.Contains(columns[i]))
+                {
+                    table.Columns.Add(columns[i]);
+                }
+            }
+        }
     }
 }

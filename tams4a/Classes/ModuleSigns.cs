@@ -126,6 +126,9 @@ namespace tams4a.Classes
             signPanel.toolStripButtonNotes.Click += editNotes;
             signPanel.buttonSignNote.Click += signNote;
 
+            signPanel.setOtherDateToolStripMenuItem.Click += selectRecordDate;
+            signPanel.setTodayToolStripMenuItem.Click += resetRecordDate;
+
             signPanel.textBoxType.TextChanged += setMUTCDvalues;
             signPanel.comboBoxSigns.TextChanged += signChangeHandler;
 
@@ -360,21 +363,15 @@ namespace tams4a.Classes
             ISelection shpSelection = selectionLayer.Selection;
             DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
+            string[] ts = { "TAMSSIGN" };
             if (selectionTable.Rows.Count == 0)
             {
-                if (!selectionTable.Columns.Contains("TAMSSIGN"))
-                {
-                    selectionTable.Columns.Add("TAMSSIGN");
-                    selectionLayer.DataSet.DataTable = selectionTable;
-                }
+                PrepareDatatable(selectionTable, ts);
                 return;
             }
             selectionTable.DefaultView.Sort = tamsidcolumn + " asc";
             selectionTable = selectionTable.DefaultView.ToTable();
-            if (!selectionTable.Columns.Contains("TAMSSIGN"))
-            {
-                selectionTable.Columns.Add("TAMSSIGN");
-            }
+            PrepareDatatable(selectionTable, ts);
             string postSQL = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
             DataTable tamsTable = Database.GetDataByQuery(Project.conn, postSQL);
             tamsTable.DefaultView.Sort = "support_id asc";
