@@ -765,14 +765,8 @@ namespace tams4a.Classes
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             selectionTable.DefaultView.Sort = tamsidcolumn + " asc";
             selectionTable = selectionTable.DefaultView.ToTable();
-            if (!selectionTable.Columns.Contains("TAMSROADRSL"))
-            {
-                selectionTable.Columns.Add("TAMSROADRSL");
-            }
-            if (!selectionTable.Columns.Contains("TAMSTREATMENT"))
-            {
-                selectionTable.Columns.Add("TAMSTREATMENT");
-            }
+            string[] symbols = { "TAMSROADRSL", "TAMSTREATMENT" };
+            PrepareDatatable(selectionTable, symbols);
             string roadSQL = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
             DataTable tamsTable = Database.GetDataByQuery(Project.conn, roadSQL);
             tamsTable.DefaultView.Sort = "TAMSID asc";

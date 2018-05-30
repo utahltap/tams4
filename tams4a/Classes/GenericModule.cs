@@ -91,8 +91,12 @@ namespace tams4a.Classes
             panel.toolStripButtonCancel.Click += cancelChanges;
             panel.clickMapToolStripMenuItem.Click += clickMap;
             panel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
+
+            panel.setOtherDateToolStripMenuItem.Click += selectRecordDate;
+            panel.setTodayToolStripMenuItem.Click += resetRecordDate;
             #endregion
 
+            setMaxID();
             setSymbolizer();
             disableDisplay();
             resetDisplay();
@@ -133,6 +137,12 @@ namespace tams4a.Classes
                 return false;
             }
             return true;
+        }
+
+        private void setMaxID()
+        {
+            DataTable tmp = Database.GetDataByQuery(Project.conn, "SELECT MAX(TAMSID) FROM miscellaneous");
+            maxTAMSID = tmp.Rows.Count > 0 ? Util.ToInt(tmp.Rows[0]["MAX(TAMSID)"].ToString()) : 0;
         }
 
         private void setSymbolizer()
@@ -178,8 +188,7 @@ namespace tams4a.Classes
 
             if (UnsavedChanges)
             {
-
-
+                
             }
 
             resetDisplay();
@@ -361,18 +370,8 @@ namespace tams4a.Classes
             DotSpatial.Topology.Point newPost = new DotSpatial.Topology.Point(xy[0], xy[1]);
             IFeature np = mpl.DataSet.AddFeature(newPost);
             maxTAMSID++;
-            if (!np.DataRow.Table.Columns.Contains("FID"))
-            {
-                np.DataRow.Table.Columns.Add("FID");
-            }
-            if (!np.DataRow.Table.Columns.Contains(Project.settings.GetValue(ModuleName + "_f_TAMSID")))
-            {
-                np.DataRow.Table.Columns.Add(Project.settings.GetValue(ModuleName + "_f_TAMSID"));
-            }
-            if (!np.DataRow.Table.Columns.Contains("TAMSICON"))
-            {
-                np.DataRow.Table.Columns.Add("TAMSICON");
-            }
+            string[] cols = { "FID", ModuleName + "_f_TAMSID", "TAMSICON"};
+            PrepareDatatable(np.DataRow.Table, cols);
             np.DataRow["FID"] = maxTAMSID;
             np.DataRow[Project.settings.GetValue(ModuleName + "_f_TAMSID")] = maxTAMSID;
             np.DataRow["TAMSICON"] = "feature";
@@ -456,6 +455,23 @@ namespace tams4a.Classes
             }
             addFeature(xy[1], xy[0]);
             Project.map.Click -= addFeatureByClick;
+        }
+
+        protected void selectRecordDate(object sender, EventArgs e)
+        {
+            dateForm.Show();
+            Panel_Other controls = getOtherControls();
+            controls.setTodayToolStripMenuItem.Checked = false;
+            controls.setOtherDateToolStripMenuItem.Checked = true;
+        }
+
+
+        protected void resetRecordDate(object sender, EventArgs e)
+        {
+            surveyDate = DateTime.Now;
+            Panel_Other controls = getOtherControls();
+            controls.setTodayToolStripMenuItem.Checked = true;
+            controls.setOtherDateToolStripMenuItem.Checked = false;
         }
     }
 }
