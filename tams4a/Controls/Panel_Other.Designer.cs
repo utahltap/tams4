@@ -31,6 +31,9 @@
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButtonDate = new System.Windows.Forms.ToolStripDropDownButton();
+            this.setTodayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setOtherDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownAddObject = new System.Windows.Forms.ToolStripDropDownButton();
             this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,9 +54,6 @@
             this.labelObject = new System.Windows.Forms.Label();
             this.labelSurveyDate = new System.Windows.Forms.Label();
             this.groupBoxProperties = new System.Windows.Forms.GroupBox();
-            this.toolStripDropDownButtonDate = new System.Windows.Forms.ToolStripDropDownButton();
-            this.setTodayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.setOtherDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip.SuspendLayout();
             this.groupBoxType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
@@ -93,6 +93,31 @@
             this.toolStripButtonCancel.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonCancel.Text = "Cancel";
             this.toolStripButtonCancel.ToolTipText = "Cancel Changes";
+            // 
+            // toolStripDropDownButtonDate
+            // 
+            this.toolStripDropDownButtonDate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripDropDownButtonDate.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setTodayToolStripMenuItem,
+            this.setOtherDateToolStripMenuItem});
+            this.toolStripDropDownButtonDate.Image = global::tams4a.Properties.Resources.calendar;
+            this.toolStripDropDownButtonDate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButtonDate.Name = "toolStripDropDownButtonDate";
+            this.toolStripDropDownButtonDate.Size = new System.Drawing.Size(29, 22);
+            this.toolStripDropDownButtonDate.Text = "Select Date";
+            this.toolStripDropDownButtonDate.ToolTipText = "Select Date";
+            // 
+            // setTodayToolStripMenuItem
+            // 
+            this.setTodayToolStripMenuItem.Name = "setTodayToolStripMenuItem";
+            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.setTodayToolStripMenuItem.Text = "Set Today";
+            // 
+            // setOtherDateToolStripMenuItem
+            // 
+            this.setOtherDateToolStripMenuItem.Name = "setOtherDateToolStripMenuItem";
+            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.setOtherDateToolStripMenuItem.Text = "Set Other Date";
             // 
             // toolStripSeparator1
             // 
@@ -257,6 +282,7 @@
             "ADA Ramp",
             "Severe Road Distress",
             "Accident Hotspot",
+            "Drainage",
             "Other"});
             this.comboBoxObject.Location = new System.Drawing.Point(89, 36);
             this.comboBoxObject.Name = "comboBoxObject";
@@ -290,31 +316,6 @@
             this.groupBoxProperties.TabIndex = 2;
             this.groupBoxProperties.TabStop = false;
             this.groupBoxProperties.Text = "Properties";
-            // 
-            // toolStripDropDownButtonDate
-            // 
-            this.toolStripDropDownButtonDate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripDropDownButtonDate.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.setTodayToolStripMenuItem,
-            this.setOtherDateToolStripMenuItem});
-            this.toolStripDropDownButtonDate.Image = global::tams4a.Properties.Resources.calendar;
-            this.toolStripDropDownButtonDate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButtonDate.Name = "toolStripDropDownButtonDate";
-            this.toolStripDropDownButtonDate.Size = new System.Drawing.Size(29, 22);
-            this.toolStripDropDownButtonDate.Text = "Select Date";
-            this.toolStripDropDownButtonDate.ToolTipText = "Select Date";
-            // 
-            // setTodayToolStripMenuItem
-            // 
-            this.setTodayToolStripMenuItem.Name = "setTodayToolStripMenuItem";
-            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.setTodayToolStripMenuItem.Text = "Set Today";
-            // 
-            // setOtherDateToolStripMenuItem
-            // 
-            this.setOtherDateToolStripMenuItem.Name = "setOtherDateToolStripMenuItem";
-            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.setOtherDateToolStripMenuItem.Text = "Set Other Date";
             // 
             // Panel_Other
             // 
