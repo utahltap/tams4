@@ -303,7 +303,7 @@ namespace tams4a.Classes
         /// </summary>
         private void setSymbolizer()
         {
-            int baseWidth = 48;
+            int baseWidth = 64;
 
             PointScheme sgnScheme = new PointScheme();
             

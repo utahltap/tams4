@@ -28,6 +28,7 @@ namespace tams4a.Controls
                 { "ADA Ramp", new List<Control>() },
                 { "Severe Road Distress", new List<Control>() },
                 { "Accident Hotspot", new List<Control>() },
+                { "Drainage", new List<Control>() },
                 { "Other", new List<Control>() }
             };
             int left = 11, right = 89;
@@ -36,9 +37,10 @@ namespace tams4a.Controls
             swFault.Location = new Point(right, 24);
             swFault.Size = new Size(112, 20);
             swFault.Items.Add("");
-            swFault.Items.Add("low");
-            swFault.Items.Add("moderate");
-            swFault.Items.Add("severe");
+            swFault.Items.Add("Less than 0.25 in.");
+            swFault.Items.Add("0.25 - 0.5 in.");
+            swFault.Items.Add("0.5 - 1 in.");
+            swFault.Items.Add("More than 1 in.");
             controlSets["Sidewalk"].Add(swFault);
             ComboBox swBreak = new ComboBox();
             swBreak.Location = new Point(right, 48);
@@ -119,14 +121,43 @@ namespace tams4a.Controls
             controlSets["Severe Road Distress"].Add(recommendationLabel);
             controlSets["Severe Road Distress"].Add(notesLabel);
             #endregion distress
+            #region drainage
+            ComboBox cause = new ComboBox();
+            cause.Location = new Point(right, 24);
+            cause.Size = new Size(112, 20);
+            cause.Items.Add("");
+            cause.Items.Add("Curb and Gutter");
+            cause.Items.Add("Roadway Ponding");
+            cause.Items.Add("Unpaved Shoulder");
+            cause.Items.Add("Turf Shoulder");
+            cause.Items.Add("Storm Grate");
+            cause.Items.Add("Other");
+            controlSets["Drainage"].Add(cause);
+            TextBox comment = new TextBox();
+            comment.Location = new Point(right, 48);
+            comment.Size = new Size(112, 20);
+            controlSets["Drainage"].Add(comment);
+            controlSets["Drainage"].Add(notes);
+            Label causeLabel = new Label();
+            causeLabel.Text = "Cause";
+            causeLabel.Location = new Point(left, 26);
+            causeLabel.Size = new Size(70, 14);
+            controlSets["Drainage"].Add(causeLabel);
+            Label commentLabel = new Label();
+            commentLabel.Text = "Comment";
+            commentLabel.Location = new Point(left, 50);
+            commentLabel.Size = new Size(70, 14);
+            controlSets["Drainage"].Add(commentLabel);
+            controlSets["Drainage"].Add(notesLabel);
+            #endregion drainage
             #region accidents
             TextBox lastAccident = new TextBox();
             lastAccident.Location = new Point(right, 24);
             lastAccident.Size = new Size(112, 20);
             controlSets["Accident Hotspot"].Add(lastAccident);
-            TextBox comment = new TextBox();
-            comment.Location = new Point(right, 48);
-            comment.Size = new Size(112, 20);
+            //TextBox comment = new TextBox();
+            //comment.Location = new Point(right, 48);
+            //comment.Size = new Size(112, 20);
             controlSets["Accident Hotspot"].Add(comment);
             controlSets["Accident Hotspot"].Add(notes);
             Label lastAccidentLabel = new Label();
@@ -134,10 +165,10 @@ namespace tams4a.Controls
             lastAccidentLabel.Location = new Point(left, 26);
             lastAccidentLabel.Size = new Size(70, 14);
             controlSets["Accident Hotspot"].Add(lastAccidentLabel);
-            Label commentLabel = new Label();
-            commentLabel.Text = "Comment";
-            commentLabel.Location = new Point(left, 50);
-            commentLabel.Size = new Size(70, 14);
+            //Label commentLabel = new Label();
+            //commentLabel.Text = "Comment";
+            //commentLabel.Location = new Point(left, 50);
+            //commentLabel.Size = new Size(70, 14);
             controlSets["Accident Hotspot"].Add(commentLabel);
             controlSets["Accident Hotspot"].Add(notesLabel);
             #endregion accidents
@@ -154,7 +185,7 @@ namespace tams4a.Controls
             Label property1Label = new Label();
             property1Label.Text = "Property 1";
             property1Label.Size = new Size(70, 14);
-            property1Label.Location = new Point(Left, 26);
+            property1Label.Location = new Point(left, 26);
             controlSets["Other"].Add(property1Label);
             Label property2Label = new Label();
             property2Label.Text = "Property 2";
