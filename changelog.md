@@ -1,4 +1,7 @@
-# TAMS version 4.0.3.0
+# TAMS version 4.0.3.2
+* Corrected version number
+
+# TAMS version 4.0.3.1
 
 BUG FIXES
 ------------------------------------------------------
