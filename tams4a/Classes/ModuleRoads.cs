@@ -20,6 +20,7 @@ namespace tams4a.Classes
         private DataTable surfaceTypes;
         private DataTable roadTypes;
         private DataTable surfaceDistresses;
+        private Dictionary<string, string> swData;
         private string notes;
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
                     FROM
@@ -69,9 +70,9 @@ namespace tams4a.Classes
                 { "road_f_surfacetype", "surface" }
             };
 
+            swData = new Dictionary<string, string>();
             Project.map.ResetBuffer();
             Project.map.Update();
-            // TODO: Rest
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace tams4a.Classes
         {
             if (type == "") { type = "line"; }
             if (type != "line") { throw new Exception("Roads module requires a line-type shp file"); }
-            
+
             #region Additional module settings
             ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_f_TAMSID", module: ModuleName, value: "",
                     display_text: "SHP field with unique identifier.",
@@ -125,7 +126,7 @@ namespace tams4a.Classes
 
             if (!base.openFile(thePath, type)) { return false; }
             Project.map.Layers.Move(Layer, 0);
-            
+
             ControlsPage.Controls.Remove(ControlsPage.Controls["ROADADD"]);
             Panel_Road roadPanel = new Panel_Road();
             roadPanel.Name = "ROADCONTROLS";
@@ -137,6 +138,7 @@ namespace tams4a.Classes
             roadPanel.buttonReset.Click += cancelChanges;
             roadPanel.pictureBoxPhoto.Click += clickPhotoBox;
             roadPanel.toolStripButtonAnalysis.Click += reportSelected;
+            roadPanel.toolStripButtonSidewalk.Click += setSideWalkInfo;
 
             roadPanel.btnNotes.Click += editNotes;
             roadPanel.buttonSuggest.Click += automaticTreatmentSuggestion;
@@ -173,12 +175,12 @@ namespace tams4a.Classes
             roadPanel.comboBoxSurface.DataSource = surfaceTypes;    //
             roadPanel.comboBoxSurface.DisplayMember = "name";       // sets options
             roadPanel.comboBoxSurface.ValueMember = "id";           //
-            
+
             surfaceDistresses = Database.GetDataByQuery(Project.conn, "SELECT rd.*, rs.name AS surface FROM road_distresses AS rd JOIN road_surfaces AS rs ON rd.surface_id = rs.id ORDER BY rd.id");
             DataColumn[] keys = new DataColumn[1];
             keys[0] = surfaceDistresses.Columns["id"];
             surfaceDistresses.PrimaryKey = keys;
-            
+
             roadTypes = Database.GetDataByQuery(Project.conn, "SELECT * FROM road_types");
             // procedural technique for generating combobox options from datatable
             roadPanel.comboBoxType.Items.Add(""); // add empty row
@@ -194,6 +196,11 @@ namespace tams4a.Classes
             resetRoadDisplay();
             resetSaveCondition();
             return true;
+        }
+
+        private void setSideWalkInfo(object sender, EventArgs e)
+        {
+
         }
 
         /// <summary>
@@ -423,7 +430,7 @@ namespace tams4a.Classes
                     }
                     catch
                     {
-                        
+
                     }
                 }
             }
@@ -506,9 +513,16 @@ namespace tams4a.Classes
             roadControls.groupBoxInfo.Enabled = true;
             roadControls.groupBoxDistress.Enabled = true;
             roadControls.toolStrip.Enabled = true;
-
+            bool hasSWModule = false;
+            for (int i = 0; i < Project.map.Layers.Count; i++)
+            {
+                if (((FeatureLayer)Project.map.Layers[i]).Name == "miscellaneous") {
+                    hasSWModule = true;
+                }
+            }
+            roadControls.toolStripButtonSidewalk.Visible = hasSWModule;
+            roadControls.toolStripButtonSidewalk.Enabled = hasSWModule;
         }
-
 
         // handler for changed controls
         protected override void controlChanged(object sender, EventArgs e)
@@ -1103,7 +1117,7 @@ namespace tams4a.Classes
             int[] dvs;
             if (roadControls.comboBoxSurface.Text.Contains("gravel"))
             {
-                dvs = new int[7]{ roadControls.distress1.Value, roadControls.distress2.Value, roadControls.distress3.Value, roadControls.distress4.Value, roadControls.distress5.Value, roadControls.distress6.Value, roadControls.distress7.Value};
+                dvs = new int[7] { roadControls.distress1.Value, roadControls.distress2.Value, roadControls.distress3.Value, roadControls.distress4.Value, roadControls.distress5.Value, roadControls.distress6.Value, roadControls.distress7.Value };
             }
             else
             {
@@ -1112,7 +1126,7 @@ namespace tams4a.Classes
             string gd = getGoverningDistress(dvs, roadControls.comboBoxSurface.Text);
             if (string.IsNullOrWhiteSpace(gd)) { return; }
             int index = data[roadControls.comboBoxSurface.Text][gd] - 1;
-            DataTable suggestion = Database.GetDataByQuery(Project.conn, "SELECT treatment FROM auto_suggest WHERE governing_distress='" + gd +  "' AND distress_value=" + dvs[index].ToString() + ";");
+            DataTable suggestion = Database.GetDataByQuery(Project.conn, "SELECT treatment FROM auto_suggest WHERE governing_distress='" + gd + "' AND distress_value=" + dvs[index].ToString() + ";");
             if (suggestion.Rows.Count > 0)
             {
                 roadControls.comboBoxTreatment.Text = suggestion.Rows[0]["treatment"].ToString();
@@ -1241,11 +1255,11 @@ namespace tams4a.Classes
             string gd = "";
             for (int i = 1; i <= distresses.Rows.Count; i++)
             {;
-                if (distValues[i-1] <= 0)
+                if (distValues[i - 1] <= 0)
                 {
                     continue;
                 }
-                int rsl = Util.ToInt(distresses.Rows[i - 1]["rsl" + distValues[i-1]].ToString());
+                int rsl = Util.ToInt(distresses.Rows[i - 1]["rsl" + distValues[i - 1]].ToString());
                 if (rsl < maxRSL)
                 {
                     maxRSL = rsl;
@@ -1277,9 +1291,9 @@ namespace tams4a.Classes
             {
                 budget.Close();
             }
-            
+
         }
-        
+
         protected void toggleColors(object sender, EventArgs e)
         {
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
@@ -1381,6 +1395,45 @@ namespace tams4a.Classes
                 report.Show();
             }
             tableFilters.Close();
+        }
+    }
+
+    internal class RoadSidewalkForm
+    {
+        private FormCustomMessage dialogBox;
+        private int RoadID;
+        private ComboBox sidewalks;
+        private TextBox textBoxComment;
+
+        public RoadSidewalkForm(int rid)
+        {
+            RoadID = rid;
+            dialogBox = new FormCustomMessage();
+            dialogBox.Text = "Sidewalks on this Road";
+            dialogBox.labelMessage.Text = "Does this raod have sidewalks?";
+            sidewalks = new ComboBox();
+            sidewalks.Items.Add("Yes");
+            sidewalks.Items.Add("No");
+            sidewalks.Items.Add("Partial");
+            sidewalks.Location = new Point(240, 16);
+            dialogBox.groupBoxUser.Controls.Add(sidewalks);
+            Label comment = new Label();
+            comment.Text = "Comment:";
+            comment.Location = new Point(12, 40);
+            comment.Size = new Size(80, 24);
+            dialogBox.Controls.Add(comment);
+            textBoxComment = new TextBox();
+            textBoxComment.Size = new Size(240, 24);
+            textBoxComment.Location = new Point(100, 40);
+            dialogBox.Controls.Add(textBoxComment);
+        }
+
+        public void setSidewalkData(TamsProject project)
+        {
+            if (dialogBox.ShowDialog() == DialogResult.OK)
+            {
+
+            }
         }
     }
 }

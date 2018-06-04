@@ -115,7 +115,7 @@ namespace tams4a.Controls
             distressLabel.Location = new Point(left, 26);
             controlSets["Severe Road Distress"].Add(distressLabel);
             Label recommendationLabel = new Label();
-            recommendationLabel.Text = "Recommendation";
+            recommendationLabel.Text = "Recommend";
             recommendationLabel.Size = new Size(75, 14);
             recommendationLabel.Location = new Point(left, 50);
             controlSets["Severe Road Distress"].Add(recommendationLabel);

@@ -732,6 +732,25 @@ CREATE TABLE miscellaneous (TAMSID INTEGER PRIMARY KEY, type TEXT, icon TEXT, ad
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_8_immute
+            #region db_update_9_immute
+            if (dbVersion == 8)
+            {
+                try
+                {
+                    string cmdString = @"CREATE TABLE road_sidewalks (road_ID INTEGER PRIMARY KEY, installed TEXT, comments TEXT);";
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                    MessageBox.Show("The database could not be updated to the latest version of TAMS please contact the Utah LTAP Center for help.");
+                    return false;
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "9";
+                dbVersion = 9;
+                //Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_9_immute
 
             return true;
         }
