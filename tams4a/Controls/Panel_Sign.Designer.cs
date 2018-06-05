@@ -43,6 +43,8 @@
             this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
+            this.comboBoxRecommendation = new System.Windows.Forms.ComboBox();
+            this.labelRecommend = new System.Windows.Forms.Label();
             this.comboBoxObstruction = new System.Windows.Forms.ComboBox();
             this.labelObstruction = new System.Windows.Forms.Label();
             this.labelCondition = new System.Windows.Forms.Label();
@@ -97,8 +99,6 @@
             this.comboBoxSheeting = new System.Windows.Forms.ComboBox();
             this.labelSheeting = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.labelRecommend = new System.Windows.Forms.Label();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOffset)).BeginInit();
@@ -238,7 +238,7 @@
             // 
             // groupBoxSupport
             // 
-            this.groupBoxSupport.Controls.Add(this.comboBox1);
+            this.groupBoxSupport.Controls.Add(this.comboBoxRecommendation);
             this.groupBoxSupport.Controls.Add(this.labelRecommend);
             this.groupBoxSupport.Controls.Add(this.comboBoxObstruction);
             this.groupBoxSupport.Controls.Add(this.labelObstruction);
@@ -264,6 +264,30 @@
             this.groupBoxSupport.TabIndex = 1;
             this.groupBoxSupport.TabStop = false;
             this.groupBoxSupport.Text = "Support";
+            // 
+            // comboBoxRecommendation
+            // 
+            this.comboBoxRecommendation.FormattingEnabled = true;
+            this.comboBoxRecommendation.Items.AddRange(new object[] {
+            "",
+            "Replace Signs",
+            "Replace Post",
+            "Move Post",
+            "Move and Replace Post",
+            "Clear Obstructions"});
+            this.comboBoxRecommendation.Location = new System.Drawing.Point(87, 156);
+            this.comboBoxRecommendation.Name = "comboBoxRecommendation";
+            this.comboBoxRecommendation.Size = new System.Drawing.Size(112, 21);
+            this.comboBoxRecommendation.TabIndex = 45;
+            // 
+            // labelRecommend
+            // 
+            this.labelRecommend.AutoSize = true;
+            this.labelRecommend.Location = new System.Drawing.Point(10, 159);
+            this.labelRecommend.Name = "labelRecommend";
+            this.labelRecommend.Size = new System.Drawing.Size(67, 13);
+            this.labelRecommend.TabIndex = 44;
+            this.labelRecommend.Text = "Recommend";
             // 
             // comboBoxObstruction
             // 
@@ -848,28 +872,6 @@
             this.labelType.TabIndex = 0;
             this.labelType.Text = "MUTCD code";
             // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "",
-            "clear",
-            "partial",
-            "severe"});
-            this.comboBox1.Location = new System.Drawing.Point(87, 156);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(112, 21);
-            this.comboBox1.TabIndex = 45;
-            // 
-            // labelRecommend
-            // 
-            this.labelRecommend.AutoSize = true;
-            this.labelRecommend.Location = new System.Drawing.Point(10, 159);
-            this.labelRecommend.Name = "labelRecommend";
-            this.labelRecommend.Size = new System.Drawing.Size(67, 13);
-            this.labelRecommend.TabIndex = 44;
-            this.labelRecommend.Text = "Recommend";
-            // 
             // Panel_Sign
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -965,7 +967,7 @@
         private System.Windows.Forms.Label labelCondition;
         public System.Windows.Forms.ComboBox comboBoxCondition;
         public System.Windows.Forms.ToolStripButton toolStripButtonRemove;
-        public System.Windows.Forms.ComboBox comboBox1;
+        public System.Windows.Forms.ComboBox comboBoxRecommendation;
         private System.Windows.Forms.Label labelRecommend;
     }
 }

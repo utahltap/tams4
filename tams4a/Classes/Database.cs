@@ -737,7 +737,11 @@ CREATE TABLE miscellaneous (TAMSID INTEGER PRIMARY KEY, type TEXT, icon TEXT, ad
             {
                 try
                 {
-                    string cmdString = @"CREATE TABLE road_sidewalks (road_ID INTEGER PRIMARY KEY, installed TEXT, comments TEXT);";
+                    string cmdString = @"CREATE TABLE road_sidewalks (road_ID INTEGER PRIMARY KEY, installed TEXT, comments TEXT);
+ALTER TABLE sign_support ADD recommendation TEXT;
+ALTER TABLE miscellaneous ADD property3 TEXT;";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
                 }
                 catch (Exception e)
                 {

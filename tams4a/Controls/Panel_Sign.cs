@@ -21,7 +21,6 @@ namespace tams4a.Controls
             comboBoxCondition.SelectionChangeCommitted += moduleValueChanged;
             comboBoxMaterial.SelectionChangeCommitted += moduleValueChanged;
             numericUpDownOffset.ValueChanged += moduleValueChanged;
-            numericUpDownHeight.ValueChanged += moduleValueChanged;
             textBoxType.TextChanged += moduleValueChanged;
             textBoxDescription.TextChanged += moduleValueChanged;
             comboBoxSheeting.SelectedValueChanged += moduleValueChanged;

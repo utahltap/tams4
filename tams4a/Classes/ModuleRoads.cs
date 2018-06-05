@@ -20,7 +20,6 @@ namespace tams4a.Classes
         private DataTable surfaceTypes;
         private DataTable roadTypes;
         private DataTable surfaceDistresses;
-        private Dictionary<string, string> swData;
         private string notes;
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
                     FROM
@@ -69,8 +68,7 @@ namespace tams4a.Classes
                 { "road_f_endaddr", "to_address" },
                 { "road_f_surfacetype", "surface" }
             };
-
-            swData = new Dictionary<string, string>();
+            
             Project.map.ResetBuffer();
             Project.map.Update();
         }
@@ -200,7 +198,8 @@ namespace tams4a.Classes
 
         private void setSideWalkInfo(object sender, EventArgs e)
         {
-
+            RoadSidewalkForm rsf = new RoadSidewalkForm(Util.ToInt(tamsids[0]));
+            rsf.setSidewalkData(Project);
         }
 
         /// <summary>
@@ -521,7 +520,7 @@ namespace tams4a.Classes
                 }
             }
             roadControls.toolStripButtonSidewalk.Visible = hasSWModule;
-            roadControls.toolStripButtonSidewalk.Enabled = hasSWModule;
+            roadControls.toolStripButtonSidewalk.Enabled = hasSWModule && selectionValues != null && selectionValues.Count == 1;
         }
 
         // handler for changed controls
@@ -1432,7 +1431,12 @@ namespace tams4a.Classes
         {
             if (dialogBox.ShowDialog() == DialogResult.OK)
             {
-
+                Database.ReplaceRow(project.conn, new Dictionary<string, string>()
+                {
+                    { "road_ID", RoadID.ToString()},
+                    { "installed", sidewalks.Text },
+                    { "comments", textBoxComment.Text }
+                }, "road_sidewalks");
             }
         }
     }
