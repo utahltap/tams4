@@ -322,4 +322,16 @@
   <data name="swdatabutton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\swdatabutton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="crash" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\crash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pooling" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pooling.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ramp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ramp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sidewalk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sidewalk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

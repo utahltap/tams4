@@ -46,10 +46,8 @@
             this.labelPhoto = new System.Windows.Forms.Label();
             this.buttonNextPhoto = new System.Windows.Forms.Button();
             this.textBoxPhotoFile = new System.Windows.Forms.TextBox();
-            this.comboBoxIcon = new System.Windows.Forms.ComboBox();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.labelDescription = new System.Windows.Forms.Label();
-            this.labelIcon = new System.Windows.Forms.Label();
             this.comboBoxObject = new System.Windows.Forms.ComboBox();
             this.labelObject = new System.Windows.Forms.Label();
             this.labelSurveyDate = new System.Windows.Forms.Label();
@@ -168,24 +166,22 @@
             this.groupBoxType.Controls.Add(this.labelPhoto);
             this.groupBoxType.Controls.Add(this.buttonNextPhoto);
             this.groupBoxType.Controls.Add(this.textBoxPhotoFile);
-            this.groupBoxType.Controls.Add(this.comboBoxIcon);
             this.groupBoxType.Controls.Add(this.textBoxDescription);
             this.groupBoxType.Controls.Add(this.labelDescription);
-            this.groupBoxType.Controls.Add(this.labelIcon);
             this.groupBoxType.Controls.Add(this.comboBoxObject);
             this.groupBoxType.Controls.Add(this.labelObject);
             this.groupBoxType.Controls.Add(this.labelSurveyDate);
             this.groupBoxType.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxType.Location = new System.Drawing.Point(0, 25);
             this.groupBoxType.Name = "groupBoxType";
-            this.groupBoxType.Size = new System.Drawing.Size(224, 232);
+            this.groupBoxType.Size = new System.Drawing.Size(224, 209);
             this.groupBoxType.TabIndex = 1;
             this.groupBoxType.TabStop = false;
             this.groupBoxType.Text = "Type";
             // 
             // textBoxAddress
             // 
-            this.textBoxAddress.Location = new System.Drawing.Point(89, 85);
+            this.textBoxAddress.Location = new System.Drawing.Point(89, 61);
             this.textBoxAddress.Name = "textBoxAddress";
             this.textBoxAddress.Size = new System.Drawing.Size(112, 20);
             this.textBoxAddress.TabIndex = 25;
@@ -193,7 +189,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 87);
+            this.label1.Location = new System.Drawing.Point(11, 63);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 13);
             this.label1.TabIndex = 24;
@@ -203,7 +199,7 @@
             // 
             this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBoxPhoto.InitialImage = global::tams4a.Properties.Resources.nophoto;
-            this.pictureBoxPhoto.Location = new System.Drawing.Point(111, 156);
+            this.pictureBoxPhoto.Location = new System.Drawing.Point(111, 132);
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
             this.pictureBoxPhoto.Size = new System.Drawing.Size(90, 64);
             this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -213,7 +209,7 @@
             // labelPhoto
             // 
             this.labelPhoto.AutoSize = true;
-            this.labelPhoto.Location = new System.Drawing.Point(14, 132);
+            this.labelPhoto.Location = new System.Drawing.Point(14, 108);
             this.labelPhoto.Name = "labelPhoto";
             this.labelPhoto.Size = new System.Drawing.Size(54, 13);
             this.labelPhoto.TabIndex = 22;
@@ -221,7 +217,7 @@
             // 
             // buttonNextPhoto
             // 
-            this.buttonNextPhoto.Location = new System.Drawing.Point(89, 131);
+            this.buttonNextPhoto.Location = new System.Drawing.Point(89, 107);
             this.buttonNextPhoto.Name = "buttonNextPhoto";
             this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
             this.buttonNextPhoto.TabIndex = 21;
@@ -230,28 +226,15 @@
             // 
             // textBoxPhotoFile
             // 
-            this.textBoxPhotoFile.Location = new System.Drawing.Point(111, 131);
+            this.textBoxPhotoFile.Location = new System.Drawing.Point(111, 107);
             this.textBoxPhotoFile.Name = "textBoxPhotoFile";
             this.textBoxPhotoFile.Size = new System.Drawing.Size(90, 20);
             this.textBoxPhotoFile.TabIndex = 20;
             this.textBoxPhotoFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // comboBoxIcon
-            // 
-            this.comboBoxIcon.FormattingEnabled = true;
-            this.comboBoxIcon.Items.AddRange(new object[] {
-            "feature",
-            "problem",
-            "important",
-            "question"});
-            this.comboBoxIcon.Location = new System.Drawing.Point(89, 61);
-            this.comboBoxIcon.Name = "comboBoxIcon";
-            this.comboBoxIcon.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxIcon.TabIndex = 6;
-            // 
             // textBoxDescription
             // 
-            this.textBoxDescription.Location = new System.Drawing.Point(89, 108);
+            this.textBoxDescription.Location = new System.Drawing.Point(89, 84);
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(112, 20);
             this.textBoxDescription.TabIndex = 5;
@@ -259,20 +242,11 @@
             // labelDescription
             // 
             this.labelDescription.AutoSize = true;
-            this.labelDescription.Location = new System.Drawing.Point(11, 110);
+            this.labelDescription.Location = new System.Drawing.Point(11, 86);
             this.labelDescription.Name = "labelDescription";
             this.labelDescription.Size = new System.Drawing.Size(60, 13);
             this.labelDescription.TabIndex = 4;
             this.labelDescription.Text = "Description";
-            // 
-            // labelIcon
-            // 
-            this.labelIcon.AutoSize = true;
-            this.labelIcon.Location = new System.Drawing.Point(11, 64);
-            this.labelIcon.Name = "labelIcon";
-            this.labelIcon.Size = new System.Drawing.Size(28, 13);
-            this.labelIcon.TabIndex = 3;
-            this.labelIcon.Text = "Icon";
             // 
             // comboBoxObject
             // 
@@ -310,9 +284,9 @@
             // groupBoxProperties
             // 
             this.groupBoxProperties.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBoxProperties.Location = new System.Drawing.Point(0, 263);
+            this.groupBoxProperties.Location = new System.Drawing.Point(0, 240);
             this.groupBoxProperties.Name = "groupBoxProperties";
-            this.groupBoxProperties.Size = new System.Drawing.Size(224, 406);
+            this.groupBoxProperties.Size = new System.Drawing.Size(224, 429);
             this.groupBoxProperties.TabIndex = 2;
             this.groupBoxProperties.TabStop = false;
             this.groupBoxProperties.Text = "Properties";
@@ -339,14 +313,12 @@
         #endregion
         private System.Windows.Forms.Label labelObject;
         private System.Windows.Forms.Label labelSurveyDate;
-        private System.Windows.Forms.Label labelIcon;
         private System.Windows.Forms.Label labelDescription;
         public System.Windows.Forms.PictureBox pictureBoxPhoto;
         private System.Windows.Forms.Label labelPhoto;
         public System.Windows.Forms.Button buttonNextPhoto;
         public System.Windows.Forms.TextBox textBoxPhotoFile;
         public System.Windows.Forms.ComboBox comboBoxObject;
-        public System.Windows.Forms.ComboBox comboBoxIcon;
         public System.Windows.Forms.TextBox textBoxDescription;
         public System.Windows.Forms.TextBox textBoxAddress;
         private System.Windows.Forms.Label label1;

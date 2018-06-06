@@ -20,7 +20,6 @@ namespace tams4a.Controls
             InitializeComponent();
 
             new ToolTip().SetToolTip(buttonNextPhoto, "Get Next Photo");
-            new ToolTip().SetToolTip(comboBoxIcon, "Select Icon to Show on Map");
 
             controlSets = new Dictionary<string, List<Control>>()
             {
@@ -197,7 +196,6 @@ namespace tams4a.Controls
 
             comboBoxObject.TextChanged += moduleValueChanged;
             comboBoxObject.TextChanged += objectChanged;
-            comboBoxIcon.TextChanged += moduleValueChanged;
             textBoxAddress.TextChanged += moduleValueChanged;
             textBoxDescription.TextChanged += moduleValueChanged;
             textBoxPhotoFile.TextChanged += moduleValueChanged;
@@ -217,7 +215,6 @@ namespace tams4a.Controls
         public void updateDisplay(Dictionary<string, string> values)
         {
             comboBoxObject.Text = Util.DictionaryItemString(values, "type");
-            comboBoxIcon.Text = Util.DictionaryItemString(values, "icon");
             textBoxAddress.Text = Util.DictionaryItemString(values, "address");
             textBoxDescription.Text = Util.DictionaryItemString(values, "description");
             textBoxPhotoFile.Text = Util.DictionaryItemString(values, "photo");
@@ -258,7 +255,6 @@ namespace tams4a.Controls
         {
             textBoxAddress.Text = "";
             comboBoxObject.Text = "";
-            comboBoxIcon.Text = "";
             textBoxPhotoFile.Text = "";
             textBoxDescription.Text = "";
             for (int i = 0; i < 3; i ++)
