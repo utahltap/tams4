@@ -41,17 +41,17 @@
             this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readGPSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
+            this.comboBoxRecommendation = new System.Windows.Forms.ComboBox();
+            this.labelRecommend = new System.Windows.Forms.Label();
             this.comboBoxObstruction = new System.Windows.Forms.ComboBox();
             this.labelObstruction = new System.Windows.Forms.Label();
             this.labelCondition = new System.Windows.Forms.Label();
             this.comboBoxCondition = new System.Windows.Forms.ComboBox();
             this.buttonFavorite = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
-            this.labelHeight = new System.Windows.Forms.Label();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.labelSigns = new System.Windows.Forms.Label();
             this.comboBoxSigns = new System.Windows.Forms.ComboBox();
@@ -99,10 +99,8 @@
             this.comboBoxSheeting = new System.Windows.Forms.ComboBox();
             this.labelSheeting = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
-            this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOffset)).BeginInit();
             this.groupBoxSign.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
@@ -211,34 +209,44 @@
             // enterCoordinatesToolStripMenuItem
             // 
             this.enterCoordinatesToolStripMenuItem.Name = "enterCoordinatesToolStripMenuItem";
-            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.enterCoordinatesToolStripMenuItem.Text = "Enter Coordinates";
             // 
             // readGPSToolStripMenuItem
             // 
             this.readGPSToolStripMenuItem.Enabled = false;
             this.readGPSToolStripMenuItem.Name = "readGPSToolStripMenuItem";
-            this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.readGPSToolStripMenuItem.Text = "Read GPS";
             // 
             // clickMapToolStripMenuItem
             // 
             this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
-            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.clickMapToolStripMenuItem.Text = "Click Map";
+            // 
+            // toolStripButtonRemove
+            // 
+            this.toolStripButtonRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRemove.Enabled = false;
+            this.toolStripButtonRemove.Image = global::tams4a.Properties.Resources.removepost;
+            this.toolStripButtonRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRemove.Name = "toolStripButtonRemove";
+            this.toolStripButtonRemove.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonRemove.Text = "remove support";
+            this.toolStripButtonRemove.ToolTipText = "Remove Support";
             // 
             // groupBoxSupport
             // 
+            this.groupBoxSupport.Controls.Add(this.comboBoxRecommendation);
+            this.groupBoxSupport.Controls.Add(this.labelRecommend);
             this.groupBoxSupport.Controls.Add(this.comboBoxObstruction);
             this.groupBoxSupport.Controls.Add(this.labelObstruction);
             this.groupBoxSupport.Controls.Add(this.labelCondition);
             this.groupBoxSupport.Controls.Add(this.comboBoxCondition);
             this.groupBoxSupport.Controls.Add(this.buttonFavorite);
             this.groupBoxSupport.Controls.Add(this.buttonRemove);
-            this.groupBoxSupport.Controls.Add(this.label1);
             this.groupBoxSupport.Controls.Add(this.label2);
-            this.groupBoxSupport.Controls.Add(this.numericUpDownHeight);
-            this.groupBoxSupport.Controls.Add(this.labelHeight);
             this.groupBoxSupport.Controls.Add(this.buttonAdd);
             this.groupBoxSupport.Controls.Add(this.labelSigns);
             this.groupBoxSupport.Controls.Add(this.comboBoxSigns);
@@ -256,6 +264,30 @@
             this.groupBoxSupport.TabIndex = 1;
             this.groupBoxSupport.TabStop = false;
             this.groupBoxSupport.Text = "Support";
+            // 
+            // comboBoxRecommendation
+            // 
+            this.comboBoxRecommendation.FormattingEnabled = true;
+            this.comboBoxRecommendation.Items.AddRange(new object[] {
+            "",
+            "Replace Signs",
+            "Replace Post",
+            "Move Post",
+            "Move and Replace Post",
+            "Clear Obstructions"});
+            this.comboBoxRecommendation.Location = new System.Drawing.Point(87, 156);
+            this.comboBoxRecommendation.Name = "comboBoxRecommendation";
+            this.comboBoxRecommendation.Size = new System.Drawing.Size(112, 21);
+            this.comboBoxRecommendation.TabIndex = 45;
+            // 
+            // labelRecommend
+            // 
+            this.labelRecommend.AutoSize = true;
+            this.labelRecommend.Location = new System.Drawing.Point(10, 159);
+            this.labelRecommend.Name = "labelRecommend";
+            this.labelRecommend.Size = new System.Drawing.Size(67, 13);
+            this.labelRecommend.TabIndex = 44;
+            this.labelRecommend.Text = "Recommend";
             // 
             // comboBoxObstruction
             // 
@@ -322,15 +354,6 @@
             this.buttonRemove.TabIndex = 19;
             this.buttonRemove.UseVisualStyleBackColor = true;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(176, 159);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(13, 13);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "ft";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -339,38 +362,6 @@
             this.label2.Size = new System.Drawing.Size(13, 13);
             this.label2.TabIndex = 17;
             this.label2.Text = "ft";
-            // 
-            // numericUpDownHeight
-            // 
-            this.numericUpDownHeight.DecimalPlaces = 1;
-            this.numericUpDownHeight.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            this.numericUpDownHeight.Location = new System.Drawing.Point(87, 156);
-            this.numericUpDownHeight.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.numericUpDownHeight.Name = "numericUpDownHeight";
-            this.numericUpDownHeight.Size = new System.Drawing.Size(83, 20);
-            this.numericUpDownHeight.TabIndex = 16;
-            this.numericUpDownHeight.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // labelHeight
-            // 
-            this.labelHeight.AutoSize = true;
-            this.labelHeight.Location = new System.Drawing.Point(10, 159);
-            this.labelHeight.Name = "labelHeight";
-            this.labelHeight.Size = new System.Drawing.Size(38, 13);
-            this.labelHeight.TabIndex = 15;
-            this.labelHeight.Text = "Height";
             // 
             // buttonAdd
             // 
@@ -881,17 +872,6 @@
             this.labelType.TabIndex = 0;
             this.labelType.Text = "MUTCD code";
             // 
-            // toolStripButtonRemove
-            // 
-            this.toolStripButtonRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRemove.Enabled = false;
-            this.toolStripButtonRemove.Image = global::tams4a.Properties.Resources.removepost;
-            this.toolStripButtonRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRemove.Name = "toolStripButtonRemove";
-            this.toolStripButtonRemove.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonRemove.Text = "remove support";
-            this.toolStripButtonRemove.ToolTipText = "Remove Support";
-            // 
             // Panel_Sign
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -905,7 +885,6 @@
             this.toolStrip.PerformLayout();
             this.groupBoxSupport.ResumeLayout(false);
             this.groupBoxSupport.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOffset)).EndInit();
             this.groupBoxSign.ResumeLayout(false);
             this.groupBoxSign.PerformLayout();
@@ -930,8 +909,6 @@
         public System.Windows.Forms.NumericUpDown numericUpDownOffset;
         public System.Windows.Forms.ComboBox comboBoxMaterial;
         public System.Windows.Forms.TextBox textBoxAddress;
-        public System.Windows.Forms.NumericUpDown numericUpDownHeight;
-        private System.Windows.Forms.Label labelHeight;
         public System.Windows.Forms.ComboBox comboBoxSheeting;
         private System.Windows.Forms.Label labelSheeting;
         private System.Windows.Forms.Label labelType;
@@ -944,7 +921,6 @@
         public System.Windows.Forms.TextBox textBoxType;
         public System.Windows.Forms.NumericUpDown numericUpDownMountHeight;
         private System.Windows.Forms.Label labelMountHeight;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
@@ -991,5 +967,7 @@
         private System.Windows.Forms.Label labelCondition;
         public System.Windows.Forms.ComboBox comboBoxCondition;
         public System.Windows.Forms.ToolStripButton toolStripButtonRemove;
+        public System.Windows.Forms.ComboBox comboBoxRecommendation;
+        private System.Windows.Forms.Label labelRecommend;
     }
 }

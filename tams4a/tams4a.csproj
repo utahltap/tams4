@@ -381,6 +381,12 @@
     <Compile Include="Forms\FormNewSign.Designer.cs">
       <DependentUpon>FormNewSign.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormQueryBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormQueryBuilder.Designer.cs">
+      <DependentUpon>FormQueryBuilder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormSignLookup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -493,6 +499,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormNewSign.resx">
       <DependentUpon>FormNewSign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormQueryBuilder.resx">
+      <DependentUpon>FormQueryBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormSignLookup.resx">
       <DependentUpon>FormSignLookup.cs</DependentUpon>
@@ -612,6 +621,7 @@
     <None Include="Resources\baseremove.png" />
     <Content Include="Resources\Clock.bmp" />
     <Content Include="Resources\Compass.bmp" />
+    <None Include="Resources\crash.png" />
     <Content Include="Resources\Distresses\blank.png" />
     <Content Include="Resources\Distresses\blocking.jpg" />
     <Content Include="Resources\Distresses\conlong.png" />
@@ -663,13 +673,17 @@
     <None Include="Resources\important_feature.png" />
     <None Include="Resources\problem_flat.png" />
     <None Include="Resources\question.png" />
+    <None Include="Resources\pooling.png" />
+    <None Include="Resources\ramp.png" />
     <Content Include="Resources\SatelliteSignalBar.bmp" />
     <Content Include="Resources\SatelliteViewer.bmp" />
+    <None Include="Resources\sidewalk.png" />
     <Content Include="Resources\spalling.png" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\worker.png" />
     <Content Include="Resources\Speedometer.bmp" />
     <None Include="Resources\suggest.png" />
+    <None Include="Resources\swdatabutton.png" />
     <Content Include="Resources\zoom_select.png" />
     <None Include="Resources\zoom_select1.png" />
     <Content Include="x64\SQLite.Interop.dll">

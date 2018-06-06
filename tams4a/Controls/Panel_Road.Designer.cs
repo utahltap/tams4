@@ -85,6 +85,8 @@ namespace tams4a.Controls
             this.buttonHistory = new System.Windows.Forms.ToolStripButton();
             this.btnNotes = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAnalysis = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonSidewalk = new System.Windows.Forms.ToolStripButton();
             this.groupBoxDistress.SuspendLayout();
             this.groupBoxInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLanes)).BeginInit();
@@ -615,7 +617,9 @@ namespace tams4a.Controls
             this.buttonSetDate,
             this.buttonHistory,
             this.btnNotes,
-            this.toolStripButtonAnalysis});
+            this.toolStripSeparator2,
+            this.toolStripButtonAnalysis,
+            this.toolStripButtonSidewalk});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.MinimumSize = new System.Drawing.Size(200, 0);
             this.toolStrip.Name = "toolStrip";
@@ -703,6 +707,22 @@ namespace tams4a.Controls
             this.toolStripButtonAnalysis.Text = "Analysis";
             this.toolStripButtonAnalysis.ToolTipText = "Create Report on Selected Roads";
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButtonSidewalk
+            // 
+            this.toolStripButtonSidewalk.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSidewalk.Enabled = false;
+            this.toolStripButtonSidewalk.Image = global::tams4a.Properties.Resources.swdatabutton;
+            this.toolStripButtonSidewalk.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSidewalk.Name = "toolStripButtonSidewalk";
+            this.toolStripButtonSidewalk.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonSidewalk.Text = "Sidewalk Data";
+            this.toolStripButtonSidewalk.Visible = false;
+            // 
             // Panel_Road
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -786,5 +806,7 @@ namespace tams4a.Controls
         public System.Windows.Forms.Label label4;
         public System.Windows.Forms.TextBox inputRsl;
         public System.Windows.Forms.Button buttonSuggest;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        public System.Windows.Forms.ToolStripButton toolStripButtonSidewalk;
     }
 }

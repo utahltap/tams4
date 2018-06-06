@@ -303,7 +303,7 @@ namespace tams4a.Classes
         /// </summary>
         private void setSymbolizer()
         {
-            int baseWidth = 48;
+            int baseWidth = 64;
 
             PointScheme sgnScheme = new PointScheme();
             
@@ -493,7 +493,6 @@ namespace tams4a.Classes
             signControls.comboBoxMaterial.Text = Util.DictionaryItemString(values, "material");
             signControls.labelSurveyDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
             signControls.comboBoxCondition.Text = Util.DictionaryItemString(values, "condition");
-            signControls.numericUpDownHeight.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "height"));
             signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "height"));
             notes = Util.DictionaryItemString(values, "notes");
             postCat = Util.DictionaryItemString(values, "category");
@@ -607,7 +606,6 @@ namespace tams4a.Classes
             signControls.comboBoxCondition.SelectedIndex = 0;
             signControls.comboBoxMaterial.SelectedIndex = 0;
             signControls.numericUpDownOffset.Value = 0;
-            signControls.numericUpDownHeight.Value = 0;
             signControls.comboBoxSigns.Text = "";
             signControls.textBoxType.Text = "";
             signControls.textBoxDescription.Text = "";
@@ -664,7 +662,6 @@ namespace tams4a.Classes
             signChanges[index]["backing"] = signControls.comboBoxBacking.Text;
             signChanges[index]["condition"] = signControls.comboBoxConditionSign.Text;
             signChanges[index]["width"] = signControls.numericUpDownWidth.Value.ToString();
-            signChanges[index]["height"] = signControls.numericUpDownHeight.Value.ToString();
             signChanges[index]["mount_height"] = signControls.numericUpDownMountHeight.Value.ToString();
             signChanges[index]["sign_text"] = signControls.textBoxText.Text;
             signChanges[index]["survey_date"] = Util.SortableDate(surveyDate);

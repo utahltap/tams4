@@ -18,6 +18,7 @@ namespace tams4a.Classes
         static private readonly string itemSelectionSql = @"SELECT * from miscellaneous WHERE TAMSID IN ([[IDLIST]]);";
         private string notes;
         int maxTAMSID = 0;
+        private Dictionary<string, string> icons;
 
         public GenericModule(TamsProject theProject, TabPage controlPage, ToolStripMenuItem[] boundButtons, string mn = "miscellaneous") : base(theProject, controlPage, boundButtons, itemSelectionSql)
         {
@@ -32,6 +33,16 @@ namespace tams4a.Classes
             FieldSettingToDbColumn = new Dictionary<string, string>()
             {
                 { ModuleName + "_f_TAMSID", "TAMSID" }
+            };
+
+            icons = new Dictionary<string, string>()
+            {
+                { "Severe Road Distress", "road" },
+                { "Other", "other" },
+                { "ADA Ramp", "ramp" },
+                { "Sidewalk", "sidewalk" },
+                { "Drainage", "drainage" },
+                { "Accident Hotspot", "accident" }
             };
 
             Project.map.ResetBuffer();
@@ -158,8 +169,19 @@ namespace tams4a.Classes
             catDef.Symbolizer.ScaleMode = ScaleMode.Geographic;
             ftrScheme.AddCategory(catDef);
 
-            Image[] images = { Properties.Resources.feature, Properties.Resources.important, Properties.Resources.question, Properties.Resources.problem};
-            string[] iconNames = { "feature", "important", "question", "problem"};
+            Image[] images = {
+                Properties.Resources.feature,
+                Properties.Resources.important,
+                Properties.Resources.question,
+                Properties.Resources.problem,
+                Properties.Resources.ramp,
+                Properties.Resources.sidewalk,
+                Properties.Resources.feature,
+                Properties.Resources.problem,
+                Properties.Resources.drainage,
+                Properties.Resources.crash
+            };
+            string[] iconNames = { "feature", "important", "question", "problem", "ramp", "sidewalk", "other", "road", "drainage", "accident"};
 
             for (int i = 0; i < images.Length; i++)
             {
@@ -295,7 +317,7 @@ namespace tams4a.Classes
             Panel_Other controls = getOtherControls();
             Dictionary<string, string> values = new Dictionary<string, string>();
             values["type"] = controls.comboBoxObject.Text;
-            values["icon"] = controls.comboBoxIcon.Text;
+            values["icon"] = Util.DictionaryItemString(icons, controls.comboBoxObject.Text);
             values["address"] = controls.textBoxAddress.Text;
             values["description"] = controls.textBoxDescription.Text;
             values["photo"] = controls.textBoxPhotoFile.Text;
