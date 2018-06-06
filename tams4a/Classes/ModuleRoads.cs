@@ -199,6 +199,7 @@ namespace tams4a.Classes
         private void setSideWalkInfo(object sender, EventArgs e)
         {
             RoadSidewalkForm rsf = new RoadSidewalkForm(Util.ToInt(tamsids[0]));
+            rsf.prePopField(Project);
             rsf.setSidewalkData(Project);
         }
 
@@ -1420,11 +1421,11 @@ namespace tams4a.Classes
             comment.Text = "Comment:";
             comment.Location = new Point(12, 40);
             comment.Size = new Size(80, 24);
-            dialogBox.Controls.Add(comment);
+            dialogBox.groupBoxUser.Controls.Add(comment);
             textBoxComment = new TextBox();
             textBoxComment.Size = new Size(240, 24);
             textBoxComment.Location = new Point(100, 40);
-            dialogBox.Controls.Add(textBoxComment);
+            dialogBox.groupBoxUser.Controls.Add(textBoxComment);
         }
 
         public void setSidewalkData(TamsProject project)
@@ -1437,6 +1438,20 @@ namespace tams4a.Classes
                     { "installed", sidewalks.Text },
                     { "comments", textBoxComment.Text }
                 }, "road_sidewalks");
+            }
+        }
+
+        public void prePopField(TamsProject project)
+        {
+            try
+            {
+                DataTable data = Database.GetDataByQuery(project.conn, "SELECT * FROM road_sidewalks WHERE road_ID=" + RoadID.ToString() + ";");
+                sidewalks.Text = data.Rows[0]["installed"].ToString();
+                textBoxComment.Text = data.Rows[0]["comments"].ToString();
+            }
+            catch (Exception e)
+            {
+
             }
         }
     }
