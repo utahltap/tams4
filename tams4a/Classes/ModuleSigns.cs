@@ -1036,7 +1036,6 @@ namespace tams4a.Classes
             data.Columns.Add("Sheeting");
             data.Columns.Add("Backing");
             data.Columns.Add("Reflectivity");
-            data.Columns.Add("Obstructions");
             data.Columns.Add("Condition");
             data.Columns.Add("Recommendation");
             try
@@ -1057,29 +1056,10 @@ namespace tams4a.Classes
                     nr["Sheeting"] = row["sheeting"].ToString();
                     nr["Backing"] = row["backing"].ToString();
                     nr["Reflectivity"] = row["reflectivity"].ToString();
-                    nr["Obstructions"] = row["obstructions"].ToString();
                     nr["Condition"] = row["condition"].ToString();
                     int age = DateTime.Now.Year - Util.ToInt(row["install_date"].ToString().Split('-')[0]);
-                    if (nr["Obstructions"].ToString().Contains("clear"))
-                    {
-                        nr["Recommendation"] = "remove obstructions";
-                    }
-                    else if (nr["Obstructions"].ToString().Contains("move"))
-                    {
-                        nr["Recommendation"] = "move sign";
-                    }
-                    else if (nr["Reflectivity"].ToString().Contains("fail") || nr["Condition"].ToString().Contains("broken"))
-                    {
-                        nr["Recommendation"] = "replace";
-                    }
-                    else if ((age > 5 && (nr["Sheeting"].ToString().Equals("I") || nr["Sheeting"].ToString().Equals("V"))) || age > 9)
-                    {
-                        nr["Recommendation"] = "monitor";
-                    }
-                    else
-                    {
-                        nr["Recommendation"] = "";
-                    }
+                    nr["Recommendation"] = "";
+                    
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";

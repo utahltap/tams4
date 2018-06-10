@@ -60,7 +60,15 @@ namespace tams4a
             Visible = true;
             ToolStripMenuItem[] lcs = { importRoadsToolStripMenuItem, generalToolStripMenuItem, potholesToolStripMenuItem, analysisToolStripMenuItem, customToolStripMenuItem, roadToolStripMenuItem };
             ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signAlertsToolStripMenuItem, signInventoryToolStripMenuItem, supportAlertsToolStripMenuItem, supportInventoryToolStripMenuItem, signToolStripMenuItem};
-            ToolStripMenuItem[] lcso = { otherToolStripMenuItem };
+            ToolStripMenuItem[] lcso = { otherToolStripMenuItem,
+                sidewalkDistressToolStripMenuItem,
+                severeRoadDistressToolStripMenuItem,
+                aDARampsToolStripMenuItem,
+                drainageToolStripMenuItem,
+                accidentsToolStripMenuItem,
+                allOthersToolStripMenuItem,
+                roadsWithSidewalksToolStripMenuItem
+            };
             ModuleRoads road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
             ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
             GenericModule other = new GenericModule(Project, new TabPage("Other"), lcso);

@@ -112,19 +112,9 @@
     <ApplicationIcon>Resources\tams.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BruTile">
-      <HintPath>..\..\DotSpatial 1.9\Windows Extensions\DotSpatial.Plugins.WebMap\BruTile.dll</HintPath>
-    </Reference>
-    <Reference Include="BruTile.Desktop">
-      <HintPath>..\..\DotSpatial 1.9\Windows Extensions\DotSpatial.Plugins.WebMap\BruTile.Desktop.dll</HintPath>
-    </Reference>
     <Reference Include="DotSpatial.Analysis, Version=1.9.0.0, Culture=neutral, PublicKeyToken=df3f45fb0fe4cb0c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Analysis.1.9\lib\net40-Client\DotSpatial.Analysis.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="DotSpatial.Compatibility, Version=1.8.0.0, Culture=neutral, PublicKeyToken=094c8fdea7f4a002, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DotSpatial 1.9\DotSpatial.Compatibility.dll</HintPath>
     </Reference>
     <Reference Include="DotSpatial.Controls, Version=1.9.0.0, Culture=neutral, PublicKeyToken=4d9e49339a7d240c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Controls.1.9\lib\net40-Client\DotSpatial.Controls.dll</HintPath>
@@ -157,18 +147,6 @@
     <Reference Include="DotSpatial.NetTopologySuite, Version=1.14.4.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.NetTopologySuite.1.14.4\lib\net40-client\DotSpatial.NetTopologySuite.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="DotSpatial.Plugins.About">
-      <HintPath>..\..\DotSpatial 1.9\Plugins\DotSpatial.Plugins.About\DotSpatial.Plugins.About.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Plugins.ShapeEditor">
-      <HintPath>..\..\DotSpatial 1.9\Plugins\DotSpatial.Plugins.ShapeEditor\DotSpatial.Plugins.ShapeEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Plugins.SimpleMap">
-      <HintPath>..\..\DotSpatial 1.9\Plugins\DotSpatial.Plugins.SimpleMap\DotSpatial.Plugins.SimpleMap.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Plugins.WebMap">
-      <HintPath>..\..\DotSpatial 1.9\Windows Extensions\DotSpatial.Plugins.WebMap\DotSpatial.Plugins.WebMap.dll</HintPath>
     </Reference>
     <Reference Include="DotSpatial.Positioning, Version=1.9.0.0, Culture=neutral, PublicKeyToken=f6f66d1554473068, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Positioning.1.9\lib\net40-Client\DotSpatial.Positioning.dll</HintPath>
@@ -256,6 +234,7 @@
     <Compile Include="Classes\ProjectSettings.cs" />
     <Compile Include="Classes\ProjectVersion.cs" />
     <Compile Include="Classes\RoadDistress.cs" />
+    <Compile Include="Classes\RoadSidewalkForm.cs" />
     <Compile Include="Classes\TamsProject.cs" />
     <Compile Include="Classes\CustomEventArgs.cs" />
     <Compile Include="Classes\Module.cs" />
