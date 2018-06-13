@@ -755,7 +755,12 @@ ALTER TABLE miscellaneous ADD property3 TEXT;";
                 //Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_9_immute
+            #region db_update_10_immute
+            if (dbVersion == 9)
+            {
 
+            }
+            #endregion db_update_10_immute
             return true;
         }
 
