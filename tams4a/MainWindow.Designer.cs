@@ -59,6 +59,14 @@
             this.supportAlertsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.supportInventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sidewalkDistressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.roadsWithSidewalksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.severeRoadDistressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aDARampsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drainageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.accidentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.allOthersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -85,14 +93,6 @@
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSnapShot = new System.Windows.Forms.ToolStripButton();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.sidewalkDistressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.severeRoadDistressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aDARampsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drainageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.accidentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.allOthersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.customOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.roadsWithSidewalksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -310,25 +310,25 @@
             // signAlertsToolStripMenuItem
             // 
             this.signAlertsToolStripMenuItem.Name = "signAlertsToolStripMenuItem";
-            this.signAlertsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.signAlertsToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.signAlertsToolStripMenuItem.Text = "Sign Alerts";
             // 
             // signInventoryToolStripMenuItem
             // 
             this.signInventoryToolStripMenuItem.Name = "signInventoryToolStripMenuItem";
-            this.signInventoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.signInventoryToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.signInventoryToolStripMenuItem.Text = "Sign Inventory";
             // 
             // supportAlertsToolStripMenuItem
             // 
             this.supportAlertsToolStripMenuItem.Name = "supportAlertsToolStripMenuItem";
-            this.supportAlertsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.supportAlertsToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.supportAlertsToolStripMenuItem.Text = "Support Alerts";
             // 
             // supportInventoryToolStripMenuItem
             // 
             this.supportInventoryToolStripMenuItem.Name = "supportInventoryToolStripMenuItem";
-            this.supportInventoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.supportInventoryToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.supportInventoryToolStripMenuItem.Text = "Support Inventory";
             // 
             // otherToolStripMenuItem
@@ -347,13 +347,62 @@
             this.otherToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.otherToolStripMenuItem.Text = "Other";
             // 
+            // sidewalkDistressToolStripMenuItem
+            // 
+            this.sidewalkDistressToolStripMenuItem.Name = "sidewalkDistressToolStripMenuItem";
+            this.sidewalkDistressToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.sidewalkDistressToolStripMenuItem.Text = "Sidewalk Distress";
+            // 
+            // roadsWithSidewalksToolStripMenuItem
+            // 
+            this.roadsWithSidewalksToolStripMenuItem.Name = "roadsWithSidewalksToolStripMenuItem";
+            this.roadsWithSidewalksToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.roadsWithSidewalksToolStripMenuItem.Text = "Roads With Sidewalks";
+            // 
+            // severeRoadDistressToolStripMenuItem
+            // 
+            this.severeRoadDistressToolStripMenuItem.Name = "severeRoadDistressToolStripMenuItem";
+            this.severeRoadDistressToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.severeRoadDistressToolStripMenuItem.Text = "Severe Road Distress";
+            // 
+            // aDARampsToolStripMenuItem
+            // 
+            this.aDARampsToolStripMenuItem.Name = "aDARampsToolStripMenuItem";
+            this.aDARampsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.aDARampsToolStripMenuItem.Text = "ADA Ramps";
+            // 
+            // drainageToolStripMenuItem
+            // 
+            this.drainageToolStripMenuItem.Name = "drainageToolStripMenuItem";
+            this.drainageToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.drainageToolStripMenuItem.Text = "Drainage";
+            // 
+            // accidentsToolStripMenuItem
+            // 
+            this.accidentsToolStripMenuItem.Name = "accidentsToolStripMenuItem";
+            this.accidentsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.accidentsToolStripMenuItem.Text = "Accidents";
+            // 
+            // allOthersToolStripMenuItem
+            // 
+            this.allOthersToolStripMenuItem.Name = "allOthersToolStripMenuItem";
+            this.allOthersToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.allOthersToolStripMenuItem.Text = "All Others";
+            // 
+            // customOutputToolStripMenuItem
+            // 
+            this.customOutputToolStripMenuItem.Name = "customOutputToolStripMenuItem";
+            this.customOutputToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.customOutputToolStripMenuItem.Text = "Custom Output";
+            this.customOutputToolStripMenuItem.Visible = false;
+            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.toolStripProgressBar1});
-            this.statusStrip.Location = new System.Drawing.Point(0, 756);
+            this.statusStrip.Location = new System.Drawing.Point(0, 727);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1075, 22);
             this.statusStrip.TabIndex = 1;
@@ -408,7 +457,7 @@
             this.uxMap.ProjectionModeReproject = DotSpatial.Controls.ActionMode.PromptOnce;
             this.uxMap.RedrawLayersWhileResizing = false;
             this.uxMap.SelectionEnabled = true;
-            this.uxMap.Size = new System.Drawing.Size(847, 707);
+            this.uxMap.Size = new System.Drawing.Size(847, 678);
             this.uxMap.TabIndex = 1;
             this.uxMap.ZoomOutFartherThanMaxExtent = false;
             this.uxMap.SelectionChanged += new System.EventHandler(this.uxMap_SelectionChanged);
@@ -434,7 +483,7 @@
             this.splitContainerMain.Panel2.Controls.Add(this.uxMap);
             this.splitContainerMain.Panel2.Controls.Add(this.toolStrip1);
             this.splitContainerMain.Panel2MinSize = 300;
-            this.splitContainerMain.Size = new System.Drawing.Size(1075, 732);
+            this.splitContainerMain.Size = new System.Drawing.Size(1075, 703);
             this.splitContainerMain.SplitterDistance = 224;
             this.splitContainerMain.TabIndex = 2;
             // 
@@ -445,7 +494,7 @@
             this.tabControlControls.Location = new System.Drawing.Point(0, 0);
             this.tabControlControls.Name = "tabControlControls";
             this.tabControlControls.SelectedIndex = 0;
-            this.tabControlControls.Size = new System.Drawing.Size(224, 732);
+            this.tabControlControls.Size = new System.Drawing.Size(224, 703);
             this.tabControlControls.TabIndex = 0;
             this.tabControlControls.SelectedIndexChanged += new System.EventHandler(this.tabControlControls_SelectedIndexChanged);
             // 
@@ -455,7 +504,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(216, 706);
+            this.tabPage1.Size = new System.Drawing.Size(216, 677);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -617,60 +666,12 @@
             this.toolStripButtonSnapShot.ToolTipText = "Take Snap Shot of the Map";
             this.toolStripButtonSnapShot.Click += new System.EventHandler(this.toolStripButtonSnapShot_Click);
             // 
-            // sidewalkDistressToolStripMenuItem
-            // 
-            this.sidewalkDistressToolStripMenuItem.Name = "sidewalkDistressToolStripMenuItem";
-            this.sidewalkDistressToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.sidewalkDistressToolStripMenuItem.Text = "Sidewalk Distress";
-            // 
-            // severeRoadDistressToolStripMenuItem
-            // 
-            this.severeRoadDistressToolStripMenuItem.Name = "severeRoadDistressToolStripMenuItem";
-            this.severeRoadDistressToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.severeRoadDistressToolStripMenuItem.Text = "Severe Road Distress";
-            // 
-            // aDARampsToolStripMenuItem
-            // 
-            this.aDARampsToolStripMenuItem.Name = "aDARampsToolStripMenuItem";
-            this.aDARampsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.aDARampsToolStripMenuItem.Text = "ADA Ramps";
-            // 
-            // drainageToolStripMenuItem
-            // 
-            this.drainageToolStripMenuItem.Name = "drainageToolStripMenuItem";
-            this.drainageToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.drainageToolStripMenuItem.Text = "Drainage";
-            // 
-            // accidentsToolStripMenuItem
-            // 
-            this.accidentsToolStripMenuItem.Name = "accidentsToolStripMenuItem";
-            this.accidentsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.accidentsToolStripMenuItem.Text = "Accidents";
-            // 
-            // allOthersToolStripMenuItem
-            // 
-            this.allOthersToolStripMenuItem.Name = "allOthersToolStripMenuItem";
-            this.allOthersToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.allOthersToolStripMenuItem.Text = "All Others";
-            // 
-            // customOutputToolStripMenuItem
-            // 
-            this.customOutputToolStripMenuItem.Name = "customOutputToolStripMenuItem";
-            this.customOutputToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.customOutputToolStripMenuItem.Text = "Custom Output";
-            // 
-            // roadsWithSidewalksToolStripMenuItem
-            // 
-            this.roadsWithSidewalksToolStripMenuItem.Name = "roadsWithSidewalksToolStripMenuItem";
-            this.roadsWithSidewalksToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.roadsWithSidewalksToolStripMenuItem.Text = "Roads With Sidewalks";
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1075, 778);
+            this.ClientSize = new System.Drawing.Size(1075, 749);
             this.Controls.Add(this.splitContainerMain);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);

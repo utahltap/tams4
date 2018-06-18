@@ -792,7 +792,7 @@ namespace tams4a.Classes
             selectionLayer.DataSet.DataTable = selectionTable;
         }
 
-        private void setSymbolizer()
+        override protected void setSymbolizer()
         {
             // These change how the lines look.
             // TODO:  Change these someday to allow for custom look?

@@ -31,6 +31,7 @@ namespace tams4a.Classes
             boundButtons[4].Click += DrainageReport;
             boundButtons[5].Click += AccidentReport;
             boundButtons[6].Click += OtherReport;
+            boundButtons[7].Click += RoadsWithSidewalks;
 
             setControlPanel();
 
@@ -63,6 +64,7 @@ namespace tams4a.Classes
             controls.groupBoxType.Enabled = true;
             controls.toolStrip.Enabled = true;
             controls.groupBoxProperties.Enabled = true;
+            controls.toolStripButtonRemove.Enabled = tamsids.Count == 1;
         }
 
         private void newSHPFile(object sender, EventArgs e)
@@ -109,6 +111,7 @@ namespace tams4a.Classes
             panel.toolStripButtonCancel.Click += cancelChanges;
             panel.clickMapToolStripMenuItem.Click += clickMap;
             panel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
+            panel.toolStripButtonRemove.Click += deleteFeature;
 
             panel.setOtherDateToolStripMenuItem.Click += selectRecordDate;
             panel.setTodayToolStripMenuItem.Click += resetRecordDate;
@@ -163,7 +166,7 @@ namespace tams4a.Classes
             maxTAMSID = tmp.Rows.Count > 0 ? Util.ToInt(tmp.Rows[0]["MAX(TAMSID)"].ToString()) : 0;
         }
 
-        private void setSymbolizer()
+        override protected void setSymbolizer()
         {
             int baseWidth = 48;
 
@@ -230,17 +233,17 @@ namespace tams4a.Classes
                 return;
             }
 
-            enableControls();
-            Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
-            getOtherControls().updateDisplay(values);
-            resetSaveCondition();
-
-            string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             tamsids = new List<string>();
+            string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
+
             foreach (DataRow row in selectionLayer.Selection.ToFeatureSet().DataTable.Rows)
             {
                 tamsids.Add(row[tamsidcolumn].ToString());
             }
+            enableControls();
+            Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
+            getOtherControls().updateDisplay(values);
+            resetSaveCondition();
         }
 
         private void setControlPanel()
@@ -330,7 +333,8 @@ namespace tams4a.Classes
             values["photo"] = controls.textBoxPhotoFile.Text;
             values["property1"] = controls.getProperty(values["type"], 0);
             values["property2"] = controls.getProperty(values["type"], 1);
-            values["notes"] = controls.getProperty(values["type"], 2);
+            values["property3"] = controls.getProperty(values["type"], 2);
+            values["notes"] = controls.getProperty(values["type"], 3);
 
             for (int i = 0; i < tamsids.Count; i++)
             {
@@ -593,6 +597,18 @@ namespace tams4a.Classes
             createReport(query, map);
         }
 
+        private void RoadsWithSidewalks(object sender, EventArgs e)
+        {
+            string query = "SELECT * FROM road_sidewalks";
+            Dictionary<string, string> map = new Dictionary<string, string>()
+            {
+                { "ID", "road_ID" },
+                { "Sidewalks", "installed" },
+                { "Comments", "comments" }
+            };
+            createReport(query, map);
+        }
+
         private void createReport(string query, Dictionary<string, string> mapping, string sortKey = "ID")
         {
             DataTable outputTable = new DataTable();
@@ -620,13 +636,19 @@ namespace tams4a.Classes
                 outputTable.DefaultView.Sort = sortKey + " asc";
                 FormOutput report = new FormOutput();
                 report.dataGridViewReport.DataSource = outputTable.DefaultView.ToTable();
-                report.Text = "Sign Report";
+                report.Text = "Report";
                 report.Show();
             }
             catch (Exception e)
             {
                 Log.Error("Could not get data from database " + Environment.NewLine + e.ToString());
             }
+        }
+
+        private void deleteFeature(object sender, EventArgs e)
+        {
+            string[] tables = { ModuleName };
+            deleteShape(tamsids[0], tables);
         }
     }
 }

@@ -123,6 +123,7 @@ namespace tams4a.Classes
             signPanel.buttonFavorite.Click += faveSign;
             signPanel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
             signPanel.clickMapToolStripMenuItem.Click += clickMap;
+            signPanel.toolStripButtonRemove.Click += deletePost;
             signPanel.toolStripButtonNotes.Click += editNotes;
             signPanel.buttonSignNote.Click += signNote;
 
@@ -301,7 +302,7 @@ namespace tams4a.Classes
         /// <summary>
         /// Sets the symbolizer for the signs in the GIS map. These symbols will be images representing the most important sign on the post.
         /// </summary>
-        private void setSymbolizer()
+        override protected void setSymbolizer()
         {
             int baseWidth = 64;
 
@@ -434,7 +435,6 @@ namespace tams4a.Classes
 
             if (UnsavedChanges)
             {
-                
 
             }
 
@@ -448,17 +448,17 @@ namespace tams4a.Classes
                 return;
             }
 
-            enableControls();
-            Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
-            updateSignDisplay(values);
-            getSigns();
-
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             tamsids = new List<string>();
             foreach (DataRow row in selectionLayer.Selection.ToFeatureSet().DataTable.Rows)
             {
                 tamsids.Add(row[tamsidcolumn].ToString());
             }
+
+            enableControls();
+            Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
+            updateSignDisplay(values);
+            getSigns();
         }
 
         private void cancelChanges(object sender, EventArgs e)
@@ -518,6 +518,7 @@ namespace tams4a.Classes
                 signControls.buttonAdd.Enabled = true;
                 signControls.buttonRemove.Enabled = (signsOnPost.Rows.Count > 0);
                 signControls.buttonFavorite.Enabled = (signsOnPost.Rows.Count > 0);
+                signControls.toolStripButtonRemove.Enabled = (tamsids.Count == 1);
                 signControls.comboBoxSigns.DataSource = signsOnPost;
                 signControls.comboBoxSigns.DisplayMember = "description";
                 signControls.comboBoxSigns.ValueMember = "TAMSID";
@@ -1483,7 +1484,8 @@ namespace tams4a.Classes
 
         private void deletePost(object sender, EventArgs e)
         {
-
+            string[] tables = { "sign_support", ModuleName };
+            deleteShape(tamsids[0], tables, "support_id");
         }
     }
 }

@@ -245,10 +245,11 @@ namespace tams4a.Controls
             property2.Location = new Point(right, 48);
             controlSets["Other"].Add(property2);
 
+
             nonElement = new TextBox();
             nonElement.Location = new Point(right, 72);
             nonElement.Size = new Size(112, 20);
-            controlSets["Accident Hotspot"].Add(nonElement);
+            controlSets["Other"].Add(nonElement);
             nonElement.Visible = false;
 
             controlSets["Other"].Add(notes);
@@ -269,6 +270,7 @@ namespace tams4a.Controls
             #endregion other
 
             comboBoxObject.TextChanged += moduleValueChanged;
+            comboBoxObject.TextChanged += objectChanged;
             textBoxAddress.TextChanged += moduleValueChanged;
             textBoxDescription.TextChanged += moduleValueChanged;
             textBoxPhotoFile.TextChanged += moduleValueChanged;
@@ -304,7 +306,8 @@ namespace tams4a.Controls
             {
                 controlSets[values["type"]][0].Text = Util.DictionaryItemString(values, "property1");
                 controlSets[values["type"]][1].Text = Util.DictionaryItemString(values, "property2");
-                controlSets[values["type"]][2].Text = Util.DictionaryItemString(values, "notes");
+                controlSets[values["type"]][2].Text = Util.DictionaryItemString(values, "property3");
+                controlSets[values["type"]][3].Text = Util.DictionaryItemString(values, "notes");
             }
         }
 
@@ -331,6 +334,7 @@ namespace tams4a.Controls
                 controlSets["Other"][0].Text = "";
                 controlSets["Other"][1].Text = "";
                 controlSets["Other"][2].Text = "";
+                controlSets["Other"][3].Text = "";
             }
         }
 
