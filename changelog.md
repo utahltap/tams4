@@ -1,12 +1,7 @@
-# TAMS Version 4.0.3.3
+# TAMS Version 4.0.3.4
 * Updates to generic module.  This module is still considered beta quality
 	* Added new default items for generic module
 * Other bug fixes
-
-# TAMS version 4.0.3.2
-* Corrected version number
-
-# TAMS version 4.0.3.1
 
 BUG FIXES
 ------------------------------------------------------

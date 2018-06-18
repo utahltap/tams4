@@ -605,5 +605,31 @@ namespace tams4a.Classes
                 }
             }
         }
+
+        protected virtual void setSymbolizer()
+        {
+
+        }
+
+        protected void deleteShape(string id, string[] tables, string column = "TAMSID")
+        {
+            string tamsid = id;
+            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            IFeature feature = selectionLayer.Selection.ToFeatureList()[0];
+            selectionLayer.ClearSelection();
+            selectionLayer.DataSet.Features.Remove(feature);
+            selectionLayer.DataSet.UpdateExtent();
+            selectionLayer.DataSet.InitializeVertices();
+            selectionLayer.AssignFastDrawnStates();
+            selectionLayer.DataSet.Save();
+            Project.map.Refresh();
+            Project.map.ResetBuffer();
+            for (int i = 0; i < tables.Length; i++)
+            {
+                Database.DeleteRow(Project.conn, tables[i], column, tamsid);
+            }
+            selectionLayer.DataSet.Save();
+            setSymbolizer();
+        }
     }
 }

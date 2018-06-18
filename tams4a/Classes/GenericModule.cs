@@ -25,6 +25,14 @@ namespace tams4a.Classes
             ModuleName = mn;
             notes = "";
 
+            boundButtons[1].Click += SidewalkReport;
+            boundButtons[2].Click += RoadReport;
+            boundButtons[3].Click += RampReport;
+            boundButtons[4].Click += DrainageReport;
+            boundButtons[5].Click += AccidentReport;
+            boundButtons[6].Click += OtherReport;
+            boundButtons[7].Click += RoadsWithSidewalks;
+
             setControlPanel();
 
             ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_file", module: ModuleName));
@@ -56,6 +64,7 @@ namespace tams4a.Classes
             controls.groupBoxType.Enabled = true;
             controls.toolStrip.Enabled = true;
             controls.groupBoxProperties.Enabled = true;
+            controls.toolStripButtonRemove.Enabled = tamsids.Count == 1;
         }
 
         private void newSHPFile(object sender, EventArgs e)
@@ -102,6 +111,7 @@ namespace tams4a.Classes
             panel.toolStripButtonCancel.Click += cancelChanges;
             panel.clickMapToolStripMenuItem.Click += clickMap;
             panel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
+            panel.toolStripButtonRemove.Click += deleteFeature;
 
             panel.setOtherDateToolStripMenuItem.Click += selectRecordDate;
             panel.setTodayToolStripMenuItem.Click += resetRecordDate;
@@ -156,7 +166,7 @@ namespace tams4a.Classes
             maxTAMSID = tmp.Rows.Count > 0 ? Util.ToInt(tmp.Rows[0]["MAX(TAMSID)"].ToString()) : 0;
         }
 
-        private void setSymbolizer()
+        override protected void setSymbolizer()
         {
             int baseWidth = 48;
 
@@ -178,7 +188,7 @@ namespace tams4a.Classes
                 Properties.Resources.sidewalk,
                 Properties.Resources.feature,
                 Properties.Resources.problem,
-                Properties.Resources.drainage,
+                Properties.Resources.pooling,
                 Properties.Resources.crash
             };
             string[] iconNames = { "feature", "important", "question", "problem", "ramp", "sidewalk", "other", "road", "drainage", "accident"};
@@ -223,17 +233,17 @@ namespace tams4a.Classes
                 return;
             }
 
-            enableControls();
-            Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
-            getOtherControls().updateDisplay(values);
-            resetSaveCondition();
-
-            string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             tamsids = new List<string>();
+            string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
+
             foreach (DataRow row in selectionLayer.Selection.ToFeatureSet().DataTable.Rows)
             {
                 tamsids.Add(row[tamsidcolumn].ToString());
             }
+            enableControls();
+            Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
+            getOtherControls().updateDisplay(values);
+            resetSaveCondition();
         }
 
         private void setControlPanel()
@@ -323,7 +333,8 @@ namespace tams4a.Classes
             values["photo"] = controls.textBoxPhotoFile.Text;
             values["property1"] = controls.getProperty(values["type"], 0);
             values["property2"] = controls.getProperty(values["type"], 1);
-            values["notes"] = controls.getProperty(values["type"], 2);
+            values["property3"] = controls.getProperty(values["type"], 2);
+            values["notes"] = controls.getProperty(values["type"], 3);
 
             for (int i = 0; i < tamsids.Count; i++)
             {
@@ -494,6 +505,150 @@ namespace tams4a.Classes
             Panel_Other controls = getOtherControls();
             controls.setTodayToolStripMenuItem.Checked = true;
             controls.setOtherDateToolStripMenuItem.Checked = false;
+        }
+
+        private void SidewalkReport(object sender, EventArgs e)
+        {
+            string query = "SELECT * FROM miscellaneous WHERE type='Sidewalk'";
+            Dictionary<string, string> map = new Dictionary<string, string>()
+            {
+                { "ID", "TAMSID" },
+                { "Address", "address" },
+                { "Description", "description" },
+                { "Faults", "property1" },
+                { "Breaks", "property2" },
+                { "Notes", "notes" }
+            };
+            createReport(query, map);
+        }
+
+        private void RampReport(object sender, EventArgs e)
+        {
+            string query = "SELECT * FROM miscellaneous WHERE type='ADA Ramp'";
+            Dictionary<string, string> map = new Dictionary<string, string>()
+            {
+                { "ID", "TAMSID" },
+                { "Address", "address" },
+                { "Description", "description" },
+                { "Condition", "property1" },
+                { "Compliant", "property2" },
+                { "Notes", "notes" }
+            };
+            createReport(query, map);
+        }
+
+        private void RoadReport(object sender, EventArgs e)
+        {
+            string query = "SELECT * FROM miscellaneous WHERE type='Severe Road Distress'";
+            Dictionary<string, string> map = new Dictionary<string, string>()
+            {
+                { "ID", "TAMSID" },
+                { "Address", "address" },
+                { "Description", "description" },
+                { "Distress", "property1" },
+                { "Recommendation", "property2" },
+                { "Notes", "notes" }
+            };
+            createReport(query, map);
+        }
+
+        private void DrainageReport(object sender, EventArgs e)
+        {
+            string query = "SELECT * FROM miscellaneous WHERE type='Drainage'";
+            Dictionary<string, string> map = new Dictionary<string, string>()
+            {
+                { "ID", "TAMSID" },
+                { "Address", "address" },
+                { "Description", "description" },
+                { "Cause", "property1" },
+                { "Comment", "property2" },
+                { "Notes", "notes" }
+            };
+            createReport(query, map);
+        }
+
+        private void AccidentReport(object sender, EventArgs e)
+        {
+            string query = "SELECT * FROM miscellaneous WHERE type='Accident Hotspot'";
+            Dictionary<string, string> map = new Dictionary<string, string>()
+            {
+                { "ID", "TAMSID" },
+                { "Address", "address" },
+                { "Description", "description" },
+                { "Last Accident", "property1" },
+                { "Comment", "property2" },
+                { "Notes", "notes" }
+            };
+            createReport(query, map);
+        }
+
+        private void OtherReport(object sender, EventArgs e)
+        {
+            string query = "SELECT * FROM miscellaneous WHERE type='Other'";
+            Dictionary<string, string> map = new Dictionary<string, string>()
+            {
+                { "ID", "TAMSID" },
+                { "Address", "address" },
+                { "Description", "description" },
+                { "Property 1", "property1" },
+                { "Property 2", "property2" },
+                { "Notes", "notes" }
+            };
+            createReport(query, map);
+        }
+
+        private void RoadsWithSidewalks(object sender, EventArgs e)
+        {
+            string query = "SELECT * FROM road_sidewalks";
+            Dictionary<string, string> map = new Dictionary<string, string>()
+            {
+                { "ID", "road_ID" },
+                { "Sidewalks", "installed" },
+                { "Comments", "comments" }
+            };
+            createReport(query, map);
+        }
+
+        private void createReport(string query, Dictionary<string, string> mapping, string sortKey = "ID")
+        {
+            DataTable outputTable = new DataTable();
+            foreach (string key in mapping.Keys)
+            {
+                outputTable.Columns.Add(key);
+            }
+            try
+            {
+                DataTable results = Database.GetDataByQuery(Project.conn, query);
+                if (results.Rows.Count == 0)
+                {
+                     MessageBox.Show("No list could be generated because no signs where found.");
+                     return;
+                }
+                foreach (DataRow row in results.Rows)
+                {
+                    DataRow nr = outputTable.NewRow();
+                    foreach (string key in mapping.Keys)
+                    {
+                        nr[key] = row[mapping[key]];
+                    }
+                    outputTable.Rows.Add(nr);
+                }
+                outputTable.DefaultView.Sort = sortKey + " asc";
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = outputTable.DefaultView.ToTable();
+                report.Text = "Report";
+                report.Show();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not get data from database " + Environment.NewLine + e.ToString());
+            }
+        }
+
+        private void deleteFeature(object sender, EventArgs e)
+        {
+            string[] tables = { ModuleName };
+            deleteShape(tamsids[0], tables);
         }
     }
 }

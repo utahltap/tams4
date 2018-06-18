@@ -39,13 +39,14 @@ namespace tams4a.Classes
         public ModuleRoads(TamsProject theProject, TabPage controlPage, ToolStripMenuItem[] boundButtons) : base(theProject, controlPage, boundButtons, RoadSelectionSql)
         {
             ModuleName = "road";
-            surveyDate = DateTime.Now;   // default value
+            surveyDate = DateTime.Now;
             notes = "";
+
             boundButtons[2].Click += potholeReport;
             boundButtons[1].Click += generalReport;
             boundButtons[3].Click += openBudgetTool;
             boundButtons[4].Click += customReport;
-            // Add the control to open a new shpfile.
+            
             Panel_Module_OpenShp roadAdd = new Panel_Module_OpenShp("Road");
             roadAdd.Name = "ROADADD";
             roadAdd.SetHandler(new EventHandler(openFileHandler));
@@ -54,8 +55,7 @@ namespace tams4a.Classes
 
             ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_file", module: ModuleName));
             ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_relative", module: ModuleName));
-
-            // gives a map from the setting name (containing the shp field) to the database column name
+            
             FieldSettingToDbColumn = new Dictionary<string, string>()
             {
                 { "road_f_TAMSID", "TAMSID" },
@@ -792,7 +792,7 @@ namespace tams4a.Classes
             selectionLayer.DataSet.DataTable = selectionTable;
         }
 
-        private void setSymbolizer()
+        override protected void setSymbolizer()
         {
             // These change how the lines look.
             // TODO:  Change these someday to allow for custom look?
@@ -1395,64 +1395,6 @@ namespace tams4a.Classes
                 report.Show();
             }
             tableFilters.Close();
-        }
-    }
-
-    internal class RoadSidewalkForm
-    {
-        private FormCustomMessage dialogBox;
-        private int RoadID;
-        private ComboBox sidewalks;
-        private TextBox textBoxComment;
-
-        public RoadSidewalkForm(int rid)
-        {
-            RoadID = rid;
-            dialogBox = new FormCustomMessage();
-            dialogBox.Text = "Sidewalks on this Road";
-            dialogBox.labelMessage.Text = "Does this raod have sidewalks?";
-            sidewalks = new ComboBox();
-            sidewalks.Items.Add("Yes");
-            sidewalks.Items.Add("No");
-            sidewalks.Items.Add("Partial");
-            sidewalks.Location = new Point(240, 16);
-            dialogBox.groupBoxUser.Controls.Add(sidewalks);
-            Label comment = new Label();
-            comment.Text = "Comment:";
-            comment.Location = new Point(12, 40);
-            comment.Size = new Size(80, 24);
-            dialogBox.groupBoxUser.Controls.Add(comment);
-            textBoxComment = new TextBox();
-            textBoxComment.Size = new Size(240, 24);
-            textBoxComment.Location = new Point(100, 40);
-            dialogBox.groupBoxUser.Controls.Add(textBoxComment);
-        }
-
-        public void setSidewalkData(TamsProject project)
-        {
-            if (dialogBox.ShowDialog() == DialogResult.OK)
-            {
-                Database.ReplaceRow(project.conn, new Dictionary<string, string>()
-                {
-                    { "road_ID", RoadID.ToString()},
-                    { "installed", sidewalks.Text },
-                    { "comments", textBoxComment.Text }
-                }, "road_sidewalks");
-            }
-        }
-
-        public void prePopField(TamsProject project)
-        {
-            try
-            {
-                DataTable data = Database.GetDataByQuery(project.conn, "SELECT * FROM road_sidewalks WHERE road_ID=" + RoadID.ToString() + ";");
-                sidewalks.Text = data.Rows[0]["installed"].ToString();
-                textBoxComment.Text = data.Rows[0]["comments"].ToString();
-            }
-            catch (Exception e)
-            {
-
-            }
         }
     }
 }

@@ -123,6 +123,7 @@ namespace tams4a.Classes
             signPanel.buttonFavorite.Click += faveSign;
             signPanel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
             signPanel.clickMapToolStripMenuItem.Click += clickMap;
+            signPanel.toolStripButtonRemove.Click += deletePost;
             signPanel.toolStripButtonNotes.Click += editNotes;
             signPanel.buttonSignNote.Click += signNote;
 
@@ -301,7 +302,7 @@ namespace tams4a.Classes
         /// <summary>
         /// Sets the symbolizer for the signs in the GIS map. These symbols will be images representing the most important sign on the post.
         /// </summary>
-        private void setSymbolizer()
+        override protected void setSymbolizer()
         {
             int baseWidth = 64;
 
@@ -434,7 +435,6 @@ namespace tams4a.Classes
 
             if (UnsavedChanges)
             {
-                
 
             }
 
@@ -448,17 +448,17 @@ namespace tams4a.Classes
                 return;
             }
 
-            enableControls();
-            Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
-            updateSignDisplay(values);
-            getSigns();
-
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             tamsids = new List<string>();
             foreach (DataRow row in selectionLayer.Selection.ToFeatureSet().DataTable.Rows)
             {
                 tamsids.Add(row[tamsidcolumn].ToString());
             }
+
+            enableControls();
+            Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
+            updateSignDisplay(values);
+            getSigns();
         }
 
         private void cancelChanges(object sender, EventArgs e)
@@ -518,6 +518,7 @@ namespace tams4a.Classes
                 signControls.buttonAdd.Enabled = true;
                 signControls.buttonRemove.Enabled = (signsOnPost.Rows.Count > 0);
                 signControls.buttonFavorite.Enabled = (signsOnPost.Rows.Count > 0);
+                signControls.toolStripButtonRemove.Enabled = (tamsids.Count == 1);
                 signControls.comboBoxSigns.DataSource = signsOnPost;
                 signControls.comboBoxSigns.DisplayMember = "description";
                 signControls.comboBoxSigns.ValueMember = "TAMSID";
@@ -1036,7 +1037,6 @@ namespace tams4a.Classes
             data.Columns.Add("Sheeting");
             data.Columns.Add("Backing");
             data.Columns.Add("Reflectivity");
-            data.Columns.Add("Obstructions");
             data.Columns.Add("Condition");
             data.Columns.Add("Recommendation");
             try
@@ -1057,29 +1057,10 @@ namespace tams4a.Classes
                     nr["Sheeting"] = row["sheeting"].ToString();
                     nr["Backing"] = row["backing"].ToString();
                     nr["Reflectivity"] = row["reflectivity"].ToString();
-                    nr["Obstructions"] = row["obstructions"].ToString();
                     nr["Condition"] = row["condition"].ToString();
                     int age = DateTime.Now.Year - Util.ToInt(row["install_date"].ToString().Split('-')[0]);
-                    if (nr["Obstructions"].ToString().Contains("clear"))
-                    {
-                        nr["Recommendation"] = "remove obstructions";
-                    }
-                    else if (nr["Obstructions"].ToString().Contains("move"))
-                    {
-                        nr["Recommendation"] = "move sign";
-                    }
-                    else if (nr["Reflectivity"].ToString().Contains("fail") || nr["Condition"].ToString().Contains("broken"))
-                    {
-                        nr["Recommendation"] = "replace";
-                    }
-                    else if ((age > 5 && (nr["Sheeting"].ToString().Equals("I") || nr["Sheeting"].ToString().Equals("V"))) || age > 9)
-                    {
-                        nr["Recommendation"] = "monitor";
-                    }
-                    else
-                    {
-                        nr["Recommendation"] = "";
-                    }
+                    nr["Recommendation"] = "";
+                    
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
@@ -1503,7 +1484,8 @@ namespace tams4a.Classes
 
         private void deletePost(object sender, EventArgs e)
         {
-
+            string[] tables = { "sign_support", ModuleName };
+            deleteShape(tamsids[0], tables, "support_id");
         }
     }
 }
