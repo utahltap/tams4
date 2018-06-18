@@ -1,25 +1,7 @@
-# TAMS version 4.0.3.3
-* Corrected version number
-
-CHANGES
-------------------------------------------------------
-* Adds reports for Miscellaneous tracked objects in TAMS
-* Added reccomendation input box for Sidewalk distress
-* Adds a means of tracking which roads have sidewalk to the roads module
-	* this feature is only availible of roads and other tabs are both active
-	* is accessed via button that appears on the road controls once that stated condition is met
-* Reorganizes main window menu items for user clarity
-
-BUG FIXES
-------------------------------------------------------
-
-* Fixes various display issues in the gui
-* Fixes inputs on other module to correctly map properties to the database for Accidents and Other
-
-# TAMS version 4.0.3.2
-* Corrected version number
-
-# TAMS version 4.0.3.1
+# TAMS Version 4.0.3.4
+* Updates to generic module.  This module is still considered beta quality
+	* Added new default items for generic module
+* Other bug fixes
 
 BUG FIXES
 ------------------------------------------------------
