@@ -794,33 +794,27 @@ namespace tams4a.Classes
 
         override protected void setSymbolizer()
         {
-            // These change how the lines look.
-            // TODO:  Change these someday to allow for custom look?
-            double baseWidth = 20.0;        // for convenience and clarity
-            double baseOutlineWidth = 10.0; // ditto
-            double adjWidth = baseWidth;    // adjusted width (of lines)
+            double baseWidth = 20.0;
+            double baseOutlineWidth = 10.0;
+            double adjWidth = baseWidth;
             double adjOutlineWidth = baseOutlineWidth;
             int numcategories = 6;
-            int maxrsl = 20;        // TODO:  This should come from the selection type
-
+            int maxrsl = 20;
 
             LineScheme rdScheme = new LineScheme();
 
-            // category selection symbolizer
             LineSymbolizer catSelSym = new LineSymbolizer();
             catSelSym.ScaleMode = ScaleMode.Geographic;
             catSelSym.SetWidth(adjWidth);
             catSelSym.SetOutline(Color.Blue, adjOutlineWidth);
             catSelSym.SetFillColor(Color.White);
-
-            // symoblizer default
+            
             LineSymbolizer symDef = new LineSymbolizer();
             symDef.ScaleMode = ScaleMode.Geographic;
             symDef.SetWidth(adjWidth);
             symDef.SetOutline(Color.Black, adjOutlineWidth);
             symDef.SetFillColor(Color.Gray);
-
-            // default category
+            
             LineCategory catDef = new LineCategory();
             catDef.LegendText = "No RSL Info";
 
@@ -1395,6 +1389,79 @@ namespace tams4a.Classes
                 report.Show();
             }
             tableFilters.Close();
+        }
+
+        private void graphGoverningDistress(object sender, EventArgs e)
+        {
+            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a surface for governing distresses.");
+            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            ISelection shpSelection = selectionLayer.Selection;
+            DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
+            string thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
+            if (roadChooser.ShowDialog()== DialogResult.OK)
+            {
+                try
+                {
+                    string roadType = roadChooser.chooseRoad();
+                    DataTable roads = Database.GetDataByQuery(Project.conn, thisSql + " WHERE surface = '" + roadType + "';");
+                    if (roads.Rows.Count == 0)
+                    {
+                        MessageBox.Show("No graph could be generated because there are no roads of type " + roadType + ".", "No Roads", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                catch (Exception err)
+                {
+                    Log.Error("Problem getting data from database " + err.ToString());
+                }
+            }
+        }
+    }
+
+    internal class ChooseRoadForm
+    {
+        private FormCustomMessage roadChooser;
+        private RadioButton asphalt;
+        private RadioButton gravel;
+        private RadioButton concrete;
+        private RadioButton[] buttons;
+
+        public ChooseRoadForm(string title, string text)
+        {
+            roadChooser.Text = title;
+            roadChooser.labelMessage.Text = text;
+            asphalt = new RadioButton();
+            asphalt.Text = "asphalt";
+            asphalt.Location = new Point(240, 40);
+            gravel = new RadioButton();
+            gravel.Text = "gravel";
+            gravel.Location = new Point(240, 64);
+            concrete = new RadioButton();
+            concrete.Text = "concrete";
+            concrete.Location = new Point(240, 80);
+            roadChooser.groupBoxUser.Controls.Add(asphalt);
+            roadChooser.groupBoxUser.Controls.Add(gravel);
+            roadChooser.groupBoxUser.Controls.Add(concrete);
+            RadioButton[] b = { asphalt, gravel, concrete};
+            buttons = b;
+            asphalt.Checked = true;
+        }
+
+        public string chooseRoad()
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                if (buttons[i].Checked)
+                {
+                    return buttons[i].Text;
+                }
+            }
+            return "";
+        }
+
+        public DialogResult ShowDialog()
+        {
+            return roadChooser.ShowDialog();
         }
     }
 }

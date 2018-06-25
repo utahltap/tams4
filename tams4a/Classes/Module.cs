@@ -631,5 +631,41 @@ namespace tams4a.Classes
             selectionLayer.DataSet.Save();
             setSymbolizer();
         }
+
+        protected void createReport(string query, Dictionary<string, string> mapping, string sortKey = "ID")
+        {
+            DataTable outputTable = new DataTable();
+            foreach (string key in mapping.Keys)
+            {
+                outputTable.Columns.Add(key);
+            }
+            try
+            {
+                DataTable results = Database.GetDataByQuery(Project.conn, query);
+                if (results.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no signs where found.");
+                    return;
+                }
+                foreach (DataRow row in results.Rows)
+                {
+                    DataRow nr = outputTable.NewRow();
+                    foreach (string key in mapping.Keys)
+                    {
+                        nr[key] = row[mapping[key]];
+                    }
+                    outputTable.Rows.Add(nr);
+                }
+                outputTable.DefaultView.Sort = sortKey + " asc";
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = outputTable.DefaultView.ToTable();
+                report.Text = "Report";
+                report.Show();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not get data from database " + Environment.NewLine + e.ToString());
+            }
+        }
     }
 }

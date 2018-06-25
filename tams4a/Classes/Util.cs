@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -10,9 +11,12 @@ namespace tams4a.Classes
 {
     static public class Util
     {
-        // returns at string value or empty string if unsuccessful
-        // avoids having to do something like:
-        // = dictionary.ContainsKey("key") ? dictionary["key"] ?? "".ToString() : "";
+        /// <summary>
+        /// Get's a string value of a dictionary of strings. Returns the empty string if the key isn't present.
+        /// </summary>
+        /// <param name="dictionary"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public static String DictionaryItemString(Dictionary<String, String> dictionary, String key)
         {
             try
@@ -40,7 +44,28 @@ namespace tams4a.Classes
                 return -1;
             }
         }
-        
+
+        /// <summary>
+        /// Strips out some characters that could cause an accidental sql injection and put the tams file in an invalid state.
+        /// sourced: https://docs.microsoft.com/en-us/dotnet/standard/base-types/how-to-strip-invalid-characters-from-a-string
+        /// </summary>
+        /// <param name="strIn"></param>
+        /// <returns></returns>
+        public static string CleanInput(string strIn)
+        {
+            try
+            {
+                strIn = strIn.Replace('"', ' ');
+                strIn = strIn.Replace('\'', ' ');
+                return Regex.Replace(strIn, @"[^\w\.@-]", "",
+                                     RegexOptions.None, TimeSpan.FromSeconds(1.5));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return String.Empty;
+            }
+        }
+
         /// <summary>
         /// Returns the date in a format that will sort correctly as a string.
         /// </summary>
