@@ -16,6 +16,10 @@ namespace tams4a.Classes
     {
         public new const string moduleVersion = "4.0.1.1";    // string that can be converted to System.Version
 
+        private string[] distressAsphalt = { "Fatigue", "Edge Cracks", "Longitudinal", "Patches", "Potholes", "Drainage", "Transverse", "Blocking", "Rutting" };
+        private string[] distressGravel = { "Potholes", "Rutting", "X-section", "Drainage", "Dust", "Aggregate", "Corrugation" };
+        private string[] distressConcrete = { "Spalling", "Joint Seals", "Corners", "Breaks", "Faulting", "Longitudinal", "Transverse", "Map Cracks", "Patches" };
+
         private bool colorsOn = true;
         private DataTable surfaceTypes;
         private DataTable roadTypes;
@@ -46,6 +50,8 @@ namespace tams4a.Classes
             boundButtons[1].Click += generalReport;
             boundButtons[3].Click += openBudgetTool;
             boundButtons[4].Click += customReport;
+
+            boundButtons[8].Click += graphGoverningDistress;
             
             Panel_Module_OpenShp roadAdd = new Panel_Module_OpenShp("Road");
             roadAdd.Name = "ROADADD";
@@ -609,7 +615,7 @@ namespace tams4a.Classes
                 foreach (string key in values.Keys)
                 {
                     v[key] = values[key];
-                    if ((string.IsNullOrWhiteSpace(values[key]) || values[key].Equals("multi") || values[key].Equals("-1")) && selectionValues.Count > 1)
+                    if ((string.IsNullOrWhiteSpace(values[key]) || values[key].Contains("multi") || values[key].Contains("-1")) && selectionValues.Count > 1)
                     {
                         if (i < selectionValues.Count && selectionValues[i].ContainsKey(key))
                         {
@@ -885,13 +891,11 @@ namespace tams4a.Classes
 
             FeatureLayer roadFeatures = Layer as FeatureLayer;
             //roadFeatures
-            if (!string.IsNullOrEmpty(Project.settings.GetValue("road_labels")) &&
-                    !string.IsNullOrEmpty(Project.settings.GetValue("road_f_streetname"))
-                )
+            if (!string.IsNullOrEmpty(Project.settings.GetValue("road_labels")))
             {
                 roadFeatures.AddLabels("[" + Project.settings.GetValue(ModuleName + "_f_streetname") + "]",
                         new Font("Tahoma", (float)8.0), Color.Black);
-                roadFeatures.ShowLabels = true;
+                roadFeatures.ShowLabels = Project.settings.GetValue("road_f_streetname").Contains("true");
             }
             /*
             ((DotSpatial.Controls.MapLineLayer)Layer).ShowLabels = true;
@@ -966,6 +970,7 @@ namespace tams4a.Classes
             general.Columns.Add("Treatment");
             general.Columns.Add("Cost");
             general.Columns.Add("Area");
+            general.Columns.Add("RSL");
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             selectionLayer.SelectAll();
             ISelection shpSelection = selectionLayer.Selection;
@@ -983,6 +988,7 @@ namespace tams4a.Classes
                     nr["From Address"] = row["from_address"];
                     nr["To Address"] = row["to_address"];
                     nr["Surface"] = row["surface"];
+                    nr["RSL"] = row["rsl"];
                     int[] dvs = new int[9];
                     for (int i = 0; i < 9; i++)
                     {
@@ -1221,29 +1227,26 @@ namespace tams4a.Classes
 
         private string getGoverningDistress(int[] distValues, string surfType)
         {
-            string[] da = { "Fatigue", "Edge Cracks", "Longitudinal", "Patches", "Potholes", "Drainage", "Transverse", "Blocking", "Rutting" };
-            string[] dg = { "Potholes", "Rutting", "X-section", "Drainage", "Dust", "Aggregate", "Corrugation" };
-            string[] dc = { "Spalling", "Joint Seals", "Corners", "Breaks", "Faulting", "Longitudinal", "Transverse", "Map Cracks", "Patches" };
-            string[] seld = da;
+            string[] seld = distressAsphalt;
             int distID = 1;
             int maxRSL = 20;
             if (surfType.Contains("asphalt"))
             {
                 distID = 1;
                 maxRSL = 20;
-                seld = da;
+                seld = distressAsphalt;
             }
             else if (surfType.Contains("gravel"))
             {
                 distID = 2;
                 maxRSL = 10;
-                seld = dg;
+                seld = distressGravel;
             }
             else if (surfType.Contains("concrete"))
             {
                 distID = 3;
                 maxRSL = 20;
-                seld = dc;
+                seld = distressConcrete;
             }
             DataTable distresses = Database.GetDataByQuery(Project.conn, "SELECT * FROM road_distresses WHERE surface_id = " + distID.ToString());
             string gd = "";
@@ -1367,7 +1370,7 @@ namespace tams4a.Classes
                     {
                         nr["Treatment"] = row["suggested_treatment"];
                         string treatmentCost = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments WHERE name = '" + row["suggested_treatment"].ToString() + "';").Rows[0]["cost"].ToString();
-                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;//Note: Treatment cost is per square yard. Road dimensions are in ft.
+                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;
                         if (estCost > 1000000)
                         {
                             nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
@@ -1395,20 +1398,91 @@ namespace tams4a.Classes
         {
             ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a surface for governing distresses.");
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            selectionLayer.SelectAll();
             ISelection shpSelection = selectionLayer.Selection;
             DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
             string thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
+            selectionLayer.ClearSelection();
             if (roadChooser.ShowDialog()== DialogResult.OK)
             {
                 try
                 {
                     string roadType = roadChooser.chooseRoad();
-                    DataTable roads = Database.GetDataByQuery(Project.conn, thisSql + " WHERE surface = '" + roadType + "';");
-                    if (roads.Rows.Count == 0)
+                    DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
+                    var roads = roadTable.Select("surface = '" + roadType + "'");
+                    if (roads.Length == 0)
                     {
                         MessageBox.Show("No graph could be generated because there are no roads of type " + roadType + ".", "No Roads", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    Dictionary<string, string[]> distressGroup = new Dictionary<string, string[]>()
+                    {
+                        {"asphalt", distressAsphalt },
+                        {"gravel", distressGravel },
+                        {"concrete", distressConcrete }
+                    };
+                    Dictionary<string, double> distressedArea = new Dictionary<string, double>();
+                    double totalArea = 0.0;
+                    double noDistress = 0.0;
+                    for (int i = 0; i < distressGroup[roadType].Length; i++)
+                    {
+                        distressedArea.Add(distressGroup[roadType][i], 0.0);
+                    }
+                    foreach (DataRow row in roads)
+                    {
+                        double area = Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                        totalArea += area;
+                        int[] dvs = new int[9];
+                        for (int i = 0; i < 9; i++)
+                        {
+                            dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
+                        }
+                        string governingDistress = getGoverningDistress(dvs, row["surface"].ToString());
+                        if (string.IsNullOrEmpty(governingDistress))
+                        {
+                            noDistress += area;
+                        }
+                        else
+                        {
+                            distressedArea[governingDistress] += area;
+                        }
+                    }
+                    DataTable results = new DataTable();
+                    results.Columns.Add("Distribution");
+                    for (int i = 0; i < distressGroup[roadType].Length; i++)
+                    {
+                        results.Columns.Add(distressGroup[roadType][i]);
+                    }
+                    results.Columns.Add("No Distress");
+                    DataRow labels = results.NewRow();
+                    DataRow totalsRow = results.NewRow();
+                    DataRow percentageRow = results.NewRow();
+                    labels["Distribution"] = "Distribution";
+                    totalsRow["Distribution"] = "Area (sqr. ft.)";
+                    percentageRow["Distribution"] = "Percentage";
+                    for (int i = 0; i < distressGroup[roadType].Length; i++)
+                    {
+                        labels[distressGroup[roadType][i]] = distressGroup[roadType][i];
+                        totalsRow[distressGroup[roadType][i]] = distressedArea[distressGroup[roadType][i]];
+                        percentageRow[distressGroup[roadType][i]] = Math.Round(distressedArea[distressGroup[roadType][i]] / totalArea, 3) * 100;
+                    }
+                    labels["No Distress"] = "No Distress";
+                    totalsRow["No Distress"] = noDistress;
+                    percentageRow["No Distress"] = Math.Round(noDistress / totalArea, 3) * 100;
+                    results.Rows.Add(labels);
+                    results.Rows.Add(totalsRow);
+                    results.Rows.Add(percentageRow);
+                    string[] domain = new string[distressGroup[roadType].Length + 1];
+                    double[] range = new double[distressGroup[roadType].Length + 1];
+                    for (int i = 0; i < distressGroup[roadType].Length; i++)
+                    {
+                        domain[i] = distressGroup[roadType][i];
+                        range[i] = Math.Round(distressedArea[distressGroup[roadType][i]] / totalArea, 3) * 100;
+                    }
+                    domain[distressGroup[roadType].Length] = "No Distress";
+                    range[distressGroup[roadType].Length] = Math.Round(noDistress / totalArea, 3) * 100;
+                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, Util.UppercaseFirst(roadType) + " Road Governing Distress Distribution");
+                    graph.Show();
                 }
                 catch (Exception err)
                 {
@@ -1428,6 +1502,7 @@ namespace tams4a.Classes
 
         public ChooseRoadForm(string title, string text)
         {
+            roadChooser = new FormCustomMessage();
             roadChooser.Text = title;
             roadChooser.labelMessage.Text = text;
             asphalt = new RadioButton();
@@ -1438,7 +1513,7 @@ namespace tams4a.Classes
             gravel.Location = new Point(240, 64);
             concrete = new RadioButton();
             concrete.Text = "concrete";
-            concrete.Location = new Point(240, 80);
+            concrete.Location = new Point(240, 90);
             roadChooser.groupBoxUser.Controls.Add(asphalt);
             roadChooser.groupBoxUser.Controls.Add(gravel);
             roadChooser.groupBoxUser.Controls.Add(concrete);

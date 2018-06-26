@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using tams4a.Classes;
+using System.Text.RegularExpressions;
 
 namespace tams4a.Controls
 {
@@ -46,9 +47,9 @@ namespace tams4a.Controls
             swBreak.Location = new Point(right, 48);
             swBreak.Size = new Size(112, 20);
             swBreak.Items.Add("");
-            swBreak.Items.Add("low");
-            swBreak.Items.Add("moderate");
-            swBreak.Items.Add("severe");
+            swBreak.Items.Add("Low");
+            swBreak.Items.Add("Moderate");
+            swBreak.Items.Add("Severe");
             controlSets["Sidewalk"].Add(swBreak);
 
             TextBox rec3rd = new TextBox();
@@ -105,7 +106,7 @@ namespace tams4a.Controls
             controlSets["ADA Ramp"].Add(ADAcompliant);
 
             ComboBox tiles = new ComboBox();
-            tiles.Location = new Point(right, 48);
+            tiles.Location = new Point(right, 72);
             tiles.Size = new Size(112, 20);
             tiles.Items.Add("");
             tiles.Items.Add("Yes");
@@ -294,6 +295,8 @@ namespace tams4a.Controls
 
             property1.TextChanged += moduleValueChanged;
             property2.TextChanged += moduleValueChanged;
+
+            buttonNextPhoto.Click += buttonNextPhoto_Click;
         }
 
         public void updateDisplay(Dictionary<string, string> values)
@@ -361,6 +364,48 @@ namespace tams4a.Controls
         private void objectChanged(object sender, EventArgs e)
         {
             chooseAltProperties(comboBoxObject.Text);
+        }
+
+        private void buttonNextPhoto_Click(object sender, EventArgs e)
+        {
+            string oldPhoto = Properties.Settings.Default.lastPhoto;
+            if (string.IsNullOrWhiteSpace(oldPhoto))
+            {
+                textBoxPhotoFile.Text = "0001";
+                return;
+            }
+
+            string pattern = @"(.*?)(\d+)(.*)";
+            Regex rex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            Match mat = rex.Match(oldPhoto);
+            if (!mat.Success)
+            {
+                textBoxPhotoFile.Text = oldPhoto + "_0001";
+                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
+                return;
+            }
+
+            try
+            {
+                string nextPhoto = mat.Groups[1].ToString();
+                string numPart = mat.Groups[2].ToString();
+                int num = Convert.ToInt16(numPart);
+                num++;
+                string numFormat = "D" + numPart.Length.ToString();
+                nextPhoto += num.ToString(numFormat);
+
+                nextPhoto += mat.Groups[3].ToString();
+
+                textBoxPhotoFile.Text = nextPhoto;
+                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
+            }
+            catch
+            {
+                textBoxPhotoFile.Text = oldPhoto + "0001";
+                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
+                return;
+            }
         }
     }
 }

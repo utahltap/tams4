@@ -728,12 +728,12 @@ CREATE TABLE miscellaneous (TAMSID INTEGER PRIMARY KEY, type TEXT, icon TEXT, ad
                 }
                 Dictionary<string, string> updateDb = new Dictionary<string, string>();
                 updateDb["version"] = "8";
-                dbVersion = 8;
+                dbVersion = 9;
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_8_immute
             #region db_update_9_immute
-            if (dbVersion == 8)
+            if (dbVersion == 9)
             {
                 try
                 {
@@ -745,14 +745,12 @@ ALTER TABLE miscellaneous ADD property3 TEXT;";
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Failed to update database, check database schema: " + e.ToString());
-                    MessageBox.Show("The database could not be updated to the latest version of TAMS please contact the Utah LTAP Center for help.");
-                    return false;
+
                 }
                 Dictionary<string, string> updateDb = new Dictionary<string, string>();
                 updateDb["version"] = "9";
                 dbVersion = 9;
-                //Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_9_immute
             #region db_update_10_immute

@@ -63,6 +63,7 @@ namespace tams4a.Controls
             if (!mat.Success)
             {
                 textBoxPhotoFile.Text = oldPhoto + "_0001";
+                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
                 return;
             }
 
@@ -78,10 +79,12 @@ namespace tams4a.Controls
                 nextPhoto += mat.Groups[3].ToString();
 
                 textBoxPhotoFile.Text = nextPhoto;
+                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
             }
             catch
             {
                 textBoxPhotoFile.Text = oldPhoto + "0001";
+                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
                 return;
             }
         }

@@ -158,6 +158,38 @@ namespace tams4a.Classes
             return o;
         }
 
+        public static void ChartToPNG(System.Windows.Forms.DataVisualization.Charting.Chart chart)
+        {
+            string filename;
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Portable Network Graphic (*.png)|*.png";
+            try
+            {
+                saveDialog.InitialDirectory = Properties.Settings.Default.lastFolder;
+            }
+            catch
+            {
+                saveDialog.InitialDirectory = Environment.SpecialFolder.MyDocuments.ToString();
+            }
+            if (saveDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            filename = saveDialog.FileName;
+            try
+            {
+                chart.SaveImage(filename, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not save image file: " + e.ToString());
+                MessageBox.Show("An error occoured while trying to export chart.");
+            }
+
+        }
+
         public static DataTable CSVtoDataTable(string csvText)
         {
             DataTable data = new DataTable();
@@ -204,6 +236,22 @@ namespace tams4a.Classes
             }
 
             return relativePath;
+        }
+
+        /// <summary>
+        /// https://www.dotnetperls.com/uppercase-first-letter
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string UppercaseFirst(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            char[] a = s.ToCharArray();
+            a[0] = char.ToUpper(a[0]);
+            return new string(a);
         }
     }
 }

@@ -43,6 +43,10 @@
             this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
+            this.pictureBoxPost = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonPhotoPost = new System.Windows.Forms.Button();
+            this.textBoxPhotoPost = new System.Windows.Forms.TextBox();
             this.comboBoxRecommendation = new System.Windows.Forms.ComboBox();
             this.labelRecommend = new System.Windows.Forms.Label();
             this.comboBoxObstruction = new System.Windows.Forms.ComboBox();
@@ -101,6 +105,7 @@
             this.labelType = new System.Windows.Forms.Label();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOffset)).BeginInit();
             this.groupBoxSign.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
@@ -238,6 +243,10 @@
             // 
             // groupBoxSupport
             // 
+            this.groupBoxSupport.Controls.Add(this.pictureBoxPost);
+            this.groupBoxSupport.Controls.Add(this.label1);
+            this.groupBoxSupport.Controls.Add(this.buttonPhotoPost);
+            this.groupBoxSupport.Controls.Add(this.textBoxPhotoPost);
             this.groupBoxSupport.Controls.Add(this.comboBoxRecommendation);
             this.groupBoxSupport.Controls.Add(this.labelRecommend);
             this.groupBoxSupport.Controls.Add(this.comboBoxObstruction);
@@ -260,10 +269,47 @@
             this.groupBoxSupport.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxSupport.Location = new System.Drawing.Point(0, 25);
             this.groupBoxSupport.Name = "groupBoxSupport";
-            this.groupBoxSupport.Size = new System.Drawing.Size(224, 208);
+            this.groupBoxSupport.Size = new System.Drawing.Size(224, 264);
             this.groupBoxSupport.TabIndex = 1;
             this.groupBoxSupport.TabStop = false;
             this.groupBoxSupport.Text = "Support";
+            // 
+            // pictureBoxPost
+            // 
+            this.pictureBoxPost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxPost.InitialImage = global::tams4a.Properties.Resources.nophoto;
+            this.pictureBoxPost.Location = new System.Drawing.Point(13, 200);
+            this.pictureBoxPost.Name = "pictureBoxPost";
+            this.pictureBoxPost.Size = new System.Drawing.Size(48, 30);
+            this.pictureBoxPost.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxPost.TabIndex = 52;
+            this.pictureBoxPost.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 183);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(54, 13);
+            this.label1.TabIndex = 51;
+            this.label1.Text = "Photo File";
+            // 
+            // buttonPhotoPost
+            // 
+            this.buttonPhotoPost.Location = new System.Drawing.Point(87, 183);
+            this.buttonPhotoPost.Name = "buttonPhotoPost";
+            this.buttonPhotoPost.Size = new System.Drawing.Size(20, 20);
+            this.buttonPhotoPost.TabIndex = 50;
+            this.buttonPhotoPost.Text = ">";
+            this.buttonPhotoPost.UseVisualStyleBackColor = true;
+            // 
+            // textBoxPhotoPost
+            // 
+            this.textBoxPhotoPost.Location = new System.Drawing.Point(109, 183);
+            this.textBoxPhotoPost.Name = "textBoxPhotoPost";
+            this.textBoxPhotoPost.Size = new System.Drawing.Size(90, 20);
+            this.textBoxPhotoPost.TabIndex = 49;
+            this.textBoxPhotoPost.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // comboBoxRecommendation
             // 
@@ -272,9 +318,11 @@
             "",
             "Replace Signs",
             "Replace Post",
-            "Move Post",
+            "Relocate Post",
             "Move and Replace Post",
-            "Clear Obstructions"});
+            "Clear Obstructions",
+            "Remove Post",
+            "Other (see notes)"});
             this.comboBoxRecommendation.Location = new System.Drawing.Point(87, 156);
             this.comboBoxRecommendation.Name = "comboBoxRecommendation";
             this.comboBoxRecommendation.Size = new System.Drawing.Size(112, 21);
@@ -338,7 +386,7 @@
             // 
             this.buttonFavorite.Image = global::tams4a.Properties.Resources.favoriteicon;
             this.buttonFavorite.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFavorite.Location = new System.Drawing.Point(40, 179);
+            this.buttonFavorite.Location = new System.Drawing.Point(40, 233);
             this.buttonFavorite.Name = "buttonFavorite";
             this.buttonFavorite.Size = new System.Drawing.Size(22, 22);
             this.buttonFavorite.TabIndex = 20;
@@ -348,7 +396,7 @@
             // 
             this.buttonRemove.Image = global::tams4a.Properties.Resources.removeiconsmall;
             this.buttonRemove.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonRemove.Location = new System.Drawing.Point(62, 178);
+            this.buttonRemove.Location = new System.Drawing.Point(62, 232);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(24, 24);
             this.buttonRemove.TabIndex = 19;
@@ -367,7 +415,7 @@
             // 
             this.buttonAdd.Image = global::tams4a.Properties.Resources.addiconsmall;
             this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAdd.Location = new System.Drawing.Point(85, 178);
+            this.buttonAdd.Location = new System.Drawing.Point(85, 232);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(24, 24);
             this.buttonAdd.TabIndex = 14;
@@ -376,7 +424,7 @@
             // labelSigns
             // 
             this.labelSigns.AutoSize = true;
-            this.labelSigns.Location = new System.Drawing.Point(10, 182);
+            this.labelSigns.Location = new System.Drawing.Point(10, 236);
             this.labelSigns.Name = "labelSigns";
             this.labelSigns.Size = new System.Drawing.Size(33, 13);
             this.labelSigns.TabIndex = 13;
@@ -386,7 +434,7 @@
             // 
             this.comboBoxSigns.DropDownWidth = 160;
             this.comboBoxSigns.FormattingEnabled = true;
-            this.comboBoxSigns.Location = new System.Drawing.Point(109, 180);
+            this.comboBoxSigns.Location = new System.Drawing.Point(109, 234);
             this.comboBoxSigns.Name = "comboBoxSigns";
             this.comboBoxSigns.Size = new System.Drawing.Size(90, 21);
             this.comboBoxSigns.TabIndex = 12;
@@ -504,9 +552,9 @@
             this.groupBoxSign.Controls.Add(this.labelSheeting);
             this.groupBoxSign.Controls.Add(this.labelType);
             this.groupBoxSign.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBoxSign.Location = new System.Drawing.Point(0, 233);
+            this.groupBoxSign.Location = new System.Drawing.Point(0, 295);
             this.groupBoxSign.Name = "groupBoxSign";
-            this.groupBoxSign.Size = new System.Drawing.Size(224, 436);
+            this.groupBoxSign.Size = new System.Drawing.Size(224, 374);
             this.groupBoxSign.TabIndex = 0;
             this.groupBoxSign.TabStop = false;
             this.groupBoxSign.Text = "Sign";
@@ -514,7 +562,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 393);
+            this.label6.Location = new System.Drawing.Point(10, 350);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(47, 13);
             this.label6.TabIndex = 50;
@@ -522,7 +570,7 @@
             // 
             // textBoxBarcode
             // 
-            this.textBoxBarcode.Location = new System.Drawing.Point(87, 390);
+            this.textBoxBarcode.Location = new System.Drawing.Point(87, 347);
             this.textBoxBarcode.Name = "textBoxBarcode";
             this.textBoxBarcode.Size = new System.Drawing.Size(112, 20);
             this.textBoxBarcode.TabIndex = 49;
@@ -576,9 +624,9 @@
             // 
             this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBoxPhoto.InitialImage = global::tams4a.Properties.Resources.nophoto;
-            this.pictureBoxPhoto.Location = new System.Drawing.Point(109, 323);
+            this.pictureBoxPhoto.Location = new System.Drawing.Point(12, 315);
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
-            this.pictureBoxPhoto.Size = new System.Drawing.Size(90, 64);
+            this.pictureBoxPhoto.Size = new System.Drawing.Size(45, 32);
             this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxPhoto.TabIndex = 43;
             this.pictureBoxPhoto.TabStop = false;
@@ -614,14 +662,14 @@
             this.comboBoxDirection.FormattingEnabled = true;
             this.comboBoxDirection.Items.AddRange(new object[] {
             "",
-            "north",
-            "northeast",
-            "east",
-            "southeast",
-            "south",
-            "southwest",
-            "west",
-            "northwest"});
+            "N",
+            "NE",
+            "E",
+            "SE",
+            "S",
+            "SW",
+            "W",
+            "NW"});
             this.comboBoxDirection.Location = new System.Drawing.Point(87, 275);
             this.comboBoxDirection.Name = "comboBoxDirection";
             this.comboBoxDirection.Size = new System.Drawing.Size(112, 21);
@@ -885,6 +933,7 @@
             this.toolStrip.PerformLayout();
             this.groupBoxSupport.ResumeLayout(false);
             this.groupBoxSupport.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOffset)).EndInit();
             this.groupBoxSign.ResumeLayout(false);
             this.groupBoxSign.PerformLayout();
@@ -969,5 +1018,9 @@
         public System.Windows.Forms.ToolStripButton toolStripButtonRemove;
         public System.Windows.Forms.ComboBox comboBoxRecommendation;
         private System.Windows.Forms.Label labelRecommend;
+        public System.Windows.Forms.PictureBox pictureBoxPost;
+        private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Button buttonPhotoPost;
+        public System.Windows.Forms.TextBox textBoxPhotoPost;
     }
 }

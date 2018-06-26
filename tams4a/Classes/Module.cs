@@ -471,29 +471,6 @@ namespace tams4a.Classes
             // load up values from shp file (to be overridden if present in DB)
             consolidateDictionary(selectionTable, ref shpValues);
             
-            // set column names to the correct ones specified in settings file.  
-            // TODO:  This assumes that we won't ever have an unused field in the shp file that is the same as the 
-            // DB columns that we DO use.  If that happens, we might (depending on order) lose the shp field value for 
-            // those columns.  Not the end of the world, but not ideal.
-
-            // Correct the keys in shpValues (using project settings mapping of shp fields to db columns
-            /*Dictionary<String, String> shpValuesKeyed = new Dictionary<string, string>();
-            
-            foreach (KeyValuePair<String, String> pair in FieldSettingToDbColumn)
-            {
-                if (!Project.settings.Contains(pair.Key))
-                {
-                    continue;
-                }
-
-                String fieldName = Project.settings.GetValue(pair.Key);
-                if (shpValues.ContainsKey(fieldName))
-                {
-                    // make a copy in the correct location of anything we DO need
-                    shpValuesKeyed[pair.Value] = shpValues[fieldName];
-                }
-            }*/
-
             // Get list of TAMSIDs from selection to use for DB selection
             String thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
 
