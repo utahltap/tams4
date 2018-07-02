@@ -51,7 +51,10 @@ namespace tams4a.Classes
             boundButtons[3].Click += openBudgetTool;
             boundButtons[4].Click += customReport;
 
+            boundButtons[6].Click += graphRoadType;
+            boundButtons[7].Click += graphRoadCategory;
             boundButtons[8].Click += graphGoverningDistress;
+            boundButtons[9].Click += graphRSL;
             
             Panel_Module_OpenShp roadAdd = new Panel_Module_OpenShp("Road");
             roadAdd.Name = "ROADADD";
@@ -171,14 +174,11 @@ namespace tams4a.Classes
 
             #region road controls settings
             surfaceTypes = Database.GetDataByQuery(Project.conn, "SELECT * FROM road_surfaces");
-            // functional technique for generating combobox options from data table
-            DataRow blankSurfaceRow = surfaceTypes.NewRow();    //
-            blankSurfaceRow["id"] = 0;                          // add empty row
-            blankSurfaceRow["name"] = "";                       //
-            surfaceTypes.Rows.InsertAt(blankSurfaceRow, 0);         //
-            roadPanel.comboBoxSurface.DataSource = surfaceTypes;    //
-            roadPanel.comboBoxSurface.DisplayMember = "name";       // sets options
-            roadPanel.comboBoxSurface.ValueMember = "id";           //
+            roadPanel.comboBoxSurface.Items.Add("");
+            foreach (DataRow row in surfaceTypes.Rows)
+            {
+                roadPanel.comboBoxSurface.Items.Add(Util.UppercaseFirst(row["name"].ToString()));
+            }
 
             surfaceDistresses = Database.GetDataByQuery(Project.conn, "SELECT rd.*, rs.name AS surface FROM road_distresses AS rd JOIN road_surfaces AS rs ON rd.surface_id = rs.id ORDER BY rd.id");
             DataColumn[] keys = new DataColumn[1];
@@ -186,12 +186,11 @@ namespace tams4a.Classes
             surfaceDistresses.PrimaryKey = keys;
 
             roadTypes = Database.GetDataByQuery(Project.conn, "SELECT * FROM road_types");
-            // procedural technique for generating combobox options from datatable
-            roadPanel.comboBoxType.Items.Add(""); // add empty row
-            foreach (DataRow row in roadTypes.Rows)                         //
-            {                                                               //
-                roadPanel.comboBoxType.Items.Add(row["name"].ToString());   // sets options
-            }                                                               //
+            roadPanel.comboBoxType.Items.Add("");
+            foreach (DataRow row in roadTypes.Rows)
+            {
+                roadPanel.comboBoxType.Items.Add(row["name"].ToString());
+            }
             #endregion
 
             applyColorizedProperties();
@@ -441,7 +440,7 @@ namespace tams4a.Classes
                 }
             }
 
-            var treatments = Database.GetDataByQuery(Project.conn, "SELECT id, name FROM treatments WHERE road_applied='" + roadControls.comboBoxSurface.Text + "';");
+            var treatments = Database.GetDataByQuery(Project.conn, "SELECT id, name FROM treatments WHERE road_applied='" + roadControls.comboBoxSurface.Text.ToLower() + "';");
             DataRow blankSurfaceRow = treatments.NewRow();    //
             blankSurfaceRow["id"] = 0;                          // add empty row
             blankSurfaceRow["name"] = "";                       //
@@ -565,7 +564,7 @@ namespace tams4a.Classes
             values["length"] = roadControls.textBoxLength.Text;
             values["from_address"] = roadControls.textBoxFrom.Text;
             values["to_address"] = roadControls.textBoxTo.Text;
-            values["surface"] = roadControls.comboBoxSurface.Text;
+            values["surface"] = roadControls.comboBoxSurface.Text.ToLower();
             values["photo"] = roadControls.textBoxPhotoFile.Text;
 
             foreach (string value in values.Values)
@@ -652,7 +651,7 @@ namespace tams4a.Classes
         {
             Panel_Road roadControls = getRoadControls();
 
-            updateDistressControls(roadControls.comboBoxSurface.Text);
+            updateDistressControls(roadControls.comboBoxSurface.Text.ToLower());
 
         }
 
@@ -971,11 +970,7 @@ namespace tams4a.Classes
             general.Columns.Add("Cost");
             general.Columns.Add("Area");
             general.Columns.Add("RSL");
-            FeatureLayer selectionLayer = (FeatureLayer)Layer;
-            selectionLayer.SelectAll();
-            ISelection shpSelection = selectionLayer.Selection;
-            DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
-            string thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
+            string thisSql = getSelectAllSQL();
             try
             {
                 DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
@@ -1047,7 +1042,6 @@ namespace tams4a.Classes
                 Log.Error("Could not get database values for " + ModuleName + " module.\n" + err.ToString());
                 MessageBox.Show("An error has occured while trying to consolidate data.");
             }
-            selectionLayer.ClearSelection();
         }
 
         public void potholeReport(object sender, EventArgs e)
@@ -1062,11 +1056,7 @@ namespace tams4a.Classes
             potholes.Columns.Add("Depth");
             potholes.Columns.Add("Quantity");
             potholes.Columns.Add("Suggested Treatment");
-            FeatureLayer selectionLayer = (FeatureLayer)Layer;
-            selectionLayer.SelectAll();
-            ISelection shpSelection = selectionLayer.Selection;
-            DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
-            string thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
+            string thisSql = getSelectAllSQL();
             try
             {
                 DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
@@ -1102,7 +1092,6 @@ namespace tams4a.Classes
                 Log.Error("Could not get database values for " + ModuleName + " module.\n" + err.ToString());
                 MessageBox.Show("An error has occured while trying to consolidate data.");
             }
-            selectionLayer.ClearSelection();
         }
 
         private void automaticTreatmentSuggestion(object sender, EventArgs e)
@@ -1115,7 +1104,7 @@ namespace tams4a.Classes
             };
             var roadControls = getRoadControls();
             int[] dvs;
-            if (roadControls.comboBoxSurface.Text.Contains("gravel"))
+            if (roadControls.comboBoxSurface.Text.ToLower().Contains("gravel"))
             {
                 dvs = new int[7] { roadControls.distress1.Value, roadControls.distress2.Value, roadControls.distress3.Value, roadControls.distress4.Value, roadControls.distress5.Value, roadControls.distress6.Value, roadControls.distress7.Value };
             }
@@ -1123,9 +1112,9 @@ namespace tams4a.Classes
             {
                 dvs = new int[9] { roadControls.distress1.Value, roadControls.distress2.Value, roadControls.distress3.Value, roadControls.distress4.Value, roadControls.distress5.Value, roadControls.distress6.Value, roadControls.distress7.Value, roadControls.distress8.Value, roadControls.distress9.Value };
             }
-            string gd = getGoverningDistress(dvs, roadControls.comboBoxSurface.Text);
+            string gd = getGoverningDistress(dvs, roadControls.comboBoxSurface.Text.ToLower());
             if (string.IsNullOrWhiteSpace(gd)) { return; }
-            int index = data[roadControls.comboBoxSurface.Text][gd] - 1;
+            int index = data[roadControls.comboBoxSurface.Text.ToLower()][gd] - 1;
             DataTable suggestion = Database.GetDataByQuery(Project.conn, "SELECT treatment FROM auto_suggest WHERE governing_distress='" + gd + "' AND distress_value=" + dvs[index].ToString() + ";");
             if (suggestion.Rows.Count > 0)
             {
@@ -1149,7 +1138,7 @@ namespace tams4a.Classes
             general.Columns.Add("Treatment");
             general.Columns.Add("Cost");
             general.Columns.Add("Area");
-            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            FeatureLayer selectionLayer = (FeatureLayer)Layer; 
             ISelection shpSelection = selectionLayer.Selection;
             DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
             string thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
@@ -1269,17 +1258,13 @@ namespace tams4a.Classes
         protected void openBudgetTool(object sender, EventArgs e)
         {
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
-            selectionLayer.SelectAll();
-            ISelection shpSelection = selectionLayer.Selection;
-            DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
-            string roadSQL = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
+            string roadSQL = getSelectAllSQL();
             string treatmentSQL = "SELECT * FROM treatments";
             DataTable roads = Database.GetDataByQuery(Project.conn, roadSQL);
             DataTable treatments = Database.GetDataByQuery(Project.conn, treatmentSQL);
             roads.DefaultView.Sort = "rsl asc";
             treatments.DefaultView.Sort = "id asc";
             FormBudgetEstimator budget = new FormBudgetEstimator();
-            selectionLayer.ClearSelection();
             if (budget.setData(roads.DefaultView.ToTable(), treatments.DefaultView.ToTable()))
             {
                 budget.Show();
@@ -1394,15 +1379,92 @@ namespace tams4a.Classes
             tableFilters.Close();
         }
 
-        private void graphGoverningDistress(object sender, EventArgs e)
+        private string getSelectAllSQL()
         {
-            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a surface for governing distresses.");
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             selectionLayer.SelectAll();
             ISelection shpSelection = selectionLayer.Selection;
             DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
             string thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
             selectionLayer.ClearSelection();
+            return thisSql;
+        }
+
+        private void graphRoadType(object sender, EventArgs e)
+        {
+            string[] roadTypes = { "asphalt", "concrete", "gravel" };
+            Color[] c = { Color.DarkGray, Color.LightGray, Color.Brown };
+            makeTypeGraph(roadTypes, "surface", c);
+        }
+
+        private void graphRoadCategory(object sender, EventArgs e)
+        {
+            string[] roadTypes = { "Major Arterial", "Major Collector", "Minor Arterial", "Minor Collector", "Residential" };
+            makeTypeGraph(roadTypes, "type");
+        }
+
+        private void makeTypeGraph(string[] roadTypes, string column, Color[] c = null)
+        {
+            string thisSql = getSelectAllSQL();
+            try
+            {
+                DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
+                if (roadTable.Rows.Count == 0)
+                {
+                    MessageBox.Show("No graph could be generated because no roads have a road type set.", "No Roads", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                Dictionary<string, double> roadArea = new Dictionary<string, double>();
+                for (int i = 0; i < roadTypes.Length; i++)
+                {
+                    roadArea.Add(roadTypes[i], 0.0);
+                }
+                double totalArea = 0.0;
+                foreach (DataRow row in roadTable.Rows)
+                {
+                    foreach (string key in roadArea.Keys)
+                    {
+                        if (row[column].ToString().Contains(key))
+                        {
+                            totalArea += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                            roadArea[key] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                        }
+                    }
+                    DataTable results = new DataTable();
+                    results.Columns.Add("Distribution");
+                    for (int i = 0; i < roadTypes.Length; i++)
+                    {
+                        results.Columns.Add(Util.UppercaseFirst(roadTypes[i]));
+                    }
+                    DataRow totalsRow = results.NewRow();
+                    DataRow percentageRow = results.NewRow();
+                    totalsRow["Distribution"] = "Area (sqr. ft.)";
+                    percentageRow["Distribution"] = "Percentage";
+                    string[] domain = new string[roadTypes.Length];
+                    double[] range = new double[roadTypes.Length];
+                    for (int i = 0; i < roadTypes.Length; i++)
+                    {
+                        totalsRow[Util.UppercaseFirst(roadTypes[i])] = roadArea[roadTypes[i]];
+                        percentageRow[Util.UppercaseFirst(roadTypes[i])] = Math.Round(roadArea[roadTypes[i]] / totalArea, 3) * 100;
+                        domain[i] = roadTypes[i];
+                        range[i] = Math.Round(roadArea[roadTypes[i]] / totalArea, 3) * 100;
+                    }
+                    results.Rows.Add(totalsRow);
+                    results.Rows.Add(percentageRow);
+                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, "Road " + Util.UppercaseFirst(column) + " Distribution", c);
+                    graph.Show();
+                }
+            }
+            catch (Exception err)
+            {
+                Log.Error("Problem getting data from database " + err.ToString());
+            }
+        }
+
+        private void graphGoverningDistress(object sender, EventArgs e)
+        {
+            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a surface for governing distresses.");
+            string thisSql = getSelectAllSQL();
             if (roadChooser.ShowDialog()== DialogResult.OK)
             {
                 try
@@ -1454,34 +1516,101 @@ namespace tams4a.Classes
                         results.Columns.Add(distressGroup[roadType][i]);
                     }
                     results.Columns.Add("No Distress");
-                    DataRow labels = results.NewRow();
                     DataRow totalsRow = results.NewRow();
                     DataRow percentageRow = results.NewRow();
-                    labels["Distribution"] = "Distribution";
                     totalsRow["Distribution"] = "Area (sqr. ft.)";
                     percentageRow["Distribution"] = "Percentage";
-                    for (int i = 0; i < distressGroup[roadType].Length; i++)
-                    {
-                        labels[distressGroup[roadType][i]] = distressGroup[roadType][i];
-                        totalsRow[distressGroup[roadType][i]] = distressedArea[distressGroup[roadType][i]];
-                        percentageRow[distressGroup[roadType][i]] = Math.Round(distressedArea[distressGroup[roadType][i]] / totalArea, 3) * 100;
-                    }
-                    labels["No Distress"] = "No Distress";
-                    totalsRow["No Distress"] = noDistress;
-                    percentageRow["No Distress"] = Math.Round(noDistress / totalArea, 3) * 100;
-                    results.Rows.Add(labels);
-                    results.Rows.Add(totalsRow);
-                    results.Rows.Add(percentageRow);
                     string[] domain = new string[distressGroup[roadType].Length + 1];
                     double[] range = new double[distressGroup[roadType].Length + 1];
                     for (int i = 0; i < distressGroup[roadType].Length; i++)
                     {
+                        totalsRow[distressGroup[roadType][i]] = distressedArea[distressGroup[roadType][i]];
+                        percentageRow[distressGroup[roadType][i]] = Math.Round(distressedArea[distressGroup[roadType][i]] / totalArea, 3) * 100;
                         domain[i] = distressGroup[roadType][i];
                         range[i] = Math.Round(distressedArea[distressGroup[roadType][i]] / totalArea, 3) * 100;
                     }
+                    totalsRow["No Distress"] = noDistress;
+                    percentageRow["No Distress"] = Math.Round(noDistress / totalArea, 3) * 100;
+                    results.Rows.Add(totalsRow);
+                    results.Rows.Add(percentageRow);
                     domain[distressGroup[roadType].Length] = "No Distress";
                     range[distressGroup[roadType].Length] = Math.Round(noDistress / totalArea, 3) * 100;
                     FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, Util.UppercaseFirst(roadType) + " Road Governing Distress Distribution");
+                    graph.Show();
+                }
+                catch (Exception err)
+                {
+                    Log.Error("Problem getting data from database " + err.ToString());
+                }
+            }
+        }
+
+        private void graphRSL(object sender, EventArgs e)
+        {
+            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a surface for governing distresses.");
+            string thisSql = getSelectAllSQL();
+            if (roadChooser.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string roadType = roadChooser.chooseRoad();
+                    string[] categories = { "0", "1-3", "4-6", "7-9", "10-12", "12-15", "16-18", "19-20" };
+                    int[] caps = { 0, 3, 6, 9, 12, 15, 18, 20 };
+                    DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
+                    var roads = roadTable.Select("surface = '" + roadType + "'");
+                    if (roads.Length == 0)
+                    {
+                        MessageBox.Show("No graph could be generated because there are no roads of type " + roadType + ".", "No Roads", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    
+                    Dictionary<string, double> rslArea = new Dictionary<string, double>();
+                    double totalArea = 0.0;
+                    for (int i = 0; i < categories.Length; i++)
+                    {
+                        rslArea.Add(categories[i], 0.0);
+                    }
+                    
+                    foreach (DataRow row in roads)
+                    {
+                        int rsl = Util.ToInt(row["rsl"].ToString());
+                        if (rsl == -1)
+                        {
+                            continue;
+                        }
+                        for (int i = 0; i < categories.Length; i++)
+                        {
+                            if (rsl < caps[i])
+                            {
+                                totalArea += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                                rslArea[categories[i]] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                                continue;
+                            }
+                        }
+                    }
+                    DataTable results = new DataTable();
+                    results.Columns.Add("Distribution");
+                    for (int i = 0; i < categories.Length; i++)
+                    {
+                        results.Columns.Add(categories[i]);
+                    }
+                    DataRow totalsRow = results.NewRow();
+                    DataRow percentageRow = results.NewRow();
+                    totalsRow["Distribution"] = "Area (sqr. ft.)";
+                    percentageRow["Distribution"] = "Percentage";
+                    string[] domain = new string[categories.Length];
+                    double[] range = new double[categories.Length];
+                    for (int i = 0; i < categories.Length; i++)
+                    {
+                        totalsRow[categories[i]] = rslArea[categories[i]];
+                        percentageRow[categories[i]] = Math.Round(rslArea[categories[i]] / totalArea, 3) * 100;
+                        domain[i] = categories[i];
+                        range[i] = Math.Round(rslArea[categories[i]] / totalArea, 3) * 100;
+                    }
+                    results.Rows.Add(totalsRow);
+                    results.Rows.Add(percentageRow);
+                    Color[] colour = { Color.Red, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.ForestGreen, Color.Blue };
+                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, "Road RSL Distribution", colour);
                     graph.Show();
                 }
                 catch (Exception err)

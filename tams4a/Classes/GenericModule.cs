@@ -519,7 +519,7 @@ namespace tams4a.Classes
                 { "Breaks", "property2" },
                 { "Notes", "notes" }
             };
-            createReport(query, map);
+            createReport(query, map, "ID", "Sidewalks");
         }
 
         private void RampReport(object sender, EventArgs e)
@@ -534,7 +534,7 @@ namespace tams4a.Classes
                 { "Compliant", "property2" },
                 { "Notes", "notes" }
             };
-            createReport(query, map);
+            createReport(query, map, "ID", "ADA Ramps");
         }
 
         private void RoadReport(object sender, EventArgs e)
@@ -549,7 +549,7 @@ namespace tams4a.Classes
                 { "Recommendation", "property2" },
                 { "Notes", "notes" }
             };
-            createReport(query, map);
+            createReport(query, map, "ID", "Extreme Distresses");
         }
 
         private void DrainageReport(object sender, EventArgs e)
@@ -564,7 +564,7 @@ namespace tams4a.Classes
                 { "Comment", "property2" },
                 { "Notes", "notes" }
             };
-            createReport(query, map);
+            createReport(query, map, "ID", "Drainage Problems");
         }
 
         private void AccidentReport(object sender, EventArgs e)
@@ -579,7 +579,7 @@ namespace tams4a.Classes
                 { "Comment", "property2" },
                 { "Notes", "notes" }
             };
-            createReport(query, map);
+            createReport(query, map, "ID", "Accident Sites");
         }
 
         private void OtherReport(object sender, EventArgs e)
@@ -594,7 +594,7 @@ namespace tams4a.Classes
                 { "Property 2", "property2" },
                 { "Notes", "notes" }
             };
-            createReport(query, map);
+            createReport(query, map, "ID", "Objects");
         }
 
         private void RoadsWithSidewalks(object sender, EventArgs e)
@@ -606,7 +606,7 @@ namespace tams4a.Classes
                 { "Sidewalks", "installed" },
                 { "Comments", "comments" }
             };
-            createReport(query, map);
+            createReport(query, map, "ID", "Sidewalks");
         }
 
         private void deleteFeature(object sender, EventArgs e)

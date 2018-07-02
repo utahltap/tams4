@@ -508,21 +508,15 @@ namespace tams4a.Classes
         /// </summary>
         /// <param name="selection">the selected shapes on the map</param>
         /// <returns></returns>
-        protected String extractTAMSIDs(DataTable selection)
+        protected string extractTAMSIDs(DataTable selection)
         {
-            String tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
-            String tamsids = "";
-            foreach (DataRow row in selection.Rows)
-            {
-                if (tamsids != "") { tamsids += ","; }
-                tamsids += row[tamsidcolumn].ToString();
-            }
-            return tamsids;
+            string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
+            return extractTAMSIDs(selection, tamsidcolumn);
         }
         
-        protected String extractTAMSIDs(DataTable selection, string tamsidcolumn)
+        protected string extractTAMSIDs(DataTable selection, string tamsidcolumn)
         {
-            String tamsids = "";
+            string tamsids = "";
             foreach (DataRow row in selection.Rows)
             {
                 if (tamsids != "") { tamsids += ","; }
@@ -609,7 +603,7 @@ namespace tams4a.Classes
             setSymbolizer();
         }
 
-        protected void createReport(string query, Dictionary<string, string> mapping, string sortKey = "ID")
+        protected void createReport(string query, Dictionary<string, string> mapping, string sortKey = "ID", string things = "signs")
         {
             DataTable outputTable = new DataTable();
             foreach (string key in mapping.Keys)
@@ -621,7 +615,7 @@ namespace tams4a.Classes
                 DataTable results = Database.GetDataByQuery(Project.conn, query);
                 if (results.Rows.Count == 0)
                 {
-                    MessageBox.Show("No list could be generated because no signs where found.");
+                    MessageBox.Show("No list could be generated because no " + things + " where found.");
                     return;
                 }
                 foreach (DataRow row in results.Rows)

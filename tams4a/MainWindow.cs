@@ -48,7 +48,7 @@ namespace tams4a
                 if (!Project.open(file))
                 {
                     MessageBox.Show("Could not open " + file);
-                } 
+                }
             }
             
             while (!Project.isOpen)
@@ -58,7 +58,16 @@ namespace tams4a
             }
 
             Visible = true;
-            ToolStripMenuItem[] lcs = { importRoadsToolStripMenuItem, generalToolStripMenuItem, potholesToolStripMenuItem, analysisToolStripMenuItem, customToolStripMenuItem, roadToolStripMenuItem, roadTypeToolStripMenuItem, roadCategoryToolStripMenuItem, governingDistressToolStripMenuItem, rSLToolStripMenuItem };
+            ToolStripMenuItem[] lcs = { importRoadsToolStripMenuItem,
+                generalToolStripMenuItem,
+                potholesToolStripMenuItem,
+                analysisToolStripMenuItem,
+                customToolStripMenuItem,
+                roadToolStripMenuItem,
+                roadTypeToolStripMenuItem,
+                roadCategoryToolStripMenuItem,
+                governingDistressToolStripMenuItem,
+                rSLToolStripMenuItem };
             ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signAlertsToolStripMenuItem, signInventoryToolStripMenuItem, supportAlertsToolStripMenuItem, supportInventoryToolStripMenuItem, signToolStripMenuItem};
             ToolStripMenuItem[] lcso = { otherToolStripMenuItem,
                 sidewalkDistressToolStripMenuItem,
