@@ -336,6 +336,12 @@
     <Compile Include="Forms\FormGetDistress.Designer.cs">
       <DependentUpon>FormGetDistress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormGraphDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormGraphDisplay.Designer.cs">
+      <DependentUpon>FormGraphDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormHistory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -466,6 +472,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormGetDistress.resx">
       <DependentUpon>FormGetDistress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormGraphDisplay.resx">
+      <DependentUpon>FormGraphDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormHistory.resx">
       <DependentUpon>FormHistory.cs</DependentUpon>

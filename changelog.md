@@ -1,3 +1,16 @@
+# TAMS Version 4.0.3.5
+
+CHANGES
+------------------------------------------------------
+* Added Distribution Graphs to Roads Module
+	* User can make a graph based on Road Type, Surface, Governing Distress, and RSL
+
+BUG FIXES
+-----------------------------------------------------
+* Other Items now correctly show what item is empty rather than "signs"
+* Fixed an issue where tams files were incorrectly Identified as 'broken'
+* Improved Maintainability
+
 # TAMS Version 4.0.3.4
 * Updates to generic module.  This module is still considered beta quality
 	* Added new default items for generic module

@@ -471,29 +471,6 @@ namespace tams4a.Classes
             // load up values from shp file (to be overridden if present in DB)
             consolidateDictionary(selectionTable, ref shpValues);
             
-            // set column names to the correct ones specified in settings file.  
-            // TODO:  This assumes that we won't ever have an unused field in the shp file that is the same as the 
-            // DB columns that we DO use.  If that happens, we might (depending on order) lose the shp field value for 
-            // those columns.  Not the end of the world, but not ideal.
-
-            // Correct the keys in shpValues (using project settings mapping of shp fields to db columns
-            /*Dictionary<String, String> shpValuesKeyed = new Dictionary<string, string>();
-            
-            foreach (KeyValuePair<String, String> pair in FieldSettingToDbColumn)
-            {
-                if (!Project.settings.Contains(pair.Key))
-                {
-                    continue;
-                }
-
-                String fieldName = Project.settings.GetValue(pair.Key);
-                if (shpValues.ContainsKey(fieldName))
-                {
-                    // make a copy in the correct location of anything we DO need
-                    shpValuesKeyed[pair.Value] = shpValues[fieldName];
-                }
-            }*/
-
             // Get list of TAMSIDs from selection to use for DB selection
             String thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
 
@@ -531,21 +508,15 @@ namespace tams4a.Classes
         /// </summary>
         /// <param name="selection">the selected shapes on the map</param>
         /// <returns></returns>
-        protected String extractTAMSIDs(DataTable selection)
+        protected string extractTAMSIDs(DataTable selection)
         {
-            String tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
-            String tamsids = "";
-            foreach (DataRow row in selection.Rows)
-            {
-                if (tamsids != "") { tamsids += ","; }
-                tamsids += row[tamsidcolumn].ToString();
-            }
-            return tamsids;
+            string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
+            return extractTAMSIDs(selection, tamsidcolumn);
         }
         
-        protected String extractTAMSIDs(DataTable selection, string tamsidcolumn)
+        protected string extractTAMSIDs(DataTable selection, string tamsidcolumn)
         {
-            String tamsids = "";
+            string tamsids = "";
             foreach (DataRow row in selection.Rows)
             {
                 if (tamsids != "") { tamsids += ","; }
@@ -630,6 +601,42 @@ namespace tams4a.Classes
             }
             selectionLayer.DataSet.Save();
             setSymbolizer();
+        }
+
+        protected void createReport(string query, Dictionary<string, string> mapping, string sortKey = "ID", string things = "signs")
+        {
+            DataTable outputTable = new DataTable();
+            foreach (string key in mapping.Keys)
+            {
+                outputTable.Columns.Add(key);
+            }
+            try
+            {
+                DataTable results = Database.GetDataByQuery(Project.conn, query);
+                if (results.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no " + things + " where found.");
+                    return;
+                }
+                foreach (DataRow row in results.Rows)
+                {
+                    DataRow nr = outputTable.NewRow();
+                    foreach (string key in mapping.Keys)
+                    {
+                        nr[key] = row[mapping[key]];
+                    }
+                    outputTable.Rows.Add(nr);
+                }
+                outputTable.DefaultView.Sort = sortKey + " asc";
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = outputTable.DefaultView.ToTable();
+                report.Text = "Report";
+                report.Show();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not get data from database " + Environment.NewLine + e.ToString());
+            }
         }
     }
 }

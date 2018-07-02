@@ -284,9 +284,9 @@
             // groupBoxProperties
             // 
             this.groupBoxProperties.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBoxProperties.Location = new System.Drawing.Point(0, 240);
+            this.groupBoxProperties.Location = new System.Drawing.Point(0, 227);
             this.groupBoxProperties.Name = "groupBoxProperties";
-            this.groupBoxProperties.Size = new System.Drawing.Size(224, 429);
+            this.groupBoxProperties.Size = new System.Drawing.Size(224, 442);
             this.groupBoxProperties.TabIndex = 2;
             this.groupBoxProperties.TabStop = false;
             this.groupBoxProperties.Text = "Properties";
