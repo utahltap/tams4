@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Panel_Sign));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
@@ -41,13 +40,22 @@
             this.toolStripDropDownButtonNewPost = new System.Windows.Forms.ToolStripDropDownButton();
             this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readGPSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
+            this.pictureBoxPost = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonPhotoPost = new System.Windows.Forms.Button();
+            this.textBoxPhotoPost = new System.Windows.Forms.TextBox();
+            this.comboBoxRecommendation = new System.Windows.Forms.ComboBox();
+            this.labelRecommend = new System.Windows.Forms.Label();
+            this.comboBoxObstruction = new System.Windows.Forms.ComboBox();
+            this.labelObstruction = new System.Windows.Forms.Label();
+            this.labelCondition = new System.Windows.Forms.Label();
+            this.comboBoxCondition = new System.Windows.Forms.ComboBox();
             this.buttonFavorite = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
-            this.labelHeight = new System.Windows.Forms.Label();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.labelSigns = new System.Windows.Forms.Label();
             this.comboBoxSigns = new System.Windows.Forms.ComboBox();
@@ -55,8 +63,6 @@
             this.labelOffset = new System.Windows.Forms.Label();
             this.labelMaterial = new System.Windows.Forms.Label();
             this.comboBoxMaterial = new System.Windows.Forms.ComboBox();
-            this.labelCondition = new System.Windows.Forms.Label();
-            this.comboBoxCondition = new System.Windows.Forms.ComboBox();
             this.textBoxAddress = new System.Windows.Forms.TextBox();
             this.labelAddress = new System.Windows.Forms.Label();
             this.labelSurveyDate = new System.Windows.Forms.Label();
@@ -74,8 +80,6 @@
             this.textBoxPhotoFile = new System.Windows.Forms.TextBox();
             this.comboBoxDirection = new System.Windows.Forms.ComboBox();
             this.labelDirection = new System.Windows.Forms.Label();
-            this.comboBoxObstruction = new System.Windows.Forms.ComboBox();
-            this.labelObstruction = new System.Windows.Forms.Label();
             this.comboBoxConditionSign = new System.Windows.Forms.ComboBox();
             this.comboBoxReflectivity = new System.Windows.Forms.ComboBox();
             this.labelConditionSign = new System.Windows.Forms.Label();
@@ -99,10 +103,9 @@
             this.comboBoxSheeting = new System.Windows.Forms.ComboBox();
             this.labelSheeting = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
-            this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOffset)).BeginInit();
             this.groupBoxSign.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
@@ -120,7 +123,8 @@
             this.toolStripButtonSurveyDate,
             this.toolStripButtonNotes,
             this.toolStripSeparator2,
-            this.toolStripDropDownButtonNewPost});
+            this.toolStripDropDownButtonNewPost,
+            this.toolStripButtonRemove});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(224, 25);
@@ -200,7 +204,7 @@
             this.enterCoordinatesToolStripMenuItem,
             this.readGPSToolStripMenuItem,
             this.clickMapToolStripMenuItem});
-            this.toolStripDropDownButtonNewPost.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonNewPost.Image")));
+            this.toolStripDropDownButtonNewPost.Image = global::tams4a.Properties.Resources.addpost;
             this.toolStripDropDownButtonNewPost.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonNewPost.Name = "toolStripDropDownButtonNewPost";
             this.toolStripDropDownButtonNewPost.Size = new System.Drawing.Size(29, 22);
@@ -220,14 +224,38 @@
             this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.readGPSToolStripMenuItem.Text = "Read GPS";
             // 
+            // clickMapToolStripMenuItem
+            // 
+            this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
+            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.clickMapToolStripMenuItem.Text = "Click Map";
+            // 
+            // toolStripButtonRemove
+            // 
+            this.toolStripButtonRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRemove.Enabled = false;
+            this.toolStripButtonRemove.Image = global::tams4a.Properties.Resources.removepost;
+            this.toolStripButtonRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRemove.Name = "toolStripButtonRemove";
+            this.toolStripButtonRemove.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonRemove.Text = "remove support";
+            this.toolStripButtonRemove.ToolTipText = "Remove Support";
+            // 
             // groupBoxSupport
             // 
+            this.groupBoxSupport.Controls.Add(this.pictureBoxPost);
+            this.groupBoxSupport.Controls.Add(this.label1);
+            this.groupBoxSupport.Controls.Add(this.buttonPhotoPost);
+            this.groupBoxSupport.Controls.Add(this.textBoxPhotoPost);
+            this.groupBoxSupport.Controls.Add(this.comboBoxRecommendation);
+            this.groupBoxSupport.Controls.Add(this.labelRecommend);
+            this.groupBoxSupport.Controls.Add(this.comboBoxObstruction);
+            this.groupBoxSupport.Controls.Add(this.labelObstruction);
+            this.groupBoxSupport.Controls.Add(this.labelCondition);
+            this.groupBoxSupport.Controls.Add(this.comboBoxCondition);
             this.groupBoxSupport.Controls.Add(this.buttonFavorite);
             this.groupBoxSupport.Controls.Add(this.buttonRemove);
-            this.groupBoxSupport.Controls.Add(this.label1);
             this.groupBoxSupport.Controls.Add(this.label2);
-            this.groupBoxSupport.Controls.Add(this.numericUpDownHeight);
-            this.groupBoxSupport.Controls.Add(this.labelHeight);
             this.groupBoxSupport.Controls.Add(this.buttonAdd);
             this.groupBoxSupport.Controls.Add(this.labelSigns);
             this.groupBoxSupport.Controls.Add(this.comboBoxSigns);
@@ -235,24 +263,130 @@
             this.groupBoxSupport.Controls.Add(this.labelOffset);
             this.groupBoxSupport.Controls.Add(this.labelMaterial);
             this.groupBoxSupport.Controls.Add(this.comboBoxMaterial);
-            this.groupBoxSupport.Controls.Add(this.labelCondition);
-            this.groupBoxSupport.Controls.Add(this.comboBoxCondition);
             this.groupBoxSupport.Controls.Add(this.textBoxAddress);
             this.groupBoxSupport.Controls.Add(this.labelAddress);
             this.groupBoxSupport.Controls.Add(this.labelSurveyDate);
             this.groupBoxSupport.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxSupport.Location = new System.Drawing.Point(0, 25);
             this.groupBoxSupport.Name = "groupBoxSupport";
-            this.groupBoxSupport.Size = new System.Drawing.Size(224, 183);
+            this.groupBoxSupport.Size = new System.Drawing.Size(224, 264);
             this.groupBoxSupport.TabIndex = 1;
             this.groupBoxSupport.TabStop = false;
             this.groupBoxSupport.Text = "Support";
+            // 
+            // pictureBoxPost
+            // 
+            this.pictureBoxPost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxPost.InitialImage = global::tams4a.Properties.Resources.nophoto;
+            this.pictureBoxPost.Location = new System.Drawing.Point(13, 200);
+            this.pictureBoxPost.Name = "pictureBoxPost";
+            this.pictureBoxPost.Size = new System.Drawing.Size(48, 30);
+            this.pictureBoxPost.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxPost.TabIndex = 52;
+            this.pictureBoxPost.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 183);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(54, 13);
+            this.label1.TabIndex = 51;
+            this.label1.Text = "Photo File";
+            // 
+            // buttonPhotoPost
+            // 
+            this.buttonPhotoPost.Location = new System.Drawing.Point(87, 183);
+            this.buttonPhotoPost.Name = "buttonPhotoPost";
+            this.buttonPhotoPost.Size = new System.Drawing.Size(20, 20);
+            this.buttonPhotoPost.TabIndex = 50;
+            this.buttonPhotoPost.Text = ">";
+            this.buttonPhotoPost.UseVisualStyleBackColor = true;
+            // 
+            // textBoxPhotoPost
+            // 
+            this.textBoxPhotoPost.Location = new System.Drawing.Point(109, 183);
+            this.textBoxPhotoPost.Name = "textBoxPhotoPost";
+            this.textBoxPhotoPost.Size = new System.Drawing.Size(90, 20);
+            this.textBoxPhotoPost.TabIndex = 49;
+            this.textBoxPhotoPost.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // comboBoxRecommendation
+            // 
+            this.comboBoxRecommendation.FormattingEnabled = true;
+            this.comboBoxRecommendation.Items.AddRange(new object[] {
+            "",
+            "Replace Signs",
+            "Replace Post",
+            "Relocate Post",
+            "Move and Replace Post",
+            "Clear Obstructions",
+            "Remove Post",
+            "Other (see notes)"});
+            this.comboBoxRecommendation.Location = new System.Drawing.Point(87, 156);
+            this.comboBoxRecommendation.Name = "comboBoxRecommendation";
+            this.comboBoxRecommendation.Size = new System.Drawing.Size(112, 21);
+            this.comboBoxRecommendation.TabIndex = 45;
+            // 
+            // labelRecommend
+            // 
+            this.labelRecommend.AutoSize = true;
+            this.labelRecommend.Location = new System.Drawing.Point(10, 159);
+            this.labelRecommend.Name = "labelRecommend";
+            this.labelRecommend.Size = new System.Drawing.Size(67, 13);
+            this.labelRecommend.TabIndex = 44;
+            this.labelRecommend.Text = "Recommend";
+            // 
+            // comboBoxObstruction
+            // 
+            this.comboBoxObstruction.FormattingEnabled = true;
+            this.comboBoxObstruction.Items.AddRange(new object[] {
+            "",
+            "clear",
+            "partial",
+            "severe"});
+            this.comboBoxObstruction.Location = new System.Drawing.Point(87, 107);
+            this.comboBoxObstruction.Name = "comboBoxObstruction";
+            this.comboBoxObstruction.Size = new System.Drawing.Size(112, 21);
+            this.comboBoxObstruction.TabIndex = 43;
+            // 
+            // labelObstruction
+            // 
+            this.labelObstruction.AutoSize = true;
+            this.labelObstruction.Location = new System.Drawing.Point(10, 110);
+            this.labelObstruction.Name = "labelObstruction";
+            this.labelObstruction.Size = new System.Drawing.Size(61, 13);
+            this.labelObstruction.TabIndex = 42;
+            this.labelObstruction.Text = "Obstruction";
+            // 
+            // labelCondition
+            // 
+            this.labelCondition.AutoSize = true;
+            this.labelCondition.Location = new System.Drawing.Point(10, 84);
+            this.labelCondition.Name = "labelCondition";
+            this.labelCondition.Size = new System.Drawing.Size(51, 13);
+            this.labelCondition.TabIndex = 41;
+            this.labelCondition.Text = "Condition";
+            // 
+            // comboBoxCondition
+            // 
+            this.comboBoxCondition.FormattingEnabled = true;
+            this.comboBoxCondition.Items.AddRange(new object[] {
+            "",
+            "good",
+            "acceptable",
+            "damaged",
+            "other"});
+            this.comboBoxCondition.Location = new System.Drawing.Point(87, 82);
+            this.comboBoxCondition.Name = "comboBoxCondition";
+            this.comboBoxCondition.Size = new System.Drawing.Size(112, 21);
+            this.comboBoxCondition.TabIndex = 40;
             // 
             // buttonFavorite
             // 
             this.buttonFavorite.Image = global::tams4a.Properties.Resources.favoriteicon;
             this.buttonFavorite.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFavorite.Location = new System.Drawing.Point(40, 154);
+            this.buttonFavorite.Location = new System.Drawing.Point(40, 233);
             this.buttonFavorite.Name = "buttonFavorite";
             this.buttonFavorite.Size = new System.Drawing.Size(22, 22);
             this.buttonFavorite.TabIndex = 20;
@@ -262,67 +396,26 @@
             // 
             this.buttonRemove.Image = global::tams4a.Properties.Resources.removeiconsmall;
             this.buttonRemove.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonRemove.Location = new System.Drawing.Point(62, 153);
+            this.buttonRemove.Location = new System.Drawing.Point(62, 232);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(24, 24);
             this.buttonRemove.TabIndex = 19;
             this.buttonRemove.UseVisualStyleBackColor = true;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(176, 134);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(13, 13);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "ft";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(176, 110);
+            this.label2.Location = new System.Drawing.Point(176, 135);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(13, 13);
             this.label2.TabIndex = 17;
             this.label2.Text = "ft";
             // 
-            // numericUpDownHeight
-            // 
-            this.numericUpDownHeight.DecimalPlaces = 1;
-            this.numericUpDownHeight.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            this.numericUpDownHeight.Location = new System.Drawing.Point(87, 131);
-            this.numericUpDownHeight.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.numericUpDownHeight.Name = "numericUpDownHeight";
-            this.numericUpDownHeight.Size = new System.Drawing.Size(83, 20);
-            this.numericUpDownHeight.TabIndex = 16;
-            this.numericUpDownHeight.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // labelHeight
-            // 
-            this.labelHeight.AutoSize = true;
-            this.labelHeight.Location = new System.Drawing.Point(10, 134);
-            this.labelHeight.Name = "labelHeight";
-            this.labelHeight.Size = new System.Drawing.Size(38, 13);
-            this.labelHeight.TabIndex = 15;
-            this.labelHeight.Text = "Height";
-            // 
             // buttonAdd
             // 
             this.buttonAdd.Image = global::tams4a.Properties.Resources.addiconsmall;
             this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAdd.Location = new System.Drawing.Point(85, 153);
+            this.buttonAdd.Location = new System.Drawing.Point(85, 232);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(24, 24);
             this.buttonAdd.TabIndex = 14;
@@ -331,7 +424,7 @@
             // labelSigns
             // 
             this.labelSigns.AutoSize = true;
-            this.labelSigns.Location = new System.Drawing.Point(10, 157);
+            this.labelSigns.Location = new System.Drawing.Point(10, 236);
             this.labelSigns.Name = "labelSigns";
             this.labelSigns.Size = new System.Drawing.Size(33, 13);
             this.labelSigns.TabIndex = 13;
@@ -341,7 +434,7 @@
             // 
             this.comboBoxSigns.DropDownWidth = 160;
             this.comboBoxSigns.FormattingEnabled = true;
-            this.comboBoxSigns.Location = new System.Drawing.Point(109, 155);
+            this.comboBoxSigns.Location = new System.Drawing.Point(109, 234);
             this.comboBoxSigns.Name = "comboBoxSigns";
             this.comboBoxSigns.Size = new System.Drawing.Size(90, 21);
             this.comboBoxSigns.TabIndex = 12;
@@ -354,7 +447,7 @@
             0,
             0,
             65536});
-            this.numericUpDownOffset.Location = new System.Drawing.Point(87, 107);
+            this.numericUpDownOffset.Location = new System.Drawing.Point(87, 132);
             this.numericUpDownOffset.Maximum = new decimal(new int[] {
             30,
             0,
@@ -372,7 +465,7 @@
             // labelOffset
             // 
             this.labelOffset.AutoSize = true;
-            this.labelOffset.Location = new System.Drawing.Point(10, 110);
+            this.labelOffset.Location = new System.Drawing.Point(10, 135);
             this.labelOffset.Name = "labelOffset";
             this.labelOffset.Size = new System.Drawing.Size(35, 13);
             this.labelOffset.TabIndex = 10;
@@ -381,7 +474,7 @@
             // labelMaterial
             // 
             this.labelMaterial.AutoSize = true;
-            this.labelMaterial.Location = new System.Drawing.Point(10, 85);
+            this.labelMaterial.Location = new System.Drawing.Point(10, 59);
             this.labelMaterial.Name = "labelMaterial";
             this.labelMaterial.Size = new System.Drawing.Size(44, 13);
             this.labelMaterial.TabIndex = 8;
@@ -390,34 +483,10 @@
             // comboBoxMaterial
             // 
             this.comboBoxMaterial.FormattingEnabled = true;
-            this.comboBoxMaterial.Location = new System.Drawing.Point(87, 83);
+            this.comboBoxMaterial.Location = new System.Drawing.Point(87, 57);
             this.comboBoxMaterial.Name = "comboBoxMaterial";
             this.comboBoxMaterial.Size = new System.Drawing.Size(112, 21);
             this.comboBoxMaterial.TabIndex = 7;
-            // 
-            // labelCondition
-            // 
-            this.labelCondition.AutoSize = true;
-            this.labelCondition.Location = new System.Drawing.Point(10, 59);
-            this.labelCondition.Name = "labelCondition";
-            this.labelCondition.Size = new System.Drawing.Size(51, 13);
-            this.labelCondition.TabIndex = 6;
-            this.labelCondition.Text = "Condition";
-            // 
-            // comboBoxCondition
-            // 
-            this.comboBoxCondition.FormattingEnabled = true;
-            this.comboBoxCondition.Items.AddRange(new object[] {
-            "",
-            "new",
-            "excellent",
-            "acceptable",
-            "damaged",
-            "broken"});
-            this.comboBoxCondition.Location = new System.Drawing.Point(87, 57);
-            this.comboBoxCondition.Name = "comboBoxCondition";
-            this.comboBoxCondition.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxCondition.TabIndex = 5;
             // 
             // textBoxAddress
             // 
@@ -459,8 +528,6 @@
             this.groupBoxSign.Controls.Add(this.textBoxPhotoFile);
             this.groupBoxSign.Controls.Add(this.comboBoxDirection);
             this.groupBoxSign.Controls.Add(this.labelDirection);
-            this.groupBoxSign.Controls.Add(this.comboBoxObstruction);
-            this.groupBoxSign.Controls.Add(this.labelObstruction);
             this.groupBoxSign.Controls.Add(this.comboBoxConditionSign);
             this.groupBoxSign.Controls.Add(this.comboBoxReflectivity);
             this.groupBoxSign.Controls.Add(this.labelConditionSign);
@@ -484,10 +551,10 @@
             this.groupBoxSign.Controls.Add(this.comboBoxSheeting);
             this.groupBoxSign.Controls.Add(this.labelSheeting);
             this.groupBoxSign.Controls.Add(this.labelType);
-            this.groupBoxSign.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxSign.Location = new System.Drawing.Point(0, 208);
+            this.groupBoxSign.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBoxSign.Location = new System.Drawing.Point(0, 295);
             this.groupBoxSign.Name = "groupBoxSign";
-            this.groupBoxSign.Size = new System.Drawing.Size(224, 461);
+            this.groupBoxSign.Size = new System.Drawing.Size(224, 374);
             this.groupBoxSign.TabIndex = 0;
             this.groupBoxSign.TabStop = false;
             this.groupBoxSign.Text = "Sign";
@@ -495,7 +562,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 417);
+            this.label6.Location = new System.Drawing.Point(10, 350);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(47, 13);
             this.label6.TabIndex = 50;
@@ -503,7 +570,7 @@
             // 
             // textBoxBarcode
             // 
-            this.textBoxBarcode.Location = new System.Drawing.Point(87, 414);
+            this.textBoxBarcode.Location = new System.Drawing.Point(87, 347);
             this.textBoxBarcode.Name = "textBoxBarcode";
             this.textBoxBarcode.Size = new System.Drawing.Size(112, 20);
             this.textBoxBarcode.TabIndex = 49;
@@ -512,7 +579,7 @@
             // 
             this.buttonSignNote.Image = global::tams4a.Properties.Resources.notes;
             this.buttonSignNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSignNote.Location = new System.Drawing.Point(84, 347);
+            this.buttonSignNote.Location = new System.Drawing.Point(84, 323);
             this.buttonSignNote.Name = "buttonSignNote";
             this.buttonSignNote.Size = new System.Drawing.Size(22, 22);
             this.buttonSignNote.TabIndex = 48;
@@ -557,9 +624,9 @@
             // 
             this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBoxPhoto.InitialImage = global::tams4a.Properties.Resources.nophoto;
-            this.pictureBoxPhoto.Location = new System.Drawing.Point(109, 347);
+            this.pictureBoxPhoto.Location = new System.Drawing.Point(12, 315);
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
-            this.pictureBoxPhoto.Size = new System.Drawing.Size(90, 64);
+            this.pictureBoxPhoto.Size = new System.Drawing.Size(45, 32);
             this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxPhoto.TabIndex = 43;
             this.pictureBoxPhoto.TabStop = false;
@@ -567,7 +634,7 @@
             // labelPhoto
             // 
             this.labelPhoto.AutoSize = true;
-            this.labelPhoto.Location = new System.Drawing.Point(9, 323);
+            this.labelPhoto.Location = new System.Drawing.Point(9, 299);
             this.labelPhoto.Name = "labelPhoto";
             this.labelPhoto.Size = new System.Drawing.Size(54, 13);
             this.labelPhoto.TabIndex = 42;
@@ -575,7 +642,7 @@
             // 
             // buttonNextPhoto
             // 
-            this.buttonNextPhoto.Location = new System.Drawing.Point(87, 322);
+            this.buttonNextPhoto.Location = new System.Drawing.Point(87, 298);
             this.buttonNextPhoto.Name = "buttonNextPhoto";
             this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
             this.buttonNextPhoto.TabIndex = 41;
@@ -584,7 +651,7 @@
             // 
             // textBoxPhotoFile
             // 
-            this.textBoxPhotoFile.Location = new System.Drawing.Point(109, 322);
+            this.textBoxPhotoFile.Location = new System.Drawing.Point(109, 298);
             this.textBoxPhotoFile.Name = "textBoxPhotoFile";
             this.textBoxPhotoFile.Size = new System.Drawing.Size(90, 20);
             this.textBoxPhotoFile.TabIndex = 40;
@@ -595,15 +662,15 @@
             this.comboBoxDirection.FormattingEnabled = true;
             this.comboBoxDirection.Items.AddRange(new object[] {
             "",
-            "north",
-            "northeast",
-            "east",
-            "southeast",
-            "south",
-            "southwest",
-            "west",
-            "northwest"});
-            this.comboBoxDirection.Location = new System.Drawing.Point(87, 299);
+            "N",
+            "NE",
+            "E",
+            "SE",
+            "S",
+            "SW",
+            "W",
+            "NW"});
+            this.comboBoxDirection.Location = new System.Drawing.Point(87, 275);
             this.comboBoxDirection.Name = "comboBoxDirection";
             this.comboBoxDirection.Size = new System.Drawing.Size(112, 21);
             this.comboBoxDirection.TabIndex = 39;
@@ -611,46 +678,21 @@
             // labelDirection
             // 
             this.labelDirection.AutoSize = true;
-            this.labelDirection.Location = new System.Drawing.Point(10, 301);
+            this.labelDirection.Location = new System.Drawing.Point(10, 277);
             this.labelDirection.Name = "labelDirection";
             this.labelDirection.Size = new System.Drawing.Size(49, 13);
             this.labelDirection.TabIndex = 38;
             this.labelDirection.Text = "Direction";
-            // 
-            // comboBoxObstruction
-            // 
-            this.comboBoxObstruction.FormattingEnabled = true;
-            this.comboBoxObstruction.Items.AddRange(new object[] {
-            "",
-            "clear",
-            "partial (move sign)",
-            "partial (clear obstruction)",
-            "severe (move sign)",
-            "severe (clear obstruction)"});
-            this.comboBoxObstruction.Location = new System.Drawing.Point(87, 275);
-            this.comboBoxObstruction.Name = "comboBoxObstruction";
-            this.comboBoxObstruction.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxObstruction.TabIndex = 37;
-            // 
-            // labelObstruction
-            // 
-            this.labelObstruction.AutoSize = true;
-            this.labelObstruction.Location = new System.Drawing.Point(10, 278);
-            this.labelObstruction.Name = "labelObstruction";
-            this.labelObstruction.Size = new System.Drawing.Size(61, 13);
-            this.labelObstruction.TabIndex = 36;
-            this.labelObstruction.Text = "Obstruction";
             // 
             // comboBoxConditionSign
             // 
             this.comboBoxConditionSign.FormattingEnabled = true;
             this.comboBoxConditionSign.Items.AddRange(new object[] {
             "",
-            "new",
-            "excellent",
+            "good",
             "acceptable",
             "damaged",
-            "broken"});
+            "other"});
             this.comboBoxConditionSign.Location = new System.Drawing.Point(87, 251);
             this.comboBoxConditionSign.Name = "comboBoxConditionSign";
             this.comboBoxConditionSign.Size = new System.Drawing.Size(112, 21);
@@ -878,12 +920,6 @@
             this.labelType.TabIndex = 0;
             this.labelType.Text = "MUTCD code";
             // 
-            // clickMapToolStripMenuItem
-            // 
-            this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
-            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.clickMapToolStripMenuItem.Text = "Click Map";
-            // 
             // Panel_Sign
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -897,7 +933,7 @@
             this.toolStrip.PerformLayout();
             this.groupBoxSupport.ResumeLayout(false);
             this.groupBoxSupport.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOffset)).EndInit();
             this.groupBoxSign.ResumeLayout(false);
             this.groupBoxSign.PerformLayout();
@@ -916,16 +952,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         public System.Windows.Forms.Label labelSurveyDate;
         private System.Windows.Forms.Label labelMaterial;
-        private System.Windows.Forms.Label labelCondition;
         private System.Windows.Forms.Label labelOffset;
         public System.Windows.Forms.Label labelSigns;
         public System.Windows.Forms.ComboBox comboBoxSigns;
         public System.Windows.Forms.NumericUpDown numericUpDownOffset;
-        public System.Windows.Forms.ComboBox comboBoxCondition;
         public System.Windows.Forms.ComboBox comboBoxMaterial;
         public System.Windows.Forms.TextBox textBoxAddress;
-        public System.Windows.Forms.NumericUpDown numericUpDownHeight;
-        private System.Windows.Forms.Label labelHeight;
         public System.Windows.Forms.ComboBox comboBoxSheeting;
         private System.Windows.Forms.Label labelSheeting;
         private System.Windows.Forms.Label labelType;
@@ -938,7 +970,6 @@
         public System.Windows.Forms.TextBox textBoxType;
         public System.Windows.Forms.NumericUpDown numericUpDownMountHeight;
         private System.Windows.Forms.Label labelMountHeight;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
@@ -952,8 +983,6 @@
         private System.Windows.Forms.Label labelConditionSign;
         public System.Windows.Forms.ComboBox comboBoxDirection;
         private System.Windows.Forms.Label labelDirection;
-        public System.Windows.Forms.ComboBox comboBoxObstruction;
-        private System.Windows.Forms.Label labelObstruction;
         public System.Windows.Forms.ComboBox comboBoxConditionSign;
         public System.Windows.Forms.PictureBox pictureBoxPhoto;
         private System.Windows.Forms.Label labelPhoto;
@@ -982,5 +1011,16 @@
         private System.Windows.Forms.Label label6;
         public System.Windows.Forms.TextBox textBoxBarcode;
         public System.Windows.Forms.ToolStripMenuItem clickMapToolStripMenuItem;
+        public System.Windows.Forms.ComboBox comboBoxObstruction;
+        private System.Windows.Forms.Label labelObstruction;
+        private System.Windows.Forms.Label labelCondition;
+        public System.Windows.Forms.ComboBox comboBoxCondition;
+        public System.Windows.Forms.ToolStripButton toolStripButtonRemove;
+        public System.Windows.Forms.ComboBox comboBoxRecommendation;
+        private System.Windows.Forms.Label labelRecommend;
+        public System.Windows.Forms.PictureBox pictureBoxPost;
+        private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Button buttonPhotoPost;
+        public System.Windows.Forms.TextBox textBoxPhotoPost;
     }
 }

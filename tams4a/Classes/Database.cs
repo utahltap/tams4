@@ -46,7 +46,7 @@ namespace tams4a.Classes
                 dbVersion = 0;
             }
             #region db_update_1_immute
-            if (dbVersion == 0)
+            if (dbVersion == 0)//creates roads table
             {
                 try
                 {
@@ -357,7 +357,7 @@ namespace tams4a.Classes
             }
             #endregion db_update_1_immute
             #region db_update_2_immute
-            if (dbVersion == 1)
+            if (dbVersion == 1) //adds editable treatments
             {
                 try
                 {
@@ -414,7 +414,7 @@ UPDATE treatments SET min_rsl = 0, max_rsl = 0, average_boost = 20 WHERE name = 
             }
             #endregion db_update_2_immute
             #region db_update_3_immute
-            if (dbVersion == 2)
+            if (dbVersion == 2) //moves patches to separate category
             {
                 try
                 {
@@ -443,7 +443,7 @@ CREATE TABLE sign_support(ID INTEGER PRIMARY KEY AUTOINCREMENT, support_id INTEG
             }
             #endregion db_update_3_immute
             #region db_update_4_immute
-            if (dbVersion == 3)
+            if (dbVersion == 3) // fist signs update
             {
                 try
                 {
@@ -485,7 +485,7 @@ INSERT INTO sign_sheeting (name, type, life) VALUES ('', 'XI', 12);";
             }
             #endregion db_update_4_immute
             #region db_update_5_immute
-            if (dbVersion == 4)
+            if (dbVersion == 4) // second signs update
             {
                 try
                 {
@@ -514,7 +514,7 @@ CREATE TABLE mutcd_lookup (mutcd_code TEXT PRIMARY KEY, description TEXT, sign_t
             }
             #endregion db_update_5_immute
             #region db_update_6_immute
-            if (dbVersion == 5)
+            if (dbVersion == 5) // minor database fixes
             {
                 try
                 {
@@ -542,10 +542,231 @@ REPLACE INTO mutcd_lookup(mutcd_code, description, sign_text, category) VALUES('
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_6_immute
+            #region db_update_7_immute
+            if (dbVersion == 6) // automatic recommendations
+            {
+                try
+                {
+                    string cmdString = @"CREATE TABLE auto_suggest (id INTEGER PRIMARY KEY AUTOINCREMENT, pavement TEXT, governing_distress TEXT, distress_value INTEGER, treatment TEXT);
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 1, 'Cold In-Place Recycling (2 in. with Chip Seal)');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 2, 'HMA (leveling) and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 3, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 4, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 5, 'Cold In Place Recycling (2 in. with Thin Overlay)');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 6, 'Rotomill and Thick Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 7, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 8, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 9, 'Full Depth Reclamation and Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge Cracks', 1, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge Cracks', 2, 'Microsurfacing');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge Cracks', 3, 'Cold In-Place Recycling (2 in. with Chip Seal)');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge Cracks', 4, 'Single Chip Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge Cracks', 5, 'Cold In-Place Recycling (2 in. with Chip Seal)');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge Cracks', 6, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge Cracks', 7, 'Cold In-Place Recycling (2 in. with Chip Seal)');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge Cracks', 8, 'Rotomill and Thick Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge Cracks', 9, 'Cold Recyling and Thick Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 1, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 2, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 3, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 4, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 5, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 6, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 7, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 8, 'Cold In-Place Recycling (2 in. with Chip Seal)');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 9, 'Rotomill and Thick Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 1, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 2, 'Single Chip Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 3, 'Microsurfacing');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 4, 'Single Chip Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 5, 'Single Chip Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 6, 'Microsurfacing');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 7, 'Cold In-Place Recycling (2 in. with Chip Seal)');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 8, 'HMA (leveling) and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 9, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 1, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 2, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 3, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 4, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 5, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 6, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 7, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 8, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 9, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Drainage', 1, '');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Drainage', 2, '');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Drainage', 3, 'HMA (leveling) and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 1, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 2, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 3, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 4, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 5, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 6, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 7, 'Plant Seal Mix');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 8, 'Cold In-Place Recycling (2 in. with Chip Seal)');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 9, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Rutting', 1, '');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Rutting', 2, 'HMA (leveling) and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Rutting', 3, 'Rotomill and Thick Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Blocking', 1, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Blocking', 2, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Blocking', 3, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Blocking', 4, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Blocking', 5, 'Single Chip Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Blocking', 6, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Blocking', 7, 'Plant Seal Mix');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Blocking', 8, 'Cold In-Place Recycling (2 in. with Chip Seal)');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Blocking', 9, 'Base Repair and Pavement Replacement');
+UPDATE road_distresses SET rsl1=16 WHERE name='Transverse';
+UPDATE road_distresses SET rsl1=16 WHERE name='Longitudinal';
+UPDATE road_distresses SET rsl2 =14, rsl3=12, rsl4=14, rsl5=12, rsl6=10, rsl7=12, rsl8=10, rsl9=8 WHERE name='Potholes';
+UPDATE mutcd_lookup SET category='location_guide' WHERE category='locational';";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                    MessageBox.Show("The database could not be updated to the latest version of TAMS please contact the Utah LTAP Center for help.");
+                    return false;
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "7";
+                dbVersion = 7;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_7_immute
+            #region db_update_8_immute
+            if (dbVersion == 7)
+            {
+                try
+                {
+                    string cmdString = @"ALTER TABLE sign_support ADD obstructions TEXT;
+INSERT INTO support_materials (material) VALUES ('Circular Metal Post');
+INSERT INTO support_materials (material) VALUES ('Other');
+INSERT INTO sign_backing (material, life) VALUES ('Other', 10);
+DROP TABLE auto_suggest;
+CREATE TABLE auto_suggest (id INTEGER PRIMARY KEY AUTOINCREMENT, pavement TEXT, governing_distress TEXT, distress_value INTEGER, treatment TEXT);
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 1, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 2, 'HMA (leveling) and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 3, 'Rotomill and Thick Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 4, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 5, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 6, 'Full Depth Reclamation and Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 7, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 8, 'Full Depth Reclamation and Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Fatigue', 9, 'Full Depth Reclamation and Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge', 1, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge', 2, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge', 3, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge', 4, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge', 5, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge', 6, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge', 7, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge', 8, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Edge', 9, 'Full Depth Reclamation and Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 1, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 2, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 3, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 4, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 5, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 6, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 7, 'Rotomill and Thick Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 8, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Longitudinal', 9, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 1, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 2, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 3, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 4, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 5, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 6, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 7, 'Rotomill and Thick Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 8, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Patches', 9, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 1, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 2, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 3, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 4, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 5, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 6, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 7, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 8, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Potholes', 9, 'Digout and Hot Patch');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Drainage', 1, 'Microsurfacing');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Drainage', 2, 'Microsurfacing');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Drainage', 3, 'HMA (leveling) and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 1, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 2, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 3, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 4, 'Crack Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 5, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 6, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 7, 'Rotomill and Thick Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 8, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Transverse', 9, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Rutting', 1, 'Microsurfacing');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Rutting', 2, 'Microsurfacing');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Rutting', 3, 'HMA (leveling) and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 1, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 2, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 3, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 4, 'Slurry Seal');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 5, 'Rotomill and Thin Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 6, 'Rotomill and Thick Overlay');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 7, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 8, 'Base Repair and Pavement Replacement');
+INSERT INTO auto_suggest (pavement, governing_distress, distress_value, treatment) VALUES ('asphalt', 'Block', 9, 'Base Repair and Pavement Replacement');
+CREATE TABLE miscellaneous (TAMSID INTEGER PRIMARY KEY, type TEXT, icon TEXT, address TEXT, description TEXT, photo TEXT, property1 TEXT, property2 TEXT, notes TEXT);";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                    MessageBox.Show("The database could not be updated to the latest version of TAMS please contact the Utah LTAP Center for help.");
+                    return false;
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "8";
+                dbVersion = 9;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_8_immute
+            #region db_update_9_immute
+            if (dbVersion == 9)
+            {
+                try
+                {
+                    string cmdString = @"CREATE TABLE road_sidewalks (road_ID INTEGER PRIMARY KEY, installed TEXT, comments TEXT);
+ALTER TABLE sign_support ADD recommendation TEXT;
+ALTER TABLE miscellaneous ADD property3 TEXT;";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "9";
+                dbVersion = 9;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_9_immute
+            #region db_update_10_immute
+            if (dbVersion == 9)
+            {
+
+            }
+            #endregion db_update_10_immute
             return true;
         }
 
-        // attempts to connect to the database file
+        /// <summary>
+        /// Attempts to connect to SQLite database, throws an Exception of the connection fails.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public static SQLiteConnection Connect(string filename)
         {
             SQLiteConnection conn;

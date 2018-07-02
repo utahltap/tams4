@@ -532,7 +532,7 @@ namespace tams4a.Forms
                     chartBudgetRSL.Dock = DockStyle.None;
                     chartBudgetRSL.Size = new Size(1000, 600);
                     title.Font = new Font("Arial", 16, FontStyle.Bold);
-                    ChartToPNG(chartBudgetRSL);
+                    Util.ChartToPNG(chartBudgetRSL);
                     chartBudgetRSL.Titles.Clear();
                     chartBudgetRSL.Dock = DockStyle.Fill;
                 }
@@ -542,7 +542,7 @@ namespace tams4a.Forms
                     chartYearlyDistribution.Dock = DockStyle.None;
                     chartYearlyDistribution.Size = new Size(500, 600);
                     title.Font = new Font("Arial", 14, FontStyle.Bold);
-                    ChartToPNG(chartYearlyDistribution);
+                    Util.ChartToPNG(chartYearlyDistribution);
                     chartYearlyDistribution.Dock = DockStyle.Fill;
                     chartYearlyDistribution.Titles.Clear();
                 }
@@ -551,7 +551,7 @@ namespace tams4a.Forms
             {
                 Title title = chartBudget.Titles.Add("Expected Cost based on Target RSL");
                 title.Font = new Font("Arial", 14, FontStyle.Bold);
-                ChartToPNG(chartBudget);
+                Util.ChartToPNG(chartBudget);
                 chartBudget.Titles.Clear();
             }
             else
@@ -604,6 +604,7 @@ namespace tams4a.Forms
                 chartYearlyDistribution.ChartAreas.Clear();
                 chartYearlyDistribution.Series.Add("Series");
                 chartYearlyDistribution.ChartAreas.Add("Area");
+                chartYearlyDistribution.ChartAreas["Area"].AxisY.Title = "Percent of Road Network";
                 for (int i = 0; i < rslLabels.Length; i++)
                 {
                     chartYearlyDistribution.Series["Series"].SetDefault(true);
@@ -785,38 +786,6 @@ namespace tams4a.Forms
                 max_rsl = mx;
                 average_boost = ab;
             }
-        }
-
-        private void ChartToPNG(Chart chart)
-        {
-            String filename;
-
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "Portable Network Graphic (*.png)|*.png";
-            try
-            {
-                saveDialog.InitialDirectory = Properties.Settings.Default.lastFolder;
-            }
-            catch
-            {
-                saveDialog.InitialDirectory = Environment.SpecialFolder.MyDocuments.ToString();
-            }
-             if (saveDialog.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-
-            filename = saveDialog.FileName;
-            try
-            {
-                chart.SaveImage(filename, ChartImageFormat.Png);
-            }
-            catch (Exception e)
-            {
-                Log.Error("Could not save image file: " + e.ToString());
-                MessageBox.Show("An error occoured while trying to export chart.");
-            }
-
         }
         
     }

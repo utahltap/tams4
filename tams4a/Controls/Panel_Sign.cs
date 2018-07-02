@@ -21,7 +21,6 @@ namespace tams4a.Controls
             comboBoxCondition.SelectionChangeCommitted += moduleValueChanged;
             comboBoxMaterial.SelectionChangeCommitted += moduleValueChanged;
             numericUpDownOffset.ValueChanged += moduleValueChanged;
-            numericUpDownHeight.ValueChanged += moduleValueChanged;
             textBoxType.TextChanged += moduleValueChanged;
             textBoxDescription.TextChanged += moduleValueChanged;
             comboBoxSheeting.SelectedValueChanged += moduleValueChanged;
@@ -43,6 +42,7 @@ namespace tams4a.Controls
             new ToolTip().SetToolTip(buttonInstallDate, "Set Install Date of Sign");
             new ToolTip().SetToolTip(buttonFavorite, "Add Sign to Favorites");
             new ToolTip().SetToolTip(buttonSignNote, "Add Note to Sign");
+            new ToolTip().SetToolTip(buttonNextPhoto, "Get Next Photo");
 
             AutoScroll = true;
         }
@@ -63,6 +63,7 @@ namespace tams4a.Controls
             if (!mat.Success)
             {
                 textBoxPhotoFile.Text = oldPhoto + "_0001";
+                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
                 return;
             }
 
@@ -78,10 +79,12 @@ namespace tams4a.Controls
                 nextPhoto += mat.Groups[3].ToString();
 
                 textBoxPhotoFile.Text = nextPhoto;
+                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
             }
             catch
             {
                 textBoxPhotoFile.Text = oldPhoto + "0001";
+                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
                 return;
             }
         }

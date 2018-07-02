@@ -22,14 +22,19 @@ namespace tams4a.Controls
             textBoxFrom.TextChanged += moduleValueChanged;
             textBoxTo.TextChanged += moduleValueChanged;
             textBoxRoadName.TextChanged += moduleValueChanged;
-            comboBoxSurface.SelectionChangeCommitted += moduleValueChanged;
-            comboBoxType.SelectionChangeCommitted += moduleValueChanged;
-            comboBoxTreatment.SelectionChangeCommitted += moduleValueChanged;
+            comboBoxSurface.TextChanged += moduleValueChanged;
+            comboBoxType.TextChanged += moduleValueChanged;
+            comboBoxTreatment.TextChanged += moduleValueChanged;
             textBoxPhotoFile.TextChanged += moduleValueChanged;
+            inputRsl.TextChanged += moduleValueChanged;
             textBoxWidth.TextChanged += widthChanged;
             textBoxLength.TextChanged += lengthChanged;
             buttonNextPhoto.Click += buttonNextPhoto_Click;
-            this.AutoScroll = true;
+            
+            new ToolTip().SetToolTip(buttonNextPhoto, "Get Next Photo");
+            new ToolTip().SetToolTip(buttonSuggest, "Get TAMS Suggestion");
+
+            AutoScroll = true;
         }
 
 

@@ -78,13 +78,17 @@ namespace tams4a.Classes
         }
 
 
-        // opens file specified in parameter OR already specified in "filepath" member
-        // TODO:  Is there a case where we need the 2nd option?
+        /// <summary>
+        /// Override this, opens the shapefile and adds it to dotspatial map.
+        /// </summary>
+        /// <param name="thePath"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public virtual Boolean openFile(String thePath="", String type="")
         {
             if (isOpen())
             {
-                Log.Error("Module " + ModuleName + "attempted to open file (" + thePath + ") when file was already opened (" + Filepath + ")"); // Shouldn't even get here.
+                Log.Error("Module " + ModuleName + "attempted to open file (" + thePath + ") when file was already opened (" + Filepath + ")");
                 return false;
             }
             
@@ -116,10 +120,11 @@ namespace tams4a.Classes
                     if (Layer.Projection != DotSpatial.Projections.KnownCoordinateSystems.Projected.World.WebMercator)
                     {
                         MessageBox.Show("Could not reproject SHP file.  Please adjust the projection to WebMercator in a GIS program (such as ArcMap or MapWindow).");
-                        this.close();
+                        close();
                         return false;
                     }
                 }
+                Project.map.Projection = DotSpatial.Projections.KnownCoordinateSystems.Projected.World.WebMercator;
                 foreach (var comp in linkedComponents)
                 {
                     comp.Enabled = true;
@@ -272,7 +277,18 @@ namespace tams4a.Classes
                 {
                     if (!openFile(filename))
                     {
-                        MessageBox.Show("Could not load " + ModuleName + " file (" + filename + ")");
+                        if(MessageBox.Show("Could not load " + ModuleName + " file (" + filename + "). It is possible that the file was moved or deleted. Would you like to manual locate this file?", "File not Found", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            OpenFileDialog openDialog = new OpenFileDialog();
+                            openDialog.Filter = "SHP Files|*.shp";
+                            openDialog.Multiselect = false;
+                            openDialog.Title = "Open " + ModuleName + " SHP File";
+                            if (openDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                filename = openDialog.FileName;
+                                openFile(filename);
+                            }
+                        }
                     }
                 }
             }
@@ -283,7 +299,18 @@ namespace tams4a.Classes
                 {
                     if (!openFile(filename))
                     {
-                        MessageBox.Show("Could not load " + ModuleName + " file (" + filename + ")");
+                        if (MessageBox.Show("Could not load " + ModuleName + " file (" + filename + "). It is possible that the file was moved or deleted. Would you like to manual locate this file?", "File not Found", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            OpenFileDialog openDialog = new OpenFileDialog();
+                            openDialog.Filter = "SHP Files|*.shp";
+                            openDialog.Multiselect = false;
+                            openDialog.Title = "Open " + ModuleName + " SHP File";
+                            if (openDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                filename = openDialog.FileName;
+                                openFile(filename);
+                            }
+                        }
                     }
                 }
                 
@@ -444,29 +471,6 @@ namespace tams4a.Classes
             // load up values from shp file (to be overridden if present in DB)
             consolidateDictionary(selectionTable, ref shpValues);
             
-            // set column names to the correct ones specified in settings file.  
-            // TODO:  This assumes that we won't ever have an unused field in the shp file that is the same as the 
-            // DB columns that we DO use.  If that happens, we might (depending on order) lose the shp field value for 
-            // those columns.  Not the end of the world, but not ideal.
-
-            // Correct the keys in shpValues (using project settings mapping of shp fields to db columns
-            /*Dictionary<String, String> shpValuesKeyed = new Dictionary<string, string>();
-            
-            foreach (KeyValuePair<String, String> pair in FieldSettingToDbColumn)
-            {
-                if (!Project.settings.Contains(pair.Key))
-                {
-                    continue;
-                }
-
-                String fieldName = Project.settings.GetValue(pair.Key);
-                if (shpValues.ContainsKey(fieldName))
-                {
-                    // make a copy in the correct location of anything we DO need
-                    shpValuesKeyed[pair.Value] = shpValues[fieldName];
-                }
-            }*/
-
             // Get list of TAMSIDs from selection to use for DB selection
             String thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
 
@@ -504,21 +508,15 @@ namespace tams4a.Classes
         /// </summary>
         /// <param name="selection">the selected shapes on the map</param>
         /// <returns></returns>
-        protected String extractTAMSIDs(DataTable selection)
+        protected string extractTAMSIDs(DataTable selection)
         {
-            String tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
-            String tamsids = "";
-            foreach (DataRow row in selection.Rows)
-            {
-                if (tamsids != "") { tamsids += ","; }
-                tamsids += row[tamsidcolumn].ToString();
-            }
-            return tamsids;
+            string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
+            return extractTAMSIDs(selection, tamsidcolumn);
         }
         
-        protected String extractTAMSIDs(DataTable selection, string tamsidcolumn)
+        protected string extractTAMSIDs(DataTable selection, string tamsidcolumn)
         {
-            String tamsids = "";
+            string tamsids = "";
             foreach (DataRow row in selection.Rows)
             {
                 if (tamsids != "") { tamsids += ","; }
@@ -560,6 +558,85 @@ namespace tams4a.Classes
         protected void setDate(object sender, EventArgs args)
         {
             surveyDate = dateForm.getDate();
+        }
+
+        protected void ReportErrMsg(Exception err)
+        {
+            MessageBox.Show("An error occured while trying to generate the report.");
+            Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+        }
+
+        protected void PrepareDatatable(DataTable table, string[] columns)
+        {
+            for (int i = 0; i < columns.Length; i++)
+            {
+                if (!table.Columns.Contains(columns[i]))
+                {
+                    table.Columns.Add(columns[i]);
+                }
+            }
+        }
+
+        protected virtual void setSymbolizer()
+        {
+
+        }
+
+        protected void deleteShape(string id, string[] tables, string column = "TAMSID")
+        {
+            string tamsid = id;
+            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            IFeature feature = selectionLayer.Selection.ToFeatureList()[0];
+            selectionLayer.ClearSelection();
+            selectionLayer.DataSet.Features.Remove(feature);
+            selectionLayer.DataSet.UpdateExtent();
+            selectionLayer.DataSet.InitializeVertices();
+            selectionLayer.AssignFastDrawnStates();
+            selectionLayer.DataSet.Save();
+            Project.map.Refresh();
+            Project.map.ResetBuffer();
+            for (int i = 0; i < tables.Length; i++)
+            {
+                Database.DeleteRow(Project.conn, tables[i], column, tamsid);
+            }
+            selectionLayer.DataSet.Save();
+            setSymbolizer();
+        }
+
+        protected void createReport(string query, Dictionary<string, string> mapping, string sortKey = "ID", string things = "signs")
+        {
+            DataTable outputTable = new DataTable();
+            foreach (string key in mapping.Keys)
+            {
+                outputTable.Columns.Add(key);
+            }
+            try
+            {
+                DataTable results = Database.GetDataByQuery(Project.conn, query);
+                if (results.Rows.Count == 0)
+                {
+                    MessageBox.Show("No list could be generated because no " + things + " where found.");
+                    return;
+                }
+                foreach (DataRow row in results.Rows)
+                {
+                    DataRow nr = outputTable.NewRow();
+                    foreach (string key in mapping.Keys)
+                    {
+                        nr[key] = row[mapping[key]];
+                    }
+                    outputTable.Rows.Add(nr);
+                }
+                outputTable.DefaultView.Sort = sortKey + " asc";
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = outputTable.DefaultView.ToTable();
+                report.Text = "Report";
+                report.Show();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not get data from database " + Environment.NewLine + e.ToString());
+            }
         }
     }
 }

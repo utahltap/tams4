@@ -76,8 +76,8 @@ namespace tams4a.Classes
                             values["distress1"] = r["Fat_Spall_XSec"].ToString();
                             values["distress2"] = r["Edge_Broke_Pot"].ToString();
                             values["distress3"] = r["Lon_Joint_Drain"].ToString();
-                            values["distress4"] = "0";
-                            values["distress5"] = r["Pot_Fault_LAggr"].ToString();
+                            values["distress4"] = r["Pot_Fault_LAggr"].ToString();
+                            values["distress5"] = "0";
                             values["distress6"] = r["Drain_Patch"].ToString();
                             values["distress7"] = r["Tran_Corner_Rutt"].ToString();
                             values["distress8"] = r["Block_Crack"].ToString();

@@ -31,8 +31,10 @@ namespace tams4a.Controls
         private void InitializeComponent()
         {
             this.groupBoxDistress = new System.Windows.Forms.GroupBox();
+            this.buttonSuggest = new System.Windows.Forms.Button();
+            this.inputRsl = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.labelSuggestedTreatment = new System.Windows.Forms.Label();
-            this.inputRsl = new tams4a.Controls.LabeledInput();
             this.comboBoxTreatment = new System.Windows.Forms.ComboBox();
             this.distress9 = new tams4a.Controls.DistressEntry();
             this.distress8 = new tams4a.Controls.DistressEntry();
@@ -83,6 +85,8 @@ namespace tams4a.Controls
             this.buttonHistory = new System.Windows.Forms.ToolStripButton();
             this.btnNotes = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAnalysis = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonSidewalk = new System.Windows.Forms.ToolStripButton();
             this.groupBoxDistress.SuspendLayout();
             this.groupBoxInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLanes)).BeginInit();
@@ -93,8 +97,10 @@ namespace tams4a.Controls
             // 
             // groupBoxDistress
             // 
-            this.groupBoxDistress.Controls.Add(this.labelSuggestedTreatment);
+            this.groupBoxDistress.Controls.Add(this.buttonSuggest);
             this.groupBoxDistress.Controls.Add(this.inputRsl);
+            this.groupBoxDistress.Controls.Add(this.label4);
+            this.groupBoxDistress.Controls.Add(this.labelSuggestedTreatment);
             this.groupBoxDistress.Controls.Add(this.comboBoxTreatment);
             this.groupBoxDistress.Controls.Add(this.distress9);
             this.groupBoxDistress.Controls.Add(this.distress8);
@@ -114,26 +120,39 @@ namespace tams4a.Controls
             this.groupBoxDistress.TabStop = false;
             this.groupBoxDistress.Text = "Distresses";
             // 
+            // buttonSuggest
+            // 
+            this.buttonSuggest.Image = global::tams4a.Properties.Resources.suggest;
+            this.buttonSuggest.Location = new System.Drawing.Point(78, 221);
+            this.buttonSuggest.Name = "buttonSuggest";
+            this.buttonSuggest.Size = new System.Drawing.Size(24, 23);
+            this.buttonSuggest.TabIndex = 29;
+            this.buttonSuggest.UseVisualStyleBackColor = true;
+            // 
+            // inputRsl
+            // 
+            this.inputRsl.Location = new System.Drawing.Point(104, 222);
+            this.inputRsl.Name = "inputRsl";
+            this.inputRsl.Size = new System.Drawing.Size(90, 20);
+            this.inputRsl.TabIndex = 28;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(7, 229);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(28, 13);
+            this.label4.TabIndex = 27;
+            this.label4.Text = "RSL";
+            // 
             // labelSuggestedTreatment
             // 
             this.labelSuggestedTreatment.AutoSize = true;
-            this.labelSuggestedTreatment.Location = new System.Drawing.Point(7, 256);
+            this.labelSuggestedTreatment.Location = new System.Drawing.Point(7, 254);
             this.labelSuggestedTreatment.Name = "labelSuggestedTreatment";
             this.labelSuggestedTreatment.Size = new System.Drawing.Size(55, 13);
             this.labelSuggestedTreatment.TabIndex = 26;
             this.labelSuggestedTreatment.Text = "Treatment";
-            // 
-            // inputRsl
-            // 
-            this.inputRsl.Label = "RSL";
-            this.inputRsl.Location = new System.Drawing.Point(4, 223);
-            this.inputRsl.Margin = new System.Windows.Forms.Padding(0);
-            this.inputRsl.Name = "inputRsl";
-            this.inputRsl.Padding = new System.Windows.Forms.Padding(2);
-            this.inputRsl.ReadOnly = true;
-            this.inputRsl.Size = new System.Drawing.Size(190, 24);
-            this.inputRsl.TabIndex = 9;
-            this.inputRsl.Value = "";
             // 
             // comboBoxTreatment
             // 
@@ -598,7 +617,9 @@ namespace tams4a.Controls
             this.buttonSetDate,
             this.buttonHistory,
             this.btnNotes,
-            this.toolStripButtonAnalysis});
+            this.toolStripSeparator2,
+            this.toolStripButtonAnalysis,
+            this.toolStripButtonSidewalk});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.MinimumSize = new System.Drawing.Size(200, 0);
             this.toolStrip.Name = "toolStrip";
@@ -648,13 +669,13 @@ namespace tams4a.Controls
             this.setTodayToolStripMenuItem.Checked = true;
             this.setTodayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.setTodayToolStripMenuItem.Name = "setTodayToolStripMenuItem";
-            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.setTodayToolStripMenuItem.Text = "Set Today";
             // 
             // setOtherDateToolStripMenuItem
             // 
             this.setOtherDateToolStripMenuItem.Name = "setOtherDateToolStripMenuItem";
-            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.setOtherDateToolStripMenuItem.Text = "Set Other Date";
             // 
             // buttonHistory
@@ -685,6 +706,22 @@ namespace tams4a.Controls
             this.toolStripButtonAnalysis.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonAnalysis.Text = "Analysis";
             this.toolStripButtonAnalysis.ToolTipText = "Create Report on Selected Roads";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButtonSidewalk
+            // 
+            this.toolStripButtonSidewalk.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSidewalk.Enabled = false;
+            this.toolStripButtonSidewalk.Image = global::tams4a.Properties.Resources.swdatabutton;
+            this.toolStripButtonSidewalk.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSidewalk.Name = "toolStripButtonSidewalk";
+            this.toolStripButtonSidewalk.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonSidewalk.Text = "Sidewalk Data";
+            this.toolStripButtonSidewalk.Visible = false;
             // 
             // Panel_Road
             // 
@@ -758,7 +795,6 @@ namespace tams4a.Controls
         public DistressEntry distress8;
         public DistressEntry distress9;
         public System.Windows.Forms.ComboBox comboBoxTreatment;
-        public LabeledInput inputRsl;
         public System.Windows.Forms.Label labelSuggestedTreatment;
         public System.Windows.Forms.GroupBox groupBoxDistress;
         public System.Windows.Forms.NumericUpDown numericUpDownLanes;
@@ -767,5 +803,10 @@ namespace tams4a.Controls
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelMPH;
         public System.Windows.Forms.NumericUpDown numericUpDownSpeedLimit;
+        public System.Windows.Forms.Label label4;
+        public System.Windows.Forms.TextBox inputRsl;
+        public System.Windows.Forms.Button buttonSuggest;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        public System.Windows.Forms.ToolStripButton toolStripButtonSidewalk;
     }
 }

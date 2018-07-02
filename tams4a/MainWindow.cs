@@ -20,8 +20,8 @@ namespace tams4a
         private TamsProject Project;
         private int maxWidth;
         private DotSpatial.Controls.AppManager appManager;
-        private DotSpatial.Plugins.WebMap.ServiceProvider webService;
-        private DotSpatial.Plugins.WebMap.WebMapPlugin webLayer;
+        //private DotSpatial.Plugins.WebMap.ServiceProvider webService;
+        //private DotSpatial.Plugins.WebMap.WebMapPlugin webLayer;
         private bool closeForReal = true;
 
         /// <summary>
@@ -38,17 +38,17 @@ namespace tams4a
 
         private void InitializeProject()
         {
+            uxMap.Projection = DotSpatial.Projections.KnownCoordinateSystems.Projected.World.WebMercator;
             Project = new TamsProject(uxMap);
             tabControlControls.TabPages.Clear();
 
             if (Program.cmdArgs.Length > 0)
             {
-                //open project
-                String file = Program.cmdArgs[0];
+                string file = Program.cmdArgs[0];
                 if (!Project.open(file))
                 {
                     MessageBox.Show("Could not open " + file);
-                } 
+                }
             }
             
             while (!Project.isOpen)
@@ -58,12 +58,32 @@ namespace tams4a
             }
 
             Visible = true;
-            ToolStripMenuItem[] lcs = { importRoadsToolStripMenuItem, generalReportToolStripMenuItem, roadsWithPotholesToolStripMenuItem, budgetToolStripMenuItem };
-            ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signReportToolStripMenuItem, failedSignsToolStripMenuItem, obstructedSignsToolStripMenuItem, oldSignsToolStripMenuItem, damagedSignsToolStripMenuItem};
+            ToolStripMenuItem[] lcs = { importRoadsToolStripMenuItem,
+                generalToolStripMenuItem,
+                potholesToolStripMenuItem,
+                analysisToolStripMenuItem,
+                customToolStripMenuItem,
+                roadToolStripMenuItem,
+                roadTypeToolStripMenuItem,
+                roadCategoryToolStripMenuItem,
+                governingDistressToolStripMenuItem,
+                rSLToolStripMenuItem };
+            ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signAlertsToolStripMenuItem, signInventoryToolStripMenuItem, supportAlertsToolStripMenuItem, supportInventoryToolStripMenuItem, signToolStripMenuItem};
+            ToolStripMenuItem[] lcso = { otherToolStripMenuItem,
+                sidewalkDistressToolStripMenuItem,
+                severeRoadDistressToolStripMenuItem,
+                aDARampsToolStripMenuItem,
+                drainageToolStripMenuItem,
+                accidentsToolStripMenuItem,
+                allOthersToolStripMenuItem,
+                roadsWithSidewalksToolStripMenuItem
+            };
             ModuleRoads road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
             ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
+            GenericModule other = new GenericModule(Project, new TabPage("Other"), lcso);
             Project.addModule(road, "Roads", tabControlControls);
             Project.addModule(sign, "Signs", tabControlControls);
+            Project.addModule(other, "Other", tabControlControls);
 
             Project.selectModule("Roads");
 
@@ -83,7 +103,6 @@ namespace tams4a
             appManager.ProgressHandler = new DotSpatial.Controls.SpatialStatusStrip();
             appManager.Map = uxMap;
             appManager.LoadExtensions();
-            uxMap.Projection = DotSpatial.Projections.KnownCoordinateSystems.Projected.World.WebMercator;
             webService = DotSpatial.Plugins.WebMap.ServiceProviderFactory.Create("GooleMap");
         }
         */

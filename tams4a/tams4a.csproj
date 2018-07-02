@@ -112,19 +112,9 @@
     <ApplicationIcon>Resources\tams.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BruTile">
-      <HintPath>..\..\DotSpatial 1.9\Windows Extensions\DotSpatial.Plugins.WebMap\BruTile.dll</HintPath>
-    </Reference>
-    <Reference Include="BruTile.Desktop">
-      <HintPath>..\..\DotSpatial 1.9\Windows Extensions\DotSpatial.Plugins.WebMap\BruTile.Desktop.dll</HintPath>
-    </Reference>
     <Reference Include="DotSpatial.Analysis, Version=1.9.0.0, Culture=neutral, PublicKeyToken=df3f45fb0fe4cb0c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Analysis.1.9\lib\net40-Client\DotSpatial.Analysis.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="DotSpatial.Compatibility, Version=1.8.0.0, Culture=neutral, PublicKeyToken=094c8fdea7f4a002, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DotSpatial 1.9\DotSpatial.Compatibility.dll</HintPath>
     </Reference>
     <Reference Include="DotSpatial.Controls, Version=1.9.0.0, Culture=neutral, PublicKeyToken=4d9e49339a7d240c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Controls.1.9\lib\net40-Client\DotSpatial.Controls.dll</HintPath>
@@ -157,18 +147,6 @@
     <Reference Include="DotSpatial.NetTopologySuite, Version=1.14.4.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.NetTopologySuite.1.14.4\lib\net40-client\DotSpatial.NetTopologySuite.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="DotSpatial.Plugins.About">
-      <HintPath>..\..\DotSpatial 1.9\Plugins\DotSpatial.Plugins.About\DotSpatial.Plugins.About.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Plugins.ShapeEditor">
-      <HintPath>..\..\DotSpatial 1.9\Plugins\DotSpatial.Plugins.ShapeEditor\DotSpatial.Plugins.ShapeEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Plugins.SimpleMap">
-      <HintPath>..\..\DotSpatial 1.9\Plugins\DotSpatial.Plugins.SimpleMap\DotSpatial.Plugins.SimpleMap.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Plugins.WebMap">
-      <HintPath>..\..\DotSpatial 1.9\Windows Extensions\DotSpatial.Plugins.WebMap\DotSpatial.Plugins.WebMap.dll</HintPath>
     </Reference>
     <Reference Include="DotSpatial.Positioning, Version=1.9.0.0, Culture=neutral, PublicKeyToken=f6f66d1554473068, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Positioning.1.9\lib\net40-Client\DotSpatial.Positioning.dll</HintPath>
@@ -247,6 +225,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\GenericModule.cs" />
     <Compile Include="Classes\ImportAccess.cs" />
     <Compile Include="Classes\Database.cs" />
     <Compile Include="Classes\Log.cs" />
@@ -255,6 +234,7 @@
     <Compile Include="Classes\ProjectSettings.cs" />
     <Compile Include="Classes\ProjectVersion.cs" />
     <Compile Include="Classes\RoadDistress.cs" />
+    <Compile Include="Classes\RoadSidewalkForm.cs" />
     <Compile Include="Classes\TamsProject.cs" />
     <Compile Include="Classes\CustomEventArgs.cs" />
     <Compile Include="Classes\Module.cs" />
@@ -286,6 +266,12 @@
     </Compile>
     <Compile Include="Controls\Panel_Module.Designer.cs">
       <DependentUpon>Panel_Module.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Panel_Other.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Panel_Other.Designer.cs">
+      <DependentUpon>Panel_Other.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Panel_Road.cs">
       <SubType>UserControl</SubType>
@@ -350,6 +336,12 @@
     <Compile Include="Forms\FormGetDistress.Designer.cs">
       <DependentUpon>FormGetDistress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormGraphDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormGraphDisplay.Designer.cs">
+      <DependentUpon>FormGraphDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormHistory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -373,6 +365,12 @@
     </Compile>
     <Compile Include="Forms\FormNewSign.Designer.cs">
       <DependentUpon>FormNewSign.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormQueryBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormQueryBuilder.Designer.cs">
+      <DependentUpon>FormQueryBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormSignLookup.cs">
       <SubType>Form</SubType>
@@ -448,6 +446,9 @@
     <EmbeddedResource Include="Controls\Panel_Module_OpenShp.resx">
       <DependentUpon>Panel_Module_OpenShp.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Panel_Other.resx">
+      <DependentUpon>Panel_Other.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Panel_Road.resx">
       <DependentUpon>Panel_Road.cs</DependentUpon>
     </EmbeddedResource>
@@ -472,6 +473,9 @@
     <EmbeddedResource Include="Forms\FormGetDistress.resx">
       <DependentUpon>FormGetDistress.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormGraphDisplay.resx">
+      <DependentUpon>FormGraphDisplay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormHistory.resx">
       <DependentUpon>FormHistory.cs</DependentUpon>
     </EmbeddedResource>
@@ -483,6 +487,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormNewSign.resx">
       <DependentUpon>FormNewSign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormQueryBuilder.resx">
+      <DependentUpon>FormQueryBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormSignLookup.resx">
       <DependentUpon>FormSignLookup.cs</DependentUpon>
@@ -590,6 +597,7 @@
     <None Include="Resources\addicon.png" />
     <None Include="Resources\addicon1.png" />
     <None Include="Resources\addiconsmall.png" />
+    <None Include="Resources\addpost.png" />
     <Content Include="Resources\Altimeter.bmp" />
     <Content Include="Resources\attributions.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -597,8 +605,11 @@
     <None Include="Resources\blank.png" />
     <None Include="Resources\blocking.jpg" />
     <None Include="Resources\broke.png" />
+    <None Include="Resources\baseadd.png" />
+    <None Include="Resources\baseremove.png" />
     <Content Include="Resources\Clock.bmp" />
     <Content Include="Resources\Compass.bmp" />
+    <None Include="Resources\crash.png" />
     <Content Include="Resources\Distresses\blank.png" />
     <Content Include="Resources\Distresses\blocking.jpg" />
     <Content Include="Resources\Distresses\conlong.png" />
@@ -645,12 +656,22 @@
     <None Include="Resources\jointseal.png" />
     <None Include="Resources\removeiconsmall.png" />
     <None Include="Resources\favoriteicon.png" />
+    <None Include="Resources\removepost.png" />
+    <None Include="Resources\feature_flat.png" />
+    <None Include="Resources\important_feature.png" />
+    <None Include="Resources\problem_flat.png" />
+    <None Include="Resources\question.png" />
+    <None Include="Resources\pooling.png" />
+    <None Include="Resources\ramp.png" />
     <Content Include="Resources\SatelliteSignalBar.bmp" />
     <Content Include="Resources\SatelliteViewer.bmp" />
+    <None Include="Resources\sidewalk.png" />
     <Content Include="Resources\spalling.png" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\worker.png" />
     <Content Include="Resources\Speedometer.bmp" />
+    <None Include="Resources\suggest.png" />
+    <None Include="Resources\swdatabutton.png" />
     <Content Include="Resources\zoom_select.png" />
     <None Include="Resources\zoom_select1.png" />
     <Content Include="x64\SQLite.Interop.dll">

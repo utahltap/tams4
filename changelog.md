@@ -1,31 +1,41 @@
-# TAMS version 4.0.2
+# TAMS Version 4.0.3.5
 
-Please note that the signs manager is still in the beta stages of development and some features may not work correctly. If you encounter any problems please contact the Utah LTAP center.
+CHANGES
+------------------------------------------------------
+* Added Distribution Graphs to Roads Module
+	* User can make a graph based on Road Type, Surface, Governing Distress, and RSL
+
+BUG FIXES
+-----------------------------------------------------
+* Other Items now correctly show what item is empty rather than "signs"
+* Fixed an issue where tams files were incorrectly Identified as 'broken'
+* Improved Maintainability
+
+# TAMS Version 4.0.3.4
+* Updates to generic module.  This module is still considered beta quality
+	* Added new default items for generic module
+* Other bug fixes
+
+BUG FIXES
+------------------------------------------------------
+
+* Fixes a critical bug in generic module that could have caused loss of data.
+* Fixed a bug in the signs module where date selection actually did nothing, now correctly selects the date.
+* Refactored table modifacation into its own fuction.
+	* Function is in the base class project module since it is used by all the modules in TAMS.
+* Made refinements to the roads import tool.
+
+# TAMS version 4.0.3.0
 
 CHANGES
 ------------------------------------------------------
 
-* Added Signs Module
-	* Supports both importing existing shapefiles and creating new ones
-	* Sign posts can be added to shapefile
-	* Signs can be added or removed from post.
-	* Reports can be generated for the signs in the form of CSV lists.
-* Fixed a bug where TAMS would crash of the wrong kind of shapefile was opened (roads need line, signs need point files)
-* Treatment editor can now be closed.
-* Database updated to version 6.
-	* primarily to support Signs module.
-	* New blank database template added so new projects could be created faster.
-	* Also added photos for a few more concrete distresses. Only Patch remains without photo.
-* Fixed a bug regarding event bindings.
+* Implemnts Generic module
+	* generic module behaves the same as the signs module in most reguards
+	* generic module currently supports 4 specific types and 1 fully generic type.
+	* generic moudle must create a new shape file when used.
+* Changes auto suggestion table to better reflect common treatment reccomenations.
+* Database now up to version 8
 
-KOWN ISSUES
-------------------------------------------------------
 
-* Sign posts can be added but not removed
-* Map view (such as open street map) not availible
-* Recommends adding sign by gps coordinate, as adding sign by click by produce interesting results.
-* No legend availabe when saving a snapshot of map.
-* rsl may not be calculated if when directly typing in a number into distress box unless the enter key is pressed or another box is clicked.
-* When toggling road colors on and off in project settings, colors do not update until a road has been saved or until tams has been reloaded.
 
-For information on how to use TAMS please see [the instructions manual on utahltap.org] (https://www.utahltap.org/software/help/).
