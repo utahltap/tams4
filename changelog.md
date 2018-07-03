@@ -1,3 +1,9 @@
+# TAMS Version 4.0.3.6
+
+CHANGES
+------------------------------------------------------
+* Fixed bug in roads module
+
 # TAMS Version 4.0.3.5
 
 CHANGES
