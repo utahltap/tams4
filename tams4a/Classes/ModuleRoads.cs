@@ -322,7 +322,7 @@ namespace tams4a.Classes
             } else {
                 roadControls.groupBoxDistress.Enabled = true;
                 // Update the visible distresses based on surface type
-                updateDistressControls(roadControls.comboBoxSurface.Text);
+                updateDistressControls(roadControls.comboBoxSurface.Text.ToLower());
             }
             roadControls.distress1.Value = Util.DictionaryItemInt(values, "distress1");
             roadControls.distress2.Value = Util.DictionaryItemInt(values, "distress2");
@@ -440,14 +440,14 @@ namespace tams4a.Classes
                 }
             }
 
-            var treatments = Database.GetDataByQuery(Project.conn, "SELECT id, name FROM treatments WHERE road_applied='" + roadControls.comboBoxSurface.Text.ToLower() + "';");
-            DataRow blankSurfaceRow = treatments.NewRow();    //
+            var treatments = Database.GetDataByQuery(Project.conn, "SELECT id, name FROM treatments WHERE road_applied='" + surface + "';");
+            DataRow blankSurfaceRow = treatments.NewRow();      //
             blankSurfaceRow["id"] = 0;                          // add empty row
             blankSurfaceRow["name"] = "";                       //
-            treatments.Rows.InsertAt(blankSurfaceRow, 0);         //
+            treatments.Rows.InsertAt(blankSurfaceRow, 0);       //
             roadControls.comboBoxTreatment.DataSource = treatments;    //
-            roadControls.comboBoxTreatment.DisplayMember = "name";       // sets options
-            roadControls.comboBoxTreatment.ValueMember = "id";           //
+            roadControls.comboBoxTreatment.DisplayMember = "name";     // sets options
+            roadControls.comboBoxTreatment.ValueMember = "id";         //
         }
 
 
