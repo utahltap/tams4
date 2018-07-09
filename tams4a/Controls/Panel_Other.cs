@@ -354,6 +354,7 @@ namespace tams4a.Controls
                     controlSets[key][i].Text = "";
                 }
             }
+            pictureBoxPhoto.Image = null;
         }
 
         public string getProperty(string type, int index)
@@ -381,8 +382,7 @@ namespace tams4a.Controls
             Match mat = rex.Match(oldPhoto);
             if (!mat.Success)
             {
-                textBoxPhotoFile.Text = oldPhoto + "_0001";
-                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
+                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
                 return;
             }
 
@@ -398,12 +398,10 @@ namespace tams4a.Controls
                 nextPhoto += mat.Groups[3].ToString();
 
                 textBoxPhotoFile.Text = nextPhoto;
-                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
             }
             catch
             {
-                textBoxPhotoFile.Text = oldPhoto + "0001";
-                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
+                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
                 return;
             }
         }

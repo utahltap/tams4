@@ -62,7 +62,7 @@ namespace tams4a.Controls
             Match mat = rex.Match(oldPhoto);
             if (!mat.Success)
             {
-                textBoxPhotoFile.Text = oldPhoto + "_0001";
+                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
                 Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
                 return;
             }
@@ -83,7 +83,7 @@ namespace tams4a.Controls
             }
             catch
             {
-                textBoxPhotoFile.Text = oldPhoto + "0001";
+                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
                 Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
                 return;
             }

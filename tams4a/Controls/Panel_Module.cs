@@ -28,5 +28,13 @@ namespace tams4a.Controls
         {
             Handler(sender, e);
         }
+
+        protected string MakePictureNumbered(string oldPhoto)
+        {
+            string[] spl = oldPhoto.Split('.');
+            string bas = spl[0];
+            string ext = "." + spl[spl.Length - 1];
+            return bas + "0001" + ext;
+        }
     }
 }

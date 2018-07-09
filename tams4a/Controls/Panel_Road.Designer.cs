@@ -84,8 +84,8 @@ namespace tams4a.Controls
             this.setOtherDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonHistory = new System.Windows.Forms.ToolStripButton();
             this.btnNotes = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonAnalysis = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonAnalysis = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSidewalk = new System.Windows.Forms.ToolStripButton();
             this.groupBoxDistress.SuspendLayout();
             this.groupBoxInfo.SuspendLayout();
@@ -697,6 +697,11 @@ namespace tams4a.Controls
             this.btnNotes.Size = new System.Drawing.Size(23, 22);
             this.btnNotes.Text = "Create a Note";
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripButtonAnalysis
             // 
             this.toolStripButtonAnalysis.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -706,11 +711,6 @@ namespace tams4a.Controls
             this.toolStripButtonAnalysis.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonAnalysis.Text = "Analysis";
             this.toolStripButtonAnalysis.ToolTipText = "Create Report on Selected Roads";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonSidewalk
             // 

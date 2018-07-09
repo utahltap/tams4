@@ -513,8 +513,9 @@ CREATE TABLE mutcd_lookup (mutcd_code TEXT PRIMARY KEY, description TEXT, sign_t
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_5_immute
+            // minor database fixes
             #region db_update_6_immute
-            if (dbVersion == 5) // minor database fixes
+            if (dbVersion == 5) 
             {
                 try
                 {
@@ -636,6 +637,7 @@ UPDATE mutcd_lookup SET category='location_guide' WHERE category='locational';";
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_7_immute
+            // automatic suggestion table revised
             #region db_update_8_immute
             if (dbVersion == 7)
             {
@@ -728,12 +730,13 @@ CREATE TABLE miscellaneous (TAMSID INTEGER PRIMARY KEY, type TEXT, icon TEXT, ad
                 }
                 Dictionary<string, string> updateDb = new Dictionary<string, string>();
                 updateDb["version"] = "8";
-                dbVersion = 9;
+                dbVersion = 8;
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_8_immute
+            // creates table for roads with sidewalks
             #region db_update_9_immute
-            if (dbVersion == 9)
+            if (dbVersion == 8)
             {
                 try
                 {
@@ -753,6 +756,7 @@ ALTER TABLE miscellaneous ADD property3 TEXT;";
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_9_immute
+            //converts ft to yd
             #region db_update_10_immute
             if (dbVersion == 9)
             {

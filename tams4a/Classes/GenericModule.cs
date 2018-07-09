@@ -115,6 +115,7 @@ namespace tams4a.Classes
 
             panel.setOtherDateToolStripMenuItem.Click += selectRecordDate;
             panel.setTodayToolStripMenuItem.Click += resetRecordDate;
+            panel.pictureBoxPhoto.Click += clickPhotoBox;
             #endregion
 
             setMaxID();
@@ -335,6 +336,11 @@ namespace tams4a.Classes
             values["property2"] = controls.getProperty(values["type"], 1);
             values["property3"] = controls.getProperty(values["type"], 2);
             values["notes"] = controls.getProperty(values["type"], 3);
+
+            if (!string.IsNullOrWhiteSpace(controls.textBoxPhotoFile.Text))
+            {
+                Properties.Settings.Default.lastPhoto = controls.textBoxPhotoFile.Text;
+            }
 
             for (int i = 0; i < tamsids.Count; i++)
             {
@@ -613,6 +619,12 @@ namespace tams4a.Classes
         {
             string[] tables = { ModuleName };
             deleteShape(tamsids[0], tables);
+        }
+
+        private void clickPhotoBox(object sender, EventArgs e)
+        {
+            Panel_Other controls = getOtherControls();
+            enlargePicture(controls.pictureBoxPhoto, controls.textBoxPhotoFile.Text);
         }
     }
 }

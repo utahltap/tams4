@@ -146,6 +146,8 @@ namespace tams4a.Classes
             signPanel.comboBoxConditionSign.TextChanged += signValueChanged;
             signPanel.comboBoxDirection.TextChanged += signValueChanged;
             signPanel.textBoxPhotoFile.TextChanged += signValueChanged;
+            signPanel.pictureBoxPhoto.Click += clickPhotoBox;
+            signPanel.pictureBoxPost.Click += clickPostPhotoBox;
             #endregion eventhandlers
 
             DataTable supportMaterials = Database.GetDataByQuery(Project.conn, "SELECT * FROM support_materials");
@@ -622,6 +624,7 @@ namespace tams4a.Classes
             signControls.comboBoxConditionSign.SelectedIndex = 0;
             signControls.textBoxPhotoFile.Text = "";
             signControls.pictureBoxPhoto.Image = null;
+            signControls.pictureBoxPost.Image = null;
             suppressChanges = false;
             signControls.labelAddress.ForeColor = default(Color);
             signControls.labelAddress.BackColor = default(Color);
@@ -1391,23 +1394,15 @@ namespace tams4a.Classes
             Panel_Sign signControls = getSignControls();
             if (!string.IsNullOrWhiteSpace(signControls.textBoxPhotoFile.Text))
             {
-                try
+                string imageLocation = Project.projectFolderPath + @"\Photos\" + signControls.textBoxPhotoFile.Text;
+                if (File.Exists(imageLocation))
                 {
-                    string imageLocation = Project.projectFolderPath + @"\Photos\" + signControls.textBoxPhotoFile.Text;
-                    if (File.Exists(imageLocation))
-                    {
-                        signControls.pictureBoxPhoto.ImageLocation = imageLocation;
-                    }
-                    else
-                    {
-                        Log.Warning("Missing image file: " + imageLocation);
-                        signControls.toolTip.SetToolTip(signControls.pictureBoxPhoto, "Missing: " + imageLocation);
-                        throw new Exception("Missing image file");
-                    }
+                    signControls.pictureBoxPhoto.ImageLocation = imageLocation;
                 }
-                catch
+                else
                 {
-                    signControls.pictureBoxPhoto.Image = Properties.Resources.error;
+                    Log.Warning("Missing image file: " + imageLocation);
+                    signControls.toolTip.SetToolTip(signControls.pictureBoxPhoto, "Missing: " + imageLocation);
                 }
             }
             else
@@ -1419,34 +1414,13 @@ namespace tams4a.Classes
         private void clickPhotoBox(object sender, EventArgs e)
         {
             Panel_Sign signControls = getSignControls();
-            FormPicture largePic = new FormPicture();
-            if (!string.IsNullOrWhiteSpace(signControls.textBoxPhotoFile.Text))
-            {
-                try
-                {
-                    string imageLocation = Project.projectFolderPath + @"\Photos\" + signControls.textBoxPhotoFile.Text;
+            enlargePicture(signControls.pictureBoxPhoto, signControls.textBoxPhotoFile.Text);
+        }
 
-                    if (File.Exists(imageLocation))
-                    {
-                        largePic.pictureRoad.ImageLocation = imageLocation;
-                    }
-                    else
-                    {
-                        Log.Warning("Missing image file: " + imageLocation);
-                        signControls.toolTip.SetToolTip(signControls.pictureBoxPhoto, "Missing: " + imageLocation);
-                        throw new Exception("Missing image file");
-                    }
-                }
-                catch
-                {
-                    largePic.pictureRoad.Image = Properties.Resources.error;
-                }
-            }
-            else
-            {
-                largePic.pictureRoad.Image = Properties.Resources.nophoto;
-            }
-            largePic.Show();
+        private void clickPostPhotoBox(object sender, EventArgs e)
+        {
+            Panel_Sign signControls = getSignControls();
+            enlargePicture(signControls.pictureBoxPost, signControls.textBoxPhotoPost.Text);
         }
 
         private void clickMap(object sender, EventArgs e)
