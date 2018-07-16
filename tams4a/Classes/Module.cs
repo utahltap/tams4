@@ -604,27 +604,35 @@ namespace tams4a.Classes
             setSymbolizer();
         }
 
-        protected void enlargePicture(PictureBox picture, string source, string subPath = @"\Photos\") {
+        protected void enlargePicture(string source, string subPath = @"\Photos\") {
             FormPicture largePic = new FormPicture();
-            if (!string.IsNullOrWhiteSpace(source))
+            updatePhotoPreview(largePic.pictureRoad, source, subPath);
+            largePic.Show();
+        }
+
+        /// <summary>
+        /// Sets the picture of the provided picture box.
+        /// </summary>
+        /// <param name="preview"></param>
+        protected void updatePhotoPreview(PictureBox preview, string filePath, string subPath = @"\Photos\")
+        {
+            if (!string.IsNullOrEmpty(filePath))
             {
-                string imageLocation = Project.projectFolderPath + subPath + source;
-                
+                string imageLocation = Project.projectFolderPath + @"\Photos\" + filePath;
                 if (File.Exists(imageLocation))
                 {
-                    largePic.pictureRoad.ImageLocation = imageLocation;
+                    preview.ImageLocation = imageLocation;
                 }
                 else
                 {
                     Log.Warning("Missing image file: " + imageLocation);
-                    largePic.pictureRoad.Image = Properties.Resources.error;
+                    preview.Image = Properties.Resources.error;
                 }
             }
             else
             {
-                largePic.pictureRoad.Image = Properties.Resources.nophoto;
+                preview.Image = Properties.Resources.nophoto;
             }
-            largePic.Show();
         }
 
         protected void createReport(string query, Dictionary<string, string> mapping, string sortKey = "ID", string things = "signs")

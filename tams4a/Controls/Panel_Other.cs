@@ -346,6 +346,7 @@ namespace tams4a.Controls
             textBoxAddress.Text = "";
             comboBoxObject.Text = "";
             textBoxPhotoFile.Text = "";
+            pictureBoxPhoto.ImageLocation = null;
             textBoxDescription.Text = "";
             for (int i = 0; i < 3; i ++)
             {

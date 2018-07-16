@@ -756,11 +756,26 @@ ALTER TABLE miscellaneous ADD property3 TEXT;";
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_9_immute
-            //converts ft to yd
+            //adjusts default treatment ranges
             #region db_update_10_immute
             if (dbVersion == 9)
             {
-
+                try
+                {
+                    string cmdString = @"UPDATE treatments SET max_rsl = 2 WHERE name = 'Base and Pavement Replacement';
+UPDATE treatments SET max_rsl = 2 WHERE name = 'Full Depth Reclamation and Overlay';
+ALTER TABLE sign_support ADD photo TEXT;";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "10";
+                dbVersion = 10;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_10_immute
             return true;

@@ -244,6 +244,7 @@ namespace tams4a.Classes
             enableControls();
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
             getOtherControls().updateDisplay(values);
+            updatePhotoPreview(getOtherControls().pictureBoxPhoto, getOtherControls().textBoxPhotoFile.Text);
             resetSaveCondition();
         }
 
@@ -276,36 +277,6 @@ namespace tams4a.Classes
                 throw new Exception("Could not retrieve controls page.\n" + e.ToString());
             }
             return controls;
-        }
-
-        private void updatePhotoPreview()
-        {
-            Panel_Other controls = getOtherControls();
-            if (!string.IsNullOrWhiteSpace(controls.textBoxPhotoFile.Text))
-            {
-                try
-                {
-                    string imageLocation = Project.projectFolderPath + @"\Photos\" + controls.textBoxPhotoFile.Text;
-                    if (File.Exists(imageLocation))
-                    {
-                        controls.pictureBoxPhoto.ImageLocation = imageLocation;
-                    }
-                    else
-                    {
-                        Log.Warning("Missing image file: " + imageLocation);
-                        controls.toolTip.SetToolTip(controls.pictureBoxPhoto, "Missing: " + imageLocation);
-                        throw new Exception("Missing image file");
-                    }
-                }
-                catch
-                {
-                    controls.pictureBoxPhoto.Image = Properties.Resources.error;
-                }
-            }
-            else
-            {
-                controls.pictureBoxPhoto.Image = Properties.Resources.nophoto;
-            }
         }
 
         protected override void controlChanged(object sender, EventArgs e)
@@ -373,7 +344,6 @@ namespace tams4a.Classes
 
             resetSaveCondition();
 
-            updatePhotoPreview();
             Properties.Settings.Default.Save();
             selectionLayer.ClearSelection();
             selectionLayer.DataSet.Save();
@@ -624,7 +594,7 @@ namespace tams4a.Classes
         private void clickPhotoBox(object sender, EventArgs e)
         {
             Panel_Other controls = getOtherControls();
-            enlargePicture(controls.pictureBoxPhoto, controls.textBoxPhotoFile.Text);
+            enlargePicture(controls.textBoxPhotoFile.Text);
         }
     }
 }

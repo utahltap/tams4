@@ -20,7 +20,7 @@ namespace tams4a.Forms
         private decimal[] categoryPercents;
         private Label[] groups;
         private NumericUpDown[] percentages;
-        private DataTable treatment, roadTable, byBudgetResults, byTargetResults;
+        private DataTable treatment, roadTable, byBudgetResults, byTargetResults, treatmentMetaData;
         private Dictionary<string, List<NumericUpDown>> treatmentControls;
         private Dictionary<string, List<TreatmentFastReference>> treatmentData;
         private List<roadData> roads;
