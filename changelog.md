@@ -1,3 +1,11 @@
+# TAMS Version 4.0.4.0
+
+CHANGES
+-----------------------------------------------------
+* Refactor & Bug-fix of modules base
+* Other bug fixes
+* Picturebox bug fixes
+
 # TAMS Version 4.0.3.6
 
 CHANGES
