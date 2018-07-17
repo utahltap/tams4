@@ -17,6 +17,7 @@ namespace tams4a.Classes
     {
         static private readonly string itemSelectionSql = @"SELECT * from miscellaneous WHERE TAMSID IN ([[IDLIST]]);";
         private string notes;
+        private bool inClick = false;
         int maxTAMSID = 0;
         private Dictionary<string, string> icons;
 
@@ -427,8 +428,10 @@ namespace tams4a.Classes
 
         private void clickMap(object sender, EventArgs e)
         {
+            if (inClick) { return; }
             bool hasStreetMap = false;
             bool hasSignMap = false;
+            inClick = true;
             for (int i = 0; i < Project.map.Layers.Count; i++)
             {
                 if (((FeatureLayer)Project.map.Layers[i]).Name.Contains("road"))
@@ -453,6 +456,7 @@ namespace tams4a.Classes
 
         private void addFeatureByClick(object sender, EventArgs e)
         {
+            inClick = false;
             var clickCoords = Project.map.PixelToProj(Project.map.PointToClient(Cursor.Position));
             double[] xy = { clickCoords.X, clickCoords.Y };
             double[] z = { clickCoords.Z };
@@ -462,7 +466,14 @@ namespace tams4a.Classes
                 MessageBox.Show("There appears to be a problem with the projection of your shapefile. Consider reprojecting your shapefiles using ArcMap or MapWindow.");
                 Log.Error("Coordinate is Infinity or NaN " + Environment.NewLine + Environment.StackTrace);
             }
-            addFeature(xy[1], xy[0]);
+            try
+            {
+                addFeature(xy[1], xy[0]);
+            }
+            catch (Exception err)
+            {
+                Log.Error("something went terribly wrong: " + err.ToString());
+            }
             Project.map.Click -= addFeatureByClick;
         }
 

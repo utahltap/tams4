@@ -1435,7 +1435,14 @@ namespace tams4a.Classes
                 MessageBox.Show("There appears to be a problem with the projection of your shapefile. Consider reprojecting your shapefiles using ArcMap or MapWindow.");
                 Log.Error("Coordinate is Infinity or NaN " + Environment.NewLine + Environment.StackTrace);
             }
-            addPost(xy[1], xy[0]);
+            try
+            {
+                addPost(xy[1], xy[0]);
+            }
+            catch (Exception err)
+            {
+                Log.Error("something went terribly wrong: " + err.ToString());
+            }
             Project.map.Click -= addPostByClick;
         }
 
