@@ -1,5 +1,11 @@
-# TAMS Version 4.0.4.0
+# TAMS 4.0.x
 
+# Version 4.0.4.1
+BUG FIXES
+----------------------------------------------------
+* Guard and error handling
+
+# Version 4.0.4.0
 CHANGES
 -----------------------------------------------------
 * Refactor & Bug-fix of modules base
@@ -7,13 +13,11 @@ CHANGES
 * Picturebox bug fixes
 
 # TAMS Version 4.0.3.6
-
 CHANGES
 ------------------------------------------------------
 * Fixed bug in roads module
 
 # TAMS Version 4.0.3.5
-
 CHANGES
 ------------------------------------------------------
 * Added Distribution Graphs to Roads Module
