@@ -1,4 +1,11 @@
 # TAMS 4.0.x
+# Version 4.0.5.0
+----------------------------------------------------
+* recommendation box on sidewalks is now a combo box with four options
+* and the module panel drop down buttons now open the menu on mouse over
+* The add sign/feature buttons can now be directly clicked, and clicking it is the same as clicking click map
+* The order of menu items under those buttons was rearranged for clarity.
+
 
 # Version 4.0.4.1
 BUG FIXES
