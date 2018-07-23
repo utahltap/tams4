@@ -38,9 +38,9 @@
             this.toolStripButtonNotes = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownButtonNewPost = new System.Windows.Forms.ToolStripDropDownButton();
+            this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readGPSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
             this.pictureBoxPost = new System.Windows.Forms.PictureBox();
@@ -169,6 +169,7 @@
             this.toolStripButtonSurveyDate.Size = new System.Drawing.Size(29, 22);
             this.toolStripButtonSurveyDate.Text = "Survey Date";
             this.toolStripButtonSurveyDate.ToolTipText = "Select Survey Date";
+            this.toolStripButtonSurveyDate.MouseEnter += new System.EventHandler(this.ShowDateDropDown);
             // 
             // setTodayToolStripMenuItem
             // 
@@ -201,34 +202,36 @@
             // 
             this.toolStripDropDownButtonNewPost.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripDropDownButtonNewPost.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clickMapToolStripMenuItem,
             this.enterCoordinatesToolStripMenuItem,
-            this.readGPSToolStripMenuItem,
-            this.clickMapToolStripMenuItem});
+            this.readGPSToolStripMenuItem});
             this.toolStripDropDownButtonNewPost.Image = global::tams4a.Properties.Resources.addpost;
             this.toolStripDropDownButtonNewPost.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonNewPost.Name = "toolStripDropDownButtonNewPost";
             this.toolStripDropDownButtonNewPost.Size = new System.Drawing.Size(29, 22);
             this.toolStripDropDownButtonNewPost.Text = "New Post";
             this.toolStripDropDownButtonNewPost.ToolTipText = "Add New Support";
+            this.toolStripDropDownButtonNewPost.MouseEnter += new System.EventHandler(this.ShowDropDown);
+            // 
+            // clickMapToolStripMenuItem
+            // 
+            this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
+            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clickMapToolStripMenuItem.Text = "Click Map";
             // 
             // enterCoordinatesToolStripMenuItem
             // 
             this.enterCoordinatesToolStripMenuItem.Name = "enterCoordinatesToolStripMenuItem";
-            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.enterCoordinatesToolStripMenuItem.Text = "Enter Coordinates";
             // 
             // readGPSToolStripMenuItem
             // 
             this.readGPSToolStripMenuItem.Enabled = false;
             this.readGPSToolStripMenuItem.Name = "readGPSToolStripMenuItem";
-            this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.readGPSToolStripMenuItem.Text = "Read GPS";
-            // 
-            // clickMapToolStripMenuItem
-            // 
-            this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
-            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.clickMapToolStripMenuItem.Text = "Click Map";
+            this.readGPSToolStripMenuItem.Visible = false;
             // 
             // toolStripButtonRemove
             // 
@@ -1003,7 +1006,6 @@
         public System.Windows.Forms.Button buttonFavorite;
         public System.Windows.Forms.Button buttonSignNote;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonNewPost;
         public System.Windows.Forms.ToolStripMenuItem enterCoordinatesToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem readGPSToolStripMenuItem;
         public System.Windows.Forms.ToolStripDropDownButton toolStripButtonSurveyDate;
@@ -1022,5 +1024,6 @@
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Button buttonPhotoPost;
         public System.Windows.Forms.TextBox textBoxPhotoPost;
+        public System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonNewPost;
     }
 }

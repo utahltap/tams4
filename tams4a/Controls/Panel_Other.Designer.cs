@@ -36,8 +36,8 @@
             this.setOtherDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownAddObject = new System.Windows.Forms.ToolStripDropDownButton();
-            this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
             this.groupBoxType = new System.Windows.Forms.GroupBox();
             this.textBoxAddress = new System.Windows.Forms.TextBox();
@@ -104,6 +104,7 @@
             this.toolStripDropDownButtonDate.Size = new System.Drawing.Size(29, 22);
             this.toolStripDropDownButtonDate.Text = "Select Date";
             this.toolStripDropDownButtonDate.ToolTipText = "Select Date";
+            this.toolStripDropDownButtonDate.MouseEnter += new System.EventHandler(this.ShowDateDropDown);
             // 
             // setTodayToolStripMenuItem
             // 
@@ -126,26 +127,27 @@
             // 
             this.toolStripDropDownAddObject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripDropDownAddObject.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enterCoordinatesToolStripMenuItem,
-            this.clickMapToolStripMenuItem});
+            this.clickMapToolStripMenuItem,
+            this.enterCoordinatesToolStripMenuItem});
             this.toolStripDropDownAddObject.Image = global::tams4a.Properties.Resources.baseadd;
             this.toolStripDropDownAddObject.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownAddObject.Name = "toolStripDropDownAddObject";
             this.toolStripDropDownAddObject.Size = new System.Drawing.Size(29, 22);
             this.toolStripDropDownAddObject.Text = "Add Object";
             this.toolStripDropDownAddObject.ToolTipText = "Add Landmark";
-            // 
-            // enterCoordinatesToolStripMenuItem
-            // 
-            this.enterCoordinatesToolStripMenuItem.Name = "enterCoordinatesToolStripMenuItem";
-            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.enterCoordinatesToolStripMenuItem.Text = "Enter Coordinates";
+            this.toolStripDropDownAddObject.MouseEnter += new System.EventHandler(this.ShowDropDown);
             // 
             // clickMapToolStripMenuItem
             // 
             this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
-            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clickMapToolStripMenuItem.Text = "Click Map";
+            // 
+            // enterCoordinatesToolStripMenuItem
+            // 
+            this.enterCoordinatesToolStripMenuItem.Name = "enterCoordinatesToolStripMenuItem";
+            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.enterCoordinatesToolStripMenuItem.Text = "Enter Coordinates";
             // 
             // toolStripButtonRemove
             // 
@@ -323,7 +325,6 @@
         public System.Windows.Forms.TextBox textBoxAddress;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.ToolStripButton toolStripButtonSave;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownAddObject;
         public System.Windows.Forms.ToolStripButton toolStripButtonRemove;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         public System.Windows.Forms.ToolStripButton toolStripButtonCancel;
@@ -335,5 +336,6 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonDate;
         public System.Windows.Forms.ToolStripMenuItem setTodayToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem setOtherDateToolStripMenuItem;
+        public System.Windows.Forms.ToolStripDropDownButton toolStripDropDownAddObject;
     }
 }

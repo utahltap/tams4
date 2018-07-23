@@ -52,9 +52,14 @@ namespace tams4a.Controls
             swBreak.Items.Add("Severe");
             controlSets["Sidewalk"].Add(swBreak);
 
-            TextBox rec3rd = new TextBox();
+            ComboBox rec3rd = new ComboBox();
             rec3rd.Location = new Point(right, 72);
             rec3rd.Size = new Size(112, 20);
+            rec3rd.Items.Add("");
+            rec3rd.Items.Add("Grind");
+            rec3rd.Items.Add("Replace");
+            rec3rd.Items.Add("Watch");
+            rec3rd.Items.Add("Other (see notes)");
             controlSets["Sidewalk"].Add(rec3rd);
 
             TextBox notes = new TextBox();
@@ -346,6 +351,7 @@ namespace tams4a.Controls
             textBoxAddress.Text = "";
             comboBoxObject.Text = "";
             textBoxPhotoFile.Text = "";
+            pictureBoxPhoto.ImageLocation = null;
             textBoxDescription.Text = "";
             for (int i = 0; i < 3; i ++)
             {
@@ -354,6 +360,7 @@ namespace tams4a.Controls
                     controlSets[key][i].Text = "";
                 }
             }
+            pictureBoxPhoto.Image = null;
         }
 
         public string getProperty(string type, int index)
@@ -381,8 +388,7 @@ namespace tams4a.Controls
             Match mat = rex.Match(oldPhoto);
             if (!mat.Success)
             {
-                textBoxPhotoFile.Text = oldPhoto + "_0001";
-                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
+                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
                 return;
             }
 
@@ -398,14 +404,22 @@ namespace tams4a.Controls
                 nextPhoto += mat.Groups[3].ToString();
 
                 textBoxPhotoFile.Text = nextPhoto;
-                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
             }
             catch
             {
-                textBoxPhotoFile.Text = oldPhoto + "0001";
-                Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
+                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
                 return;
             }
+        }
+
+        private void ShowDropDown(object sender, EventArgs e)
+        {
+            toolStripDropDownAddObject.ShowDropDown();
+        }
+
+        private void ShowDateDropDown(object sender, EventArgs e)
+        {
+            toolStripDropDownButtonDate.ShowDropDown();
         }
     }
 }

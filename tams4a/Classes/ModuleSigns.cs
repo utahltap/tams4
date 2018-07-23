@@ -26,6 +26,7 @@ namespace tams4a.Classes
         private List<Dictionary<string, string>> signChanges;
         private Dictionary<string, int> catRank;
         private bool suppressChanges = false;
+        private bool inClick = false;
 
         private const string SignSelectionSql = @"SELECT * from sign_support WHERE support_id IN ([[IDLIST]]);";
 
@@ -123,6 +124,7 @@ namespace tams4a.Classes
             signPanel.buttonFavorite.Click += faveSign;
             signPanel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
             signPanel.clickMapToolStripMenuItem.Click += clickMap;
+            signPanel.toolStripDropDownButtonNewPost.Click += clickMap;
             signPanel.toolStripButtonRemove.Click += deletePost;
             signPanel.toolStripButtonNotes.Click += editNotes;
             signPanel.buttonSignNote.Click += signNote;
@@ -146,6 +148,8 @@ namespace tams4a.Classes
             signPanel.comboBoxConditionSign.TextChanged += signValueChanged;
             signPanel.comboBoxDirection.TextChanged += signValueChanged;
             signPanel.textBoxPhotoFile.TextChanged += signValueChanged;
+            signPanel.pictureBoxPhoto.Click += clickPhotoBox;
+            signPanel.pictureBoxPost.Click += clickPostPhotoBox;
             #endregion eventhandlers
 
             DataTable supportMaterials = Database.GetDataByQuery(Project.conn, "SELECT * FROM support_materials");
@@ -494,6 +498,8 @@ namespace tams4a.Classes
             signControls.labelSurveyDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
             signControls.comboBoxCondition.Text = Util.DictionaryItemString(values, "condition");
             signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "height"));
+            signControls.textBoxPhotoPost.Text = Util.DictionaryItemString(values, "photo");
+            updatePhotoPreview(signControls.pictureBoxPost, signControls.textBoxPhotoPost.Text);
             notes = Util.DictionaryItemString(values, "notes");
             postCat = Util.DictionaryItemString(values, "category");
             if (!string.IsNullOrEmpty(notes))
@@ -562,7 +568,7 @@ namespace tams4a.Classes
             signPanel.textBoxPhotoFile.Text = signChanges[index]["photo"];
             signPanel.buttonFavorite.BackColor = signChanges[index]["favorite"].Contains("true") ? Color.DeepPink : Control.DefaultBackColor;
             suppressChanges = false;
-            updatePhotoPreview();
+            updatePhotoPreview(signPanel.pictureBoxPhoto, signPanel.textBoxPhotoFile.Text);
         }
 
         /// <summary>
@@ -621,7 +627,11 @@ namespace tams4a.Classes
             signControls.comboBoxDirection.SelectedIndex = 0;
             signControls.comboBoxConditionSign.SelectedIndex = 0;
             signControls.textBoxPhotoFile.Text = "";
+            signControls.textBoxPhotoPost.Text = "";
             signControls.pictureBoxPhoto.Image = null;
+            signControls.pictureBoxPost.Image = null;
+            signControls.pictureBoxPhoto.ImageLocation = null;
+            signControls.pictureBoxPost.ImageLocation = null;
             suppressChanges = false;
             signControls.labelAddress.ForeColor = default(Color);
             signControls.labelAddress.BackColor = default(Color);
@@ -714,6 +724,7 @@ namespace tams4a.Classes
             values["material"] = signControls.comboBoxMaterial.Text;
             values["road_offset"] = signControls.numericUpDownOffset.Value.ToString();
             values["height"] = signControls.numericUpDownOffset.Value.ToString();
+            values["photo"] = signControls.textBoxPhotoPost.Text;
             values["category"] = postCat;
             values["notes"] = notes;
 
@@ -768,8 +779,7 @@ namespace tams4a.Classes
             }
             
             resetSaveCondition();
-
-            updatePhotoPreview();
+            
             Properties.Settings.Default.Save();
             selectionLayer.ClearSelection();
             selectionLayer.DataSet.Save();
@@ -1386,71 +1396,24 @@ namespace tams4a.Classes
             }
         }
 
-        private void updatePhotoPreview()
-        {
-            Panel_Sign signControls = getSignControls();
-            if (!string.IsNullOrWhiteSpace(signControls.textBoxPhotoFile.Text))
-            {
-                try
-                {
-                    string imageLocation = Project.projectFolderPath + @"\Photos\" + signControls.textBoxPhotoFile.Text;
-                    if (File.Exists(imageLocation))
-                    {
-                        signControls.pictureBoxPhoto.ImageLocation = imageLocation;
-                    }
-                    else
-                    {
-                        Log.Warning("Missing image file: " + imageLocation);
-                        signControls.toolTip.SetToolTip(signControls.pictureBoxPhoto, "Missing: " + imageLocation);
-                        throw new Exception("Missing image file");
-                    }
-                }
-                catch
-                {
-                    signControls.pictureBoxPhoto.Image = Properties.Resources.error;
-                }
-            }
-            else
-            {
-                signControls.pictureBoxPhoto.Image = Properties.Resources.nophoto;
-            }
-        }
-
         private void clickPhotoBox(object sender, EventArgs e)
         {
             Panel_Sign signControls = getSignControls();
-            FormPicture largePic = new FormPicture();
-            if (!string.IsNullOrWhiteSpace(signControls.textBoxPhotoFile.Text))
-            {
-                try
-                {
-                    string imageLocation = Project.projectFolderPath + @"\Photos\" + signControls.textBoxPhotoFile.Text;
+            enlargePicture(signControls.textBoxPhotoFile.Text);
+        }
 
-                    if (File.Exists(imageLocation))
-                    {
-                        largePic.pictureRoad.ImageLocation = imageLocation;
-                    }
-                    else
-                    {
-                        Log.Warning("Missing image file: " + imageLocation);
-                        signControls.toolTip.SetToolTip(signControls.pictureBoxPhoto, "Missing: " + imageLocation);
-                        throw new Exception("Missing image file");
-                    }
-                }
-                catch
-                {
-                    largePic.pictureRoad.Image = Properties.Resources.error;
-                }
-            }
-            else
-            {
-                largePic.pictureRoad.Image = Properties.Resources.nophoto;
-            }
-            largePic.Show();
+        private void clickPostPhotoBox(object sender, EventArgs e)
+        {
+            Panel_Sign signControls = getSignControls();
+            enlargePicture(signControls.textBoxPhotoPost.Text);
         }
 
         private void clickMap(object sender, EventArgs e)
         {
+            if (inClick)
+            {
+                return;
+            }
             bool hasStreetMap = false;
             for (int i = 0; i < Project.map.Layers.Count; i++)
             {
@@ -1473,12 +1436,20 @@ namespace tams4a.Classes
             double[] xy = { clickCoords.X, clickCoords.Y };
             double[] z = { clickCoords.Z};
             DotSpatial.Projections.Reproject.ReprojectPoints(xy, z, Project.map.Projection, DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984, 0, 1);
+            inClick = false;
             if (double.IsInfinity(xy[0]) || double.IsInfinity(xy[1]))
             {
                 MessageBox.Show("There appears to be a problem with the projection of your shapefile. Consider reprojecting your shapefiles using ArcMap or MapWindow.");
                 Log.Error("Coordinate is Infinity or NaN " + Environment.NewLine + Environment.StackTrace);
             }
-            addPost(xy[1], xy[0]);
+            try
+            {
+                addPost(xy[1], xy[0]);
+            }
+            catch (Exception err)
+            {
+                Log.Error("something went terribly wrong: " + err.ToString());
+            }
             Project.map.Click -= addPostByClick;
         }
 

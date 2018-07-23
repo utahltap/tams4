@@ -17,6 +17,7 @@ namespace tams4a.Classes
     {
         static private readonly string itemSelectionSql = @"SELECT * from miscellaneous WHERE TAMSID IN ([[IDLIST]]);";
         private string notes;
+        private bool inClick = false;
         int maxTAMSID = 0;
         private Dictionary<string, string> icons;
 
@@ -110,11 +111,13 @@ namespace tams4a.Classes
             panel.toolStripButtonSave.Click += saveHandler;
             panel.toolStripButtonCancel.Click += cancelChanges;
             panel.clickMapToolStripMenuItem.Click += clickMap;
+            panel.toolStripDropDownAddObject.Click += clickMap;
             panel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
             panel.toolStripButtonRemove.Click += deleteFeature;
 
             panel.setOtherDateToolStripMenuItem.Click += selectRecordDate;
             panel.setTodayToolStripMenuItem.Click += resetRecordDate;
+            panel.pictureBoxPhoto.Click += clickPhotoBox;
             #endregion
 
             setMaxID();
@@ -243,6 +246,7 @@ namespace tams4a.Classes
             enableControls();
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
             getOtherControls().updateDisplay(values);
+            updatePhotoPreview(getOtherControls().pictureBoxPhoto, getOtherControls().textBoxPhotoFile.Text);
             resetSaveCondition();
         }
 
@@ -277,36 +281,6 @@ namespace tams4a.Classes
             return controls;
         }
 
-        private void updatePhotoPreview()
-        {
-            Panel_Other controls = getOtherControls();
-            if (!string.IsNullOrWhiteSpace(controls.textBoxPhotoFile.Text))
-            {
-                try
-                {
-                    string imageLocation = Project.projectFolderPath + @"\Photos\" + controls.textBoxPhotoFile.Text;
-                    if (File.Exists(imageLocation))
-                    {
-                        controls.pictureBoxPhoto.ImageLocation = imageLocation;
-                    }
-                    else
-                    {
-                        Log.Warning("Missing image file: " + imageLocation);
-                        controls.toolTip.SetToolTip(controls.pictureBoxPhoto, "Missing: " + imageLocation);
-                        throw new Exception("Missing image file");
-                    }
-                }
-                catch
-                {
-                    controls.pictureBoxPhoto.Image = Properties.Resources.error;
-                }
-            }
-            else
-            {
-                controls.pictureBoxPhoto.Image = Properties.Resources.nophoto;
-            }
-        }
-
         protected override void controlChanged(object sender, EventArgs e)
         {
             Panel_Other controls = getOtherControls();
@@ -335,6 +309,11 @@ namespace tams4a.Classes
             values["property2"] = controls.getProperty(values["type"], 1);
             values["property3"] = controls.getProperty(values["type"], 2);
             values["notes"] = controls.getProperty(values["type"], 3);
+
+            if (!string.IsNullOrWhiteSpace(controls.textBoxPhotoFile.Text))
+            {
+                Properties.Settings.Default.lastPhoto = controls.textBoxPhotoFile.Text;
+            }
 
             for (int i = 0; i < tamsids.Count; i++)
             {
@@ -367,7 +346,6 @@ namespace tams4a.Classes
 
             resetSaveCondition();
 
-            updatePhotoPreview();
             Properties.Settings.Default.Save();
             selectionLayer.ClearSelection();
             selectionLayer.DataSet.Save();
@@ -451,8 +429,10 @@ namespace tams4a.Classes
 
         private void clickMap(object sender, EventArgs e)
         {
+            if (inClick) { return; }
             bool hasStreetMap = false;
             bool hasSignMap = false;
+            inClick = true;
             for (int i = 0; i < Project.map.Layers.Count; i++)
             {
                 if (((FeatureLayer)Project.map.Layers[i]).Name.Contains("road"))
@@ -477,6 +457,7 @@ namespace tams4a.Classes
 
         private void addFeatureByClick(object sender, EventArgs e)
         {
+            inClick = false;
             var clickCoords = Project.map.PixelToProj(Project.map.PointToClient(Cursor.Position));
             double[] xy = { clickCoords.X, clickCoords.Y };
             double[] z = { clickCoords.Z };
@@ -486,7 +467,14 @@ namespace tams4a.Classes
                 MessageBox.Show("There appears to be a problem with the projection of your shapefile. Consider reprojecting your shapefiles using ArcMap or MapWindow.");
                 Log.Error("Coordinate is Infinity or NaN " + Environment.NewLine + Environment.StackTrace);
             }
-            addFeature(xy[1], xy[0]);
+            try
+            {
+                addFeature(xy[1], xy[0]);
+            }
+            catch (Exception err)
+            {
+                Log.Error("something went terribly wrong: " + err.ToString());
+            }
             Project.map.Click -= addFeatureByClick;
         }
 
@@ -613,6 +601,12 @@ namespace tams4a.Classes
         {
             string[] tables = { ModuleName };
             deleteShape(tamsids[0], tables);
+        }
+
+        private void clickPhotoBox(object sender, EventArgs e)
+        {
+            Panel_Other controls = getOtherControls();
+            enlargePicture(controls.textBoxPhotoFile.Text);
         }
     }
 }

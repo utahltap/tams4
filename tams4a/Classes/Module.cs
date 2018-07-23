@@ -8,6 +8,7 @@ using tams4a.Forms;
 using System.Windows.Forms;
 using System.Data;
 using DotSpatial.Symbology;
+using System.IO;
 
 namespace tams4a.Classes
 {
@@ -84,14 +85,14 @@ namespace tams4a.Classes
         /// <param name="thePath"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public virtual Boolean openFile(String thePath="", String type="")
+        public virtual Boolean openFile(String thePath = "", String type = "")
         {
             if (isOpen())
             {
                 Log.Error("Module " + ModuleName + "attempted to open file (" + thePath + ") when file was already opened (" + Filepath + ")");
                 return false;
             }
-            
+
             // if we didn't specify a path in this call, check the data member "Filepath"
             if (thePath == "")
             {
@@ -142,8 +143,8 @@ namespace tams4a.Classes
             }
 
             // set shpfile setting for this module
-            ProjectSetting shpSetting = new ProjectSetting(name:ModuleName+"_file", value:Filepath, module:ModuleName);
-            ProjectSetting shpRelative = new ProjectSetting(name: ModuleName + "_relative", value: Util.MakeRelativePath(Properties.Settings.Default.lastProject, Filepath), module:ModuleName);
+            ProjectSetting shpSetting = new ProjectSetting(name: ModuleName + "_file", value: Filepath, module: ModuleName);
+            ProjectSetting shpRelative = new ProjectSetting(name: ModuleName + "_relative", value: Util.MakeRelativePath(Properties.Settings.Default.lastProject, Filepath), module: ModuleName);
             Project.settings.SetSetting(shpSetting);
             Project.settings.SetSetting(shpRelative);
 
@@ -159,7 +160,7 @@ namespace tams4a.Classes
 
             checkSettings();
             select();
-            
+
             Log.Note("Loaded road file " + thePath);
             return true;
         }
@@ -277,7 +278,7 @@ namespace tams4a.Classes
                 {
                     if (!openFile(filename))
                     {
-                        if(MessageBox.Show("Could not load " + ModuleName + " file (" + filename + "). It is possible that the file was moved or deleted. Would you like to manual locate this file?", "File not Found", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        if (MessageBox.Show("Could not load " + ModuleName + " file (" + filename + "). It is possible that the file was moved or deleted. Would you like to manual locate this file?", "File not Found", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             OpenFileDialog openDialog = new OpenFileDialog();
                             openDialog.Filter = "SHP Files|*.shp";
@@ -313,10 +314,10 @@ namespace tams4a.Classes
                         }
                     }
                 }
-                
+
             }
         }
-        
+
         public bool checkSettings()
         {
             return Project.settings.CheckRequired(ModuleName);
@@ -467,10 +468,10 @@ namespace tams4a.Classes
         {
             Dictionary<String, String> shpValues = new Dictionary<string, string>();
             selectionValues = new List<Dictionary<string, string>>();
-            
+
             // load up values from shp file (to be overridden if present in DB)
             consolidateDictionary(selectionTable, ref shpValues);
-            
+
             // Get list of TAMSIDs from selection to use for DB selection
             String thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
 
@@ -479,7 +480,7 @@ namespace tams4a.Classes
             try
             {
                 DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
-                
+
                 // HERE:  Problem is that if the shp file has one value and DB has a different value, 
                 // then this won't work.
                 foreach (DataRow row in resultsTable.Rows)
@@ -513,7 +514,7 @@ namespace tams4a.Classes
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             return extractTAMSIDs(selection, tamsidcolumn);
         }
-        
+
         protected string extractTAMSIDs(DataTable selection, string tamsidcolumn)
         {
             string tamsids = "";
@@ -601,6 +602,37 @@ namespace tams4a.Classes
             }
             selectionLayer.DataSet.Save();
             setSymbolizer();
+        }
+
+        protected void enlargePicture(string source, string subPath = @"\Photos\") {
+            FormPicture largePic = new FormPicture();
+            updatePhotoPreview(largePic.pictureRoad, source, subPath);
+            largePic.Show();
+        }
+
+        /// <summary>
+        /// Sets the picture of the provided picture box.
+        /// </summary>
+        /// <param name="preview"></param>
+        protected void updatePhotoPreview(PictureBox preview, string filePath, string subPath = @"\Photos\")
+        {
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                string imageLocation = Project.projectFolderPath + @"\Photos\" + filePath;
+                if (File.Exists(imageLocation))
+                {
+                    preview.ImageLocation = imageLocation;
+                }
+                else
+                {
+                    Log.Warning("Missing image file: " + imageLocation);
+                    preview.Image = Properties.Resources.error;
+                }
+            }
+            else
+            {
+                preview.Image = Properties.Resources.nophoto;
+            }
         }
 
         protected void createReport(string query, Dictionary<string, string> mapping, string sortKey = "ID", string things = "signs")

@@ -313,7 +313,7 @@ namespace tams4a.Classes
 
             roadControls.textBoxPhotoFile.Text = Util.DictionaryItemString(values, "photo");
             roadControls.toolTip.SetToolTip(roadControls.pictureBoxPhoto, "");
-            updatePhotoPreview();
+            updatePhotoPreview(roadControls.pictureBoxPhoto, roadControls.textBoxPhotoFile.Text);
 
             // distress controls
             if (string.IsNullOrWhiteSpace(roadControls.comboBoxSurface.Text))
@@ -345,40 +345,7 @@ namespace tams4a.Classes
 
             resetSaveCondition();
         }
-
-
-        // sets the photo preview to whatever the textbox says.
-        private void updatePhotoPreview()
-        {
-            Panel_Road roadControls = getRoadControls();
-            if (!string.IsNullOrWhiteSpace(roadControls.textBoxPhotoFile.Text))
-            {
-                try
-                {
-                    string imageLocation = Project.projectFolderPath + @"\Photos\" + roadControls.textBoxPhotoFile.Text;
-                    if (File.Exists(imageLocation))
-                    {
-                        roadControls.pictureBoxPhoto.ImageLocation = imageLocation;
-                    }
-                    else
-                    {
-                        Log.Warning("Missing image file: " + imageLocation);
-                        roadControls.toolTip.SetToolTip(roadControls.pictureBoxPhoto, "Missing: " + imageLocation);
-                        throw new Exception("Missing image file");
-                    }
-                }
-                catch
-                {
-                    roadControls.pictureBoxPhoto.Image = Properties.Resources.error;
-                }
-            }
-            else
-            {
-                roadControls.pictureBoxPhoto.Image = Properties.Resources.nophoto;
-            }
-        }
-
-
+        
         // Set everything as though no changes have been made
         private void resetSaveCondition()
         {
@@ -630,7 +597,6 @@ namespace tams4a.Classes
             }
             resetSaveCondition();
 
-            updatePhotoPreview();
             Properties.Settings.Default.Save();
 
             selectionLayer.ClearSelection();
@@ -829,11 +795,10 @@ namespace tams4a.Classes
 
             int[] rslfloor = { 0, 1, 5, 9, 13, 17 };
             int[] rslceil = { 0, 4, 8, 12, 16, 20 };
-            int[] r = { 255, 240, 250, 100, 5, 35 };
-            int[] g = { 5, 130, 250, 200, 255, 100 };
-            int[] b = { 5, 5, 5, 30, 10, 255 };
-
-            // add rsl categories
+            int[] r = { 255, 230, 250, 80, 0, 30 };
+            int[] g = { 5, 130, 250, 210, 255, 90 };
+            int[] b = { 5, 10, 5, 20, 40, 250 };
+            
             if (Project.settings.GetValue("road_colours").Contains("t"))
             {
                 int j = 0;
@@ -887,53 +852,25 @@ namespace tams4a.Classes
             defCat.LegendText = "Not Surveyed";
 
             rdScheme.AddCategory(defCat);
+            ((MapLineLayer)Layer).ShowLabels = false;
 
             FeatureLayer roadFeatures = Layer as FeatureLayer;
-            //roadFeatures
+            
             if (!string.IsNullOrEmpty(Project.settings.GetValue("road_labels")))
             {
                 roadFeatures.AddLabels("[" + Project.settings.GetValue(ModuleName + "_f_streetname") + "]",
                         new Font("Tahoma", (float)8.0), Color.Black);
-                roadFeatures.ShowLabels = Project.settings.GetValue("road_f_streetname").Contains("true");
+                roadFeatures.ShowLabels = Project.settings.GetValue("road_labels").Contains("true");
             }
-            /*
-            ((DotSpatial.Controls.MapLineLayer)Layer).ShowLabels = true;
-            */
+
             ((MapLineLayer)Layer).Symbology = rdScheme;
             ((MapLineLayer)Layer).ApplyScheme(rdScheme);
         }
 
         private void clickPhotoBox(object sender, EventArgs e)
-        {
+        { 
             Panel_Road roadControls = getRoadControls();
-            FormPicture largePic = new FormPicture();
-            if (!string.IsNullOrWhiteSpace(roadControls.textBoxPhotoFile.Text))
-            {
-                try
-                {
-                    string imageLocation = Project.projectFolderPath + @"\Photos\" + roadControls.textBoxPhotoFile.Text;
-
-                    if (File.Exists(imageLocation))
-                    {
-                        largePic.pictureRoad.ImageLocation = imageLocation;
-                    }
-                    else
-                    {
-                        Log.Warning("Missing image file: " + imageLocation);
-                        roadControls.toolTip.SetToolTip(roadControls.pictureBoxPhoto, "Missing: " + imageLocation);
-                        throw new Exception("Missing image file");
-                    }
-                }
-                catch
-                {
-                    largePic.pictureRoad.Image = Properties.Resources.error;
-                }
-            }
-            else
-            {
-                largePic.pictureRoad.Image = Properties.Resources.nophoto;
-            }
-            largePic.Show();
+            enlargePicture(roadControls.textBoxPhotoFile.Text);
         }
 
         public void showHistory(object sender, EventArgs e)
@@ -995,7 +932,7 @@ namespace tams4a.Classes
                     {
                         nr["Treatment"] = row["suggested_treatment"];
                         string treatmentCost = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments WHERE name = '" + row["suggested_treatment"].ToString() + "';").Rows[0]["cost"].ToString();
-                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;//Note: Treatment cost is per square yard. Road dimensions are in ft.
+                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;//Note: Treatment cost is per square yard. Road dimensions are in yd.
                         if (estCost > 1000000)
                         {
                             nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
@@ -1165,7 +1102,7 @@ namespace tams4a.Classes
                     {
                         nr["Treatment"] = row["suggested_treatment"];
                         string treatmentCost = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments WHERE name = '" + row["suggested_treatment"].ToString() + "';").Rows[0]["cost"].ToString();
-                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;//Note: Treatment cost is per square yard. Road dimensions are in ft.
+                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;//Note: Treatment cost is per square yard. Road dimensions are in yd.
                         if (estCost > 1000000)
                         {
                             nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
@@ -1422,38 +1359,38 @@ namespace tams4a.Classes
                 double totalArea = 0.0;
                 foreach (DataRow row in roadTable.Rows)
                 {
-                    foreach (string key in roadArea.Keys)
+                    for (int i = 0; i < roadTypes.Length; i++)
                     {
-                        if (row[column].ToString().Contains(key))
+                        if (row[column].ToString().Contains(roadTypes[i]))
                         {
                             totalArea += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
-                            roadArea[key] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                            roadArea[roadTypes[i]] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
                         }
                     }
-                    DataTable results = new DataTable();
-                    results.Columns.Add("Distribution");
-                    for (int i = 0; i < roadTypes.Length; i++)
-                    {
-                        results.Columns.Add(Util.UppercaseFirst(roadTypes[i]));
-                    }
-                    DataRow totalsRow = results.NewRow();
-                    DataRow percentageRow = results.NewRow();
-                    totalsRow["Distribution"] = "Area (sqr. ft.)";
-                    percentageRow["Distribution"] = "Percentage";
-                    string[] domain = new string[roadTypes.Length];
-                    double[] range = new double[roadTypes.Length];
-                    for (int i = 0; i < roadTypes.Length; i++)
-                    {
-                        totalsRow[Util.UppercaseFirst(roadTypes[i])] = roadArea[roadTypes[i]];
-                        percentageRow[Util.UppercaseFirst(roadTypes[i])] = Math.Round(roadArea[roadTypes[i]] / totalArea, 3) * 100;
-                        domain[i] = roadTypes[i];
-                        range[i] = Math.Round(roadArea[roadTypes[i]] / totalArea, 3) * 100;
-                    }
-                    results.Rows.Add(totalsRow);
-                    results.Rows.Add(percentageRow);
-                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, "Road " + Util.UppercaseFirst(column) + " Distribution", c);
-                    graph.Show();
                 }
+                DataTable results = new DataTable();
+                results.Columns.Add("Distribution");
+                for (int i = 0; i < roadTypes.Length; i++)
+                {
+                    results.Columns.Add(Util.UppercaseFirst(roadTypes[i]));
+                }
+                DataRow totalsRow = results.NewRow();
+                DataRow percentageRow = results.NewRow();
+                totalsRow["Distribution"] = "Area (sqr. ft.)";
+                percentageRow["Distribution"] = "Percentage";
+                string[] domain = new string[roadTypes.Length];
+                double[] range = new double[roadTypes.Length];
+                for (int i = 0; i < roadTypes.Length; i++)
+                {
+                    totalsRow[Util.UppercaseFirst(roadTypes[i])] = roadArea[roadTypes[i]];
+                    percentageRow[Util.UppercaseFirst(roadTypes[i])] = Math.Round(roadArea[roadTypes[i]] / totalArea, 3) * 100;
+                    domain[i] = roadTypes[i];
+                    range[i] = Math.Round(roadArea[roadTypes[i]] / totalArea, 3) * 100;
+                }
+                results.Rows.Add(totalsRow);
+                results.Rows.Add(percentageRow);
+                FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, "Road " + Util.UppercaseFirst(column) + " Distribution", c);
+                graph.Show();
             }
             catch (Exception err)
             {
@@ -1580,11 +1517,11 @@ namespace tams4a.Classes
                         }
                         for (int i = 0; i < categories.Length; i++)
                         {
-                            if (rsl < caps[i])
+                            if (rsl <= caps[i])
                             {
                                 totalArea += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
                                 rslArea[categories[i]] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
-                                continue;
+                                break;
                             }
                         }
                     }
