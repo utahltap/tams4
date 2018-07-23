@@ -52,9 +52,14 @@ namespace tams4a.Controls
             swBreak.Items.Add("Severe");
             controlSets["Sidewalk"].Add(swBreak);
 
-            TextBox rec3rd = new TextBox();
+            ComboBox rec3rd = new ComboBox();
             rec3rd.Location = new Point(right, 72);
             rec3rd.Size = new Size(112, 20);
+            rec3rd.Items.Add("");
+            rec3rd.Items.Add("Grind");
+            rec3rd.Items.Add("Replace");
+            rec3rd.Items.Add("Watch");
+            rec3rd.Items.Add("Other (see notes)");
             controlSets["Sidewalk"].Add(rec3rd);
 
             TextBox notes = new TextBox();
@@ -405,6 +410,16 @@ namespace tams4a.Controls
                 textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
                 return;
             }
+        }
+
+        private void ShowDropDown(object sender, EventArgs e)
+        {
+            toolStripDropDownAddObject.ShowDropDown();
+        }
+
+        private void ShowDateDropDown(object sender, EventArgs e)
+        {
+            toolStripDropDownButtonDate.ShowDropDown();
         }
     }
 }

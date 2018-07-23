@@ -262,6 +262,24 @@ namespace tams4a.Forms
             yearlyTreatment.Add(DateTime.Now.Year, currentYear);
         }
 
+        private void resetTablesForByBudget()
+        {
+            byBudgetResults = new DataTable();
+            byBudgetResults.Columns.Add("Year");
+            string[] rslLabels = getRSLlabels(categoryRSL);
+            for (int i = 0; i < rslLabels.Length; i++)
+            {
+                byBudgetResults.Columns.Add(rslLabels[i]);
+            }
+            byBudgetResults.Columns.Add("Cost");
+            treatmentMetaData = new DataTable();
+            treatmentMetaData.Columns.Add("Year");
+            foreach (DataRow row in treatment.Rows)
+            {
+                treatmentMetaData.Columns.Add(row["name"].ToString());
+            }
+        }
+
         /// <summary>
         /// Called when compute RSL is click, runs a simulation of road maintenance upto 10 years into the future.
         /// </summary>
@@ -278,14 +296,8 @@ namespace tams4a.Forms
                     return;
                 }
             }
-            byBudgetResults = new DataTable();
-            byBudgetResults.Columns.Add("Year");
             string[] rslLabels = getRSLlabels(categoryRSL);
-            for (int i = 0; i < rslLabels.Length; i++)
-            {
-                byBudgetResults.Columns.Add(rslLabels[i]);
-            }
-            byBudgetResults.Columns.Add("Cost");
+            resetTablesForByBudget();
             List<roadData> rd = new List<roadData>();
             for (int i = 0; i < roads.Count; i++)
             {

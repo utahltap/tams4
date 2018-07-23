@@ -88,5 +88,15 @@ namespace tams4a.Controls
                 return;
             }
         }
+
+        private void ShowDropDown(object sender, EventArgs e)
+        {
+            toolStripDropDownButtonNewPost.ShowDropDown();
+        }
+
+        private void ShowDateDropDown(object sender, EventArgs e)
+        {
+            toolStripButtonSurveyDate.ShowDropDown();
+        }
     }
 }

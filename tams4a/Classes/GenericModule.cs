@@ -111,6 +111,7 @@ namespace tams4a.Classes
             panel.toolStripButtonSave.Click += saveHandler;
             panel.toolStripButtonCancel.Click += cancelChanges;
             panel.clickMapToolStripMenuItem.Click += clickMap;
+            panel.toolStripDropDownAddObject.Click += clickMap;
             panel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
             panel.toolStripButtonRemove.Click += deleteFeature;
 

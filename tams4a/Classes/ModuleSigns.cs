@@ -26,6 +26,7 @@ namespace tams4a.Classes
         private List<Dictionary<string, string>> signChanges;
         private Dictionary<string, int> catRank;
         private bool suppressChanges = false;
+        private bool inClick = false;
 
         private const string SignSelectionSql = @"SELECT * from sign_support WHERE support_id IN ([[IDLIST]]);";
 
@@ -123,6 +124,7 @@ namespace tams4a.Classes
             signPanel.buttonFavorite.Click += faveSign;
             signPanel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
             signPanel.clickMapToolStripMenuItem.Click += clickMap;
+            signPanel.toolStripDropDownButtonNewPost.Click += clickMap;
             signPanel.toolStripButtonRemove.Click += deletePost;
             signPanel.toolStripButtonNotes.Click += editNotes;
             signPanel.buttonSignNote.Click += signNote;
@@ -1408,6 +1410,10 @@ namespace tams4a.Classes
 
         private void clickMap(object sender, EventArgs e)
         {
+            if (inClick)
+            {
+                return;
+            }
             bool hasStreetMap = false;
             for (int i = 0; i < Project.map.Layers.Count; i++)
             {
@@ -1430,6 +1436,7 @@ namespace tams4a.Classes
             double[] xy = { clickCoords.X, clickCoords.Y };
             double[] z = { clickCoords.Z};
             DotSpatial.Projections.Reproject.ReprojectPoints(xy, z, Project.map.Projection, DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984, 0, 1);
+            inClick = false;
             if (double.IsInfinity(xy[0]) || double.IsInfinity(xy[1]))
             {
                 MessageBox.Show("There appears to be a problem with the projection of your shapefile. Consider reprojecting your shapefiles using ArcMap or MapWindow.");

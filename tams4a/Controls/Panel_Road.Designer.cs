@@ -663,19 +663,20 @@ namespace tams4a.Controls
             this.buttonSetDate.Name = "buttonSetDate";
             this.buttonSetDate.Size = new System.Drawing.Size(29, 22);
             this.buttonSetDate.Text = "Set Record Date";
+            this.buttonSetDate.MouseEnter += new System.EventHandler(this.ShowDropDownDate);
             // 
             // setTodayToolStripMenuItem
             // 
             this.setTodayToolStripMenuItem.Checked = true;
             this.setTodayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.setTodayToolStripMenuItem.Name = "setTodayToolStripMenuItem";
-            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.setTodayToolStripMenuItem.Text = "Set Today";
             // 
             // setOtherDateToolStripMenuItem
             // 
             this.setOtherDateToolStripMenuItem.Name = "setOtherDateToolStripMenuItem";
-            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.setOtherDateToolStripMenuItem.Text = "Set Other Date";
             // 
             // buttonHistory
