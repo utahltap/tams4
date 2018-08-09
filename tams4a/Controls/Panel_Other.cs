@@ -411,15 +411,5 @@ namespace tams4a.Controls
                 return;
             }
         }
-
-        private void ShowDropDown(object sender, EventArgs e)
-        {
-            toolStripDropDownAddObject.ShowDropDown();
-        }
-
-        private void ShowDateDropDown(object sender, EventArgs e)
-        {
-            toolStripDropDownButtonDate.ShowDropDown();
-        }
     }
 }

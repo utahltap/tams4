@@ -254,7 +254,7 @@ namespace tams4a.Forms
                 nu.Size = new Size(60, 15);
                 tg[cat].Controls.Add(nu);
                 treatmentControls[cat].Add(nu);
-                treatmentData[cat].Add(new TreatmentFastReference(Util.ToDouble(row["cost"].ToString()), cat, Util.ToInt(row["min_rsl"].ToString()), Util.ToInt(row["max_rsl"].ToString()), Util.ToInt(row["average_boost"].ToString())));
+                treatmentData[cat].Add(new TreatmentFastReference(Util.ToDouble(row["cost"].ToString()), row["name"].ToString(), Util.ToInt(row["min_rsl"].ToString()), Util.ToInt(row["max_rsl"].ToString()), Util.ToInt(row["average_boost"].ToString())));
                 currentYear[cat].Add(0);
                 nu.ValueChanged += computeTotalTreatedArea;
                 ty[cat] += 24;
@@ -314,12 +314,12 @@ namespace tams4a.Forms
                 {
                     nr[rslLabels[j]] = Math.Round(cp[j] * 100);
                 }
-                Dictionary<string, decimal[]> atp = new Dictionary<string, decimal[]>()
+                Dictionary<string, List<decimal>> atp = new Dictionary<string, List<decimal>>()
                 {
-                    { "routine", new decimal[treatmentControls["routine"].Count]},
-                    { "preventative", new decimal[treatmentControls["preventative"].Count]},
-                    { "rehabilitation", new decimal[treatmentControls["rehabilitation"].Count]},
-                    { "reconstruction", new decimal[treatmentControls["reconstruction"].Count]}
+                    { "routine", new List<decimal>(new decimal[treatmentControls["routine"].Count])},
+                    { "preventative", new List<decimal>(new decimal[treatmentControls["preventative"].Count])},
+                    { "rehabilitation", new List<decimal>(new decimal[treatmentControls["rehabilitation"].Count])},
+                    { "reconstruction", new List<decimal>(new decimal[treatmentControls["reconstruction"].Count])}
                 };
                 string[] cat = { "routine", "preventative", "rehabilitation", "reconstruction"};
                 for (int j = 0; j < rd.Count; j++)
@@ -352,6 +352,14 @@ namespace tams4a.Forms
                 {
                     nr["Cost"] = ((int)(cost / 1000)).ToString() + " k";
                 }
+                DataRow planned = treatmentMetaData.NewRow();
+                planned["Year"] = nr["Year"].ToString() + " Planned";
+                DataRow actualExpected = treatmentMetaData.NewRow();
+                actualExpected["Year"] = nr["Year"].ToString() + " Expected Required";
+                mapTreatmentsToTableRow(planned, yearlyTreatment[DateTime.Now.Year + i]);
+                mapTreatmentsToTableRow(actualExpected, atp);
+                treatmentMetaData.Rows.Add(planned);
+                treatmentMetaData.Rows.Add(actualExpected);
                 byBudgetResults.Rows.Add(nr);
             }
             chartBudgetRSL.Invalidate();
@@ -368,6 +376,7 @@ namespace tams4a.Forms
             }
             chartBudgetRSL.Show();
             dataGridViewRSL.DataSource = byBudgetResults;
+            dataGridViewMetaData.DataSource = treatmentMetaData;
             for (int i = 0; i < dataGridViewRSL.Columns.Count; i++)
             {
                 dataGridViewRSL.Columns[i].Width = 1012/dataGridViewRSL.Columns.Count;
@@ -383,20 +392,32 @@ namespace tams4a.Forms
         /// <param name="atp"></param>
         /// <param name='c'></param>
         /// <returns></returns>
-        private bool examineCategory(string cat, roadData rd, Dictionary<string, decimal[]> atp, int yr, out double c)
+        private bool examineCategory(string cat, roadData rd, Dictionary<string, List<decimal>> atp, int yr, out double c)
         {
             for (int i = 0; i < treatmentData[cat].Count; i++)
             {
-                if (rd.RSL <= treatmentData[cat][i].max_rsl && rd.RSL >= treatmentData[cat][i].min_rsl && atp[cat][i] < yearlyTreatment[yr][cat][i])
+                decimal roadPercent = (rd.area / totalArea) * 100;
+                if (rd.RSL <= treatmentData[cat][i].max_rsl && rd.RSL >= treatmentData[cat][i].min_rsl && atp[cat][i] + roadPercent < yearlyTreatment[yr][cat][i])
                 {
                     rd.RSL += treatmentData[cat][i].average_boost;
-                    atp[cat][i] += (rd.area / totalArea) * 100;
+                    atp[cat][i] += roadPercent;
                     c = treatmentData[cat][i].cost * (double)rd.area/9; //Note: road dimensions are in feet, the treat costs are per square yard.
                     return true;
                 }
             }
             c = 0;
             return false;
+        }
+
+        private void mapTreatmentsToTableRow(DataRow row, Dictionary<string, List<decimal>> treatment)
+        {
+            foreach (string key in treatment.Keys)
+            {
+                for (int i = 0; i < treatment[key].Count; i++)
+                {
+                    row[treatmentData[key][i].name] = Math.Round(treatment[key][i], 3);
+                }
+            }
         }
 
         /// <summary>

@@ -247,7 +247,6 @@ namespace tams4a.Classes
                     String fieldName = Project.settings.GetValue(pair.Key);
                     if (data.Columns.Contains(fieldName))
                     {
-                        // make a copy in the correct location of anything we DO need
                         values[pair.Value] = row[fieldName].ToString();
                     }
                 }
@@ -262,7 +261,7 @@ namespace tams4a.Classes
             {
                 Project.settings.Inject(setting.Name, setting);
             }
-            Project.settings.LoadValues();  // get any values from the database.
+            Project.settings.LoadValues(); 
         }
 
 

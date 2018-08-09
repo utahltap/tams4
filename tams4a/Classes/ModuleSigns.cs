@@ -124,7 +124,6 @@ namespace tams4a.Classes
             signPanel.buttonFavorite.Click += faveSign;
             signPanel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
             signPanel.clickMapToolStripMenuItem.Click += clickMap;
-            signPanel.toolStripDropDownButtonNewPost.Click += clickMap;
             signPanel.toolStripButtonRemove.Click += deletePost;
             signPanel.toolStripButtonNotes.Click += editNotes;
             signPanel.buttonSignNote.Click += signNote;

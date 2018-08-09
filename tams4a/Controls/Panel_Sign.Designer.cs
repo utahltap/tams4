@@ -169,7 +169,6 @@
             this.toolStripButtonSurveyDate.Size = new System.Drawing.Size(29, 22);
             this.toolStripButtonSurveyDate.Text = "Survey Date";
             this.toolStripButtonSurveyDate.ToolTipText = "Select Survey Date";
-            this.toolStripButtonSurveyDate.MouseEnter += new System.EventHandler(this.ShowDateDropDown);
             // 
             // setTodayToolStripMenuItem
             // 
@@ -211,25 +210,24 @@
             this.toolStripDropDownButtonNewPost.Size = new System.Drawing.Size(29, 22);
             this.toolStripDropDownButtonNewPost.Text = "New Post";
             this.toolStripDropDownButtonNewPost.ToolTipText = "Add New Support";
-            this.toolStripDropDownButtonNewPost.MouseEnter += new System.EventHandler(this.ShowDropDown);
             // 
             // clickMapToolStripMenuItem
             // 
             this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
-            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.clickMapToolStripMenuItem.Text = "Click Map";
             // 
             // enterCoordinatesToolStripMenuItem
             // 
             this.enterCoordinatesToolStripMenuItem.Name = "enterCoordinatesToolStripMenuItem";
-            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.enterCoordinatesToolStripMenuItem.Text = "Enter Coordinates";
             // 
             // readGPSToolStripMenuItem
             // 
             this.readGPSToolStripMenuItem.Enabled = false;
             this.readGPSToolStripMenuItem.Name = "readGPSToolStripMenuItem";
-            this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.readGPSToolStripMenuItem.Text = "Read GPS";
             this.readGPSToolStripMenuItem.Visible = false;
             // 
