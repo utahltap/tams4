@@ -142,6 +142,7 @@ namespace tams4a.Classes
             controls.groupBoxType.Enabled = false;
             controls.toolStripButtonSave.Enabled = false;
             controls.toolStripButtonCancel.Enabled = false;
+            controls.toolStripButtonRemove.Enabled = false;
         }
 
         private bool createSHPFile(string filename)

@@ -400,6 +400,7 @@ namespace tams4a.Classes
             signControls.toolStripButtonCancel.Enabled = false;
             signControls.toolStripButtonSurveyDate.Enabled = false;
             signControls.toolStripButtonNotes.Enabled = false;
+            signControls.toolStripButtonRemove.Enabled = false;
         }
 
         /// <summary>
