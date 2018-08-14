@@ -889,7 +889,7 @@ namespace tams4a.Classes
             catch (Exception err)
             {
                 Log.Error("Malformed request " + err.ToString());
-                MessageBox.Show("An error occured when attempting to show history. Roads Database may have be corrupted.");
+                MessageBox.Show("An error occured when attempting to show history. Roads Database may be corrupted.");
             }
 
         }
@@ -899,6 +899,8 @@ namespace tams4a.Classes
             DataTable general = new DataTable();
             general.Columns.Add("ID");
             general.Columns.Add("Name");
+            general.Columns.Add("Width (ft)");
+            general.Columns.Add("Length (ft)");
             general.Columns.Add("From Address");
             general.Columns.Add("To Address");
             general.Columns.Add("Surface");
@@ -917,6 +919,8 @@ namespace tams4a.Classes
                     DataRow nr = general.NewRow();
                     nr["ID"] = row["TAMSID"];
                     nr["Name"] = row["name"];
+                    nr["Width (ft)"] = row["width"];
+                    nr["Length (ft)"] = row["length"];
                     nr["From Address"] = row["from_address"];
                     nr["To Address"] = row["to_address"];
                     nr["Surface"] = row["surface"];

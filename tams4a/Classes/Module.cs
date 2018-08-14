@@ -646,7 +646,7 @@ namespace tams4a.Classes
                 DataTable results = Database.GetDataByQuery(Project.conn, query);
                 if (results.Rows.Count == 0)
                 {
-                    MessageBox.Show("No list could be generated because no " + things + " where found.");
+                    MessageBox.Show("No list could be generated because no " + things + " were found.");
                     return;
                 }
                 foreach (DataRow row in results.Rows)
