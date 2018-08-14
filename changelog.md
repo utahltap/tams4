@@ -1,4 +1,13 @@
 # TAMS 4.0.x
+# Version 4.0.6.0
+----------------------------------------------------
+* Fixes issue where Miscellaneous points were not saved to TAMS file on creation.
+* Reverts change to drop own buttons. The no longer have a click behavior beyond opening list.
+* Fixed typos in road module error messages.
+* Refined column display on some tables.
+* Adds data view in analysis tool to show actual vs expected maintenance based on rsl.
+
+
 # Version 4.0.5.0
 ----------------------------------------------------
 * recommendation box on sidewalks is now a combo box with four options
