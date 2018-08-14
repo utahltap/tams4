@@ -80,6 +80,8 @@
             this.textBoxMaxBudget = new System.Windows.Forms.TextBox();
             this.labelMaxBudget = new System.Windows.Forms.Label();
             this.groupBoxTargets = new System.Windows.Forms.GroupBox();
+            this.tabPageMetaData = new System.Windows.Forms.TabPage();
+            this.dataGridViewMetaData = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.tabControlRSL.SuspendLayout();
             this.tabPageRSL.SuspendLayout();
@@ -104,6 +106,8 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYear2)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.tabPageMetaData.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMetaData)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -184,6 +188,7 @@
             this.tabControlBudgetData.Controls.Add(this.tabPageBudgetData);
             this.tabControlBudgetData.Controls.Add(this.tabPageBudgetGraph);
             this.tabControlBudgetData.Controls.Add(this.tabPageYearlyDist);
+            this.tabControlBudgetData.Controls.Add(this.tabPageMetaData);
             this.tabControlBudgetData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlBudgetData.Location = new System.Drawing.Point(3, 332);
             this.tabControlBudgetData.Name = "tabControlBudgetData";
@@ -661,6 +666,26 @@
             this.groupBoxTargets.TabStop = false;
             this.groupBoxTargets.Text = "Target RSL Percentages";
             // 
+            // tabPageMetaData
+            // 
+            this.tabPageMetaData.Controls.Add(this.dataGridViewMetaData);
+            this.tabPageMetaData.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMetaData.Name = "tabPageMetaData";
+            this.tabPageMetaData.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMetaData.Size = new System.Drawing.Size(1054, 354);
+            this.tabPageMetaData.TabIndex = 3;
+            this.tabPageMetaData.Text = "Treatments";
+            this.tabPageMetaData.UseVisualStyleBackColor = true;
+            // 
+            // dataGridViewMetaData
+            // 
+            this.dataGridViewMetaData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMetaData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewMetaData.Location = new System.Drawing.Point(3, 3);
+            this.dataGridViewMetaData.Name = "dataGridViewMetaData";
+            this.dataGridViewMetaData.Size = new System.Drawing.Size(1048, 348);
+            this.dataGridViewMetaData.TabIndex = 0;
+            // 
             // FormBudgetEstimator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -702,6 +727,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYear2)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabPageMetaData.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMetaData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -758,5 +785,7 @@
         private System.Windows.Forms.TextBox textBoxTargetsMet;
         private System.Windows.Forms.Label labelAverage;
         private System.Windows.Forms.Label labelTargetsMet;
+        private System.Windows.Forms.TabPage tabPageMetaData;
+        private System.Windows.Forms.DataGridView dataGridViewMetaData;
     }
 }

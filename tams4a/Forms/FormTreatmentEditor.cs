@@ -49,7 +49,14 @@ namespace tams4a.Forms
                 {"average_boost", numericUpDownRSLChange.Value.ToString() },
                 {"cost", numericUpDownCost.Value.ToString() }
             };
-            Database.UpdateRow(conn, values, "treatments", "name", values["name"]);
+            try
+            {
+                Database.UpdateRow(conn, values, "treatments", "name", values["name"]);
+                MessageBox.Show("Treatment was updated successfully.", "Update Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } catch (Exception err)
+            {
+                Log.Error("There was a problem updating the treatments in TAMS: " + Environment.NewLine + err.ToString());
+            }
             setComboBoxLists();
             comboBoxName.SelectedIndex = index;
         }

@@ -51,11 +51,6 @@ namespace tams4a.Forms
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-
-
-
-
-
             if (textBoxNewNotes.Text != "")
             {
                 String date = DateTime.Now.ToString("d MMM yyyy");

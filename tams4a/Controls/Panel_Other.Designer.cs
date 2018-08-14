@@ -104,7 +104,6 @@
             this.toolStripDropDownButtonDate.Size = new System.Drawing.Size(29, 22);
             this.toolStripDropDownButtonDate.Text = "Select Date";
             this.toolStripDropDownButtonDate.ToolTipText = "Select Date";
-            this.toolStripDropDownButtonDate.MouseEnter += new System.EventHandler(this.ShowDateDropDown);
             // 
             // setTodayToolStripMenuItem
             // 
@@ -135,18 +134,17 @@
             this.toolStripDropDownAddObject.Size = new System.Drawing.Size(29, 22);
             this.toolStripDropDownAddObject.Text = "Add Object";
             this.toolStripDropDownAddObject.ToolTipText = "Add Landmark";
-            this.toolStripDropDownAddObject.MouseEnter += new System.EventHandler(this.ShowDropDown);
             // 
             // clickMapToolStripMenuItem
             // 
             this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
-            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.clickMapToolStripMenuItem.Text = "Click Map";
             // 
             // enterCoordinatesToolStripMenuItem
             // 
             this.enterCoordinatesToolStripMenuItem.Name = "enterCoordinatesToolStripMenuItem";
-            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.enterCoordinatesToolStripMenuItem.Text = "Enter Coordinates";
             // 
             // toolStripButtonRemove

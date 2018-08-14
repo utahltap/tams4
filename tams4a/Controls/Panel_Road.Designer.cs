@@ -76,7 +76,6 @@ namespace tams4a.Controls
             this.labelSurveyDate = new System.Windows.Forms.Label();
             this.labelName = new System.Windows.Forms.Label();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.buttonSave = new System.Windows.Forms.ToolStripButton();
             this.buttonReset = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonSetDate = new System.Windows.Forms.ToolStripDropDownButton();
@@ -87,6 +86,7 @@ namespace tams4a.Controls
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAnalysis = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSidewalk = new System.Windows.Forms.ToolStripButton();
+            this.buttonSave = new System.Windows.Forms.ToolStripButton();
             this.groupBoxDistress.SuspendLayout();
             this.groupBoxInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLanes)).BeginInit();
@@ -627,16 +627,6 @@ namespace tams4a.Controls
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip1";
             // 
-            // buttonSave
-            // 
-            this.buttonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonSave.Enabled = false;
-            this.buttonSave.Image = global::tams4a.Properties.Resources.save;
-            this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(23, 22);
-            this.buttonSave.Text = "Save Changes";
-            // 
             // buttonReset
             // 
             this.buttonReset.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -663,20 +653,19 @@ namespace tams4a.Controls
             this.buttonSetDate.Name = "buttonSetDate";
             this.buttonSetDate.Size = new System.Drawing.Size(29, 22);
             this.buttonSetDate.Text = "Set Record Date";
-            this.buttonSetDate.MouseEnter += new System.EventHandler(this.ShowDropDownDate);
             // 
             // setTodayToolStripMenuItem
             // 
             this.setTodayToolStripMenuItem.Checked = true;
             this.setTodayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.setTodayToolStripMenuItem.Name = "setTodayToolStripMenuItem";
-            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.setTodayToolStripMenuItem.Text = "Set Today";
             // 
             // setOtherDateToolStripMenuItem
             // 
             this.setOtherDateToolStripMenuItem.Name = "setOtherDateToolStripMenuItem";
-            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.setOtherDateToolStripMenuItem.Text = "Set Other Date";
             // 
             // buttonHistory
@@ -724,6 +713,16 @@ namespace tams4a.Controls
             this.toolStripButtonSidewalk.Text = "Sidewalk Data";
             this.toolStripButtonSidewalk.Visible = false;
             // 
+            // buttonSave
+            // 
+            this.buttonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonSave.Enabled = false;
+            this.buttonSave.Image = global::tams4a.Properties.Resources.save;
+            this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(23, 22);
+            this.buttonSave.Text = "Save Changes";
+            // 
             // Panel_Road
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -754,7 +753,6 @@ namespace tams4a.Controls
         #endregion
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         public System.Windows.Forms.ToolStrip toolStrip;
-        public System.Windows.Forms.ToolStripButton buttonSave;
         public System.Windows.Forms.ToolStripButton buttonReset;
         public System.Windows.Forms.ToolStripDropDownButton buttonSetDate;
         public System.Windows.Forms.ToolStripButton buttonHistory;
@@ -809,5 +807,6 @@ namespace tams4a.Controls
         public System.Windows.Forms.Button buttonSuggest;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         public System.Windows.Forms.ToolStripButton toolStripButtonSidewalk;
+        public System.Windows.Forms.ToolStripButton buttonSave;
     }
 }

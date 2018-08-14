@@ -117,10 +117,5 @@ namespace tams4a.Controls
                 return;
             }
         }
-
-        private void ShowDropDownDate(object sender, EventArgs e)
-        {
-            buttonSetDate.ShowDropDown();
-        }
     }
 }
