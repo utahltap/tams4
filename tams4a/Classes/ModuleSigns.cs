@@ -672,6 +672,7 @@ namespace tams4a.Classes
             signChanges[index]["sheeting"] = signControls.comboBoxSheeting.Text;
             signChanges[index]["backing"] = signControls.comboBoxBacking.Text;
             signChanges[index]["condition"] = signControls.comboBoxConditionSign.Text;
+            signChanges[index]["height"] = signControls.numericUpDownHeigthSign.Value.ToString();
             signChanges[index]["width"] = signControls.numericUpDownWidth.Value.ToString();
             signChanges[index]["mount_height"] = signControls.numericUpDownMountHeight.Value.ToString();
             signChanges[index]["sign_text"] = signControls.textBoxText.Text;
