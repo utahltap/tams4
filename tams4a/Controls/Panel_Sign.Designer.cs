@@ -96,7 +96,7 @@
             this.textBoxType = new System.Windows.Forms.TextBox();
             this.numericUpDownWidth = new System.Windows.Forms.NumericUpDown();
             this.labelWidth = new System.Windows.Forms.Label();
-            this.numericUpDownHeigthSign = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownHeightSign = new System.Windows.Forms.NumericUpDown();
             this.labelHeightSign = new System.Windows.Forms.Label();
             this.comboBoxBacking = new System.Windows.Forms.ComboBox();
             this.labelBacking = new System.Windows.Forms.Label();
@@ -111,7 +111,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMountHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeigthSign)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeightSign)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip
@@ -545,7 +545,7 @@
             this.groupBoxSign.Controls.Add(this.textBoxType);
             this.groupBoxSign.Controls.Add(this.numericUpDownWidth);
             this.groupBoxSign.Controls.Add(this.labelWidth);
-            this.groupBoxSign.Controls.Add(this.numericUpDownHeigthSign);
+            this.groupBoxSign.Controls.Add(this.numericUpDownHeightSign);
             this.groupBoxSign.Controls.Add(this.labelHeightSign);
             this.groupBoxSign.Controls.Add(this.comboBoxBacking);
             this.groupBoxSign.Controls.Add(this.labelBacking);
@@ -851,19 +851,19 @@
             this.labelWidth.TabIndex = 19;
             this.labelWidth.Text = "Width";
             // 
-            // numericUpDownHeigthSign
+            // numericUpDownHeightSign
             // 
-            this.numericUpDownHeigthSign.DecimalPlaces = 1;
-            this.numericUpDownHeigthSign.Increment = new decimal(new int[] {
+            this.numericUpDownHeightSign.DecimalPlaces = 1;
+            this.numericUpDownHeightSign.Increment = new decimal(new int[] {
             5,
             0,
             0,
             65536});
-            this.numericUpDownHeigthSign.Location = new System.Drawing.Point(87, 136);
-            this.numericUpDownHeigthSign.Name = "numericUpDownHeigthSign";
-            this.numericUpDownHeigthSign.Size = new System.Drawing.Size(83, 20);
-            this.numericUpDownHeigthSign.TabIndex = 18;
-            this.numericUpDownHeigthSign.Value = new decimal(new int[] {
+            this.numericUpDownHeightSign.Location = new System.Drawing.Point(87, 136);
+            this.numericUpDownHeightSign.Name = "numericUpDownHeightSign";
+            this.numericUpDownHeightSign.Size = new System.Drawing.Size(83, 20);
+            this.numericUpDownHeightSign.TabIndex = 18;
+            this.numericUpDownHeightSign.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -941,7 +941,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMountHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeigthSign)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeightSign)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -966,7 +966,7 @@
         private System.Windows.Forms.Label labelBacking;
         public System.Windows.Forms.NumericUpDown numericUpDownWidth;
         private System.Windows.Forms.Label labelWidth;
-        public System.Windows.Forms.NumericUpDown numericUpDownHeigthSign;
+        public System.Windows.Forms.NumericUpDown numericUpDownHeightSign;
         private System.Windows.Forms.Label labelHeightSign;
         public System.Windows.Forms.TextBox textBoxType;
         public System.Windows.Forms.NumericUpDown numericUpDownMountHeight;

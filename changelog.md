@@ -1,4 +1,9 @@
 # TAMS 4.0.x
+# Version 4.0.7.0
+BUG FIXES
+----------------------------------------------------
+* Fixed sign height not saving
+
 # Version 4.0.6.0
 ----------------------------------------------------
 * Fixes issue where Miscellaneous points were not saved to TAMS file on creation.
