@@ -9,7 +9,7 @@ namespace tams4a
     public class CustomEventArgs : EventArgs
     {
         public int EventValue { get; set; }
-        // included a default value for times you don't care about the event value. ;)
+        // included a default value for times you don't care about the event value.
         public CustomEventArgs(int eventValue=0)
         {
             EventValue = eventValue;

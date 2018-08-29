@@ -138,7 +138,7 @@ namespace tams4a.Classes
             signPanel.textBoxDescription.TextChanged += signValueChanged;
             signPanel.comboBoxSheeting.TextChanged += signValueChanged;
             signPanel.comboBoxBacking.TextChanged += signValueChanged;
-            signPanel.numericUpDownHeigthSign.ValueChanged += signValueChanged;
+            signPanel.numericUpDownHeightSign.ValueChanged += signValueChanged;
             signPanel.numericUpDownWidth.ValueChanged += signValueChanged;
             signPanel.numericUpDownMountHeight.ValueChanged += signValueChanged;
             signPanel.textBoxInstall.TextChanged += signValueChanged;
@@ -556,7 +556,7 @@ namespace tams4a.Classes
             signPanel.textBoxDescription.Text = signChanges[index]["description"];
             signPanel.comboBoxSheeting.Text = signChanges[index]["sheeting"];
             signPanel.comboBoxBacking.Text = signChanges[index]["backing"];
-            signPanel.numericUpDownHeigthSign.Value = (decimal)Util.ToDouble(signChanges[index]["height"]);
+            signPanel.numericUpDownHeightSign.Value = (decimal)Util.ToDouble(signChanges[index]["height"]);
             signPanel.numericUpDownWidth.Value = (decimal)Util.ToDouble(signChanges[index]["width"]);
             signPanel.numericUpDownMountHeight.Value = (decimal)Util.ToDouble(signChanges[index]["mount_height"]);
             signPanel.textBoxInstall.Text = signChanges[index]["install_date"];
@@ -619,7 +619,7 @@ namespace tams4a.Classes
             signControls.comboBoxSheeting.SelectedIndex = 0;
             signControls.comboBoxBacking.SelectedIndex = 0;
             signControls.numericUpDownWidth.Value = 0;
-            signControls.numericUpDownHeigthSign.Value = 0;
+            signControls.numericUpDownHeightSign.Value = 0;
             signControls.numericUpDownMountHeight.Value = 0;
             signControls.textBoxInstall.Text = "";
             signControls.textBoxText.Text = "";
@@ -672,7 +672,7 @@ namespace tams4a.Classes
             signChanges[index]["sheeting"] = signControls.comboBoxSheeting.Text;
             signChanges[index]["backing"] = signControls.comboBoxBacking.Text;
             signChanges[index]["condition"] = signControls.comboBoxConditionSign.Text;
-            signChanges[index]["height"] = signControls.numericUpDownHeigthSign.Value.ToString();
+            signChanges[index]["height"] = signControls.numericUpDownHeightSign.Value.ToString();
             signChanges[index]["width"] = signControls.numericUpDownWidth.Value.ToString();
             signChanges[index]["mount_height"] = signControls.numericUpDownMountHeight.Value.ToString();
             signChanges[index]["sign_text"] = signControls.textBoxText.Text;
