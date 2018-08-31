@@ -15,6 +15,7 @@ namespace tams4a.Forms
         public FormNewSign()
         {
             InitializeComponent();
+            CenterToScreen();
         }
 
         private void onChoose(object sender, EventArgs e)

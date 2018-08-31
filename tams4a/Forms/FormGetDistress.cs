@@ -45,6 +45,7 @@ namespace tams4a.Forms
         public FormGetDistress()
         {
             InitializeComponent();
+            CenterToScreen();
             maxDistress = 9;
             buttonCancel.Select();
         }

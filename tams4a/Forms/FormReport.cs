@@ -21,6 +21,7 @@ namespace tams4a.Forms
         public FormReport()
         {
             InitializeComponent();
+            CenterToScreen();
 
             String errors = "LOGGED ERRORS:\n";
             errors += Log.GetTop("error");

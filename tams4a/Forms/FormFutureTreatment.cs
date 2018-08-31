@@ -22,6 +22,7 @@ namespace tams4a.Forms
         public FormFutureTreatment()
         {
             InitializeComponent();
+            CenterToScreen();
             totals = new Dictionary<int, decimal>();
             yearIsDiff = new bool[11];
             for (int i = 0; i <= 10; i++)

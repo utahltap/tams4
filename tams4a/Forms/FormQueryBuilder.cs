@@ -19,6 +19,7 @@ namespace tams4a.Forms
         public FormQueryBuilder(string tn, DataTable ts)
         {
             InitializeComponent();
+            CenterToScreen();
             TableName = tn;
             TableSchema = ts;
             labelTable.Text = "Getting data from " + TableName + " table";

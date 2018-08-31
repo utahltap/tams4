@@ -30,6 +30,7 @@ namespace tams4a.Forms
         public FormBudgetEstimator()
         {
             InitializeComponent();
+            CenterToScreen();
             new ToolTip().SetToolTip(labelMaxBudget, "Must be a number representing the maximum acceptable budget in a single year.");
             categories = new FormCategories();
             futurePlans = new FormFutureTreatment();
