@@ -18,6 +18,7 @@ namespace tams4a.Forms
         public FormCustomMessage()
         {
             InitializeComponent();
+            CenterToScreen();
             this.MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
         }
 

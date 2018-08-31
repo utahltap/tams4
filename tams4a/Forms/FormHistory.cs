@@ -15,6 +15,7 @@ namespace tams4a.Forms
         public FormHistory()
         {
             InitializeComponent();
+            CenterToScreen();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

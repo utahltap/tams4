@@ -23,6 +23,7 @@ namespace tams4a.Forms
         public FormStartup(Classes.TamsProject project)
         {
             InitializeComponent();
+            CenterToScreen();
             Project = project;
 
             labelBuild.Text = "version " + Program.GetBuild();

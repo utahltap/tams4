@@ -15,6 +15,7 @@ namespace tams4a.Forms
         public FormLatLon()
         {
             InitializeComponent();
+            CenterToScreen();
         }
 
         private void buttonOkay_Click(object sender, EventArgs e)

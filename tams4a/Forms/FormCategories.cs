@@ -21,6 +21,7 @@ namespace tams4a.Forms
         public FormCategories()
         {
             InitializeComponent();
+            CenterToScreen();
             numericUpDownCategories.Value = 8;
             enableCategories();
             categoryInput[0].Value = 0;

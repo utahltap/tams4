@@ -24,6 +24,7 @@ namespace tams4a.Forms
         public FormManageFavorites(System.Data.SQLite.SQLiteConnection c, int maxID)
         {
             InitializeComponent();
+            CenterToScreen();
             maxSignID = maxID;
             conn = c;
             DataTable sheeting = Database.GetDataByQuery(conn, "SELECT * FROM sign_sheeting");

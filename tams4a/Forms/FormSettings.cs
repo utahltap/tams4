@@ -21,6 +21,7 @@ namespace tams4a.Forms
         public FormSettings(ProjectSettings settings)
         {
             InitializeComponent();
+            CenterToScreen();
             settingControls = new List<CtlSetting>();
             Settings = settings;
 

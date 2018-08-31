@@ -26,6 +26,7 @@ namespace tams4a.Forms
         {
             OldNotes = "";
             InitializeComponent();
+            CenterToScreen();
             buttonSave.Enabled = false;
             this.MaximumSize = new Size(this.Width, int.MaxValue);  // only allow vertical resizing
             textBoxNewNotes.Focus();

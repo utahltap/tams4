@@ -22,6 +22,7 @@ namespace tams4a.Forms
         public FormSignLookup()
         {
             InitializeComponent();
+            CenterToScreen();
         }
 
         /// <summary>

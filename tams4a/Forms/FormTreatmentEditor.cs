@@ -20,6 +20,7 @@ namespace tams4a.Forms
         public FormTreatmentEditor(SQLiteConnection conn)
         {
             InitializeComponent();
+            CenterToScreen();
             this.conn = conn;
             setComboBoxLists();
             new ToolTip().SetToolTip(labelName, "The name of the treatment you want to edit.");

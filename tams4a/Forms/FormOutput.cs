@@ -17,6 +17,7 @@ namespace tams4a.Forms
         public FormOutput()
         {
             InitializeComponent();
+            CenterToScreen();
         }
 
         private void buttonClose_Click(object sender, EventArgs e)

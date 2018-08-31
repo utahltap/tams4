@@ -30,6 +30,7 @@ namespace tams4a
         public MainWindow()
         {
             InitializeComponent();
+            CenterToScreen();
             setEventHandlers();
             displayChangeLog();
             InitializeProject();

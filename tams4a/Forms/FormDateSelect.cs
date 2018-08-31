@@ -15,6 +15,7 @@ namespace tams4a.Forms
         public FormDateSelect()
         {
             InitializeComponent();
+            CenterToScreen();
         }
 
         public DateTime getDate()
