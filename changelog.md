@@ -1,6 +1,6 @@
 # TAMS 4.0.x
 
-# Version 4.0.8.1
+# Version 4.0.8.2
 CHANGES
 ----------------------------------------------------
 * Made windows render in center of screen
