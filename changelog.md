@@ -1,4 +1,13 @@
 # TAMS 4.0.x
+# Version 4.0.8.0
+CHANGES
+----------------------------------------------------
+* Made windows render in center of screen
+
+BUG FIXES
+----------------------------------------------------
+* Sign lookup is no longer cut off when rendering on a smaller screen
+
 # Version 4.0.7.0
 BUG FIXES
 ----------------------------------------------------
