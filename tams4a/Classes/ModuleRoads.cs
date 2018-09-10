@@ -9,7 +9,6 @@ using System.Linq;
 using System.Windows.Forms;
 using tams4a.Controls;
 using tams4a.Forms;
-using System.Data.SqlClient;
 
 namespace tams4a.Classes
 {
