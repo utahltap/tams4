@@ -185,12 +185,13 @@ namespace tams4a.Classes
             keys[0] = surfaceDistresses.Columns["id"];
             surfaceDistresses.PrimaryKey = keys;
 
-            roadTypes = Database.GetDataByQuery(Project.conn, "SELECT * FROM road_types");
             roadPanel.comboBoxType.Items.Add("");
-            foreach (DataRow row in roadTypes.Rows)
-            {
-                roadPanel.comboBoxType.Items.Add(row["name"].ToString());
-            }
+            roadPanel.comboBoxType.Items.Add("Major Arterial");
+            roadPanel.comboBoxType.Items.Add("Minor Arterial");
+            roadPanel.comboBoxType.Items.Add("Major Collector");
+            roadPanel.comboBoxType.Items.Add("Minor Collector");
+            roadPanel.comboBoxType.Items.Add("Residential");
+            roadPanel.comboBoxType.Items.Add("Other");
             #endregion
 
             applyColorizedProperties();
@@ -1348,7 +1349,7 @@ namespace tams4a.Classes
 
         private void graphRoadCategory(object sender, EventArgs e)
         {
-            string[] roadTypes = { "Major Arterial", "Major Collector", "Minor Arterial", "Minor Collector", "Residential" };
+            string[] roadTypes = { "Major Arterial", "Minor Arterial", "Major Collector", "Minor Collector", "Residential", "Other" };
             makeTypeGraph(roadTypes, "type");
         }
 
