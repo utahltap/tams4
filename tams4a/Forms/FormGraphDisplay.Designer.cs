@@ -73,7 +73,7 @@
             // 
             this.exportTableToolStripMenuItem.Name = "exportTableToolStripMenuItem";
             this.exportTableToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
-            this.exportTableToolStripMenuItem.Text = "Export Table";
+            this.exportTableToolStripMenuItem.Text = "F";
             this.exportTableToolStripMenuItem.Click += new System.EventHandler(this.exportTableToolStripMenuItem_Click);
             // 
             // chart
@@ -89,7 +89,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart.Series.Add(series1);
-            this.chart.Size = new System.Drawing.Size(851, 470);
+            this.chart.Size = new System.Drawing.Size(1151, 470);
             this.chart.TabIndex = 1;
             this.chart.Text = "chart1";
             // 

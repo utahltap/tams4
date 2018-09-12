@@ -25,13 +25,13 @@ namespace tams4a.Forms
         private void buttonOK_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            Hide();
+            //Hide();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            Hide();
+            //Hide();
         }
     }
 }
