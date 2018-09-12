@@ -54,9 +54,7 @@ namespace tams4a.Forms
         {
             if (textBoxNewNotes.Text != "")
             {
-                String date = DateTime.Now.ToString("d MMM yyyy");
-                String note = date + Environment.NewLine + textBoxNewNotes.Text + Environment.NewLine + 
-                    "--------------------------" + Environment.NewLine + Environment.NewLine + OldNotes;
+                String note = textBoxNewNotes.Text + Environment.NewLine + Environment.NewLine + OldNotes;
                 setNotes(note);
                 textBoxNewNotes.Text = "";
                 this.DialogResult = DialogResult.OK;
