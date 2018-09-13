@@ -1,6 +1,11 @@
 # TAMS 4.0.x
+# Version 4.0.9.0
+CHANGES
+----------------------------------------------------
+* Notes are displayed in a more readable manner in the notes form and general report.
 
-# Version 4.0.8.2
+
+# Version 4.0.8.1
 CHANGES
 ----------------------------------------------------
 * Made windows render in center of screen
@@ -8,7 +13,6 @@ CHANGES
 BUG FIXES
 ----------------------------------------------------
 * Sign lookup is no longer cut off when rendering on a smaller screen
-=======
 
 # Version 4.0.8.0
 CHANGES
