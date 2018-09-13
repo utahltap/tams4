@@ -896,7 +896,7 @@ namespace tams4a.Classes
 
          public void generalReport(object sender, EventArgs e)
          {
-             DataTable general = new DataTable();
+            DataTable general = new DataTable();
              general.Columns.Add("ID");
              general.Columns.Add("Name");
              general.Columns.Add("Width (ft)");
@@ -911,6 +911,7 @@ namespace tams4a.Classes
              general.Columns.Add("RSL");
              general.Columns.Add("Type");
              general.Columns.Add("Notes");
+             general.Columns.Add("Survey Date");
              for (int i = 1; i < 10; i++)
              {
                 general.Columns.Add("Distress " + i);
@@ -918,74 +919,44 @@ namespace tams4a.Classes
              string thisSql = getSelectAllSQL();
              try
              {
-                 DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
-                 double totalCost = 0;
-                 foreach (DataRow row in resultsTable.Rows)
-                 {
-                     DataRow nr = general.NewRow();
-                     nr["ID"] = row["TAMSID"];
-                     nr["Name"] = row["name"];
-                     nr["Width (ft)"] = row["width"];
-                     nr["Length (ft)"] = row["length"];
-                     nr["From Address"] = row["from_address"];
-                     nr["To Address"] = row["to_address"];
-                     nr["Surface"] = row["surface"];
-                     nr["RSL"] = row["rsl"];
-                     nr["Type"] = row["type"];
-                     nr["Notes"] = row["notes"];
-                     int[] dvs = new int[9];
-                     for (int i = 0; i < 9; i++)
-                     {
-                         dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
-                         nr["Distress " + (i + 1)] = row["distress" + (i + 1)];
-                     }
-                     nr["Governing Distress"] = getGoverningDistress(dvs, row["surface"].ToString());
-                     nr["Cost"] = 0;
-                     if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))
-                     {
-                         nr["Treatment"] = row["suggested_treatment"];
-                         string treatmentCost = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments WHERE name = '" + row["suggested_treatment"].ToString() + "';").Rows[0]["cost"].ToString();
-                         double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;//Note: Treatment cost is per square yard. Road dimensions are in yd.
-                         if (estCost > 1000000)
-                         {
-                             nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
-                         }
-                         else if (estCost > 1000)
-                         {
-                             nr["Cost"] = Math.Round(estCost / 1000).ToString() + "k";
-                         }
-                         else
-                         {
-                             nr["Cost"] = Math.Round(estCost).ToString();
-                         }
-                         totalCost += (int)estCost;
-                     }
-                     nr["Area"] = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
-                     general.Rows.Add(nr);
-                 }
-                 general.DefaultView.Sort = "Name asc, Treatment asc, From Address asc";
-                 general = general.DefaultView.ToTable();
-                 DataRow totals = general.NewRow();
-                 totals["Name"] = "Total";
-                 totals["From Address"] = "Estimated";
-                 totals["To Address"] = "Cost";
-                 if (totalCost > 1000000)
-                 {
-                     totals["Cost"] = Math.Round(totalCost / 1000000, 2).ToString() + "M";
-                 }
-                 else if (totalCost > 1000)
-                 {
-                     totals["Cost"] = Math.Round(totalCost / 1000).ToString() + "k";
-                 }
-                 else
-                 {
-                     totals["Cost"] = Math.Round(totalCost).ToString();
-                 }
-                 general.Rows.Add(totals);
-                 FormOutput report = new FormOutput();
-                 report.dataGridViewReport.DataSource = general.DefaultView.ToTable();
-                 report.Text = "Treatment Report";
-                 report.Show();
+                DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
+
+                foreach (DataRow row in resultsTable.Rows)
+                {
+                    DataRow nr = general.NewRow();
+                    nr["ID"] = row["TAMSID"];
+                    nr["Name"] = row["name"];
+                    nr["Width (ft)"] = row["width"];
+                    nr["Length (ft)"] = row["length"];
+                    nr["From Address"] = row["from_address"];
+                    nr["To Address"] = row["to_address"];
+                    nr["Surface"] = row["surface"];
+                    nr["RSL"] = row["rsl"];
+                    nr["Type"] = row["type"];
+                    nr["Notes"] = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+                    nr["Survey Date"] = row["survey_date"];
+                    int[] dvs = new int[9];
+                    for (int i = 0; i < 9; i++)
+                    {
+                        dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
+                        nr["Distress " + (i + 1)] = row["distress" + (i + 1)];
+                    }
+                    nr["Governing Distress"] = getGoverningDistress(dvs, row["surface"].ToString());
+                    if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))
+                    {
+                        nr["Treatment"] = row["suggested_treatment"];
+                    }
+                    nr["Area"] = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
+                    general.Rows.Add(nr);
+                }
+
+                general.DefaultView.Sort = "Name asc, Treatment asc, From Address asc";
+                general = general.DefaultView.ToTable();
+
+                FormOutput report = new FormOutput();
+                report.dataGridViewReport.DataSource = general;
+                report.Text = "Treatment Report";
+                report.Show();
              }
              catch (Exception err)
              {
