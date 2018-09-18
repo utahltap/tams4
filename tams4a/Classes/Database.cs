@@ -778,6 +778,22 @@ ALTER TABLE sign_support ADD photo TEXT;";
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_10_immute
+
+            #region db_update_11_immute
+            if (dbVersion == 10)
+            {
+                #region newrows2
+                InsertRow(conn, new Dictionary<string, string>()
+                {
+                    { "name", "Other" }
+                }, "road_types");
+                #endregion newrows2
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "11";
+                dbVersion = 11;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_11_immute
             return true;
         }
 

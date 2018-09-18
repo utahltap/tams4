@@ -156,6 +156,9 @@ namespace tams4a.Classes
                         {
                             values["type"] = "major arterial";
                         }
+                        else if (fc == 6) {
+                            values["type"] = "other";
+                        }
                         int st;
                         int.TryParse(r["SurfaceType_ID"].ToString(), out st);
                         if (st == 1)
