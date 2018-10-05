@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data;
 using DotSpatial.Symbology;
 using System.IO;
+using System.Threading;
 
 namespace tams4a.Classes
 {
@@ -229,6 +230,8 @@ namespace tams4a.Classes
         /// </summary>
         protected virtual void ShpToDatabase()
         {
+            Thread thread = new Thread(new ThreadStart(LoadingMessage));
+            thread.Start();
             Cursor.Current = Cursors.WaitCursor;
             DataTable data;
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
@@ -252,7 +255,20 @@ namespace tams4a.Classes
                 }
                 Database.InsertRow(Project.conn, values, ModuleName);
             }
+            thread.Abort();
             Cursor.Current = Cursors.Arrow;
+
+        }
+
+        private void LoadingMessage()
+        {
+            //MessageBox.Show("Loading... This may take a while");
+
+            Application.Run(new FormLoading());
+            
+            //FormLoading loading = new FormLoading();
+            //loading.Show();
+            //loading.TopMost = true;
         }
 
         protected virtual void injectSettings()

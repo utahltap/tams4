@@ -14,7 +14,7 @@ namespace tams4a.Classes
     {
         // is database connected?
         public static Boolean IsOpen(SQLiteConnection conn)
-        {
+         {
             if (    (conn != null) &&
                     (conn.State == ConnectionState.Open)
                 )
