@@ -262,13 +262,7 @@ namespace tams4a.Classes
 
         private void LoadingMessage()
         {
-            //MessageBox.Show("Loading... This may take a while");
-
             Application.Run(new FormLoading());
-            
-            //FormLoading loading = new FormLoading();
-            //loading.Show();
-            //loading.TopMost = true;
         }
 
         protected virtual void injectSettings()

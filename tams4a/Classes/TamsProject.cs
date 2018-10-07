@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using System.Data.SQLite;
 using System.IO;
 using System.Collections;
+using System.Threading;
+using tams4a.Forms;
 
 namespace tams4a.Classes
 {
@@ -116,24 +118,36 @@ namespace tams4a.Classes
         /// <returns></returns>
         public Boolean startNew(String filename)
         {
+            Thread thread = new Thread(new ThreadStart(LoadingMessage));
+            thread.Start();
+            Cursor.Current = Cursors.WaitCursor;
             try
             {
                 File.WriteAllBytes(filename, Properties.Resources.blank_db_v6);
             }
             catch
             {
+                thread.Abort();
+                Cursor.Current = Cursors.Arrow;
                 MessageBox.Show("Could not create project file: " + filename, " Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             if (!open(filename))
             {
+                thread.Abort();
+                Cursor.Current = Cursors.Arrow;
                 return false;
             }
-            
+            thread.Abort();
+            Cursor.Current = Cursors.Arrow;
             return true;
         }
 
+        private void LoadingMessage()
+        {
+            Application.Run(new FormLoading());
+        }
 
         public void mapSelectionChanged(object sender, EventArgs e)
         {
