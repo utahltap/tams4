@@ -493,11 +493,13 @@ namespace tams4a.Classes
         {
             Panel_Sign signControls = getSignControls();
             suppressChanges = true;
+            signControls.labelSurveyDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
             signControls.textBoxAddress.Text = Util.DictionaryItemString(values, "address");
             signControls.comboBoxMaterial.Text = Util.DictionaryItemString(values, "material");
-            signControls.labelSurveyDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
             signControls.comboBoxCondition.Text = Util.DictionaryItemString(values, "condition");
-            signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "height"));
+            signControls.comboBoxObstruction.Text = Util.DictionaryItemString(values, "obstructions");
+            signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "road_offset"));
+            signControls.comboBoxRecommendation.Text = Util.DictionaryItemString(values, "recommendation");
             signControls.textBoxPhotoPost.Text = Util.DictionaryItemString(values, "photo");
             updatePhotoPreview(signControls.pictureBoxPost, signControls.textBoxPhotoPost.Text);
             notes = Util.DictionaryItemString(values, "notes");
@@ -563,7 +565,6 @@ namespace tams4a.Classes
             signPanel.textBoxText.Text = signChanges[index]["sign_text"].ToString();
             signPanel.comboBoxReflectivity.Text = signChanges[index]["reflectivity"];
             signPanel.comboBoxConditionSign.Text = signChanges[index]["condition"];
-            signPanel.comboBoxObstruction.Text = signChanges[index]["obstructions"];
             signPanel.comboBoxDirection.Text = signChanges[index]["direction"];
             signPanel.textBoxPhotoFile.Text = signChanges[index]["photo"];
             signPanel.buttonFavorite.BackColor = signChanges[index]["favorite"].Contains("true") ? Color.DeepPink : Control.DefaultBackColor;
@@ -610,8 +611,9 @@ namespace tams4a.Classes
             suppressChanges = true;
             signControls.labelSurveyDate.Text = "";
             signControls.textBoxAddress.Text = "";
-            signControls.comboBoxCondition.SelectedIndex = 0;
             signControls.comboBoxMaterial.SelectedIndex = 0;
+            signControls.comboBoxCondition.SelectedIndex = 0;
+            signControls.comboBoxObstruction.Text = "";
             signControls.numericUpDownOffset.Value = 0;
             signControls.comboBoxSigns.Text = "";
             signControls.textBoxType.Text = "";
@@ -678,7 +680,6 @@ namespace tams4a.Classes
             signChanges[index]["sign_text"] = signControls.textBoxText.Text;
             signChanges[index]["survey_date"] = Util.SortableDate(surveyDate);
             signChanges[index]["photo"] = signControls.textBoxPhotoFile.Text;
-            signChanges[index]["obstructions"] = signControls.comboBoxObstruction.Text;
             signChanges[index]["reflectivity"] = signControls.comboBoxReflectivity.Text;
             signChanges[index]["description"] = signControls.textBoxDescription.Text;
             signChanges[index]["install_date"] = signControls.textBoxInstall.Text;
@@ -719,15 +720,16 @@ namespace tams4a.Classes
 
             Panel_Sign signControls = getSignControls();
             Dictionary<string, string> values = new Dictionary<string, string>();
-            values["address"] = signControls.textBoxAddress.Text;
             values["survey_date"] = Util.SortableDate(surveyDate);
-            values["condition"] = signControls.comboBoxCondition.Text;
+            values["address"] = signControls.textBoxAddress.Text;
             values["material"] = signControls.comboBoxMaterial.Text;
+            values["condition"] = signControls.comboBoxCondition.Text;
+            values["obstructions"] = signControls.comboBoxObstruction.Text;
             values["road_offset"] = signControls.numericUpDownOffset.Value.ToString();
-            values["height"] = signControls.numericUpDownOffset.Value.ToString();
+            values["recommendation"] = signControls.comboBoxRecommendation.Text;
             values["photo"] = signControls.textBoxPhotoPost.Text;
-            values["category"] = postCat;
             values["notes"] = notes;
+            values["category"] = postCat;
 
             if (signsOnPost != null && signsOnPost.Rows.Count > 0)
             {
@@ -841,7 +843,6 @@ namespace tams4a.Classes
                             newSign["support_id"] = tamsids[0];
                             newSign["condition"] = "";
                             newSign["reflectivity"] = "";
-                            newSign["obstructions"] = "";
                             newSign["install_date"] = "";
                             newSign["survey_date"] = Util.SortableDate(surveyDate);
                             newSign["photo"] = "";
