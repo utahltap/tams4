@@ -52,7 +52,7 @@ namespace tams4a.Classes
             {
                 { "sign_f_TAMSID", "support_id" },
                 { "sign_f_address", "address"},
-                { "sign_f_offset", "road_offset" }
+                //{ "sign_f_offset", "road_offset" }
             };
 
             Project.map.ResetBuffer();
@@ -88,15 +88,15 @@ namespace tams4a.Classes
             if (type != "point") { throw new Exception("Signs module requires a point-type shp file"); }
 
             #region signSettings
-            ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_f_TAMSID", module: ModuleName, value: "",
+            ModuleSettings.Add(new ProjectSetting(name: "sign_f_TAMSID", module: ModuleName, value: "",
                     display_text: "SHP field with a unique identifier (TAMSID).", display_type: "field",
                     description: "Show an Icon instead of a basic shape for sign locations.", required:true));
-            ModuleSettings.Add(new ProjectSetting(name: "sign_f_offset", module: ModuleName, value: "",
-                    display_text: "SHP field with offset from road?", display_type: "field",
-                    description: "The field in the sign shp file indicating the distance of the support from the road."));
             ModuleSettings.Add(new ProjectSetting(name: "sign_f_address", module: ModuleName, value: "",
                     display_text: "SHP field with sign address?", display_type: "field",
                     description: "The field in the sign shp file containing the approximate address of the signpost."));
+            //ModuleSettings.Add(new ProjectSetting(name: "sign_f_offset", module: ModuleName, value: "",
+            //        display_text: "SHP field with offset from road?", display_type: "field",
+            //        description: "The field in the sign shp file indicating the distance of the support from the road."));
             #endregion signSettings
 
             injectSettings();
@@ -425,8 +425,6 @@ namespace tams4a.Classes
             signControls.setOtherDateToolStripMenuItem.Checked = false;
         }
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         override public void selectionChanged()
         {    
             if (!isOpen()) { return; }
@@ -455,9 +453,6 @@ namespace tams4a.Classes
             updateSignDisplay(values, signControls);
             getSigns(signControls);
         }
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
         private void cancelChanges(object sender, EventArgs e)
         {

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using System.IO;
-using System.Collections;
 
 namespace tams4a.Classes
 {

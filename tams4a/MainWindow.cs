@@ -241,7 +241,7 @@ namespace tams4a
         }
 
 
-        // calls the right selection change method depending on the active layers
+        // Calls the right selection change method depending on the active layers
         private void uxMap_SelectionChanged()
         {
             // Shouldn't happen.
@@ -251,7 +251,7 @@ namespace tams4a
                 return; 
             }
 
-            // shouldn't happen.
+            // Shouldn't happen.
             if (!Project.isOpen)
             {
                 MessageBox.Show("No project open");
