@@ -37,7 +37,7 @@ namespace tams4a.Classes
                 var dt = GetDataByQuery(conn, "SELECT version FROM db_version");
                 dbVersion = int.Parse(dt.Rows[0]["version"].ToString());
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 string cmdString = @"CREATE TABLE db_version (version INTEGER PRIMARY KEY NOT NULL, warning TEXT NOT NULL);
                                         INSERT INTO db_version (version, warning) VALUES (0, 'DO_NOT_MODIFY');";
@@ -89,7 +89,7 @@ namespace tams4a.Classes
                     SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
                     cmd.ExecuteNonQuery();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Dictionary<string, string> ct = new Dictionary<string, string>()
                     {
@@ -746,7 +746,7 @@ ALTER TABLE miscellaneous ADD property3 TEXT;";
                     SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
                     cmd.ExecuteNonQuery();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
 
                 }

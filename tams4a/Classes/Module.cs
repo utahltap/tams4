@@ -380,7 +380,7 @@ namespace tams4a.Classes
         }
 
 
-        public virtual void selectionChanged(object sender, EventArgs e)
+        public virtual void selectionChanged()
         {
             UnsavedChanges = false;
             // generic module does nothing on selection change.

@@ -1,13 +1,8 @@
 ﻿using DotSpatial.Symbology;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Deployment.Application;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using tams4a.Classes;
 using tams4a.Forms;
@@ -19,7 +14,7 @@ namespace tams4a
         private DotSpatial.Controls.FunctionMode CurrentMode;
         private TamsProject Project;
         private int maxWidth;
-        private DotSpatial.Controls.AppManager appManager;
+        //private DotSpatial.Controls.AppManager appManager;
         //private DotSpatial.Plugins.WebMap.ServiceProvider webService;
         //private DotSpatial.Plugins.WebMap.WebMapPlugin webLayer;
         private bool closeForReal = true;
@@ -222,7 +217,6 @@ namespace tams4a
         /// <param name="e"></param>
         private void uxMap_MouseDown(object sender, MouseEventArgs e)
         {
-            
             if (e.Button == MouseButtons.Right)
             {
                 uxMap.FunctionMode = DotSpatial.Controls.FunctionMode.Pan;
@@ -243,11 +237,12 @@ namespace tams4a
                 uxMap.FunctionMode = CurrentMode;
             }
             base.OnMouseUp(e);
+            uxMap_SelectionChanged();
         }
 
 
         // calls the right selection change method depending on the active layers
-        private void uxMap_SelectionChanged(object sender, EventArgs e)
+        private void uxMap_SelectionChanged()
         {
             // Shouldn't happen.
             if (uxMap.Layers.SelectedLayer == null) 
@@ -262,7 +257,7 @@ namespace tams4a
                 MessageBox.Show("No project open");
                 return;
             }
-            Project.mapSelectionChanged(sender, e);
+            Project.mapSelectionChanged();
         }
 
         // settings dialog
