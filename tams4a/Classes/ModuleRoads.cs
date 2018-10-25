@@ -1314,7 +1314,7 @@ namespace tams4a.Classes
         private void graphRoadType(object sender, EventArgs e)
         {
             string[] roadTypes = { "asphalt", "concrete", "gravel" };
-            Color[] c = { Color.DarkGray, Color.LightGray, Color.Brown };
+            Color[] c = { Color.Black, Color.LightGray, Color.FromArgb(150, 75, 0) };
             makeTypeGraph(roadTypes, "surface", c);
         }
 
@@ -1530,7 +1530,7 @@ namespace tams4a.Classes
                     }
                     results.Rows.Add(totalsRow);
                     results.Rows.Add(percentageRow);
-                    Color[] colour = { Color.Red, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.ForestGreen, Color.Blue };
+                    Color[] colour = { Color.DarkRed, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.DeepSkyBlue, Color.Blue };
                     FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, "Road RSL Distribution", colour);
                     graph.Show();
                 }

@@ -18,9 +18,10 @@ namespace tams4a.Forms
         public FormGraphDisplay(DataTable dt, string[] domain, double[] range, string t = "Distribution Graph", Color[] c = null)
         {
             InitializeComponent();
+            CenterToScreen();
             displayedTable = dt;
             dataGridView.DataSource = displayedTable;
-            Color[] colours = { Color.Tomato, Color.Wheat, Color.PeachPuff, Color.Peru, Color.SeaGreen, Color.Teal, Color.Sienna, Color.Plum, Color.Olive, Color.Aqua};
+            Color[] colours = { Color.Green, Color.Turquoise, Color.LightBlue, Color.Blue, Color.Purple, Color.Pink, Color.Red, Color.Orange, Color.Yellow, Color.Brown };
             if (c != null) {
                 colours = c;
             }
@@ -56,7 +57,7 @@ namespace tams4a.Forms
             CenterToScreen();
             displayedTable = dt;
             dataGridView.DataSource = displayedTable;
-            Color[] colours = { Color.Tomato, Color.Wheat, Color.PeachPuff, Color.Peru, Color.SeaGreen, Color.Teal, Color.Sienna, Color.Plum, Color.Olive, Color.Aqua };
+            Color[] colours = { Color.Green, Color.Turquoise, Color.LightBlue, Color.Blue, Color.Purple, Color.Pink, Color.Red, Color.Orange, Color.Yellow, Color.Brown };
             if (c != null)
             {
                 colours = c;
