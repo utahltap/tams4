@@ -179,7 +179,6 @@ namespace tams4a.Classes
             setSymbolizer();
             disableSignDisplay(signControls);
             resetSignDisplay(signControls);
-            resetSaveCondition(signControls);
 
             return true;
         }
@@ -405,7 +404,9 @@ namespace tams4a.Classes
             UnsavedChanges = false;
             
             signControls.toolStripButtonSave.Enabled = false;
+            signControls.toolStripButtonCancel.Enabled = false;
             signControls.toolStripButtonSave.BackColor = default(Color);
+            signControls.toolStripButtonCancel.BackColor = default(Color);
         }
 
         protected void selectRecordDate(object sender, EventArgs e)
@@ -452,6 +453,7 @@ namespace tams4a.Classes
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
             updateSignDisplay(values, signControls);
             getSigns(signControls);
+            resetSaveCondition(signControls);
         }
 
         private void cancelChanges(object sender, EventArgs e)
@@ -510,13 +512,13 @@ namespace tams4a.Classes
                 signsOnPost = Database.GetDataByQuery(Project.conn, SignListSql.Replace("[[IDLIST]]", selectionValues[0]["support_id"]));
 
                 clearSignChanges();
-
-                //int i = 1;
-                //foreach (DataRow row in signsOnPost.Rows)
-                //{
-                //    row["description"] = i.ToString() + ". " + row["description"];
-                //    i++;    
-                //}
+                foreach (DataRow row in signsOnPost.Rows)
+                {
+                    if (row["display"].ToString() != row["description"].ToString() + " (" + row["TAMSID"].ToString() + ")")
+                    {
+                        row["display"] = row["description"].ToString() + " (" + row["TAMSID"].ToString() + ")";
+                    }
+                }
 
                 signControls.comboBoxSigns.Enabled = true;
                 signControls.buttonAdd.Enabled = true;
@@ -524,15 +526,11 @@ namespace tams4a.Classes
                 signControls.buttonFavorite.Enabled = (signsOnPost.Rows.Count > 0);
                 signControls.toolStripButtonRemove.Enabled = (tamsids.Count == 1);
                 signControls.comboBoxSigns.DataSource = signsOnPost;
-                signControls.comboBoxSigns.DisplayMember = "AHHHH";//"description";
+                signControls.comboBoxSigns.DisplayMember = "display";
                 signControls.comboBoxSigns.ValueMember = "TAMSID";
-
                 clearSignChanges();
                 changeSign(signControls);
-                foreach (DataRow row in signsOnPost.Rows)
-                {
-                    row["description"] = row["description"].ToString().Remove(0, 3);
-                }
+                
                 determinePostCat();
                 
             }
@@ -769,9 +767,9 @@ namespace tams4a.Classes
                     MessageBox.Show("Could not save data!");
                 }
             }
-            
-            resetSaveCondition(signControls);
-            
+
+            resetSignDisplay(signControls);
+            disableSignDisplay(signControls);           
             Properties.Settings.Default.Save();
             selectionLayer.ClearSelection();
             selectionLayer.DataSet.Save();
@@ -886,7 +884,14 @@ namespace tams4a.Classes
             getSigns(signControls);
             changeSign(signControls);
             determinePostCat();
-            controlChanged(sender, e);
+            DataTable post = Database.GetDataByQuery(Project.conn, SignSelectionSql.Replace("[[IDLIST]]", selectionValues[0]["support_id"]));
+            foreach (DataRow row in post.Rows)row["category"] = postCat;
+            selectionChanged();
+            setSymbolizer();
+            Project.map.Invalidate();
+            Project.map.Refresh();
+            Project.map.ResetBuffer();
+            Project.map.Update();            
         }
 
         private void faveSign(object sender, EventArgs e)
@@ -1447,8 +1452,16 @@ namespace tams4a.Classes
 
         private void deletePost(object sender, EventArgs e)
         {
+            if (MessageBox.Show("You are about to delete a post along with any signs on it, this action cannot be undone.", "Warning: Delete Post", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
+            {
+                return;
+            }
+            Panel_Sign signControls = getSignControls();
             string[] tables = { "sign_support", ModuleName };
             deleteShape(tamsids[0], tables, "support_id");
+            resetSignDisplay(signControls);
+            disableSignDisplay(signControls);
+            Project.map.Update();
         }
     }
 }

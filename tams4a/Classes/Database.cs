@@ -792,6 +792,44 @@ ALTER TABLE sign_support ADD photo TEXT;";
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_11_immute
+
+            #region db_update_12_immute
+            if (dbVersion == 11)
+            {
+                #region newrows2
+                InsertRow(conn, new Dictionary<string, string>()
+                {
+                    { "name", "Other" }
+                }, "road_types");
+                #endregion newrows2
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "12";
+                dbVersion = 12;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_12_immute
+
+            #region db_update_13_immute
+            if (dbVersion == 12)
+            {
+                try
+                {
+                    string cmdString = @"ALTER TABLE sign ADD COLUMN display TEXT;
+UPDATE sign SET display = description || ' (' || TAMSID || ')';";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "12";
+                dbVersion = 13;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_13_immute
+
             return true;
         }
 
