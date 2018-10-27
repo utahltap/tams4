@@ -1,5 +1,5 @@
 # TAMS 4.0.x
-# Version 4.1.1.0
+# Version 4.0.11.0
 CHANGES
 ----------------------------------------------------
 * Improved performance when changing sign selection
@@ -10,11 +10,12 @@ BUG FIXES
 * Fixed issues with removing signs and deleting posts
 * Fixed bug with two signs with the same description on a post
 
-# Version 4.1.0.0
+# Version 4.0.10.0
 CHANGES
 ----------------------------------------------------
 * Add 'Other' option for road type
 * Reordered road type dropdown
+* Changed graphs color scheme
 
 # Version 4.0.9.0
 CHANGES
