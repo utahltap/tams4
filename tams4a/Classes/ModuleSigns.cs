@@ -717,30 +717,27 @@ namespace tams4a.Classes
             values["photo"] = signControls.textBoxPhotoPost.Text;
             values["notes"] = notes;
             values["category"] = postCat;
-
-            if (signsOnPost != null && signsOnPost.Rows.Count > 0)
+            
+            for (int i = 0; i < signChanges.Count; i++)
             {
-                for (int i = 0; i < signChanges.Count; i++)
+                if (!Database.ReplaceRow(Project.conn, signChanges[i], ModuleName))
                 {
-                    if (!Database.ReplaceRow(Project.conn, signChanges[i], ModuleName))
-                    {
-                        MessageBox.Show("Could not save data!");
-                    }
+                    MessageBox.Show("Could not save data!");
                 }
-                if (!string.IsNullOrWhiteSpace(postCat))
+            }
+            if (!string.IsNullOrWhiteSpace(postCat))
+            {
+                string tamsidsCSV = string.Join(",", tamsids.ToArray());
+                foreach (DataRow row in selectionLayer.DataSet.DataTable.Select(tamsidcolumn + " IN (" + tamsidsCSV + ")"))
                 {
-                    string tamsidsCSV = string.Join(",", tamsids.ToArray());
-                    foreach (DataRow row in selectionLayer.DataSet.DataTable.Select(tamsidcolumn + " IN (" + tamsidsCSV + ")"))
+                    row["TAMSSIGN"] = postCat;
+                    if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_address")))
                     {
-                        row["TAMSSIGN"] = postCat;
-                        if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_address")))
-                        {
-                            row[Project.settings.GetValue("sign_f_address")] = values["address"];
-                        }
-                        if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_offset")))
-                        {
-                            row[Project.settings.GetValue("sign_f_offset")] = values["road_offset"];
-                        }
+                        row[Project.settings.GetValue("sign_f_address")] = values["address"];
+                    }
+                    if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_offset")))
+                    {
+                        row[Project.settings.GetValue("sign_f_offset")] = values["road_offset"];
                     }
                 }
             }
@@ -768,6 +765,7 @@ namespace tams4a.Classes
                 }
             }
 
+            if (suppressChanges) return;
             resetSignDisplay(signControls);
             disableSignDisplay(signControls);           
             Properties.Settings.Default.Save();
@@ -884,14 +882,11 @@ namespace tams4a.Classes
             getSigns(signControls);
             changeSign(signControls);
             determinePostCat();
-            DataTable post = Database.GetDataByQuery(Project.conn, SignSelectionSql.Replace("[[IDLIST]]", selectionValues[0]["support_id"]));
-            foreach (DataRow row in post.Rows)row["category"] = postCat;
+            suppressChanges = true;
+            saveHandler(sender, e);
+            suppressChanges = false;
             selectionChanged();
-            setSymbolizer();
-            Project.map.Invalidate();
-            Project.map.Refresh();
-            Project.map.ResetBuffer();
-            Project.map.Update();            
+            setSymbolizer();        
         }
 
         private void faveSign(object sender, EventArgs e)
