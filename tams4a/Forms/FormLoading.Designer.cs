@@ -43,7 +43,7 @@
             this.MinimumSize = new System.Drawing.Size(350, 280);
             this.Name = "FormLoading";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Loading. This may take a while...";
+            this.Text = "Loading...";
             this.UseWaitCursor = true;
             this.Load += new System.EventHandler(this.FormLoad);
             this.ResumeLayout(false);
