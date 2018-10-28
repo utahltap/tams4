@@ -694,7 +694,7 @@
             // 
             this.roadCategoryToolStripMenuItem.Name = "roadCategoryToolStripMenuItem";
             this.roadCategoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.roadCategoryToolStripMenuItem.Text = "Road Category";
+            this.roadCategoryToolStripMenuItem.Text = "Functional Classification";
             // 
             // governingDistressToolStripMenuItem
             // 

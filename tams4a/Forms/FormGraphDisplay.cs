@@ -33,7 +33,7 @@ namespace tams4a.Forms
             chart.ChartAreas.Clear();
             chart.Series.Add("Series");
             chart.Series["Series"].IsValueShownAsLabel = true;
-            chart.Series["Series"].Label = "#PERCENT{P0}";
+            chart.Series["Series"].Label = "#PERCENT{P1}";
             chart.ChartAreas.Add("Area");
             chart.ChartAreas["Area"].AxisX.Interval = 1;
             chart.ChartAreas["Area"].AxisX.MajorGrid.LineColor = Color.LightGray;

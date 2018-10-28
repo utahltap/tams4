@@ -1315,16 +1315,16 @@ namespace tams4a.Classes
         {
             string[] roadTypes = { "asphalt", "concrete", "gravel" };
             Color[] c = { Color.Black, Color.LightGray, Color.FromArgb(150, 75, 0) };
-            makeTypeGraph(roadTypes, "surface", c);
+            makeTypeGraph(roadTypes, "surface", "Road Surface Distribution", c);
         }
 
         private void graphRoadCategory(object sender, EventArgs e)
         {
             string[] roadTypes = { "Major Arterial", "Minor Arterial", "Major Collector", "Minor Collector", "Residential", "Other" };
-            makeTypeGraph(roadTypes, "type");
+            makeTypeGraph(roadTypes, "type", "Distribution of Function Classification");
         }
 
-        private void makeTypeGraph(string[] roadTypes, string column, Color[] c = null)
+        private void makeTypeGraph(string[] roadTypes, string column, string title, Color[] c = null)
         {
             string thisSql = getSelectAllSQL();
             try
@@ -1373,7 +1373,7 @@ namespace tams4a.Classes
                 }
                 results.Rows.Add(totalsRow);
                 results.Rows.Add(percentageRow);
-                FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, "Road " + Util.UppercaseFirst(column) + " Distribution", c);
+                FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, title, c);
                 graph.Show();
             }
             catch (Exception err)
@@ -1384,7 +1384,7 @@ namespace tams4a.Classes
 
         private void graphGoverningDistress(object sender, EventArgs e)
         {
-            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a surface for governing distresses.");
+            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a road surface type.");
             string thisSql = getSelectAllSQL();
             if (roadChooser.ShowDialog()== DialogResult.OK)
             {
@@ -1468,7 +1468,7 @@ namespace tams4a.Classes
 
         private void graphRSL(object sender, EventArgs e)
         {
-            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a surface for governing distresses.");
+            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a road surface type.");
             string thisSql = getSelectAllSQL();
             if (roadChooser.ShowDialog() == DialogResult.OK)
             {
