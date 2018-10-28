@@ -1,4 +1,11 @@
 # TAMS 4.0.x
+# Version 4.0.10.0
+CHANGES
+----------------------------------------------------
+* Add 'Other' option for road type
+* Reordered road type dropdown
+* Changed graphs color scheme
+
 # Version 4.0.9.0
 CHANGES
 ----------------------------------------------------
