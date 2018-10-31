@@ -117,5 +117,10 @@ namespace tams4a.Controls
                 return;
             }
         }
+
+        private void groupBoxDistress_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

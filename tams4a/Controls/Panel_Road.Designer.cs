@@ -76,6 +76,7 @@ namespace tams4a.Controls
             this.labelSurveyDate = new System.Windows.Forms.Label();
             this.labelName = new System.Windows.Forms.Label();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.buttonSave = new System.Windows.Forms.ToolStripButton();
             this.buttonReset = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonSetDate = new System.Windows.Forms.ToolStripDropDownButton();
@@ -86,7 +87,6 @@ namespace tams4a.Controls
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAnalysis = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSidewalk = new System.Windows.Forms.ToolStripButton();
-            this.buttonSave = new System.Windows.Forms.ToolStripButton();
             this.groupBoxDistress.SuspendLayout();
             this.groupBoxInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLanes)).BeginInit();
@@ -97,6 +97,9 @@ namespace tams4a.Controls
             // 
             // groupBoxDistress
             // 
+            this.groupBoxDistress.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxDistress.Controls.Add(this.buttonSuggest);
             this.groupBoxDistress.Controls.Add(this.inputRsl);
             this.groupBoxDistress.Controls.Add(this.label4);
@@ -111,14 +114,14 @@ namespace tams4a.Controls
             this.groupBoxDistress.Controls.Add(this.distress3);
             this.groupBoxDistress.Controls.Add(this.distress2);
             this.groupBoxDistress.Controls.Add(this.distress1);
-            this.groupBoxDistress.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBoxDistress.Location = new System.Drawing.Point(0, 418);
+            this.groupBoxDistress.Location = new System.Drawing.Point(0, 435);
             this.groupBoxDistress.MinimumSize = new System.Drawing.Size(0, 100);
             this.groupBoxDistress.Name = "groupBoxDistress";
-            this.groupBoxDistress.Size = new System.Drawing.Size(224, 273);
+            this.groupBoxDistress.Size = new System.Drawing.Size(220, 324);
             this.groupBoxDistress.TabIndex = 6;
             this.groupBoxDistress.TabStop = false;
             this.groupBoxDistress.Text = "Distresses";
+            this.groupBoxDistress.Enter += new System.EventHandler(this.groupBoxDistress_Enter);
             // 
             // buttonSuggest
             // 
@@ -342,7 +345,7 @@ namespace tams4a.Controls
             this.groupBoxInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxInfo.Location = new System.Drawing.Point(0, 25);
             this.groupBoxInfo.Name = "groupBoxInfo";
-            this.groupBoxInfo.Size = new System.Drawing.Size(224, 393);
+            this.groupBoxInfo.Size = new System.Drawing.Size(220, 410);
             this.groupBoxInfo.TabIndex = 5;
             this.groupBoxInfo.TabStop = false;
             this.groupBoxInfo.Text = "Road";
@@ -412,7 +415,7 @@ namespace tams4a.Controls
             // labelTo
             // 
             this.labelTo.AutoSize = true;
-            this.labelTo.Location = new System.Drawing.Point(7, 136);
+            this.labelTo.Location = new System.Drawing.Point(7, 139);
             this.labelTo.Name = "labelTo";
             this.labelTo.Size = new System.Drawing.Size(61, 13);
             this.labelTo.TabIndex = 24;
@@ -421,7 +424,7 @@ namespace tams4a.Controls
             // labelFrom
             // 
             this.labelFrom.AutoSize = true;
-            this.labelFrom.Location = new System.Drawing.Point(7, 110);
+            this.labelFrom.Location = new System.Drawing.Point(8, 113);
             this.labelFrom.Name = "labelFrom";
             this.labelFrom.Size = new System.Drawing.Size(71, 13);
             this.labelFrom.TabIndex = 23;
@@ -452,7 +455,7 @@ namespace tams4a.Controls
             // 
             this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBoxPhoto.InitialImage = global::tams4a.Properties.Resources.nophoto;
-            this.pictureBoxPhoto.Location = new System.Drawing.Point(104, 318);
+            this.pictureBoxPhoto.Location = new System.Drawing.Point(104, 331);
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
             this.pictureBoxPhoto.Size = new System.Drawing.Size(90, 64);
             this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -462,7 +465,7 @@ namespace tams4a.Controls
             // labelPhoto
             // 
             this.labelPhoto.AutoSize = true;
-            this.labelPhoto.Location = new System.Drawing.Point(7, 294);
+            this.labelPhoto.Location = new System.Drawing.Point(6, 308);
             this.labelPhoto.Name = "labelPhoto";
             this.labelPhoto.Size = new System.Drawing.Size(54, 13);
             this.labelPhoto.TabIndex = 18;
@@ -470,7 +473,7 @@ namespace tams4a.Controls
             // 
             // buttonNextPhoto
             // 
-            this.buttonNextPhoto.Location = new System.Drawing.Point(82, 293);
+            this.buttonNextPhoto.Location = new System.Drawing.Point(82, 305);
             this.buttonNextPhoto.Name = "buttonNextPhoto";
             this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
             this.buttonNextPhoto.TabIndex = 17;
@@ -479,7 +482,7 @@ namespace tams4a.Controls
             // 
             // textBoxPhotoFile
             // 
-            this.textBoxPhotoFile.Location = new System.Drawing.Point(104, 293);
+            this.textBoxPhotoFile.Location = new System.Drawing.Point(105, 305);
             this.textBoxPhotoFile.Name = "textBoxPhotoFile";
             this.textBoxPhotoFile.Size = new System.Drawing.Size(90, 20);
             this.textBoxPhotoFile.TabIndex = 16;
@@ -488,7 +491,7 @@ namespace tams4a.Controls
             // labelSurface
             // 
             this.labelSurface.AutoSize = true;
-            this.labelSurface.Location = new System.Drawing.Point(7, 267);
+            this.labelSurface.Location = new System.Drawing.Point(8, 281);
             this.labelSurface.Name = "labelSurface";
             this.labelSurface.Size = new System.Drawing.Size(44, 13);
             this.labelSurface.TabIndex = 15;
@@ -498,7 +501,7 @@ namespace tams4a.Controls
             // 
             this.comboBoxSurface.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSurface.FormattingEnabled = true;
-            this.comboBoxSurface.Location = new System.Drawing.Point(82, 266);
+            this.comboBoxSurface.Location = new System.Drawing.Point(83, 278);
             this.comboBoxSurface.Name = "comboBoxSurface";
             this.comboBoxSurface.Size = new System.Drawing.Size(112, 21);
             this.comboBoxSurface.TabIndex = 14;
@@ -507,7 +510,7 @@ namespace tams4a.Controls
             // 
             this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxType.FormattingEnabled = true;
-            this.comboBoxType.Location = new System.Drawing.Point(82, 239);
+            this.comboBoxType.Location = new System.Drawing.Point(82, 246);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(112, 21);
             this.comboBoxType.TabIndex = 13;
@@ -515,16 +518,16 @@ namespace tams4a.Controls
             // labelType
             // 
             this.labelType.AutoSize = true;
-            this.labelType.Location = new System.Drawing.Point(7, 241);
+            this.labelType.Location = new System.Drawing.Point(8, 243);
             this.labelType.Name = "labelType";
-            this.labelType.Size = new System.Drawing.Size(31, 13);
+            this.labelType.Size = new System.Drawing.Size(68, 26);
             this.labelType.TabIndex = 12;
-            this.labelType.Text = "Type";
+            this.labelType.Text = "Functional\r\nClassification";
             // 
             // labelArea
             // 
             this.labelArea.AutoSize = true;
-            this.labelArea.Location = new System.Drawing.Point(7, 213);
+            this.labelArea.Location = new System.Drawing.Point(7, 219);
             this.labelArea.Name = "labelArea";
             this.labelArea.Size = new System.Drawing.Size(32, 13);
             this.labelArea.TabIndex = 11;
@@ -533,7 +536,7 @@ namespace tams4a.Controls
             // labelLength
             // 
             this.labelLength.AutoSize = true;
-            this.labelLength.Location = new System.Drawing.Point(7, 188);
+            this.labelLength.Location = new System.Drawing.Point(7, 191);
             this.labelLength.Name = "labelLength";
             this.labelLength.Size = new System.Drawing.Size(40, 13);
             this.labelLength.TabIndex = 10;
@@ -542,7 +545,7 @@ namespace tams4a.Controls
             // labelWidth
             // 
             this.labelWidth.AutoSize = true;
-            this.labelWidth.Location = new System.Drawing.Point(7, 162);
+            this.labelWidth.Location = new System.Drawing.Point(7, 166);
             this.labelWidth.Name = "labelWidth";
             this.labelWidth.Size = new System.Drawing.Size(35, 13);
             this.labelWidth.TabIndex = 9;
@@ -550,7 +553,7 @@ namespace tams4a.Controls
             // 
             // textBoxArea
             // 
-            this.textBoxArea.Location = new System.Drawing.Point(82, 213);
+            this.textBoxArea.Location = new System.Drawing.Point(82, 216);
             this.textBoxArea.Name = "textBoxArea";
             this.textBoxArea.ReadOnly = true;
             this.textBoxArea.Size = new System.Drawing.Size(77, 20);
@@ -575,7 +578,7 @@ namespace tams4a.Controls
             // labelLanes
             // 
             this.labelLanes.AutoSize = true;
-            this.labelLanes.Location = new System.Drawing.Point(7, 85);
+            this.labelLanes.Location = new System.Drawing.Point(8, 85);
             this.labelLanes.Name = "labelLanes";
             this.labelLanes.Size = new System.Drawing.Size(36, 13);
             this.labelLanes.TabIndex = 4;
@@ -584,7 +587,7 @@ namespace tams4a.Controls
             // labelSpeedLimit
             // 
             this.labelSpeedLimit.AutoSize = true;
-            this.labelSpeedLimit.Location = new System.Drawing.Point(7, 62);
+            this.labelSpeedLimit.Location = new System.Drawing.Point(8, 61);
             this.labelSpeedLimit.Name = "labelSpeedLimit";
             this.labelSpeedLimit.Size = new System.Drawing.Size(62, 13);
             this.labelSpeedLimit.TabIndex = 2;
@@ -623,9 +626,19 @@ namespace tams4a.Controls
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.MinimumSize = new System.Drawing.Size(200, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(224, 25);
+            this.toolStrip.Size = new System.Drawing.Size(220, 25);
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip1";
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonSave.Enabled = false;
+            this.buttonSave.Image = global::tams4a.Properties.Resources.save;
+            this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(23, 22);
+            this.buttonSave.Text = "Save Changes";
             // 
             // buttonReset
             // 
@@ -659,13 +672,13 @@ namespace tams4a.Controls
             this.setTodayToolStripMenuItem.Checked = true;
             this.setTodayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.setTodayToolStripMenuItem.Name = "setTodayToolStripMenuItem";
-            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.setTodayToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.setTodayToolStripMenuItem.Text = "Set Today";
             // 
             // setOtherDateToolStripMenuItem
             // 
             this.setOtherDateToolStripMenuItem.Name = "setOtherDateToolStripMenuItem";
-            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.setOtherDateToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.setOtherDateToolStripMenuItem.Text = "Set Other Date";
             // 
             // buttonHistory
@@ -713,16 +726,6 @@ namespace tams4a.Controls
             this.toolStripButtonSidewalk.Text = "Sidewalk Data";
             this.toolStripButtonSidewalk.Visible = false;
             // 
-            // buttonSave
-            // 
-            this.buttonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonSave.Enabled = false;
-            this.buttonSave.Image = global::tams4a.Properties.Resources.save;
-            this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(23, 22);
-            this.buttonSave.Text = "Save Changes";
-            // 
             // Panel_Road
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -733,9 +736,10 @@ namespace tams4a.Controls
             this.Controls.Add(this.groupBoxDistress);
             this.Controls.Add(this.groupBoxInfo);
             this.Controls.Add(this.toolStrip);
-            this.MinimumSize = new System.Drawing.Size(200, 400);
+            this.MaximumSize = new System.Drawing.Size(220, 2410);
+            this.MinimumSize = new System.Drawing.Size(220, 750);
             this.Name = "Panel_Road";
-            this.Size = new System.Drawing.Size(224, 691);
+            this.Size = new System.Drawing.Size(220, 762);
             this.groupBoxDistress.ResumeLayout(false);
             this.groupBoxDistress.PerformLayout();
             this.groupBoxInfo.ResumeLayout(false);
