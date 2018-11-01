@@ -481,13 +481,12 @@
             // uxMap
             // 
             this.uxMap.AllowDrop = true;
-            this.uxMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.uxMap.AutoSize = true;
+            this.uxMap.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.uxMap.BackColor = System.Drawing.Color.LightGray;
             this.uxMap.CollectAfterDraw = false;
             this.uxMap.CollisionDetection = false;
+            this.uxMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uxMap.Enabled = false;
             this.uxMap.ExtendBuffer = false;
             this.uxMap.FunctionMode = DotSpatial.Controls.FunctionMode.Select;
@@ -512,18 +511,23 @@
             // 
             this.sidePanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.sidePanel.AutoSize = true;
+            this.sidePanel.HorizontalScroll.Maximum = 0;
+            this.sidePanel.AutoScroll = false;
+            this.sidePanel.VerticalScroll.Visible = false;
+            this.sidePanel.AutoScroll = true;
+            this.sidePanel.AutoScrollMinSize = new System.Drawing.Size(0, 771);
             this.sidePanel.Controls.Add(this.tabControlControls);
             this.sidePanel.Location = new System.Drawing.Point(0, 35);
-            this.sidePanel.MaximumSize = new System.Drawing.Size(220, 2410);
+            this.sidePanel.Margin = new System.Windows.Forms.Padding(5);
+            this.sidePanel.MaximumSize = new System.Drawing.Size(230, 2410);
             this.sidePanel.Name = "sidePanel";
-            this.sidePanel.Size = new System.Drawing.Size(220, 771);
+            this.sidePanel.Size = new System.Drawing.Size(230, 771);
             this.sidePanel.TabIndex = 0;
             // 
             // tabControlControls
             // 
             this.tabControlControls.Controls.Add(this.tabPage1);
-            this.tabControlControls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlControls.Dock = System.Windows.Forms.DockStyle.Left;
             this.tabControlControls.Location = new System.Drawing.Point(0, 0);
             this.tabControlControls.MaximumSize = new System.Drawing.Size(226, 2410);
             this.tabControlControls.Name = "tabControlControls";
@@ -537,7 +541,6 @@
             this.tabPage1.AutoScroll = true;
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(212, 745);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
@@ -554,7 +557,7 @@
             this.mapPanel.Controls.Add(this.toolStrip1);
             this.mapPanel.Location = new System.Drawing.Point(226, 35);
             this.mapPanel.Name = "mapPanel";
-            this.mapPanel.Size = new System.Drawing.Size(864, 774);
+            this.mapPanel.Size = new System.Drawing.Size(861, 771);
             this.mapPanel.TabIndex = 1;
             // 
             // toolStrip1
@@ -578,7 +581,7 @@
             this.toolStripButtonSnapShot});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(864, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(861, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
