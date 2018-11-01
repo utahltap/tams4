@@ -164,6 +164,14 @@ namespace tams4a.Controls
             this.comboBoxTreatment.FormattingEnabled = true;
             this.comboBoxTreatment.Location = new System.Drawing.Point(82, 248);
             this.comboBoxTreatment.Name = "comboBoxTreatment";
+            this.comboBoxTreatment.Items.Add("");
+            this.comboBoxTreatment.Items.Add("Nothing");
+            this.comboBoxTreatment.Items.Add("Routine");
+            this.comboBoxTreatment.Items.Add("Patching");
+            this.comboBoxTreatment.Items.Add("Preventative");
+            this.comboBoxTreatment.Items.Add("Preventative with Patching");
+            this.comboBoxTreatment.Items.Add("Rehabilitation");
+            this.comboBoxTreatment.Items.Add("Recontruction");
             this.comboBoxTreatment.Size = new System.Drawing.Size(112, 21);
             this.comboBoxTreatment.TabIndex = 25;
             // 

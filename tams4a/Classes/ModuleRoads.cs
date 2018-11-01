@@ -408,14 +408,15 @@ namespace tams4a.Classes
                 }
             }
 
-            var treatments = Database.GetDataByQuery(Project.conn, "SELECT id, name FROM treatments WHERE road_applied='" + surface + "';");
-            DataRow blankSurfaceRow = treatments.NewRow();      //
-            blankSurfaceRow["id"] = 0;                          // add empty row
-            blankSurfaceRow["name"] = "";                       //
-            treatments.Rows.InsertAt(blankSurfaceRow, 0);       //
-            roadControls.comboBoxTreatment.DataSource = treatments;    //
-            roadControls.comboBoxTreatment.DisplayMember = "name";     // sets options
-            roadControls.comboBoxTreatment.ValueMember = "id";         //
+            //var treatments = Database.GetDataByQuery(Project.conn, "SELECT id, name FROM treatments WHERE road_applied='" + surface + "';");
+            //DataRow blankSurfaceRow = treatments.NewRow();      //
+            //blankSurfaceRow["id"] = 0;                          // add empty row
+            //blankSurfaceRow["name"] = "";                       //
+            //treatments.Rows.InsertAt(blankSurfaceRow, 0);       //
+            //roadControls.comboBoxTreatment.DataSource = treatments;    //
+            //roadControls.comboBoxTreatment.DisplayMember = "name";     // sets options
+            //roadControls.comboBoxTreatment.ValueMember = "id";         //
+            
         }
 
 
@@ -446,6 +447,7 @@ namespace tams4a.Classes
             roadControls.distress7.Value = -1;
             roadControls.distress8.Value = -1;
             roadControls.distress9.Value = -1;
+            roadControls.comboBoxTreatment.Text = "";
             roadControls.inputRsl.Text = "";
             roadControls.btnNotes.Checked = false;
 
