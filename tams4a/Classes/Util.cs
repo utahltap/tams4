@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.Drawing.Imaging;
+
 using System.Windows.Forms;
 
 namespace tams4a.Classes
@@ -136,6 +136,43 @@ namespace tams4a.Classes
             }
 
             outFile.Close();
+            return true;
+        }
+
+        public static bool TableToPNG(DataGridView dgv)
+        {
+            //Resize DataGridView to full height and width.
+            int height = dgv.Height;
+            int width = dgv.Width;
+            dgv.ClearSelection();
+            dgv.Height = (dgv.RowCount + 2) * dgv.RowTemplate.Height;
+            dgv.Width = 50; //width of blank column
+            for (int i = 0; i < dgv.ColumnCount; i++)
+            {
+                dgv.Width += dgv.Rows[0].Cells[i].Size.Width;
+            }
+
+            //Create a Bitmap and draw the DataGridView on it.
+            Bitmap bitmap = new Bitmap(dgv.Width, dgv.Height);
+            dgv.DrawToBitmap(bitmap, new Rectangle(0, 0, dgv.Width, dgv.Height));
+
+            //Resize DataGridView back to original height and width.
+            dgv.Height = height;
+            dgv.Width = width;
+
+            //Save the Bitmap to folder.
+            SaveFileDialog save = new SaveFileDialog();
+
+            save.Filter = "PNG Image | *.png";
+            save.Title = "Save Report as PNG";
+            save.ShowDialog();
+
+            if (save.FileName != "")
+            {
+                System.IO.FileStream path = (System.IO.FileStream)save.OpenFile();
+                bitmap.Save(path, ImageFormat.Png);
+                path.Close();
+            }
             return true;
         }
 

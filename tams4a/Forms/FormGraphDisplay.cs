@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -85,14 +80,19 @@ namespace tams4a.Forms
             Close();
         }
 
-        private void exportGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        private void graphToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Classes.Util.ChartToPNG(chart);
         }
 
-        private void exportTableToolStripMenuItem_Click(object sender, EventArgs e)
+        private void cSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Classes.Util.TableToCSV(displayedTable);
+        }
+
+        private void pNGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Classes.Util.TableToPNG(dataGridView);
         }
     }
 }
