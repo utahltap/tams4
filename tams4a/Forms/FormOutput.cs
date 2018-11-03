@@ -31,17 +31,22 @@ namespace tams4a.Forms
         {
             //Resize DataGridView to full height and width.
             int height = dataGridViewReport.Height;
-            //int width = dataGridViewReport.Width;
+            int width = dataGridViewReport.Width;
+            dataGridViewReport.ClearSelection();
             dataGridViewReport.Height = (dataGridViewReport.RowCount + 2) * dataGridViewReport.RowTemplate.Height;
-            //dataGridViewReport.Width = dataGridViewReport.ColumnCount * (dataGridViewReport.Width);
+            dataGridViewReport.Width = 50; //width of blank column
+            for (int i = 0; i < dataGridViewReport.ColumnCount; i++)
+            {
+                dataGridViewReport.Width += dataGridViewReport.Rows[0].Cells[i].Size.Width;
+            }
 
             //Create a Bitmap and draw the DataGridView on it.
             Bitmap bitmap = new Bitmap(this.dataGridViewReport.Width, this.dataGridViewReport.Height);
             dataGridViewReport.DrawToBitmap(bitmap, new Rectangle(0, 0, this.dataGridViewReport.Width, this.dataGridViewReport.Height));
 
-            //Resize DataGridView back to original height.
+            //Resize DataGridView back to original height and width.
             dataGridViewReport.Height = height;
-            //dataGridViewReport.Width = width;
+            dataGridViewReport.Width = width;
 
             //Save the Bitmap to folder.
             SaveFileDialog save = new SaveFileDialog();

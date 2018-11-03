@@ -121,7 +121,6 @@ namespace tams4a.Controls
             this.groupBoxDistress.TabIndex = 6;
             this.groupBoxDistress.TabStop = false;
             this.groupBoxDistress.Text = "Distresses";
-            this.groupBoxDistress.Enter += new System.EventHandler(this.groupBoxDistress_Enter);
             // 
             // buttonSuggest
             // 

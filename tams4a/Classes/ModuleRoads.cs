@@ -740,7 +740,7 @@ namespace tams4a.Classes
         }
 
         /// <summary>
-        /// Sets the data properties used to colour surveyed roads on the map. Roads are coloured based RSL
+        /// Sets the data properties used to color surveyed roads on the map. Roads are colored based RSL
         /// </summary>
         private void applyColorizedProperties()
         {
