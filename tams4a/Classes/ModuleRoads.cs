@@ -1323,7 +1323,7 @@ namespace tams4a.Classes
         private void graphRoadCategory(object sender, EventArgs e)
         {
             string[] roadTypes = { "Major Arterial", "Minor Arterial", "Major Collector", "Minor Collector", "Residential", "Other" };
-            makeTypeGraph(roadTypes, "type", "Distribution of Function Classification");
+            makeTypeGraph(roadTypes, "type", "Distribution of Functional Classification");
         }
 
         private void makeTypeGraph(string[] roadTypes, string column, string title, Color[] c = null)
@@ -1386,7 +1386,7 @@ namespace tams4a.Classes
 
         private void graphGoverningDistress(object sender, EventArgs e)
         {
-            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a road surface type.");
+            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a Road Surface Type");
             string thisSql = getSelectAllSQL();
             if (roadChooser.ShowDialog()== DialogResult.OK)
             {
@@ -1402,9 +1402,9 @@ namespace tams4a.Classes
                     }
                     Dictionary<string, string[]> distressGroup = new Dictionary<string, string[]>()
                     {
-                        {"asphalt", distressAsphalt },
-                        {"gravel", distressGravel },
-                        {"concrete", distressConcrete }
+                        {"Asphalt", distressAsphalt },
+                        {"Gravel", distressGravel },
+                        {"Concrete", distressConcrete }
                     };
                     Dictionary<string, double> distressedArea = new Dictionary<string, double>();
                     double totalArea = 0.0;
@@ -1558,13 +1558,13 @@ namespace tams4a.Classes
             roadChooser.Text = title;
             roadChooser.labelMessage.Text = text;
             asphalt = new RadioButton();
-            asphalt.Text = "asphalt";
+            asphalt.Text = "Asphalt";
             asphalt.Location = new Point(240, 40);
             gravel = new RadioButton();
-            gravel.Text = "gravel";
+            gravel.Text = "Gravel";
             gravel.Location = new Point(240, 64);
             concrete = new RadioButton();
-            concrete.Text = "concrete";
+            concrete.Text = "Concrete";
             concrete.Location = new Point(240, 90);
             roadChooser.groupBoxUser.Controls.Add(asphalt);
             roadChooser.groupBoxUser.Controls.Add(gravel);
