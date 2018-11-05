@@ -885,8 +885,44 @@ namespace tams4a.Classes
             try
             {
                 DataTable history = Database.GetDataByQuery(Project.conn, histring);
-                FormHistory histForm = new FormHistory();
-                histForm.dataGridViewHistory.DataSource = history;
+
+                history.Columns["id"].ColumnName = "ID";
+                history.Columns["survey_date"].ColumnName = "Survey Date";
+                history.Columns["name"].ColumnName = "Name";
+                history.Columns["speed_limit"].ColumnName = "Speed Limit";
+                history.Columns["lanes"].ColumnName = "Lanes";
+                history.Columns["width"].ColumnName = "Width";
+                history.Columns["length"].ColumnName = "Length";
+                history.Columns["surface"].ColumnName = "Surface";
+                history.Columns["type"].ColumnName = "Functional Classification";
+                history.Columns["from_address"].ColumnName = "From Address";
+                history.Columns["to_address"].ColumnName = "To Address";
+                history.Columns["photo"].ColumnName = "Photo";
+                history.Columns["rsl"].ColumnName = "RSL";
+                history.Columns["suggested_treatment"].ColumnName = "Suggested Treatment";
+                history.Columns["notes"].ColumnName = "Notes";
+
+                int surface_id = 0;
+                string surface_type = history.Rows[0]["surface"].ToString();
+                if (surface_type == "asphalt")surface_id = 1;
+                if (surface_type == "gravel")
+                {
+                    surface_id = 2;
+                    history.Columns.Remove("distress8");
+                    history.Columns.Remove("distress9");
+                }
+                if (surface_type == "concrete")surface_id = 3;
+
+                DataTable distresses = Database.GetDataByQuery(Project.conn, "SELECT name, dbkey FROM road_distresses WHERE surface_id = " + surface_id.ToString());
+                for (int i = 0; i < distresses.Rows.Count; i++)
+                {
+                    string distressNumber = distresses.Rows[i]["dbkey"].ToString();
+                    history.Columns[distressNumber].ColumnName = distresses.Rows[i]["name"].ToString();
+                }
+
+                FormOutput histForm = new FormOutput();
+                histForm.Text = "Road History";
+                histForm.dataGridViewReport.DataSource = history;
                 histForm.Show();
             }
             catch (Exception err)

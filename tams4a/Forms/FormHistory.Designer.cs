@@ -35,8 +35,9 @@
             // 
             // buttonOK
             // 
+            this.buttonOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonOK.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.buttonOK.Location = new System.Drawing.Point(547, 469);
+            this.buttonOK.Location = new System.Drawing.Point(561, 469);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(118, 35);
             this.buttonOK.TabIndex = 0;
@@ -46,10 +47,14 @@
             // 
             // dataGridViewHistory
             // 
+            this.dataGridViewHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewHistory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewHistory.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewHistory.Name = "dataGridViewHistory";
-            this.dataGridViewHistory.Size = new System.Drawing.Size(1247, 463);
+            this.dataGridViewHistory.Size = new System.Drawing.Size(1238, 463);
             this.dataGridViewHistory.TabIndex = 1;
             // 
             // FormHistory
@@ -60,7 +65,7 @@
             this.Controls.Add(this.dataGridViewHistory);
             this.Controls.Add(this.buttonOK);
             this.Name = "FormHistory";
-            this.Text = "FormHistory";
+            this.Text = "Road History";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistory)).EndInit();
             this.ResumeLayout(false);
 
