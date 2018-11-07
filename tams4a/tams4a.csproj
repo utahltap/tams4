@@ -342,12 +342,6 @@
     <Compile Include="Forms\FormGraphDisplay.Designer.cs">
       <DependentUpon>FormGraphDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormHistory.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormHistory.Designer.cs">
-      <DependentUpon>FormHistory.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\FormLatLon.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -475,9 +469,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormGraphDisplay.resx">
       <DependentUpon>FormGraphDisplay.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormHistory.resx">
-      <DependentUpon>FormHistory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormLatLon.resx">
       <DependentUpon>FormLatLon.cs</DependentUpon>
