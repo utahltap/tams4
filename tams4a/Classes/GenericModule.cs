@@ -16,7 +16,6 @@ namespace tams4a.Classes
     class GenericModule : ProjectModule
     {
         static private readonly string itemSelectionSql = @"SELECT * from miscellaneous WHERE TAMSID IN ([[IDLIST]]);";
-        private string notes;
         private bool inClick = false;
         int maxTAMSID = 0;
         private Dictionary<string, string> icons;
@@ -24,7 +23,6 @@ namespace tams4a.Classes
         public GenericModule(TamsProject theProject, TabPage controlPage, ToolStripMenuItem[] boundButtons, string mn = "miscellaneous") : base(theProject, controlPage, boundButtons, itemSelectionSql)
         {
             ModuleName = mn;
-            notes = "";
 
             boundButtons[1].Click += SidewalkReport;
             boundButtons[2].Click += RoadReport;
@@ -216,7 +214,7 @@ namespace tams4a.Classes
             setControlPanel();
         }
 
-        override public void selectionChanged(object sender, EventArgs e)
+        override public void selectionChanged()
         {
 
             if (!isOpen()) { return; }
@@ -360,7 +358,7 @@ namespace tams4a.Classes
         private void cancelChanges(object sender, EventArgs e)
         {
             resetSaveCondition();
-            selectionChanged(sender, e);
+            selectionChanged();
         }
 
         private void resetSaveCondition()

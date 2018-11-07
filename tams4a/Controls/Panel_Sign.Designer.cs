@@ -439,6 +439,8 @@
             this.comboBoxSigns.Name = "comboBoxSigns";
             this.comboBoxSigns.Size = new System.Drawing.Size(90, 21);
             this.comboBoxSigns.TabIndex = 12;
+            this.comboBoxSigns.Tag = "";
+            this.comboBoxSigns.SelectedIndexChanged += new System.EventHandler(this.comboBoxSigns_SelectedIndexChanged);
             // 
             // numericUpDownOffset
             // 

@@ -45,7 +45,7 @@ namespace tams4a.Forms
                 int i = Convert.ToInt32(textBoxValue.Text);
                 valueText = textBoxValue.Text;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 valueText = "'" + textBoxValue.Text.Replace('\'', ' ') + "'";
             }

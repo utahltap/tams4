@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.OleDb;
 using System.Data.SQLite;
 using System.Windows.Forms;
@@ -46,7 +43,7 @@ namespace tams4a.Classes
                 {
                     adapter.Fill(dt);
                 }
-                catch (OleDbException oe)
+                catch (OleDbException)
                 {
                     v2_2_6 = false;
                 }
@@ -131,11 +128,9 @@ namespace tams4a.Classes
                         values["from_address"] = r["FromAddress"].ToString();
                         values["to_address"] = r["ToAddress"].ToString();
                         values["rsl"] = r["RSL"].ToString();
-                        int sl;
-                        int.TryParse(r["SpeedLimit_ID"].ToString(), out sl); sl = sl * 5;
+                        int.TryParse(r["SpeedLimit_ID"].ToString(), out int sl); sl = sl * 5;
                         values["speed_limit"] = sl.ToString();
-                        int fc;
-                        int.TryParse(r["FunctionalClass_ID"].ToString(), out fc);
+                        int.TryParse(r["FunctionalClass_ID"].ToString(), out int fc);
                         if (fc == 1)
                         {
                             values["type"] = "residential";
@@ -159,8 +154,7 @@ namespace tams4a.Classes
                         else if (fc == 6) {
                             values["type"] = "other";
                         }
-                        int st;
-                        int.TryParse(r["SurfaceType_ID"].ToString(), out st);
+                        int.TryParse(r["SurfaceType_ID"].ToString(), out int st);
                         if (st == 1)
                         {
                             values["surface"] = "asphalt";

@@ -180,12 +180,6 @@
       <HintPath>..\packages\DotSpatial.Symbology.Forms.1.9\lib\net40-Client\DotSpatial.Symbology.Forms.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DotSpatial.Symbology.Forms.resources">
-      <HintPath>..\..\DotSpatial 1.9\en-US\DotSpatial.Symbology.Forms.resources.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Tools">
-      <HintPath>..\..\DotSpatial 1.9\Tools\DotSpatial.Tools.dll</HintPath>
-    </Reference>
     <Reference Include="DotSpatial.Topology, Version=1.9.0.0, Culture=neutral, PublicKeyToken=a66b5e9434ca3671, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Topology.1.9\lib\net40-Client\DotSpatial.Topology.dll</HintPath>
       <Private>True</Private>

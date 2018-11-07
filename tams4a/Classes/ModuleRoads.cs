@@ -22,7 +22,7 @@ namespace tams4a.Classes
 
         private bool colorsOn = true;
         private DataTable surfaceTypes;
-        private DataTable roadTypes;
+        //private DataTable roadTypes;
         private DataTable surfaceDistresses;
         private string notes;
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
@@ -215,7 +215,7 @@ namespace tams4a.Classes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public override void selectionChanged(object sender, EventArgs e)
+        public override void selectionChanged()
         {
             if (!isOpen()) { return; }
 
@@ -224,7 +224,8 @@ namespace tams4a.Classes
                 DialogResult rslt = MessageBox.Show("Unsaved Changes Detected! Would you like to save the changes? Otherwise, they will be discared", "Unsaved Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (rslt == DialogResult.Yes)
                 {
-                    saveHandler(sender, e);
+                    return;
+                    //saveHandler(sender, e);
                 }
 
             }
@@ -273,7 +274,7 @@ namespace tams4a.Classes
         private void cancelChanges(object sender, EventArgs e)
         {
             resetSaveCondition();
-            selectionChanged(sender, e);
+            selectionChanged();
         }
 
         // returns the ROADCONTROLS collection of controls.
@@ -770,8 +771,8 @@ namespace tams4a.Classes
             double baseOutlineWidth = 10.0;
             double adjWidth = baseWidth;
             double adjOutlineWidth = baseOutlineWidth;
-            int numcategories = 6;
-            int maxrsl = 20;
+            //int numcategories = 6;
+            //int maxrsl = 20;
 
             LineScheme rdScheme = new LineScheme();
 
