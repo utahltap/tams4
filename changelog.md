@@ -1,7 +1,9 @@
 # TAMS 4.0.x
-# Version 4.0.11.0
+
+# Version 4.1.0.1
 CHANGES
 ----------------------------------------------------
+* Started new branch for Signs module
 * Improved performance when changing sign selection
 
 BUG FIXES
