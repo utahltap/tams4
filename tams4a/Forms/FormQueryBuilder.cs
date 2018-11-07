@@ -27,9 +27,9 @@ namespace tams4a.Forms
             blankSurfaceRow["cid"] = 0;
             blankSurfaceRow["name"] = "";
             TableSchema.Rows.InsertAt(blankSurfaceRow, 0);
-            comboBoxColumn.DataSource = TableSchema;
-            comboBoxColumn.DisplayMember = "name";
-            comboBoxColumn.ValueMember = "cid";
+            //comboBoxColumn.DataSource = TableSchema;
+            //comboBoxColumn.DisplayMember = "name";
+            //comboBoxColumn.ValueMember = "cid";
         }
 
         public string getQuery()

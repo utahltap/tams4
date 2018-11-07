@@ -935,32 +935,47 @@ namespace tams4a.Classes
          public void generalReport(object sender, EventArgs e)
          {
             DataTable general = new DataTable();
-             general.Columns.Add("ID");
-             general.Columns.Add("Name");
-             general.Columns.Add("Width (ft)");
-             general.Columns.Add("Length (ft)");
-             general.Columns.Add("From Address");
-             general.Columns.Add("To Address");
-             general.Columns.Add("Surface");
-             general.Columns.Add("Governing Distress");
-             general.Columns.Add("Treatment");
-             general.Columns.Add("Cost");
-             general.Columns.Add("Area");
-             general.Columns.Add("RSL");
-             general.Columns.Add("Type");
-             general.Columns.Add("Notes");
-             general.Columns.Add("Survey Date");
-             for (int i = 1; i < 10; i++)
-             {
-                general.Columns.Add("Distress " + i);
-             }
-             string thisSql = getSelectAllSQL();
-             try
+            general.Columns.Add("ID");
+            general.Columns.Add("Name");
+            general.Columns.Add("Width (ft)");
+            general.Columns.Add("Length (ft)");
+            general.Columns.Add("From Address");
+            general.Columns.Add("To Address");
+            general.Columns.Add("Surface");
+            general.Columns.Add("Governing Distress");
+            general.Columns.Add("Treatment");
+            general.Columns.Add("Cost");
+            general.Columns.Add("Area");
+            general.Columns.Add("RSL");
+            general.Columns.Add("Functional Classification");
+            general.Columns.Add("Notes");
+            general.Columns.Add("Survey Date");
+            general.Columns.Add("Fat/Spa/Pot");
+            general.Columns.Add("Edg/Joi/Rut");
+            general.Columns.Add("Lon/Cor/X-S");
+            general.Columns.Add("Pat/Bro/Dra");
+            general.Columns.Add("Pot/Fau/Dus");
+            general.Columns.Add("Dra/Lon/Agg");
+            general.Columns.Add("Tra/Tra/Cor");
+            general.Columns.Add("Block/Crack");
+            general.Columns.Add("Rutti/Patch");
+
+            string thisSql = getSelectAllSQL();
+            try
              {
                 DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
 
                 foreach (DataRow row in resultsTable.Rows)
                 {
+                    string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+
+                    int oldNoteLength = note.Length;
+                    int maxLength = 17;
+                    if (!string.IsNullOrEmpty(note))
+                    {
+                        note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
+                        if(note.Length == maxLength)note += "...";
+                    }
                     DataRow nr = general.NewRow();
                     nr["ID"] = row["TAMSID"];
                     nr["Name"] = row["name"];
@@ -970,14 +985,23 @@ namespace tams4a.Classes
                     nr["To Address"] = row["to_address"];
                     nr["Surface"] = row["surface"];
                     nr["RSL"] = row["rsl"];
-                    nr["Type"] = row["type"];
-                    nr["Notes"] = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+                    nr["Functional Classification"] = row["type"];
+                    nr["Notes"] = note;
                     nr["Survey Date"] = row["survey_date"];
+                    nr["Fat/Spa/Pot"] = row["distress1"];
+                    nr["Edg/Joi/Rut"] = row["distress2"];
+                    nr["Lon/Cor/X-S"] = row["distress3"];
+                    nr["Pat/Bro/Dra"] = row["distress4"];
+                    nr["Pot/Fau/Dus"] = row["distress5"];
+                    nr["Dra/Lon/Agg"] = row["distress6"];
+                    nr["Tra/Tra/Cor"] = row["distress7"];
+                    nr["Block/Crack"] = row["distress8"];
+                    nr["Rutti/Patch"] = row["distress9"];
+
                     int[] dvs = new int[9];
                     for (int i = 0; i < 9; i++)
                     {
-                        dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
-                        nr["Distress " + (i + 1)] = row["distress" + (i + 1)];
+                        dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());     
                     }
                     nr["Governing Distress"] = getGoverningDistress(dvs, row["surface"].ToString());
                     if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))

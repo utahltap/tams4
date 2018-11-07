@@ -49,7 +49,7 @@
             this.labelTable.Name = "labelTable";
             this.labelTable.Size = new System.Drawing.Size(147, 15);
             this.labelTable.TabIndex = 0;
-            this.labelTable.Text = "Getting data from [[Table]]";
+            this.labelTable.Text = "Create a Custom Report";
             // 
             // buttonOK
             // 
@@ -94,6 +94,22 @@
             // comboBoxColumn
             // 
             this.comboBoxColumn.FormattingEnabled = true;
+            this.comboBoxColumn.Items.AddRange(new object[] {
+                "ID",
+                "TAMDID",
+                "Survey Date",
+                "Name",
+                "Speed Limit",
+                "Lanes",
+                "Width",
+                "Length",
+                "Functional Classification",
+                "Surface",
+                "From Address",
+                "To Address",
+                "RSL",
+                "Suggested Treatment",
+            });
             this.comboBoxColumn.Location = new System.Drawing.Point(13, 25);
             this.comboBoxColumn.Name = "comboBoxColumn";
             this.comboBoxColumn.Size = new System.Drawing.Size(134, 21);
@@ -103,12 +119,13 @@
             // 
             this.comboBoxComparision.FormattingEnabled = true;
             this.comboBoxComparision.Items.AddRange(new object[] {
-            "=",
-            ">=",
-            ">",
-            "<=",
-            "<",
-            "<>"});
+                "=",
+                ">=",
+                ">",
+                "<=",
+                "<",
+                "<>"
+            });
             this.comboBoxComparision.Location = new System.Drawing.Point(153, 24);
             this.comboBoxComparision.Name = "comboBoxComparision";
             this.comboBoxComparision.Size = new System.Drawing.Size(84, 21);
