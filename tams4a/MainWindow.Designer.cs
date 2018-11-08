@@ -530,7 +530,6 @@
             this.uxMap.Size = new System.Drawing.Size(861, 746);
             this.uxMap.TabIndex = 1;
             this.uxMap.ZoomOutFartherThanMaxExtent = false;
-            this.uxMap.SelectionChanged += new System.EventHandler(this.uxMap_SelectionChanged);
             this.uxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.uxMap_MouseDown);
             this.uxMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.uxMap_MouseUp);
             // 
@@ -825,14 +824,14 @@
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem potholesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        //private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem analysisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem graphsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem customToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem signAlertsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem signInventoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem supportAlertsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        //private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem supportInventoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sidewalkDistressToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem severeRoadDistressToolStripMenuItem;

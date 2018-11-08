@@ -39,7 +39,7 @@ namespace tams4a.Forms
                 int i = Convert.ToInt32(comboBoxValue.Text);
                 valueText = comboBoxValue.Text;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 valueText = "'" + comboBoxValue.Text.Replace('\'', ' ') + "'";
             }

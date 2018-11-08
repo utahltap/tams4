@@ -63,7 +63,7 @@ namespace tams4a.Classes
                 sidewalks.Text = data.Rows[0]["installed"].ToString();
                 textBoxComment.Text = data.Rows[0]["comments"].ToString();
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
             }

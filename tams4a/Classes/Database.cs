@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 // TODO: Change this to an instantiated class.  Make it a member of the tamsproject class.
@@ -37,7 +35,7 @@ namespace tams4a.Classes
                 var dt = GetDataByQuery(conn, "SELECT version FROM db_version");
                 dbVersion = int.Parse(dt.Rows[0]["version"].ToString());
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 string cmdString = @"CREATE TABLE db_version (version INTEGER PRIMARY KEY NOT NULL, warning TEXT NOT NULL);
                                         INSERT INTO db_version (version, warning) VALUES (0, 'DO_NOT_MODIFY');";
@@ -89,7 +87,7 @@ namespace tams4a.Classes
                     SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
                     cmd.ExecuteNonQuery();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Dictionary<string, string> ct = new Dictionary<string, string>()
                     {
@@ -746,7 +744,7 @@ ALTER TABLE miscellaneous ADD property3 TEXT;";
                     SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
                     cmd.ExecuteNonQuery();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
 
                 }
@@ -794,6 +792,28 @@ ALTER TABLE sign_support ADD photo TEXT;";
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_11_immute
+
+            #region db_update_12_immute
+            if (dbVersion == 11)
+            {
+                try
+                {
+                    string cmdString = @"ALTER TABLE sign ADD COLUMN display TEXT;
+UPDATE sign SET display = description || ' (' || TAMSID || ')';";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "12";
+                dbVersion = 12;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_12_immute
+
             return true;
         }
 
