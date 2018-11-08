@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-
 using DotSpatial.Controls;
 using DotSpatial.Data;
 using tams4a.Forms;

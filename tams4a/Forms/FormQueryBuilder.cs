@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace tams4a.Forms
@@ -30,11 +23,12 @@ namespace tams4a.Forms
             //comboBoxColumn.DataSource = TableSchema;
             //comboBoxColumn.DisplayMember = "name";
             //comboBoxColumn.ValueMember = "cid";
+            
         }
 
         public string getQuery()
         {
-            if (string.IsNullOrWhiteSpace(comboBoxColumn.Text) || string.IsNullOrWhiteSpace(comboBoxComparision.Text) || string.IsNullOrWhiteSpace(textBoxValue.Text))
+            if (string.IsNullOrWhiteSpace(comboBoxColumn.Text) || string.IsNullOrWhiteSpace(comboBoxComparision.Text) || string.IsNullOrWhiteSpace(comboBoxValue.Text))
             {
                 MessageBox.Show("An option was left blank and the resulting query is invalid. Instead, this tool will show your " + TableName + " data without any filters.");
                 return "SELECT * FROM " + TableName;
@@ -42,12 +36,12 @@ namespace tams4a.Forms
             string valueText = "";
             try
             {
-                int i = Convert.ToInt32(textBoxValue.Text);
-                valueText = textBoxValue.Text;
+                int i = Convert.ToInt32(comboBoxValue.Text);
+                valueText = comboBoxValue.Text;
             }
             catch (Exception e)
             {
-                valueText = "'" + textBoxValue.Text.Replace('\'', ' ') + "'";
+                valueText = "'" + comboBoxValue.Text.Replace('\'', ' ') + "'";
             }
 
             return "SELECT * FROM " + TableName + " WHERE " + comboBoxColumn.Text + " " + comboBoxComparision.Text + " " + valueText;
@@ -65,7 +59,7 @@ namespace tams4a.Forms
 
         private string getValue()
         {
-            return textBoxValue.Text;
+            return comboBoxValue.Text;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -78,6 +72,45 @@ namespace tams4a.Forms
         {
             DialogResult = DialogResult.Cancel;
             Hide();
+        }
+
+        private void comboBoxColumn_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBoxValue.Items.Clear();
+            textBoxValue.Hide();
+            comboBoxValue.Show();
+            comboBoxComparision.Enabled = false;
+            comboBoxComparision.SelectedIndex = 0;
+            if (comboBoxColumn.Text == "Functional Classification")
+            {
+                comboBoxValue.Items.Add("Major Arterial");
+                comboBoxValue.Items.Add("Minor Arterial");
+                comboBoxValue.Items.Add("Major Collector");
+                comboBoxValue.Items.Add("Minor Collecter");
+                comboBoxValue.Items.Add("Residential");
+                return;
+            }
+            if (comboBoxColumn.Text == "Surface")
+            {
+                comboBoxValue.Items.Add("Asphalt");
+                comboBoxValue.Items.Add("Concrete");
+                comboBoxValue.Items.Add("Gravel");
+                return;
+            }
+            if (comboBoxColumn.Text == "Suggested Treatment")
+            {
+                comboBoxValue.Items.Add("Nothing");
+                comboBoxValue.Items.Add("Routine");
+                comboBoxValue.Items.Add("Patching");
+                comboBoxValue.Items.Add("Preventative");
+                comboBoxValue.Items.Add("Preventative with Patching");
+                comboBoxValue.Items.Add("Rehabilitation");
+                comboBoxValue.Items.Add("Reconstruction");
+                return;
+            }
+            comboBoxComparision.Enabled = true;
+            comboBoxValue.Hide();
+            textBoxValue.Show();
         }
     }
 }
