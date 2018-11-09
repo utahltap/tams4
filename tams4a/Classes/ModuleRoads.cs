@@ -1304,6 +1304,7 @@ namespace tams4a.Classes
                 DataTable outputTable = new DataTable();
                 outputTable.Columns.Add("ID");
                 outputTable.Columns.Add("Name");
+                outputTable.Columns.Add("Functional Classification");
                 outputTable.Columns.Add("From Address");
                 outputTable.Columns.Add("To Address");
                 outputTable.Columns.Add("Surface");
@@ -1323,6 +1324,7 @@ namespace tams4a.Classes
                     DataRow nr = outputTable.NewRow();
                     nr["ID"] = row["TAMSID"];
                     nr["Name"] = row["name"];
+                    nr["Functional Classification"] = row["type"];
                     nr["From Address"] = row["from_address"];
                     nr["To Address"] = row["to_address"];
                     nr["Surface"] = row["surface"];
@@ -1337,20 +1339,20 @@ namespace tams4a.Classes
                     if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))
                     {
                         nr["Treatment"] = row["suggested_treatment"];
-                        string treatmentCost = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments WHERE name = '" + row["suggested_treatment"].ToString() + "';").Rows[0]["cost"].ToString();
-                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;
-                        if (estCost > 1000000)
-                        {
-                            nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
-                        }
-                        else if (estCost > 1000)
-                        {
-                            nr["Cost"] = Math.Round(estCost / 1000).ToString() + "k";
-                        }
-                        else
-                        {
-                            nr["Cost"] = Math.Round(estCost).ToString();
-                        }
+                        //string treatmentCost = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments WHERE name = '" + row["suggested_treatment"].ToString() + "';").Rows[0]["cost"].ToString();
+                        //double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;
+                        //if (estCost > 1000000)
+                        //{
+                        //    nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
+                        //}
+                        //else if (estCost > 1000)
+                        //{
+                        //    nr["Cost"] = Math.Round(estCost / 1000).ToString() + "k";
+                        //}
+                        //else
+                        //{
+                        //    nr["Cost"] = Math.Round(estCost).ToString();
+                        //}
                     }
                     nr["Area"] = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
                     outputTable.Rows.Add(nr);

@@ -8,6 +8,7 @@ namespace tams4a.Forms
     {
         private string TableName;
         private DataTable TableSchema;
+        private string columnName;
 
         public FormQueryBuilder(string tn, DataTable ts)
         {
@@ -19,32 +20,46 @@ namespace tams4a.Forms
             DataRow blankSurfaceRow = TableSchema.NewRow();
             blankSurfaceRow["cid"] = 0;
             blankSurfaceRow["name"] = "";
-            TableSchema.Rows.InsertAt(blankSurfaceRow, 0);
-            //comboBoxColumn.DataSource = TableSchema;
-            //comboBoxColumn.DisplayMember = "name";
-            //comboBoxColumn.ValueMember = "cid";
-            
+            TableSchema.Rows.InsertAt(blankSurfaceRow, 0);            
         }
 
         public string getQuery()
         {
-            if (string.IsNullOrWhiteSpace(comboBoxColumn.Text) || string.IsNullOrWhiteSpace(comboBoxComparision.Text) || string.IsNullOrWhiteSpace(comboBoxValue.Text))
+            if (string.IsNullOrWhiteSpace(comboBoxColumn.Text) || string.IsNullOrWhiteSpace(comboBoxComparision.Text)
+                || (string.IsNullOrWhiteSpace(comboBoxValue.Text) && string.IsNullOrWhiteSpace(textBoxValue.Text)))
             {
                 MessageBox.Show("An option was left blank and the resulting query is invalid. Instead, this tool will show your " + TableName + " data without any filters.");
                 return "SELECT * FROM " + TableName;
             }
             string valueText = "";
-            try
-            {
-                int i = Convert.ToInt32(comboBoxValue.Text);
-                valueText = comboBoxValue.Text;
-            }
-            catch (Exception)
-            {
-                valueText = "'" + comboBoxValue.Text.Replace('\'', ' ') + "'";
-            }
 
-            return "SELECT * FROM " + TableName + " WHERE " + comboBoxColumn.Text + " " + comboBoxComparision.Text + " " + valueText;
+
+            //TODO: fix whatever is going on here...
+            //Value is a custom input
+            if (string.IsNullOrWhiteSpace(comboBoxValue.Text))
+            {
+                try
+                {
+                    int i = Convert.ToInt32(comboBoxValue.Text);
+                    valueText = comboBoxValue.Text;
+                }
+                catch (Exception)
+                {
+                    valueText = "'" + comboBoxValue.Text.Replace('\'', ' ') + "'";
+                }
+            }
+            else
+            {
+                valueText = comboBoxValue.Text;
+                if (comboBoxColumn.Text == "Surface") valueText.ToLower();
+
+            }
+            Console.WriteLine("#####################################################################");
+            Console.WriteLine("SELECT * FROM " + TableName + " WHERE " + columnName + " like \"" + valueText + "\"");
+            Console.WriteLine("#####################################################################");
+            return "SELECT * FROM " + TableName + " WHERE " + columnName + " like \"" + valueText + "\"";
+
+            return "";
         }
 
         private string getColumn()
@@ -78,11 +93,13 @@ namespace tams4a.Forms
         {
             comboBoxValue.Items.Clear();
             textBoxValue.Hide();
+            textBoxValue.Text = "";
             comboBoxValue.Show();
             comboBoxComparision.Enabled = false;
             comboBoxComparision.SelectedIndex = 0;
             if (comboBoxColumn.Text == "Functional Classification")
             {
+                columnName = "type";
                 comboBoxValue.Items.Add("Major Arterial");
                 comboBoxValue.Items.Add("Minor Arterial");
                 comboBoxValue.Items.Add("Major Collector");
@@ -92,6 +109,7 @@ namespace tams4a.Forms
             }
             if (comboBoxColumn.Text == "Surface")
             {
+                columnName = "surface";
                 comboBoxValue.Items.Add("Asphalt");
                 comboBoxValue.Items.Add("Concrete");
                 comboBoxValue.Items.Add("Gravel");
@@ -99,6 +117,7 @@ namespace tams4a.Forms
             }
             if (comboBoxColumn.Text == "Suggested Treatment")
             {
+                columnName = "suggested_treatment";
                 comboBoxValue.Items.Add("Nothing");
                 comboBoxValue.Items.Add("Routine");
                 comboBoxValue.Items.Add("Patching");
