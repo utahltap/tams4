@@ -1303,21 +1303,22 @@ namespace tams4a.Classes
                 }
                 DataTable outputTable = new DataTable();
                 outputTable.Columns.Add("ID");
-                outputTable.Columns.Add("Survey Date");
                 outputTable.Columns.Add("Name");
                 outputTable.Columns.Add("Speed Limit");
                 outputTable.Columns.Add("Lanes");
-                outputTable.Columns.Add("Width");
-                outputTable.Columns.Add("Length");
-                outputTable.Columns.Add("Functional Classification");
+                outputTable.Columns.Add("Width (ft)");
+                outputTable.Columns.Add("Length (ft)");
                 outputTable.Columns.Add("From Address");
                 outputTable.Columns.Add("To Address");
                 outputTable.Columns.Add("Surface");
                 outputTable.Columns.Add("Governing Distress");
-                outputTable.Columns.Add("RSL");
                 outputTable.Columns.Add("Treatment");
                 outputTable.Columns.Add("Cost");
                 outputTable.Columns.Add("Area");
+                outputTable.Columns.Add("RSL");
+                outputTable.Columns.Add("Functional Classification");
+                outputTable.Columns.Add("Notes");
+                outputTable.Columns.Add("Survey Date");
                 if (surfaceType == "")
                 {
                     outputTable.Columns.Add("Fat/Spa/Pot");
@@ -1370,18 +1371,31 @@ namespace tams4a.Classes
                 foreach (DataRow row in results.Rows)
                 {
                     DataRow nr = outputTable.NewRow();
+                    string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+
+                    int oldNoteLength = note.Length;
+                    int maxLength = 17;
+                    if (!string.IsNullOrEmpty(note))
+                    {
+                        note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
+                        if (note.Length == maxLength) note += "...";
+                    }
+                    double area = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
+
                     nr["ID"] = row["TAMSID"];
-                    nr["Survey Date"] = row["survey_date"];
                     nr["Name"] = row["name"];
                     nr["Speed Limit"] = row["speed_limit"];
                     nr["Lanes"] = row["lanes"];
-                    nr["Width"] = row["width"];
-                    nr["Length"] = row["length"];
-                    nr["Functional Classification"] = row["type"];
+                    nr["Width (ft)"] = row["width"];
+                    nr["Length (ft)"] = row["length"];
                     nr["From Address"] = row["from_address"];
                     nr["To Address"] = row["to_address"];
                     nr["Surface"] = row["surface"];
+                    nr["Area"] = area;
                     nr["RSL"] = row["rsl"];
+                    nr["Functional Classification"] = row["type"];
+                    nr["Notes"] = note;
+                    nr["Survey Date"] = row["survey_date"];
                     if (surfaceType == "")
                     {
                         nr["Fat/Spa/Pot"] = row["distress1"];
@@ -1456,7 +1470,7 @@ namespace tams4a.Classes
                         }
 
 
-                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * treatmentCost / 9;
+                        double estCost = area * treatmentCost / 9;
                         if (estCost > 1000000)
                         {
                             nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
@@ -1470,7 +1484,6 @@ namespace tams4a.Classes
                             nr["Cost"] = Math.Round(estCost).ToString();
                         }
                     }
-                    nr["Area"] = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
                     outputTable.Rows.Add(nr);
                 }
                 report.dataGridViewReport.DataSource = outputTable;
