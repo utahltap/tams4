@@ -170,7 +170,7 @@ namespace tams4a.Controls
             this.comboBoxTreatment.Items.Add("Preventative");
             this.comboBoxTreatment.Items.Add("Preventative with Patching");
             this.comboBoxTreatment.Items.Add("Rehabilitation");
-            this.comboBoxTreatment.Items.Add("Recontruction");
+            this.comboBoxTreatment.Items.Add("Reconstruction");
             this.comboBoxTreatment.Size = new System.Drawing.Size(112, 21);
             this.comboBoxTreatment.TabIndex = 25;
             // 
