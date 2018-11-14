@@ -814,6 +814,26 @@ UPDATE sign SET display = description || ' (' || TAMSID || ')';";
             }
             #endregion db_update_12_immute
 
+            #region db_update_13_immute
+            if (dbVersion == 12)
+            {
+                try
+                {
+                    string cmdString = @"UPDATE road SET suggested_treatment = 'Reconstruction' WHERE suggested_treatment = 'Recontruction';";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "13";
+                dbVersion = 13;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_13_immute
+
             return true;
         }
 

@@ -1290,20 +1290,25 @@ namespace tams4a.Classes
 
         private void customReport(object sender, EventArgs e)
         {
-            DataTable schema = Database.GetDataByQuery(Project.conn, "PRAGMA table_info(road)");
-            FormQueryBuilder tableFilters = new FormQueryBuilder("road", schema);
+            FormQueryBuilder tableFilters = new FormQueryBuilder("road");
             if (tableFilters.ShowDialog() == DialogResult.OK)
             {
+                string surfaceType = tableFilters.getSurface();
                 string query = tableFilters.getQuery() + " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC;";
                 DataTable results = Database.GetDataByQuery(Project.conn, query);
                 if (results.Rows.Count == 0)
                 {
-                    MessageBox.Show("No list could be generated because no roads with potholes where found.");
+                    MessageBox.Show("No roads matching the given description were found.");
                     return;
                 }
                 DataTable outputTable = new DataTable();
                 outputTable.Columns.Add("ID");
+                outputTable.Columns.Add("Survey Date");
                 outputTable.Columns.Add("Name");
+                outputTable.Columns.Add("Speed Limit");
+                outputTable.Columns.Add("Lanes");
+                outputTable.Columns.Add("Width");
+                outputTable.Columns.Add("Length");
                 outputTable.Columns.Add("Functional Classification");
                 outputTable.Columns.Add("From Address");
                 outputTable.Columns.Add("To Address");
@@ -1313,22 +1318,118 @@ namespace tams4a.Classes
                 outputTable.Columns.Add("Treatment");
                 outputTable.Columns.Add("Cost");
                 outputTable.Columns.Add("Area");
+                if (surfaceType == "")
+                {
+                    outputTable.Columns.Add("Fat/Spa/Pot");
+                    outputTable.Columns.Add("Edg/Joi/Rut");
+                    outputTable.Columns.Add("Lon/Cor/X-S");
+                    outputTable.Columns.Add("Pat/Bro/Dra");
+                    outputTable.Columns.Add("Pot/Fau/Dus");
+                    outputTable.Columns.Add("Dra/Lon/Agg");
+                    outputTable.Columns.Add("Tra/Tra/Cor");
+                    outputTable.Columns.Add("Block/Crack");
+                    outputTable.Columns.Add("Rutti/Patch");
+                }
+                if (surfaceType == "Asphalt")
+                {
+                    outputTable.Columns.Add("Fatigue");
+                    outputTable.Columns.Add("Edge");
+                    outputTable.Columns.Add("Longitudinal");
+                    outputTable.Columns.Add("Patches");
+                    outputTable.Columns.Add("Potholes");
+                    outputTable.Columns.Add("Drainage");
+                    outputTable.Columns.Add("Transverse");
+                    outputTable.Columns.Add("Block");
+                    outputTable.Columns.Add("Rutting");
+                }
+                if (surfaceType == "Concrete")
+                {
+                    outputTable.Columns.Add("Spalling");
+                    outputTable.Columns.Add("Joint Seal");
+                    outputTable.Columns.Add("Corners");
+                    outputTable.Columns.Add("Broken");
+                    outputTable.Columns.Add("Faulting");
+                    outputTable.Columns.Add("Longitudinal");
+                    outputTable.Columns.Add("Transverse");
+                    outputTable.Columns.Add("Cracking");
+                    outputTable.Columns.Add("Patches");
+                }
+
+                if (surfaceType == "Gravel")
+                {
+                    outputTable.Columns.Add("Potholes");
+                    outputTable.Columns.Add("Rutting");
+                    outputTable.Columns.Add("X-Section");
+                    outputTable.Columns.Add("Drainage");
+                    outputTable.Columns.Add("Dust");
+                    outputTable.Columns.Add("Aggregate");
+                    outputTable.Columns.Add("Corrugate");
+                }
+
                 FormOutput report = new FormOutput();
-                var currentID = results.Rows[0]["TAMSID"];
                 foreach (DataRow row in results.Rows)
                 {
-                    if (currentID.ToString().Equals(row["TAMSID"].ToString()))
-                    {
-                        continue;
-                    }
                     DataRow nr = outputTable.NewRow();
                     nr["ID"] = row["TAMSID"];
+                    nr["Survey Date"] = row["survey_date"];
                     nr["Name"] = row["name"];
+                    nr["Speed Limit"] = row["speed_limit"];
+                    nr["Lanes"] = row["lanes"];
+                    nr["Width"] = row["width"];
+                    nr["Length"] = row["length"];
                     nr["Functional Classification"] = row["type"];
                     nr["From Address"] = row["from_address"];
                     nr["To Address"] = row["to_address"];
                     nr["Surface"] = row["surface"];
                     nr["RSL"] = row["rsl"];
+                    if (surfaceType == "")
+                    {
+                        nr["Fat/Spa/Pot"] = row["distress1"];
+                        nr["Edg/Joi/Rut"] = row["distress2"];
+                        nr["Lon/Cor/X-S"] = row["distress3"];
+                        nr["Pat/Bro/Dra"] = row["distress4"];
+                        nr["Pot/Fau/Dus"] = row["distress5"];
+                        nr["Dra/Lon/Agg"] = row["distress6"];
+                        nr["Tra/Tra/Cor"] = row["distress7"];
+                        nr["Block/Crack"] = row["distress8"];
+                        nr["Rutti/Patch"] = row["distress9"];
+                    }
+                    if (surfaceType == "Asphalt")
+                    {
+                        nr["Fatigue"] = row["distress1"];
+                        nr["Edge"] = row["distress2"];
+                        nr["Longitudinal"] = row["distress3"];
+                        nr["Patches"] = row["distress4"];
+                        nr["Potholes"] = row["distress5"];
+                        nr["Drainage"] = row["distress6"];
+                        nr["Transverse"] = row["distress7"];
+                        nr["Block"] = row["distress8"];
+                        nr["Rutting"] = row["distress9"];
+                    }
+                    if (surfaceType == "Concrete")
+                    {
+                        nr["Spalling"] = row["distress1"];
+                        nr["Joint Seal"] = row["distress2"];
+                        nr["Corners"] = row["distress3"];
+                        nr["Broken"] = row["distress4"];
+                        nr["Faulting"] = row["distress5"];
+                        nr["Longitudinal"] = row["distress6"];
+                        nr["Transverse"] = row["distress7"];
+                        nr["Cracking"] = row["distress8"];
+                        nr["Patches"] = row["distress9"];
+                    }
+
+                    if (surfaceType == "Gravel")
+                    {
+                        nr["Potholes"] = row["distress1"];
+                        nr["Rutting"] = row["distress2"];
+                        nr["X-Section"] = row["distress3"];
+                        nr["Drainage"] = row["distress4"];
+                        nr["Dust"] = row["distress5"];
+                        nr["Aggregate"] = row["distress6"];
+                        nr["Corrugate"] = row["distress7"];
+                    }
+
                     int[] dvs = new int[9];
                     for (int i = 0; i < 9; i++)
                     {
@@ -1339,20 +1440,35 @@ namespace tams4a.Classes
                     if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))
                     {
                         nr["Treatment"] = row["suggested_treatment"];
-                        //string treatmentCost = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments WHERE name = '" + row["suggested_treatment"].ToString() + "';").Rows[0]["cost"].ToString();
-                        //double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;
-                        //if (estCost > 1000000)
-                        //{
-                        //    nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
-                        //}
-                        //else if (estCost > 1000)
-                        //{
-                        //    nr["Cost"] = Math.Round(estCost / 1000).ToString() + "k";
-                        //}
-                        //else
-                        //{
-                        //    nr["Cost"] = Math.Round(estCost).ToString();
-                        //}
+                        string treatment = row["suggested_treatment"].ToString();
+
+                        double treatmentCost = 0.0;
+                        if (treatment == "Routine") treatmentCost = 0.56;
+                        if (treatment == "Patching") treatmentCost = 0.67;
+                        if (treatment == "Preventative") treatmentCost = 2.08;
+                        if (treatment == "Preventative with Patching") treatmentCost = 2.75;
+                        if (treatment == "Rehabilitation") treatmentCost = 9.57;
+                        if (treatment == "Reconstruction") treatmentCost = 18.4;
+                        if (treatmentCost == 0.0 && treatment != "Nothing")
+                        {
+                            DataTable tc = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments " + "WHERE name LIKE '" + treatment + "';");
+                            treatmentCost = Util.ToDouble(tc.Rows[0]["cost"].ToString());
+                        }
+
+
+                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * treatmentCost / 9;
+                        if (estCost > 1000000)
+                        {
+                            nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
+                        }
+                        else if (estCost > 1000)
+                        {
+                            nr["Cost"] = Math.Round(estCost / 1000).ToString() + "k";
+                        }
+                        else
+                        {
+                            nr["Cost"] = Math.Round(estCost).ToString();
+                        }
                     }
                     nr["Area"] = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
                     outputTable.Rows.Add(nr);
