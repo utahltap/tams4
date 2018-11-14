@@ -1,9 +1,22 @@
 # TAMS 4.0.x
 
+# Version 4.1.0.2
+CHANGES
+----------------------------------------------------
+* All reports can be exported as either a CSV or PNG file.
+* Road "Type" is now "Functional Classification"
+* Custom Reports now work
+* Added theme settings under "Project" dropdown
+* Graph and table data now round to nearest tenth
+* Notes in reports now truncate to fit table better
+
+BUG FIXES
+----------------------------------------------------
+* Fixed issues with histroy reports resizing
+
 # Version 4.1.0.1
 CHANGES
 ----------------------------------------------------
-* Started new branch for Signs module
 * Improved performance when changing sign selection
 
 BUG FIXES
