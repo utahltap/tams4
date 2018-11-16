@@ -11,17 +11,17 @@ using tams4a.Forms;
 
 namespace tams4a.Classes
 {
-    class ModuleRoads : ProjectModule
+    public class ModuleRoads : ProjectModule
     {
         public new const string moduleVersion = "4.0.1.1";    // string that can be converted to System.Version
-
+        public string roadColors = "RSL";
+        public Color labelColor = Color.Black;
         private string[] distressAsphalt = { "Fatigue", "Edge Cracks", "Longitudinal", "Patches", "Potholes", "Drainage", "Transverse", "Blocking", "Rutting" };
         private string[] distressGravel = { "Potholes", "Rutting", "X-section", "Drainage", "Dust", "Aggregate", "Corrugation" };
         private string[] distressConcrete = { "Spalling", "Joint Seals", "Corners", "Breaks", "Faulting", "Longitudinal", "Transverse", "Map Cracks", "Patches" };
 
         private bool colorsOn = true;
         private DataTable surfaceTypes;
-        //private DataTable roadTypes;
         private DataTable surfaceDistresses;
         private string notes;
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
@@ -120,7 +120,7 @@ namespace tams4a.Classes
             ModuleSettings.Add(new ProjectSetting(name: "road_labels", module: ModuleName, value: "true",
                     display_text: "Show Labels?", display_type: "bool",
                     description: "Showing street labels (names) may slow down the display."));
-            ModuleSettings.Add(new ProjectSetting(name: "road_colours", module: ModuleName, value: "true",
+            ModuleSettings.Add(new ProjectSetting(name: "road_colors", module: ModuleName, value: "true",
                     display_text: "Use Colors?", display_type: "bool",
                     description: "Color the streets based on observed RSL."));
             //ModuleSettings.Add(new ProjectSetting(name: "road_f_rsl", module: ModuleName, value: "true",
@@ -766,14 +766,12 @@ namespace tams4a.Classes
             selectionLayer.DataSet.DataTable = selectionTable;
         }
 
-        override protected void setSymbolizer()
+        public void setSymbolizer()
         {
             double baseWidth = 20.0;
             double baseOutlineWidth = 10.0;
             double adjWidth = baseWidth;
             double adjOutlineWidth = baseOutlineWidth;
-            //int numcategories = 6;
-            //int maxrsl = 20;
 
             LineScheme rdScheme = new LineScheme();
 
@@ -796,65 +794,92 @@ namespace tams4a.Classes
             catDef.Symbolizer = symDef;
             rdScheme.AddCategory(catDef);
 
-            int[] rslfloor = { 0, 1, 5, 9, 13, 17 };
-            int[] rslceil = { 0, 4, 8, 12, 16, 20 };
-            int[] r = { 255, 230, 250, 80, 0, 30 };
-            int[] g = { 5, 130, 250, 210, 255, 90 };
-            int[] b = { 5, 10, 5, 20, 40, 250 };
-            
-            if (Project.settings.GetValue("road_colours").Contains("t"))
+
+
+            int[] rslfloor = { 0, 1, 4, 7, 10, 13, 16, 19 };
+            int[] rslceil = { 0, 3, 6, 9, 12, 15, 18, 20 };
+
+            int[] r = new int[30];
+            int[] g = new int[30];
+            int[] b = new int[30];
+            r[0] = 139; r[1] = 255; r[2] = 255; r[3] = 255; r[4] = 50; r[5] = 0; r[6] = 0; r[7] = 0;
+            g[0] = 0; g[1] = 0; g[2] = 165; g[3] = 255; g[4] = 205; g[5] = 128; g[6] = 191; g[7] = 0;
+            b[0] = 0; b[1] = 0; b[2] = 0; b[3] = 0; b[4] = 50; b[5] = 0; b[6] = 255; b[7] = 255;
+
+            if (Project.settings.GetValue("road_colors").Contains("t"))
             {
-                int j = 0;
-                for (int i = 0; i < 21; i++)
+                if (roadColors == "RSL")
                 {
-                    while (i > rslceil[j])
+                    int j = 0;
+                    for (int i = 0; i < 21; i++)
                     {
+                        while (i > rslceil[j])
+                        {
+                            j++;
+                        }
+                        // create a category
+                        LineCategory colorCat = new LineCategory();
+                        colorCat.FilterExpression = "[TAMSROADRSL] = '" + i.ToString() + "'";
+
+                        LineSymbolizer colorSym = new LineSymbolizer();
+                        colorSym.ScaleMode = ScaleMode.Geographic;
+                        colorSym.SetWidth(adjWidth);
+                        colorSym.SetOutline(Color.DarkGray, adjOutlineWidth);
+                        colorSym.SetFillColor(Color.FromArgb(r[j], g[j], b[j]));
+
+                        colorCat.Symbolizer = colorSym;
+
+                        // assign (default) selection symbolizer
+                        colorCat.SelectionSymbolizer = catSelSym;
+
+                        // done
+                        rdScheme.AddCategory(colorCat);
+                    }
+                }
+
+                if (roadColors == "Treatment")
+                {
+                    DataTable nameToTreatment = Database.GetDataByQuery(Project.conn, "SELECT name, category FROM treatments;");
+                    string[] treatments = new string[30];
+                    int j = 0;
+                    foreach (DataRow row in nameToTreatment.Rows)
+                    {
+                        treatments[j] = row["name"].ToString();
+                        if (row["category"].ToString() == "routine") r[j] = 0; g[j] = 0; b[j] = 255;
+                        if (row["category"].ToString() == "patch") r[j] = 50; g[j] = 205; b[j] = 50;
+                        if (row["category"].ToString() == "preventative") r[j] = 255; g[j] = 255; b[j] = 0;
+                        if (row["category"].ToString() == "rehabilitation") r[j] = 255; g[j] = 0; b[j] = 0;
+                        if (row["category"].ToString() == "reconstruction") r[j] = 139; g[j] = 0; b[j] = 0;
                         j++;
                     }
-                    // create a category
-                    LineCategory colourCat = new LineCategory();
-                    colourCat.FilterExpression = "[TAMSROADRSL] = '" + i.ToString() + "'";
+                    treatments[24] = "Routine"; r[24] = 0; g[24] = 0; b[24] = 255;
+                    treatments[25] = "Patching"; r[25] = 50; g[25] = 205; b[25] = 50;
+                    treatments[26] = "Preventative"; r[26] = 255; g[26] = 255; b[26] = 0;
+                    treatments[27] = "Preventative with Patching"; r[27] = 255; g[27] = 165; b[27] = 0;
+                    treatments[28] = "Rehabilitation"; r[28] = 255; g[28] = 0; b[28] = 0;
+                    treatments[29] = "Reconstruction"; r[29] = 139; g[29] = 0; b[29] = 0;
 
-                    // create a new symbolizer, then assign it to category
-                    //LineSymbolizer sym = new LineSymbolizer(Color.FromArgb(r, g, b), Color.Black, adjWidth, System.Drawing.Drawing2D.DashStyle.Solid,
-                    //        System.Drawing.Drawing2D.LineCap.Flat);
-                    //sym.ScaleMode = ScaleMode.Geographic;
-                    //sym.SetOutline(Color.Red, adjOutlineWidth);
-                    LineSymbolizer colourSym = new LineSymbolizer();
-                    colourSym.ScaleMode = ScaleMode.Geographic;
-                    colourSym.SetWidth(adjWidth);
-                    colourSym.SetOutline(Color.DarkGray, adjOutlineWidth);
-                    colourSym.SetFillColor(Color.FromArgb(r[j], g[j], b[j]));
+                    for (int i = 0; i < treatments.Length; i++)
+                    {
+                        LineCategory colorCat = new LineCategory();
+                        colorCat.FilterExpression = "[TAMSTREATMENT] = '" + treatments[i] + "'";
 
-                    colourCat.Symbolizer = colourSym;
+                        LineSymbolizer colorSym = new LineSymbolizer();
+                        colorSym.ScaleMode = ScaleMode.Geographic;
+                        colorSym.SetWidth(adjWidth);
+                        colorSym.SetOutline(Color.DarkGray, adjOutlineWidth);
+                        colorSym.SetFillColor(Color.FromArgb(r[i], g[i], b[i]));
 
-                    // assign (default) selection symbolizer
-                    colourCat.SelectionSymbolizer = catSelSym;
+                        colorCat.Symbolizer = colorSym;
 
-                    // in case we ever use the legend
-                    //cat.LegendText = "RSL " + reader["start"].ToString() + "-" + reader["end"].ToString();
-                    colourCat.LegendText = "RSL " + rslfloor.ToString() + " +";
+                        // assign (default) selection symbolizer
+                        colorCat.SelectionSymbolizer = catSelSym;
 
-                    // done
-                    rdScheme.AddCategory(colourCat);
+                        // done
+                        rdScheme.AddCategory(colorCat);
+                    }
                 }
             }
-
-            LineCategory defCat = new LineCategory();
-            defCat.FilterExpression = "[TAMSROADRSL] = -1";
-
-            LineSymbolizer defSym = new LineSymbolizer();
-            defSym.ScaleMode = ScaleMode.Geographic;
-            defSym.SetWidth(adjWidth);
-            defSym.SetOutline(Color.Black, adjOutlineWidth);
-            defSym.SetFillColor(Color.Gray);
-
-            defCat.Symbolizer = defSym;
-            defCat.SelectionSymbolizer = catSelSym;
-
-            defCat.LegendText = "Not Surveyed";
-
-            rdScheme.AddCategory(defCat);
             ((MapLineLayer)Layer).ShowLabels = false;
 
             FeatureLayer roadFeatures = Layer as FeatureLayer;
@@ -862,7 +887,7 @@ namespace tams4a.Classes
             if (!string.IsNullOrEmpty(Project.settings.GetValue("road_labels")))
             {
                 roadFeatures.AddLabels("[" + Project.settings.GetValue(ModuleName + "_f_streetname") + "]",
-                        new Font("Tahoma", (float)8.0), Color.Black);
+                        new Font("Tahoma", (float)8.0), labelColor);
                 roadFeatures.ShowLabels = Project.settings.GetValue("road_labels").Contains("true");
             }
 
@@ -1668,7 +1693,7 @@ namespace tams4a.Classes
                 try
                 {
                     string roadType = roadChooser.chooseRoad();
-                    string[] categories = { "0", "1-3", "4-6", "7-9", "10-12", "12-15", "16-18", "19-20" };
+                    string[] categories = { "0", "1-3", "4-6", "7-9", "10-12", "13-15", "16-18", "19-20" };
                     int[] caps = { 0, 3, 6, 9, 12, 15, 18, 20 };
                     DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
                     var roads = roadTable.Select("surface = '" + roadType + "'");
@@ -1723,8 +1748,8 @@ namespace tams4a.Classes
                     }
                     results.Rows.Add(totalsRow);
                     results.Rows.Add(percentageRow);
-                    Color[] colour = { Color.DarkRed, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.DeepSkyBlue, Color.Blue };
-                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, "Road RSL Distribution", colour);
+                    Color[] color = { Color.DarkRed, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.DeepSkyBlue, Color.Blue };
+                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, "Road RSL Distribution", color);
                     graph.Show();
                 }
                 catch (Exception err)

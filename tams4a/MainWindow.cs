@@ -12,7 +12,9 @@ namespace tams4a
     public partial class MainWindow : Form
     {
         private DotSpatial.Controls.FunctionMode CurrentMode;
-        private TamsProject Project;
+        public TamsProject Project;
+        public ModuleRoads road;
+
         private int maxWidth;
         //private DotSpatial.Controls.AppManager appManager;
         //private DotSpatial.Plugins.WebMap.ServiceProvider webService;
@@ -74,7 +76,7 @@ namespace tams4a
                 allOthersToolStripMenuItem,
                 roadsWithSidewalksToolStripMenuItem
             };
-            ModuleRoads road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
+            road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
             ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
             GenericModule other = new GenericModule(Project, new TabPage("Other"), lcso);
             Project.addModule(road, "Roads", tabControlControls);
@@ -477,6 +479,12 @@ namespace tams4a
         {
             uxMap.BackColor = Color.Black;
             Project.map.Refresh();
+        }
+
+        private void displayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormDisplaySettings formDisplay = new FormDisplaySettings(this);
+            formDisplay.ShowDialog();
         }
     }
 }
