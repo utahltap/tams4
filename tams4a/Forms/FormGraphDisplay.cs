@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -33,7 +28,7 @@ namespace tams4a.Forms
             chart.ChartAreas.Clear();
             chart.Series.Add("Series");
             chart.Series["Series"].IsValueShownAsLabel = true;
-            chart.Series["Series"].Label = "#PERCENT{P0}";
+            chart.Series["Series"].Label = "#PERCENT{P1}";
             chart.ChartAreas.Add("Area");
             chart.ChartAreas["Area"].AxisX.Interval = 1;
             chart.ChartAreas["Area"].AxisX.MajorGrid.LineColor = Color.LightGray;
@@ -85,14 +80,19 @@ namespace tams4a.Forms
             Close();
         }
 
-        private void exportGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        private void graphToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Classes.Util.ChartToPNG(chart);
         }
 
-        private void exportTableToolStripMenuItem_Click(object sender, EventArgs e)
+        private void cSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Classes.Util.TableToCSV(displayedTable);
+        }
+
+        private void pNGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Classes.Util.TableToPNG(dataGridView);
         }
     }
 }

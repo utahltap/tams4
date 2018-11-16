@@ -115,7 +115,12 @@ namespace tams4a
             {
                 toolStrip1.Enabled = true;
                 uxMap.Enabled = true;
-                uxMap.BackColor = Color.White;
+                //if (theme == "light")
+                    uxMap.BackColor = Color.White;
+                //if (theme == "dark")
+                //{
+                //    uxMap.BackColor = Color.Black;
+                //}
             }
             else
             {
@@ -460,6 +465,18 @@ namespace tams4a
             {
                 System.Diagnostics.Process.Start("https://github.com/utahltap/tams4/blob/master/changelog.md");
             }
+        }
+
+        private void lightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            uxMap.BackColor = Color.White;
+            Project.map.Refresh();
+        }
+
+        private void darkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            uxMap.BackColor = Color.Black;
+            Project.map.Refresh();
         }
     }
 }

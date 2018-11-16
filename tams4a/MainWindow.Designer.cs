@@ -36,6 +36,9 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitTAMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.themeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +56,11 @@
             this.customToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.distributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.roadTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.roadCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.governingDistressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rSLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signAlertsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signInventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,9 +81,10 @@
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.appManager1 = new DotSpatial.Controls.AppManager();
             this.uxMap = new DotSpatial.Controls.Map();
-            this.splitContainerMain = new System.Windows.Forms.SplitContainer();
+            this.sidePanel = new System.Windows.Forms.Panel();
             this.tabControlControls = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.mapPanel = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripZoomIn = new System.Windows.Forms.ToolStripButton();
@@ -93,18 +102,11 @@
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSnapShot = new System.Windows.Forms.ToolStripButton();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.distributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.roadTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.roadCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.governingDistressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rSLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
-            this.splitContainerMain.Panel1.SuspendLayout();
-            this.splitContainerMain.Panel2.SuspendLayout();
-            this.splitContainerMain.SuspendLayout();
+            this.sidePanel.SuspendLayout();
             this.tabControlControls.SuspendLayout();
+            this.mapPanel.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -120,7 +122,7 @@
             this.otherToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1075, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1087, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -130,7 +132,8 @@
             this.infoToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.closeProjectToolStripMenuItem,
-            this.quitTAMSToolStripMenuItem});
+            this.quitTAMSToolStripMenuItem,
+            this.themeToolStripMenuItem});
             this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
             this.projectToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.projectToolStripMenuItem.Text = "&Project";
@@ -139,30 +142,53 @@
             // 
             this.infoToolStripMenuItem.Enabled = false;
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.infoToolStripMenuItem.Text = "I&nfo";
             this.infoToolStripMenuItem.Visible = false;
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.settingsToolStripMenuItem.Text = "&Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // closeProjectToolStripMenuItem
             // 
             this.closeProjectToolStripMenuItem.Name = "closeProjectToolStripMenuItem";
-            this.closeProjectToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.closeProjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.closeProjectToolStripMenuItem.Text = "&Close Project";
             this.closeProjectToolStripMenuItem.Click += new System.EventHandler(this.closeProjectToolStripMenuItem_Click);
             // 
             // quitTAMSToolStripMenuItem
             // 
             this.quitTAMSToolStripMenuItem.Name = "quitTAMSToolStripMenuItem";
-            this.quitTAMSToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.quitTAMSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.quitTAMSToolStripMenuItem.Text = "&Quit TAMS";
             this.quitTAMSToolStripMenuItem.Click += new System.EventHandler(this.quitTAMS4_click);
+            // 
+            // themeToolStripMenuItem
+            // 
+            this.themeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lightToolStripMenuItem,
+            this.darkToolStripMenuItem});
+            this.themeToolStripMenuItem.Name = "themeToolStripMenuItem";
+            this.themeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.themeToolStripMenuItem.Text = "Theme";
+            // 
+            // lightToolStripMenuItem
+            // 
+            this.lightToolStripMenuItem.Name = "lightToolStripMenuItem";
+            this.lightToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lightToolStripMenuItem.Text = "Light";
+            this.lightToolStripMenuItem.Click += new System.EventHandler(this.lightToolStripMenuItem_Click);
+            // 
+            // darkToolStripMenuItem
+            // 
+            this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.darkToolStripMenuItem.Text = "Dark";
+            this.darkToolStripMenuItem.Click += new System.EventHandler(this.darkToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -265,7 +291,7 @@
             this.potholesToolStripMenuItem,
             this.customToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.reportsToolStripMenuItem.Text = "Reports";
             // 
             // generalToolStripMenuItem
@@ -291,7 +317,7 @@
             // 
             this.analysisToolStripMenuItem.Enabled = false;
             this.analysisToolStripMenuItem.Name = "analysisToolStripMenuItem";
-            this.analysisToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.analysisToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.analysisToolStripMenuItem.Text = "Analysis";
             // 
             // graphsToolStripMenuItem
@@ -299,8 +325,43 @@
             this.graphsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.distributionToolStripMenuItem});
             this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
-            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.graphsToolStripMenuItem.Text = "Graphs";
+            // 
+            // distributionToolStripMenuItem
+            // 
+            this.distributionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.roadTypeToolStripMenuItem,
+            this.roadCategoryToolStripMenuItem,
+            this.governingDistressToolStripMenuItem,
+            this.rSLToolStripMenuItem});
+            this.distributionToolStripMenuItem.Name = "distributionToolStripMenuItem";
+            this.distributionToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.distributionToolStripMenuItem.Text = "Distribution";
+            // 
+            // roadTypeToolStripMenuItem
+            // 
+            this.roadTypeToolStripMenuItem.Name = "roadTypeToolStripMenuItem";
+            this.roadTypeToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.roadTypeToolStripMenuItem.Text = "Road Type";
+            // 
+            // roadCategoryToolStripMenuItem
+            // 
+            this.roadCategoryToolStripMenuItem.Name = "roadCategoryToolStripMenuItem";
+            this.roadCategoryToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.roadCategoryToolStripMenuItem.Text = "Functional Classification";
+            // 
+            // governingDistressToolStripMenuItem
+            // 
+            this.governingDistressToolStripMenuItem.Name = "governingDistressToolStripMenuItem";
+            this.governingDistressToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.governingDistressToolStripMenuItem.Text = "Governing Distress";
+            // 
+            // rSLToolStripMenuItem
+            // 
+            this.rSLToolStripMenuItem.Name = "rSLToolStripMenuItem";
+            this.rSLToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.rSLToolStripMenuItem.Text = "RSL";
             // 
             // signToolStripMenuItem
             // 
@@ -409,9 +470,9 @@
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.toolStripProgressBar1});
-            this.statusStrip.Location = new System.Drawing.Point(0, 727);
+            this.statusStrip.Location = new System.Drawing.Point(0, 809);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1075, 22);
+            this.statusStrip.Size = new System.Drawing.Size(1087, 22);
             this.statusStrip.TabIndex = 1;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -447,6 +508,8 @@
             // uxMap
             // 
             this.uxMap.AllowDrop = true;
+            this.uxMap.AutoSize = true;
+            this.uxMap.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.uxMap.BackColor = System.Drawing.Color.LightGray;
             this.uxMap.CollectAfterDraw = false;
             this.uxMap.CollisionDetection = false;
@@ -464,43 +527,35 @@
             this.uxMap.ProjectionModeReproject = DotSpatial.Controls.ActionMode.PromptOnce;
             this.uxMap.RedrawLayersWhileResizing = false;
             this.uxMap.SelectionEnabled = true;
-            this.uxMap.Size = new System.Drawing.Size(847, 678);
+            this.uxMap.Size = new System.Drawing.Size(861, 746);
             this.uxMap.TabIndex = 1;
             this.uxMap.ZoomOutFartherThanMaxExtent = false;
             this.uxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.uxMap_MouseDown);
             this.uxMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.uxMap_MouseUp);
             // 
-            // splitContainerMain
+            // sidePanel
             // 
-            this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerMain.IsSplitterFixed = true;
-            this.splitContainerMain.Location = new System.Drawing.Point(0, 24);
-            this.splitContainerMain.Name = "splitContainerMain";
-            // 
-            // splitContainerMain.Panel1
-            // 
-            this.splitContainerMain.Panel1.AutoScroll = true;
-            this.splitContainerMain.Panel1.Controls.Add(this.tabControlControls);
-            this.splitContainerMain.Panel1MinSize = 224;
-            // 
-            // splitContainerMain.Panel2
-            // 
-            this.splitContainerMain.Panel2.AutoScroll = true;
-            this.splitContainerMain.Panel2.Controls.Add(this.uxMap);
-            this.splitContainerMain.Panel2.Controls.Add(this.toolStrip1);
-            this.splitContainerMain.Panel2MinSize = 300;
-            this.splitContainerMain.Size = new System.Drawing.Size(1075, 703);
-            this.splitContainerMain.SplitterDistance = 224;
-            this.splitContainerMain.TabIndex = 2;
+            this.sidePanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.sidePanel.AutoScroll = true;
+            this.sidePanel.AutoScrollMinSize = new System.Drawing.Size(0, 771);
+            this.sidePanel.Controls.Add(this.tabControlControls);
+            this.sidePanel.Location = new System.Drawing.Point(0, 35);
+            this.sidePanel.Margin = new System.Windows.Forms.Padding(5);
+            this.sidePanel.MaximumSize = new System.Drawing.Size(230, 2410);
+            this.sidePanel.Name = "sidePanel";
+            this.sidePanel.Size = new System.Drawing.Size(230, 771);
+            this.sidePanel.TabIndex = 0;
             // 
             // tabControlControls
             // 
             this.tabControlControls.Controls.Add(this.tabPage1);
-            this.tabControlControls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlControls.Dock = System.Windows.Forms.DockStyle.Left;
             this.tabControlControls.Location = new System.Drawing.Point(0, 0);
+            this.tabControlControls.MaximumSize = new System.Drawing.Size(226, 2410);
             this.tabControlControls.Name = "tabControlControls";
             this.tabControlControls.SelectedIndex = 0;
-            this.tabControlControls.Size = new System.Drawing.Size(224, 703);
+            this.tabControlControls.Size = new System.Drawing.Size(220, 771);
             this.tabControlControls.TabIndex = 0;
             this.tabControlControls.SelectedIndexChanged += new System.EventHandler(this.tabControlControls_SelectedIndexChanged);
             // 
@@ -509,11 +564,24 @@
             this.tabPage1.AutoScroll = true;
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(216, 677);
+            this.tabPage1.Size = new System.Drawing.Size(212, 745);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // mapPanel
+            // 
+            this.mapPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapPanel.AutoScroll = true;
+            this.mapPanel.AutoSize = true;
+            this.mapPanel.Controls.Add(this.uxMap);
+            this.mapPanel.Controls.Add(this.toolStrip1);
+            this.mapPanel.Location = new System.Drawing.Point(226, 35);
+            this.mapPanel.Name = "mapPanel";
+            this.mapPanel.Size = new System.Drawing.Size(861, 771);
+            this.mapPanel.TabIndex = 1;
             // 
             // toolStrip1
             // 
@@ -536,7 +604,7 @@
             this.toolStripButtonSnapShot});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(847, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(861, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -672,49 +740,15 @@
             this.toolStripButtonSnapShot.ToolTipText = "Take Snap Shot of the Map";
             this.toolStripButtonSnapShot.Click += new System.EventHandler(this.toolStripButtonSnapShot_Click);
             // 
-            // distributionToolStripMenuItem
-            // 
-            this.distributionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.roadTypeToolStripMenuItem,
-            this.roadCategoryToolStripMenuItem,
-            this.governingDistressToolStripMenuItem,
-            this.rSLToolStripMenuItem});
-            this.distributionToolStripMenuItem.Name = "distributionToolStripMenuItem";
-            this.distributionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.distributionToolStripMenuItem.Text = "Distribution";
-            // 
-            // roadTypeToolStripMenuItem
-            // 
-            this.roadTypeToolStripMenuItem.Name = "roadTypeToolStripMenuItem";
-            this.roadTypeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.roadTypeToolStripMenuItem.Text = "Road Type";
-            // 
-            // roadCategoryToolStripMenuItem
-            // 
-            this.roadCategoryToolStripMenuItem.Name = "roadCategoryToolStripMenuItem";
-            this.roadCategoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.roadCategoryToolStripMenuItem.Text = "Road Category";
-            // 
-            // governingDistressToolStripMenuItem
-            // 
-            this.governingDistressToolStripMenuItem.Name = "governingDistressToolStripMenuItem";
-            this.governingDistressToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.governingDistressToolStripMenuItem.Text = "Governing Distress";
-            // 
-            // rSLToolStripMenuItem
-            // 
-            this.rSLToolStripMenuItem.Name = "rSLToolStripMenuItem";
-            this.rSLToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.rSLToolStripMenuItem.Text = "RSL";
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1075, 749);
-            this.Controls.Add(this.splitContainerMain);
+            this.ClientSize = new System.Drawing.Size(1087, 831);
             this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.sidePanel);
+            this.Controls.Add(this.mapPanel);
             this.Controls.Add(this.menuStrip);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -728,12 +762,10 @@
             this.menuStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            this.splitContainerMain.Panel1.ResumeLayout(false);
-            this.splitContainerMain.Panel2.ResumeLayout(false);
-            this.splitContainerMain.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
-            this.splitContainerMain.ResumeLayout(false);
+            this.sidePanel.ResumeLayout(false);
             this.tabControlControls.ResumeLayout(false);
+            this.mapPanel.ResumeLayout(false);
+            this.mapPanel.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -747,7 +779,8 @@
         private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip;
         private DotSpatial.Controls.AppManager appManager1;
-        private System.Windows.Forms.SplitContainer splitContainerMain;
+        private System.Windows.Forms.Panel sidePanel;
+        private System.Windows.Forms.Panel mapPanel;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
@@ -813,6 +846,9 @@
         private System.Windows.Forms.ToolStripMenuItem roadCategoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem governingDistressToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rSLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem themeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem darkToolStripMenuItem;
     }
 }
 
