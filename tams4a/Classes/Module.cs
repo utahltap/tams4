@@ -658,7 +658,7 @@ namespace tams4a.Classes
                     outputTable.Rows.Add(nr);
                 }
                 outputTable.DefaultView.Sort = sortKey + " asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = outputTable.DefaultView.ToTable();
                 report.Text = "Report";
                 report.Show();

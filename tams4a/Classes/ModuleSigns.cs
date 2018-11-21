@@ -1066,7 +1066,7 @@ namespace tams4a.Classes
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Sign Report";
                 report.Show();
@@ -1124,7 +1124,7 @@ namespace tams4a.Classes
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Sign Report";
                 report.Show();
@@ -1176,7 +1176,7 @@ namespace tams4a.Classes
                     }
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Sign Report";
                 report.Show();
@@ -1234,7 +1234,7 @@ namespace tams4a.Classes
                     }
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Sign Report";
                 report.Show();
@@ -1294,7 +1294,7 @@ namespace tams4a.Classes
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Sign Report";
                 report.Show();
@@ -1330,7 +1330,7 @@ namespace tams4a.Classes
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Support Report";
                 report.Show();
@@ -1377,7 +1377,7 @@ namespace tams4a.Classes
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Support Report";
                 report.Show();

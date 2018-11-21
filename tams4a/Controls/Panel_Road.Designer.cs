@@ -173,6 +173,8 @@ namespace tams4a.Controls
             this.comboBoxTreatment.Items.Add("Reconstruction");
             this.comboBoxTreatment.Size = new System.Drawing.Size(112, 21);
             this.comboBoxTreatment.TabIndex = 25;
+            this.comboBoxTreatment.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatmentChanged);
+
             // 
             // distress9
             // 

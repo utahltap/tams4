@@ -766,7 +766,7 @@ namespace tams4a.Classes
             selectionLayer.DataSet.DataTable = selectionTable;
         }
 
-        public void setSymbolizer()
+        new public void setSymbolizer()
         {
             double baseWidth = 20.0;
             double baseOutlineWidth = 10.0;
@@ -945,7 +945,7 @@ namespace tams4a.Classes
                     history.Columns[distressNumber].ColumnName = distresses.Rows[i]["name"].ToString();
                 }
 
-                FormOutput histForm = new FormOutput();
+                FormOutput histForm = new FormOutput(Project);
                 histForm.Text = "Road History";
                 histForm.dataGridViewReport.DataSource = history;
                 histForm.Show();
@@ -1040,7 +1040,7 @@ namespace tams4a.Classes
                 general.DefaultView.Sort = "Name asc, Treatment asc, From Address asc";
                 general = general.DefaultView.ToTable();
 
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = general;
                 report.Text = "Treatment Report";
                 report.Show();
@@ -1090,7 +1090,7 @@ namespace tams4a.Classes
                     potholes.Rows.InsertAt(nr, potholes.Rows.Count);
                 }
                 potholes.DefaultView.Sort = "Name asc, From Address asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = potholes.DefaultView.ToTable();
                 report.Text = "Potholes Report";
                 report.Show();
@@ -1210,7 +1210,7 @@ namespace tams4a.Classes
                     totals["Cost"] = Math.Round(totalCost).ToString();
                 }
                 general.Rows.Add(totals);
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = general.DefaultView.ToTable();
                 report.Text = "Treatment Report";
                 report.Show();
@@ -1392,7 +1392,7 @@ namespace tams4a.Classes
                     outputTable.Columns.Add("Corrugate");
                 }
 
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 foreach (DataRow row in results.Rows)
                 {
                     DataRow nr = outputTable.NewRow();

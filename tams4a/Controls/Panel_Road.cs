@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
@@ -57,6 +50,10 @@ namespace tams4a.Controls
             moduleValueChanged(sender, e);
         }
 
+        private void comboBoxTreatmentChanged(object sender, EventArgs e)
+        {
+            moduleValueChanged(sender, e);
+        }
 
         private void updateArea()
         {

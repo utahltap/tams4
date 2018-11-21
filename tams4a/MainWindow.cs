@@ -483,7 +483,9 @@ namespace tams4a
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormDisplaySettings formDisplay = new FormDisplaySettings(this);
+            int currentRoadColoring = 0;
+            if (this.treatmentRoutine.Visible) currentRoadColoring = 1;
+            FormDisplaySettings formDisplay = new FormDisplaySettings(this, currentRoadColoring);
             formDisplay.ShowDialog();
         }
     }
