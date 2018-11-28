@@ -23,6 +23,7 @@ namespace tams4a.Classes
         private bool colorsOn = true;
         private DataTable surfaceTypes;
         private DataTable surfaceDistresses;
+        private string previousSurface;
         private string notes;
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
                     FROM
@@ -220,13 +221,13 @@ namespace tams4a.Classes
 
             if (UnsavedChanges)
             {
-                DialogResult rslt = MessageBox.Show("Unsaved Changes Detected! Would you like to save the changes? Otherwise, they will be discared", "Unsaved Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult rslt = MessageBox.Show("Unsaved Changes Detected! Would you like to save the changes? Otherwise, they will be discared", "Unsaved Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 if (rslt == DialogResult.Yes)
                 {
+                    saveHandler(null, null);
                     return;
-                    //saveHandler(sender, e);
                 }
-
+                if (rslt == DialogResult.Cancel) return;
             }
             resetRoadDisplay();
 
@@ -310,8 +311,7 @@ namespace tams4a.Classes
             roadControls.textBoxLength.Text = Util.DictionaryItemString(values, "length");
 
             roadControls.comboBoxType.Text = Util.DictionaryItemString(values, "type");
-            roadControls.comboBoxSurface.Text = Util.DictionaryItemString(values, "surface");
-
+            previousSurface = roadControls.comboBoxSurface.Text = Util.DictionaryItemString(values, "surface");
             roadControls.textBoxPhotoFile.Text = Util.DictionaryItemString(values, "photo");
             roadControls.toolTip.SetToolTip(roadControls.pictureBoxPhoto, "");
             updatePhotoPreview(roadControls.pictureBoxPhoto, roadControls.textBoxPhotoFile.Text);
@@ -337,6 +337,13 @@ namespace tams4a.Classes
             roadControls.comboBoxTreatment.Text = Util.DictionaryItemString(values, "suggested_treatment");
             // we're taking RSL from DB to later allow manual entry
             roadControls.inputRsl.Text = Util.DictionaryItemString(values, "rsl");
+
+            //if (roadControls.distress1.Value > -1) roadControls.comboBoxSurface.Enabled = false;
+            //else roadControls.comboBoxSurface.Enabled = true;
+            //Console.WriteLine("##########################################");
+            //Console.WriteLine(roadControls.distress1.Value.ToString());
+            //Console.WriteLine("##########################################");
+
 
             notes = Util.DictionaryItemString(values, "notes");
             if (!string.IsNullOrEmpty(notes))
@@ -619,6 +626,27 @@ namespace tams4a.Classes
         private void surfaceChanged(object sender, EventArgs e)
         {
             Panel_Road roadControls = getRoadControls();
+
+            if (roadControls.distress1.Value > -1 ||
+                roadControls.distress2.Value > -1 ||
+                roadControls.distress3.Value > -1 ||
+                roadControls.distress4.Value > -1 ||
+                roadControls.distress5.Value > -1 ||
+                roadControls.distress6.Value > -1 ||
+                roadControls.distress7.Value > -1 ||
+                roadControls.distress8.Value > -1 ||
+                roadControls.distress9.Value > -1
+                )
+            {
+
+                DialogResult result = MessageBox.Show("Warning: Changing road surface will delete all distress data for the selected roads. Are you sure you want to do this?" +
+                "\n \n (Note: Changes are not permanent until saved)", "Changing Road Surface", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.No)
+                {
+                    roadControls.comboBoxSurface.Text = previousSurface;
+                    return;
+                }
+            }
 
             updateDistressControls(roadControls.comboBoxSurface.Text.ToLower());
 
@@ -1488,10 +1516,17 @@ namespace tams4a.Classes
                         if (treatment == "Preventative with Patching") treatmentCost = 2.75;
                         if (treatment == "Rehabilitation") treatmentCost = 9.57;
                         if (treatment == "Reconstruction") treatmentCost = 18.4;
-                        if (treatmentCost == 0.0 && treatment != "Nothing")
+                        try
                         {
-                            DataTable tc = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments " + "WHERE name LIKE '" + treatment + "';");
-                            treatmentCost = Util.ToDouble(tc.Rows[0]["cost"].ToString());
+                            if (treatmentCost == 0.0 && treatment != "Nothing")
+                            {
+                                DataTable tc = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments " + "WHERE name LIKE '" + treatment + "';");
+                                treatmentCost = Util.ToDouble(tc.Rows[0]["cost"].ToString());
+                            }
+                        }
+                        catch (Exception err)
+                        {
+                            Log.Error("Problem getting data from database " + err.ToString());
                         }
 
 

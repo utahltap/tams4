@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using tams4a.Classes;
 using tams4a.Forms;
+using System.Runtime.InteropServices;
 
 namespace tams4a
 {
@@ -14,6 +15,13 @@ namespace tams4a
         private DotSpatial.Controls.FunctionMode CurrentMode;
         public TamsProject Project;
         public ModuleRoads road;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
+        //Mouse actions
+        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        private const int MOUSEEVENTF_LEFTUP = 0x04;
+
 
         private int maxWidth;
         //private DotSpatial.Controls.AppManager appManager;
@@ -216,6 +224,13 @@ namespace tams4a
             }
         }
 
+        //Trick the UI into thinking the left mouse is clicked so panning works with right click
+        public void DoMouseClick()
+        {
+            uint X = (uint)Cursor.Position.X;
+            uint Y = (uint)Cursor.Position.Y;
+            mouse_event(MOUSEEVENTF_LEFTDOWN, X, Y, 0, 0);
+        }
 
         /// <summary>
         /// Used to ensure right mouse button always pans
@@ -227,10 +242,10 @@ namespace tams4a
             if (e.Button == MouseButtons.Right)
             {
                 uxMap.FunctionMode = DotSpatial.Controls.FunctionMode.Pan;
+                DoMouseClick();
             }
             base.OnMouseDown(e);
         }
-
 
         /// <summary>
         /// Sets the mode back to the previous mode if the right mouse button was held.
@@ -242,6 +257,8 @@ namespace tams4a
             if (e.Button == MouseButtons.Right)
             {
                 uxMap.FunctionMode = CurrentMode;
+                uxMap.ZoomIn();  //Refresh() and Update() were not working as expected
+                uxMap.ZoomOut(); //but somewhere in these methods the map gets refreshed.
             }
             base.OnMouseUp(e);
             uxMap_SelectionChanged();
@@ -483,9 +500,7 @@ namespace tams4a
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int currentRoadColoring = 0;
-            if (this.treatmentRoutine.Visible) currentRoadColoring = 1;
-            FormDisplaySettings formDisplay = new FormDisplaySettings(this, currentRoadColoring);
+            FormDisplaySettings formDisplay = new FormDisplaySettings(this, road.roadColors);
             formDisplay.ShowDialog();
         }
     }

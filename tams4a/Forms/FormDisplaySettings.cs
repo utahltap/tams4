@@ -8,7 +8,7 @@ namespace tams4a.Forms
     public partial class FormDisplaySettings : Form
     {
         private MainWindow mainWindow = null;
-        public FormDisplaySettings(Form callingForm, int currentRoadColoring)
+        public FormDisplaySettings(Form callingForm, string currentRoadColoring)
         {
             mainWindow = callingForm as MainWindow;
             InitializeComponent();
@@ -16,7 +16,8 @@ namespace tams4a.Forms
             else radioButtonDark.Checked = true;
             if (mainWindow.rslBlue.Visible || mainWindow.treatmentRoutine.Visible) radioButtonOn.Checked = true;
             else radioButtonOff.Checked = true;
-            comboBoxRoadColors.SelectedIndex = currentRoadColoring;
+            if (currentRoadColoring == "RSL") comboBoxRoadColors.SelectedIndex = 0;
+            if (currentRoadColoring == "Treatment") comboBoxRoadColors.SelectedIndex = 1;
         }
 
         private void radioButtonLight_CheckedChanged(object sender, EventArgs e)

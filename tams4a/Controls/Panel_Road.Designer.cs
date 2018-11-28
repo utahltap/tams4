@@ -514,6 +514,7 @@ namespace tams4a.Controls
             this.comboBoxSurface.Name = "comboBoxSurface";
             this.comboBoxSurface.Size = new System.Drawing.Size(112, 21);
             this.comboBoxSurface.TabIndex = 14;
+            this.comboBoxSurface.SelectedIndexChanged += new System.EventHandler(this.comboBoxSurfaceChanged);
             // 
             // comboBoxType
             // 
@@ -523,6 +524,7 @@ namespace tams4a.Controls
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(112, 21);
             this.comboBoxType.TabIndex = 13;
+            this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.comboBoxTypeChanged);
             // 
             // labelType
             // 

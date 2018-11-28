@@ -227,7 +227,6 @@
     <Compile Include="Classes\ProjectSetting.cs" />
     <Compile Include="Classes\ProjectSettings.cs" />
     <Compile Include="Classes\ProjectVersion.cs" />
-    <Compile Include="Classes\RoadDistress.cs" />
     <Compile Include="Classes\RoadSidewalkForm.cs" />
     <Compile Include="Classes\TamsProject.cs" />
     <Compile Include="Classes\CustomEventArgs.cs" />
