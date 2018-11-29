@@ -227,15 +227,15 @@ namespace tams4a.Classes
         }
 
 
-        public DialogResult showDialog(String selectedTab="general")
+        public DialogResult showDialog(String selectedTab="road")
         {
             LoadValues();
             FormSettings settingsForm = new FormSettings(this);
             settingsForm.Init();
             settingsForm.TrySelectTab(selectedTab);
-            settingsForm.ShowDialog();
+            DialogResult settingsResult = settingsForm.ShowDialog();
 
-            if (HaveRequired())
+            if (HaveRequired() && settingsResult == DialogResult.OK)
             {
                 return DialogResult.OK;
             } else

@@ -110,11 +110,11 @@ namespace tams4a.Classes
                     display_text: "SHP Field for speed limit", display_type: "field",
                     description: "Field in the SHP file for speed limit."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_startaddr", module: ModuleName, value: "",
-                    display_text: "SHP Field for starting address number", display_type: "field",
-                    description: "Field in the SHP file for starting address number."));
+                    display_text: "SHP Field for from address number", display_type: "field",
+                    description: "Field in the SHP file for from address number."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_endaddr", module: ModuleName, value: "",
-                    display_text: "SHP Field for ending address number", display_type: "field",
-                    description: "Field in the SHP file for ending address number."));
+                    display_text: "SHP Field for to address number", display_type: "field",
+                    description: "Field in the SHP file for to address number."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_surfacetype", module: ModuleName, value: "",
                     display_text: "SHP Field for road surface", display_type: "field",
                     description: "Field in the SHP file for the pavement used by the road, e.g. asphalt."));
