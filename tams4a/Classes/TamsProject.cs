@@ -60,7 +60,7 @@ namespace tams4a.Classes
             Database.UpdateDatabase(conn);
             try
             {
-                settings = new ProjectSettings(conn);
+                settings = new ProjectSettings(conn, this);
                 settings.LoadValues();
             }
             catch (Exception e)

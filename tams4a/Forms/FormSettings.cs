@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using tams4a.Classes;
 using tams4a.Controls;
@@ -17,14 +12,15 @@ namespace tams4a.Forms
     {
         private List<CtlSetting> settingControls; // useful for accesssing different settings.
         private ProjectSettings Settings;
+        private TamsProject Project;
 
-        public FormSettings(ProjectSettings settings)
+        public FormSettings(ProjectSettings settings, TamsProject theProject)
         {
             InitializeComponent();
             CenterToScreen();
             settingControls = new List<CtlSetting>();
             Settings = settings;
-
+            Project = theProject;
             textBoxNotes.Text = ""; // default instructions
         }
 
@@ -168,7 +164,7 @@ namespace tams4a.Forms
         {
             if (!Settings.HaveRequired())
             {
-                MessageBox.Show("All required settings have not been set.  TAMS may not work properly until the required settings are valid.");
+                MessageBox.Show("All required settings have not been set. TAMS may not work properly until the required settings are valid.");
             }
             this.DialogResult = DialogResult.Cancel;
             this.Close();
@@ -181,23 +177,36 @@ namespace tams4a.Forms
 
         private void save()
         {
+            string streetname = "", tamsid = "";
+            bool success = true;
             foreach (CtlSetting setting in settingControls)
             {
                 try
                 {
                     Settings.SetValue(setting.Key, setting.getValue());
+
+                    if (setting.Key.ToString() == "road_f_streetname") streetname = setting.getValue();
+                    if (setting.Key.ToString() == "road_f_TAMSID") tamsid = setting.getValue();
+                    //setting.getValue() returns combobox value.
+                    // TODO: Maybe return the key value pair so we know what road columns to update from what shape columns 
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show("Could not save setting.\n" + e.ToString());
+                    success = false;
                 }
+            }
+
+            if (success)
+            {
+                string sql = "UPDATE road SET name = (SELECT " + streetname + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
+                Database.ExecuteNonQuery(Project.conn, sql);
             }
 
             if (!Settings.HaveRequired())
             {
-                MessageBox.Show("Missing some required settings.  TAMS may not work properly.");
+                MessageBox.Show("Missing some required settings. TAMS may not work properly.");
             }
-
             this.Close();
         }
     }

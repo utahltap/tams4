@@ -834,6 +834,26 @@ UPDATE sign SET display = description || ' (' || TAMSID || ')';";
             }
             #endregion db_update_13_immute
 
+            #region db_update_14_immute
+            if (dbVersion == 13)
+            {
+                try
+                {
+                    string cmdString = @"CREATE TABLE 'shape' ('SHAPE_ID' INTEGER PRIMARY KEY AUTOINCREMENT);";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "14";
+                dbVersion = 14;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_13_immute
+
             return true;
         }
 

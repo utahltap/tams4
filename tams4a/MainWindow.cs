@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using tams4a.Classes;
 using tams4a.Forms;
 using System.Runtime.InteropServices;
+using System.Data;
 
 namespace tams4a
 {
@@ -291,7 +292,20 @@ namespace tams4a
             if (result == DialogResult.OK && Project.isOpen)
             {
                 MessageBox.Show("Attempting to reload settings");
+                //DataTable road = Database.GetDataByQuery(Project.conn, "SELECT * FROM road");
+                //DataTable shape = Database.GetDataByQuery(Project.conn, "SELECT * FROM shape");
+
+                ////foreach (Data) ;
+
+
+                //string sql = "UPDATE road SET name = (SELECT FULLNAME FROM shape WHERE road.TAMSID = TAMS_ID);";
+                //Database.ExecuteNonQuery(Project.conn, sql);
                 Project.settings.LoadValues();
+
+                //
+                // NOT WORKING
+                //Project.map.Update();
+                //Project.map.Refresh();
             }
         }
 

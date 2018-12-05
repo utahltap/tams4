@@ -911,11 +911,15 @@ namespace tams4a.Classes
             ((MapLineLayer)Layer).ShowLabels = false;
 
             FeatureLayer roadFeatures = Layer as FeatureLayer;
-            
+
             if (!string.IsNullOrEmpty(Project.settings.GetValue("road_labels")))
             {
-                roadFeatures.AddLabels("[" + Project.settings.GetValue(ModuleName + "_f_streetname") + "]",
+                string streetnames = "[" + Project.settings.GetValue(ModuleName + "_f_streetname") + "]";
+                //string streetIDs = "[" + Project.settings.GetValue(ModuleName + "_f_TAMSID") + "]";
+                roadFeatures.AddLabels(streetnames,
                         new Font("Tahoma", (float)8.0), labelColor);
+                //string sql = "UPDATE road SET name = " + streetnames + " WHERE road_f_tamsid = " + streetIDs + "; ";
+                //Database.ExecuteNonQuery(Project.conn, sql);
                 roadFeatures.ShowLabels = Project.settings.GetValue("road_labels").Contains("true");
             }
 
@@ -985,8 +989,23 @@ namespace tams4a.Classes
             }
         }
 
-         public void generalReport(object sender, EventArgs e)
-         {
+        private string truncateNote(DataRow row)
+        {
+            string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+
+            int oldNoteLength = note.Length;
+            int maxLength = 17;
+            if (!string.IsNullOrEmpty(note))
+            {
+                note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
+
+            }
+            if (note.Length == maxLength) note += "...";
+            return note;
+        }
+
+        public void generalReport(object sender, EventArgs e)
+        {
             DataTable general = new DataTable();
             general.Columns.Add("ID");
             general.Columns.Add("Name");
@@ -1020,15 +1039,7 @@ namespace tams4a.Classes
 
                 foreach (DataRow row in resultsTable.Rows)
                 {
-                    string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
-
-                    int oldNoteLength = note.Length;
-                    int maxLength = 17;
-                    if (!string.IsNullOrEmpty(note))
-                    {
-                        note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
-                        if(note.Length == maxLength)note += "...";
-                    }
+                     
                     DataRow nr = general.NewRow();
                     nr["ID"] = row["TAMSID"];
                     nr["Name"] = row["name"];
@@ -1039,7 +1050,7 @@ namespace tams4a.Classes
                     nr["Surface"] = row["surface"];
                     nr["RSL"] = row["rsl"];
                     nr["Functional Classification"] = row["type"];
-                    nr["Notes"] = note;
+                    nr["Notes"] = truncateNote(row);
                     nr["Survey Date"] = row["survey_date"];
                     nr["Fat/Spa/Pot"] = row["distress1"];
                     nr["Edg/Joi/Rut"] = row["distress2"];
@@ -1167,6 +1178,10 @@ namespace tams4a.Classes
             DataTable general = new DataTable();
             general.Columns.Add("ID");
             general.Columns.Add("Name");
+            general.Columns.Add("Speed Limit");
+            general.Columns.Add("Lanes");
+            general.Columns.Add("Width (ft)");
+            general.Columns.Add("Length (ft)");
             general.Columns.Add("From Address");
             general.Columns.Add("To Address");
             general.Columns.Add("Surface");
@@ -1174,6 +1189,19 @@ namespace tams4a.Classes
             general.Columns.Add("Treatment");
             general.Columns.Add("Cost");
             general.Columns.Add("Area");
+            general.Columns.Add("RSL");
+            general.Columns.Add("Functional Classification");
+            general.Columns.Add("Notes");
+            general.Columns.Add("Survey Date");
+            general.Columns.Add("Fat/Spa/Pot");
+            general.Columns.Add("Edg/Joi/Rut");
+            general.Columns.Add("Lon/Cor/X-S");
+            general.Columns.Add("Pat/Bro/Dra");
+            general.Columns.Add("Pot/Fau/Dus");
+            general.Columns.Add("Dra/Lon/Agg");
+            general.Columns.Add("Tra/Tra/Cor");
+            general.Columns.Add("Block/Crack");
+            general.Columns.Add("Rutti/Patch");
             FeatureLayer selectionLayer = (FeatureLayer)Layer; 
             ISelection shpSelection = selectionLayer.Selection;
             DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
@@ -1182,14 +1210,32 @@ namespace tams4a.Classes
             {
                 DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
                 double totalCost = 0;
+
                 foreach (DataRow row in resultsTable.Rows)
                 {
+                    double area = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
+
                     DataRow nr = general.NewRow();
                     nr["ID"] = row["TAMSID"];
                     nr["Name"] = row["name"];
+                    nr["Width (ft)"] = row["width"];
+                    nr["Length (ft)"] = row["length"];
                     nr["From Address"] = row["from_address"];
                     nr["To Address"] = row["to_address"];
                     nr["Surface"] = row["surface"];
+                    nr["RSL"] = row["rsl"];
+                    nr["Functional Classification"] = row["type"];
+                    nr["Notes"] = truncateNote(row);
+                    nr["Survey Date"] = row["survey_date"];
+                    nr["Fat/Spa/Pot"] = row["distress1"];
+                    nr["Edg/Joi/Rut"] = row["distress2"];
+                    nr["Lon/Cor/X-S"] = row["distress3"];
+                    nr["Pat/Bro/Dra"] = row["distress4"];
+                    nr["Pot/Fau/Dus"] = row["distress5"];
+                    nr["Dra/Lon/Agg"] = row["distress6"];
+                    nr["Tra/Tra/Cor"] = row["distress7"];
+                    nr["Block/Crack"] = row["distress8"];
+                    nr["Rutti/Patch"] = row["distress9"];
                     int[] dvs = new int[9];
                     for (int i = 0; i < 9; i++)
                     {
@@ -1200,8 +1246,30 @@ namespace tams4a.Classes
                     if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))
                     {
                         nr["Treatment"] = row["suggested_treatment"];
-                        string treatmentCost = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments WHERE name = '" + row["suggested_treatment"].ToString() + "';").Rows[0]["cost"].ToString();
-                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;//Note: Treatment cost is per square yard. Road dimensions are in yd.
+                        string treatment = row["suggested_treatment"].ToString();
+
+                        double treatmentCost = 0.0;
+                        if (treatment == "Routine") treatmentCost = 0.56;
+                        if (treatment == "Patching") treatmentCost = 0.67;
+                        if (treatment == "Preventative") treatmentCost = 2.08;
+                        if (treatment == "Preventative with Patching") treatmentCost = 2.75;
+                        if (treatment == "Rehabilitation") treatmentCost = 9.57;
+                        if (treatment == "Reconstruction") treatmentCost = 18.4;
+                        try
+                        {
+                            if (treatmentCost == 0.0 && treatment != "Nothing")
+                            {
+                                DataTable tc = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments " + "WHERE name LIKE '" + treatment + "';");
+                                treatmentCost = Util.ToDouble(tc.Rows[0]["cost"].ToString());
+                            }
+                        }
+                        catch (Exception err)
+                        {
+                            Log.Error("Problem getting data from database " + err.ToString());
+                        }
+
+
+                        double estCost = area * treatmentCost / 9;
                         if (estCost > 1000000)
                         {
                             nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
@@ -1214,9 +1282,8 @@ namespace tams4a.Classes
                         {
                             nr["Cost"] = Math.Round(estCost).ToString();
                         }
-                        totalCost += (int)estCost;
                     }
-                    nr["Area"] = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
+                    nr["Area"] = area;
                     general.Rows.Add(nr);
                 }
                 general.DefaultView.Sort = "Name asc, Treatment asc, From Address asc";

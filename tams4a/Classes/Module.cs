@@ -40,7 +40,7 @@ namespace tams4a.Classes
                                                  // http://stackoverflow.com/questions/6037546/assigning-a-value-to-an-inherited-readonly-field
 
 
-        public ProjectModule(TamsProject theProject, TabPage controlsPage, ToolStripMenuItem[] lcs, String selectionSql = "")
+        public ProjectModule(TamsProject theProject, TabPage controlsPage, ToolStripMenuItem[] lcs = null, String selectionSql = "")
         {
             Project = theProject;
             setControls(controlsPage);  // attempt to select the page appropriate to the current module
@@ -207,10 +207,9 @@ namespace tams4a.Classes
                 return false;
             }
 
-
-            // @TO-DO load data from shpfile to db
             if (Properties.Settings.Default.newProject)
             {
+                ShpToDatatable();
                 ShpToDatabase();
                 Properties.Settings.Default.newProject = false;
                 Properties.Settings.Default.Save();
@@ -226,7 +225,7 @@ namespace tams4a.Classes
         /// <summary>
         /// Called once when a new project is created, puts a database entry for each shape in the .shp file.
         /// </summary>
-        protected virtual void ShpToDatabase()
+        public virtual void ShpToDatabase()
         {
             Cursor.Current = Cursors.WaitCursor;
             DataTable data;
@@ -242,7 +241,7 @@ namespace tams4a.Classes
                     {
                         continue;
                     }
-
+                    
                     String fieldName = Project.settings.GetValue(pair.Key);
                     if (data.Columns.Contains(fieldName))
                     {
@@ -252,6 +251,27 @@ namespace tams4a.Classes
                 Database.InsertRow(Project.conn, values, ModuleName);
             }
             Cursor.Current = Cursors.Arrow;
+        }
+
+        private void ShpToDatatable()
+        {
+            DataTable data;
+            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            data = selectionLayer.DataSet.DataTable;
+            foreach (DataColumn col in data.Columns)
+            {
+                string sql = "ALTER TABLE shape ADD " + col.ToString() + " TEXT;";
+                Database.ExecuteNonQuery(Project.conn, sql);
+            }
+            foreach (DataRow row in data.Rows)
+            {
+                Dictionary<String, String> values = new Dictionary<string, string>();
+                foreach (DataColumn col in data.Columns)
+                {
+                    values[col.ToString()] = row[col].ToString();
+                }
+                Database.InsertRow(Project.conn, values, "shape");
+            }
         }
 
         protected virtual void injectSettings()
