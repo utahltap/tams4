@@ -266,7 +266,7 @@ namespace tams4a.Classes
             return controls;
         }
 
-        public override void ShpToDatabase()
+        protected override void ShpToDatabase()
         {
             Cursor.Current = Cursors.WaitCursor;
             DataTable data;

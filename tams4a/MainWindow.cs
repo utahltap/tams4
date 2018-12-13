@@ -258,11 +258,14 @@ namespace tams4a
             if (e.Button == MouseButtons.Right)
             {
                 uxMap.FunctionMode = CurrentMode;
-                uxMap.ZoomIn();  //Refresh() and Update() were not working as expected
+                uxMap.ZoomIn();  //Refresh() and Update() do not working as expected
                 uxMap.ZoomOut(); //but somewhere in these methods the map gets refreshed.
             }
-            base.OnMouseUp(e);
-            uxMap_SelectionChanged();
+            else
+            {
+                base.OnMouseUp(e);
+                uxMap_SelectionChanged();
+            }
         }
 
 
@@ -291,21 +294,8 @@ namespace tams4a
             DialogResult result = Project.settings.showDialog();
             if (result == DialogResult.OK && Project.isOpen)
             {
-                MessageBox.Show("Attempting to reload settings");
-                //DataTable road = Database.GetDataByQuery(Project.conn, "SELECT * FROM road");
-                //DataTable shape = Database.GetDataByQuery(Project.conn, "SELECT * FROM shape");
-
-                ////foreach (Data) ;
-
-
-                //string sql = "UPDATE road SET name = (SELECT FULLNAME FROM shape WHERE road.TAMSID = TAMS_ID);";
-                //Database.ExecuteNonQuery(Project.conn, sql);
+                MessageBox.Show("Attempting to reload settings.\nSome settings may not be changed until TAMS is restarted.");
                 Project.settings.LoadValues();
-
-                //
-                // NOT WORKING
-                //Project.map.Update();
-                //Project.map.Refresh();
             }
         }
 

@@ -225,7 +225,7 @@ namespace tams4a.Classes
         /// <summary>
         /// Called once when a new project is created, puts a database entry for each shape in the .shp file.
         /// </summary>
-        public virtual void ShpToDatabase()
+        protected virtual void ShpToDatabase()
         {
             Cursor.Current = Cursors.WaitCursor;
             DataTable data;

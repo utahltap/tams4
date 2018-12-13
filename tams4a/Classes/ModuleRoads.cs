@@ -217,8 +217,8 @@ namespace tams4a.Classes
         /// <param name="e"></param>
         public override void selectionChanged()
         {
-            if (!isOpen()) { return; }
-
+            if (!isOpen()) return;
+            
             if (UnsavedChanges)
             {
                 DialogResult rslt = MessageBox.Show("Unsaved Changes Detected! Would you like to save the changes? Otherwise, they will be discared", "Unsaved Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
@@ -303,8 +303,23 @@ namespace tams4a.Classes
 
             roadControls.textBoxRoadName.Text = Util.DictionaryItemString(values, "name");
             roadControls.labelSurveyDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
-            roadControls.numericUpDownSpeedLimit.Value = Util.ToInt(Util.DictionaryItemString(values, "speed_limit"));
-            roadControls.numericUpDownLanes.Value = Util.ToInt(Util.DictionaryItemString(values, "lanes"));
+            try
+            {
+                roadControls.numericUpDownSpeedLimit.Value = Util.ToInt(Util.DictionaryItemString(values, "speed_limit"));
+            }
+            catch
+            {
+                MessageBox.Show("Warning! The 'speed limit' value for this selection is corrupted.\n" +
+                    "Enter the correct speed limit to fix this, or change the shape field assigned to speed limit under settings");    
+            }
+            try
+            {
+                roadControls.numericUpDownLanes.Value = Util.ToInt(Util.DictionaryItemString(values, "lanes"));
+            }
+            catch
+            {
+                MessageBox.Show("Warning! The 'lanes' value for this selection is corrupted.");
+            }
             roadControls.textBoxFrom.Text = Util.DictionaryItemString(values, "from_address");
             roadControls.textBoxTo.Text = Util.DictionaryItemString(values, "to_address");
             roadControls.textBoxWidth.Text = Util.DictionaryItemString(values, "width");
