@@ -221,12 +221,9 @@ namespace tams4a.Classes
             
             if (UnsavedChanges)
             {
-                DialogResult rslt = MessageBox.Show("Unsaved Changes Detected! Would you like to save the changes? Otherwise, they will be discared", "Unsaved Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                if (rslt == DialogResult.Yes)
-                {
-                    saveHandler(null, null);
-                    return;
-                }
+                DialogResult rslt = MessageBox.Show("Unsaved changes detected! Would you like to save the changes? Otherwise, they will be discared",
+                    "Unsaved Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (rslt == DialogResult.Yes) saveHandler(null, null);
                 if (rslt == DialogResult.Cancel) return;
             }
             resetRoadDisplay();
@@ -309,8 +306,8 @@ namespace tams4a.Classes
             }
             catch
             {
-                MessageBox.Show("Warning! The 'speed limit' value for this selection is corrupted.\n" +
-                    "Enter the correct speed limit to fix this, or change the shape field assigned to speed limit under settings");    
+                MessageBox.Show("The 'speed limit' value for this selection is corrupted. Enter the correct speed limit to fix this, or change the shape field assigned to speed limit under settings",
+                    "Warning! Corrupt Data", MessageBoxButtons.OK, MessageBoxIcon.Warning);    
             }
             try
             {
@@ -318,7 +315,8 @@ namespace tams4a.Classes
             }
             catch
             {
-                MessageBox.Show("Warning! The 'lanes' value for this selection is corrupted.");
+                MessageBox.Show("The 'lanes' value for this selection is corrupted. Enter the correct number of lanes to fix this.",
+                    "Warning! Corrupt Data", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             roadControls.textBoxFrom.Text = Util.DictionaryItemString(values, "from_address");
             roadControls.textBoxTo.Text = Util.DictionaryItemString(values, "to_address");
