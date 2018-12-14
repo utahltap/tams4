@@ -114,6 +114,7 @@
             this.treatmentPreventativePatching = new System.Windows.Forms.TextBox();
             this.treatmentRehabilitation = new System.Windows.Forms.TextBox();
             this.treatmentPreventative = new System.Windows.Forms.TextBox();
+            this.importCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.sidePanel.SuspendLayout();
@@ -154,14 +155,14 @@
             // 
             this.infoToolStripMenuItem.Enabled = false;
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.infoToolStripMenuItem.Text = "I&nfo";
             this.infoToolStripMenuItem.Visible = false;
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.settingsToolStripMenuItem.Text = "&Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -175,14 +176,14 @@
             // closeProjectToolStripMenuItem
             // 
             this.closeProjectToolStripMenuItem.Name = "closeProjectToolStripMenuItem";
-            this.closeProjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeProjectToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.closeProjectToolStripMenuItem.Text = "&Close Project";
             this.closeProjectToolStripMenuItem.Click += new System.EventHandler(this.closeProjectToolStripMenuItem_Click);
             // 
             // quitTAMSToolStripMenuItem
             // 
             this.quitTAMSToolStripMenuItem.Name = "quitTAMSToolStripMenuItem";
-            this.quitTAMSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.quitTAMSToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.quitTAMSToolStripMenuItem.Text = "&Quit TAMS";
             this.quitTAMSToolStripMenuItem.Click += new System.EventHandler(this.quitTAMS4_click);
             // 
@@ -232,7 +233,8 @@
             this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importRoadsToolStripMenuItem,
             this.editTreatmentsToolStripMenuItem,
-            this.favoriteSignsToolStripMenuItem});
+            this.favoriteSignsToolStripMenuItem,
+            this.importCSVToolStripMenuItem});
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.advancedToolStripMenuItem.Text = "Ad&vanced";
@@ -951,6 +953,13 @@
             this.treatmentPreventative.Text = "Preventative";
             this.treatmentPreventative.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPreventative.Visible = false;
+            //
+            // importCSVToolStripMenuItem
+            // 
+            this.importCSVToolStripMenuItem.Name = "importCSVToolStripMenuItem";
+            this.importCSVToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.importCSVToolStripMenuItem.Text = "Import CSV";
+            this.importCSVToolStripMenuItem.Click += new System.EventHandler(this.importCSVToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -1073,6 +1082,7 @@
         public System.Windows.Forms.TextBox treatmentRehabilitation;
         public System.Windows.Forms.TextBox treatmentPreventativePatching;
         public System.Windows.Forms.TextBox treatmentReconstruction;
+        private System.Windows.Forms.ToolStripMenuItem importCSVToolStripMenuItem;
     }
 }
 

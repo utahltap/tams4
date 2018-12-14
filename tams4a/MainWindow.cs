@@ -1,5 +1,6 @@
 ﻿using DotSpatial.Symbology;
 using System;
+using System.Data;
 using System.Deployment.Application;
 using System.Drawing;
 using System.Linq;
@@ -7,7 +8,6 @@ using System.Windows.Forms;
 using tams4a.Classes;
 using tams4a.Forms;
 using System.Runtime.InteropServices;
-using System.Data;
 
 namespace tams4a
 {
@@ -490,22 +490,54 @@ namespace tams4a
             }
         }
 
-        private void lightToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            uxMap.BackColor = Color.White;
-            Project.map.Refresh();
-        }
-
-        private void darkToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            uxMap.BackColor = Color.Black;
-            Project.map.Refresh();
-        }
-
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormDisplaySettings formDisplay = new FormDisplaySettings(this, road.roadColors);
             formDisplay.ShowDialog();
+        }
+
+        private void importCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openCSV = new OpenFileDialog();
+            openCSV.Filter = "CSV Files|*.csv";
+            openCSV.Title = "Select a Comma Separtated Value File";
+
+            if (openCSV.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                System.IO.StreamReader sr = new System.IO.StreamReader(openCSV.FileName);
+                string importedCSV = sr.ReadToEnd();
+                sr.Close();
+
+                DataTable importedTable = new DataTable();
+                string[] rows = importedCSV.Split('\n');
+                string[] cols = rows[0].Split(',');
+                foreach (string column in cols)
+                {
+                    if (column == "TAMSID")
+                    {
+                        importedTable.Columns.Add("ID", typeof(string));
+                        continue;
+                    }
+                    importedTable.Columns.Add(column, typeof(string));
+                }
+
+                int i = -1;
+                foreach (string row in rows)
+                {
+                    i++;
+                    if (i == 0) continue;
+                    string[] thisRow = row.Split(',');
+                    importedTable.Rows.Add(thisRow);
+                    
+                }
+
+                FormOutput report = new FormOutput(Project);
+                report.dataGridViewReport.DataSource = importedTable;
+                report.Text = "Imported Report";
+                report.Show();
+                MessageBox.Show("Check to make sure the table was imported correctly.\nSave changes if you want to keep them.");
+
+            }
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using tams4a.Classes;
 
@@ -68,8 +64,8 @@ namespace tams4a.Forms
             comboBoxName.DataSource = treatments;
             comboBoxName.DisplayMember = "name";
             comboBoxName.ValueMember = "id";
-            DataTable surfaceTypes = Database.GetDataByQuery(conn, "SELECT * FROM road_surfaces");
-            comboBoxRoad.DataSource = surfaceTypes;
+            //DataTable surfaceTypes = Database.GetDataByQuery(conn, "SELECT * FROM road_surfaces");
+            //comboBoxRoad.DataSource = surfaceTypes;
             comboBoxRoad.DisplayMember = "name";
             comboBoxRoad.ValueMember = "id";
         }
