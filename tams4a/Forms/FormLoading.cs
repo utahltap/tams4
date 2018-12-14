@@ -27,10 +27,10 @@ namespace tams4a.Forms
         {
             if (frame == 4) frame = 0;
             List<Bitmap> loadingGif = new List<Bitmap>();
-            loadingGif.Add(Properties.Resources.tams_logo1);
-            loadingGif.Add(Properties.Resources.tams_logo2);
-            loadingGif.Add(Properties.Resources.tams_logo3);
             loadingGif.Add(Properties.Resources.tams_logo4);
+            loadingGif.Add(Properties.Resources.tams_logo3);
+            loadingGif.Add(Properties.Resources.tams_logo2);
+            loadingGif.Add(Properties.Resources.tams_logo1);
             this.BackgroundImage = loadingGif[frame++];
         }
 
