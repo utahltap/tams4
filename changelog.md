@@ -10,6 +10,7 @@ CHANGES
 * For projects made after this release, changes in shape field settings are reflected in road database.
 * Exported csv files no longer have a space before every entry.
 * Changes made to a report opened with TAMS can be saved.
+* New advanced option for csv files to be imported and overwrite datatables in TAMS.
 
 BUG FIXES
 ----------------------------------------------------
