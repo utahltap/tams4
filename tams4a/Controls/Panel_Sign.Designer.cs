@@ -439,6 +439,8 @@
             this.comboBoxSigns.Name = "comboBoxSigns";
             this.comboBoxSigns.Size = new System.Drawing.Size(90, 21);
             this.comboBoxSigns.TabIndex = 12;
+            this.comboBoxSigns.Tag = "";
+            this.comboBoxSigns.SelectedIndexChanged += new System.EventHandler(this.comboBoxSigns_SelectedIndexChanged);
             // 
             // numericUpDownOffset
             // 
@@ -516,6 +518,9 @@
             // 
             // groupBoxSign
             // 
+            this.groupBoxSign.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxSign.Controls.Add(this.label6);
             this.groupBoxSign.Controls.Add(this.textBoxBarcode);
             this.groupBoxSign.Controls.Add(this.buttonSignNote);
@@ -552,7 +557,6 @@
             this.groupBoxSign.Controls.Add(this.comboBoxSheeting);
             this.groupBoxSign.Controls.Add(this.labelSheeting);
             this.groupBoxSign.Controls.Add(this.labelType);
-            this.groupBoxSign.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBoxSign.Location = new System.Drawing.Point(0, 295);
             this.groupBoxSign.Name = "groupBoxSign";
             this.groupBoxSign.Size = new System.Drawing.Size(224, 374);

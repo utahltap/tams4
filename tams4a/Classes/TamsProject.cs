@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using System.IO;
-using System.Collections;
 using System.Threading;
 using tams4a.Forms;
 
@@ -149,7 +148,7 @@ namespace tams4a.Classes
             Application.Run(new FormLoading());
         }
 
-        public void mapSelectionChanged(object sender, EventArgs e)
+        public void mapSelectionChanged()
         {
             if (String.IsNullOrEmpty(currentModuleName))
             {
@@ -169,7 +168,7 @@ namespace tams4a.Classes
                 return;
             }
 
-            module.selectionChanged(sender, e);
+            module.selectionChanged();
         }
 
         /// <summary>

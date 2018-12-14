@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-
 using DotSpatial.Controls;
 using DotSpatial.Data;
 using tams4a.Forms;
@@ -390,7 +389,7 @@ namespace tams4a.Classes
         }
 
 
-        public virtual void selectionChanged(object sender, EventArgs e)
+        public virtual void selectionChanged()
         {
             UnsavedChanges = false;
             // generic module does nothing on selection change.

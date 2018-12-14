@@ -1,15 +1,41 @@
 # TAMS 4.0.x
-# Version 4.1.0.0
+
+# Version 4.1.0.2
+CHANGES
+----------------------------------------------------
+* All reports can be exported as either a CSV or PNG file.
+* Road "Type" is now "Functional Classification"
+* Custom Reports now work
+* Added theme settings under "Project" dropdown
+* Graph and table data now round to nearest tenth
+* Notes in reports now truncate to fit table better
+
+BUG FIXES
+----------------------------------------------------
+* Fixed issues with histroy reports resizing
+
+# Version 4.1.0.1
+CHANGES
+----------------------------------------------------
+* Improved performance when changing sign selection
+
+BUG FIXES
+----------------------------------------------------
+* Fixed signs not saving all data
+* Fixed issues with removing signs and deleting posts
+* Fixed bug with two signs with the same description on a post
+
+# Version 4.0.10.0
 CHANGES
 ----------------------------------------------------
 * Add 'Other' option for road type
 * Reordered road type dropdown
+* Changed graphs color scheme
 
 # Version 4.0.9.0
 CHANGES
 ----------------------------------------------------
 * Notes are displayed in a more readable manner in the notes form and general report.
-
 
 # Version 4.0.8.1
 CHANGES
@@ -67,7 +93,7 @@ CHANGES
 CHANGES
 ------------------------------------------------------
 * Added Distribution Graphs to Roads Module
-	* User can make a graph based on Road Type, Surface, Governing Distress, and RSL
+* User can make a graph based on Road Type, Surface, Governing Distress, and RSL
 
 BUG FIXES
 -----------------------------------------------------
@@ -77,27 +103,24 @@ BUG FIXES
 
 # TAMS Version 4.0.3.4
 * Updates to generic module.  This module is still considered beta quality
-	* Added new default items for generic module
+* Added new default items for generic module
 * Other bug fixes
 
 BUG FIXES
 ------------------------------------------------------
-
 * Fixes a critical bug in generic module that could have caused loss of data.
 * Fixed a bug in the signs module where date selection actually did nothing, now correctly selects the date.
 * Refactored table modifacation into its own fuction.
-	* Function is in the base class project module since it is used by all the modules in TAMS.
+* Function is in the base class project module since it is used by all the modules in TAMS.
 * Made refinements to the roads import tool.
 
 # TAMS version 4.0.3.0
-
 CHANGES
 ------------------------------------------------------
-
 * Implemnts Generic module
-	* generic module behaves the same as the signs module in most reguards
-	* generic module currently supports 4 specific types and 1 fully generic type.
-	* generic moudle must create a new shape file when used.
+* generic module behaves the same as the signs module in most reguards
+* generic module currently supports 4 specific types and 1 fully generic type.
+* generic moudle must create a new shape file when used.
 * Changes auto suggestion table to better reflect common treatment reccomenations.
 * Database now up to version 8
 

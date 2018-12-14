@@ -18,9 +18,11 @@ namespace tams4a.Controls
             InitializeComponent();
 
             textBoxAddress.TextChanged += moduleValueChanged;
-            comboBoxCondition.SelectionChangeCommitted += moduleValueChanged;
             comboBoxMaterial.SelectionChangeCommitted += moduleValueChanged;
+            comboBoxCondition.SelectionChangeCommitted += moduleValueChanged;
+            comboBoxObstruction.SelectedValueChanged += moduleValueChanged;
             numericUpDownOffset.ValueChanged += moduleValueChanged;
+            comboBoxRecommendation.SelectedValueChanged += moduleValueChanged;
             textBoxType.TextChanged += moduleValueChanged;
             textBoxDescription.TextChanged += moduleValueChanged;
             comboBoxSheeting.SelectedValueChanged += moduleValueChanged;
@@ -32,7 +34,6 @@ namespace tams4a.Controls
             textBoxText.TextChanged += moduleValueChanged;
             comboBoxReflectivity.SelectionChangeCommitted += moduleValueChanged;
             comboBoxConditionSign.SelectedValueChanged += moduleValueChanged;
-            comboBoxObstruction.SelectedValueChanged += moduleValueChanged;
             comboBoxDirection.SelectedValueChanged += moduleValueChanged;
             textBoxPhotoFile.TextChanged += moduleValueChanged;
             buttonNextPhoto.Click += buttonNextPhoto_Click;
@@ -87,6 +88,11 @@ namespace tams4a.Controls
                 Properties.Settings.Default.lastPhoto = textBoxPhotoFile.Text;
                 return;
             }
+        }
+
+        private void comboBoxSigns_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

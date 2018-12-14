@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -18,9 +13,10 @@ namespace tams4a.Forms
         public FormGraphDisplay(DataTable dt, string[] domain, double[] range, string t = "Distribution Graph", Color[] c = null)
         {
             InitializeComponent();
+            CenterToScreen();
             displayedTable = dt;
             dataGridView.DataSource = displayedTable;
-            Color[] colours = { Color.Tomato, Color.Wheat, Color.PeachPuff, Color.Peru, Color.SeaGreen, Color.Teal, Color.Sienna, Color.Plum, Color.Olive, Color.Aqua};
+            Color[] colours = { Color.Green, Color.Turquoise, Color.LightBlue, Color.Blue, Color.Purple, Color.Pink, Color.Red, Color.Orange, Color.Yellow, Color.Brown };
             if (c != null) {
                 colours = c;
             }
@@ -32,7 +28,7 @@ namespace tams4a.Forms
             chart.ChartAreas.Clear();
             chart.Series.Add("Series");
             chart.Series["Series"].IsValueShownAsLabel = true;
-            chart.Series["Series"].Label = "#PERCENT{P0}";
+            chart.Series["Series"].Label = "#PERCENT{P1}";
             chart.ChartAreas.Add("Area");
             chart.ChartAreas["Area"].AxisX.Interval = 1;
             chart.ChartAreas["Area"].AxisX.MajorGrid.LineColor = Color.LightGray;
@@ -56,7 +52,7 @@ namespace tams4a.Forms
             CenterToScreen();
             displayedTable = dt;
             dataGridView.DataSource = displayedTable;
-            Color[] colours = { Color.Tomato, Color.Wheat, Color.PeachPuff, Color.Peru, Color.SeaGreen, Color.Teal, Color.Sienna, Color.Plum, Color.Olive, Color.Aqua };
+            Color[] colours = { Color.Green, Color.Turquoise, Color.LightBlue, Color.Blue, Color.Purple, Color.Pink, Color.Red, Color.Orange, Color.Yellow, Color.Brown };
             if (c != null)
             {
                 colours = c;
@@ -84,14 +80,19 @@ namespace tams4a.Forms
             Close();
         }
 
-        private void exportGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        private void graphToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Classes.Util.ChartToPNG(chart);
         }
 
-        private void exportTableToolStripMenuItem_Click(object sender, EventArgs e)
+        private void cSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Classes.Util.TableToCSV(displayedTable);
+        }
+
+        private void pNGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Classes.Util.TableToPNG(dataGridView);
         }
     }
 }

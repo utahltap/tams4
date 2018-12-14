@@ -89,15 +89,15 @@ namespace tams4a.Classes
             if (type != "point") { throw new Exception("Signs module requires a point-type shp file"); }
 
             #region signSettings
-            ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_f_TAMSID", module: ModuleName, value: "",
+            ModuleSettings.Add(new ProjectSetting(name: "sign_f_TAMSID", module: ModuleName, value: "",
                     display_text: "SHP field with a unique identifier (TAMSID).", display_type: "field",
                     description: "Show an Icon instead of a basic shape for sign locations.", required:true));
-            ModuleSettings.Add(new ProjectSetting(name: "sign_f_offset", module: ModuleName, value: "",
-                    display_text: "SHP field with offset from road?", display_type: "field",
-                    description: "The field in the sign shp file indicating the distance of the support from the road."));
             ModuleSettings.Add(new ProjectSetting(name: "sign_f_address", module: ModuleName, value: "",
                     display_text: "SHP field with sign address?", display_type: "field",
                     description: "The field in the sign shp file containing the approximate address of the signpost."));
+            ModuleSettings.Add(new ProjectSetting(name: "sign_f_offset", module: ModuleName, value: "",
+                    display_text: "SHP field with offset from road?", display_type: "field",
+                    description: "The field in the sign shp file indicating the distance of the support from the road."));
             #endregion signSettings
 
             injectSettings();
@@ -174,11 +174,12 @@ namespace tams4a.Classes
                 Layer.Extent.ExpandBy(100, 100);
             }
 
+            Panel_Sign signControls = getSignControls();
+
             applySymbolizedProperty();
             setSymbolizer();
-            disableSignDisplay();
-            resetSignDisplay();
-            resetSaveCondition();
+            disableSignDisplay(signControls);
+            resetSignDisplay(signControls);
 
             return true;
         }
@@ -240,10 +241,7 @@ namespace tams4a.Classes
 
         protected override void controlChanged(object sender, EventArgs e)
         {
-            if (suppressChanges)
-            {
-                return;
-            }
+            if (suppressChanges)return;           
             Panel_Sign signPanel = getSignControls();
 
             signPanel.toolStripButtonSave.Enabled = true;
@@ -304,7 +302,7 @@ namespace tams4a.Classes
         /// </summary>
         override protected void setSymbolizer()
         {
-            int baseWidth = 64;
+            int baseWidth = 48;
 
             PointScheme sgnScheme = new PointScheme();
             
@@ -379,18 +377,17 @@ namespace tams4a.Classes
             tamsTable = tamsTable.DefaultView.ToTable();
             for (int i = 0; i < selectionTable.Rows.Count; i++)
             {
-                selectionTable.Rows[i]["TAMSSIGN"] = i >= tamsTable.Rows.Count ? "empty_post" : tamsTable.Rows[i]["category"];
+                selectionTable.Rows[i]["TAMSSIGN"] = (i >= tamsTable.Rows.Count) ? "empty_post" : tamsTable.Rows[i]["category"];
             }
-            selectionLayer.DataSet.DataTable = selectionTable;
+            selectionLayer.DataSet.DataTable = selectionTable; //Is this necessary?
         }
 
         /// <summary>
         /// Disables sign controls.
         /// </summary>
-        private void disableSignDisplay()
+        private void disableSignDisplay(Panel_Sign signControls)
         {
-            Panel_Sign signControls = getSignControls();
-            resetSaveCondition();
+            resetSaveCondition(signControls);
             signControls.groupBoxSupport.Enabled = false;
             signControls.groupBoxSign.Enabled = false;
             signControls.toolStripButtonSave.Enabled = false;
@@ -403,13 +400,14 @@ namespace tams4a.Classes
         /// <summary>
         /// Resets the save condition on the controls panel.
         /// </summary>
-        private void resetSaveCondition()
+        private void resetSaveCondition(Panel_Sign signControls)
         {
             UnsavedChanges = false;
-            Panel_Sign signControls = getSignControls();
             
             signControls.toolStripButtonSave.Enabled = false;
+            signControls.toolStripButtonCancel.Enabled = false;
             signControls.toolStripButtonSave.BackColor = default(Color);
+            signControls.toolStripButtonCancel.BackColor = default(Color);
         }
 
         protected void selectRecordDate(object sender, EventArgs e)
@@ -429,23 +427,19 @@ namespace tams4a.Classes
             signControls.setOtherDateToolStripMenuItem.Checked = false;
         }
 
-        override public void selectionChanged(object sender, EventArgs e)
-        {
-            
+        override public void selectionChanged()
+        {    
             if (!isOpen()) { return; }
+            if (UnsavedChanges){}
+            Panel_Sign signControls = getSignControls();
 
-            if (UnsavedChanges)
-            {
-
-            }
-
-            resetSignDisplay();
+            resetSignDisplay(signControls);
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
 
             if (shpSelection.Count <= 0)
             {
-                disableSignDisplay();
+                disableSignDisplay(signControls);
                 return;
             }
 
@@ -456,16 +450,17 @@ namespace tams4a.Classes
                 tamsids.Add(row[tamsidcolumn].ToString());
             }
 
-            enableControls();
+            enableControls(signControls);
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
-            updateSignDisplay(values);
-            getSigns();
+            updateSignDisplay(values, signControls);
+            getSigns(signControls);
+            resetSaveCondition(signControls);
         }
 
         private void cancelChanges(object sender, EventArgs e)
         {
-            resetSaveCondition();
-            selectionChanged(sender, e);
+            resetSaveCondition(getSignControls());
+            selectionChanged();
         }
 
         public void setMUTCDvalues(object sender, EventArgs e)
@@ -486,15 +481,16 @@ namespace tams4a.Classes
             determinePostCat();
         }
 
-        private void updateSignDisplay(Dictionary<string, string> values)
+        private void updateSignDisplay(Dictionary<string, string> values, Panel_Sign signControls)
         {
-            Panel_Sign signControls = getSignControls();
             suppressChanges = true;
+            signControls.labelSurveyDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
             signControls.textBoxAddress.Text = Util.DictionaryItemString(values, "address");
             signControls.comboBoxMaterial.Text = Util.DictionaryItemString(values, "material");
-            signControls.labelSurveyDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
             signControls.comboBoxCondition.Text = Util.DictionaryItemString(values, "condition");
-            signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "height"));
+            signControls.comboBoxObstruction.Text = Util.DictionaryItemString(values, "obstructions");
+            signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "road_offset"));
+            signControls.comboBoxRecommendation.Text = Util.DictionaryItemString(values, "recommendation");
             signControls.textBoxPhotoPost.Text = Util.DictionaryItemString(values, "photo");
             updatePhotoPreview(signControls.pictureBoxPost, signControls.textBoxPhotoPost.Text);
             notes = Util.DictionaryItemString(values, "notes");
@@ -509,25 +505,35 @@ namespace tams4a.Classes
         /// <summary>
         /// Gets the table of signs associated with the selected sign support if only one sign support is selected.
         /// </summary>
-        private void getSigns()
+        private void getSigns(Panel_Sign signControls)
         {
-            Panel_Sign signControls = getSignControls();
             signsOnPost = null;
             if (selectionValues.Count == 1)
             {
                 signsOnPost = Database.GetDataByQuery(Project.conn, SignListSql.Replace("[[IDLIST]]", selectionValues[0]["support_id"]));
+
                 clearSignChanges();
+                foreach (DataRow row in signsOnPost.Rows)
+                {
+                    if (row["display"].ToString() != row["description"].ToString() + " (" + row["TAMSID"].ToString() + ")")
+                    {
+                        row["display"] = row["description"].ToString() + " (" + row["TAMSID"].ToString() + ")";
+                    }
+                }
+
                 signControls.comboBoxSigns.Enabled = true;
                 signControls.buttonAdd.Enabled = true;
                 signControls.buttonRemove.Enabled = (signsOnPost.Rows.Count > 0);
                 signControls.buttonFavorite.Enabled = (signsOnPost.Rows.Count > 0);
                 signControls.toolStripButtonRemove.Enabled = (tamsids.Count == 1);
                 signControls.comboBoxSigns.DataSource = signsOnPost;
-                signControls.comboBoxSigns.DisplayMember = "description";
+                signControls.comboBoxSigns.DisplayMember = "display";
                 signControls.comboBoxSigns.ValueMember = "TAMSID";
-                clearSignChanges(); // Visual Studio's C# complier decided to start skipping this line.
-                changeSign();
+                clearSignChanges();
+                changeSign(signControls);
+                
                 determinePostCat();
+                
             }
             else
             {
@@ -538,9 +544,8 @@ namespace tams4a.Classes
             }
         }
 
-        private void changeSign()
+        private void changeSign(Panel_Sign signPanel)
         {
-            Panel_Sign signPanel = getSignControls();
             if (signsOnPost == null || signsOnPost.Rows.Count == 0)
             {
                 signPanel.groupBoxSign.Enabled = false;
@@ -560,7 +565,6 @@ namespace tams4a.Classes
             signPanel.textBoxText.Text = signChanges[index]["sign_text"].ToString();
             signPanel.comboBoxReflectivity.Text = signChanges[index]["reflectivity"];
             signPanel.comboBoxConditionSign.Text = signChanges[index]["condition"];
-            signPanel.comboBoxObstruction.Text = signChanges[index]["obstructions"];
             signPanel.comboBoxDirection.Text = signChanges[index]["direction"];
             signPanel.textBoxPhotoFile.Text = signChanges[index]["photo"];
             signPanel.buttonFavorite.BackColor = signChanges[index]["favorite"].Contains("true") ? Color.DeepPink : Control.DefaultBackColor;
@@ -587,10 +591,8 @@ namespace tams4a.Classes
         /// <summary>
         /// activates the controls when a sign is selected.
         /// </summary>
-        private void enableControls()
+        private void enableControls(Panel_Sign signControls)
         {
-            Panel_Sign signControls = getSignControls();
-
             signControls.groupBoxSign.Enabled = true;
             signControls.toolStrip.Enabled = true;
             signControls.groupBoxSupport.Enabled = true;
@@ -601,15 +603,16 @@ namespace tams4a.Classes
         /// <summary>
         /// resests the sign control panel back to blank values.
         /// </summary>
-        private void resetSignDisplay()
+        private void resetSignDisplay(Panel_Sign signControls)
         {
-            Panel_Sign signControls = getSignControls();
             suppressChanges = true;
             signControls.labelSurveyDate.Text = "";
             signControls.textBoxAddress.Text = "";
-            signControls.comboBoxCondition.SelectedIndex = 0;
             signControls.comboBoxMaterial.SelectedIndex = 0;
+            signControls.comboBoxCondition.SelectedIndex = 0;
+            signControls.comboBoxObstruction.Text = "";
             signControls.numericUpDownOffset.Value = 0;
+            signControls.comboBoxRecommendation.Text = "";
             signControls.comboBoxSigns.Text = "";
             signControls.textBoxType.Text = "";
             signControls.textBoxDescription.Text = "";
@@ -637,7 +640,7 @@ namespace tams4a.Classes
             signControls.labelAddress.Text = "Address";
             signControls.buttonFavorite.BackColor = Control.DefaultBackColor;
         }
-        
+
         protected override void clearControlPanel()
         {
             ControlsPage.Controls.Remove(ControlsPage.Controls["SIGNCONTROLS"]);
@@ -655,16 +658,10 @@ namespace tams4a.Classes
 
         public void signValueChanged(object sender, EventArgs e)
         {
-            if (suppressChanges)
-            {
-                return;
-            }
+            if (suppressChanges) return;
             Panel_Sign signControls = getSignControls();
             int index = signControls.comboBoxSigns.SelectedIndex;
-            if (index == -1)
-            {
-                return;
-            }
+            if (index == -1) return;
             signChanges[index]["mutcd_code"] = signControls.textBoxType.Text;
             signChanges[index]["sheeting"] = signControls.comboBoxSheeting.Text;
             signChanges[index]["backing"] = signControls.comboBoxBacking.Text;
@@ -675,7 +672,6 @@ namespace tams4a.Classes
             signChanges[index]["sign_text"] = signControls.textBoxText.Text;
             signChanges[index]["survey_date"] = Util.SortableDate(surveyDate);
             signChanges[index]["photo"] = signControls.textBoxPhotoFile.Text;
-            signChanges[index]["obstructions"] = signControls.comboBoxObstruction.Text;
             signChanges[index]["reflectivity"] = signControls.comboBoxReflectivity.Text;
             signChanges[index]["description"] = signControls.textBoxDescription.Text;
             signChanges[index]["install_date"] = signControls.textBoxInstall.Text;
@@ -687,12 +683,8 @@ namespace tams4a.Classes
 
         public void determinePostCat()
         {
-            Panel_Sign signControls = getSignControls();
             postCat = "empty_post";
-            if (signsOnPost == null || signsOnPost.Rows.Count == 0)
-            {
-                return;
-            }
+            if (signsOnPost == null || signsOnPost.Rows.Count == 0)return;
             postCat = signChanges[0]["category"];
             for (int i = 0; i < signChanges.Count; i++)
             {
@@ -705,7 +697,7 @@ namespace tams4a.Classes
 
         public void signChangeHandler(object sender, EventArgs e)
         {
-            changeSign();
+            changeSign(getSignControls());
         }
 
         public void saveHandler(object sender, EventArgs e)
@@ -716,39 +708,37 @@ namespace tams4a.Classes
 
             Panel_Sign signControls = getSignControls();
             Dictionary<string, string> values = new Dictionary<string, string>();
-            values["address"] = signControls.textBoxAddress.Text;
             values["survey_date"] = Util.SortableDate(surveyDate);
-            values["condition"] = signControls.comboBoxCondition.Text;
+            values["address"] = signControls.textBoxAddress.Text;
             values["material"] = signControls.comboBoxMaterial.Text;
+            values["condition"] = signControls.comboBoxCondition.Text;
+            values["obstructions"] = signControls.comboBoxObstruction.Text;
             values["road_offset"] = signControls.numericUpDownOffset.Value.ToString();
-            values["height"] = signControls.numericUpDownOffset.Value.ToString();
+            values["recommendation"] = signControls.comboBoxRecommendation.Text;
             values["photo"] = signControls.textBoxPhotoPost.Text;
-            values["category"] = postCat;
             values["notes"] = notes;
-
-            if (signsOnPost != null && signsOnPost.Rows.Count > 0)
+            values["category"] = postCat;
+            
+            for (int i = 0; i < signChanges.Count; i++)
             {
-                for (int i = 0; i < signChanges.Count; i++)
+                if (!Database.ReplaceRow(Project.conn, signChanges[i], ModuleName))
                 {
-                    if (!Database.ReplaceRow(Project.conn, signChanges[i], ModuleName))
-                    {
-                        MessageBox.Show("Could not save data!");
-                    }
+                    MessageBox.Show("Could not save data!");
                 }
-                if (!string.IsNullOrWhiteSpace(postCat))
+            }
+            if (!string.IsNullOrWhiteSpace(postCat))
+            {
+                string tamsidsCSV = string.Join(",", tamsids.ToArray());
+                foreach (DataRow row in selectionLayer.DataSet.DataTable.Select(tamsidcolumn + " IN (" + tamsidsCSV + ")"))
                 {
-                    string tamsidsCSV = string.Join(",", tamsids.ToArray());
-                    foreach (DataRow row in selectionLayer.DataSet.DataTable.Select(tamsidcolumn + " IN (" + tamsidsCSV + ")"))
+                    row["TAMSSIGN"] = postCat;
+                    if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_address")))
                     {
-                        row["TAMSSIGN"] = postCat;
-                        if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_address")))
-                        {
-                            row[Project.settings.GetValue("sign_f_address")] = values["address"];
-                        }
-                        if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_offset")))
-                        {
-                            row[Project.settings.GetValue("sign_f_offset")] = values["road_offset"];
-                        }
+                        row[Project.settings.GetValue("sign_f_address")] = values["address"];
+                    }
+                    if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_offset")))
+                    {
+                        row[Project.settings.GetValue("sign_f_offset")] = values["road_offset"];
                     }
                 }
             }
@@ -775,9 +765,10 @@ namespace tams4a.Classes
                     MessageBox.Show("Could not save data!");
                 }
             }
-            
-            resetSaveCondition();
-            
+
+            if (suppressChanges) return;
+            resetSignDisplay(signControls);
+            disableSignDisplay(signControls);           
             Properties.Settings.Default.Save();
             selectionLayer.ClearSelection();
             selectionLayer.DataSet.Save();
@@ -802,6 +793,7 @@ namespace tams4a.Classes
         private void addNewSign(object sender, EventArgs e)
         {
             FormNewSign newSignForm = new FormNewSign();
+            Panel_Sign signControls = getSignControls();
             if (newSignForm.ShowDialog() == DialogResult.OK)
             {
                 if (newSignForm.radioButtonMUTCD.Checked)
@@ -813,9 +805,9 @@ namespace tams4a.Classes
                         newSign["TAMSID"] = maxSignID.ToString();
                         newSign["support_id"] = tamsids[0];
                         Database.ReplaceRow(Project.conn, newSign, "sign");
-                        getSigns();
-                        getSignControls().comboBoxSigns.SelectedIndex = getSignControls().comboBoxSigns.Items.Count - 1;
-                        changeSign();
+                        getSigns(signControls);
+                        signControls.comboBoxSigns.SelectedIndex = signControls.comboBoxSigns.Items.Count - 1;
+                        changeSign(signControls);
                         determinePostCat();
                     }
                 }
@@ -839,16 +831,15 @@ namespace tams4a.Classes
                             newSign["support_id"] = tamsids[0];
                             newSign["condition"] = "";
                             newSign["reflectivity"] = "";
-                            newSign["obstructions"] = "";
                             newSign["install_date"] = "";
                             newSign["survey_date"] = Util.SortableDate(surveyDate);
                             newSign["photo"] = "";
                             newSign["barcode"] = "";
                             newSign["favorite"] = "false";
                             Database.ReplaceRow(Project.conn, newSign, "sign");
-                            getSigns();
-                            getSignControls().comboBoxSigns.SelectedIndex = getSignControls().comboBoxSigns.Items.Count - 1;
-                            changeSign();
+                            getSigns(signControls);
+                            signControls.comboBoxSigns.SelectedIndex = signControls.comboBoxSigns.Items.Count - 1;
+                            changeSign(signControls);
                             determinePostCat();
                         }
                     }
@@ -864,9 +855,9 @@ namespace tams4a.Classes
                         {"category", "empty_post" }
                     };
                     Database.ReplaceRow(Project.conn, newSign, "sign");
-                    getSigns();
-                    getSignControls().comboBoxSigns.SelectedIndex = getSignControls().comboBoxSigns.Items.Count - 1;
-                    changeSign();
+                    getSigns(signControls);
+                    signControls.comboBoxSigns.SelectedIndex = signControls.comboBoxSigns.Items.Count - 1;
+                    changeSign(signControls);
                 }
                 controlChanged(sender, e);
             }
@@ -890,10 +881,14 @@ namespace tams4a.Classes
             {
                 Database.DeleteRow(Project.conn, "sign", "TAMSID", signChanges[index]["TAMSID"]);
             }
-            getSigns();
-            changeSign();
+            getSigns(signControls);
+            changeSign(signControls);
             determinePostCat();
-            controlChanged(sender, e);
+            suppressChanges = true;
+            saveHandler(sender, e);
+            suppressChanges = false;
+            selectionChanged();
+            setSymbolizer();        
         }
 
         private void faveSign(object sender, EventArgs e)
@@ -1455,8 +1450,16 @@ namespace tams4a.Classes
 
         private void deletePost(object sender, EventArgs e)
         {
+            if (MessageBox.Show("You are about to delete a post along with any signs on it, this action cannot be undone.", "Warning: Delete Post", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
+            {
+                return;
+            }
+            Panel_Sign signControls = getSignControls();
             string[] tables = { "sign_support", ModuleName };
             deleteShape(tamsids[0], tables, "support_id");
+            resetSignDisplay(signControls);
+            disableSignDisplay(signControls);
+            Project.map.Update();
         }
     }
 }

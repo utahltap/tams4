@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using tams4a.Controls;
@@ -22,7 +21,7 @@ namespace tams4a.Classes
 
         private bool colorsOn = true;
         private DataTable surfaceTypes;
-        private DataTable roadTypes;
+        //private DataTable roadTypes;
         private DataTable surfaceDistresses;
         private string notes;
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
@@ -215,7 +214,7 @@ namespace tams4a.Classes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public override void selectionChanged(object sender, EventArgs e)
+        public override void selectionChanged()
         {
             if (!isOpen()) { return; }
 
@@ -224,7 +223,8 @@ namespace tams4a.Classes
                 DialogResult rslt = MessageBox.Show("Unsaved Changes Detected! Would you like to save the changes? Otherwise, they will be discared", "Unsaved Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (rslt == DialogResult.Yes)
                 {
-                    saveHandler(sender, e);
+                    return;
+                    //saveHandler(sender, e);
                 }
 
             }
@@ -273,7 +273,7 @@ namespace tams4a.Classes
         private void cancelChanges(object sender, EventArgs e)
         {
             resetSaveCondition();
-            selectionChanged(sender, e);
+            selectionChanged();
         }
 
         // returns the ROADCONTROLS collection of controls.
@@ -408,14 +408,15 @@ namespace tams4a.Classes
                 }
             }
 
-            var treatments = Database.GetDataByQuery(Project.conn, "SELECT id, name FROM treatments WHERE road_applied='" + surface + "';");
-            DataRow blankSurfaceRow = treatments.NewRow();      //
-            blankSurfaceRow["id"] = 0;                          // add empty row
-            blankSurfaceRow["name"] = "";                       //
-            treatments.Rows.InsertAt(blankSurfaceRow, 0);       //
-            roadControls.comboBoxTreatment.DataSource = treatments;    //
-            roadControls.comboBoxTreatment.DisplayMember = "name";     // sets options
-            roadControls.comboBoxTreatment.ValueMember = "id";         //
+            //var treatments = Database.GetDataByQuery(Project.conn, "SELECT id, name FROM treatments WHERE road_applied='" + surface + "';");
+            //DataRow blankSurfaceRow = treatments.NewRow();      //
+            //blankSurfaceRow["id"] = 0;                          // add empty row
+            //blankSurfaceRow["name"] = "";                       //
+            //treatments.Rows.InsertAt(blankSurfaceRow, 0);       //
+            //roadControls.comboBoxTreatment.DataSource = treatments;    //
+            //roadControls.comboBoxTreatment.DisplayMember = "name";     // sets options
+            //roadControls.comboBoxTreatment.ValueMember = "id";         //
+            
         }
 
 
@@ -446,6 +447,7 @@ namespace tams4a.Classes
             roadControls.distress7.Value = -1;
             roadControls.distress8.Value = -1;
             roadControls.distress9.Value = -1;
+            roadControls.comboBoxTreatment.Text = "";
             roadControls.inputRsl.Text = "";
             roadControls.btnNotes.Checked = false;
 
@@ -738,7 +740,7 @@ namespace tams4a.Classes
         }
 
         /// <summary>
-        /// Sets the data properties used to colour surveyed roads on the map. Roads are coloured based RSL
+        /// Sets the data properties used to color surveyed roads on the map. Roads are colored based RSL
         /// </summary>
         private void applyColorizedProperties()
         {
@@ -770,8 +772,8 @@ namespace tams4a.Classes
             double baseOutlineWidth = 10.0;
             double adjWidth = baseWidth;
             double adjOutlineWidth = baseOutlineWidth;
-            int numcategories = 6;
-            int maxrsl = 20;
+            //int numcategories = 6;
+            //int maxrsl = 20;
 
             LineScheme rdScheme = new LineScheme();
 
@@ -883,8 +885,44 @@ namespace tams4a.Classes
             try
             {
                 DataTable history = Database.GetDataByQuery(Project.conn, histring);
-                FormHistory histForm = new FormHistory();
-                histForm.dataGridViewHistory.DataSource = history;
+
+                history.Columns["id"].ColumnName = "ID";
+                history.Columns["survey_date"].ColumnName = "Survey Date";
+                history.Columns["name"].ColumnName = "Name";
+                history.Columns["speed_limit"].ColumnName = "Speed Limit";
+                history.Columns["lanes"].ColumnName = "Lanes";
+                history.Columns["width"].ColumnName = "Width";
+                history.Columns["length"].ColumnName = "Length";
+                history.Columns["surface"].ColumnName = "Surface";
+                history.Columns["type"].ColumnName = "Functional Classification";
+                history.Columns["from_address"].ColumnName = "From Address";
+                history.Columns["to_address"].ColumnName = "To Address";
+                history.Columns["photo"].ColumnName = "Photo";
+                history.Columns["rsl"].ColumnName = "RSL";
+                history.Columns["suggested_treatment"].ColumnName = "Suggested Treatment";
+                history.Columns["notes"].ColumnName = "Notes";
+
+                int surface_id = 0;
+                string surface_type = history.Rows[0]["surface"].ToString();
+                if (surface_type == "asphalt")surface_id = 1;
+                if (surface_type == "gravel")
+                {
+                    surface_id = 2;
+                    history.Columns.Remove("distress8");
+                    history.Columns.Remove("distress9");
+                }
+                if (surface_type == "concrete")surface_id = 3;
+
+                DataTable distresses = Database.GetDataByQuery(Project.conn, "SELECT name, dbkey FROM road_distresses WHERE surface_id = " + surface_id.ToString());
+                for (int i = 0; i < distresses.Rows.Count; i++)
+                {
+                    string distressNumber = distresses.Rows[i]["dbkey"].ToString();
+                    history.Columns[distressNumber].ColumnName = distresses.Rows[i]["name"].ToString();
+                }
+
+                FormOutput histForm = new FormOutput();
+                histForm.Text = "Road History";
+                histForm.dataGridViewReport.DataSource = history;
                 histForm.Show();
             }
             catch (Exception err)
@@ -897,32 +935,47 @@ namespace tams4a.Classes
          public void generalReport(object sender, EventArgs e)
          {
             DataTable general = new DataTable();
-             general.Columns.Add("ID");
-             general.Columns.Add("Name");
-             general.Columns.Add("Width (ft)");
-             general.Columns.Add("Length (ft)");
-             general.Columns.Add("From Address");
-             general.Columns.Add("To Address");
-             general.Columns.Add("Surface");
-             general.Columns.Add("Governing Distress");
-             general.Columns.Add("Treatment");
-             general.Columns.Add("Cost");
-             general.Columns.Add("Area");
-             general.Columns.Add("RSL");
-             general.Columns.Add("Type");
-             general.Columns.Add("Notes");
-             general.Columns.Add("Survey Date");
-             for (int i = 1; i < 10; i++)
-             {
-                general.Columns.Add("Distress " + i);
-             }
-             string thisSql = getSelectAllSQL();
-             try
+            general.Columns.Add("ID");
+            general.Columns.Add("Name");
+            general.Columns.Add("Width (ft)");
+            general.Columns.Add("Length (ft)");
+            general.Columns.Add("From Address");
+            general.Columns.Add("To Address");
+            general.Columns.Add("Surface");
+            general.Columns.Add("Governing Distress");
+            general.Columns.Add("Treatment");
+            general.Columns.Add("Cost");
+            general.Columns.Add("Area");
+            general.Columns.Add("RSL");
+            general.Columns.Add("Functional Classification");
+            general.Columns.Add("Notes");
+            general.Columns.Add("Survey Date");
+            general.Columns.Add("Fat/Spa/Pot");
+            general.Columns.Add("Edg/Joi/Rut");
+            general.Columns.Add("Lon/Cor/X-S");
+            general.Columns.Add("Pat/Bro/Dra");
+            general.Columns.Add("Pot/Fau/Dus");
+            general.Columns.Add("Dra/Lon/Agg");
+            general.Columns.Add("Tra/Tra/Cor");
+            general.Columns.Add("Block/Crack");
+            general.Columns.Add("Rutti/Patch");
+
+            string thisSql = getSelectAllSQL();
+            try
              {
                 DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
 
                 foreach (DataRow row in resultsTable.Rows)
                 {
+                    string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+
+                    int oldNoteLength = note.Length;
+                    int maxLength = 17;
+                    if (!string.IsNullOrEmpty(note))
+                    {
+                        note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
+                        if(note.Length == maxLength)note += "...";
+                    }
                     DataRow nr = general.NewRow();
                     nr["ID"] = row["TAMSID"];
                     nr["Name"] = row["name"];
@@ -932,14 +985,23 @@ namespace tams4a.Classes
                     nr["To Address"] = row["to_address"];
                     nr["Surface"] = row["surface"];
                     nr["RSL"] = row["rsl"];
-                    nr["Type"] = row["type"];
-                    nr["Notes"] = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+                    nr["Functional Classification"] = row["type"];
+                    nr["Notes"] = note;
                     nr["Survey Date"] = row["survey_date"];
+                    nr["Fat/Spa/Pot"] = row["distress1"];
+                    nr["Edg/Joi/Rut"] = row["distress2"];
+                    nr["Lon/Cor/X-S"] = row["distress3"];
+                    nr["Pat/Bro/Dra"] = row["distress4"];
+                    nr["Pot/Fau/Dus"] = row["distress5"];
+                    nr["Dra/Lon/Agg"] = row["distress6"];
+                    nr["Tra/Tra/Cor"] = row["distress7"];
+                    nr["Block/Crack"] = row["distress8"];
+                    nr["Rutti/Patch"] = row["distress9"];
+
                     int[] dvs = new int[9];
                     for (int i = 0; i < 9; i++)
                     {
-                        dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
-                        nr["Distress " + (i + 1)] = row["distress" + (i + 1)];
+                        dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());     
                     }
                     nr["Governing Distress"] = getGoverningDistress(dvs, row["surface"].ToString());
                     if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))
@@ -1228,43 +1290,160 @@ namespace tams4a.Classes
 
         private void customReport(object sender, EventArgs e)
         {
-            DataTable schema = Database.GetDataByQuery(Project.conn, "PRAGMA table_info(road)");
-            FormQueryBuilder tableFilters = new FormQueryBuilder("road", schema);
+            FormQueryBuilder tableFilters = new FormQueryBuilder("road");
             if (tableFilters.ShowDialog() == DialogResult.OK)
             {
+                string surfaceType = tableFilters.getSurface();
                 string query = tableFilters.getQuery() + " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC;";
                 DataTable results = Database.GetDataByQuery(Project.conn, query);
                 if (results.Rows.Count == 0)
                 {
-                    MessageBox.Show("No list could be generated because no roads with potholes where found.");
+                    MessageBox.Show("No roads matching the given description were found.");
                     return;
                 }
                 DataTable outputTable = new DataTable();
                 outputTable.Columns.Add("ID");
                 outputTable.Columns.Add("Name");
+                outputTable.Columns.Add("Speed Limit");
+                outputTable.Columns.Add("Lanes");
+                outputTable.Columns.Add("Width (ft)");
+                outputTable.Columns.Add("Length (ft)");
                 outputTable.Columns.Add("From Address");
                 outputTable.Columns.Add("To Address");
                 outputTable.Columns.Add("Surface");
                 outputTable.Columns.Add("Governing Distress");
-                outputTable.Columns.Add("RSL");
                 outputTable.Columns.Add("Treatment");
                 outputTable.Columns.Add("Cost");
                 outputTable.Columns.Add("Area");
+                outputTable.Columns.Add("RSL");
+                outputTable.Columns.Add("Functional Classification");
+                outputTable.Columns.Add("Notes");
+                outputTable.Columns.Add("Survey Date");
+                if (surfaceType == "")
+                {
+                    outputTable.Columns.Add("Fat/Spa/Pot");
+                    outputTable.Columns.Add("Edg/Joi/Rut");
+                    outputTable.Columns.Add("Lon/Cor/X-S");
+                    outputTable.Columns.Add("Pat/Bro/Dra");
+                    outputTable.Columns.Add("Pot/Fau/Dus");
+                    outputTable.Columns.Add("Dra/Lon/Agg");
+                    outputTable.Columns.Add("Tra/Tra/Cor");
+                    outputTable.Columns.Add("Block/Crack");
+                    outputTable.Columns.Add("Rutti/Patch");
+                }
+                if (surfaceType == "Asphalt")
+                {
+                    outputTable.Columns.Add("Fatigue");
+                    outputTable.Columns.Add("Edge");
+                    outputTable.Columns.Add("Longitudinal");
+                    outputTable.Columns.Add("Patches");
+                    outputTable.Columns.Add("Potholes");
+                    outputTable.Columns.Add("Drainage");
+                    outputTable.Columns.Add("Transverse");
+                    outputTable.Columns.Add("Block");
+                    outputTable.Columns.Add("Rutting");
+                }
+                if (surfaceType == "Concrete")
+                {
+                    outputTable.Columns.Add("Spalling");
+                    outputTable.Columns.Add("Joint Seal");
+                    outputTable.Columns.Add("Corners");
+                    outputTable.Columns.Add("Broken");
+                    outputTable.Columns.Add("Faulting");
+                    outputTable.Columns.Add("Longitudinal");
+                    outputTable.Columns.Add("Transverse");
+                    outputTable.Columns.Add("Cracking");
+                    outputTable.Columns.Add("Patches");
+                }
+
+                if (surfaceType == "Gravel")
+                {
+                    outputTable.Columns.Add("Potholes");
+                    outputTable.Columns.Add("Rutting");
+                    outputTable.Columns.Add("X-Section");
+                    outputTable.Columns.Add("Drainage");
+                    outputTable.Columns.Add("Dust");
+                    outputTable.Columns.Add("Aggregate");
+                    outputTable.Columns.Add("Corrugate");
+                }
+
                 FormOutput report = new FormOutput();
-                var currentID = results.Rows[0]["TAMSID"];
                 foreach (DataRow row in results.Rows)
                 {
-                    if (currentID.ToString().Equals(row["TAMSID"].ToString()))
-                    {
-                        continue;
-                    }
                     DataRow nr = outputTable.NewRow();
+                    string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+
+                    int oldNoteLength = note.Length;
+                    int maxLength = 17;
+                    if (!string.IsNullOrEmpty(note))
+                    {
+                        note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
+                        if (note.Length == maxLength) note += "...";
+                    }
+                    double area = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
+
                     nr["ID"] = row["TAMSID"];
                     nr["Name"] = row["name"];
+                    nr["Speed Limit"] = row["speed_limit"];
+                    nr["Lanes"] = row["lanes"];
+                    nr["Width (ft)"] = row["width"];
+                    nr["Length (ft)"] = row["length"];
                     nr["From Address"] = row["from_address"];
                     nr["To Address"] = row["to_address"];
                     nr["Surface"] = row["surface"];
+                    nr["Area"] = area;
                     nr["RSL"] = row["rsl"];
+                    nr["Functional Classification"] = row["type"];
+                    nr["Notes"] = note;
+                    nr["Survey Date"] = row["survey_date"];
+                    if (surfaceType == "")
+                    {
+                        nr["Fat/Spa/Pot"] = row["distress1"];
+                        nr["Edg/Joi/Rut"] = row["distress2"];
+                        nr["Lon/Cor/X-S"] = row["distress3"];
+                        nr["Pat/Bro/Dra"] = row["distress4"];
+                        nr["Pot/Fau/Dus"] = row["distress5"];
+                        nr["Dra/Lon/Agg"] = row["distress6"];
+                        nr["Tra/Tra/Cor"] = row["distress7"];
+                        nr["Block/Crack"] = row["distress8"];
+                        nr["Rutti/Patch"] = row["distress9"];
+                    }
+                    if (surfaceType == "Asphalt")
+                    {
+                        nr["Fatigue"] = row["distress1"];
+                        nr["Edge"] = row["distress2"];
+                        nr["Longitudinal"] = row["distress3"];
+                        nr["Patches"] = row["distress4"];
+                        nr["Potholes"] = row["distress5"];
+                        nr["Drainage"] = row["distress6"];
+                        nr["Transverse"] = row["distress7"];
+                        nr["Block"] = row["distress8"];
+                        nr["Rutting"] = row["distress9"];
+                    }
+                    if (surfaceType == "Concrete")
+                    {
+                        nr["Spalling"] = row["distress1"];
+                        nr["Joint Seal"] = row["distress2"];
+                        nr["Corners"] = row["distress3"];
+                        nr["Broken"] = row["distress4"];
+                        nr["Faulting"] = row["distress5"];
+                        nr["Longitudinal"] = row["distress6"];
+                        nr["Transverse"] = row["distress7"];
+                        nr["Cracking"] = row["distress8"];
+                        nr["Patches"] = row["distress9"];
+                    }
+
+                    if (surfaceType == "Gravel")
+                    {
+                        nr["Potholes"] = row["distress1"];
+                        nr["Rutting"] = row["distress2"];
+                        nr["X-Section"] = row["distress3"];
+                        nr["Drainage"] = row["distress4"];
+                        nr["Dust"] = row["distress5"];
+                        nr["Aggregate"] = row["distress6"];
+                        nr["Corrugate"] = row["distress7"];
+                    }
+
                     int[] dvs = new int[9];
                     for (int i = 0; i < 9; i++)
                     {
@@ -1275,8 +1454,23 @@ namespace tams4a.Classes
                     if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))
                     {
                         nr["Treatment"] = row["suggested_treatment"];
-                        string treatmentCost = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments WHERE name = '" + row["suggested_treatment"].ToString() + "';").Rows[0]["cost"].ToString();
-                        double estCost = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString()) * Util.ToDouble(treatmentCost) / 9;
+                        string treatment = row["suggested_treatment"].ToString();
+
+                        double treatmentCost = 0.0;
+                        if (treatment == "Routine") treatmentCost = 0.56;
+                        if (treatment == "Patching") treatmentCost = 0.67;
+                        if (treatment == "Preventative") treatmentCost = 2.08;
+                        if (treatment == "Preventative with Patching") treatmentCost = 2.75;
+                        if (treatment == "Rehabilitation") treatmentCost = 9.57;
+                        if (treatment == "Reconstruction") treatmentCost = 18.4;
+                        if (treatmentCost == 0.0 && treatment != "Nothing")
+                        {
+                            DataTable tc = Database.GetDataByQuery(Project.conn, "SELECT cost FROM treatments " + "WHERE name LIKE '" + treatment + "';");
+                            treatmentCost = Util.ToDouble(tc.Rows[0]["cost"].ToString());
+                        }
+
+
+                        double estCost = area * treatmentCost / 9;
                         if (estCost > 1000000)
                         {
                             nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
@@ -1290,7 +1484,6 @@ namespace tams4a.Classes
                             nr["Cost"] = Math.Round(estCost).ToString();
                         }
                     }
-                    nr["Area"] = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
                     outputTable.Rows.Add(nr);
                 }
                 report.dataGridViewReport.DataSource = outputTable;
@@ -1314,17 +1507,17 @@ namespace tams4a.Classes
         private void graphRoadType(object sender, EventArgs e)
         {
             string[] roadTypes = { "asphalt", "concrete", "gravel" };
-            Color[] c = { Color.DarkGray, Color.LightGray, Color.Brown };
-            makeTypeGraph(roadTypes, "surface", c);
+            Color[] c = { Color.Black, Color.LightGray, Color.FromArgb(150, 75, 0) };
+            makeTypeGraph(roadTypes, "surface", "Road Surface Distribution", c);
         }
 
         private void graphRoadCategory(object sender, EventArgs e)
         {
             string[] roadTypes = { "Major Arterial", "Minor Arterial", "Major Collector", "Minor Collector", "Residential", "Other" };
-            makeTypeGraph(roadTypes, "type");
+            makeTypeGraph(roadTypes, "type", "Distribution of Functional Classification");
         }
 
-        private void makeTypeGraph(string[] roadTypes, string column, Color[] c = null)
+        private void makeTypeGraph(string[] roadTypes, string column, string title, Color[] c = null)
         {
             string thisSql = getSelectAllSQL();
             try
@@ -1373,7 +1566,7 @@ namespace tams4a.Classes
                 }
                 results.Rows.Add(totalsRow);
                 results.Rows.Add(percentageRow);
-                FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, "Road " + Util.UppercaseFirst(column) + " Distribution", c);
+                FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, title, c);
                 graph.Show();
             }
             catch (Exception err)
@@ -1384,7 +1577,7 @@ namespace tams4a.Classes
 
         private void graphGoverningDistress(object sender, EventArgs e)
         {
-            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a surface for governing distresses.");
+            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a Road Surface Type");
             string thisSql = getSelectAllSQL();
             if (roadChooser.ShowDialog()== DialogResult.OK)
             {
@@ -1400,9 +1593,9 @@ namespace tams4a.Classes
                     }
                     Dictionary<string, string[]> distressGroup = new Dictionary<string, string[]>()
                     {
-                        {"asphalt", distressAsphalt },
-                        {"gravel", distressGravel },
-                        {"concrete", distressConcrete }
+                        {"Asphalt", distressAsphalt },
+                        {"Gravel", distressGravel },
+                        {"Concrete", distressConcrete }
                     };
                     Dictionary<string, double> distressedArea = new Dictionary<string, double>();
                     double totalArea = 0.0;
@@ -1468,7 +1661,7 @@ namespace tams4a.Classes
 
         private void graphRSL(object sender, EventArgs e)
         {
-            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a surface for governing distresses.");
+            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a road surface type.");
             string thisSql = getSelectAllSQL();
             if (roadChooser.ShowDialog() == DialogResult.OK)
             {
@@ -1530,7 +1723,7 @@ namespace tams4a.Classes
                     }
                     results.Rows.Add(totalsRow);
                     results.Rows.Add(percentageRow);
-                    Color[] colour = { Color.Red, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.ForestGreen, Color.Blue };
+                    Color[] colour = { Color.DarkRed, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.DeepSkyBlue, Color.Blue };
                     FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, "Road RSL Distribution", colour);
                     graph.Show();
                 }
@@ -1556,13 +1749,13 @@ namespace tams4a.Classes
             roadChooser.Text = title;
             roadChooser.labelMessage.Text = text;
             asphalt = new RadioButton();
-            asphalt.Text = "asphalt";
+            asphalt.Text = "Asphalt";
             asphalt.Location = new Point(240, 40);
             gravel = new RadioButton();
-            gravel.Text = "gravel";
+            gravel.Text = "Gravel";
             gravel.Location = new Point(240, 64);
             concrete = new RadioButton();
-            concrete.Text = "concrete";
+            concrete.Text = "Concrete";
             concrete.Location = new Point(240, 90);
             roadChooser.groupBoxUser.Controls.Add(asphalt);
             roadChooser.groupBoxUser.Controls.Add(gravel);

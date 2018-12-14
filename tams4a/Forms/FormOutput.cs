@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using tams4a.Classes;
 
@@ -26,9 +20,14 @@ namespace tams4a.Forms
             Close();
         }
 
-        private void buttonExportCSV_Click(object sender, EventArgs e)
+        private void csvToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Util.TableToCSV((DataTable)(dataGridViewReport.DataSource), "TAMS");
+        }
+
+        private void pngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Util.TableToPNG(dataGridViewReport);
         }
     }
 }
