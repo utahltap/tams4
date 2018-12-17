@@ -1,4 +1,9 @@
-# TAMS 4.0.x
+# TAMS 4.1.x
+
+# Version 4.1.0.3
+CHANGES
+----------------------------------------------------
+* Added a loading splash animation when building a new project. This may also be used in other places in the future.
 
 # Version 4.1.0.3
 CHANGES

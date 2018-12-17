@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
 using tams4a.Controls;
 using tams4a.Forms;
 
@@ -783,8 +784,9 @@ namespace tams4a.Classes
             Dictionary<string, string> results = searchMUTCDlist();
             if (results != null)
             {
-                getSignControls().textBoxType.Text = results["mutcd_code"];
-                getSignControls().textBoxDescription.Text = results["description"];
+                Panel_Sign signControls = getSignControls();
+                signControls.textBoxType.Text = results["mutcd_code"];
+                signControls.textBoxDescription.Text = results["description"];
             }
         }
 
@@ -986,6 +988,7 @@ namespace tams4a.Classes
             mutcd.Close();
             return returnValue;
         }
+
 
         private void editNotes(object sender, EventArgs e)
         {
