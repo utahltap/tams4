@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
@@ -30,13 +23,27 @@ namespace tams4a.Controls
             textBoxWidth.TextChanged += widthChanged;
             textBoxLength.TextChanged += lengthChanged;
             buttonNextPhoto.Click += buttonNextPhoto_Click;
-            
+
+            checkDistressValues();
+
             new ToolTip().SetToolTip(buttonNextPhoto, "Get Next Photo");
             new ToolTip().SetToolTip(buttonSuggest, "Get TAMS Suggestion");
 
             AutoScroll = true;
         }
 
+        private void checkDistressValues()
+        {
+            if (distress1.Value >= 0) comboBoxSurface.Enabled = false;
+            if (distress2.Value >= 0) comboBoxSurface.Enabled = false;
+            if (distress3.Value >= 0) comboBoxSurface.Enabled = false;
+            if (distress4.Value >= 0) comboBoxSurface.Enabled = false;
+            if (distress5.Value >= 0) comboBoxSurface.Enabled = false;
+            if (distress6.Value >= 0) comboBoxSurface.Enabled = false;
+            if (distress7.Value >= 0) comboBoxSurface.Enabled = false;
+            if (distress8.Value >= 0) comboBoxSurface.Enabled = false;
+            if (distress9.Value >= 0) comboBoxSurface.Enabled = false;
+        }
 
         private void lengthChanged(object sender, EventArgs e)
         {
@@ -52,12 +59,21 @@ namespace tams4a.Controls
         }
 
 
-        private void surfaceChanged(object sender, EventArgs e)
+        private void comboBoxSurfaceChanged(object sender, EventArgs e)
         {
             moduleValueChanged(sender, e);
         }
 
+        private void comboBoxTreatmentChanged(object sender, EventArgs e)
+        {
+            moduleValueChanged(sender, e);
+        }
 
+        private void comboBoxTypeChanged(object sender, EventArgs e)
+        {
+            moduleValueChanged(sender, e);
+        }
+        
         private void updateArea()
         {
             try

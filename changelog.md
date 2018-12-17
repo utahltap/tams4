@@ -1,5 +1,22 @@
 # TAMS 4.0.x
 
+# Version 4.1.0.3
+CHANGES
+----------------------------------------------------
+* A legend is present in the bottom right corner of the map.
+* Roads can be colored by treatment.
+* There is a display option under the "Project" dropdown (replacing the theme option) that allows users to change display settings.
+* Warning prevents users from accidentally changing surface type.
+* For projects made after this release, changes in shape field settings are reflected in road database.
+* Exported csv files no longer have a space before every entry.
+* Changes made to a report opened with TAMS can be saved.
+* New advanced option for csv files to be imported and overwrite datatables in TAMS.
+
+BUG FIXES
+----------------------------------------------------
+* Panning with right click works again.
+* Generating a report on selected roads is working.
+
 # Version 4.1.0.2
 CHANGES
 ----------------------------------------------------

@@ -1,11 +1,6 @@
 ﻿ using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace tams4a.Controls
@@ -94,25 +89,7 @@ namespace tams4a.Controls
                 } catch {
                     // TODO:
                 }
-                // TODO: Raise change event
-            } else {
-                // TODO: (Nothing?)
             }
-
-            //// cancel will return a different DialogResult (.CANCEL IIRC)
-            //if (distressForm.ShowDialog() == DialogResult.OK)
-            //{
-            //    try
-            //    {
-            //        this.Value = distressForm.DistressValue.ToString();
-            //        distressForm.Dispose();
-            //        OnValueChanged(new CustomEventArgs());
-            //    }
-            //    catch (Exception Get_Click_e)
-            //    {
-            //        MessageBox.Show("Unknown Error\n" + Get_Click_e);
-            //    }
-            //} // else do nothing
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)

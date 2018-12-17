@@ -227,7 +227,6 @@
     <Compile Include="Classes\ProjectSetting.cs" />
     <Compile Include="Classes\ProjectSettings.cs" />
     <Compile Include="Classes\ProjectVersion.cs" />
-    <Compile Include="Classes\RoadDistress.cs" />
     <Compile Include="Classes\RoadSidewalkForm.cs" />
     <Compile Include="Classes\TamsProject.cs" />
     <Compile Include="Classes\CustomEventArgs.cs" />
@@ -317,6 +316,12 @@
     </Compile>
     <Compile Include="Forms\FormCustomMessage.Designer.cs">
       <DependentUpon>FormCustomMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormDisplaySettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormDisplaySettings.Designer.cs">
+      <DependentUpon>FormDisplaySettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormFutureTreatment.cs">
       <SubType>Form</SubType>
@@ -454,6 +459,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCustomMessage.resx">
       <DependentUpon>FormCustomMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDisplaySettings.resx">
+      <DependentUpon>FormDisplaySettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormFutureTreatment.resx">
       <DependentUpon>FormFutureTreatment.cs</DependentUpon>

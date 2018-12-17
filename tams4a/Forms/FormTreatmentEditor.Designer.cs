@@ -185,6 +185,12 @@
             this.comboBoxRoad.Name = "comboBoxRoad";
             this.comboBoxRoad.Size = new System.Drawing.Size(109, 21);
             this.comboBoxRoad.TabIndex = 9;
+            this.comboBoxRoad.Items.AddRange(new object[]
+            {
+                "Asphalt",
+                "Gravel",
+                "Concrete"
+            });
             // 
             // labelCost
             // 
@@ -229,17 +235,20 @@
             this.labelRoad.Name = "labelRoad";
             this.labelRoad.Size = new System.Drawing.Size(73, 13);
             this.labelRoad.TabIndex = 4;
-            this.labelRoad.Text = "Raod Surface";
+            this.labelRoad.Text = "Road Surface";
             // 
             // comboBoxCategory
             // 
             this.comboBoxCategory.FormattingEnabled = true;
             this.comboBoxCategory.Items.AddRange(new object[] {
-            "patch",
-            "routine",
-            "preventative",
-            "rehabilitation",
-            "reconstruction"});
+                "Nothing",
+                "Routine",
+                "Patching",
+                "Preventative",
+                "Preventative with Patching",
+                "Rehabilitation",
+                "Reconstruction"
+            });
             this.comboBoxCategory.Location = new System.Drawing.Point(157, 58);
             this.comboBoxCategory.Name = "comboBoxCategory";
             this.comboBoxCategory.Size = new System.Drawing.Size(134, 21);

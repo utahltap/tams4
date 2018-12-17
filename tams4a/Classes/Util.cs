@@ -122,7 +122,7 @@ namespace tams4a.Classes
             string s = prefix;
             foreach (DataColumn col in dt.Columns)
             {
-                s = s + col.ColumnName + ", ";
+                s = s + col.ColumnName + ",";
             }
             outFile.WriteLine(s);
             foreach (DataRow row in dt.Rows)
@@ -130,7 +130,7 @@ namespace tams4a.Classes
                 s = "";
                 foreach (DataColumn col in dt.Columns)
                 {
-                    s = s + row[col.ColumnName].ToString() + ", ";
+                    s = s + row[col.ColumnName].ToString() + ",";
                 }
                 outFile.WriteLine(s);
             }

@@ -1,18 +1,29 @@
 ﻿using DotSpatial.Symbology;
 using System;
+using System.Data;
 using System.Deployment.Application;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using tams4a.Classes;
 using tams4a.Forms;
+using System.Runtime.InteropServices;
 
 namespace tams4a
 {
     public partial class MainWindow : Form
     {
         private DotSpatial.Controls.FunctionMode CurrentMode;
-        private TamsProject Project;
+        public TamsProject Project;
+        public ModuleRoads road;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
+        //Mouse actions
+        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        private const int MOUSEEVENTF_LEFTUP = 0x04;
+
+
         private int maxWidth;
         //private DotSpatial.Controls.AppManager appManager;
         //private DotSpatial.Plugins.WebMap.ServiceProvider webService;
@@ -74,7 +85,7 @@ namespace tams4a
                 allOthersToolStripMenuItem,
                 roadsWithSidewalksToolStripMenuItem
             };
-            ModuleRoads road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
+            road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
             ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
             GenericModule other = new GenericModule(Project, new TabPage("Other"), lcso);
             Project.addModule(road, "Roads", tabControlControls);
@@ -214,6 +225,13 @@ namespace tams4a
             }
         }
 
+        //Trick the UI into thinking the left mouse is clicked so panning works with right click
+        public void DoMouseClick()
+        {
+            uint X = (uint)Cursor.Position.X;
+            uint Y = (uint)Cursor.Position.Y;
+            mouse_event(MOUSEEVENTF_LEFTDOWN, X, Y, 0, 0);
+        }
 
         /// <summary>
         /// Used to ensure right mouse button always pans
@@ -225,10 +243,10 @@ namespace tams4a
             if (e.Button == MouseButtons.Right)
             {
                 uxMap.FunctionMode = DotSpatial.Controls.FunctionMode.Pan;
+                DoMouseClick();
             }
             base.OnMouseDown(e);
         }
-
 
         /// <summary>
         /// Sets the mode back to the previous mode if the right mouse button was held.
@@ -240,9 +258,14 @@ namespace tams4a
             if (e.Button == MouseButtons.Right)
             {
                 uxMap.FunctionMode = CurrentMode;
+                uxMap.ZoomIn();  //Refresh() and Update() do not working as expected
+                uxMap.ZoomOut(); //but somewhere in these methods the map gets refreshed.
             }
-            base.OnMouseUp(e);
-            uxMap_SelectionChanged();
+            else
+            {
+                base.OnMouseUp(e);
+                uxMap_SelectionChanged();
+            }
         }
 
 
@@ -271,7 +294,7 @@ namespace tams4a
             DialogResult result = Project.settings.showDialog();
             if (result == DialogResult.OK && Project.isOpen)
             {
-                MessageBox.Show("Attempting to reload settings");
+                MessageBox.Show("Attempting to reload settings.\nSome settings may not be changed until TAMS is restarted.");
                 Project.settings.LoadValues();
             }
         }
@@ -467,16 +490,54 @@ namespace tams4a
             }
         }
 
-        private void lightToolStripMenuItem_Click(object sender, EventArgs e)
+        private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            uxMap.BackColor = Color.White;
-            Project.map.Refresh();
+            FormDisplaySettings formDisplay = new FormDisplaySettings(this, road.roadColors);
+            formDisplay.ShowDialog();
         }
 
-        private void darkToolStripMenuItem_Click(object sender, EventArgs e)
+        private void importCSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            uxMap.BackColor = Color.Black;
-            Project.map.Refresh();
+            OpenFileDialog openCSV = new OpenFileDialog();
+            openCSV.Filter = "CSV Files|*.csv";
+            openCSV.Title = "Select a Comma Separtated Value File";
+
+            if (openCSV.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                System.IO.StreamReader sr = new System.IO.StreamReader(openCSV.FileName);
+                string importedCSV = sr.ReadToEnd();
+                sr.Close();
+
+                DataTable importedTable = new DataTable();
+                string[] rows = importedCSV.Split('\n');
+                string[] cols = rows[0].Split(',');
+                foreach (string column in cols)
+                {
+                    if (column == "TAMSID")
+                    {
+                        importedTable.Columns.Add("ID", typeof(string));
+                        continue;
+                    }
+                    importedTable.Columns.Add(column, typeof(string));
+                }
+
+                int i = -1;
+                foreach (string row in rows)
+                {
+                    i++;
+                    if (i == 0) continue;
+                    string[] thisRow = row.Split(',');
+                    importedTable.Rows.Add(thisRow);
+                    
+                }
+
+                FormOutput report = new FormOutput(Project);
+                report.dataGridViewReport.DataSource = importedTable;
+                report.Text = "Imported Report";
+                report.Show();
+                MessageBox.Show("Check to make sure the table was imported correctly.\nSave changes if you want to keep them.");
+
+            }
         }
     }
 }
