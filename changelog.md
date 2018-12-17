@@ -1,11 +1,11 @@
 # TAMS 4.1.x
 
-# Version 4.1.0.3
+# Version 4.1.1.1
 CHANGES
 ----------------------------------------------------
 * Added a loading splash animation when building a new project. This may also be used in other places in the future.
 
-# Version 4.1.0.3
+# Version 4.1.1.0
 CHANGES
 ----------------------------------------------------
 * A legend is present in the bottom right corner of the map.
