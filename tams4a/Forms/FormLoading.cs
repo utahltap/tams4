@@ -14,9 +14,10 @@ namespace tams4a.Forms
     {
         public int frame = 0;
 
-        public FormLoading()
+        public FormLoading(string message = "Loading...")
         {
             InitializeComponent();
+            this.Text = message;
             Timer fps = new Timer();
             fps.Interval = 150;
             fps.Tick += new EventHandler(ChangeFrame);
@@ -34,9 +35,5 @@ namespace tams4a.Forms
             this.BackgroundImage = loadingGif[frame++];
         }
 
-        private void FormLoad(object sender, EventArgs e)
-        {
-            
-        }
     }
 }

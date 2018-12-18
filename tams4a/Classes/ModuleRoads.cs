@@ -23,6 +23,7 @@ namespace tams4a.Classes
         private bool colorsOn = true;
         private DataTable surfaceTypes;
         private DataTable surfaceDistresses;
+        private DataTable reportTable;
         private string previousSurface;
         private string notes;
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
@@ -276,7 +277,7 @@ namespace tams4a.Classes
 
         // returns the ROADCONTROLS collection of controls.
         // does not include the toolstrip
-        private Panel_Road getRoadControls()
+        public Panel_Road getRoadControls()
         {
             Panel_Road controls;
 
@@ -585,8 +586,9 @@ namespace tams4a.Classes
 
             if (roadControls.comboBoxTreatment.Visible) { values["suggested_treatment"] = roadControls.comboBoxTreatment.Text; }
 
-            if (!string.IsNullOrWhiteSpace(roadControls.inputRsl.Text.ToString())) {
-                values["rsl"] = roadControls.inputRsl.Text.ToString();
+            if (!string.IsNullOrWhiteSpace(roadControls.inputRsl.Text) || !string.IsNullOrWhiteSpace(roadControls.comboBoxTreatment.Text)) {
+                values["rsl"] = roadControls.inputRsl.Text;
+                values["suggested_treatment"] = roadControls.comboBoxTreatment.Text;
 
                 string tamsidsCSV = string.Join(",", tamsids.ToArray());
                 foreach (DataRow row in selectionLayer.DataSet.DataTable.Select(tamsidcolumn + " IN (" + tamsidsCSV + ")"))
@@ -781,7 +783,7 @@ namespace tams4a.Classes
         }
 
         /// <summary>
-        /// Sets the data properties used to color surveyed roads on the map. Roads are colored based RSL
+        /// Sets the data properties used to color surveyed roads on the map. Roads are colored based RSL or Treatment
         /// </summary>
         private void applyColorizedProperties()
         {
@@ -1186,6 +1188,8 @@ namespace tams4a.Classes
             }
         }
 
+        private DataTable selectedResultsTable;
+
         private void reportSelected(object sender, EventArgs e)
         {
             DataTable general = new DataTable();
@@ -1221,10 +1225,10 @@ namespace tams4a.Classes
             string thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
             try
             {
-                DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
+                selectedResultsTable = Database.GetDataByQuery(Project.conn, thisSql);
                 double totalCost = 0;
 
-                foreach (DataRow row in resultsTable.Rows)
+                foreach (DataRow row in selectedResultsTable.Rows)
                 {
                     double area = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
 
@@ -1318,16 +1322,47 @@ namespace tams4a.Classes
                     totals["Cost"] = Math.Round(totalCost).ToString();
                 }
                 general.Rows.Add(totals);
+                reportTable = general.DefaultView.ToTable();
                 FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = general.DefaultView.ToTable();
+                report.dataGridViewReport.DataSource = reportTable;
                 report.Text = "Treatment Report";
                 report.Show();
+                report.FormClosing += updateChanges;
             }
             catch (Exception err)
             {
                 Log.Error("Could not get database values for " + ModuleName + " module.\n" + err.ToString());
                 MessageBox.Show("An error has occured while trying to consolidate data.");
             }
+        }
+
+        private void updateChanges(object sender, EventArgs e)
+        {
+            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
+            string tamsidsCSV = string.Join(",", tamsids.ToArray());
+
+            foreach (DataRow row in selectionLayer.DataSet.DataTable.Select(tamsidcolumn + " IN (" + tamsidsCSV + ")"))
+            {
+                foreach (DataRow r in reportTable.Rows)
+                {
+                    int x, y;
+                    Int32.TryParse(r["ID"].ToString(), out x);
+                    Int32.TryParse(row["TAMS_ID"].ToString(), out y);
+                    if (x == y)
+                    {
+                        row["TAMSROADRSL"] = r["RSL"];
+                        row["TAMSTREATMENT"] = r["Treatment"];
+                    }
+                }
+            }
+
+            selectionLayer.ClearSelection();
+            setSymbolizer();
+            Project.map.Invalidate();
+            Project.map.Refresh();
+            Project.map.ResetBuffer();
+            Project.map.Update();
         }
 
         private string getGoverningDistress(int[] distValues, string surfType)
