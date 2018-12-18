@@ -23,9 +23,9 @@ namespace tams4a.Classes
         public String ModuleName { get; protected set; } // used for settings and ????
         protected Dictionary<String, String> FieldSettingToDbColumn;
         public String IdText { get; protected set; }
-        public Boolean UnsavedChanges { get; protected set; }
+        public Boolean UnsavedChanges { get; set; }
         protected List<Dictionary<String, String>> selectionValues;
-        protected List<string> tamsids;
+        public List<string> tamsids;
         protected DateTime surveyDate;
         protected FormSurveyDate dateForm;
         // button to enable after shp file is opened
@@ -37,7 +37,7 @@ namespace tams4a.Classes
         public List<ProjectSetting> ModuleSettings { get; protected set; }
 
         // sql used to retrieve database information about map selected objects
-        protected readonly String SelectionSql;  // TODO: This should only be set at construction.  Readonly doesn't work for inherited classes.
+        public readonly String SelectionSql;  // TODO: This should only be set at construction.  Readonly doesn't work for inherited classes.
                                                  // http://stackoverflow.com/questions/6037546/assigning-a-value-to-an-inherited-readonly-field
 
 
@@ -537,7 +537,7 @@ namespace tams4a.Classes
         /// </summary>
         /// <param name="selection">the selected shapes on the map</param>
         /// <returns></returns>
-        protected string extractTAMSIDs(DataTable selection)
+        public string extractTAMSIDs(DataTable selection)
         {
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             return extractTAMSIDs(selection, tamsidcolumn);
@@ -595,7 +595,7 @@ namespace tams4a.Classes
             Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
         }
 
-        protected void PrepareDatatable(DataTable table, string[] columns)
+        public void PrepareDatatable(DataTable table, string[] columns)
         {
             for (int i = 0; i < columns.Length; i++)
             {

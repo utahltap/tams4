@@ -24,7 +24,7 @@ namespace tams4a.Forms
         {
             mainWindow.uxMap.BackColor = Color.White;
             mainWindow.road.labelColor = Color.Black;
-            mainWindow.road.setSymbolizer();
+            mainWindow.road.symbols.setSymbolizer();
             mainWindow.Project.map.Refresh();
         }
 
@@ -32,7 +32,7 @@ namespace tams4a.Forms
         {
             mainWindow.uxMap.BackColor = Color.Black;
             mainWindow.road.labelColor = Color.LightGray;
-            mainWindow.road.setSymbolizer();
+            mainWindow.road.symbols.setSymbolizer();
             mainWindow.Project.map.Refresh();
         }
 
@@ -93,7 +93,7 @@ namespace tams4a.Forms
         {
             if (radioButtonOn.Checked)getLegend();
             mainWindow.road.roadColors = comboBoxRoadColors.Text;
-            mainWindow.road.setSymbolizer();
+            mainWindow.road.symbols.setSymbolizer();
             mainWindow.Project.map.Refresh();
         }
     }
