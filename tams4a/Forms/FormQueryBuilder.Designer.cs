@@ -229,6 +229,11 @@
             // 
             this.numericUpDownRSLValue.Enabled = false;
             this.numericUpDownRSLValue.Location = new System.Drawing.Point(244, 58);
+            this.numericUpDownRSLValue.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             this.numericUpDownRSLValue.Name = "numericUpDownRSLValue";
             this.numericUpDownRSLValue.Size = new System.Drawing.Size(65, 20);
             this.numericUpDownRSLValue.TabIndex = 60;
@@ -721,6 +726,11 @@
             // 
             this.numericUpDownLengthValue.Enabled = false;
             this.numericUpDownLengthValue.Location = new System.Drawing.Point(250, 165);
+            this.numericUpDownLengthValue.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
             this.numericUpDownLengthValue.Name = "numericUpDownLengthValue";
             this.numericUpDownLengthValue.Size = new System.Drawing.Size(65, 20);
             this.numericUpDownLengthValue.TabIndex = 59;
@@ -729,6 +739,11 @@
             // 
             this.numericUpDownWidthValue.Enabled = false;
             this.numericUpDownWidthValue.Location = new System.Drawing.Point(250, 138);
+            this.numericUpDownWidthValue.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.numericUpDownWidthValue.Name = "numericUpDownWidthValue";
             this.numericUpDownWidthValue.Size = new System.Drawing.Size(65, 20);
             this.numericUpDownWidthValue.TabIndex = 58;
@@ -758,6 +773,11 @@
             // 
             this.numericUpDownIDValue.Enabled = false;
             this.numericUpDownIDValue.Location = new System.Drawing.Point(250, 31);
+            this.numericUpDownIDValue.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             this.numericUpDownIDValue.Name = "numericUpDownIDValue";
             this.numericUpDownIDValue.Size = new System.Drawing.Size(65, 20);
             this.numericUpDownIDValue.TabIndex = 54;

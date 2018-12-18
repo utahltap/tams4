@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using tams4a.Classes;
 using tams4a.Controls;
@@ -17,14 +12,15 @@ namespace tams4a.Forms
     {
         private List<CtlSetting> settingControls; // useful for accesssing different settings.
         private ProjectSettings Settings;
+        private TamsProject Project;
 
-        public FormSettings(ProjectSettings settings)
+        public FormSettings(ProjectSettings settings, TamsProject theProject)
         {
             InitializeComponent();
             CenterToScreen();
             settingControls = new List<CtlSetting>();
             Settings = settings;
-
+            Project = theProject;
             textBoxNotes.Text = ""; // default instructions
         }
 
@@ -168,7 +164,7 @@ namespace tams4a.Forms
         {
             if (!Settings.HaveRequired())
             {
-                MessageBox.Show("All required settings have not been set.  TAMS may not work properly until the required settings are valid.");
+                MessageBox.Show("All required settings have not been set. TAMS may not work properly until the required settings are valid.");
             }
             this.DialogResult = DialogResult.Cancel;
             this.Close();
@@ -181,23 +177,99 @@ namespace tams4a.Forms
 
         private void save()
         {
+            string colors = "", labels = "", surfacetype = "", endaddr = "", startaddr = "",
+                speedlimit = "", length = "", width = "", streetname = "", tamsid = "";
+            bool updateColors = false, updateLabels = false, updateSurface = false, updateEndaddr = false, updateStartaddr = false,
+                updateSpeedlimit = false, updateLength = false, updateWidth = false, updateStreetname = false, updateTamsid = false;
+            string sql = "";
+            bool success = true;
             foreach (CtlSetting setting in settingControls)
             {
                 try
                 {
                     Settings.SetValue(setting.Key, setting.getValue());
+                    if (setting.Key.ToString() == "road_colors")
+                    {
+                        colors = setting.getValue();
+                        if (!String.IsNullOrEmpty(colors)) updateColors = true;
+                    }
+                    if (setting.Key.ToString() == "road_labels")
+                    {
+                        labels = setting.getValue();
+                        if (!String.IsNullOrEmpty(labels)) updateLabels = true;
+                    }
+
+                    if (setting.Key.ToString() == "road_f_surfacetype")
+                    {
+                        surfacetype = setting.getValue();
+                        if (!String.IsNullOrEmpty(surfacetype)) updateSurface = true;
+                    }
+                    if (setting.Key.ToString() == "road_f_endaddr") {
+                        endaddr = setting.getValue();
+                        if (!String.IsNullOrEmpty(endaddr)) updateEndaddr = true;
+                    }
+                    if (setting.Key.ToString() == "road_f_startaddr")
+                    {
+                        startaddr = setting.getValue();
+                        if (!String.IsNullOrEmpty(startaddr)) updateStartaddr = true;
+                    }
+                    if (setting.Key.ToString() == "road_f_speedlimit")
+                    {
+                        speedlimit = setting.getValue();
+                        if (!int.TryParse(speedlimit, out int n)) continue;
+                        if (!String.IsNullOrEmpty(speedlimit)) updateSpeedlimit = true;
+                    }
+                    if (setting.Key.ToString() == "road_f_length")
+                    {
+                        length = setting.getValue();
+                        if (!double.TryParse(length, out double n)) continue;
+                        if (!String.IsNullOrEmpty(length)) updateLength = true;
+                    }
+                    if (setting.Key.ToString() == "road_f_width")
+                    {
+                        width = setting.getValue();
+                        if (!double.TryParse(width, out double n)) continue;
+                        if (!String.IsNullOrEmpty(width)) updateWidth = true;
+                    }
+                    if (setting.Key.ToString() == "road_f_streetname")
+                    {
+                        streetname = setting.getValue();
+                        if (!String.IsNullOrEmpty(streetname)) updateStreetname = true;
+                    }
+                    if (setting.Key.ToString() == "road_f_TAMSID")
+                    {
+                        tamsid = setting.getValue();
+                        if (!int.TryParse(tamsid, out int n)) continue;
+                        if (!String.IsNullOrEmpty(tamsid)) updateTamsid = true;
+                    }
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show("Could not save setting.\n" + e.ToString());
+                    success = false;
                 }
+            }
+
+            if (success)
+            {
+                if (updateColors)sql += "\nUPDATE settings SET value = '" + colors + "' WHERE name = 'road_colors';";
+                if (updateLabels)sql += "\nUPDATE settings SET value = '" + labels + "' WHERE name = 'road_labels';";
+                if (updateSurface)sql += "\nUPDATE road SET surface = (SELECT " + surfacetype + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
+                if (updateEndaddr)sql += "\nUPDATE road SET to_address = (SELECT " + endaddr + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
+                if (updateStartaddr)sql += "\nUPDATE road SET from_address = (SELECT " + startaddr + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
+                if (updateSpeedlimit)sql += "\nUPDATE road SET speed_limit = (SELECT " + speedlimit + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
+                if (updateLength)sql += "\nUPDATE road SET length = (SELECT " + length + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
+                if (updateWidth)sql += "\nUPDATE road SET width = (SELECT " + width + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
+                if (updateStreetname)sql += "\nUPDATE road SET name = (SELECT " + streetname + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
+                if (updateTamsid)sql += "\nUPDATE road SET TAMSID = (SELECT " + tamsid + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
+                Console.WriteLine(sql);
+                Database.ExecuteNonQuery(Project.conn, sql);
             }
 
             if (!Settings.HaveRequired())
             {
-                MessageBox.Show("Missing some required settings.  TAMS may not work properly.");
+                MessageBox.Show("Missing some required settings. TAMS may not work properly.");
             }
-
             this.Close();
         }
     }

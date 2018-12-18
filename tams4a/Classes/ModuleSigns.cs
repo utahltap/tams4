@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
 using tams4a.Controls;
 using tams4a.Forms;
 
@@ -783,8 +784,9 @@ namespace tams4a.Classes
             Dictionary<string, string> results = searchMUTCDlist();
             if (results != null)
             {
-                getSignControls().textBoxType.Text = results["mutcd_code"];
-                getSignControls().textBoxDescription.Text = results["description"];
+                Panel_Sign signControls = getSignControls();
+                signControls.textBoxType.Text = results["mutcd_code"];
+                signControls.textBoxDescription.Text = results["description"];
             }
         }
 
@@ -987,6 +989,7 @@ namespace tams4a.Classes
             return returnValue;
         }
 
+
         private void editNotes(object sender, EventArgs e)
         {
             FormNotes noteForm = new FormNotes();
@@ -1066,7 +1069,7 @@ namespace tams4a.Classes
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Sign Report";
                 report.Show();
@@ -1124,7 +1127,7 @@ namespace tams4a.Classes
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Sign Report";
                 report.Show();
@@ -1176,7 +1179,7 @@ namespace tams4a.Classes
                     }
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Sign Report";
                 report.Show();
@@ -1234,7 +1237,7 @@ namespace tams4a.Classes
                     }
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Sign Report";
                 report.Show();
@@ -1294,7 +1297,7 @@ namespace tams4a.Classes
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Sign Report";
                 report.Show();
@@ -1330,7 +1333,7 @@ namespace tams4a.Classes
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Support Report";
                 report.Show();
@@ -1377,7 +1380,7 @@ namespace tams4a.Classes
                     data.Rows.Add(nr);
                 }
                 data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput();
+                FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Support Report";
                 report.Show();

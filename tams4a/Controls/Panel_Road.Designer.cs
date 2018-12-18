@@ -161,18 +161,20 @@ namespace tams4a.Controls
             this.comboBoxTreatment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTreatment.DropDownWidth = 250;
             this.comboBoxTreatment.FormattingEnabled = true;
+            this.comboBoxTreatment.Items.AddRange(new object[] {
+            "",
+            "Nothing",
+            "Routine",
+            "Patching",
+            "Preventative",
+            "Preventative with Patching",
+            "Rehabilitation",
+            "Reconstruction"});
             this.comboBoxTreatment.Location = new System.Drawing.Point(82, 248);
             this.comboBoxTreatment.Name = "comboBoxTreatment";
-            this.comboBoxTreatment.Items.Add("");
-            this.comboBoxTreatment.Items.Add("Nothing");
-            this.comboBoxTreatment.Items.Add("Routine");
-            this.comboBoxTreatment.Items.Add("Patching");
-            this.comboBoxTreatment.Items.Add("Preventative");
-            this.comboBoxTreatment.Items.Add("Preventative with Patching");
-            this.comboBoxTreatment.Items.Add("Rehabilitation");
-            this.comboBoxTreatment.Items.Add("Reconstruction");
             this.comboBoxTreatment.Size = new System.Drawing.Size(112, 21);
             this.comboBoxTreatment.TabIndex = 25;
+            this.comboBoxTreatment.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatmentChanged);
             // 
             // distress9
             // 
@@ -397,7 +399,7 @@ namespace tams4a.Controls
             // 
             this.numericUpDownLanes.Location = new System.Drawing.Point(82, 83);
             this.numericUpDownLanes.Maximum = new decimal(new int[] {
-            12,
+            16,
             0,
             0,
             0});
@@ -512,6 +514,7 @@ namespace tams4a.Controls
             this.comboBoxSurface.Name = "comboBoxSurface";
             this.comboBoxSurface.Size = new System.Drawing.Size(112, 21);
             this.comboBoxSurface.TabIndex = 14;
+            this.comboBoxSurface.SelectedIndexChanged += new System.EventHandler(this.comboBoxSurfaceChanged);
             // 
             // comboBoxType
             // 
@@ -521,6 +524,7 @@ namespace tams4a.Controls
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(112, 21);
             this.comboBoxType.TabIndex = 13;
+            this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.comboBoxTypeChanged);
             // 
             // labelType
             // 

@@ -13,11 +13,13 @@ namespace tams4a.Classes
         // Members
         private Dictionary<String, ProjectSetting> Settings;
         private SQLiteConnection Conn;
+        private TamsProject Project;
 
-        public ProjectSettings(SQLiteConnection tamsconn)
+        public ProjectSettings(SQLiteConnection tamsconn, TamsProject theProject)
         {
             Settings = new Dictionary<String, ProjectSetting>();
             Conn = tamsconn;
+            Project = theProject;
         }
 
 
@@ -227,15 +229,15 @@ namespace tams4a.Classes
         }
 
 
-        public DialogResult showDialog(String selectedTab="general")
+        public DialogResult showDialog(String selectedTab="road")
         {
             LoadValues();
-            FormSettings settingsForm = new FormSettings(this);
+            FormSettings settingsForm = new FormSettings(this, Project);
             settingsForm.Init();
             settingsForm.TrySelectTab(selectedTab);
-            settingsForm.ShowDialog();
+            DialogResult settingsResult = settingsForm.ShowDialog();
 
-            if (HaveRequired())
+            if (HaveRequired() && settingsResult == DialogResult.OK)
             {
                 return DialogResult.OK;
             } else
