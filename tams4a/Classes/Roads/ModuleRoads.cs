@@ -101,40 +101,42 @@ namespace tams4a.Classes
             if (type != "line") { throw new Exception("Roads module requires a line-type shp file"); }
 
             #region Additional module settings
-            ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_f_TAMSID", module: ModuleName, value: "",
-                    display_text: "SHP field with unique identifier.",
-                    display_type: "field", required: true));
-            ModuleSettings.Add(new ProjectSetting(name: "road_f_streetname", module: ModuleName, value: "",
-                    display_text: "SHP Field for road name", display_type: "field",
-                    description: "Field in the SHP file for the street name.  e.g. 100 South, Main, Oak Ave."));
-            ModuleSettings.Add(new ProjectSetting(name: "road_f_width", module: ModuleName, value: "",
-                    display_text: "SHP Field for width (ft)", display_type: "field",
-                    description: "Field in the SHP file for the road width."));
-            ModuleSettings.Add(new ProjectSetting(name: "road_f_length", module: ModuleName, value: "",
-                    display_text: "SHP Field for length (ft)", display_type: "field",
-                    description: "Field in the SHP file for segment length."));
-            ModuleSettings.Add(new ProjectSetting(name: "road_f_speedlimit", module: ModuleName, value: "",
-                    display_text: "SHP Field for speed limit", display_type: "field",
-                    description: "Field in the SHP file for speed limit."));
-            ModuleSettings.Add(new ProjectSetting(name: "road_f_startaddr", module: ModuleName, value: "",
-                    display_text: "SHP Field for from address number", display_type: "field",
-                    description: "Field in the SHP file for from address number."));
-            ModuleSettings.Add(new ProjectSetting(name: "road_f_endaddr", module: ModuleName, value: "",
-                    display_text: "SHP Field for to address number", display_type: "field",
-                    description: "Field in the SHP file for to address number."));
-            ModuleSettings.Add(new ProjectSetting(name: "road_f_surfacetype", module: ModuleName, value: "",
-                    display_text: "SHP Field for road surface", display_type: "field",
-                    description: "Field in the SHP file for the pavement used by the road, e.g. asphalt."));
-            ModuleSettings.Add(new ProjectSetting(name: "road_labels", module: ModuleName, value: "true",
-                    display_text: "Show Labels?", display_type: "bool",
-                    description: "Showing street labels (names) may slow down the display."));
-            ModuleSettings.Add(new ProjectSetting(name: "road_colors", module: ModuleName, value: "true",
+            ModuleSettings.Add(new ProjectSetting(name: "road_colors", module: ModuleName, value: "true", display_weight: 12,
                     display_text: "Use Colors?", display_type: "bool",
                     description: "Color the streets based on observed RSL."));
-            //ModuleSettings.Add(new ProjectSetting(name: "road_f_rsl", module: ModuleName, value: "true",
-            //        display_text: "SHP Field that holds observed RSL", display_type: "field",
-            //        description: "Field in the SHP file RSL."));
-
+            ModuleSettings.Add(new ProjectSetting(name: "road_labels", module: ModuleName, value: "true", display_weight: 11,
+                    display_text: "Show Labels?", display_type: "bool",
+                    description: "Showing street labels (names) may slow down the display."));
+            ModuleSettings.Add(new ProjectSetting(name: "road_f_rsl", module: ModuleName, value: "true",
+                    display_text: "SHP Field that holds observed RSL", display_type: "field", display_weight: 10,
+                    description: "Field in the SHP file RSL."));
+            ModuleSettings.Add(new ProjectSetting(name: "road_f_type", module: ModuleName, value: "true",
+                    display_text: "SHP Field that holds functional classification", display_type: "field", display_weight: 9,
+                    description: "Field in the SHP file for functional classification."));
+            ModuleSettings.Add(new ProjectSetting(name: "road_f_width", module: ModuleName, value: "",
+                    display_text: "SHP Field for width (ft)", display_type: "field", display_weight: 8,
+                    description: "Field in the SHP file for the road width."));
+            ModuleSettings.Add(new ProjectSetting(name: "road_f_length", module: ModuleName, value: "",
+                    display_text: "SHP Field for length (ft)", display_type: "field", display_weight: 7,
+                    description: "Field in the SHP file for segment length."));
+            ModuleSettings.Add(new ProjectSetting(name: "road_f_speedlimit", module: ModuleName, value: "",
+                    display_text: "SHP Field for speed limit", display_type: "field", display_weight: 6,
+                    description: "Field in the SHP file for speed limit."));
+            ModuleSettings.Add(new ProjectSetting(name: "road_f_endaddr", module: ModuleName, value: "",
+                    display_text: "SHP Field for to address number", display_type: "field", display_weight: 5,
+                    description: "Field in the SHP file for to address number."));
+            ModuleSettings.Add(new ProjectSetting(name: "road_f_startaddr", module: ModuleName, value: "",
+                    display_text: "SHP Field for from address number", display_type: "field", display_weight: 4,
+                    description: "Field in the SHP file for from address number."));
+            ModuleSettings.Add(new ProjectSetting(name: "road_f_surfacetype", module: ModuleName, value: "",
+                    display_text: "SHP Field for road surface", display_type: "field", display_weight: 3,
+                    description: "Field in the SHP file for the pavement used by the road, e.g. asphalt."));
+            ModuleSettings.Add(new ProjectSetting(name: "road_f_streetname", module: ModuleName, value: "",
+                    display_text: "SHP Field for road name", display_type: "field", display_weight: 2,
+                    description: "Field in the SHP file for the street name.  e.g. 100 South, Main, Oak Ave."));
+            ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_f_TAMSID", module: ModuleName, value: "",
+                    display_text: "SHP field with unique identifier.",
+                    display_type: "field", display_weight: 1, required: true));
             #endregion
             injectSettings();
 
@@ -238,10 +240,14 @@ namespace tams4a.Classes
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
 
-            if (shpSelection.Count <= 0) {
+            if (shpSelection.Count <= 0)
+            {
                 disableRoadDisplay();
                 return;
             }
+
+            selectionLayer.ZoomToSelectedFeatures();
+            Project.map.ZoomOut();
 
             enableControls();
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
@@ -583,7 +589,7 @@ namespace tams4a.Classes
             if (roadControls.distress8.Visible) { values["distress8"] = roadControls.distress8.Value.ToString(); }   //  Block                          Cracking
             if (roadControls.distress9.Visible) { values["distress9"] = roadControls.distress9.Value.ToString(); }   //  Rutting                        Patches
 
-            if (roadControls.comboBoxTreatment.Visible) { values["suggested_treatment"] = roadControls.comboBoxTreatment.Text; }
+            //if (roadControls.comboBoxTreatment.Visible) { values["suggested_treatment"] = roadControls.comboBoxTreatment.Text; }
 
             if (!string.IsNullOrWhiteSpace(roadControls.inputRsl.Text) || !string.IsNullOrWhiteSpace(roadControls.comboBoxTreatment.Text)) {
                 values["rsl"] = roadControls.inputRsl.Text;
@@ -624,7 +630,7 @@ namespace tams4a.Classes
             Properties.Settings.Default.Save();
 
             selectionLayer.ClearSelection();
-            setSymbolizer();
+            symbols.setSymbolizer();
             Project.map.Invalidate();
             Project.map.Refresh();
             Project.map.ResetBuffer();

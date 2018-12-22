@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using tams4a.Classes;
 using tams4a.Forms;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
+using DotSpatial.Data;
 
 namespace tams4a
 {
@@ -16,6 +18,7 @@ namespace tams4a
         private DotSpatial.Controls.FunctionMode CurrentMode;
         public TamsProject Project;
         public ModuleRoads road;
+        public ModuleSigns sign;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
@@ -71,10 +74,10 @@ namespace tams4a
                 analysisToolStripMenuItem,
                 customToolStripMenuItem,
                 roadToolStripMenuItem,
-                roadTypeToolStripMenuItem,
-                roadCategoryToolStripMenuItem,
-                governingDistressToolStripMenuItem,
-                rSLToolStripMenuItem };
+                surfaceTypeToolStripMenuItem,
+                functionalClassificationToolStripMenuItem,
+                governingDistressesToolStripMenuItem,
+                rSLDistributionToolStripMenuItem };
             ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signAlertsToolStripMenuItem, signInventoryToolStripMenuItem, supportAlertsToolStripMenuItem, supportInventoryToolStripMenuItem, signToolStripMenuItem};
             ToolStripMenuItem[] lcso = { otherToolStripMenuItem,
                 sidewalkDistressToolStripMenuItem,
@@ -86,7 +89,7 @@ namespace tams4a
                 roadsWithSidewalksToolStripMenuItem
             };
             road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
-            ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
+            sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
             GenericModule other = new GenericModule(Project, new TabPage("Other"), lcso);
             Project.addModule(road, "Roads", tabControlControls);
             Project.addModule(sign, "Signs", tabControlControls);
@@ -126,12 +129,7 @@ namespace tams4a
             {
                 toolStrip1.Enabled = true;
                 uxMap.Enabled = true;
-                //if (theme == "light")
-                    uxMap.BackColor = Color.White;
-                //if (theme == "dark")
-                //{
-                //    uxMap.BackColor = Color.Black;
-                //}
+                uxMap.BackColor = Color.White;
             }
             else
             {
@@ -288,6 +286,14 @@ namespace tams4a
             Project.mapSelectionChanged();
         }
 
+        private void uxMap_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                e.SuppressKeyPress = true;
+            }
+        }
+
         // settings dialog
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -411,9 +417,49 @@ namespace tams4a
                 return;
             }
             String id = toolStripTextBoxSearch.Text;
+            if (String.IsNullOrEmpty(id)) return;
+
             FeatureLayer selectionLayer = (FeatureLayer)uxMap.Layers.SelectedLayer;
+            string layerName = "";
+            if (Project.currentModuleName == "Roads") layerName = "road";
+            if (Project.currentModuleName == "Signs") layerName = "sign";
+            foreach (FeatureLayer layer in uxMap.Layers)
+            {
+                layer.UnSelectAll();
+                if (layer.Name.ToString() == layerName) selectionLayer = layer;
+            }
             String tamsidcolumn = Project.settings.GetValue(selectionLayer.Name + "_f_TAMSID");
-            selectionLayer.SelectByAttribute(tamsidcolumn + " = " + id);
+
+            string searchBy = toolStripComboBoxFind.Text;
+            if (searchBy == "ID")
+            {
+                if (!Int32.TryParse(id, out int x))
+                {
+                    MessageBox.Show("Please Enter a Number", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                selectionLayer.SelectByAttribute(tamsidcolumn + " = " + id); //"TAMSID = 1"
+            }
+
+            if (searchBy == "Street")
+            {
+                DataTable searchID = Database.GetDataByQuery(Project.conn, "SELECT DISTINCT TAMSID FROM road WHERE name = '" + id + "';");
+
+                foreach (DataRow row in searchID.Rows)
+                {
+                    selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
+                }
+            }
+
+            if (selectionLayer.Selection.Count == 0)
+            {
+                MessageBox.Show(searchBy + " Not Found", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+
+            if (layerName == "road") road.selectionChanged();
+            if (layerName == "sign") sign.selectionChanged();
+
         }
 
         private void toolStripButtonSnapShot_Click(object sender, EventArgs e)
@@ -473,7 +519,18 @@ namespace tams4a
 
         private void tabControlControls_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Project.selectModule(tabControlControls.SelectedTab.Text);
+            string selectedTab = tabControlControls.SelectedTab.Text;
+            Project.selectModule(selectedTab);
+            if (selectedTab == "Signs")
+            {
+                toolStripComboBoxFind.SelectedIndex = 0;
+                toolStripComboBoxFind.Enabled = false;
+            }
+            if (selectedTab == "Roads")
+            {
+                toolStripComboBoxFind.Enabled = true;
+            }
+
         }
 
         private void displayChangeLog()

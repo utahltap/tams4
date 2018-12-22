@@ -94,7 +94,6 @@ namespace tams4a.Classes.Roads
 
                 general.DefaultView.Sort = "Name asc, Treatment asc, From Address asc";
                 general = general.DefaultView.ToTable();
-
                 FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = general;
                 report.Text = "Treatment Report";
@@ -466,13 +465,14 @@ namespace tams4a.Classes.Roads
 
 
                         double estCost = area * treatmentCost / 9;
+                        totalCost += estCost;
                         if (estCost > 1000000)
                         {
                             nr["Cost"] = Math.Round(estCost / 1000000, 2).ToString() + "M";
                         }
                         else if (estCost > 1000)
                         {
-                            nr["Cost"] = Math.Round(estCost / 1000).ToString() + "k";
+                            nr["Cost"] = Math.Round(estCost / 1000, 1).ToString() + "k";
                         }
                         else
                         {
@@ -485,9 +485,9 @@ namespace tams4a.Classes.Roads
                 general.DefaultView.Sort = "Name asc, Treatment asc, From Address asc";
                 general = general.DefaultView.ToTable();
                 DataRow totals = general.NewRow();
-                totals["Name"] = "Total";
-                totals["From Address"] = "Estimated";
-                totals["To Address"] = "Cost";
+                totals["Surface"] = "Total";
+                totals["Governing Distress"] = "Estimated";
+                totals["Treatment"] = "Cost";
                 if (totalCost > 1000000)
                 {
                     totals["Cost"] = Math.Round(totalCost / 1000000, 2).ToString() + "M";
@@ -559,6 +559,7 @@ namespace tams4a.Classes.Roads
                     history.Columns[distressNumber].ColumnName = distresses.Rows[i]["name"].ToString();
                 }
 
+                reportTable = history.DefaultView.ToTable();
                 FormOutput histForm = new FormOutput(Project);
                 histForm.Text = "Road History";
                 histForm.dataGridViewReport.DataSource = history;

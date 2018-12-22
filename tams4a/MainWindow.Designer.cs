@@ -46,19 +46,19 @@
             this.importRoadsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editTreatmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.favoriteSignsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemSep = new System.Windows.Forms.ToolStripMenuItem();
             this.roadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.potholesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.distributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.roadTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.roadCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.governingDistressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rSLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.governingDistressesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rSLDistributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.surfaceTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.functionalClassificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signAlertsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signInventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +83,12 @@
             this.tabControlControls = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.mapPanel = new System.Windows.Forms.Panel();
+            this.treatmentPreventative = new System.Windows.Forms.TextBox();
+            this.treatmentRehabilitation = new System.Windows.Forms.TextBox();
+            this.treatmentPreventativePatching = new System.Windows.Forms.TextBox();
+            this.treatmentReconstruction = new System.Windows.Forms.TextBox();
+            this.treatmentPatching = new System.Windows.Forms.TextBox();
+            this.treatmentRoutine = new System.Windows.Forms.TextBox();
             this.rslBlue = new System.Windows.Forms.TextBox();
             this.rslDeepSkyBlue = new System.Windows.Forms.TextBox();
             this.rslGreen = new System.Windows.Forms.TextBox();
@@ -104,17 +110,11 @@
             this.buttonModeZoomin = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.labelId = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripComboBoxFind = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripTextBoxSearch = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSnapShot = new System.Windows.Forms.ToolStripButton();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.treatmentRoutine = new System.Windows.Forms.TextBox();
-            this.treatmentPatching = new System.Windows.Forms.TextBox();
-            this.treatmentReconstruction = new System.Windows.Forms.TextBox();
-            this.treatmentPreventativePatching = new System.Windows.Forms.TextBox();
-            this.treatmentRehabilitation = new System.Windows.Forms.TextBox();
-            this.treatmentPreventative = new System.Windows.Forms.TextBox();
-            this.importCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.sidePanel.SuspendLayout();
@@ -169,7 +169,7 @@
             // displayToolStripMenuItem
             // 
             this.displayToolStripMenuItem.Name = "displayToolStripMenuItem";
-            this.displayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.displayToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.displayToolStripMenuItem.Text = "&Display";
             this.displayToolStripMenuItem.Click += new System.EventHandler(this.displayToolStripMenuItem_Click);
             // 
@@ -264,6 +264,13 @@
             this.favoriteSignsToolStripMenuItem.Text = "&Favorite Signs";
             this.favoriteSignsToolStripMenuItem.ToolTipText = "Manage your favorite signs";
             // 
+            // importCSVToolStripMenuItem
+            // 
+            this.importCSVToolStripMenuItem.Name = "importCSVToolStripMenuItem";
+            this.importCSVToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.importCSVToolStripMenuItem.Text = "Import CSV";
+            this.importCSVToolStripMenuItem.Click += new System.EventHandler(this.importCSVToolStripMenuItem_Click);
+            // 
             // toolStripMenuItemSep
             // 
             this.toolStripMenuItemSep.Enabled = false;
@@ -275,8 +282,8 @@
             // 
             this.roadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.reportsToolStripMenuItem,
-            this.analysisToolStripMenuItem,
-            this.graphsToolStripMenuItem});
+            this.graphsToolStripMenuItem,
+            this.analysisToolStripMenuItem});
             this.roadToolStripMenuItem.Enabled = false;
             this.roadToolStripMenuItem.Name = "roadToolStripMenuItem";
             this.roadToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -311,55 +318,47 @@
             this.customToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.customToolStripMenuItem.Text = "Custom";
             // 
+            // graphsToolStripMenuItem
+            // 
+            this.graphsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.governingDistressesToolStripMenuItem,
+            this.rSLDistributionToolStripMenuItem,
+            this.surfaceTypeToolStripMenuItem,
+            this.functionalClassificationToolStripMenuItem});
+            this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
+            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.graphsToolStripMenuItem.Text = "Graphs";
+            // 
+            // governingDistressesToolStripMenuItem
+            // 
+            this.governingDistressesToolStripMenuItem.Name = "governingDistressesToolStripMenuItem";
+            this.governingDistressesToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.governingDistressesToolStripMenuItem.Text = "Governing Distresses";
+            // 
+            // rSLDistributionToolStripMenuItem
+            // 
+            this.rSLDistributionToolStripMenuItem.Name = "rSLDistributionToolStripMenuItem";
+            this.rSLDistributionToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.rSLDistributionToolStripMenuItem.Text = "RSL Distribution";
+            // 
+            // surfaceTypeToolStripMenuItem
+            // 
+            this.surfaceTypeToolStripMenuItem.Name = "surfaceTypeToolStripMenuItem";
+            this.surfaceTypeToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.surfaceTypeToolStripMenuItem.Text = "Surface Type";
+            // 
+            // functionalClassificationToolStripMenuItem
+            // 
+            this.functionalClassificationToolStripMenuItem.Name = "functionalClassificationToolStripMenuItem";
+            this.functionalClassificationToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.functionalClassificationToolStripMenuItem.Text = "Functional Classification";
+            // 
             // analysisToolStripMenuItem
             // 
             this.analysisToolStripMenuItem.Enabled = false;
             this.analysisToolStripMenuItem.Name = "analysisToolStripMenuItem";
             this.analysisToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.analysisToolStripMenuItem.Text = "Analysis";
-            // 
-            // graphsToolStripMenuItem
-            // 
-            this.graphsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.distributionToolStripMenuItem});
-            this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
-            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.graphsToolStripMenuItem.Text = "Graphs";
-            // 
-            // distributionToolStripMenuItem
-            // 
-            this.distributionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.roadTypeToolStripMenuItem,
-            this.roadCategoryToolStripMenuItem,
-            this.governingDistressToolStripMenuItem,
-            this.rSLToolStripMenuItem});
-            this.distributionToolStripMenuItem.Name = "distributionToolStripMenuItem";
-            this.distributionToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.distributionToolStripMenuItem.Text = "Distribution";
-            // 
-            // roadTypeToolStripMenuItem
-            // 
-            this.roadTypeToolStripMenuItem.Name = "roadTypeToolStripMenuItem";
-            this.roadTypeToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.roadTypeToolStripMenuItem.Text = "Road Type";
-            // 
-            // roadCategoryToolStripMenuItem
-            // 
-            this.roadCategoryToolStripMenuItem.Name = "roadCategoryToolStripMenuItem";
-            this.roadCategoryToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.roadCategoryToolStripMenuItem.Text = "Functional Classification";
-            // 
-            // governingDistressToolStripMenuItem
-            // 
-            this.governingDistressToolStripMenuItem.Name = "governingDistressToolStripMenuItem";
-            this.governingDistressToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.governingDistressToolStripMenuItem.Text = "Governing Distress";
-            // 
-            // rSLToolStripMenuItem
-            // 
-            this.rSLToolStripMenuItem.Name = "rSLToolStripMenuItem";
-            this.rSLToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.rSLToolStripMenuItem.Text = "RSL";
             // 
             // signToolStripMenuItem
             // 
@@ -528,6 +527,7 @@
             this.uxMap.Size = new System.Drawing.Size(863, 752);
             this.uxMap.TabIndex = 1;
             this.uxMap.ZoomOutFartherThanMaxExtent = false;
+            this.uxMap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.uxMap_KeyDown);
             this.uxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.uxMap_MouseDown);
             this.uxMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.uxMap_MouseUp);
             // 
@@ -594,6 +594,96 @@
             this.mapPanel.Name = "mapPanel";
             this.mapPanel.Size = new System.Drawing.Size(863, 777);
             this.mapPanel.TabIndex = 1;
+            // 
+            // treatmentPreventative
+            // 
+            this.treatmentPreventative.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.treatmentPreventative.BackColor = System.Drawing.Color.Yellow;
+            this.treatmentPreventative.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentPreventative.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treatmentPreventative.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.treatmentPreventative.Location = new System.Drawing.Point(713, 661);
+            this.treatmentPreventative.Name = "treatmentPreventative";
+            this.treatmentPreventative.Size = new System.Drawing.Size(136, 23);
+            this.treatmentPreventative.TabIndex = 16;
+            this.treatmentPreventative.Text = "Preventative";
+            this.treatmentPreventative.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.treatmentPreventative.Visible = false;
+            // 
+            // treatmentRehabilitation
+            // 
+            this.treatmentRehabilitation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.treatmentRehabilitation.BackColor = System.Drawing.Color.Red;
+            this.treatmentRehabilitation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentRehabilitation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treatmentRehabilitation.ForeColor = System.Drawing.SystemColors.Info;
+            this.treatmentRehabilitation.Location = new System.Drawing.Point(713, 719);
+            this.treatmentRehabilitation.Name = "treatmentRehabilitation";
+            this.treatmentRehabilitation.Size = new System.Drawing.Size(136, 23);
+            this.treatmentRehabilitation.TabIndex = 15;
+            this.treatmentRehabilitation.Text = "Rehabilitation";
+            this.treatmentRehabilitation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.treatmentRehabilitation.Visible = false;
+            // 
+            // treatmentPreventativePatching
+            // 
+            this.treatmentPreventativePatching.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.treatmentPreventativePatching.BackColor = System.Drawing.Color.Orange;
+            this.treatmentPreventativePatching.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentPreventativePatching.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treatmentPreventativePatching.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.treatmentPreventativePatching.Location = new System.Drawing.Point(713, 690);
+            this.treatmentPreventativePatching.Name = "treatmentPreventativePatching";
+            this.treatmentPreventativePatching.Size = new System.Drawing.Size(136, 23);
+            this.treatmentPreventativePatching.TabIndex = 14;
+            this.treatmentPreventativePatching.Text = "Preventative/Patching";
+            this.treatmentPreventativePatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.treatmentPreventativePatching.Visible = false;
+            // 
+            // treatmentReconstruction
+            // 
+            this.treatmentReconstruction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.treatmentReconstruction.BackColor = System.Drawing.Color.DarkRed;
+            this.treatmentReconstruction.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentReconstruction.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treatmentReconstruction.ForeColor = System.Drawing.SystemColors.Info;
+            this.treatmentReconstruction.Location = new System.Drawing.Point(713, 748);
+            this.treatmentReconstruction.Name = "treatmentReconstruction";
+            this.treatmentReconstruction.Size = new System.Drawing.Size(136, 23);
+            this.treatmentReconstruction.TabIndex = 13;
+            this.treatmentReconstruction.Text = "Reconstruction";
+            this.treatmentReconstruction.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.treatmentReconstruction.Visible = false;
+            // 
+            // treatmentPatching
+            // 
+            this.treatmentPatching.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.treatmentPatching.BackColor = System.Drawing.Color.LimeGreen;
+            this.treatmentPatching.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentPatching.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treatmentPatching.ForeColor = System.Drawing.SystemColors.Info;
+            this.treatmentPatching.Location = new System.Drawing.Point(713, 632);
+            this.treatmentPatching.Name = "treatmentPatching";
+            this.treatmentPatching.Size = new System.Drawing.Size(136, 23);
+            this.treatmentPatching.TabIndex = 12;
+            this.treatmentPatching.Text = "Patching";
+            this.treatmentPatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.treatmentPatching.Visible = false;
+            // 
+            // treatmentRoutine
+            // 
+            this.treatmentRoutine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.treatmentRoutine.BackColor = System.Drawing.Color.Blue;
+            this.treatmentRoutine.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentRoutine.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treatmentRoutine.ForeColor = System.Drawing.SystemColors.Info;
+            this.treatmentRoutine.Location = new System.Drawing.Point(713, 603);
+            this.treatmentRoutine.Name = "treatmentRoutine";
+            this.treatmentRoutine.Size = new System.Drawing.Size(136, 23);
+            this.treatmentRoutine.TabIndex = 10;
+            this.treatmentRoutine.Text = "Routine";
+            this.treatmentRoutine.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.treatmentRoutine.Visible = false;
             // 
             // rslBlue
             // 
@@ -723,6 +813,7 @@
             this.buttonModeZoomin,
             this.toolStripSeparator2,
             this.labelId,
+            this.toolStripComboBoxFind,
             this.toolStripTextBoxSearch,
             this.toolStripButtonSearch,
             this.toolStripButtonSnapShot});
@@ -832,8 +923,19 @@
             // 
             this.labelId.Enabled = false;
             this.labelId.Name = "labelId";
-            this.labelId.Size = new System.Drawing.Size(47, 22);
-            this.labelId.Text = "Find ID:";
+            this.labelId.Size = new System.Drawing.Size(30, 22);
+            this.labelId.Text = "Find";
+            // 
+            // toolStripComboBoxFind
+            // 
+            this.toolStripComboBoxFind.BackColor = System.Drawing.SystemColors.Control;
+            this.toolStripComboBoxFind.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripComboBoxFind.Items.AddRange(new object[] {
+            "ID",
+            "Street"});
+            this.toolStripComboBoxFind.Name = "toolStripComboBoxFind";
+            this.toolStripComboBoxFind.Size = new System.Drawing.Size(75, 25);
+            this.toolStripComboBoxFind.Text = "ID";
             // 
             // toolStripTextBoxSearch
             // 
@@ -863,103 +965,6 @@
             this.toolStripButtonSnapShot.Text = "toolStripButtonSnapShot";
             this.toolStripButtonSnapShot.ToolTipText = "Take Snap Shot of the Map";
             this.toolStripButtonSnapShot.Click += new System.EventHandler(this.toolStripButtonSnapShot_Click);
-            // 
-            // treatmentRoutine
-            // 
-            this.treatmentRoutine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.treatmentRoutine.BackColor = System.Drawing.Color.Blue;
-            this.treatmentRoutine.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treatmentRoutine.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treatmentRoutine.ForeColor = System.Drawing.SystemColors.Info;
-            this.treatmentRoutine.Location = new System.Drawing.Point(713, 603);
-            this.treatmentRoutine.Name = "treatmentRoutine";
-            this.treatmentRoutine.Size = new System.Drawing.Size(136, 23);
-            this.treatmentRoutine.TabIndex = 10;
-            this.treatmentRoutine.Text = "Routine";
-            this.treatmentRoutine.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.treatmentRoutine.Visible = false;
-            // 
-            // treatmentPatching
-            // 
-            this.treatmentPatching.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.treatmentPatching.BackColor = System.Drawing.Color.LimeGreen;
-            this.treatmentPatching.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treatmentPatching.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treatmentPatching.ForeColor = System.Drawing.SystemColors.Info;
-            this.treatmentPatching.Location = new System.Drawing.Point(713, 632);
-            this.treatmentPatching.Name = "treatmentPatching";
-            this.treatmentPatching.Size = new System.Drawing.Size(136, 23);
-            this.treatmentPatching.TabIndex = 12;
-            this.treatmentPatching.Text = "Patching";
-            this.treatmentPatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.treatmentPatching.Visible = false;
-            // 
-            // treatmentReconstruction
-            // 
-            this.treatmentReconstruction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.treatmentReconstruction.BackColor = System.Drawing.Color.DarkRed;
-            this.treatmentReconstruction.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treatmentReconstruction.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treatmentReconstruction.ForeColor = System.Drawing.SystemColors.Info;
-            this.treatmentReconstruction.Location = new System.Drawing.Point(713, 748);
-            this.treatmentReconstruction.Name = "treatmentReconstruction";
-            this.treatmentReconstruction.Size = new System.Drawing.Size(136, 23);
-            this.treatmentReconstruction.TabIndex = 13;
-            this.treatmentReconstruction.Text = "Reconstruction";
-            this.treatmentReconstruction.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.treatmentReconstruction.Visible = false;
-            // 
-            // treatmentPreventativePatching
-            // 
-            this.treatmentPreventativePatching.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.treatmentPreventativePatching.BackColor = System.Drawing.Color.Orange;
-            this.treatmentPreventativePatching.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treatmentPreventativePatching.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treatmentPreventativePatching.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.treatmentPreventativePatching.Location = new System.Drawing.Point(713, 690);
-            this.treatmentPreventativePatching.Name = "treatmentPreventativePatching";
-            this.treatmentPreventativePatching.Size = new System.Drawing.Size(136, 23);
-            this.treatmentPreventativePatching.TabIndex = 14;
-            this.treatmentPreventativePatching.Text = "Preventative/Patching";
-            this.treatmentPreventativePatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.treatmentPreventativePatching.Visible = false;
-            // 
-            // treatmentRehabilitation
-            // 
-            this.treatmentRehabilitation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.treatmentRehabilitation.BackColor = System.Drawing.Color.Red;
-            this.treatmentRehabilitation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treatmentRehabilitation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treatmentRehabilitation.ForeColor = System.Drawing.SystemColors.Info;
-            this.treatmentRehabilitation.Location = new System.Drawing.Point(713, 719);
-            this.treatmentRehabilitation.Name = "treatmentRehabilitation";
-            this.treatmentRehabilitation.Size = new System.Drawing.Size(136, 23);
-            this.treatmentRehabilitation.TabIndex = 15;
-            this.treatmentRehabilitation.Text = "Rehabilitation";
-            this.treatmentRehabilitation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.treatmentRehabilitation.Visible = false;
-            // 
-            // treatmentPreventative
-            // 
-            this.treatmentPreventative.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.treatmentPreventative.BackColor = System.Drawing.Color.Yellow;
-            this.treatmentPreventative.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treatmentPreventative.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treatmentPreventative.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.treatmentPreventative.Location = new System.Drawing.Point(713, 661);
-            this.treatmentPreventative.Name = "treatmentPreventative";
-            this.treatmentPreventative.Size = new System.Drawing.Size(136, 23);
-            this.treatmentPreventative.TabIndex = 16;
-            this.treatmentPreventative.Text = "Preventative";
-            this.treatmentPreventative.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.treatmentPreventative.Visible = false;
-            //
-            // importCSVToolStripMenuItem
-            // 
-            this.importCSVToolStripMenuItem.Name = "importCSVToolStripMenuItem";
-            this.importCSVToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.importCSVToolStripMenuItem.Text = "Import CSV";
-            this.importCSVToolStripMenuItem.Click += new System.EventHandler(this.importCSVToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -1062,11 +1067,6 @@
         private System.Windows.Forms.ToolStripMenuItem allOthersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem customOutputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem roadsWithSidewalksToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem distributionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem roadTypeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem roadCategoryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem governingDistressToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rSLToolStripMenuItem;
         public System.Windows.Forms.TextBox rslRed;
         public System.Windows.Forms.TextBox rslBlue;
         public System.Windows.Forms.TextBox rslDeepSkyBlue;
@@ -1083,6 +1083,11 @@
         public System.Windows.Forms.TextBox treatmentPreventativePatching;
         public System.Windows.Forms.TextBox treatmentReconstruction;
         private System.Windows.Forms.ToolStripMenuItem importCSVToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem governingDistressesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rSLDistributionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem surfaceTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem functionalClassificationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxFind;
     }
 }
 
