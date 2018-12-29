@@ -935,7 +935,6 @@
             "Street"});
             this.toolStripComboBoxFind.Name = "toolStripComboBoxFind";
             this.toolStripComboBoxFind.Size = new System.Drawing.Size(75, 25);
-            this.toolStripComboBoxFind.Text = "ID";
             // 
             // toolStripTextBoxSearch
             // 

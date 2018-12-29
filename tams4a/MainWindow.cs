@@ -140,6 +140,12 @@ namespace tams4a
             UpdateZoomButtons(sender, e);
         }
 
+        private void ResetLegend(object sender, EventArgs e)
+        {
+            FormDisplaySettings display = new FormDisplaySettings(this, road.roadColors);
+            if (display.radioButtonOff.Checked) return;
+            display.getLegend();
+        }
 
         private void toolStripZoomIn_Click(object sender, EventArgs e)
         {
@@ -368,6 +374,7 @@ namespace tams4a
         private void window_Resize(object sender, EventArgs e)
         {
             UpdateZoomButtons(sender, e);
+            ResetLegend(sender, e);
         }
 
         /// <summary>

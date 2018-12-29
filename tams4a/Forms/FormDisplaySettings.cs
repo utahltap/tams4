@@ -46,7 +46,7 @@ namespace tams4a.Forms
             hideLegend();
         }
 
-        private void hideLegend()
+        public void hideLegend()
         {
             mainWindow.rslBlue.Visible = false;
             mainWindow.rslDeepSkyBlue.Visible = false;
@@ -64,7 +64,7 @@ namespace tams4a.Forms
             mainWindow.treatmentReconstruction.Visible = false;
         }
 
-        private void getLegend()
+        public void getLegend()
         {
             hideLegend();
             if (comboBoxRoadColors.Text == "RSL")
