@@ -21,10 +21,10 @@ namespace tams4a.Classes
         {
             try
             {
-                string tenpString;
-                tenpString = dictionary[key].ToString();
+                string tempString;
+                tempString = dictionary[key].ToString();
                 //return string.Format("G2", tenpString);
-                return tenpString;
+                return tempString;
             }
             catch
             {

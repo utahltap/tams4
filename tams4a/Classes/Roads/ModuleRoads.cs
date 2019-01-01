@@ -14,7 +14,7 @@ namespace tams4a.Classes
     {
         public new const string moduleVersion = "4.0.1.1";    // string that can be converted to System.Version
         public string roadColors = "RSL";
-        public Color labelColor = Color.Black;
+        public Color labelColor = Color.Black;        
 
         private RoadReports reports;
         private RoadGraphs graphs;
@@ -24,6 +24,7 @@ namespace tams4a.Classes
         private string[] distressGravel = { "Potholes", "Rutting", "X-section", "Drainage", "Dust", "Aggregate", "Corrugation" };
         private string[] distressConcrete = { "Spalling", "Joint Seals", "Corners", "Breaks", "Faulting", "Longitudinal", "Transverse", "Map Cracks", "Patches" };
 
+        private int selectionCount = 0;
         private bool colorsOn = true;
         private DataTable surfaceTypes;
         private DataTable surfaceDistresses;
@@ -101,6 +102,9 @@ namespace tams4a.Classes
             if (type != "line") { throw new Exception("Roads module requires a line-type shp file"); }
 
             #region Additional module settings
+            ModuleSettings.Add(new ProjectSetting(name: "road_zoom", module: ModuleName, value: "true", display_weight: 13,
+                    display_text: "Zoom to Selection?", display_type: "bool",
+                    description: "Fit map to selected roads."));
             ModuleSettings.Add(new ProjectSetting(name: "road_colors", module: ModuleName, value: "true", display_weight: 12,
                     display_text: "Use Colors?", display_type: "bool",
                     description: "Color the streets based on observed RSL."));
@@ -108,34 +112,34 @@ namespace tams4a.Classes
                     display_text: "Show Labels?", display_type: "bool",
                     description: "Showing street labels (names) may slow down the display."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_rsl", module: ModuleName, value: "true",
-                    display_text: "SHP Field that holds observed RSL", display_type: "field", display_weight: 10,
+                    display_text: "SHP Field for 'Observed RSL'", display_type: "field", display_weight: 10,
                     description: "Field in the SHP file RSL."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_type", module: ModuleName, value: "true",
-                    display_text: "SHP Field that holds functional classification", display_type: "field", display_weight: 9,
+                    display_text: "SHP Field for 'Functional Classification'", display_type: "field", display_weight: 9,
                     description: "Field in the SHP file for functional classification."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_width", module: ModuleName, value: "",
-                    display_text: "SHP Field for width (ft)", display_type: "field", display_weight: 8,
+                    display_text: "SHP Field for 'Width' (ft)", display_type: "field", display_weight: 8,
                     description: "Field in the SHP file for the road width."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_length", module: ModuleName, value: "",
-                    display_text: "SHP Field for length (ft)", display_type: "field", display_weight: 7,
+                    display_text: "SHP Field for 'Length' (ft)", display_type: "field", display_weight: 7,
                     description: "Field in the SHP file for segment length."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_speedlimit", module: ModuleName, value: "",
-                    display_text: "SHP Field for speed limit", display_type: "field", display_weight: 6,
+                    display_text: "SHP Field for 'Speed Limit'", display_type: "field", display_weight: 6,
                     description: "Field in the SHP file for speed limit."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_endaddr", module: ModuleName, value: "",
-                    display_text: "SHP Field for to address number", display_type: "field", display_weight: 5,
+                    display_text: "SHP Field for 'To Address Number'", display_type: "field", display_weight: 5,
                     description: "Field in the SHP file for to address number."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_startaddr", module: ModuleName, value: "",
-                    display_text: "SHP Field for from address number", display_type: "field", display_weight: 4,
+                    display_text: "SHP Field for 'From Address Number'", display_type: "field", display_weight: 4,
                     description: "Field in the SHP file for from address number."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_surfacetype", module: ModuleName, value: "",
-                    display_text: "SHP Field for road surface", display_type: "field", display_weight: 3,
+                    display_text: "SHP Field for 'Road Surface'", display_type: "field", display_weight: 3,
                     description: "Field in the SHP file for the pavement used by the road, e.g. asphalt."));
             ModuleSettings.Add(new ProjectSetting(name: "road_f_streetname", module: ModuleName, value: "",
-                    display_text: "SHP Field for road name", display_type: "field", display_weight: 2,
+                    display_text: "SHP Field for 'Road Name'", display_type: "field", display_weight: 2,
                     description: "Field in the SHP file for the street name.  e.g. 100 South, Main, Oak Ave."));
             ModuleSettings.Add(new ProjectSetting(name: ModuleName + "_f_TAMSID", module: ModuleName, value: "",
-                    display_text: "SHP field with unique identifier.",
+                    display_text: "SHP Field with a 'Unique Identifier' (TAMSID)",
                     display_type: "field", display_weight: 1, required: true));
             #endregion
             injectSettings();
@@ -160,7 +164,7 @@ namespace tams4a.Classes
             roadPanel.buttonSuggest.Click += automaticTreatmentSuggestion;
 
             roadPanel.comboBoxSurface.SelectionChangeCommitted += surfaceChanged;
-            roadPanel.setChangedHandler(controlChanged);
+            //roadPanel.setChangedHandler(controlChanged);
 
             roadPanel.distress1.ValueChanged += distressChanged;
             roadPanel.distress2.ValueChanged += distressChanged;
@@ -239,15 +243,18 @@ namespace tams4a.Classes
 
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
-
-            if (shpSelection.Count <= 0)
+            selectionCount = shpSelection.Count;
+            if (selectionCount <= 0)
             {
                 disableRoadDisplay();
                 return;
             }
 
-            selectionLayer.ZoomToSelectedFeatures();
-            Project.map.ZoomOut();
+            if (Project.settings.GetValue("road_zoom") == "true")
+            {
+                selectionLayer.ZoomToSelectedFeatures();
+                Project.map.ZoomOut();
+            }
 
             enableControls();
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
@@ -270,6 +277,7 @@ namespace tams4a.Classes
                 roadControls.labelName.Text = "Multiple";
                 roadControls.textBoxRoadName.Enabled = false;
                 roadControls.textBoxRoadName.Text = "";
+                roadControls.labelSurveyDate.Visible = false;
             }
 
 
@@ -279,6 +287,7 @@ namespace tams4a.Classes
             {
                 tamsids.Add(row[tamsidcolumn].ToString());
             }
+            roadControls.setChangedHandler(controlChanged);
         }
 
         private void cancelChanges(object sender, EventArgs e)
@@ -480,6 +489,7 @@ namespace tams4a.Classes
             roadControls.labelName.ForeColor = default(Color);
             roadControls.labelName.BackColor = default(Color);
             roadControls.textBoxRoadName.Enabled = true;
+            roadControls.labelSurveyDate.Visible = true;
             roadControls.labelName.Text = "Road";
         }
 
@@ -489,6 +499,7 @@ namespace tams4a.Classes
         {
             Panel_Road roadControls = getRoadControls();
             resetSaveCondition();
+            roadControls.setChangedHandler(null);
             roadControls.groupBoxInfo.Enabled = false;
             roadControls.groupBoxDistress.Enabled = false;
             roadControls.toolStrip.Enabled = false;
@@ -528,6 +539,7 @@ namespace tams4a.Classes
         // handler for changed controls
         protected override void controlChanged(object sender, EventArgs e)
         {
+            if (selectionCount <= 0) return;
             Panel_Road roadControls = getRoadControls();
 
             roadControls.buttonSave.Enabled = true;
@@ -536,6 +548,7 @@ namespace tams4a.Classes
 
             roadControls.buttonHistory.Enabled = true;
             roadControls.buttonReset.Enabled = true;
+            roadControls.setChangedHandler(null);
         }
 
 
@@ -684,9 +697,6 @@ namespace tams4a.Classes
             if (roadControls.comboBoxSurface.Text != "")
             {
                 roadControls.inputRsl.Text = calcRsl().ToString();
-
-                // change save condition
-                controlChanged(sender, e);
             }
         }
 

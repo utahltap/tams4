@@ -87,14 +87,17 @@ namespace tams4a.Classes
             if (type != "point") { throw new Exception("Signs module requires a point-type shp file"); }
 
             #region signSettings
+            ModuleSettings.Add(new ProjectSetting(name: "sign_zoom", module: ModuleName, value: "true", display_weight: 4,
+                    display_text: "Zoom to Selection?", display_type: "bool",
+                    description: "Fit map to selected roads."));
             ModuleSettings.Add(new ProjectSetting(name: "sign_f_offset", module: ModuleName, value: "",
-                    display_text: "SHP field with offset from road?", display_type: "field", display_weight: 3,
+                    display_text: "SHP Field for 'Offset From Road'", display_type: "field", display_weight: 3,
                     description: "The field in the sign shp file indicating the distance of the support from the road."));
             ModuleSettings.Add(new ProjectSetting(name: "sign_f_address", module: ModuleName, value: "",
-                    display_text: "SHP field with sign address?", display_type: "field", display_weight: 2,
+                    display_text: "SHP Field for 'Sign Address'", display_type: "field", display_weight: 2,
                     description: "The field in the sign shp file containing the approximate address of the signpost."));
             ModuleSettings.Add(new ProjectSetting(name: "sign_f_TAMSID", module: ModuleName, value: "",
-                    display_text: "SHP field with a unique identifier (TAMSID).", display_type: "field", display_weight: 1,
+                    display_text: "SHP Field with a 'Unique Identifier' (TAMSID)", display_type: "field", display_weight: 1,
                     description: "Show an Icon instead of a basic shape for sign locations.", required:true));
             #endregion signSettings
 
@@ -440,8 +443,13 @@ namespace tams4a.Classes
                 return;
             }
 
-            selectionLayer.ZoomToSelectedFeatures();
-            Project.map.ZoomOut();
+            if (Project.settings.GetValue("sign_zoom") == "true")
+            {
+                selectionLayer.ZoomToSelectedFeatures();
+                Project.map.ZoomOut();
+                Project.map.ZoomOut();
+            }
+
 
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             tamsids = new List<string>();
