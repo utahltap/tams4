@@ -420,11 +420,34 @@ namespace tams4a
         {
             if (uxMap.Layers.Count == 0)
             {
-                MessageBox.Show("A SHP file is required to do that action.");
+                MessageBox.Show("A SHP file is required to do this action.");
                 return;
             }
-            String id = toolStripTextBoxSearch.Text;
-            if (String.IsNullOrEmpty(id)) return;
+            string input = toolStripTextBoxSearch.Text;
+            if (String.IsNullOrEmpty(input)) return;
+
+            //remove spaces before entry
+            int j = 0;
+            while (input[j] == ' ') j++;
+            input = input.Remove(0, j);
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == ',')
+                {
+                    //remove spaces after comma
+                    j = 1;
+                    while (input[i + j] == ' ') j++;
+                    input = input.Remove(i + 1, j - 1);
+
+                    //remove spaces before comma
+                    j = 1;
+                    while (input[i - j] == ' ') j++;
+                    input = input.Remove(i - j + 1, j - 1); 
+                }
+            }
+
+            string[] ids = input.Split(',').ToArray();
 
             FeatureLayer selectionLayer = (FeatureLayer)uxMap.Layers.SelectedLayer;
             string layerName = "";
@@ -439,22 +462,28 @@ namespace tams4a
 
             string searchBy = toolStripComboBoxFind.Text;
             if (searchBy == "ID")
-            {
-                if (!Int32.TryParse(id, out int x))
+            {                
+                foreach (string id in ids)
                 {
-                    MessageBox.Show("Please Enter a Number", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
+                    if (!Int32.TryParse(id, out int x))
+                    {
+                        MessageBox.Show("'" + id + "' is not a valid input.\nPlease Enter a Number", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        continue;
+                    }
+                    selectionLayer.SelectByAttribute(tamsidcolumn + " = " + id, ModifySelectionMode.Append);
                 }
-                selectionLayer.SelectByAttribute(tamsidcolumn + " = " + id); //"TAMSID = 1"
             }
 
             if (searchBy == "Street")
             {
-                DataTable searchID = Database.GetDataByQuery(Project.conn, "SELECT DISTINCT TAMSID FROM road WHERE name = '" + id + "';");
-
-                foreach (DataRow row in searchID.Rows)
+                foreach (string name in ids)
                 {
-                    selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
+                    Console.WriteLine(name);
+                    DataTable searchName = Database.GetDataByQuery(Project.conn, "SELECT DISTINCT TAMSID FROM road WHERE name LIKE '" + name + "';");
+                    foreach (DataRow row in searchName.Rows)
+                    {
+                        selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
+                    }
                 }
             }
 
