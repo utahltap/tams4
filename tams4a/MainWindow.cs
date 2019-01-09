@@ -8,8 +8,6 @@ using System.Windows.Forms;
 using tams4a.Classes;
 using tams4a.Forms;
 using System.Runtime.InteropServices;
-using System.Collections.Generic;
-using DotSpatial.Data;
 
 namespace tams4a
 {
@@ -116,6 +114,17 @@ namespace tams4a
             webService = DotSpatial.Plugins.WebMap.ServiceProviderFactory.Create("GooleMap");
         }
         */
+
+        private void checkHotKeys(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                if (tabControlControls.SelectedIndex == 0) road.saveHandler(sender, e);
+                if (tabControlControls.SelectedIndex == 1) sign.saveHandler(sender, e);
+                //if (tabControlControls.SelectedTab.Name == "Other") //do something
+            }
+        }
+
         private void setEventHandlers()
         {
             uxMap.Layers.LayerAdded += LayersChangedEventHandler;

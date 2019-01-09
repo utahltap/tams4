@@ -710,11 +710,12 @@ namespace tams4a.Classes
 
         public void saveHandler(object sender, EventArgs e)
         {
+            Panel_Sign signControls = getSignControls();
+            if (!signControls.toolStripButtonSave.Enabled) return;
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
 
-            Panel_Sign signControls = getSignControls();
             Dictionary<string, string> values = new Dictionary<string, string>();
             values["survey_date"] = Util.SortableDate(surveyDate);
             values["address"] = signControls.textBoxAddress.Text;

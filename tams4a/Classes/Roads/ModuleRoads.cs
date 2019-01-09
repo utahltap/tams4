@@ -154,6 +154,7 @@ namespace tams4a.Classes
             ControlsPage.Controls.Add(roadPanel);
 
             #region eventhandlers
+            //roadPanel.KeyDown += new KeyEventHandler(checkHotKey);
             roadPanel.buttonSave.Click += saveHandler;
             roadPanel.buttonReset.Click += cancelChanges;
             roadPanel.pictureBoxPhoto.Click += clickPhotoBox;
@@ -214,6 +215,12 @@ namespace tams4a.Classes
             resetSaveCondition();
             return true;
         }
+
+        //private void checkHotKey(object sender, KeyEventArgs e)
+        //{
+        //    Console.WriteLine("Event fired!");
+        //    if (e.KeyCode == Keys.S) saveHandler(sender, e);
+        //}
 
         private void setSideWalkInfo(object sender, EventArgs e)
         {
@@ -557,13 +564,14 @@ namespace tams4a.Classes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void saveHandler(object sender, EventArgs e)
+        public void saveHandler(object sender, EventArgs e)
         {
+            Panel_Road roadControls = getRoadControls();
+            if (!roadControls.buttonSave.Enabled) return;
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
 
-            Panel_Road roadControls = getRoadControls();
             Dictionary<string, string> values = new Dictionary<string, string>();
             values["name"] = roadControls.textBoxRoadName.Text;
             values["survey_date"] = Util.SortableDate(surveyDate);

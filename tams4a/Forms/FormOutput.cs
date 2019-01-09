@@ -1,8 +1,5 @@
-﻿using DotSpatial.Symbology;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
-using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using tams4a.Classes;
