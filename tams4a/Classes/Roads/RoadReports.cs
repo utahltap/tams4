@@ -161,9 +161,11 @@ namespace tams4a.Classes.Roads
             FormQueryBuilder tableFilters = new FormQueryBuilder("road");
             if (tableFilters.ShowDialog() == DialogResult.OK)
             {
+                bool selectResults = false;
                 string surfaceType = tableFilters.getSurface();
                 string query = tableFilters.getQuery() + " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC;";
                 DataTable results = Database.GetDataByQuery(Project.conn, query);
+                if (tableFilters.checkBoxSelectResults.Checked) selectResults = true;
                 if (results.Rows.Count == 0)
                 {
                     MessageBox.Show("No roads matching the given description were found.");
@@ -238,6 +240,13 @@ namespace tams4a.Classes.Roads
                 FormOutput report = new FormOutput(Project);
                 foreach (DataRow row in results.Rows)
                 {
+                    if (selectResults)
+                    {
+                        FeatureLayer selectionLayer = (FeatureLayer)moduleRoads.Layer;
+                        String tamsidcolumn = Project.settings.GetValue("road_f_TAMSID");
+                        selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
+                    }
+
                     DataRow nr = outputTable.NewRow();
                     string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
 
@@ -364,6 +373,7 @@ namespace tams4a.Classes.Roads
                 report.dataGridViewReport.DataSource = outputTable;
                 report.Text = "Treatment Report";
                 report.Show();
+                if(selectResults) moduleRoads.selectionChanged();
             }
             tableFilters.Close();
         }

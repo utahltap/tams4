@@ -263,7 +263,10 @@ namespace tams4a.Classes
                 Project.map.ZoomOut();
             }
 
-            enableControls();
+            bool mulitple = false;
+            if (selectionCount > 1) mulitple = true;
+
+            enableControls(mulitple);
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
 
             updateRoadDisplay(values);
@@ -276,25 +279,14 @@ namespace tams4a.Classes
                 IdText = "";
             }
 
-            Panel_Road roadControls = getRoadControls();
-            if (shpSelection.Count > 1)
-            {
-                roadControls.labelName.ForeColor = SystemColors.HighlightText;
-                roadControls.labelName.BackColor = SystemColors.Highlight;
-                roadControls.labelName.Text = "Multiple";
-                roadControls.textBoxRoadName.Enabled = false;
-                roadControls.textBoxRoadName.Text = "";
-                roadControls.labelSurveyDate.Visible = false;
-            }
-
-
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             tamsids = new List<string>();
             foreach (DataRow row in selectionLayer.Selection.ToFeatureSet().DataTable.Rows)
             {
                 tamsids.Add(row[tamsidcolumn].ToString());
             }
-            roadControls.setChangedHandler(controlChanged);
+
+            getRoadControls().setChangedHandler(controlChanged);
         }
 
         private void cancelChanges(object sender, EventArgs e)
@@ -515,7 +507,7 @@ namespace tams4a.Classes
 
         // enables controls for when at least 1 segment is selected
         // some controls depend on whether we've selected multiple items, so optional parameter
-        private void enableControls(Boolean multiple = false)
+        private void enableControls(bool multiple)
         {
             Panel_Road roadControls = getRoadControls();
 
@@ -523,6 +515,12 @@ namespace tams4a.Classes
             {
                 roadControls.textBoxPhotoFile.Enabled = false;
                 roadControls.buttonNextPhoto.Enabled = false;
+                roadControls.labelName.ForeColor = SystemColors.HighlightText;
+                roadControls.labelName.BackColor = SystemColors.Highlight;
+                roadControls.labelName.Text = "Multiple";
+                roadControls.textBoxRoadName.Enabled = false;
+                roadControls.textBoxRoadName.Text = "";
+                roadControls.labelSurveyDate.Visible = false;
             } else
             {
                 roadControls.textBoxPhotoFile.Enabled = true;

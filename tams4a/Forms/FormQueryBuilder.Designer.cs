@@ -100,6 +100,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.labelComparison = new System.Windows.Forms.Label();
             this.labelColumn = new System.Windows.Forms.Label();
+            this.checkBoxSelectResults = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panelBelowSurface.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRSLValue)).BeginInit();
@@ -132,7 +133,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(332, 388);
+            this.buttonOK.Location = new System.Drawing.Point(332, 385);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 1;
@@ -142,7 +143,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(28, 388);
+            this.buttonCancel.Location = new System.Drawing.Point(28, 385);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 2;
@@ -183,7 +184,7 @@
             this.panel1.Controls.Add(this.labelColumn);
             this.panel1.Location = new System.Drawing.Point(15, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(393, 355);
+            this.panel1.Size = new System.Drawing.Size(393, 354);
             this.panel1.TabIndex = 3;
             // 
             // panelBelowSurface
@@ -202,7 +203,7 @@
             this.panelBelowSurface.Controls.Add(this.from_address);
             this.panelBelowSurface.Location = new System.Drawing.Point(6, 240);
             this.panelBelowSurface.Name = "panelBelowSurface";
-            this.panelBelowSurface.Size = new System.Drawing.Size(386, 109);
+            this.panelBelowSurface.Size = new System.Drawing.Size(386, 112);
             this.panelBelowSurface.TabIndex = 93;
             // 
             // textBoxToAddressComparison
@@ -1046,11 +1047,27 @@
             this.labelColumn.TabIndex = 9;
             this.labelColumn.Text = "Sort By";
             // 
+            // checkBoxSelectResults
+            // 
+            this.checkBoxSelectResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxSelectResults.AutoSize = true;
+            this.checkBoxSelectResults.Checked = true;
+            this.checkBoxSelectResults.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSelectResults.Location = new System.Drawing.Point(186, 389);
+            this.checkBoxSelectResults.Name = "checkBoxSelectResults";
+            this.checkBoxSelectResults.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.checkBoxSelectResults.Size = new System.Drawing.Size(133, 17);
+            this.checkBoxSelectResults.TabIndex = 65;
+            this.checkBoxSelectResults.Text = "Select Results on Map";
+            this.checkBoxSelectResults.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxSelectResults.UseVisualStyleBackColor = true;
+            // 
             // FormQueryBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(423, 423);
+            this.ClientSize = new System.Drawing.Size(423, 421);
+            this.Controls.Add(this.checkBoxSelectResults);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
@@ -1158,5 +1175,6 @@
         private System.Windows.Forms.ComboBox comboBoxDistress1Comparison;
         private System.Windows.Forms.Panel panelDistresses;
         private System.Windows.Forms.Panel panelBelowSurface;
+        public System.Windows.Forms.CheckBox checkBoxSelectResults;
     }
 }

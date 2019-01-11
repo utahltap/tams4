@@ -458,30 +458,30 @@ namespace tams4a
 
             string[] ids = input.Split(',').ToArray();
 
-            FeatureLayer selectionLayer = (FeatureLayer)uxMap.Layers.SelectedLayer;
-            string layerName = "";
-            if (Project.currentModuleName == "Roads") layerName = "road";
-            if (Project.currentModuleName == "Signs") layerName = "sign";
-            foreach (FeatureLayer layer in uxMap.Layers)
-            {
-                layer.UnSelectAll();
-                if (layer.Name.ToString() == layerName) selectionLayer = layer;
-            }
-            String tamsidcolumn = Project.settings.GetValue(selectionLayer.Name + "_f_TAMSID");
-
-            string searchBy = toolStripComboBoxFind.Text;
-            if (searchBy == "ID")
-            {                
-                foreach (string id in ids)
+                FeatureLayer selectionLayer = (FeatureLayer)uxMap.Layers.SelectedLayer;
+                string layerName = "";
+                if (Project.currentModuleName == "Roads") layerName = "road";
+                if (Project.currentModuleName == "Signs") layerName = "sign";
+                foreach (FeatureLayer layer in uxMap.Layers)
                 {
-                    if (!Int32.TryParse(id, out int x))
-                    {
-                        MessageBox.Show("'" + id + "' is not a valid input.\nPlease Enter a Number", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        continue;
-                    }
-                    selectionLayer.SelectByAttribute(tamsidcolumn + " = " + id, ModifySelectionMode.Append);
+                    layer.UnSelectAll();
+                    if (layer.Name.ToString() == layerName) selectionLayer = layer;
                 }
-            }
+                String tamsidcolumn = Project.settings.GetValue(selectionLayer.Name + "_f_TAMSID");
+
+                string searchBy = toolStripComboBoxFind.Text;
+                if (searchBy == "ID")
+                {                
+                    foreach (string id in ids)
+                    {
+                        if (!Int32.TryParse(id, out int x))
+                        {
+                            MessageBox.Show("'" + id + "' is not a valid input.\nPlease Enter a Number", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            continue;
+                        }
+                        selectionLayer.SelectByAttribute(tamsidcolumn + " = " + id, ModifySelectionMode.Append);
+                    }
+                }
 
             if (searchBy == "Street")
             {

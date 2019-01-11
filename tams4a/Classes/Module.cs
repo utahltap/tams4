@@ -498,7 +498,7 @@ namespace tams4a.Classes
             selectionValues = new List<Dictionary<string, string>>();
 
             // load up values from shp file (to be overridden if present in DB)
-            consolidateDictionary(selectionTable, ref shpValues);
+            //consolidateDictionary(selectionTable, ref shpValues);
 
             // Get list of TAMSIDs from selection to use for DB selection
             String thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));

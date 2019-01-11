@@ -1,4 +1,6 @@
-﻿namespace tams4a
+﻿using System.Windows.Forms;
+
+namespace tams4a
 {
     partial class MainWindow
     {
@@ -221,7 +223,8 @@
             // manuelToolStripMenuItem
             // 
             this.manuelToolStripMenuItem.Name = "manuelToolStripMenuItem";
-            this.manuelToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.manuelToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.M)));
+            this.manuelToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.manuelToolStripMenuItem.Text = "Manual";
             this.manuelToolStripMenuItem.ToolTipText = "View the TAMS4 manual online";
             this.manuelToolStripMenuItem.Click += new System.EventHandler(this.manuelToolStripMenuItem_Click);
@@ -229,7 +232,8 @@
             // reportProblemsToolStripMenuItem
             // 
             this.reportProblemsToolStripMenuItem.Name = "reportProblemsToolStripMenuItem";
-            this.reportProblemsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.reportProblemsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
+            this.reportProblemsToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.reportProblemsToolStripMenuItem.Text = "Report Problems";
             this.reportProblemsToolStripMenuItem.ToolTipText = "Submit a bug report to the TAMS4 development team.";
             this.reportProblemsToolStripMenuItem.Click += new System.EventHandler(this.reportProblemsToolStripMenuItem_Click);
