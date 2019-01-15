@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -77,6 +78,7 @@ namespace tams4a.Forms
                 mainWindow.rslOrange.Visible = true;
                 mainWindow.rslRed.Visible = true;
                 mainWindow.rslDarkRed.Visible = true;
+                mainWindow.resetLegend(mainWindow.treatmentLegend);
             }
             if (comboBoxRoadColors.Text == "Treatment")
             {
@@ -86,6 +88,7 @@ namespace tams4a.Forms
                 mainWindow.treatmentPreventativePatching.Visible = true;
                 mainWindow.treatmentRehabilitation.Visible = true;
                 mainWindow.treatmentReconstruction.Visible = true;
+                mainWindow.resetLegend(mainWindow.rslLegend);
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace tams4a
 {
@@ -208,7 +210,7 @@ namespace tams4a
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -216,7 +218,7 @@ namespace tams4a
             // 
             this.logsToolStripMenuItem.Name = "logsToolStripMenuItem";
             this.logsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.L)));
-            this.logsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.logsToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.logsToolStripMenuItem.Text = "&Logs";
             this.logsToolStripMenuItem.Click += new System.EventHandler(this.logsToolStripMenuItem_Click);
             // 
@@ -617,202 +619,244 @@ namespace tams4a
             this.treatmentPreventative.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.treatmentPreventative.BackColor = System.Drawing.Color.Yellow;
             this.treatmentPreventative.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentPreventative.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentPreventative.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentPreventative.ForeColor = System.Drawing.SystemColors.ControlText;
             this.treatmentPreventative.Location = new System.Drawing.Point(713, 661);
             this.treatmentPreventative.Name = "treatmentPreventative";
+            this.treatmentPreventative.ReadOnly = true;
             this.treatmentPreventative.Size = new System.Drawing.Size(136, 23);
             this.treatmentPreventative.TabIndex = 16;
             this.treatmentPreventative.Text = "Preventative";
             this.treatmentPreventative.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPreventative.Visible = false;
+            this.treatmentLegend[treatmentPreventative] = Color.Yellow;
             // 
             // treatmentRehabilitation
             // 
             this.treatmentRehabilitation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.treatmentRehabilitation.BackColor = System.Drawing.Color.Red;
             this.treatmentRehabilitation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentRehabilitation.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentRehabilitation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentRehabilitation.ForeColor = System.Drawing.SystemColors.Info;
             this.treatmentRehabilitation.Location = new System.Drawing.Point(713, 719);
             this.treatmentRehabilitation.Name = "treatmentRehabilitation";
+            this.treatmentRehabilitation.ReadOnly = true;
             this.treatmentRehabilitation.Size = new System.Drawing.Size(136, 23);
             this.treatmentRehabilitation.TabIndex = 15;
             this.treatmentRehabilitation.Text = "Rehabilitation";
             this.treatmentRehabilitation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentRehabilitation.Visible = false;
+            this.treatmentLegend[treatmentRehabilitation] = Color.Red;
             // 
             // treatmentPreventativePatching
             // 
             this.treatmentPreventativePatching.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.treatmentPreventativePatching.BackColor = System.Drawing.Color.Orange;
             this.treatmentPreventativePatching.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentPreventativePatching.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentPreventativePatching.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentPreventativePatching.ForeColor = System.Drawing.SystemColors.Desktop;
             this.treatmentPreventativePatching.Location = new System.Drawing.Point(713, 690);
             this.treatmentPreventativePatching.Name = "treatmentPreventativePatching";
+            this.treatmentPreventativePatching.ReadOnly = true;
             this.treatmentPreventativePatching.Size = new System.Drawing.Size(136, 23);
             this.treatmentPreventativePatching.TabIndex = 14;
             this.treatmentPreventativePatching.Text = "Preventative/Patching";
             this.treatmentPreventativePatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPreventativePatching.Visible = false;
+            this.treatmentLegend[treatmentPreventativePatching] = Color.Orange;
             // 
             // treatmentReconstruction
             // 
             this.treatmentReconstruction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.treatmentReconstruction.BackColor = System.Drawing.Color.DarkRed;
             this.treatmentReconstruction.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentReconstruction.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentReconstruction.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentReconstruction.ForeColor = System.Drawing.SystemColors.Info;
             this.treatmentReconstruction.Location = new System.Drawing.Point(713, 748);
             this.treatmentReconstruction.Name = "treatmentReconstruction";
+            this.treatmentReconstruction.ReadOnly = true;
             this.treatmentReconstruction.Size = new System.Drawing.Size(136, 23);
             this.treatmentReconstruction.TabIndex = 13;
             this.treatmentReconstruction.Text = "Reconstruction";
             this.treatmentReconstruction.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentReconstruction.Visible = false;
+            this.treatmentLegend[treatmentReconstruction] = Color.DarkRed;
             // 
             // treatmentPatching
             // 
             this.treatmentPatching.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.treatmentPatching.BackColor = System.Drawing.Color.LimeGreen;
             this.treatmentPatching.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentPatching.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentPatching.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentPatching.ForeColor = System.Drawing.SystemColors.Info;
             this.treatmentPatching.Location = new System.Drawing.Point(713, 632);
             this.treatmentPatching.Name = "treatmentPatching";
+            this.treatmentPatching.ReadOnly = true;
             this.treatmentPatching.Size = new System.Drawing.Size(136, 23);
             this.treatmentPatching.TabIndex = 12;
             this.treatmentPatching.Text = "Patching";
             this.treatmentPatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPatching.Visible = false;
+            this.treatmentLegend[treatmentPatching] = Color.LimeGreen;
             // 
             // treatmentRoutine
             // 
             this.treatmentRoutine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.treatmentRoutine.BackColor = System.Drawing.Color.Blue;
             this.treatmentRoutine.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treatmentRoutine.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentRoutine.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentRoutine.ForeColor = System.Drawing.SystemColors.Info;
             this.treatmentRoutine.Location = new System.Drawing.Point(713, 603);
             this.treatmentRoutine.Name = "treatmentRoutine";
+            this.treatmentRoutine.ReadOnly = true;
             this.treatmentRoutine.Size = new System.Drawing.Size(136, 23);
             this.treatmentRoutine.TabIndex = 10;
             this.treatmentRoutine.Text = "Routine";
             this.treatmentRoutine.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentRoutine.Visible = false;
+            this.treatmentLegend[treatmentRoutine] = Color.Blue;
             // 
             // rslBlue
             // 
             this.rslBlue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.rslBlue.BackColor = System.Drawing.Color.Blue;
             this.rslBlue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rslBlue.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslBlue.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslBlue.ForeColor = System.Drawing.SystemColors.Info;
             this.rslBlue.Location = new System.Drawing.Point(790, 545);
             this.rslBlue.Name = "rslBlue";
+            this.rslBlue.ReadOnly = true;
             this.rslBlue.Size = new System.Drawing.Size(59, 23);
             this.rslBlue.TabIndex = 9;
             this.rslBlue.Text = "1 9 - 20";
             this.rslBlue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslLegend[rslBlue] = Color.Blue;
             // 
             // rslDeepSkyBlue
             // 
             this.rslDeepSkyBlue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.rslDeepSkyBlue.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.rslDeepSkyBlue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rslDeepSkyBlue.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslDeepSkyBlue.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslDeepSkyBlue.ForeColor = System.Drawing.SystemColors.Info;
             this.rslDeepSkyBlue.Location = new System.Drawing.Point(790, 574);
             this.rslDeepSkyBlue.Name = "rslDeepSkyBlue";
+            this.rslDeepSkyBlue.ReadOnly = true;
             this.rslDeepSkyBlue.Size = new System.Drawing.Size(59, 23);
             this.rslDeepSkyBlue.TabIndex = 8;
             this.rslDeepSkyBlue.Text = "16 - 18";
             this.rslDeepSkyBlue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslLegend[rslDeepSkyBlue] = Color.DeepSkyBlue;
             // 
             // rslGreen
             // 
             this.rslGreen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.rslGreen.BackColor = System.Drawing.Color.Green;
             this.rslGreen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rslGreen.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslGreen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslGreen.ForeColor = System.Drawing.SystemColors.Info;
             this.rslGreen.Location = new System.Drawing.Point(790, 603);
             this.rslGreen.Name = "rslGreen";
+            this.rslGreen.ReadOnly = true;
             this.rslGreen.Size = new System.Drawing.Size(59, 23);
             this.rslGreen.TabIndex = 7;
             this.rslGreen.Text = "13 - 15";
             this.rslGreen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslLegend[rslGreen] = Color.Green;
             // 
             // rslLimeGreen
             // 
             this.rslLimeGreen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.rslLimeGreen.BackColor = System.Drawing.Color.LimeGreen;
             this.rslLimeGreen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rslLimeGreen.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslLimeGreen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslLimeGreen.ForeColor = System.Drawing.SystemColors.Info;
             this.rslLimeGreen.Location = new System.Drawing.Point(790, 632);
             this.rslLimeGreen.Name = "rslLimeGreen";
+            this.rslLimeGreen.ReadOnly = true;
             this.rslLimeGreen.Size = new System.Drawing.Size(59, 23);
             this.rslLimeGreen.TabIndex = 6;
             this.rslLimeGreen.Text = "10 - 12";
             this.rslLimeGreen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslLegend[rslLimeGreen] = Color.LimeGreen;
             // 
             // rslYellow
             // 
             this.rslYellow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.rslYellow.BackColor = System.Drawing.Color.Yellow;
             this.rslYellow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rslYellow.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslYellow.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslYellow.ForeColor = System.Drawing.SystemColors.ControlText;
             this.rslYellow.Location = new System.Drawing.Point(790, 661);
             this.rslYellow.Name = "rslYellow";
+            this.rslYellow.ReadOnly = true;
             this.rslYellow.Size = new System.Drawing.Size(59, 23);
             this.rslYellow.TabIndex = 5;
             this.rslYellow.Text = "7 - 9";
             this.rslYellow.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslLegend[rslYellow] = Color.Yellow;
             // 
             // rslDarkRed
             // 
             this.rslDarkRed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.rslDarkRed.BackColor = System.Drawing.Color.DarkRed;
             this.rslDarkRed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rslDarkRed.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslDarkRed.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslDarkRed.ForeColor = System.Drawing.SystemColors.Info;
             this.rslDarkRed.Location = new System.Drawing.Point(790, 748);
             this.rslDarkRed.Name = "rslDarkRed";
+            this.rslDarkRed.ReadOnly = true;
             this.rslDarkRed.Size = new System.Drawing.Size(59, 23);
             this.rslDarkRed.TabIndex = 4;
             this.rslDarkRed.Text = "0";
             this.rslDarkRed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslLegend[rslDarkRed] = Color.DarkRed;
             // 
             // rslOrange
             // 
             this.rslOrange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.rslOrange.BackColor = System.Drawing.Color.Orange;
             this.rslOrange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rslOrange.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslOrange.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslOrange.ForeColor = System.Drawing.SystemColors.Desktop;
             this.rslOrange.Location = new System.Drawing.Point(790, 690);
             this.rslOrange.Name = "rslOrange";
+            this.rslOrange.ReadOnly = true;
             this.rslOrange.Size = new System.Drawing.Size(59, 23);
             this.rslOrange.TabIndex = 3;
             this.rslOrange.Text = "4 - 6";
             this.rslOrange.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslLegend[rslOrange] = Color.Orange;
             // 
             // rslRed
             // 
             this.rslRed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.rslRed.BackColor = System.Drawing.Color.Red;
             this.rslRed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rslRed.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslRed.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslRed.ForeColor = System.Drawing.SystemColors.Info;
             this.rslRed.Location = new System.Drawing.Point(790, 719);
             this.rslRed.Name = "rslRed";
+            this.rslRed.ReadOnly = true;
             this.rslRed.Size = new System.Drawing.Size(59, 23);
             this.rslRed.TabIndex = 2;
             this.rslRed.Text = "1 - 3";
             this.rslRed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslLegend[rslRed] = Color.Red;
             // 
             // toolStrip1
             // 
@@ -1014,7 +1058,25 @@ namespace tams4a
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
+            //
+            // Handles Clicks on Legend for changing map display
+            //
+            /*** Comment Out This Block of Code to Edit MainWindow Design ****************************************************************************************************************************************************/
+            /**/ this.rslBlue.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslBlue); });                                              /**/
+            /**/ this.rslDeepSkyBlue.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslDeepSkyBlue); });                                /**/
+            /**/ this.rslGreen.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslGreen); });                                            /**/
+            /**/ this.rslLimeGreen.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslLimeGreen); });                                    /**/
+            /**/ this.rslYellow.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslYellow); });                                          /**/
+            /**/ this.rslOrange.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslOrange); });                                          /**/
+            /**/ this.rslRed.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslRed); });                                                /**/
+            /**/ this.rslDarkRed.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslDarkRed); });                                        /**/
+            /**/ this.treatmentRoutine.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentRoutine); });                            /**/
+            /**/ this.treatmentPreventative.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPreventative); });                  /**/
+            /**/ this.treatmentPatching.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPatching); });                          /**/
+            /**/ this.treatmentPreventativePatching.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPreventativePatching); });  /**/
+            /**/ this.treatmentRehabilitation.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentRehabilitation); });              /**/
+            /**/ this.treatmentReconstruction.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentReconstruction); });              /**/
+            /*****************************************************************************************************************************************************************************************************************/
         }
 
         #endregion
@@ -1085,6 +1147,7 @@ namespace tams4a
         private System.Windows.Forms.ToolStripMenuItem allOthersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem customOutputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem roadsWithSidewalksToolStripMenuItem;
+        public Dictionary<TextBox, Color> rslLegend = new Dictionary<TextBox, Color>();
         public System.Windows.Forms.TextBox rslRed;
         public System.Windows.Forms.TextBox rslBlue;
         public System.Windows.Forms.TextBox rslDeepSkyBlue;
@@ -1094,6 +1157,7 @@ namespace tams4a
         public System.Windows.Forms.TextBox rslDarkRed;
         public System.Windows.Forms.TextBox rslOrange;
         private System.Windows.Forms.ToolStripMenuItem displayToolStripMenuItem;
+        public Dictionary<TextBox, Color> treatmentLegend = new Dictionary<TextBox, Color>();
         public System.Windows.Forms.TextBox treatmentPatching;
         public System.Windows.Forms.TextBox treatmentRoutine;
         public System.Windows.Forms.TextBox treatmentPreventative;

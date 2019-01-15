@@ -1,5 +1,7 @@
 ﻿using DotSpatial.Controls;
 using DotSpatial.Symbology;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 
@@ -10,6 +12,17 @@ namespace tams4a.Classes.Roads
         private TamsProject Project;
         private ModuleRoads moduleRoads;
         private string ModuleName = "road";
+        public Dictionary<Color, bool> selectedColors = new Dictionary<Color, bool> {
+            { Color.Gray, true },
+            { Color.Blue, true },
+            { Color.DeepSkyBlue, true },
+            { Color.Green , true },
+            { Color.LimeGreen , true },
+            { Color.Yellow , true },
+            { Color.Orange , true },
+            { Color.Red , true },
+            { Color.DarkRed , true }
+        };
 
         public RoadSymbols(TamsProject theProject, ModuleRoads roads)
         {
@@ -72,36 +85,37 @@ namespace tams4a.Classes.Roads
             catDef.Symbolizer = symDef;
             rdScheme.AddCategory(catDef);
 
-            int[] rslfloor = { 0, 1, 4, 7, 10, 13, 16, 19 };
-            int[] rslceil = { 0, 3, 6, 9, 12, 15, 18, 20 };
-
             int[] r = new int[30];
             int[] g = new int[30];
             int[] b = new int[30];
-            r[0] = 139; r[1] = 255; r[2] = 255; r[3] = 255; r[4] = 50; r[5] = 0; r[6] = 0; r[7] = 0;
-            g[0] = 0; g[1] = 0; g[2] = 165; g[3] = 255; g[4] = 205; g[5] = 128; g[6] = 191; g[7] = 0;
-            b[0] = 0; b[1] = 0; b[2] = 0; b[3] = 0; b[4] = 50; b[5] = 0; b[6] = 255; b[7] = 255;
 
             if (Project.settings.GetValue("road_colors").Contains("t"))
             {
                 if (moduleRoads.roadColors == "RSL")
                 {
-                    int j = 0;
-                    for (int i = 0; i < 21; i++)
+                    for (int rsl = 0; rsl <= 20; rsl++)
                     {
-                        while (i > rslceil[j])
-                        {
-                            j++;
-                        }
                         // create a category
                         LineCategory colorCat = new LineCategory();
-                        colorCat.FilterExpression = "[TAMSROADRSL] = '" + i.ToString() + "'";
+                        colorCat.FilterExpression = "[TAMSROADRSL] = '" + rsl.ToString() + "'";
 
                         LineSymbolizer colorSym = new LineSymbolizer();
                         colorSym.ScaleMode = ScaleMode.Geographic;
                         colorSym.SetWidth(adjWidth);
                         colorSym.SetOutline(Color.DarkGray, adjOutlineWidth);
-                        colorSym.SetFillColor(Color.FromArgb(r[j], g[j], b[j]));
+
+                        Color fillColor = Color.Gray;
+                        if (rsl == 20 || rsl == 19) fillColor = Color.Blue;
+                        if (rsl <= 18 && rsl >= 16) fillColor = Color.DeepSkyBlue;
+                        if (rsl <= 15 && rsl >= 13) fillColor = Color.Green;
+                        if (rsl <= 12 && rsl >= 10) fillColor = Color.LimeGreen;
+                        if (rsl <= 9  && rsl >= 7 ) fillColor = Color.Yellow;
+                        if (rsl <= 6  && rsl >= 4 ) fillColor = Color.Orange;
+                        if (rsl <= 3  && rsl >= 1 ) fillColor = Color.Red;
+                        if (rsl == 0) fillColor = Color.DarkRed;
+
+                        if (selectedColors[fillColor]) colorSym.SetFillColor(fillColor);
+                        else continue;
 
                         colorCat.Symbolizer = colorSym;
 
@@ -137,6 +151,17 @@ namespace tams4a.Classes.Roads
 
                     for (int i = 0; i < treatments.Length; i++)
                     {
+
+                        // TODO: Get this to work
+                        Color fillColor = Color.Gray;
+                        if (r[i] == 0 && g[i] == 0 && b[i] == 255) fillColor = Color.Blue;
+                        if (r[i] == 50 && g[i] == 205 && b[i] == 50) fillColor = Color.LimeGreen;
+                        if (r[i] == 255 && g[i] == 255 && b[i] == 0) fillColor = Color.Yellow;
+                        if (r[i] == 255 && g[i] == 165 && b[i] == 0) fillColor = Color.Orange;
+                        if (r[i] == 255 && g[i] == 0 && b[i] == 0) fillColor = Color.Red;
+                        if (r[i] == 139 && g[i] == 0 && b[i] == 0) fillColor = Color.DarkRed;
+                        if (!selectedColors[fillColor]) continue;
+
                         LineCategory colorCat = new LineCategory();
                         colorCat.FilterExpression = "[TAMSTREATMENT] = '" + treatments[i] + "'";
 
@@ -163,11 +188,7 @@ namespace tams4a.Classes.Roads
             if (!string.IsNullOrEmpty(Project.settings.GetValue("road_labels")))
             {
                 string streetnames = "[" + Project.settings.GetValue(ModuleName + "_f_streetname") + "]";
-                //string streetIDs = "[" + Project.settings.GetValue(ModuleName + "_f_TAMSID") + "]";
-                roadFeatures.AddLabels(streetnames,
-                        new Font("Tahoma", (float)8.0), moduleRoads.labelColor);
-                //string sql = "UPDATE road SET name = " + streetnames + " WHERE road_f_tamsid = " + streetIDs + "; ";
-                //Database.ExecuteNonQuery(Project.conn, sql);
+                roadFeatures.AddLabels(streetnames, new Font("Tahoma", (float)8.0), moduleRoads.labelColor);
                 roadFeatures.ShowLabels = Project.settings.GetValue("road_labels").Contains("true");
             }
 

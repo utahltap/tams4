@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using tams4a.Classes;
 using tams4a.Forms;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace tams4a
 {
@@ -639,6 +640,73 @@ namespace tams4a
                 report.Show();
                 MessageBox.Show("Check to make sure the table was imported correctly.\nSave changes if you want to keep them.");
 
+            }
+        }
+
+        private void highlightKey(object sender, MouseEventArgs e, TextBox key)
+        {
+            bool noneSelected = true;
+            bool allSelected = true;
+            if (key.BorderStyle == BorderStyle.FixedSingle)
+            {
+                key.BorderStyle = BorderStyle.Fixed3D;
+            }
+            else
+            {
+                key.BorderStyle = BorderStyle.FixedSingle;
+            }
+
+            Dictionary<TextBox, Color> currentLegend = new Dictionary<TextBox, Color>();
+            if (road.roadColors == "RSL")
+            {
+                currentLegend = rslLegend;
+            }
+
+            if (road.roadColors == "Treatment")
+            {
+                currentLegend = treatmentLegend;
+            }
+            foreach (KeyValuePair<TextBox, Color> box in currentLegend)
+            {
+                if (box.Key.BorderStyle == BorderStyle.Fixed3D)
+                {
+                    road.symbols.selectedColors[box.Value] = true;
+                    box.Key.BackColor = box.Value;
+                    allSelected = false;
+                    if (box.Value == Color.Yellow || box.Value == Color.Orange)
+                    {
+                        box.Key.ForeColor = Color.Black;
+                    }
+                }
+                else
+                {
+                    road.symbols.selectedColors[box.Value] = false;
+                    box.Key.BackColor = Color.LightGray;
+                    noneSelected = false;
+                    if (box.Value == Color.Yellow || box.Value == Color.Orange)
+                    {
+                        box.Key.ForeColor = Color.White;
+                    }
+                }
+            }
+            if (noneSelected || allSelected)
+            {
+                resetLegend(currentLegend);
+            }
+            road.symbols.setSymbolizer();
+        }
+
+        public void resetLegend(Dictionary<TextBox, Color> currentLegend)
+        {
+            foreach (KeyValuePair<TextBox, Color> box in currentLegend)
+            {
+                road.symbols.selectedColors[box.Value] = true;
+                box.Key.BackColor = box.Value;
+                box.Key.BorderStyle = BorderStyle.FixedSingle;
+                if (box.Value == Color.Yellow || box.Value == Color.Orange)
+                {
+                    box.Key.ForeColor = Color.Black;
+                }
             }
         }
     }
