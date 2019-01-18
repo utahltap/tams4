@@ -607,7 +607,16 @@ namespace tams4a
 
             if (openCSV.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                System.IO.StreamReader sr = new System.IO.StreamReader(openCSV.FileName);
+                System.IO.StreamReader sr = null;
+                try
+                {
+                    sr = new System.IO.StreamReader(openCSV.FileName);
+                }
+                catch
+                {
+                    MessageBox.Show("Failed to import file. Make sure the file is of type 'CSV' and is not open in any other application", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 string importedCSV = sr.ReadToEnd();
                 sr.Close();
 
@@ -634,11 +643,38 @@ namespace tams4a
                     
                 }
 
-                FormOutput report = new FormOutput(Project);
+                FormOutput report = new FormOutput(Project, road);
                 report.dataGridViewReport.DataSource = importedTable;
                 report.Text = "Imported Report";
                 report.Show();
-                MessageBox.Show("Check to make sure the table was imported correctly.\nSave changes if you want to keep them.");
+                MessageBox.Show("Check to make sure the table was imported correctly. " +
+                    "Only columns with following headings will be updated:\n" +
+                    "\n\t\t ID" +
+                    "\n\t\t Name" +
+                    "\n\t\t Speed Limit" +
+                    "\n\t\t Lanes" +
+                    "\n\t\t Width (ft)" +
+                    "\n\t\t Length (ft)" +
+                    "\n\t\t From Addres" +
+                    "\n\t\t To Address" +
+                    "\n\t\t Surface" +
+                    "\n\t\t Treatment" +
+                    "\n\t\t RSL" +
+                    "\n\t\t Functional Classification" +
+                    "\n\t\t Notes" +
+                    "\n\t\t Survey Date" +
+                    "\n\t\t Fat/Spa/Pot" +
+                    "\n\t\t Edg/Joi/Rut" +
+                    "\n\t\t Lon/Cor/X-S" +
+                    "\n\t\t Pat/Bro/Dra" +
+                    "\n\t\t Pot/Fau/Dus" +
+                    "\n\t\t Dra/Lon/Agg" +
+                    "\n\t\t Tra/Tra/Cor" +
+                    "\n\t\t Block/Crack" +
+                    "\n\t\t Rutti/Patch" +
+                    "\n\nColumns such as 'Cost' and 'Area' are computed when a table is generated." +
+                    " Save changes if you want to keep them.",
+                    "Importing CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
         }

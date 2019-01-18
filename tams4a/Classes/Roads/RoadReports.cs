@@ -14,7 +14,7 @@ namespace tams4a.Classes.Roads
         private DataTable reportTable;
         private string ModuleName = "road";
 
-        public RoadReports(TamsProject theProject, ModuleRoads roads)
+        public RoadReports(TamsProject theProject, ModuleRoads roads = null)
         {
             Project = theProject;
             moduleRoads = roads;
@@ -94,7 +94,7 @@ namespace tams4a.Classes.Roads
 
                 general.DefaultView.Sort = "Name asc, Treatment asc, From Address asc";
                 general = general.DefaultView.ToTable();
-                FormOutput report = new FormOutput(Project);
+                FormOutput report = new FormOutput(Project, moduleRoads);
                 report.dataGridViewReport.DataSource = general;
                 report.Text = "Treatment Report";
                 report.Show();
@@ -144,7 +144,7 @@ namespace tams4a.Classes.Roads
                     potholes.Rows.InsertAt(nr, potholes.Rows.Count);
                 }
                 potholes.DefaultView.Sort = "Name asc, From Address asc";
-                FormOutput report = new FormOutput(Project);
+                FormOutput report = new FormOutput(Project, moduleRoads);
                 report.dataGridViewReport.DataSource = potholes.DefaultView.ToTable();
                 report.Text = "Potholes Report";
                 report.Show();
@@ -237,7 +237,7 @@ namespace tams4a.Classes.Roads
                     outputTable.Columns.Add("Corrugate");
                 }
 
-                FormOutput report = new FormOutput(Project);
+                FormOutput report = new FormOutput(Project, moduleRoads);
                 foreach (DataRow row in results.Rows)
                 {
                     if (selectResults)
@@ -423,6 +423,8 @@ namespace tams4a.Classes.Roads
                     DataRow nr = general.NewRow();
                     nr["ID"] = row["TAMSID"];
                     nr["Name"] = row["name"];
+                    nr["Speed Limit"] = row["speed_limit"];
+                    nr["Lanes"] = row["lanes"];
                     nr["Width (ft)"] = row["width"];
                     nr["Length (ft)"] = row["length"];
                     nr["From Address"] = row["from_address"];
@@ -512,7 +514,7 @@ namespace tams4a.Classes.Roads
                 }
                 general.Rows.Add(totals);
                 reportTable = general.DefaultView.ToTable();
-                FormOutput report = new FormOutput(Project);
+                FormOutput report = new FormOutput(Project, moduleRoads);
                 report.dataGridViewReport.DataSource = reportTable;
                 report.Text = "Treatment Report";
                 report.Show();
@@ -570,7 +572,7 @@ namespace tams4a.Classes.Roads
                 }
 
                 reportTable = history.DefaultView.ToTable();
-                FormOutput histForm = new FormOutput(Project);
+                FormOutput histForm = new FormOutput(Project, moduleRoads);
                 histForm.Text = "Road History";
                 histForm.dataGridViewReport.DataSource = history;
                 histForm.Show();
