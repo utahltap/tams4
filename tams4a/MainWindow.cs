@@ -675,7 +675,6 @@ namespace tams4a
                     "\n\nColumns such as 'Cost' and 'Area' are computed when a table is generated." +
                     " Save changes if you want to keep them.",
                     "Importing CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             }
         }
 
