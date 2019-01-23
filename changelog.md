@@ -13,6 +13,7 @@ BUG FIXES
 ----------------------------------------------------
 * Fixed legend not repositioning when shrinking the map.
 * Saving changes when editing/ importing a table is much faster.
+* Sorting tables by numeric values now sorts as expected.
 
 # Version 4.1.1.1
 CHANGES
