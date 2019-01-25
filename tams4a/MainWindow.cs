@@ -75,7 +75,7 @@ namespace tams4a
                 roadCategoryToolStripMenuItem,
                 governingDistressToolStripMenuItem,
                 rSLToolStripMenuItem };
-            ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signAlertsToolStripMenuItem, signInventoryToolStripMenuItem, supportAlertsToolStripMenuItem, supportInventoryToolStripMenuItem, signToolStripMenuItem};
+            ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signInventoryToolStripMenuItem, signRecommendationsToolStripMenuItem, supportInventoryToolStripMenuItem, supportRecommendationsToolStripMenuItem, signToolStripMenuItem };
             ToolStripMenuItem[] lcso = { otherToolStripMenuItem,
                 sidewalkDistressToolStripMenuItem,
                 severeRoadDistressToolStripMenuItem,

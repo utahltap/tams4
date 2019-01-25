@@ -852,7 +852,27 @@ UPDATE sign SET display = description || ' (' || TAMSID || ')';";
                 dbVersion = 14;
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
-            #endregion db_update_13_immute
+            #endregion db_update_14_immute
+
+            #region db_update_15_immute
+            if (dbVersion == 14)
+            {
+                try
+                {
+                    string cmdString = @"ALTER TABLE sign ADD COLUMN recommendation TEXT;";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "15";
+                dbVersion = 15;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_15_immute
 
             return true;
         }
