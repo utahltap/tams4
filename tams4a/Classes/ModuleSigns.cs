@@ -6,15 +6,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Threading;
 using tams4a.Controls;
 using tams4a.Forms;
 
 namespace tams4a.Classes
 {
-    class ModuleSigns : ProjectModule {
-
-        
+    public class ModuleSigns : ProjectModule
+    {    
         private string notes;
         private string postCat;
         private int maxSuppID = 0;
@@ -89,15 +87,18 @@ namespace tams4a.Classes
             if (type != "point") { throw new Exception("Signs module requires a point-type shp file"); }
 
             #region signSettings
-            ModuleSettings.Add(new ProjectSetting(name: "sign_f_TAMSID", module: ModuleName, value: "",
-                    display_text: "SHP field with a unique identifier (TAMSID).", display_type: "field",
-                    description: "Show an Icon instead of a basic shape for sign locations.", required:true));
-            ModuleSettings.Add(new ProjectSetting(name: "sign_f_address", module: ModuleName, value: "",
-                    display_text: "SHP field with sign address?", display_type: "field",
-                    description: "The field in the sign shp file containing the approximate address of the signpost."));
+            ModuleSettings.Add(new ProjectSetting(name: "sign_zoom", module: ModuleName, value: "true", display_weight: 4,
+                    display_text: "Zoom to Selection?", display_type: "bool",
+                    description: "Fit map to selected roads."));
             ModuleSettings.Add(new ProjectSetting(name: "sign_f_offset", module: ModuleName, value: "",
-                    display_text: "SHP field with offset from road?", display_type: "field",
+                    display_text: "SHP Field for 'Offset From Road'", display_type: "field", display_weight: 3,
                     description: "The field in the sign shp file indicating the distance of the support from the road."));
+            ModuleSettings.Add(new ProjectSetting(name: "sign_f_address", module: ModuleName, value: "",
+                    display_text: "SHP Field for 'Sign Address'", display_type: "field", display_weight: 2,
+                    description: "The field in the sign shp file containing the approximate address of the signpost."));
+            ModuleSettings.Add(new ProjectSetting(name: "sign_f_TAMSID", module: ModuleName, value: "",
+                    display_text: "SHP Field with a 'Unique Identifier' (TAMSID)", display_type: "field", display_weight: 1,
+                    description: "Show an Icon instead of a basic shape for sign locations.", required:true));
             #endregion signSettings
 
             injectSettings();
@@ -394,7 +395,6 @@ namespace tams4a.Classes
             signControls.toolStripButtonCancel.Enabled = false;
             signControls.toolStripButtonSurveyDate.Enabled = false;
             signControls.toolStripButtonNotes.Enabled = false;
-            signControls.toolStripButtonRemove.Enabled = false;
         }
 
         /// <summary>
@@ -442,6 +442,14 @@ namespace tams4a.Classes
                 disableSignDisplay(signControls);
                 return;
             }
+
+            if (Project.settings.GetValue("sign_zoom") == "true")
+            {
+                selectionLayer.ZoomToSelectedFeatures();
+                Project.map.ZoomOut();
+                Project.map.ZoomOut();
+            }
+
 
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             tamsids = new List<string>();
@@ -702,11 +710,12 @@ namespace tams4a.Classes
 
         public void saveHandler(object sender, EventArgs e)
         {
+            Panel_Sign signControls = getSignControls();
+            if (!signControls.toolStripButtonSave.Enabled) return;
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
 
-            Panel_Sign signControls = getSignControls();
             Dictionary<string, string> values = new Dictionary<string, string>();
             values["survey_date"] = Util.SortableDate(surveyDate);
             values["address"] = signControls.textBoxAddress.Text;
@@ -732,14 +741,16 @@ namespace tams4a.Classes
                 foreach (DataRow row in selectionLayer.DataSet.DataTable.Select(tamsidcolumn + " IN (" + tamsidsCSV + ")"))
                 {
                     row["TAMSSIGN"] = postCat;
-                    if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_address")))
+                    try
                     {
                         row[Project.settings.GetValue("sign_f_address")] = values["address"];
                     }
-                    if (!string.IsNullOrWhiteSpace(Project.settings.GetValue("sign_f_offset")))
+                    catch { }
+                    try
                     {
                         row[Project.settings.GetValue("sign_f_offset")] = values["road_offset"];
                     }
+                    catch { }
                 }
             }
 
@@ -1317,7 +1328,7 @@ namespace tams4a.Classes
             data.Columns.Add("Material");
             data.Columns.Add("Condition");
             data.Columns.Add("Obstructions");
-            data.Columns.Add("Comment");
+            data.Columns.Add("Notes");
             try
             {
                 DataTable supportTable = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign_support");
@@ -1325,14 +1336,15 @@ namespace tams4a.Classes
                 {
                     DataRow nr = data.NewRow();
                     nr["ID"] = row["support_id"];
-                    nr["Addres"] = row["address"];
-                    nr["signs"] = Database.GetDataByQuery(Project.conn, "SELECT COUNT(suppord_id) FROM sign WHERE support_id = " + nr["ID"].ToString() + ";");
+                    nr["Address"] = row["address"];
+                    nr["Signs"] = Database.GetDataByQuery(Project.conn, "SELECT COUNT(support_id) FROM sign WHERE support_id = " + nr["ID"].ToString() + ";");
                     nr["Material"] = row["material"];
-                    nr["Condtion"] = row["condition"];
+                    nr["Condition"] = row["condition"];
                     nr["Obstructions"] = row["obstructions"];
+                    nr["Notes"] = row["notes"];
                     data.Rows.Add(nr);
                 }
-                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
+                data.DefaultView.Sort = "Address asc, ID asc";
                 FormOutput report = new FormOutput(Project);
                 report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
                 report.Text = "Support Report";

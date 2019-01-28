@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace tams4a.Classes
 {
@@ -44,31 +41,9 @@ namespace tams4a.Classes
             options = new List<String>();
         }
 
-        #region TODO:tablesql
-        // TODO:  Use this approach?
-        // Returns the SQL necessary to create a database table for the above class.
-        // this means I don't have to include a default database (and worry about keeping these
-        // in sync in 2 different locations).
-        //public static String createTableSQL()
-        //{
-        //    return @"CREATE TABLE `settings` ( 
-        //                `name`	            TEXT NOT NULL UNIQUE,
-        //             `value`	            TEXT,
-        //             `module` 	        TEXT NOT NULL DEFAULT 'base',
-        //             `display_name`	    TEXT,
-        //             `display_type`	    TEXT,
-        //             `display_weight`	INTEGER DEFAULT 5,
-        //             `description`	    TEXT,
-        //             PRIMARY KEY(`name`)
-        //            ); 
-        //            INSERT INTO settings (name, value) VALUES ('version', '4.0');
-        //            ";
-        //}
-        #endregion
-
         // -1 => This before other
-        // 0  =  Equal (or undefined)
-        // 1  => This after other
+        //  0 => Equal (or undefined)
+        //  1 => This after other
         // note that since we've defined a default value, we shouldn't run into instances where 
         // display_weight is undefined or null, but just in case. ;) 
         public int CompareTo(ProjectSetting other)
@@ -77,14 +52,6 @@ namespace tams4a.Classes
             {
                 int weight_this = this.Display_Weight;
                 int weight_that = other.Display_Weight;
-
-                // max display_weight = 10.  This puts info items at the bottom.
-                if (this.Display_Type == "info") { weight_this += 10; }
-                if (other.Display_Type == "info") { weight_that += 10; }
-
-                // other adjustments as necessary
-                // alpha?
-
                 return weight_this.CompareTo(weight_that);
             }
             catch

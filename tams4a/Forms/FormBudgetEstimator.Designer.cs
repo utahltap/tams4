@@ -1,4 +1,6 @@
-﻿namespace tams4a.Forms
+﻿using System;
+
+namespace tams4a.Forms
 {
     partial class FormBudgetEstimator
     {
@@ -217,6 +219,7 @@
             this.dataGridViewRSL.Name = "dataGridViewRSL";
             this.dataGridViewRSL.Size = new System.Drawing.Size(1048, 348);
             this.dataGridViewRSL.TabIndex = 3;
+            this.dataGridViewRSL.ReadOnly = true;
             // 
             // tabPageBudgetGraph
             // 
@@ -300,15 +303,17 @@
             this.checkBoxVaried.UseVisualStyleBackColor = true;
             // 
             // numericUpDownDisplayYear
-            // 
+            //
+            DateTime today = DateTime.Today;
+            int currentYear = int.Parse(today.ToString("yyyy"));
             this.numericUpDownDisplayYear.Location = new System.Drawing.Point(367, 24);
             this.numericUpDownDisplayYear.Maximum = new decimal(new int[] {
-            2028,
+            currentYear + 10,
             0,
             0,
             0});
             this.numericUpDownDisplayYear.Minimum = new decimal(new int[] {
-            2018,
+            currentYear,
             0,
             0,
             0});
@@ -316,7 +321,7 @@
             this.numericUpDownDisplayYear.Size = new System.Drawing.Size(73, 20);
             this.numericUpDownDisplayYear.TabIndex = 7;
             this.numericUpDownDisplayYear.Value = new decimal(new int[] {
-            2018,
+            currentYear,
             0,
             0,
             0});
@@ -685,6 +690,7 @@
             this.dataGridViewMetaData.Name = "dataGridViewMetaData";
             this.dataGridViewMetaData.Size = new System.Drawing.Size(1048, 348);
             this.dataGridViewMetaData.TabIndex = 0;
+            this.dataGridViewMetaData.ReadOnly = true;
             // 
             // FormBudgetEstimator
             // 

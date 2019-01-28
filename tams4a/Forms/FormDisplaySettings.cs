@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -24,7 +25,7 @@ namespace tams4a.Forms
         {
             mainWindow.uxMap.BackColor = Color.White;
             mainWindow.road.labelColor = Color.Black;
-            mainWindow.road.setSymbolizer();
+            mainWindow.road.symbols.setSymbolizer();
             mainWindow.Project.map.Refresh();
         }
 
@@ -32,7 +33,7 @@ namespace tams4a.Forms
         {
             mainWindow.uxMap.BackColor = Color.Black;
             mainWindow.road.labelColor = Color.LightGray;
-            mainWindow.road.setSymbolizer();
+            mainWindow.road.symbols.setSymbolizer();
             mainWindow.Project.map.Refresh();
         }
 
@@ -46,7 +47,7 @@ namespace tams4a.Forms
             hideLegend();
         }
 
-        private void hideLegend()
+        public void hideLegend()
         {
             mainWindow.rslBlue.Visible = false;
             mainWindow.rslDeepSkyBlue.Visible = false;
@@ -64,7 +65,7 @@ namespace tams4a.Forms
             mainWindow.treatmentReconstruction.Visible = false;
         }
 
-        private void getLegend()
+        public void getLegend()
         {
             hideLegend();
             if (comboBoxRoadColors.Text == "RSL")
@@ -77,6 +78,7 @@ namespace tams4a.Forms
                 mainWindow.rslOrange.Visible = true;
                 mainWindow.rslRed.Visible = true;
                 mainWindow.rslDarkRed.Visible = true;
+                mainWindow.resetLegend(mainWindow.treatmentLegend);
             }
             if (comboBoxRoadColors.Text == "Treatment")
             {
@@ -86,6 +88,7 @@ namespace tams4a.Forms
                 mainWindow.treatmentPreventativePatching.Visible = true;
                 mainWindow.treatmentRehabilitation.Visible = true;
                 mainWindow.treatmentReconstruction.Visible = true;
+                mainWindow.resetLegend(mainWindow.rslLegend);
             }
         }
 
@@ -93,7 +96,7 @@ namespace tams4a.Forms
         {
             if (radioButtonOn.Checked)getLegend();
             mainWindow.road.roadColors = comboBoxRoadColors.Text;
-            mainWindow.road.setSymbolizer();
+            mainWindow.road.symbols.setSymbolizer();
             mainWindow.Project.map.Refresh();
         }
     }

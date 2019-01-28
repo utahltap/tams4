@@ -60,7 +60,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.buttonSave);
             this.splitContainer1.Panel2.Controls.Add(this.buttonCancel);
             this.splitContainer1.Size = new System.Drawing.Size(613, 525);
-            this.splitContainer1.SplitterDistance = 425;
+            this.splitContainer1.SplitterDistance = 431;
             this.splitContainer1.TabIndex = 0;
             // 
             // tabControlSettings
@@ -70,7 +70,7 @@
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(613, 425);
+            this.tabControlSettings.Size = new System.Drawing.Size(613, 431);
             this.tabControlSettings.TabIndex = 0;
             // 
             // general
@@ -78,7 +78,7 @@
             this.general.Location = new System.Drawing.Point(4, 22);
             this.general.Name = "general";
             this.general.Padding = new System.Windows.Forms.Padding(3);
-            this.general.Size = new System.Drawing.Size(605, 399);
+            this.general.Size = new System.Drawing.Size(605, 405);
             this.general.TabIndex = 0;
             this.general.Text = "General";
             this.general.UseVisualStyleBackColor = true;
@@ -101,7 +101,7 @@
             // 
             this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSave.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonSave.Location = new System.Drawing.Point(411, 55);
+            this.buttonSave.Location = new System.Drawing.Point(411, 49);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(199, 38);
             this.buttonSave.TabIndex = 1;
@@ -113,7 +113,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(3, 55);
+            this.buttonCancel.Location = new System.Drawing.Point(3, 49);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(96, 38);
             this.buttonCancel.TabIndex = 0;

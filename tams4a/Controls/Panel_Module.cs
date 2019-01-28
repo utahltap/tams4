@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace tams4a.Controls
@@ -26,7 +19,11 @@ namespace tams4a.Controls
 
         public void moduleValueChanged(object sender, EventArgs e)
         {
-            Handler(sender, e);
+            try
+            {
+                Handler(sender, e);
+            }
+            catch { }
         }
 
         protected string MakePictureNumbered(string oldPhoto)

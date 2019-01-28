@@ -227,11 +227,14 @@
     <Compile Include="Classes\ProjectSetting.cs" />
     <Compile Include="Classes\ProjectSettings.cs" />
     <Compile Include="Classes\ProjectVersion.cs" />
+    <Compile Include="Classes\Roads\RoadGraphs.cs" />
+    <Compile Include="Classes\Roads\RoadReports.cs" />
     <Compile Include="Classes\RoadSidewalkForm.cs" />
+    <Compile Include="Classes\Roads\RoadSymbols.cs" />
     <Compile Include="Classes\TamsProject.cs" />
     <Compile Include="Classes\CustomEventArgs.cs" />
     <Compile Include="Classes\Module.cs" />
-    <Compile Include="Classes\ModuleRoads.cs" />
+    <Compile Include="Classes\Roads\ModuleRoads.cs" />
     <Compile Include="Classes\Util.cs" />
     <Compile Include="Controls\CtlSettingBool.cs">
       <SubType>UserControl</SubType>
