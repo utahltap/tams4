@@ -1,6 +1,6 @@
 # TAMS 4.1.x
 
-# Version 4.1.1.2
+# Version 4.1.2.0
 CHANGES
 ----------------------------------------------------
 * Improved functionality of the search feature in the main window tool bar.
