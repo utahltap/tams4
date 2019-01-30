@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace tams4a.Classes
 {
@@ -134,8 +135,8 @@ namespace tams4a.Classes
                 }
                 outFile.WriteLine(s);
             }
-
             outFile.Close();
+            Process.Start(filename);
             return true;
         }
 
@@ -173,6 +174,8 @@ namespace tams4a.Classes
                 bitmap.Save(path, ImageFormat.Png);
                 path.Close();
             }
+            Process.Start(save.FileName);
+
             return true;
         }
 
