@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using tams4a.Classes;
 using tams4a.Forms;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace tams4a
 {
@@ -16,6 +17,7 @@ namespace tams4a
         private DotSpatial.Controls.FunctionMode CurrentMode;
         public TamsProject Project;
         public ModuleRoads road;
+        public ModuleSigns sign;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
@@ -86,7 +88,7 @@ namespace tams4a
                 roadsWithSidewalksToolStripMenuItem
             };
             road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
-            ModuleSigns sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
+            sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
             GenericModule other = new GenericModule(Project, new TabPage("Other"), lcso);
             Project.addModule(road, "Roads", tabControlControls);
             Project.addModule(sign, "Signs", tabControlControls);
@@ -113,6 +115,17 @@ namespace tams4a
             webService = DotSpatial.Plugins.WebMap.ServiceProviderFactory.Create("GooleMap");
         }
         */
+
+        private void checkHotKeys(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                if (tabControlControls.SelectedIndex == 0) road.saveHandler(sender, e);
+                if (tabControlControls.SelectedIndex == 1) sign.saveHandler(sender, e);
+                //if (tabControlControls.SelectedTab.Name == "Other") //do something
+            }
+        }
+
         private void setEventHandlers()
         {
             uxMap.Layers.LayerAdded += LayersChangedEventHandler;
@@ -126,12 +139,7 @@ namespace tams4a
             {
                 toolStrip1.Enabled = true;
                 uxMap.Enabled = true;
-                //if (theme == "light")
-                    uxMap.BackColor = Color.White;
-                //if (theme == "dark")
-                //{
-                //    uxMap.BackColor = Color.Black;
-                //}
+                uxMap.BackColor = Color.White;
             }
             else
             {
@@ -142,6 +150,12 @@ namespace tams4a
             UpdateZoomButtons(sender, e);
         }
 
+        private void ResetLegend(object sender, EventArgs e)
+        {
+            FormDisplaySettings display = new FormDisplaySettings(this, road.roadColors);
+            if (display.radioButtonOff.Checked) return;
+            display.getLegend();
+        }
 
         private void toolStripZoomIn_Click(object sender, EventArgs e)
         {
@@ -288,6 +302,14 @@ namespace tams4a
             Project.mapSelectionChanged();
         }
 
+        private void uxMap_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                e.SuppressKeyPress = true;
+            }
+        }
+
         // settings dialog
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -362,6 +384,7 @@ namespace tams4a
         private void window_Resize(object sender, EventArgs e)
         {
             UpdateZoomButtons(sender, e);
+            ResetLegend(sender, e);
         }
 
         /// <summary>
@@ -407,13 +430,83 @@ namespace tams4a
         {
             if (uxMap.Layers.Count == 0)
             {
-                MessageBox.Show("A SHP file is required to do that action.");
+                MessageBox.Show("A SHP file is required to do this action.");
                 return;
             }
-            String id = toolStripTextBoxSearch.Text;
-            FeatureLayer selectionLayer = (FeatureLayer)uxMap.Layers.SelectedLayer;
-            String tamsidcolumn = Project.settings.GetValue(selectionLayer.Name + "_f_TAMSID");
-            selectionLayer.SelectByAttribute(tamsidcolumn + " = " + id);
+            string input = toolStripTextBoxSearch.Text;
+            if (String.IsNullOrEmpty(input)) return;
+
+            //remove spaces before entry
+            int j = 0;
+            while (input[j] == ' ') j++;
+            input = input.Remove(0, j);
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == ',')
+                {
+                    //remove spaces after comma
+                    j = 1;
+                    while (input[i + j] == ' ') j++;
+                    input = input.Remove(i + 1, j - 1);
+
+                    //remove spaces before comma
+                    j = 1;
+                    while (input[i - j] == ' ') j++;
+                    input = input.Remove(i - j + 1, j - 1); 
+                }
+            }
+
+            string[] ids = input.Split(',').ToArray();
+
+                FeatureLayer selectionLayer = (FeatureLayer)uxMap.Layers.SelectedLayer;
+                string layerName = "";
+                if (Project.currentModuleName == "Roads") layerName = "road";
+                if (Project.currentModuleName == "Signs") layerName = "sign";
+                foreach (FeatureLayer layer in uxMap.Layers)
+                {
+                    layer.UnSelectAll();
+                    if (layer.Name.ToString() == layerName) selectionLayer = layer;
+                }
+                String tamsidcolumn = Project.settings.GetValue(selectionLayer.Name + "_f_TAMSID");
+
+                string searchBy = toolStripComboBoxFind.Text;
+                if (searchBy == "ID")
+                {                
+                    foreach (string id in ids)
+                    {
+                    int x;
+                        if (!Int32.TryParse(id, out x))
+                        {
+                            MessageBox.Show("'" + id + "' is not a valid input.\nPlease Enter a Number", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            continue;
+                        }
+                        selectionLayer.SelectByAttribute(tamsidcolumn + " = " + id, ModifySelectionMode.Append);
+                    }
+                }
+
+            if (searchBy == "Street")
+            {
+                foreach (string name in ids)
+                {
+                    Console.WriteLine(name);
+                    DataTable searchName = Database.GetDataByQuery(Project.conn, "SELECT DISTINCT TAMSID FROM road WHERE name LIKE '" + name + "';");
+                    foreach (DataRow row in searchName.Rows)
+                    {
+                        selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
+                    }
+                }
+            }
+
+            if (selectionLayer.Selection.Count == 0)
+            {
+                MessageBox.Show(searchBy + " Not Found", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+
+            if (layerName == "road") road.selectionChanged();
+            if (layerName == "sign") sign.selectionChanged();
+
         }
 
         private void toolStripButtonSnapShot_Click(object sender, EventArgs e)
@@ -473,7 +566,18 @@ namespace tams4a
 
         private void tabControlControls_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Project.selectModule(tabControlControls.SelectedTab.Text);
+            string selectedTab = tabControlControls.SelectedTab.Text;
+            Project.selectModule(selectedTab);
+            if (selectedTab == "Signs")
+            {
+                toolStripComboBoxFind.SelectedIndex = 0;
+                toolStripComboBoxFind.Enabled = false;
+            }
+            if (selectedTab == "Roads")
+            {
+                toolStripComboBoxFind.Enabled = true;
+            }
+
         }
 
         private void displayChangeLog()
@@ -504,7 +608,16 @@ namespace tams4a
 
             if (openCSV.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                System.IO.StreamReader sr = new System.IO.StreamReader(openCSV.FileName);
+                System.IO.StreamReader sr = null;
+                try
+                {
+                    sr = new System.IO.StreamReader(openCSV.FileName);
+                }
+                catch
+                {
+                    MessageBox.Show("Failed to import file. Make sure the file is of type 'CSV' and is not open in any other application", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 string importedCSV = sr.ReadToEnd();
                 sr.Close();
 
@@ -531,12 +644,105 @@ namespace tams4a
                     
                 }
 
-                FormOutput report = new FormOutput(Project);
+                FormOutput report = new FormOutput(Project, road);
                 report.dataGridViewReport.DataSource = importedTable;
                 report.Text = "Imported Report";
                 report.Show();
-                MessageBox.Show("Check to make sure the table was imported correctly.\nSave changes if you want to keep them.");
+                MessageBox.Show("Check to make sure the table was imported correctly. " +
+                    "Only columns with following headings will be updated:\n" +
+                    "\n\t\t ID" +
+                    "\n\t\t Name" +
+                    "\n\t\t Speed Limit" +
+                    "\n\t\t Lanes" +
+                    "\n\t\t Width (ft)" +
+                    "\n\t\t Length (ft)" +
+                    "\n\t\t From Addres" +
+                    "\n\t\t To Address" +
+                    "\n\t\t Surface" +
+                    "\n\t\t Treatment" +
+                    "\n\t\t RSL" +
+                    "\n\t\t Functional Classification" +
+                    "\n\t\t Notes" +
+                    "\n\t\t Survey Date" +
+                    "\n\t\t Fat/Spa/Pot" +
+                    "\n\t\t Edg/Joi/Rut" +
+                    "\n\t\t Lon/Cor/X-S" +
+                    "\n\t\t Pat/Bro/Dra" +
+                    "\n\t\t Pot/Fau/Dus" +
+                    "\n\t\t Dra/Lon/Agg" +
+                    "\n\t\t Tra/Tra/Cor" +
+                    "\n\t\t Block/Crack" +
+                    "\n\t\t Rutti/Patch" +
+                    "\n\nColumns such as 'Cost' and 'Area' are computed when a table is generated." +
+                    " Save changes if you want to keep them.",
+                    "Importing CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
 
+        private void highlightKey(object sender, MouseEventArgs e, TextBox key)
+        {
+            bool noneSelected = true;
+            bool allSelected = true;
+            if (key.BorderStyle == BorderStyle.FixedSingle)
+            {
+                key.BorderStyle = BorderStyle.Fixed3D;
+            }
+            else
+            {
+                key.BorderStyle = BorderStyle.FixedSingle;
+            }
+
+            Dictionary<TextBox, Color> currentLegend = new Dictionary<TextBox, Color>();
+            if (road.roadColors == "RSL")
+            {
+                currentLegend = rslLegend;
+            }
+
+            if (road.roadColors == "Treatment")
+            {
+                currentLegend = treatmentLegend;
+            }
+            foreach (KeyValuePair<TextBox, Color> box in currentLegend)
+            {
+                if (box.Key.BorderStyle == BorderStyle.Fixed3D)
+                {
+                    road.symbols.selectedColors[box.Value] = true;
+                    box.Key.BackColor = box.Value;
+                    allSelected = false;
+                    if (box.Value == Color.Yellow || box.Value == Color.Orange)
+                    {
+                        box.Key.ForeColor = Color.Black;
+                    }
+                }
+                else
+                {
+                    road.symbols.selectedColors[box.Value] = false;
+                    box.Key.BackColor = Color.LightGray;
+                    noneSelected = false;
+                    if (box.Value == Color.Yellow || box.Value == Color.Orange)
+                    {
+                        box.Key.ForeColor = Color.White;
+                    }
+                }
+            }
+            if (noneSelected || allSelected)
+            {
+                resetLegend(currentLegend);
+            }
+            road.symbols.setSymbolizer();
+        }
+
+        public void resetLegend(Dictionary<TextBox, Color> currentLegend)
+        {
+            foreach (KeyValuePair<TextBox, Color> box in currentLegend)
+            {
+                road.symbols.selectedColors[box.Value] = true;
+                box.Key.BackColor = box.Value;
+                box.Key.BorderStyle = BorderStyle.FixedSingle;
+                if (box.Value == Color.Yellow || box.Value == Color.Orange)
+                {
+                    box.Key.ForeColor = Color.Black;
+                }
             }
         }
     }

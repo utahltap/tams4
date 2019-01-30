@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using tams4a.Classes;
 
@@ -7,12 +9,15 @@ namespace tams4a.Forms
 {
     public partial class FormOutput : Form
     {
-        public TamsProject Project;
-        public FormOutput(TamsProject theProject)
+        private TamsProject Project;
+        private ModuleRoads moduleRoads;
+
+        public FormOutput(TamsProject theProject, ModuleRoads roads = null)
         {
             InitializeComponent();
             CenterToScreen();
             Project = theProject;
+            moduleRoads = roads;
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
@@ -36,7 +41,10 @@ namespace tams4a.Forms
             Cursor.Current = Cursors.WaitCursor;
             DataTable report = new DataTable();
 
-            foreach(DataGridViewColumn col in dataGridViewReport.Columns)
+            string thisSql = moduleRoads.getSelectAllSQL();
+            DataTable fullDataSet = Database.GetDataByQuery(Project.conn, thisSql);
+
+            foreach (DataGridViewColumn col in dataGridViewReport.Columns)
             {
                 report.Columns.Add(col.Name);
             }
@@ -50,11 +58,13 @@ namespace tams4a.Forms
                 report.Rows.Add(dataRow);
             }
 
+            string sql = "";
             foreach (DataColumn col in report.Columns)
             {
                 foreach (DataRow row in report.Rows)
                 {
                     string column = "";
+
                     if (col.ToString() == "ID") column = "TAMSID";
                     else if (col.ToString() == "Name") column = "name";
                     else if (col.ToString() == "Speed Limit") column = "speed_limit";
@@ -78,17 +88,52 @@ namespace tams4a.Forms
                     else if (col.ToString() == "Tra/Tra/Cor") column = "distress7";
                     else if (col.ToString() == "Block/Crack") column = "distress8";
                     else if (col.ToString() == "Rutti/Patch") column = "distress9";
+                    else continue;
 
-                    string sql = "";
+                    string currentID = row["ID"].ToString();
+                    if (String.IsNullOrEmpty(currentID)) currentID = null;
+                    if (currentID == null) continue;
 
-                    if (row[col].ToString() != "")
-                        sql = "UPDATE road SET " + column + " = \"" + row[col].ToString() + "\" WHERE TAMSID = " + row["ID"].ToString();
-                    if (column != "" && sql != "")
-                        Database.ExecuteNonQuery(Project.conn, sql);
+                    string newValue = row[col].ToString();
+                    if (String.IsNullOrEmpty(newValue)) newValue = null;
+
+                    bool valuePresent = false;
+
+                    string searchDataSet = "TAMSID = null";
+                    if (!(currentID == null)) searchDataSet = "TAMSID = " + row["ID"].ToString();
+                    DataRow[] existingRow = fullDataSet.Select(searchDataSet);
+                    foreach (DataRow dr in existingRow)
+                    {
+                        string oldValue = dr[column].ToString();
+                        if (String.IsNullOrEmpty(oldValue)) oldValue = null;
+                        if (oldValue == newValue)
+                        {
+                            valuePresent = true;
+                            continue;
+                        }
+                    }
+                    if (valuePresent) continue;
+                    sql += "UPDATE road SET " + column + " = \"" + newValue + "\" WHERE TAMSID = " + currentID + ";";
                 }
+            }
+            try
+            {
+                Database.ExecuteNonQuery(Project.conn, sql);
+            }
+            catch
+            {
+                Cursor.Current = Cursors.Arrow;
+                MessageBox.Show("Make sure the column names match each of the column names found in the 'general report.'", "Error: Save Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             Cursor.Current = Cursors.Arrow;
             MessageBox.Show("Changes Saved");
+            return;
+        }
+
+        private void LoadingMessage()
+        {
+            Application.Run(new FormLoading("Saving Changes..."));
         }
     }
 }

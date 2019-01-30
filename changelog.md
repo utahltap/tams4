@@ -1,5 +1,20 @@
 # TAMS 4.1.x
 
+# Version 4.1.2.0
+CHANGES
+----------------------------------------------------
+* Improved functionality of the search feature in the main window tool bar.
+* New setting to toggle zooming to selection on the map.
+* Added various keyboard shortcuts
+* Custom report has a new option to select roads on the map.
+* Keys in the legend can be selected to display only selected colors on the map. 
+
+BUG FIXES
+----------------------------------------------------
+* Fixed legend not repositioning when shrinking the map.
+* Saving changes when editing/ importing a table is much faster.
+* Sorting tables by numeric values now sorts as expected.
+
 # Version 4.1.1.1
 CHANGES
 ----------------------------------------------------

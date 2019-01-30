@@ -45,7 +45,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Loading...";
             this.UseWaitCursor = true;
-            this.Load += new System.EventHandler(this.FormLoad);
             this.ResumeLayout(false);
 
         }

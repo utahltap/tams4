@@ -187,7 +187,7 @@
         private System.Windows.Forms.ComboBox comboBoxRoadColors;
         private System.Windows.Forms.Label labelLegend;
         private System.Windows.Forms.RadioButton radioButtonOn;
-        private System.Windows.Forms.RadioButton radioButtonOff;
+        public System.Windows.Forms.RadioButton radioButtonOff;
         private System.Windows.Forms.Panel panelTheme;
         private System.Windows.Forms.Panel panelLegend;
         private System.Windows.Forms.Label labelRoadColors;
