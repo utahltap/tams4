@@ -304,17 +304,11 @@ namespace tams4a.Classes
         /// </summary>
         override protected void setSymbolizer()
         {
+            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            selectionLayer.SelectAll();
+
             int baseWidth = 48;
-
             PointScheme sgnScheme = new PointScheme();
-            
-            PointCategory catDef = new PointCategory(Properties.Resources.empty_post, baseWidth);
-            catDef.LegendText = "No Sign Info";
-            catDef.SelectionSymbolizer.ScaleMode = ScaleMode.Geographic;
-            catDef.SelectionSymbolizer.SetOutline(Color.Cyan, baseWidth / 4);
-            catDef.Symbolizer.ScaleMode = ScaleMode.Geographic;
-            sgnScheme.AddCategory(catDef);
-
             Image[] images = { Properties.Resources.regulatory_rw, Properties.Resources.regulatory_bw, Properties.Resources.warning, Properties.Resources.regulatory_pedestrian, Properties.Resources.school_pedestrian, Properties.Resources.worker, Properties.Resources.rail, Properties.Resources.highway, Properties.Resources.locational, Properties.Resources.locational, Properties.Resources.service, Properties.Resources.recreation, Properties.Resources.empty_post};
             string[] signCats = { "regulatory_rw", "regulatory_bw", "warning", "regulatory_pedestrian", "school_pedestrian", "worker", "rail", "highway", "locational", "location_guide", "service", "recreation", "empty_post"};
 
@@ -330,10 +324,6 @@ namespace tams4a.Classes
 
             ((MapPointLayer)Layer).Symbology = sgnScheme;
             ((MapPointLayer)Layer).ApplyScheme(sgnScheme);
-            Project.map.Invalidate();
-            Project.map.Refresh();
-            Project.map.ResetBuffer();
-            Project.map.Update();
         }
 
         /// <summary>
@@ -385,7 +375,7 @@ namespace tams4a.Classes
             {
                 selectionTable.Rows[i]["TAMSSIGN"] = (i >= tamsTable.Rows.Count) ? "empty_post" : tamsTable.Rows[i]["category"];
             }
-            selectionLayer.DataSet.DataTable = selectionTable; //Is this necessary?
+            //selectionLayer.DataSet.DataTable = selectionTable; //Is this necessary?
         }
 
         /// <summary>
@@ -447,6 +437,11 @@ namespace tams4a.Classes
             {
                 disableSignDisplay(signControls);
                 return;
+            }
+
+            if (shpSelection.Count > 1)
+            {
+                //handle multi sign selection
             }
 
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
@@ -537,9 +532,7 @@ namespace tams4a.Classes
                 signControls.comboBoxSigns.ValueMember = "TAMSID";
                 clearSignChanges();
                 changeSign(signControls);
-                
-                determinePostCat();
-                
+                determinePostCat();   
             }
             else
             {

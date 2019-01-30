@@ -73,16 +73,11 @@ namespace tams4a.Classes.Signs
 
                     data.Rows.Add(nr);
                 }
-                data.DefaultView.Sort = "Support ID asc, ID asc";
-                FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
-                report.Text = "Sign Inventory";
-                report.Show();
+                showReport(data, "Sign Inventory");
             }
             catch (Exception err)
             {
-                MessageBox.Show("An error occured while trying to generate the report.");
-                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+                errMsg(err);
             }
         }
 
@@ -128,16 +123,11 @@ namespace tams4a.Classes.Signs
 
                     data.Rows.Add(nr);
                 }
-                data.DefaultView.Sort = "Support ID asc, ID asc";
-                FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
-                report.Text = "Support Inventory";
-                report.Show();
+                showReport(data, "Sign Recommendations");
             }
             catch (Exception err)
             {
-                MessageBox.Show("An error occured while trying to generate the report.");
-                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+                errMsg(err);
             }
         }
 
@@ -181,16 +171,11 @@ namespace tams4a.Classes.Signs
                     nr["Survey Date"] = row["survey_date"];
                     data.Rows.Add(nr);
                 }
-                data.DefaultView.Sort = "Support ID asc";
-                FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
-                report.Text = "Support Inventory";
-                report.Show();
+                showReport(data, "Support Inventory");
             }
             catch (Exception err)
             {
-                MessageBox.Show("An error occured while trying to generate the report.");
-                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+                errMsg(err);
             }
         }
 
@@ -222,17 +207,27 @@ namespace tams4a.Classes.Signs
                     nr["Survey Date"] = row["survey_date"];
                     data.Rows.Add(nr);
                 }
-                data.DefaultView.Sort = "Support ID asc";
-                FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
-                report.Text = "Support Inventory";
-                report.Show();
+                showReport(data, "Support Recommendations");
             }
             catch (Exception err)
             {
-                MessageBox.Show("An error occured while trying to generate the report.");
-                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+                errMsg(err);
             }
+        }
+
+        private void showReport(DataTable data, string name)
+        {
+            data.DefaultView.Sort = "Support ID asc";
+            FormOutput report = new FormOutput(Project);
+            report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
+            report.Text = name;
+            report.Show();
+        }
+
+        private void errMsg(Exception err)
+        {
+            MessageBox.Show("An error occured while trying to generate the report.");
+            Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
         }
     }
 }
