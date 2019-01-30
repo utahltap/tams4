@@ -230,11 +230,8 @@
     <Compile Include="Classes\Roads\RoadGraphs.cs" />
     <Compile Include="Classes\Roads\RoadReports.cs" />
     <Compile Include="Classes\RoadSidewalkForm.cs" />
-<<<<<<< HEAD
     <Compile Include="Classes\Signs\SignReports.cs" />
-=======
     <Compile Include="Classes\Roads\RoadSymbols.cs" />
->>>>>>> e8ecac516968735ca5c5111443c069c58a0aa0d8
     <Compile Include="Classes\TamsProject.cs" />
     <Compile Include="Classes\CustomEventArgs.cs" />
     <Compile Include="Classes\Module.cs" />

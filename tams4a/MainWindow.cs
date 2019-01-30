@@ -73,10 +73,10 @@ namespace tams4a
                 analysisToolStripMenuItem,
                 customToolStripMenuItem,
                 roadToolStripMenuItem,
-                roadTypeToolStripMenuItem,
-                roadCategoryToolStripMenuItem,
-                governingDistressToolStripMenuItem,
-                rSLToolStripMenuItem };
+                surfaceTypeToolStripMenuItem,
+                functionalClassificationToolStripMenuItem,
+                governingDistressesToolStripMenuItem,
+                rSLDistributionToolStripMenuItem };
             ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signInventoryToolStripMenuItem, signRecommendationsToolStripMenuItem, supportInventoryToolStripMenuItem, supportRecommendationsToolStripMenuItem, signToolStripMenuItem };
             ToolStripMenuItem[] lcso = { otherToolStripMenuItem,
                 sidewalkDistressToolStripMenuItem,
