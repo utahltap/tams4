@@ -53,14 +53,16 @@ namespace tams4a.Classes.Roads
         {
             string[] pd = { "less than 1\"", "less than 2\"", "more than 2\"" };
             string[] pq = { "less than 2", "less than 5", "more than 5" };
+            int Integer = 0;
+            Type typeInt = Integer.GetType();
             DataTable potholes = new DataTable("Potholes");
-            potholes.Columns.Add("ID");
+            potholes.Columns.Add("ID", typeInt);
             potholes.Columns.Add("Name");
             potholes.Columns.Add("From Address");
             potholes.Columns.Add("To Address");
             potholes.Columns.Add("Depth");
             potholes.Columns.Add("Quantity");
-            potholes.Columns.Add("Suggested Treatment");
+            potholes.Columns.Add("Treatment");
             string thisSql = moduleRoads.getSelectAllSQL();
             try
             {
@@ -83,7 +85,7 @@ namespace tams4a.Classes.Roads
                     nr["To Address"] = row["to_address"];
                     nr["Depth"] = (Util.ToInt(row["distress5"].ToString()) > 0 ? pd[(Util.ToInt(row["distress5"].ToString()) - 1) / 3] : "None");
                     nr["Quantity"] = (Util.ToInt(row["distress5"].ToString()) > 0 ? pq[(Util.ToInt(row["distress5"].ToString()) - 1) % 3] : "None");
-                    nr["Suggested Treatment"] = row["suggested_treatment"].ToString();
+                    nr["Treatment"] = row["suggested_treatment"].ToString();
                     potholes.Rows.InsertAt(nr, potholes.Rows.Count);
                 }
                 potholes.DefaultView.Sort = "Name asc, From Address asc";

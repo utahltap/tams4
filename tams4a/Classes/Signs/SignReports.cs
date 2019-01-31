@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using tams4a.Forms;
 
@@ -38,6 +39,7 @@ namespace tams4a.Classes.Signs
             data.Columns.Add("Category");
             data.Columns.Add("Notes");
             data.Columns.Add("Favorite");
+            data.Columns.Add("MUTCD Code");
             data.Columns.Add("Install Date");
             data.Columns.Add("Survey Date");
             try
@@ -66,8 +68,9 @@ namespace tams4a.Classes.Signs
                     nr["Mount Height (ft)"] = row["mount_height"];
                     nr["Direction"] = row["direction"];
                     nr["Category"] = row["category"];
-                    nr["Notes"] = row["notes"];
+                    nr["Notes"] = truncateNote(row);
                     nr["Favorite"] = row["favorite"];
+                    nr["MUTCD Code"] = row["mutcd_code"];
                     nr["Install Date"] = row["install_date"];
                     nr["Survey Date"] = row["survey_date"];
 
@@ -118,7 +121,7 @@ namespace tams4a.Classes.Signs
                     nr["Support ID"] = row["support_id"];
                     nr["Address"] = address;
                     nr["Recommendation"] = row["recommendation"];
-                    nr["Notes"] = row["notes"];
+                    nr["Notes"] = truncateNote(row);
                     nr["Survey Date"] = row["survey_date"];
 
                     data.Rows.Add(nr);
@@ -167,7 +170,7 @@ namespace tams4a.Classes.Signs
                     nr["Road Offset (ft)"] = row["road_offset"];
                     nr["Height (ft)"] = row["height"];
                     nr["Category"] = row["category"];
-                    nr["Notes"] = row["notes"];
+                    nr["Notes"] = truncateNote(row);
                     nr["Survey Date"] = row["survey_date"];
                     data.Rows.Add(nr);
                 }
@@ -203,7 +206,7 @@ namespace tams4a.Classes.Signs
                     nr["Support ID"] = row["support_id"];
                     nr["Address"] = row["address"];
                     nr["Recommendation"] = row["recommendation"];
-                    nr["Notes"] = row["notes"];
+                    nr["Notes"] = truncateNote(row);
                     nr["Survey Date"] = row["survey_date"];
                     data.Rows.Add(nr);
                 }
@@ -218,7 +221,7 @@ namespace tams4a.Classes.Signs
         private void showReport(DataTable data, string name)
         {
             data.DefaultView.Sort = "Support ID asc";
-            FormOutput report = new FormOutput(Project);
+            FormOutput report = new FormOutput(Project, null, name);
             report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
             report.Text = name;
             report.Show();
@@ -228,6 +231,21 @@ namespace tams4a.Classes.Signs
         {
             MessageBox.Show("An error occured while trying to generate the report.");
             Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
+        }
+
+        private string truncateNote(DataRow row)
+        {
+            string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+
+            int oldNoteLength = note.Length;
+            int maxLength = 17;
+            if (!string.IsNullOrEmpty(note))
+            {
+                note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
+
+            }
+            if (note.Length == maxLength) note += "...";
+            return note;
         }
     }
 }
