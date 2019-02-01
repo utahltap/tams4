@@ -26,7 +26,6 @@ namespace tams4a.Classes.Signs
             data.Columns.Add("Support ID", typeInt);
             data.Columns.Add("Description");
             data.Columns.Add("Sign Text");
-            data.Columns.Add("Obstructions");
             data.Columns.Add("Condition");
             data.Columns.Add("Recommendation");
             data.Columns.Add("Reflectivity");
@@ -57,7 +56,6 @@ namespace tams4a.Classes.Signs
                     nr["Support ID"] = row["support_id"];
                     nr["Description"] = row["description"];
                     nr["Sign Text"] = row["sign_text"];
-                    nr["Obstructions"] = row["obstructions"];
                     nr["Condition"] = row["condition"];
                     nr["Recommendation"] = row["recommendation"];
                     nr["Reflectivity"] = row["reflectivity"];

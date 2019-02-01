@@ -28,7 +28,7 @@ namespace tams4a.Forms
 
         private void csvToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Util.TableToCSV((DataTable)(dataGridViewReport.DataSource), "TAMS");
+            Util.TableToCSV((DataTable)(dataGridViewReport.DataSource));
         }
 
         private void pngToolStripMenuItem_Click(object sender, EventArgs e)
@@ -55,7 +55,7 @@ namespace tams4a.Forms
                 report.Rows.Add(dataRow);
             }
 
-            if (String.IsNullOrEmpty(reportType)) roadReport(report);
+            if (String.IsNullOrEmpty(reportType) || reportType == "Road") roadReport(report);
             else if (reportType == "Sign Inventory") signInventoryReport(report);
             else if (reportType == "Sign Recommendations") signRecommendationsReport(report);
             else if (reportType == "Support Inventory") supportInventoryReport(report);
@@ -90,7 +90,6 @@ namespace tams4a.Forms
                     else if (col.ToString() == "Treatment") column = "suggested_treatment";
                     else if (col.ToString() == "RSL") column = "rsl";
                     else if (col.ToString() == "Functional Classification") column = "type";
-                    else if (col.ToString() == "Notes") column = "notes";
                     else if (col.ToString() == "Survey Date") column = "survey_date";
                     else if (col.ToString() == "Fat/Spa/Pot") column = "distress1";
                     else if (col.ToString() == "Edg/Joi/Rut") column = "distress2";
@@ -164,9 +163,9 @@ namespace tams4a.Forms
                     else if (col.ToString() == "Backing") column = "backing";
                     else if (col.ToString() == "Height (in)") column = "height";
                     else if (col.ToString() == "Width (in)") column = "width";
+                    else if (col.ToString() == "Mount Height (ft)") column = "mount_height";
                     else if (col.ToString() == "Direction") column = "direction";
                     else if (col.ToString() == "Category") column = "category";
-                    else if (col.ToString() == "Notes") column = "notes";
                     else if (col.ToString() == "Favorite") column = "favorite";
                     else if (col.ToString() == "MUTCD Code") column = "mutcd_code";
                     else if (col.ToString() == "Install Date") column = "install_date";
@@ -233,7 +232,6 @@ namespace tams4a.Forms
                         continue;
                     }
                     else if (col.ToString() == "Recommendation") column = "recommendation";
-                    else if (col.ToString() == "Notes") column = "notes";
                     else if (col.ToString() == "Survey Date") column = "survey_date";
                     else continue;
 
@@ -295,7 +293,6 @@ namespace tams4a.Forms
                     else if (col.ToString() == "Road Offset (ft)") column = "road_offset";
                     else if (col.ToString() == "Height (ft)") column = "height";
                     else if (col.ToString() == "Category") column = "category";
-                    else if (col.ToString() == "Notes") column = "notes";
                     else if (col.ToString() == "Survey Date") column = "survey_date";
                     else continue;
 
@@ -351,7 +348,6 @@ namespace tams4a.Forms
                     if (col.ToString() == "Support ID") column = "support_id";
                     else if (col.ToString() == "Address") column = "address";
                     else if (col.ToString() == "Recommendation") column = "recommendation";
-                    else if (col.ToString() == "Notes") column = "notes";
                     else if (col.ToString() == "Survey Date") column = "survey_date";
                     else continue;
 
