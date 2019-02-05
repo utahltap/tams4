@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Panel_Sign));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
@@ -42,6 +43,7 @@
             this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readGPSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMoveSign = new System.Windows.Forms.ToolStripButton();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
             this.pictureBoxPost = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -126,7 +128,8 @@
             this.toolStripButtonNotes,
             this.toolStripSeparator2,
             this.toolStripDropDownButtonNewPost,
-            this.toolStripButtonRemove});
+            this.toolStripButtonRemove,
+            this.toolStripMoveSign});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(224, 25);
@@ -243,6 +246,16 @@
             this.toolStripButtonRemove.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonRemove.Text = "remove support";
             this.toolStripButtonRemove.ToolTipText = "Remove Support";
+            // 
+            // toolStripMoveSign
+            // 
+            this.toolStripMoveSign.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripMoveSign.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMoveSign.Image")));
+            this.toolStripMoveSign.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripMoveSign.Name = "toolStripMoveSign";
+            this.toolStripMoveSign.Size = new System.Drawing.Size(23, 22);
+            this.toolStripMoveSign.Text = "toolStripMoveSign";
+            this.toolStripMoveSign.ToolTipText = "Move Sign";
             // 
             // groupBoxSupport
             // 
@@ -430,7 +443,6 @@
             this.comboBoxSigns.Size = new System.Drawing.Size(90, 21);
             this.comboBoxSigns.TabIndex = 12;
             this.comboBoxSigns.Tag = "";
-            this.comboBoxSigns.SelectedIndexChanged += new System.EventHandler(this.comboBoxSigns_SelectedIndexChanged);
             // 
             // numericUpDownOffset
             // 
@@ -1054,5 +1066,6 @@
         public System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonNewPost;
         public System.Windows.Forms.ComboBox comboBoxSignRecommendation;
         private System.Windows.Forms.Label labelSignRecommend;
+        public System.Windows.Forms.ToolStripButton toolStripMoveSign;
     }
 }

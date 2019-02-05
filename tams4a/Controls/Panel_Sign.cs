@@ -83,9 +83,6 @@ namespace tams4a.Controls
             }
         }
 
-        private void comboBoxSigns_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
-        }
     }
 }

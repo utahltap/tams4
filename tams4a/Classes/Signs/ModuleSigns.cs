@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using tams4a.Controls;
 using tams4a.Forms;
 using tams4a.Classes.Signs;
+using DotSpatial.Topology;
+using DotSpatial.Plugins.ShapeEditor;
 
 namespace tams4a.Classes
 {
@@ -23,6 +25,8 @@ namespace tams4a.Classes
         private Dictionary<string, int> catRank;
         private bool suppressChanges = false;
         private bool inClick = false;
+        private bool movingSign = false;
+        private Color originalColor;
 
         private SignReports reports;
 
@@ -40,7 +44,7 @@ namespace tams4a.Classes
             Button createSigns = new Button();
             createSigns.Text = "Create Sign SHP File";
             createSigns.Size = new Size(196, 54);
-            createSigns.Location = new Point(10, 74);
+            createSigns.Location = new System.Drawing.Point(10, 74);
             createSigns.Click += newSHPFile;
             signAdd.Controls.Add(createSigns);
             signAdd.Dock = DockStyle.Fill;
@@ -114,6 +118,8 @@ namespace tams4a.Classes
             ControlsPage.Controls.Add(signPanel);
 
             #region eventhandlers
+            signPanel.toolStripMoveSign.Click += moveSign;
+
             signPanel.setChangedHandler(controlChanged);
             signPanel.toolStripButtonSave.Click += saveHandler;
             signPanel.toolStripButtonCancel.Click += cancelChanges;
@@ -150,6 +156,7 @@ namespace tams4a.Classes
             signPanel.textBoxPhotoFile.TextChanged += signValueChanged;
             signPanel.pictureBoxPhoto.Click += clickPhotoBox;
             signPanel.pictureBoxPost.Click += clickPostPhotoBox;
+            Project.map.MouseUp += moveSignMouseUp;
             #endregion eventhandlers
 
             DataTable supportMaterials = Database.GetDataByQuery(Project.conn, "SELECT * FROM support_materials");
@@ -235,7 +242,7 @@ namespace tams4a.Classes
         /// <param name="e"></param>
         private void chooseInstallDate(object sender, EventArgs e)
         {
-            Forms.FormSurveyDate df = new Forms.FormSurveyDate();
+            FormSurveyDate df = new FormSurveyDate();
             df.Text = "Select Install Date";
             df.setText("Select the date when this sign was installed.");
             df.ShowDialog();
@@ -422,6 +429,67 @@ namespace tams4a.Classes
             Panel_Sign signControls = getSignControls();
             signControls.setTodayToolStripMenuItem.Checked = true;
             signControls.setOtherDateToolStripMenuItem.Checked = false;
+        }
+
+
+        private void moveSign(object sender, EventArgs e)
+        {
+            Panel_Sign signControls = getSignControls();
+            if (signControls.toolStripMoveSign.BackColor == Color.LightSkyBlue)
+            {
+                movingSign = false;
+                Project.map.FunctionMode = FunctionMode.Select;
+                signControls.toolStripMoveSign.BackColor = originalColor;
+                return;
+            }
+            originalColor = signControls.toolStripMoveSign.BackColor;
+            signControls.toolStripMoveSign.BackColor = Color.LightSkyBlue;
+            IFeatureLayer selectionLayer = (IFeatureLayer)Layer;
+            MoveVertexFunction moveSign = new MoveVertexFunction(Project.map);
+            moveSign.Map = Project.map;
+            moveSign.YieldStyle = YieldStyles.LeftButton | YieldStyles.RightButton;
+            if (Project.map.MapFunctions.Contains(moveSign) == false)
+            {
+                Project.map.MapFunctions.Add(moveSign);
+            }
+            Project.map.FunctionMode = FunctionMode.None;
+            Project.map.Cursor = Cursors.Cross;
+            moveSign.DeselectFeature();
+            moveSign.Layer = selectionLayer;
+            SetSnapLayers(moveSign);
+            moveSign.Activate();
+            movingSign = true;
+        }
+
+        private void moveSignMouseUp(object sender, MouseEventArgs e)
+        {
+            if (!movingSign) return;
+            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            Properties.Settings.Default.Save();
+            selectionLayer.ClearSelection();
+            selectionLayer.DataSet.Save();
+            setSymbolizer();
+            Project.map.Invalidate();
+            Project.map.Refresh();
+            Project.map.ResetBuffer();
+            Project.map.Update();
+            Panel_Sign signControls = getSignControls();
+            if (signControls.toolStripMoveSign.BackColor != originalColor) return;
+            movingSign = false;
+            Project.map.FunctionMode = FunctionMode.Select;
+            signControls.toolStripMoveSign.BackColor = originalColor;
+        }
+
+        private void SetSnapLayers(SnappableMapFunction func)
+        {
+            func.DoSnapping = true;
+            IFeatureLayer selectionLayer = (IFeatureLayer)Layer;
+            foreach (var layer in Project.map.Layers)
+            {
+                IFeatureLayer fl = layer as IFeatureLayer;
+                if (fl != null && fl != selectionLayer && fl.DataSet.FeatureType != selectionLayer.DataSet.FeatureType)
+                    func.AddLayerToSnap(fl);
+            }
         }
 
         override public void selectionChanged()
@@ -659,7 +727,7 @@ namespace tams4a.Classes
             Button createSigns = new Button();
             createSigns.Text = "Create Sign SHP File";
             createSigns.Size = new Size(196, 54);
-            createSigns.Location = new Point(10, 74);
+            createSigns.Location = new System.Drawing.Point(10, 74);
             signAdd.Controls.Add(createSigns);
             signAdd.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(signAdd);

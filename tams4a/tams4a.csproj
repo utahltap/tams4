@@ -148,6 +148,9 @@
       <HintPath>..\packages\DotSpatial.NetTopologySuite.1.14.4\lib\net40-client\DotSpatial.NetTopologySuite.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DotSpatial.Plugins.ShapeEditor">
+      <HintPath>..\..\..\..\.nuget\packages\DotSpatial.Plugins.ShapeEditor.1.0.1185\lib\net40-Client\DotSpatial.Plugins.ShapeEditor.dll</HintPath>
+    </Reference>
     <Reference Include="DotSpatial.Positioning, Version=1.9.0.0, Culture=neutral, PublicKeyToken=f6f66d1554473068, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Positioning.1.9\lib\net40-Client\DotSpatial.Positioning.dll</HintPath>
       <Private>True</Private>

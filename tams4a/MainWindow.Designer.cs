@@ -994,6 +994,7 @@ namespace tams4a
             this.toolStripComboBoxFind.Items.AddRange(new object[] {
             "ID",
             "Street"});
+            this.toolStripComboBoxFind.SelectedIndex = 0;
             this.toolStripComboBoxFind.Name = "toolStripComboBoxFind";
             this.toolStripComboBoxFind.Size = new System.Drawing.Size(75, 25);
             // 
