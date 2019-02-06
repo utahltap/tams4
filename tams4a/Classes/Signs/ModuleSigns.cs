@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using tams4a.Controls;
 using tams4a.Forms;
 using tams4a.Classes.Signs;
-using DotSpatial.Topology;
 using DotSpatial.Plugins.ShapeEditor;
 
 namespace tams4a.Classes
@@ -27,6 +26,7 @@ namespace tams4a.Classes
         private bool inClick = false;
         private bool movingSign = false;
         private Color originalColor;
+        new private FormSurveyDate dateForm = new FormSurveyDate();
 
         private SignReports reports;
 
@@ -157,6 +157,7 @@ namespace tams4a.Classes
             signPanel.pictureBoxPhoto.Click += clickPhotoBox;
             signPanel.pictureBoxPost.Click += clickPostPhotoBox;
             Project.map.MouseUp += moveSignMouseUp;
+            dateForm.FormClosing += updateSurveyDate;
             #endregion eventhandlers
 
             DataTable supportMaterials = Database.GetDataByQuery(Project.conn, "SELECT * FROM support_materials");
@@ -420,8 +421,17 @@ namespace tams4a.Classes
             Panel_Sign signControls = getSignControls();
             signControls.setTodayToolStripMenuItem.Checked = false;
             signControls.setOtherDateToolStripMenuItem.Checked = true;
+
         }
 
+        private void updateSurveyDate(object sender, EventArgs e)
+        {
+            Panel_Sign signControls = getSignControls();
+            surveyDate = dateForm.getDate();
+            string[] dateFormats = surveyDate.GetDateTimeFormats();
+            signControls.labelSurveyDate.Text = "As of " + dateFormats[94];
+            controlChanged(sender, e);            
+        }
 
         protected void resetRecordDate(object sender, EventArgs e)
         {
