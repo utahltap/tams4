@@ -429,7 +429,7 @@ namespace tams4a.Classes
             Panel_Sign signControls = getSignControls();
             surveyDate = dateForm.getDate();
             string[] dateFormats = surveyDate.GetDateTimeFormats();
-            signControls.labelSurveyDate.Text = "As of " + dateFormats[94];
+            signControls.labelSurveyDate.Text = "As of " + dateFormats[58];
             controlChanged(sender, e);            
         }
 
@@ -437,6 +437,8 @@ namespace tams4a.Classes
         {
             surveyDate = DateTime.Now;
             Panel_Sign signControls = getSignControls();
+            string[] dateFormats = surveyDate.GetDateTimeFormats();
+            signControls.labelSurveyDate.Text = "As of " + dateFormats[58];
             signControls.setTodayToolStripMenuItem.Checked = true;
             signControls.setOtherDateToolStripMenuItem.Checked = false;
         }
@@ -798,7 +800,8 @@ namespace tams4a.Classes
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
 
             Dictionary<string, string> values = new Dictionary<string, string>();
-            values["survey_date"] = Util.SortableDate(surveyDate);
+            string[] dateFormat = surveyDate.GetDateTimeFormats();
+            values["survey_date"] = dateFormat[58];
             values["address"] = signControls.textBoxAddress.Text;
             values["material"] = signControls.comboBoxMaterial.Text;
             values["condition"] = signControls.comboBoxCondition.Text;

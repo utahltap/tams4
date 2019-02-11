@@ -38,6 +38,7 @@ namespace tams4a
         public MainWindow()
         {
             InitializeComponent();
+            SetUpLegendControls();
             CenterToScreen();
             setEventHandlers();
             displayChangeLog();
@@ -103,6 +104,44 @@ namespace tams4a
             CurrentMode = uxMap.FunctionMode;
             maxWidth = (int)uxMap.ViewExtents.Width + 10;
         }
+
+        private void SetUpLegendControls()
+        {
+            //
+            // Handles Clicks on Legend for changing map display
+            //
+            rslBlue.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslBlue); });
+            rslDeepSkyBlue.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslDeepSkyBlue); });
+            rslGreen.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslGreen); });
+            rslLimeGreen.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslLimeGreen); });
+            rslYellow.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslYellow); });
+            rslOrange.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslOrange); });
+            rslRed.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslRed); });
+            rslDarkRed.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslDarkRed); });
+            treatmentRoutine.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentRoutine); });
+            treatmentPreventative.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPreventative); });
+            treatmentPatching.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPatching); });
+            treatmentPreventativePatching.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPreventativePatching); });
+            treatmentRehabilitation.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentRehabilitation); });
+            treatmentReconstruction.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentReconstruction); });
+            treatmentLegend[treatmentPreventative] = Color.Yellow;
+            treatmentLegend[treatmentRehabilitation] = Color.Red;
+            treatmentLegend[treatmentPreventativePatching] = Color.Orange;
+            treatmentLegend[treatmentReconstruction] = Color.DarkRed;
+            treatmentLegend[treatmentPatching] = Color.LimeGreen;
+            treatmentLegend[treatmentRoutine] = Color.Blue;
+            rslLegend[rslBlue] = Color.Blue;
+            rslLegend[rslDeepSkyBlue] = Color.DeepSkyBlue;
+            rslLegend[rslGreen] = Color.Green;
+            rslLegend[rslLimeGreen] = Color.LimeGreen;
+            rslLegend[rslYellow] = Color.Yellow;
+            rslLegend[rslDarkRed] = Color.DarkRed;
+            rslLegend[rslOrange] = Color.Orange;
+            rslLegend[rslRed] = Color.Red;
+        }
+
+
+
         /*
         private void createWebLayer()
         {

@@ -630,7 +630,6 @@ namespace tams4a
             this.treatmentPreventative.Text = "Preventative";
             this.treatmentPreventative.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPreventative.Visible = false;
-            this.treatmentLegend[treatmentPreventative] = Color.Yellow;
             // 
             // treatmentRehabilitation
             // 
@@ -648,7 +647,6 @@ namespace tams4a
             this.treatmentRehabilitation.Text = "Rehabilitation";
             this.treatmentRehabilitation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentRehabilitation.Visible = false;
-            this.treatmentLegend[treatmentRehabilitation] = Color.Red;
             // 
             // treatmentPreventativePatching
             // 
@@ -666,7 +664,6 @@ namespace tams4a
             this.treatmentPreventativePatching.Text = "Preventative/Patching";
             this.treatmentPreventativePatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPreventativePatching.Visible = false;
-            this.treatmentLegend[treatmentPreventativePatching] = Color.Orange;
             // 
             // treatmentReconstruction
             // 
@@ -684,7 +681,6 @@ namespace tams4a
             this.treatmentReconstruction.Text = "Reconstruction";
             this.treatmentReconstruction.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentReconstruction.Visible = false;
-            this.treatmentLegend[treatmentReconstruction] = Color.DarkRed;
             // 
             // treatmentPatching
             // 
@@ -702,7 +698,6 @@ namespace tams4a
             this.treatmentPatching.Text = "Patching";
             this.treatmentPatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPatching.Visible = false;
-            this.treatmentLegend[treatmentPatching] = Color.LimeGreen;
             // 
             // treatmentRoutine
             // 
@@ -720,7 +715,6 @@ namespace tams4a
             this.treatmentRoutine.Text = "Routine";
             this.treatmentRoutine.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentRoutine.Visible = false;
-            this.treatmentLegend[treatmentRoutine] = Color.Blue;
             // 
             // rslBlue
             // 
@@ -737,7 +731,6 @@ namespace tams4a
             this.rslBlue.TabIndex = 9;
             this.rslBlue.Text = "1 9 - 20";
             this.rslBlue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslBlue] = Color.Blue;
             // 
             // rslDeepSkyBlue
             // 
@@ -754,7 +747,6 @@ namespace tams4a
             this.rslDeepSkyBlue.TabIndex = 8;
             this.rslDeepSkyBlue.Text = "16 - 18";
             this.rslDeepSkyBlue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslDeepSkyBlue] = Color.DeepSkyBlue;
             // 
             // rslGreen
             // 
@@ -771,7 +763,6 @@ namespace tams4a
             this.rslGreen.TabIndex = 7;
             this.rslGreen.Text = "13 - 15";
             this.rslGreen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslGreen] = Color.Green;
             // 
             // rslLimeGreen
             // 
@@ -788,7 +779,6 @@ namespace tams4a
             this.rslLimeGreen.TabIndex = 6;
             this.rslLimeGreen.Text = "10 - 12";
             this.rslLimeGreen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslLimeGreen] = Color.LimeGreen;
             // 
             // rslYellow
             // 
@@ -805,7 +795,6 @@ namespace tams4a
             this.rslYellow.TabIndex = 5;
             this.rslYellow.Text = "7 - 9";
             this.rslYellow.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslYellow] = Color.Yellow;
             // 
             // rslDarkRed
             // 
@@ -822,7 +811,6 @@ namespace tams4a
             this.rslDarkRed.TabIndex = 4;
             this.rslDarkRed.Text = "0";
             this.rslDarkRed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslDarkRed] = Color.DarkRed;
             // 
             // rslOrange
             // 
@@ -839,7 +827,6 @@ namespace tams4a
             this.rslOrange.TabIndex = 3;
             this.rslOrange.Text = "4 - 6";
             this.rslOrange.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslOrange] = Color.Orange;
             // 
             // rslRed
             // 
@@ -856,7 +843,6 @@ namespace tams4a
             this.rslRed.TabIndex = 2;
             this.rslRed.Text = "1 - 3";
             this.rslRed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslRed] = Color.Red;
             // 
             // toolStrip1
             // 
@@ -1059,25 +1045,6 @@ namespace tams4a
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-            //
-            // Handles Clicks on Legend for changing map display
-            //
-            /*** Comment Out This Block of Code to Edit MainWindow Design ****************************************************************************************************************************************************/
-            /**/ this.rslBlue.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslBlue); });                                              /**/
-            /**/ this.rslDeepSkyBlue.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslDeepSkyBlue); });                                /**/
-            /**/ this.rslGreen.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslGreen); });                                            /**/
-            /**/ this.rslLimeGreen.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslLimeGreen); });                                    /**/
-            /**/ this.rslYellow.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslYellow); });                                          /**/
-            /**/ this.rslOrange.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslOrange); });                                          /**/
-            /**/ this.rslRed.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslRed); });                                                /**/
-            /**/ this.rslDarkRed.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslDarkRed); });                                        /**/
-            /**/ this.treatmentRoutine.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentRoutine); });                            /**/
-            /**/ this.treatmentPreventative.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPreventative); });                  /**/
-            /**/ this.treatmentPatching.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPatching); });                          /**/
-            /**/ this.treatmentPreventativePatching.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPreventativePatching); });  /**/
-            /**/ this.treatmentRehabilitation.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentRehabilitation); });              /**/
-            /**/ this.treatmentReconstruction.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentReconstruction); });              /**/
-            /*****************************************************************************************************************************************************************************************************************/
         }
 
         #endregion

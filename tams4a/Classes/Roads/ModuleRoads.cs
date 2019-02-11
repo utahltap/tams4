@@ -19,6 +19,7 @@ namespace tams4a.Classes
         private RoadReports reports;
         private RoadGraphs graphs;
         public RoadSymbols symbols;
+        new private FormSurveyDate dateForm = new FormSurveyDate();
 
         private string[] distressAsphalt = { "Fatigue", "Edge Cracks", "Longitudinal", "Patches", "Potholes", "Drainage", "Transverse", "Blocking", "Rutting" };
         private string[] distressGravel = { "Potholes", "Rutting", "X-section", "Drainage", "Dust", "Aggregate", "Corrugation" };
@@ -180,10 +181,7 @@ namespace tams4a.Classes
             roadPanel.buttonHistory.Click += reports.showHistory;
             roadPanel.setOtherDateToolStripMenuItem.Click += selectRecordDate;
             roadPanel.setTodayToolStripMenuItem.Click += resetRecordDate;
-            dateForm = new FormSurveyDate();
-            dateForm.Hide();
-            dateForm.buttonConfirm.Click += setDate;
-
+            dateForm.FormClosing += updateSurveyDate;
             #endregion eventhandlers
 
             #region road controls settings
@@ -267,6 +265,8 @@ namespace tams4a.Classes
             if (selectionCount > 1) mulitple = true;
 
             enableControls(mulitple);
+
+            //Note: Pulls data from most recent survey_date, not highest id.
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
 
             updateRoadDisplay(values);
@@ -571,8 +571,10 @@ namespace tams4a.Classes
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
 
             Dictionary<string, string> values = new Dictionary<string, string>();
+
+            string[] dateFormat = surveyDate.GetDateTimeFormats();
+            values["survey_date"] = dateFormat[58];
             values["name"] = roadControls.textBoxRoadName.Text;
-            values["survey_date"] = Util.SortableDate(surveyDate);
             values["speed_limit"] = roadControls.numericUpDownSpeedLimit.Value != 0 ? roadControls.numericUpDownSpeedLimit.Value.ToString() : "";
             values["lanes"] = roadControls.numericUpDownLanes.Value != 0 ? roadControls.numericUpDownLanes.Value.ToString() : "";
             values["width"] = roadControls.textBoxWidth.Text;
@@ -700,6 +702,7 @@ namespace tams4a.Classes
         public void distressChanged(object sender, CustomEventArgs e)
         {
             Panel_Road roadControls = getRoadControls();
+            controlChanged(sender, e);
             if (roadControls.comboBoxSurface.Text != "")
             {
                 roadControls.inputRsl.Text = calcRsl().ToString();
@@ -786,7 +789,6 @@ namespace tams4a.Classes
             noteForm.Close();
         }
 
-
         protected void selectRecordDate(object sender, EventArgs e)
         {
             dateForm.Show();
@@ -795,10 +797,21 @@ namespace tams4a.Classes
             roadControls.setOtherDateToolStripMenuItem.Checked = true;
         }
 
+        private void updateSurveyDate(object sender, EventArgs e)
+        {
+            Panel_Road roadControls = getRoadControls();
+            surveyDate = dateForm.getDate();
+            string[] dateFormats = surveyDate.GetDateTimeFormats();
+            roadControls.labelSurveyDate.Text = "As of " + dateFormats[58];
+            controlChanged(sender, e);
+        }
+
         protected void resetRecordDate(object sender, EventArgs e)
         {
             surveyDate = DateTime.Now;
             Panel_Road roadControls = getRoadControls();
+            string[] dateFormats = surveyDate.GetDateTimeFormats();
+            roadControls.labelSurveyDate.Text = "As of " + dateFormats[58];
             roadControls.setTodayToolStripMenuItem.Checked = true;
             roadControls.setOtherDateToolStripMenuItem.Checked = false;
         }
