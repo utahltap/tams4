@@ -496,7 +496,7 @@ CREATE TABLE mutcd_lookup (mutcd_code TEXT PRIMARY KEY, description TEXT, sign_t
                     SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
                     cmd.ExecuteNonQuery();
                     var liteAdapter = new SQLiteDataAdapter("SELECT * FROM mutcd_lookup", conn);
-                    var cmdBUilder = new SQLiteCommandBuilder(liteAdapter);
+                    var cmdBuilder = new SQLiteCommandBuilder(liteAdapter);
                     liteAdapter.Update(mutcdDat);
                 }
                 catch (Exception e)
@@ -873,6 +873,26 @@ UPDATE sign SET display = description || ' (' || TAMSID || ')';";
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
             #endregion db_update_15_immute
+
+            #region db_update_16_immute
+            if (dbVersion == 15)
+            {
+                try
+                {
+                    string cmdString = @"UPDATE mutcd_lookup SET description = UPPER(SUBSTR(description, 1, 1)) || SUBSTR(description, 2);";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "16";
+                dbVersion = 16;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_16_immute
 
             return true;
         }
