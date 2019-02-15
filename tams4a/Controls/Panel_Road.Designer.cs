@@ -118,7 +118,7 @@ namespace tams4a.Controls
             this.groupBoxDistress.MinimumSize = new System.Drawing.Size(0, 100);
             this.groupBoxDistress.Name = "groupBoxDistress";
             this.groupBoxDistress.Size = new System.Drawing.Size(220, 324);
-            this.groupBoxDistress.TabIndex = 6;
+            this.groupBoxDistress.TabIndex = 33;
             this.groupBoxDistress.TabStop = false;
             this.groupBoxDistress.Text = "Distresses";
             // 
@@ -128,7 +128,7 @@ namespace tams4a.Controls
             this.buttonSuggest.Location = new System.Drawing.Point(78, 221);
             this.buttonSuggest.Name = "buttonSuggest";
             this.buttonSuggest.Size = new System.Drawing.Size(24, 23);
-            this.buttonSuggest.TabIndex = 29;
+            this.buttonSuggest.TabIndex = 34;
             this.buttonSuggest.UseVisualStyleBackColor = true;
             // 
             // inputRsl
@@ -136,7 +136,7 @@ namespace tams4a.Controls
             this.inputRsl.Location = new System.Drawing.Point(104, 222);
             this.inputRsl.Name = "inputRsl";
             this.inputRsl.Size = new System.Drawing.Size(90, 20);
-            this.inputRsl.TabIndex = 28;
+            this.inputRsl.TabIndex = 35;
             // 
             // label4
             // 
@@ -144,7 +144,6 @@ namespace tams4a.Controls
             this.label4.Location = new System.Drawing.Point(7, 229);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(28, 13);
-            this.label4.TabIndex = 27;
             this.label4.Text = "RSL";
             // 
             // labelSuggestedTreatment
@@ -153,7 +152,6 @@ namespace tams4a.Controls
             this.labelSuggestedTreatment.Location = new System.Drawing.Point(7, 254);
             this.labelSuggestedTreatment.Name = "labelSuggestedTreatment";
             this.labelSuggestedTreatment.Size = new System.Drawing.Size(55, 13);
-            this.labelSuggestedTreatment.TabIndex = 26;
             this.labelSuggestedTreatment.Text = "Treatment";
             // 
             // comboBoxTreatment
@@ -173,7 +171,7 @@ namespace tams4a.Controls
             this.comboBoxTreatment.Location = new System.Drawing.Point(82, 248);
             this.comboBoxTreatment.Name = "comboBoxTreatment";
             this.comboBoxTreatment.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxTreatment.TabIndex = 25;
+            this.comboBoxTreatment.TabIndex = 36;
             this.comboBoxTreatment.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatmentChanged);
             // 
             // distress9
@@ -405,7 +403,7 @@ namespace tams4a.Controls
             0});
             this.numericUpDownLanes.Name = "numericUpDownLanes";
             this.numericUpDownLanes.Size = new System.Drawing.Size(111, 20);
-            this.numericUpDownLanes.TabIndex = 26;
+            this.numericUpDownLanes.TabIndex = 22;
             this.numericUpDownLanes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // numericUpDownSpeedLimit
@@ -418,7 +416,7 @@ namespace tams4a.Controls
             this.numericUpDownSpeedLimit.Location = new System.Drawing.Point(83, 58);
             this.numericUpDownSpeedLimit.Name = "numericUpDownSpeedLimit";
             this.numericUpDownSpeedLimit.Size = new System.Drawing.Size(76, 20);
-            this.numericUpDownSpeedLimit.TabIndex = 25;
+            this.numericUpDownSpeedLimit.TabIndex = 21;
             this.numericUpDownSpeedLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // labelTo
@@ -444,14 +442,14 @@ namespace tams4a.Controls
             this.textBoxTo.Location = new System.Drawing.Point(82, 136);
             this.textBoxTo.Name = "textBoxTo";
             this.textBoxTo.Size = new System.Drawing.Size(112, 20);
-            this.textBoxTo.TabIndex = 22;
+            this.textBoxTo.TabIndex = 24;
             // 
             // textBoxFrom
             // 
             this.textBoxFrom.Location = new System.Drawing.Point(82, 110);
             this.textBoxFrom.Name = "textBoxFrom";
             this.textBoxFrom.Size = new System.Drawing.Size(112, 20);
-            this.textBoxFrom.TabIndex = 21;
+            this.textBoxFrom.TabIndex = 23;
             // 
             // textBoxRoadName
             // 
@@ -468,7 +466,7 @@ namespace tams4a.Controls
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
             this.pictureBoxPhoto.Size = new System.Drawing.Size(90, 64);
             this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxPhoto.TabIndex = 19;
+            this.pictureBoxPhoto.TabIndex = 32;
             this.pictureBoxPhoto.TabStop = false;
             // 
             // labelPhoto
@@ -485,7 +483,7 @@ namespace tams4a.Controls
             this.buttonNextPhoto.Location = new System.Drawing.Point(82, 305);
             this.buttonNextPhoto.Name = "buttonNextPhoto";
             this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
-            this.buttonNextPhoto.TabIndex = 17;
+            this.buttonNextPhoto.TabIndex = 30;
             this.buttonNextPhoto.Text = ">";
             this.buttonNextPhoto.UseVisualStyleBackColor = true;
             // 
@@ -494,7 +492,7 @@ namespace tams4a.Controls
             this.textBoxPhotoFile.Location = new System.Drawing.Point(105, 305);
             this.textBoxPhotoFile.Name = "textBoxPhotoFile";
             this.textBoxPhotoFile.Size = new System.Drawing.Size(90, 20);
-            this.textBoxPhotoFile.TabIndex = 16;
+            this.textBoxPhotoFile.TabIndex = 31;
             this.textBoxPhotoFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // labelSurface
@@ -513,7 +511,7 @@ namespace tams4a.Controls
             this.comboBoxSurface.Location = new System.Drawing.Point(83, 278);
             this.comboBoxSurface.Name = "comboBoxSurface";
             this.comboBoxSurface.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxSurface.TabIndex = 14;
+            this.comboBoxSurface.TabIndex = 29;
             this.comboBoxSurface.SelectedIndexChanged += new System.EventHandler(this.comboBoxSurfaceChanged);
             // 
             // comboBoxType
@@ -523,7 +521,7 @@ namespace tams4a.Controls
             this.comboBoxType.Location = new System.Drawing.Point(82, 246);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxType.TabIndex = 13;
+            this.comboBoxType.TabIndex = 28;
             this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.comboBoxTypeChanged);
             // 
             // labelType
@@ -568,14 +566,14 @@ namespace tams4a.Controls
             this.textBoxArea.Name = "textBoxArea";
             this.textBoxArea.ReadOnly = true;
             this.textBoxArea.Size = new System.Drawing.Size(77, 20);
-            this.textBoxArea.TabIndex = 8;
+            this.textBoxArea.TabIndex = 27;
             // 
             // textBoxLength
             // 
             this.textBoxLength.Location = new System.Drawing.Point(82, 188);
             this.textBoxLength.Name = "textBoxLength";
             this.textBoxLength.Size = new System.Drawing.Size(77, 20);
-            this.textBoxLength.TabIndex = 7;
+            this.textBoxLength.TabIndex = 26;
             this.textBoxLength.TextChanged += new System.EventHandler(this.lengthChanged);
             // 
             // textBoxWidth
@@ -583,7 +581,7 @@ namespace tams4a.Controls
             this.textBoxWidth.Location = new System.Drawing.Point(82, 162);
             this.textBoxWidth.Name = "textBoxWidth";
             this.textBoxWidth.Size = new System.Drawing.Size(77, 20);
-            this.textBoxWidth.TabIndex = 6;
+            this.textBoxWidth.TabIndex = 25;
             this.textBoxWidth.TextChanged += new System.EventHandler(this.widthChanged);
             // 
             // labelLanes

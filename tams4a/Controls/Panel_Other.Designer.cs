@@ -187,7 +187,7 @@
             this.textBoxAddress.Location = new System.Drawing.Point(89, 61);
             this.textBoxAddress.Name = "textBoxAddress";
             this.textBoxAddress.Size = new System.Drawing.Size(112, 20);
-            this.textBoxAddress.TabIndex = 25;
+            this.textBoxAddress.TabIndex = 3;
             // 
             // label1
             // 
@@ -223,7 +223,7 @@
             this.buttonNextPhoto.Location = new System.Drawing.Point(89, 107);
             this.buttonNextPhoto.Name = "buttonNextPhoto";
             this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
-            this.buttonNextPhoto.TabIndex = 21;
+            this.buttonNextPhoto.TabIndex = 5;
             this.buttonNextPhoto.Text = ">";
             this.buttonNextPhoto.UseVisualStyleBackColor = true;
             // 
@@ -232,7 +232,7 @@
             this.textBoxPhotoFile.Location = new System.Drawing.Point(111, 107);
             this.textBoxPhotoFile.Name = "textBoxPhotoFile";
             this.textBoxPhotoFile.Size = new System.Drawing.Size(90, 20);
-            this.textBoxPhotoFile.TabIndex = 20;
+            this.textBoxPhotoFile.TabIndex = 6;
             this.textBoxPhotoFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // textBoxDescription
@@ -240,7 +240,7 @@
             this.textBoxDescription.Location = new System.Drawing.Point(89, 84);
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(112, 20);
-            this.textBoxDescription.TabIndex = 5;
+            this.textBoxDescription.TabIndex = 4;
             // 
             // labelDescription
             // 
@@ -248,7 +248,6 @@
             this.labelDescription.Location = new System.Drawing.Point(11, 86);
             this.labelDescription.Name = "labelDescription";
             this.labelDescription.Size = new System.Drawing.Size(60, 13);
-            this.labelDescription.TabIndex = 4;
             this.labelDescription.Text = "Description";
             // 
             // comboBoxObject

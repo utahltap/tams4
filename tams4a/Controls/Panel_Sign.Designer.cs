@@ -133,7 +133,7 @@
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(224, 25);
-            this.toolStrip.TabIndex = 0;
+            this.toolStrip.TabIndex = 12;
             this.toolStrip.Text = "toolStrip1";
             // 
             // toolStripButtonSave
@@ -314,7 +314,7 @@
             this.buttonPhotoPost.Location = new System.Drawing.Point(87, 183);
             this.buttonPhotoPost.Name = "buttonPhotoPost";
             this.buttonPhotoPost.Size = new System.Drawing.Size(20, 20);
-            this.buttonPhotoPost.TabIndex = 50;
+            this.buttonPhotoPost.TabIndex = 10;
             this.buttonPhotoPost.Text = ">";
             this.buttonPhotoPost.UseVisualStyleBackColor = true;
             // 
@@ -323,7 +323,7 @@
             this.textBoxPhotoPost.Location = new System.Drawing.Point(109, 183);
             this.textBoxPhotoPost.Name = "textBoxPhotoPost";
             this.textBoxPhotoPost.Size = new System.Drawing.Size(90, 20);
-            this.textBoxPhotoPost.TabIndex = 49;
+            this.textBoxPhotoPost.TabIndex = 11;
             this.textBoxPhotoPost.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // comboBoxSupportRecommendation
@@ -340,7 +340,7 @@
             this.comboBoxSupportRecommendation.Location = new System.Drawing.Point(87, 156);
             this.comboBoxSupportRecommendation.Name = "comboBoxSupportRecommendation";
             this.comboBoxSupportRecommendation.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxSupportRecommendation.TabIndex = 45;
+            this.comboBoxSupportRecommendation.TabIndex = 9;
             // 
             // labelSupportRecommend
             // 
@@ -362,7 +362,7 @@
             this.comboBoxObstruction.Location = new System.Drawing.Point(87, 107);
             this.comboBoxObstruction.Name = "comboBoxObstruction";
             this.comboBoxObstruction.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxObstruction.TabIndex = 43;
+            this.comboBoxObstruction.TabIndex = 7;
             // 
             // labelObstruction
             // 
@@ -394,7 +394,7 @@
             this.comboBoxCondition.Location = new System.Drawing.Point(87, 82);
             this.comboBoxCondition.Name = "comboBoxCondition";
             this.comboBoxCondition.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxCondition.TabIndex = 40;
+            this.comboBoxCondition.TabIndex = 6;
             // 
             // buttonRemove
             // 
@@ -403,7 +403,7 @@
             this.buttonRemove.Location = new System.Drawing.Point(59, 249);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(24, 24);
-            this.buttonRemove.TabIndex = 19;
+            this.buttonRemove.TabIndex = 12;
             this.buttonRemove.UseVisualStyleBackColor = true;
             // 
             // label2
@@ -422,7 +422,7 @@
             this.buttonAdd.Location = new System.Drawing.Point(83, 249);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(24, 24);
-            this.buttonAdd.TabIndex = 14;
+            this.buttonAdd.TabIndex = 13;
             this.buttonAdd.UseVisualStyleBackColor = true;
             // 
             // labelSigns
@@ -431,7 +431,6 @@
             this.labelSigns.Location = new System.Drawing.Point(10, 255);
             this.labelSigns.Name = "labelSigns";
             this.labelSigns.Size = new System.Drawing.Size(33, 13);
-            this.labelSigns.TabIndex = 13;
             this.labelSigns.Text = "Signs";
             // 
             // comboBoxSigns
@@ -441,7 +440,7 @@
             this.comboBoxSigns.Location = new System.Drawing.Point(109, 252);
             this.comboBoxSigns.Name = "comboBoxSigns";
             this.comboBoxSigns.Size = new System.Drawing.Size(90, 21);
-            this.comboBoxSigns.TabIndex = 12;
+            this.comboBoxSigns.TabIndex = 14;
             this.comboBoxSigns.Tag = "";
             // 
             // numericUpDownOffset
@@ -460,7 +459,7 @@
             0});
             this.numericUpDownOffset.Name = "numericUpDownOffset";
             this.numericUpDownOffset.Size = new System.Drawing.Size(83, 20);
-            this.numericUpDownOffset.TabIndex = 11;
+            this.numericUpDownOffset.TabIndex = 8;
             this.numericUpDownOffset.Value = new decimal(new int[] {
             1,
             0,
@@ -491,7 +490,7 @@
             this.comboBoxMaterial.Location = new System.Drawing.Point(87, 57);
             this.comboBoxMaterial.Name = "comboBoxMaterial";
             this.comboBoxMaterial.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxMaterial.TabIndex = 7;
+            this.comboBoxMaterial.TabIndex = 5;
             // 
             // textBoxAddress
             // 
@@ -524,7 +523,7 @@
             this.buttonFavorite.Location = new System.Drawing.Point(109, 367);
             this.buttonFavorite.Name = "buttonFavorite";
             this.buttonFavorite.Size = new System.Drawing.Size(23, 23);
-            this.buttonFavorite.TabIndex = 20;
+            this.buttonFavorite.TabIndex = 33;
             this.buttonFavorite.UseVisualStyleBackColor = true;
             // 
             // groupBoxSign
@@ -574,7 +573,7 @@
             this.groupBoxSign.Location = new System.Drawing.Point(0, 310);
             this.groupBoxSign.Name = "groupBoxSign";
             this.groupBoxSign.Size = new System.Drawing.Size(224, 427);
-            this.groupBoxSign.TabIndex = 0;
+            this.groupBoxSign.TabIndex = 2;
             this.groupBoxSign.TabStop = false;
             this.groupBoxSign.Text = "Sign";
             // 
@@ -590,7 +589,7 @@
             this.comboBoxSignRecommendation.Location = new System.Drawing.Point(87, 299);
             this.comboBoxSignRecommendation.Name = "comboBoxSignRecommendation";
             this.comboBoxSignRecommendation.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxSignRecommendation.TabIndex = 52;
+            this.comboBoxSignRecommendation.TabIndex = 29;
             // 
             // labelSignRecommend
             // 
@@ -615,7 +614,7 @@
             this.textBoxBarcode.Location = new System.Drawing.Point(87, 396);
             this.textBoxBarcode.Name = "textBoxBarcode";
             this.textBoxBarcode.Size = new System.Drawing.Size(112, 20);
-            this.textBoxBarcode.TabIndex = 49;
+            this.textBoxBarcode.TabIndex = 34;
             // 
             // buttonSignNote
             // 
@@ -624,7 +623,7 @@
             this.buttonSignNote.Location = new System.Drawing.Point(86, 367);
             this.buttonSignNote.Name = "buttonSignNote";
             this.buttonSignNote.Size = new System.Drawing.Size(23, 23);
-            this.buttonSignNote.TabIndex = 48;
+            this.buttonSignNote.TabIndex = 32;
             this.buttonSignNote.UseVisualStyleBackColor = true;
             // 
             // buttonSearchMUTCD
@@ -634,7 +633,7 @@
             this.buttonSearchMUTCD.Location = new System.Drawing.Point(86, 18);
             this.buttonSearchMUTCD.Name = "buttonSearchMUTCD";
             this.buttonSearchMUTCD.Size = new System.Drawing.Size(23, 22);
-            this.buttonSearchMUTCD.TabIndex = 47;
+            this.buttonSearchMUTCD.TabIndex = 15;
             this.buttonSearchMUTCD.UseVisualStyleBackColor = true;
             // 
             // buttonInstallDate
@@ -643,7 +642,7 @@
             this.buttonInstallDate.Location = new System.Drawing.Point(86, 181);
             this.buttonInstallDate.Name = "buttonInstallDate";
             this.buttonInstallDate.Size = new System.Drawing.Size(22, 22);
-            this.buttonInstallDate.TabIndex = 46;
+            this.buttonInstallDate.TabIndex = 24;
             this.buttonInstallDate.UseVisualStyleBackColor = true;
             // 
             // textBoxDescription
@@ -651,7 +650,7 @@
             this.textBoxDescription.Location = new System.Drawing.Point(87, 42);
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(112, 20);
-            this.textBoxDescription.TabIndex = 45;
+            this.textBoxDescription.TabIndex = 17;
             // 
             // labelDescription
             // 
@@ -687,7 +686,7 @@
             this.buttonNextPhoto.Location = new System.Drawing.Point(87, 326);
             this.buttonNextPhoto.Name = "buttonNextPhoto";
             this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
-            this.buttonNextPhoto.TabIndex = 41;
+            this.buttonNextPhoto.TabIndex = 30;
             this.buttonNextPhoto.Text = ">";
             this.buttonNextPhoto.UseVisualStyleBackColor = true;
             // 
@@ -696,7 +695,7 @@
             this.textBoxPhotoFile.Location = new System.Drawing.Point(109, 327);
             this.textBoxPhotoFile.Name = "textBoxPhotoFile";
             this.textBoxPhotoFile.Size = new System.Drawing.Size(90, 20);
-            this.textBoxPhotoFile.TabIndex = 40;
+            this.textBoxPhotoFile.TabIndex = 31;
             this.textBoxPhotoFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // comboBoxDirection
@@ -715,7 +714,7 @@
             this.comboBoxDirection.Location = new System.Drawing.Point(87, 275);
             this.comboBoxDirection.Name = "comboBoxDirection";
             this.comboBoxDirection.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxDirection.TabIndex = 39;
+            this.comboBoxDirection.TabIndex = 28;
             // 
             // labelDirection
             // 
@@ -738,7 +737,7 @@
             this.comboBoxConditionSign.Location = new System.Drawing.Point(87, 251);
             this.comboBoxConditionSign.Name = "comboBoxConditionSign";
             this.comboBoxConditionSign.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxConditionSign.TabIndex = 35;
+            this.comboBoxConditionSign.TabIndex = 27;
             // 
             // comboBoxReflectivity
             // 
@@ -750,7 +749,7 @@
             this.comboBoxReflectivity.Location = new System.Drawing.Point(87, 227);
             this.comboBoxReflectivity.Name = "comboBoxReflectivity";
             this.comboBoxReflectivity.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxReflectivity.TabIndex = 34;
+            this.comboBoxReflectivity.TabIndex = 26;
             // 
             // labelConditionSign
             // 
@@ -775,7 +774,7 @@
             this.textBoxText.Location = new System.Drawing.Point(87, 205);
             this.textBoxText.Name = "textBoxText";
             this.textBoxText.Size = new System.Drawing.Size(112, 20);
-            this.textBoxText.TabIndex = 30;
+            this.textBoxText.TabIndex = 25;
             // 
             // labelText
             // 
@@ -792,7 +791,7 @@
             this.textBoxInstall.Location = new System.Drawing.Point(109, 182);
             this.textBoxInstall.Name = "textBoxInstall";
             this.textBoxInstall.Size = new System.Drawing.Size(90, 20);
-            this.textBoxInstall.TabIndex = 28;
+            this.textBoxInstall.TabIndex = 24;
             // 
             // labelInstall
             // 
@@ -841,7 +840,7 @@
             this.numericUpDownMountHeight.Location = new System.Drawing.Point(87, 159);
             this.numericUpDownMountHeight.Name = "numericUpDownMountHeight";
             this.numericUpDownMountHeight.Size = new System.Drawing.Size(83, 20);
-            this.numericUpDownMountHeight.TabIndex = 23;
+            this.numericUpDownMountHeight.TabIndex = 22;
             this.numericUpDownMountHeight.Value = new decimal(new int[] {
             1,
             0,
@@ -863,7 +862,7 @@
             this.textBoxType.Location = new System.Drawing.Point(109, 19);
             this.textBoxType.Name = "textBoxType";
             this.textBoxType.Size = new System.Drawing.Size(90, 20);
-            this.textBoxType.TabIndex = 21;
+            this.textBoxType.TabIndex = 16;
             // 
             // numericUpDownWidth
             // 
@@ -903,7 +902,7 @@
             this.numericUpDownHeightSign.Location = new System.Drawing.Point(87, 136);
             this.numericUpDownHeightSign.Name = "numericUpDownHeightSign";
             this.numericUpDownHeightSign.Size = new System.Drawing.Size(83, 20);
-            this.numericUpDownHeightSign.TabIndex = 18;
+            this.numericUpDownHeightSign.TabIndex = 21;
             this.numericUpDownHeightSign.Value = new decimal(new int[] {
             1,
             0,
@@ -925,7 +924,7 @@
             this.comboBoxBacking.Location = new System.Drawing.Point(87, 89);
             this.comboBoxBacking.Name = "comboBoxBacking";
             this.comboBoxBacking.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxBacking.TabIndex = 11;
+            this.comboBoxBacking.TabIndex = 19;
             // 
             // labelBacking
             // 
@@ -942,7 +941,7 @@
             this.comboBoxSheeting.Location = new System.Drawing.Point(87, 65);
             this.comboBoxSheeting.Name = "comboBoxSheeting";
             this.comboBoxSheeting.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxSheeting.TabIndex = 8;
+            this.comboBoxSheeting.TabIndex = 18;
             // 
             // labelSheeting
             // 

@@ -544,7 +544,6 @@ namespace tams4a
             this.uxMap.RedrawLayersWhileResizing = false;
             this.uxMap.SelectionEnabled = true;
             this.uxMap.Size = new System.Drawing.Size(863, 752);
-            this.uxMap.TabIndex = 1;
             this.uxMap.ZoomOutFartherThanMaxExtent = false;
             this.uxMap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.uxMap_KeyDown);
             this.uxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.uxMap_MouseDown);
@@ -626,7 +625,6 @@ namespace tams4a
             this.treatmentPreventative.Name = "treatmentPreventative";
             this.treatmentPreventative.ReadOnly = true;
             this.treatmentPreventative.Size = new System.Drawing.Size(136, 23);
-            this.treatmentPreventative.TabIndex = 16;
             this.treatmentPreventative.Text = "Preventative";
             this.treatmentPreventative.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPreventative.Visible = false;
@@ -643,7 +641,6 @@ namespace tams4a
             this.treatmentRehabilitation.Name = "treatmentRehabilitation";
             this.treatmentRehabilitation.ReadOnly = true;
             this.treatmentRehabilitation.Size = new System.Drawing.Size(136, 23);
-            this.treatmentRehabilitation.TabIndex = 15;
             this.treatmentRehabilitation.Text = "Rehabilitation";
             this.treatmentRehabilitation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentRehabilitation.Visible = false;
@@ -660,7 +657,6 @@ namespace tams4a
             this.treatmentPreventativePatching.Name = "treatmentPreventativePatching";
             this.treatmentPreventativePatching.ReadOnly = true;
             this.treatmentPreventativePatching.Size = new System.Drawing.Size(136, 23);
-            this.treatmentPreventativePatching.TabIndex = 14;
             this.treatmentPreventativePatching.Text = "Preventative/Patching";
             this.treatmentPreventativePatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPreventativePatching.Visible = false;
@@ -677,7 +673,6 @@ namespace tams4a
             this.treatmentReconstruction.Name = "treatmentReconstruction";
             this.treatmentReconstruction.ReadOnly = true;
             this.treatmentReconstruction.Size = new System.Drawing.Size(136, 23);
-            this.treatmentReconstruction.TabIndex = 13;
             this.treatmentReconstruction.Text = "Reconstruction";
             this.treatmentReconstruction.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentReconstruction.Visible = false;
@@ -694,7 +689,6 @@ namespace tams4a
             this.treatmentPatching.Name = "treatmentPatching";
             this.treatmentPatching.ReadOnly = true;
             this.treatmentPatching.Size = new System.Drawing.Size(136, 23);
-            this.treatmentPatching.TabIndex = 12;
             this.treatmentPatching.Text = "Patching";
             this.treatmentPatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPatching.Visible = false;
@@ -711,7 +705,6 @@ namespace tams4a
             this.treatmentRoutine.Name = "treatmentRoutine";
             this.treatmentRoutine.ReadOnly = true;
             this.treatmentRoutine.Size = new System.Drawing.Size(136, 23);
-            this.treatmentRoutine.TabIndex = 10;
             this.treatmentRoutine.Text = "Routine";
             this.treatmentRoutine.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentRoutine.Visible = false;
@@ -728,9 +721,9 @@ namespace tams4a
             this.rslBlue.Name = "rslBlue";
             this.rslBlue.ReadOnly = true;
             this.rslBlue.Size = new System.Drawing.Size(59, 23);
-            this.rslBlue.TabIndex = 9;
             this.rslBlue.Text = "1 9 - 20";
             this.rslBlue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslBlue.TabIndex = 1;
             // 
             // rslDeepSkyBlue
             // 
@@ -744,9 +737,9 @@ namespace tams4a
             this.rslDeepSkyBlue.Name = "rslDeepSkyBlue";
             this.rslDeepSkyBlue.ReadOnly = true;
             this.rslDeepSkyBlue.Size = new System.Drawing.Size(59, 23);
-            this.rslDeepSkyBlue.TabIndex = 8;
             this.rslDeepSkyBlue.Text = "16 - 18";
             this.rslDeepSkyBlue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslDeepSkyBlue.TabIndex = 2;
             // 
             // rslGreen
             // 
@@ -760,9 +753,9 @@ namespace tams4a
             this.rslGreen.Name = "rslGreen";
             this.rslGreen.ReadOnly = true;
             this.rslGreen.Size = new System.Drawing.Size(59, 23);
-            this.rslGreen.TabIndex = 7;
             this.rslGreen.Text = "13 - 15";
             this.rslGreen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslGreen.TabIndex = 3;
             // 
             // rslLimeGreen
             // 
@@ -776,9 +769,9 @@ namespace tams4a
             this.rslLimeGreen.Name = "rslLimeGreen";
             this.rslLimeGreen.ReadOnly = true;
             this.rslLimeGreen.Size = new System.Drawing.Size(59, 23);
-            this.rslLimeGreen.TabIndex = 6;
             this.rslLimeGreen.Text = "10 - 12";
             this.rslLimeGreen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslLimeGreen.TabIndex = 4;
             // 
             // rslYellow
             // 
@@ -792,9 +785,9 @@ namespace tams4a
             this.rslYellow.Name = "rslYellow";
             this.rslYellow.ReadOnly = true;
             this.rslYellow.Size = new System.Drawing.Size(59, 23);
-            this.rslYellow.TabIndex = 5;
             this.rslYellow.Text = "7 - 9";
             this.rslYellow.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslYellow.TabIndex = 5;
             // 
             // rslDarkRed
             // 
@@ -808,9 +801,9 @@ namespace tams4a
             this.rslDarkRed.Name = "rslDarkRed";
             this.rslDarkRed.ReadOnly = true;
             this.rslDarkRed.Size = new System.Drawing.Size(59, 23);
-            this.rslDarkRed.TabIndex = 4;
             this.rslDarkRed.Text = "0";
             this.rslDarkRed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslDarkRed.TabIndex = 8;
             // 
             // rslOrange
             // 
@@ -824,9 +817,9 @@ namespace tams4a
             this.rslOrange.Name = "rslOrange";
             this.rslOrange.ReadOnly = true;
             this.rslOrange.Size = new System.Drawing.Size(59, 23);
-            this.rslOrange.TabIndex = 3;
             this.rslOrange.Text = "4 - 6";
             this.rslOrange.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslOrange.TabIndex = 6;
             // 
             // rslRed
             // 
@@ -840,9 +833,9 @@ namespace tams4a
             this.rslRed.Name = "rslRed";
             this.rslRed.ReadOnly = true;
             this.rslRed.Size = new System.Drawing.Size(59, 23);
-            this.rslRed.TabIndex = 2;
             this.rslRed.Text = "1 - 3";
             this.rslRed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rslRed.TabIndex = 7;
             // 
             // toolStrip1
             // 
