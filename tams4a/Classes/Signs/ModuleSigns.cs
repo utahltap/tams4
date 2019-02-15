@@ -910,6 +910,35 @@ namespace tams4a.Classes
                 {
                     FormSignLookup fave = new FormSignLookup();
                     DataTable favorites = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign WHERE favorite='true'");
+                    DataRow stopSign = favorites.NewRow();
+                    DataRow streetSign = favorites.NewRow();
+                    DataRow speedSign = favorites.NewRow();
+                    stopSign["description"] = "Stop";
+                    stopSign["sign_text"] = "STOP";
+                    stopSign["height"] = 30;
+                    stopSign["width"] = 30;
+                    stopSign["mutcd_code"] = "R1-1";
+                    stopSign["category"] = "regulatory_rw";
+                    stopSign["TAMSID"] = -1;
+                    favorites.Rows.Add(stopSign);
+                    streetSign["description"] = "Street sign";
+                    streetSign["sign_text"] = "[[street]]";
+                    streetSign["height"] = 8;
+                    streetSign["width"] = 30;
+                    streetSign["mutcd_code"] = "D1-c";
+                    streetSign["category"] = "location_guide";
+                    streetSign["TAMSID"] = -2;
+                    favorites.Rows.Add(streetSign);
+                    speedSign["description"] = "Speed limit";
+                    speedSign["sign_text"] = "SPEED LIMIT 25";
+                    speedSign["height"] = 30;
+                    speedSign["width"] = 24;
+                    speedSign["mutcd_code"] = "R2-1";
+                    speedSign["category"] = "regulatory_bw";
+                    speedSign["TAMSID"] = -3;
+                    favorites.Rows.Add(speedSign);
+
+
                     if (favorites.Rows.Count == 0)
                     {
                         MessageBox.Show("You cannot create a sign from favorites because you have no favorite signs.", "No Favorite Signs");
@@ -966,6 +995,7 @@ namespace tams4a.Classes
                 return;
             }
             Panel_Sign signControls = getSignControls();
+            controlChanged(sender, e);
             int index = signControls.comboBoxSigns.SelectedIndex;
             if (signChanges[index]["favorite"].Contains("true"))
             {
@@ -983,7 +1013,7 @@ namespace tams4a.Classes
             saveHandler(sender, e);
             suppressChanges = false;
             selectionChanged();
-            setSymbolizer();        
+            setSymbolizer();
         }
 
         private void faveSign(object sender, EventArgs e)
