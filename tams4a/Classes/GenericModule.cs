@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using tams4a.Controls;
 using tams4a.Forms;
 using DotSpatial.Data;
+using DotSpatial.Plugins.ShapeEditor;
 
 namespace tams4a.Classes
 {
@@ -19,6 +20,8 @@ namespace tams4a.Classes
         private bool inClick = false;
         int maxTAMSID = 0;
         private Dictionary<string, string> icons;
+        private bool movingLandmark = false;
+        private Color originalColor;
 
         public GenericModule(TamsProject theProject, TabPage controlPage, ToolStripMenuItem[] boundButtons, string mn = "miscellaneous") : base(theProject, controlPage, boundButtons, itemSelectionSql)
         {
@@ -105,6 +108,7 @@ namespace tams4a.Classes
             ControlsPage.Controls.Add(panel);
 
             #region eventhandlers
+            panel.toolStripMoveLandmark.Click += moveLandmark;
             panel.setChangedHandler(controlChanged);
             panel.toolStripButtonSave.Click += saveHandler;
             panel.toolStripButtonCancel.Click += cancelChanges;
@@ -115,6 +119,7 @@ namespace tams4a.Classes
             panel.setOtherDateToolStripMenuItem.Click += selectRecordDate;
             panel.setTodayToolStripMenuItem.Click += resetRecordDate;
             panel.pictureBoxPhoto.Click += clickPhotoBox;
+            Project.map.MouseUp += moveLandmarkMouseUp;
             #endregion
 
             setMaxID();
@@ -206,6 +211,66 @@ namespace tams4a.Classes
 
             ((MapPointLayer)Layer).Symbology = ftrScheme;
             ((MapPointLayer)Layer).ApplyScheme(ftrScheme);
+        }
+
+        private void moveLandmark(object sender, EventArgs e)
+        {
+            Panel_Other otherControls = getOtherControls();
+            if (otherControls.toolStripMoveLandmark.BackColor == Color.LightSkyBlue)
+            {
+                movingLandmark = false;
+                Project.map.FunctionMode = FunctionMode.Select;
+                otherControls.toolStripMoveLandmark.BackColor = originalColor;
+                return;
+            }
+            originalColor = otherControls.toolStripMoveLandmark.BackColor;
+            otherControls.toolStripMoveLandmark.BackColor = Color.LightSkyBlue;
+            IFeatureLayer selectionLayer = (IFeatureLayer)Layer;
+            MoveVertexFunction moveLandmark = new MoveVertexFunction(Project.map);
+            moveLandmark.Map = Project.map;
+            moveLandmark.YieldStyle = YieldStyles.LeftButton | YieldStyles.RightButton;
+            if (Project.map.MapFunctions.Contains(moveLandmark) == false)
+            {
+                Project.map.MapFunctions.Add(moveLandmark);
+            }
+            Project.map.FunctionMode = FunctionMode.None;
+            Project.map.Cursor = Cursors.Cross;
+            moveLandmark.DeselectFeature();
+            moveLandmark.Layer = selectionLayer;
+            SetSnapLayers(moveLandmark);
+            moveLandmark.Activate();
+            movingLandmark = true;
+        }
+
+        private void moveLandmarkMouseUp(object sender, MouseEventArgs e)
+        {
+            if (!movingLandmark) return;
+            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            Properties.Settings.Default.Save();
+            selectionLayer.ClearSelection();
+            selectionLayer.DataSet.Save();
+            setSymbolizer();
+            Project.map.Invalidate();
+            Project.map.Refresh();
+            Project.map.ResetBuffer();
+            Project.map.Update();
+            Panel_Other otherControls = getOtherControls();
+            if (otherControls.toolStripMoveLandmark.BackColor != originalColor) return;
+            movingLandmark = false;
+            Project.map.FunctionMode = FunctionMode.Select;
+            otherControls.toolStripMoveLandmark.BackColor = originalColor;
+        }
+
+        private void SetSnapLayers(SnappableMapFunction func)
+        {
+            func.DoSnapping = true;
+            IFeatureLayer selectionLayer = (IFeatureLayer)Layer;
+            foreach (var layer in Project.map.Layers)
+            {
+                IFeatureLayer fl = layer as IFeatureLayer;
+                if (fl != null && fl != selectionLayer && fl.DataSet.FeatureType != selectionLayer.DataSet.FeatureType)
+                    func.AddLayerToSnap(fl);
+            }
         }
 
         protected override void clearControlPanel()

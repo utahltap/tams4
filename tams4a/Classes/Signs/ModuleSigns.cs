@@ -119,7 +119,6 @@ namespace tams4a.Classes
 
             #region eventhandlers
             signPanel.toolStripMoveSign.Click += moveSign;
-
             signPanel.setChangedHandler(controlChanged);
             signPanel.toolStripButtonSave.Click += saveHandler;
             signPanel.toolStripButtonCancel.Click += cancelChanges;
