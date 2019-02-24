@@ -58,12 +58,11 @@ namespace tams4a.Classes
             boundButtons[1].Click += reports.generalReport;
             boundButtons[2].Click += reports.potholeReport;
             boundButtons[3].Click += openBudgetTool;
-            boundButtons[4].Click += reports.customReport;
 
-            boundButtons[6].Click += graphs.graphRoadType;
-            boundButtons[7].Click += graphs.graphRoadCategory;
-            boundButtons[8].Click += graphs.graphGoverningDistress;
-            boundButtons[9].Click += graphs.graphRSL;
+            boundButtons[5].Click += graphs.graphRoadType;
+            boundButtons[6].Click += graphs.graphRoadCategory;
+            boundButtons[7].Click += graphs.graphGoverningDistress;
+            boundButtons[8].Click += graphs.graphRSL;
             
             Panel_Module_OpenShp roadAdd = new Panel_Module_OpenShp("Road");
             roadAdd.Name = "ROADADD";

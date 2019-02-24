@@ -19,28 +19,7 @@ namespace tams4a.Classes.Signs
 
         public void signInventory(object sender, EventArgs e)
         {
-            int Integer = 0;
-            Type typeInt = Integer.GetType();
-            DataTable data = new DataTable();
-            data.Columns.Add("ID", typeInt);
-            data.Columns.Add("Support ID", typeInt);
-            data.Columns.Add("Description");
-            data.Columns.Add("Sign Text");
-            data.Columns.Add("Condition");
-            data.Columns.Add("Recommendation");
-            data.Columns.Add("Reflectivity");
-            data.Columns.Add("Sheeting");
-            data.Columns.Add("Backing");
-            data.Columns.Add("Height (in)", typeInt);
-            data.Columns.Add("Width (in)", typeInt);
-            data.Columns.Add("Mount Height (ft)", typeInt);
-            data.Columns.Add("Direction");
-            data.Columns.Add("Category");
-            data.Columns.Add("Notes");
-            data.Columns.Add("Favorite");
-            data.Columns.Add("MUTCD Code");
-            data.Columns.Add("Install Date");
-            data.Columns.Add("Survey Date");
+            DataTable data = addSignColumns();   
             try
             {
                 DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign;");
@@ -244,6 +223,33 @@ namespace tams4a.Classes.Signs
             }
             if (note.Length == maxLength) note += "...";
             return note;
+        }
+
+        public DataTable addSignColumns()
+        {
+            int Integer = 0;
+            Type typeInt = Integer.GetType();
+            DataTable data = new DataTable();
+            data.Columns.Add("ID", typeInt);
+            data.Columns.Add("Support ID", typeInt);
+            data.Columns.Add("Description");
+            data.Columns.Add("Sign Text");
+            data.Columns.Add("Condition");
+            data.Columns.Add("Recommendation");
+            data.Columns.Add("Reflectivity");
+            data.Columns.Add("Sheeting");
+            data.Columns.Add("Backing");
+            data.Columns.Add("Height (in)", typeInt);
+            data.Columns.Add("Width (in)", typeInt);
+            data.Columns.Add("Mount Height (ft)", typeInt);
+            data.Columns.Add("Direction");
+            data.Columns.Add("Category");
+            data.Columns.Add("Notes");
+            data.Columns.Add("Favorite");
+            data.Columns.Add("MUTCD Code");
+            data.Columns.Add("Install Date");
+            data.Columns.Add("Survey Date");
+            return data;
         }
     }
 }

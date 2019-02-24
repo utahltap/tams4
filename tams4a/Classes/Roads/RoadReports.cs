@@ -101,54 +101,6 @@ namespace tams4a.Classes.Roads
             }
         }
 
-        public void customReport(object sender, EventArgs e)
-        {
-            FormQueryBuilder tableFilters = new FormQueryBuilder("road");
-            if (tableFilters.ShowDialog() == DialogResult.OK)
-            {
-                bool selectResults = false;
-                string surfaceType = tableFilters.getSurface();
-                string query = tableFilters.getQuery() + " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC;";
-                DataTable results = Database.GetDataByQuery(Project.conn, query);
-                if (tableFilters.checkBoxSelectResults.Checked) selectResults = true;
-                if (results.Rows.Count == 0)
-                {
-                    MessageBox.Show("No roads matching the given description were found.");
-                    return;
-                }
-                DataTable outputTable = addColumns(surfaceType);
-
-                FormOutput report = new FormOutput(Project, moduleRoads);
-                foreach (DataRow row in results.Rows)
-                {
-                    if (selectResults)
-                    {
-                        FeatureLayer selectionLayer = (FeatureLayer)moduleRoads.Layer;
-                        String tamsidcolumn = Project.settings.GetValue("road_f_TAMSID");
-                        selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
-                    }
-
-                    DataRow nr = outputTable.NewRow();
-                    string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
-
-                    int oldNoteLength = note.Length;
-                    int maxLength = 17;
-                    if (!string.IsNullOrEmpty(note))
-                    {
-                        note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
-                        if (note.Length == maxLength) note += "...";
-                    }
-                    addRows(nr, row, surfaceType);                  
-                    outputTable.Rows.Add(nr);
-                }
-                report.dataGridViewReport.DataSource = outputTable;
-                report.Text = "Treatment Report";
-                report.Show();
-                if(selectResults) moduleRoads.selectionChanged();
-            }
-            tableFilters.Close();
-        }
-
         public void reportSelected(object sender, EventArgs e)
         {
             DataTable general = addColumns();
@@ -257,7 +209,7 @@ namespace tams4a.Classes.Roads
             }
         }
 
-        private DataTable addColumns(string surfaceType = "")
+        public DataTable addColumns(string surfaceType = "")
         {
             int Integer = 0;
             Type typeInt = Integer.GetType();
@@ -266,6 +218,7 @@ namespace tams4a.Classes.Roads
             general.Columns.Add("Name");
             general.Columns.Add("Width (ft)", typeInt);
             general.Columns.Add("Length (ft)", typeInt);
+            general.Columns.Add("Lanes", typeInt);
             general.Columns.Add("From Address");
             general.Columns.Add("To Address");
             general.Columns.Add("Surface");
@@ -327,12 +280,13 @@ namespace tams4a.Classes.Roads
             return general;
         }
 
-        private void addRows(DataRow nr, DataRow row, string surfaceType = "")
+        public void addRows(DataRow nr, DataRow row, string surfaceType = "")
         {
             nr["ID"] = row["TAMSID"];
             nr["Name"] = row["name"];
             nr["Width (ft)"] = row["width"];
             nr["Length (ft)"] = row["length"];
+            nr["Lanes"] = row["lanes"];
             nr["From Address"] = row["from_address"];
             nr["To Address"] = row["to_address"];
             nr["Surface"] = row["surface"];
@@ -467,7 +421,7 @@ namespace tams4a.Classes.Roads
             Project.map.Update();
         }
 
-        private string truncateNote(DataRow row)
+        public string truncateNote(DataRow row)
         {
             string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
 

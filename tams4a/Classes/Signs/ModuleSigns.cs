@@ -507,6 +507,7 @@ namespace tams4a.Classes
         {    
             if (!isOpen()) { return; }
             if (UnsavedChanges){}
+            bool enableSigns = true;
             Panel_Sign signControls = getSignControls();
 
             resetSignDisplay(signControls);
@@ -521,7 +522,7 @@ namespace tams4a.Classes
 
             if (shpSelection.Count > 1)
             {
-                //handle multi sign selection
+                enableSigns = false;
             }
 
             if (Project.settings.GetValue("sign_zoom") == "true")
@@ -538,7 +539,7 @@ namespace tams4a.Classes
                 tamsids.Add(row[tamsidcolumn].ToString());
             }
 
-            enableControls(signControls);
+            enableControls(signControls, enableSigns);
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
             updateSignDisplay(values, signControls);
             getSigns(signControls);
@@ -678,9 +679,10 @@ namespace tams4a.Classes
         /// <summary>
         /// activates the controls when a sign is selected.
         /// </summary>
-        private void enableControls(Panel_Sign signControls)
+        private void enableControls(Panel_Sign signControls, bool enableSigns)
         {
-            signControls.groupBoxSign.Enabled = true;
+            if (enableSigns) signControls.groupBoxSign.Enabled = true;
+            else disableSignDisplay(signControls);
             signControls.toolStrip.Enabled = true;
             signControls.groupBoxSupport.Enabled = true;
             signControls.toolStripButtonSurveyDate.Enabled = true;

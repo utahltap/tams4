@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
+using tams4a.Classes;
 
 namespace tams4a.Forms
 {
@@ -10,23 +11,32 @@ namespace tams4a.Forms
         private string query;
         private bool firstOption = true;
         private int formHeight;
-        private int panel1Height;
+        private int roadPanelHeight;
+        private int tabControlCustomHeight;
         private int panelBelowSurfaceYPos;
         private int buttonCancelYPos;
         private int buttonOKYPos;
+        private const int ROAD_SIGN_HEIGHT_DIFF = 80;
 
-        public FormQueryBuilder(string tn)
+        public FormQueryBuilder(TamsProject Project)
         {
             InitializeComponent();
             CenterToScreen();
-            TableName = tn;
-            labelTable.Text = "Getting data from " + TableName + " table";
-            query = "SELECT * FROM " + TableName + " WHERE ";
-            formHeight = this.Height;
-            panel1Height = panel1.Height;
+            DataTable mutcdCodes = Database.GetDataByQuery(Project.conn, "SELECT mutcd_code FROM mutcd_lookup;");
+            comboBoxMUTCDCodeValue.DataSource = mutcdCodes;
+            comboBoxMUTCDCodeValue.DisplayMember = "mutcd_code";
+            TableName = "road";
+            Height -= ROAD_SIGN_HEIGHT_DIFF;
+            panelRoadTab.Height -= ROAD_SIGN_HEIGHT_DIFF;
+            tabControlCustom.Height -= ROAD_SIGN_HEIGHT_DIFF;
+            formHeight = Height;
+            roadPanelHeight = panelRoadTab.Height;
+            tabControlCustomHeight = tabControlCustom.Height;
             panelBelowSurfaceYPos = panelBelowSurface.Location.Y;
-            buttonCancelYPos = buttonCancel.Location.Y;
-            buttonOKYPos = buttonOK.Location.Y;
+            buttonCancelYPos = buttonCancel.Location.Y - ROAD_SIGN_HEIGHT_DIFF;
+            buttonOKYPos = buttonOK.Location.Y - ROAD_SIGN_HEIGHT_DIFF;
+            buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, buttonCancelYPos);
+            buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, buttonOKYPos);
         }
 
         public string getSurface()
@@ -41,7 +51,22 @@ namespace tams4a.Forms
 
         public string getQuery()
         {
-            if (id.Checked)
+            query = "SELECT * FROM " + TableName + " WHERE ";
+            if (TableName == "road") query = getRoadQuery(query);
+            if (TableName == "sign") query = getSignQuery(query);
+
+            if (firstOption)
+            {
+                MessageBox.Show("No options were selected. This tool will show your " + TableName + " data without any filters.");
+                return "SELECT * FROM " + TableName;
+            }
+
+            return query;
+        }
+
+        private string getRoadQuery(string query)
+        {
+            if (id.Checked && comboBoxIDComparison.Text != "")
             {
                 if (firstOption) firstOption = false;
                 query += "TAMSID " + comboBoxIDComparison.Text + " " + numericUpDownIDValue.Value.ToString();
@@ -51,14 +76,14 @@ namespace tams4a.Forms
             {
                 if (!firstOption) query += " AND ";
                 else firstOption = false;
-                query += "name LIKE \"%" + textBoxNameValue.Text + "%\""; 
+                query += "name LIKE \"%" + textBoxNameValue.Text + "%\"";
             }
 
             if (speed_limit.Checked && comboBoxSpeedLimitComparison.Text != "")
             {
                 if (!firstOption) query += " AND ";
                 else firstOption = false;
-                query += "speed_limit " + comboBoxSpeedLimitComparison.Text + " " + numericUpDownSpeedLimitValue.Value.ToString(); 
+                query += "speed_limit " + comboBoxSpeedLimitComparison.Text + " " + numericUpDownSpeedLimitValue.Value.ToString();
             }
 
             if (lanes.Checked && comboBoxLanesComparison.Text != "")
@@ -196,10 +221,110 @@ namespace tams4a.Forms
                 query += "suggested_treatment LIKE \"" + comboBoxSuggestedTreatmentValue.Text + "\"";
             }
 
-            if (firstOption)
+            return query;
+        }
+
+        private string getSignQuery(string query)
+        {
+            if (SignID.Checked && comboBoxSignIDComparison.Text != "")
             {
-                MessageBox.Show("No option were selected. This tool will show your " + TableName + " data without any filters.");
-                return "SELECT * FROM " + TableName;
+                if (firstOption) firstOption = false;
+                query += "TAMSID " + comboBoxSignIDComparison.Text + " " + numericUpDownSignIDValue.Value.ToString();
+            }
+
+            if (Sign_SupportID.Checked && comboBoxSign_SupportIDComparison.Text != "")
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "support_id " + comboBoxSign_SupportIDComparison.Text + " " + numericUpDownSign_SupportIDValue.Value.ToString();
+            }
+
+            if (MUTCDCode.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "mutcd_code LIKE \"" + comboBoxMUTCDCodeValue.Text + "\"";
+            }
+
+            if (SignText.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "sign_text LIKE \"%" + textBoxSignTextValue.Text + "%\"";
+            }
+
+            if (SignCondition.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "condition LIKE \"" + comboBoxSignConditionValue.Text + "\"";
+            }
+
+            if (SignRecommendation.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "recommendation LIKE \"" + comboBoxSignRecommendationValue.Text + "\"";
+            }
+
+            if (Reflectivity.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "reflectivity LIKE \"" + comboBoxReflectivityValue.Text + "\"";
+            }
+
+            if (Sheeting.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "sheeting LIKE \"" + comboBoxSheetingValue.Text + "\"";
+            }
+
+            if (Backing.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "backing LIKE \"" + comboBoxBackingValue.Text + "\"";
+            }
+
+            if (SignHeight.Checked && comboBoxSignHeightComparison.Text != "")
+            {
+                if (firstOption) firstOption = false;
+                query += "height " + comboBoxSignHeightComparison.Text + " " + numericUpDownSignHeightValue.Value.ToString();
+            }
+
+            if (SignWidth.Checked && comboBoxSignWidthComparison.Text != "")
+            {
+                if (firstOption) firstOption = false;
+                query += "width " + comboBoxSignWidthComparison.Text + " " + numericUpDownSignWidthValue.Value.ToString();
+            }
+
+            if (MountHeight.Checked && comboBoxMountHeightComparison.Text != "")
+            {
+                if (firstOption) firstOption = false;
+                query += "mount_height " + comboBoxMountHeightComparison.Text + " " + numericUpDownMountHeightValue.Value.ToString();
+            }
+
+            if (Direction.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "direction LIKE \"" + comboBoxDirectionValue.Text + "\"";
+            }
+
+            if (Category.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "category LIKE \"" + comboBoxCategoryValue.Text + "\"";
+            }
+
+            if (Favorite.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "favorite LIKE \"" + comboBoxFavoriteValue.Text + "\"";
             }
 
             return query;
@@ -263,12 +388,7 @@ namespace tams4a.Forms
             comboBoxSurfaceValue.Enabled = surface.Checked;
             if (!surface.Checked)
             {
-                panelDistresses.Hide();
-                this.Height = formHeight;
-                panel1.Height = panel1Height;
-                panelBelowSurface.Location = new System.Drawing.Point(panelBelowSurface.Location.X, panelBelowSurfaceYPos);
-                buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, buttonCancelYPos);
-                buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, buttonOKYPos);
+                adjustDistressHeight();
                 comboBoxSurfaceValue.Text = "";
             }
         }
@@ -358,14 +478,14 @@ namespace tams4a.Forms
             if (!distress9.Checked) comboBoxDistress9Comparison.Text = "";
         }
 
-
         private void comboBoxSurfaceValue_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxSurfaceValue.Text == "") return;
             int growHeight = panelDistresses.Height;
             if (comboBoxSurfaceValue.Text == "Gravel") growHeight -= 52;
-            this.Height = formHeight + growHeight;
-            panel1.Height = panel1Height + growHeight;
+            Height = formHeight + growHeight;
+            panelRoadTab.Height = roadPanelHeight + growHeight;
+            tabControlCustom.Height = tabControlCustomHeight + growHeight;
             panelBelowSurface.Location = new System.Drawing.Point(panelBelowSurface.Location.X, panelBelowSurfaceYPos + growHeight);
             buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, buttonCancelYPos + growHeight);
             buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, buttonOKYPos + growHeight);
@@ -419,6 +539,130 @@ namespace tams4a.Forms
                 numericUpDownDistress9Value.Hide();
             }
 
+        }
+
+        private void tabControlCustom_SelectedIndexChanged(Object sender, EventArgs e)
+        {
+            TableName = tabControlCustom.SelectedTab.Text.ToLower();
+            if (TableName == "road")
+            {
+                Height -= ROAD_SIGN_HEIGHT_DIFF;
+                panelRoadTab.Height -= ROAD_SIGN_HEIGHT_DIFF;
+                tabControlCustom.Height -= ROAD_SIGN_HEIGHT_DIFF;
+                buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, buttonCancelYPos);
+                buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, buttonOKYPos);
+                comboBoxSurfaceValue_SelectedIndexChanged(sender, e);
+            }
+            if (TableName == "sign")
+            {
+                adjustDistressHeight();
+                Height += ROAD_SIGN_HEIGHT_DIFF;
+                panelRoadTab.Height += ROAD_SIGN_HEIGHT_DIFF;
+                tabControlCustom.Height += ROAD_SIGN_HEIGHT_DIFF;
+                buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, buttonCancelYPos + ROAD_SIGN_HEIGHT_DIFF);
+                buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, buttonOKYPos + ROAD_SIGN_HEIGHT_DIFF);
+            }
+        }
+
+        private void adjustDistressHeight()
+        {
+            panelDistresses.Hide();
+            Height = formHeight;
+            panelRoadTab.Height = roadPanelHeight;
+            tabControlCustom.Height = tabControlCustomHeight;
+            panelBelowSurface.Location = new System.Drawing.Point(panelBelowSurface.Location.X, panelBelowSurfaceYPos);
+            buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, buttonCancelYPos);
+            buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, buttonOKYPos);
+        }
+
+        private void SignID_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxSignIDComparison.Enabled = SignID.Checked;
+            numericUpDownSignIDValue.Enabled = SignID.Checked;
+        }
+
+        private void Sign_SupportID_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxSign_SupportIDComparison.Enabled = Sign_SupportID.Checked;
+            numericUpDownSign_SupportIDValue.Enabled = Sign_SupportID.Checked;
+        }
+
+        private void MUTCDCode_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxMUTCDCodeComparison.Enabled = MUTCDCode.Checked;
+            comboBoxMUTCDCodeValue.Enabled = MUTCDCode.Checked;
+        }
+
+        private void SignText_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxSignTextComparison.Enabled = SignText.Checked;
+            textBoxSignTextValue.Enabled = SignText.Checked;
+        }
+
+        private void SignCondition_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxSignConditionComparison.Enabled = SignCondition.Checked;
+            comboBoxSignConditionValue.Enabled = SignCondition.Checked;
+        }
+
+        private void SignRecommendation_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxSignRecommendationComparison.Enabled = SignRecommendation.Checked;
+            comboBoxSignRecommendationValue.Enabled = SignRecommendation.Checked;
+        }
+
+        private void Reflectivity_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxReflectivityComparison.Enabled = Reflectivity.Checked;
+            comboBoxReflectivityValue.Enabled = Reflectivity.Checked;
+        }
+
+        private void Sheeting_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxSheetingComparison.Enabled = Sheeting.Checked;
+            comboBoxSheetingValue.Enabled = Sheeting.Checked;
+        }
+
+        private void Backing_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxBackingComparison.Enabled = Backing.Checked;
+            comboBoxBackingValue.Enabled = Backing.Checked;
+        }
+
+        private void SignHeight_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxSignHeightComparison.Enabled = SignHeight.Checked;
+            numericUpDownSignHeightValue.Enabled = SignHeight.Checked;
+        }
+
+        private void SignWidth_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxSignWidthComparison.Enabled = SignWidth.Checked;
+            numericUpDownSignWidthValue.Enabled = SignWidth.Checked;
+        }
+
+        private void MountHeight_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxMountHeightComparison.Enabled = MountHeight.Checked;
+            numericUpDownMountHeightValue.Enabled = MountHeight.Checked;
+        }
+
+        private void Direction_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxDirectionComparison.Enabled = Direction.Checked;
+            comboBoxDirectionValue.Enabled = Direction.Checked;
+        }
+
+        private void Category_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxCategoryComparison.Enabled = Category.Checked;
+            comboBoxCategoryValue.Enabled = Category.Checked;
+        }
+
+        private void Favorite_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxFavoriteComparison.Enabled = Favorite.Checked;
+            comboBoxFavoriteValue.Enabled = Favorite.Checked;
         }
     }
 }

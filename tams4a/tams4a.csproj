@@ -222,6 +222,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CustomReport.cs" />
     <Compile Include="Classes\GenericModule.cs" />
     <Compile Include="Classes\ImportAccess.cs" />
     <Compile Include="Classes\Database.cs" />

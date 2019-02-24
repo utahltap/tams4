@@ -18,6 +18,7 @@ namespace tams4a
         public TamsProject Project;
         public ModuleRoads road;
         public ModuleSigns sign;
+        private GenericModule other;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
@@ -72,7 +73,6 @@ namespace tams4a
                 generalToolStripMenuItem,
                 potholesToolStripMenuItem,
                 analysisToolStripMenuItem,
-                customToolStripMenuItem,
                 roadToolStripMenuItem,
                 surfaceTypeToolStripMenuItem,
                 functionalClassificationToolStripMenuItem,
@@ -90,7 +90,7 @@ namespace tams4a
             };
             road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
             sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
-            GenericModule other = new GenericModule(Project, new TabPage("Other"), lcso);
+            other = new GenericModule(Project, new TabPage("Other"), lcso);
             Project.addModule(road, "Roads", tabControlControls);
             Project.addModule(sign, "Signs", tabControlControls);
             Project.addModule(other, "Other", tabControlControls);
@@ -842,6 +842,12 @@ namespace tams4a
                     box.Key.ForeColor = Color.Black;
                 }
             }
+        }
+
+        private void customReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CustomReport customReport = new CustomReport(Project, road, sign, other);
+            customReport.newCustomReport();
         }
     }
 }
