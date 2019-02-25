@@ -17,8 +17,9 @@ namespace tams4a.Classes
         private ModuleSigns moduleSigns;
         private SignReports signReports;
         private GenericModule moduleOther;
+        private MainWindow window;
 
-        public CustomReport(TamsProject theProject, ModuleRoads roads, ModuleSigns signs, GenericModule other)
+        public CustomReport(TamsProject theProject, ModuleRoads roads, ModuleSigns signs, GenericModule other, MainWindow mainWindow)
         {
             Project = theProject;
             moduleRoads = roads;
@@ -26,11 +27,17 @@ namespace tams4a.Classes
             moduleSigns = signs;
             signReports = new SignReports(Project, signs);
             moduleOther = other;
+            window = mainWindow;
         }
 
         public void newCustomReport()
         {
-            FormQueryBuilder tableFilters = new FormQueryBuilder(Project);
+            int selectTab = 0;
+            if (window.tabControlControls.SelectedIndex == 0) selectTab = 0;
+            if (window.tabControlControls.SelectedIndex == 1) selectTab = 1;
+            if (window.tabControlControls.SelectedIndex == 2) selectTab = 3;
+            FormQueryBuilder tableFilters = new FormQueryBuilder(Project, selectTab);
+
             if (tableFilters.ShowDialog() == DialogResult.OK)
             {
                 if (tableFilters.tabControlCustom.SelectedTab.Text == "Road")
@@ -104,33 +111,35 @@ namespace tams4a.Classes
             }
             DataTable outputTable = signReports.addSignColumns();
 
-            //FormOutput report = new FormOutput(Project, moduleSigns);
-            //foreach (DataRow row in results.Rows)
-            //{
-            //    if (selectResults)
-            //    {
-            //        FeatureLayer selectionLayer = (FeatureLayer)moduleRoads.Layer;
-            //        String tamsidcolumn = Project.settings.GetValue("road_f_TAMSID");
-            //        selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
-            //    }
+            Console.WriteLine(query);
 
-            //    DataRow nr = outputTable.NewRow();
-            //    string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+            FormOutput report = new FormOutput(Project, null, "Sign Inventory");
+            foreach (DataRow row in results.Rows)
+            {
+                if (selectResults)
+                {
+                    FeatureLayer selectionLayer = (FeatureLayer)moduleSigns.Layer;
+                    String tamsidcolumn = Project.settings.GetValue("sign_f_TAMSID");
+                    selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["support_id"], ModifySelectionMode.Append);
+                }
 
-            //    int oldNoteLength = note.Length;
-            //    int maxLength = 17;
-            //    if (!string.IsNullOrEmpty(note))
-            //    {
-            //        note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
-            //        if (note.Length == maxLength) note += "...";
-            //    }
-            //    roadReports.addRows(nr, row, surfaceType);
-            //    outputTable.Rows.Add(nr);
-            //}
-            //report.dataGridViewReport.DataSource = outputTable;
-            //report.Text = "Treatment Report";
-            //report.Show();
-            //if (selectResults) moduleRoads.selectionChanged();
+                DataRow nr = outputTable.NewRow();
+                string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+
+                int oldNoteLength = note.Length;
+                int maxLength = 17;
+                if (!string.IsNullOrEmpty(note))
+                {
+                    note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
+                    if (note.Length == maxLength) note += "...";
+                }
+                signReports.addSignRows(nr, row);
+                outputTable.Rows.Add(nr);
+            }
+            report.dataGridViewReport.DataSource = outputTable;
+            report.Text = "Custom Sign Report";
+            report.Show();
+            if (selectResults) moduleRoads.selectionChanged();
         }
 
     }

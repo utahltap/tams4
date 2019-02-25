@@ -31,26 +31,7 @@ namespace tams4a.Classes.Signs
                 foreach (DataRow row in signsTable.Rows)
                 {
                     DataRow nr = data.NewRow();
-                    nr["ID"] = row["TAMSID"];
-                    nr["Support ID"] = row["support_id"];
-                    nr["Description"] = row["description"];
-                    nr["Sign Text"] = row["sign_text"];
-                    nr["Condition"] = row["condition"];
-                    nr["Recommendation"] = row["recommendation"];
-                    nr["Reflectivity"] = row["reflectivity"];
-                    nr["Sheeting"] = row["sheeting"];
-                    nr["Backing"] = row["backing"];
-                    nr["Height (in)"] = row["height"];
-                    nr["Width (in)"] = row["width"];
-                    nr["Mount Height (ft)"] = row["mount_height"];
-                    nr["Direction"] = row["direction"];
-                    nr["Category"] = row["category"];
-                    nr["Notes"] = truncateNote(row);
-                    nr["Favorite"] = row["favorite"];
-                    nr["MUTCD Code"] = row["mutcd_code"];
-                    nr["Install Date"] = row["install_date"];
-                    nr["Survey Date"] = row["survey_date"];
-
+                    addSignRows(nr, row);
                     data.Rows.Add(nr);
                 }
                 showReport(data, "Sign Inventory");
@@ -250,6 +231,29 @@ namespace tams4a.Classes.Signs
             data.Columns.Add("Install Date");
             data.Columns.Add("Survey Date");
             return data;
+        }
+
+        public void addSignRows(DataRow nr, DataRow row)
+        {
+            nr["ID"] = row["TAMSID"];
+            nr["Support ID"] = row["support_id"];
+            nr["Description"] = row["description"];
+            nr["Sign Text"] = row["sign_text"];
+            nr["Condition"] = row["condition"];
+            nr["Recommendation"] = row["recommendation"];
+            nr["Reflectivity"] = row["reflectivity"];
+            nr["Sheeting"] = row["sheeting"];
+            nr["Backing"] = row["backing"];
+            nr["Height (in)"] = row["height"];
+            nr["Width (in)"] = row["width"];
+            nr["Mount Height (ft)"] = row["mount_height"];
+            nr["Direction"] = row["direction"];
+            nr["Category"] = row["category"];
+            nr["Notes"] = truncateNote(row);
+            nr["Favorite"] = row["favorite"];
+            nr["MUTCD Code"] = row["mutcd_code"];
+            nr["Install Date"] = row["install_date"];
+            nr["Survey Date"] = row["survey_date"];
         }
     }
 }

@@ -846,7 +846,7 @@ namespace tams4a
 
         private void customReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CustomReport customReport = new CustomReport(Project, road, sign, other);
+            CustomReport customReport = new CustomReport(Project, road, sign, other, this);
             customReport.newCustomReport();
         }
     }

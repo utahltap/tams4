@@ -153,7 +153,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.tabControlCustom.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panelRoadTab.SuspendLayout();
@@ -181,6 +183,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSignHeightValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSign_SupportIDValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSignIDValue)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -209,12 +213,12 @@
             this.checkBoxSelectResults.AutoSize = true;
             this.checkBoxSelectResults.Checked = true;
             this.checkBoxSelectResults.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxSelectResults.Location = new System.Drawing.Point(175, 472);
+            this.checkBoxSelectResults.Location = new System.Drawing.Point(164, 472);
             this.checkBoxSelectResults.Name = "checkBoxSelectResults";
             this.checkBoxSelectResults.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.checkBoxSelectResults.Size = new System.Drawing.Size(133, 17);
+            this.checkBoxSelectResults.Size = new System.Drawing.Size(144, 17);
             this.checkBoxSelectResults.TabIndex = 65;
-            this.checkBoxSelectResults.Text = "Select Results on Map";
+            this.checkBoxSelectResults.Text = "Highlight Results on Map";
             this.checkBoxSelectResults.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxSelectResults.UseVisualStyleBackColor = true;
             // 
@@ -1233,8 +1237,7 @@
             this.comboBoxFavoriteValue.Items.AddRange(new object[] {
             "",
             "True",
-            "False"
-            });
+            "False"});
             this.comboBoxFavoriteValue.Location = new System.Drawing.Point(250, 402);
             this.comboBoxFavoriteValue.Name = "comboBoxFavoriteValue";
             this.comboBoxFavoriteValue.Size = new System.Drawing.Size(128, 21);
@@ -1277,8 +1280,7 @@
             "highway",
             "location_guide",
             "recreation",
-            "service"
-            });
+            "service"});
             this.comboBoxCategoryValue.Location = new System.Drawing.Point(250, 375);
             this.comboBoxCategoryValue.Name = "comboBoxCategoryValue";
             this.comboBoxCategoryValue.Size = new System.Drawing.Size(128, 21);
@@ -1318,8 +1320,7 @@
             "S",
             "SW",
             "W",
-            "NW",
-            });
+            "NW"});
             this.comboBoxDirectionValue.Location = new System.Drawing.Point(250, 348);
             this.comboBoxDirectionValue.Name = "comboBoxDirectionValue";
             this.comboBoxDirectionValue.Size = new System.Drawing.Size(128, 21);
@@ -1516,8 +1517,7 @@
             this.comboBoxReflectivityValue.Items.AddRange(new object[] {
             "",
             "Pass",
-            "Fail"
-            });
+            "Fail"});
             this.comboBoxReflectivityValue.Location = new System.Drawing.Point(250, 191);
             this.comboBoxReflectivityValue.Name = "comboBoxReflectivityValue";
             this.comboBoxReflectivityValue.Size = new System.Drawing.Size(128, 21);
@@ -1553,8 +1553,7 @@
             "Nothing",
             "Remove",
             "Replace",
-            "Other",
-            });
+            "Other"});
             this.comboBoxSignRecommendationValue.Location = new System.Drawing.Point(250, 164);
             this.comboBoxSignRecommendationValue.Name = "comboBoxSignRecommendationValue";
             this.comboBoxSignRecommendationValue.Size = new System.Drawing.Size(128, 21);
@@ -1590,8 +1589,7 @@
             "Good",
             "Acceptable",
             "Damaged",
-            "Other",
-            });
+            "Other"});
             this.comboBoxSignConditionValue.Location = new System.Drawing.Point(250, 137);
             this.comboBoxSignConditionValue.Name = "comboBoxSignConditionValue";
             this.comboBoxSignConditionValue.Size = new System.Drawing.Size(128, 21);
@@ -1675,8 +1673,7 @@
             "VIII",
             "IX",
             "X",
-            "XI"
-            });
+            "XI"});
             this.comboBoxSheetingValue.Location = new System.Drawing.Point(250, 217);
             this.comboBoxSheetingValue.Name = "comboBoxSheetingValue";
             this.comboBoxSheetingValue.Size = new System.Drawing.Size(128, 21);
@@ -1813,6 +1810,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.textBox1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -1821,8 +1819,18 @@
             this.tabPage3.Text = "Support";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // textBox1
+            // 
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Location = new System.Drawing.Point(12, 6);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(109, 13);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "Still in development...";
+            // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.textBox2);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -1830,6 +1838,15 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Other";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // textBox2
+            // 
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox2.Location = new System.Drawing.Point(12, 6);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(109, 13);
+            this.textBox2.TabIndex = 1;
+            this.textBox2.Text = "Still in development...";
             // 
             // FormQueryBuilder
             // 
@@ -1877,6 +1894,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSignHeightValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSign_SupportIDValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSignIDValue)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2009,5 +2030,7 @@
         private System.Windows.Forms.TextBox textBoxDirectionComparison;
         private System.Windows.Forms.CheckBox Direction;
         private System.Windows.Forms.ComboBox comboBoxDirectionValue;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }

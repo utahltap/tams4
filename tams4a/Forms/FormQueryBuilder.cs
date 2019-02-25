@@ -10,33 +10,41 @@ namespace tams4a.Forms
         private string TableName;
         private string query;
         private bool firstOption = true;
-        private int formHeight;
-        private int roadPanelHeight;
-        private int tabControlCustomHeight;
-        private int panelBelowSurfaceYPos;
-        private int buttonCancelYPos;
-        private int buttonOKYPos;
-        private const int ROAD_SIGN_HEIGHT_DIFF = 80;
 
-        public FormQueryBuilder(TamsProject Project)
+        private const int ROAD_FORM_HEIGHT = 465;
+        private const int ROAD_PANEL_HEIGHT = 354;
+        private const int ROAD_TAB_CONTROL_HEIGHT = 380;
+        private const int ROAD_PANEL_BELOW_SURFACE_POSITION = 240;
+        private const int ROAD_BUTTON_Y_LOCATION = 386;
+
+        private const int SIGN_FORM_HEIGHT = 545;
+        private const int SIGN_PANEL_HEIGHT = 434;
+        private const int SIGN_TAB_CONTROL_HEIGHT = 460;
+        private const int SIGN_BUTTON_Y_LOCATION = 466;
+
+        public FormQueryBuilder(TamsProject Project, int tab)
         {
             InitializeComponent();
             CenterToScreen();
             DataTable mutcdCodes = Database.GetDataByQuery(Project.conn, "SELECT mutcd_code FROM mutcd_lookup;");
             comboBoxMUTCDCodeValue.DataSource = mutcdCodes;
             comboBoxMUTCDCodeValue.DisplayMember = "mutcd_code";
-            TableName = "road";
-            Height -= ROAD_SIGN_HEIGHT_DIFF;
-            panelRoadTab.Height -= ROAD_SIGN_HEIGHT_DIFF;
-            tabControlCustom.Height -= ROAD_SIGN_HEIGHT_DIFF;
-            formHeight = Height;
-            roadPanelHeight = panelRoadTab.Height;
-            tabControlCustomHeight = tabControlCustom.Height;
-            panelBelowSurfaceYPos = panelBelowSurface.Location.Y;
-            buttonCancelYPos = buttonCancel.Location.Y - ROAD_SIGN_HEIGHT_DIFF;
-            buttonOKYPos = buttonOK.Location.Y - ROAD_SIGN_HEIGHT_DIFF;
-            buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, buttonCancelYPos);
-            buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, buttonOKYPos);
+            tabControlCustom.SelectedIndex = tab;
+            TableName = tabControlCustom.SelectedTab.Text.ToLower();
+            if (TableName == "road")
+            {
+                Console.WriteLine("Height = " + Height);
+                Console.WriteLine("panelRoadTab.Height = " + panelRoadTab.Height);
+                Console.WriteLine("tabControlCustom.Height = " + tabControlCustom.Height);
+                Console.WriteLine("buttonOK.Location.Y = " + buttonOK.Location.Y);
+                Console.WriteLine("buttonCancel.Location.Y = " + buttonCancel.Location.Y);
+
+                Height = ROAD_FORM_HEIGHT;
+                panelRoadTab.Height = ROAD_PANEL_HEIGHT;
+                tabControlCustom.Height = ROAD_TAB_CONTROL_HEIGHT;
+                buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, ROAD_BUTTON_Y_LOCATION);
+                buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, ROAD_BUTTON_Y_LOCATION);
+            }
         }
 
         public string getSurface()
@@ -483,12 +491,12 @@ namespace tams4a.Forms
             if (comboBoxSurfaceValue.Text == "") return;
             int growHeight = panelDistresses.Height;
             if (comboBoxSurfaceValue.Text == "Gravel") growHeight -= 52;
-            Height = formHeight + growHeight;
-            panelRoadTab.Height = roadPanelHeight + growHeight;
-            tabControlCustom.Height = tabControlCustomHeight + growHeight;
-            panelBelowSurface.Location = new System.Drawing.Point(panelBelowSurface.Location.X, panelBelowSurfaceYPos + growHeight);
-            buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, buttonCancelYPos + growHeight);
-            buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, buttonOKYPos + growHeight);
+            Height = ROAD_FORM_HEIGHT + growHeight;
+            panelRoadTab.Height = ROAD_PANEL_HEIGHT + growHeight;
+            tabControlCustom.Height = ROAD_TAB_CONTROL_HEIGHT + growHeight;
+            panelBelowSurface.Location = new System.Drawing.Point(panelBelowSurface.Location.X, ROAD_PANEL_BELOW_SURFACE_POSITION + growHeight);
+            buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, ROAD_BUTTON_Y_LOCATION + growHeight);
+            buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, ROAD_BUTTON_Y_LOCATION + growHeight);
             panelDistresses.Show();
             distress8.Show();
             distress9.Show();
@@ -546,33 +554,33 @@ namespace tams4a.Forms
             TableName = tabControlCustom.SelectedTab.Text.ToLower();
             if (TableName == "road")
             {
-                Height -= ROAD_SIGN_HEIGHT_DIFF;
-                panelRoadTab.Height -= ROAD_SIGN_HEIGHT_DIFF;
-                tabControlCustom.Height -= ROAD_SIGN_HEIGHT_DIFF;
-                buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, buttonCancelYPos);
-                buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, buttonOKYPos);
+                Height = ROAD_FORM_HEIGHT;
+                panelRoadTab.Height = ROAD_PANEL_HEIGHT;
+                tabControlCustom.Height = ROAD_TAB_CONTROL_HEIGHT;
+                buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, ROAD_BUTTON_Y_LOCATION);
+                buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, ROAD_BUTTON_Y_LOCATION);
                 comboBoxSurfaceValue_SelectedIndexChanged(sender, e);
             }
             if (TableName == "sign")
             {
                 adjustDistressHeight();
-                Height += ROAD_SIGN_HEIGHT_DIFF;
-                panelRoadTab.Height += ROAD_SIGN_HEIGHT_DIFF;
-                tabControlCustom.Height += ROAD_SIGN_HEIGHT_DIFF;
-                buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, buttonCancelYPos + ROAD_SIGN_HEIGHT_DIFF);
-                buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, buttonOKYPos + ROAD_SIGN_HEIGHT_DIFF);
+                Height = SIGN_FORM_HEIGHT;
+                panelRoadTab.Height = SIGN_PANEL_HEIGHT;
+                tabControlCustom.Height = SIGN_TAB_CONTROL_HEIGHT;
+                buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, SIGN_BUTTON_Y_LOCATION);
+                buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, SIGN_BUTTON_Y_LOCATION);
             }
         }
 
         private void adjustDistressHeight()
         {
             panelDistresses.Hide();
-            Height = formHeight;
-            panelRoadTab.Height = roadPanelHeight;
-            tabControlCustom.Height = tabControlCustomHeight;
-            panelBelowSurface.Location = new System.Drawing.Point(panelBelowSurface.Location.X, panelBelowSurfaceYPos);
-            buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, buttonCancelYPos);
-            buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, buttonOKYPos);
+            Height = ROAD_FORM_HEIGHT;
+            panelRoadTab.Height = ROAD_PANEL_HEIGHT;
+            tabControlCustom.Height = ROAD_TAB_CONTROL_HEIGHT;
+            panelBelowSurface.Location = new System.Drawing.Point(panelBelowSurface.Location.X, ROAD_PANEL_BELOW_SURFACE_POSITION);
+            buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, ROAD_BUTTON_Y_LOCATION);
+            buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, ROAD_BUTTON_Y_LOCATION);
         }
 
         private void SignID_CheckedChanged(object sender, EventArgs e)
