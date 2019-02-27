@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using tams4a.Controls;
 using tams4a.Forms;
 
 namespace tams4a.Classes
@@ -24,7 +20,7 @@ namespace tams4a.Classes
             RoadID = rid;
             dialogBox = new FormCustomMessage();
             dialogBox.Text = "Sidewalks on this Road";
-            dialogBox.labelMessage.Text = "Does this raod have sidewalks?";
+            dialogBox.labelMessage.Text = "Does this road have sidewalks?";
             sidewalks = new ComboBox();
             sidewalks.Items.Add("Yes");
             sidewalks.Items.Add("No");

@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace tams4a.Forms
@@ -18,6 +14,7 @@ namespace tams4a.Forms
         private List<Label> signTexts;
         private List<Label> descriptions;
         private List<PictureBox> categoryIndicator;
+        private int returnSignIndex = -1;
 
         public FormSignLookup()
         {
@@ -91,6 +88,7 @@ namespace tams4a.Forms
                 options[i].Text = searchTable.Rows[i]["mutcd_code"].ToString();
                 options[i].Location = new Point(36, 16 + 32 * i);
                 options[i].Size = new Size(108, 24);
+                options[i].Click += radio_Click;
                 panelSigns.Controls.Add(options[i]);
                 descriptions.Add(new Label());
                 descriptions[i].Text = searchTable.Rows[i]["description"].ToString();
@@ -114,23 +112,32 @@ namespace tams4a.Forms
 
         private void buttonCanel_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
             Hide();
+            DialogResult = DialogResult.Cancel;
         }
 
-        public Dictionary<string, string> getSelection()
+        private void radio_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < options.Count; i++)
             {
                 if (options[i].Checked)
                 {
-                    Dictionary<string, string> result = new Dictionary<string, string>();
-                    foreach (DataColumn col in searchTable.Columns)
-                    {
-                        result[col.ColumnName] = searchTable.Rows[i][col.ColumnName].ToString();
-                    }
-                    return result;
+                    returnSignIndex = i;
+                    return;
                 }
+            }
+        }
+
+        public Dictionary<string, string> getSelection()
+        {
+            if (returnSignIndex >= 0)
+            {
+                Dictionary<string, string> result = new Dictionary<string, string>();
+                foreach (DataColumn col in searchTable.Columns)
+                {
+                    result[col.ColumnName] = searchTable.Rows[returnSignIndex][col.ColumnName].ToString();
+                }
+                return result;
             }
 
             return null;
@@ -138,8 +145,8 @@ namespace tams4a.Forms
 
         private void buttonConfirm_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
             Hide();
+            DialogResult = DialogResult.OK;
         }
 
         private void pressEnter(object sender, KeyEventArgs e)

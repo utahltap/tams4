@@ -496,7 +496,7 @@ CREATE TABLE mutcd_lookup (mutcd_code TEXT PRIMARY KEY, description TEXT, sign_t
                     SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
                     cmd.ExecuteNonQuery();
                     var liteAdapter = new SQLiteDataAdapter("SELECT * FROM mutcd_lookup", conn);
-                    var cmdBUilder = new SQLiteCommandBuilder(liteAdapter);
+                    var cmdBuilder = new SQLiteCommandBuilder(liteAdapter);
                     liteAdapter.Update(mutcdDat);
                 }
                 catch (Exception e)
@@ -852,7 +852,70 @@ UPDATE sign SET display = description || ' (' || TAMSID || ')';";
                 dbVersion = 14;
                 Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
             }
-            #endregion db_update_13_immute
+            #endregion db_update_14_immute
+
+            #region db_update_15_immute
+            if (dbVersion == 14)
+            {
+                try
+                {
+                    string cmdString = @"ALTER TABLE sign ADD COLUMN recommendation TEXT;";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "15";
+                dbVersion = 15;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_15_immute
+
+            #region db_update_16_immute
+            if (dbVersion == 15)
+            {
+                try
+                {
+                    string cmdString = @"UPDATE mutcd_lookup SET description = UPPER(SUBSTR(description, 1, 1)) || SUBSTR(description, 2);";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "16";
+                dbVersion = 16;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_16_immute
+
+            #region db_update_17_immute
+            if (dbVersion == 16)
+            {
+                try
+                {
+                    string cmdString = @"UPDATE sign_backing SET material = UPPER(SUBSTR(material, 1, 1)) || SUBSTR(material, 2);
+                        UPDATE support_materials SET material = UPPER(SUBSTR(material, 1, 1)) || SUBSTR(material, 2);
+                        UPDATE support_materials SET material = 'Square Steel Tube' WHERE id = 3;
+                        UPDATE support_materials SET material = 'U-Channel Post' WHERE id = 2;";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "17";
+                dbVersion = 17;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_17_immute
 
             return true;
         }

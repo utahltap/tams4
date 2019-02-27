@@ -56,7 +56,6 @@ namespace tams4a
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.potholesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.customToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.governingDistressesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rSLDistributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,10 +63,10 @@ namespace tams4a
             this.functionalClassificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.signAlertsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signInventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.supportAlertsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.signRecommendationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.supportInventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.supportRecommendationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sidewalkDistressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.roadsWithSidewalksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -119,6 +118,7 @@ namespace tams4a
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSnapShot = new System.Windows.Forms.ToolStripButton();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.customReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.sidePanel.SuspendLayout();
@@ -136,7 +136,8 @@ namespace tams4a
             this.toolStripMenuItemSep,
             this.roadToolStripMenuItem,
             this.signToolStripMenuItem,
-            this.otherToolStripMenuItem});
+            this.otherToolStripMenuItem,
+            this.customReportToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1087, 24);
@@ -305,8 +306,7 @@ namespace tams4a
             // 
             this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.generalToolStripMenuItem,
-            this.potholesToolStripMenuItem,
-            this.customToolStripMenuItem});
+            this.potholesToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.reportsToolStripMenuItem.Text = "Reports";
@@ -327,14 +327,6 @@ namespace tams4a
             | System.Windows.Forms.Keys.P)));
             this.potholesToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.potholesToolStripMenuItem.Text = "Potholes";
-            // 
-            // customToolStripMenuItem
-            // 
-            this.customToolStripMenuItem.Name = "customToolStripMenuItem";
-            this.customToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
-            | System.Windows.Forms.Keys.C)));
-            this.customToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.customToolStripMenuItem.Text = "Custom";
             // 
             // graphsToolStripMenuItem
             // 
@@ -382,38 +374,38 @@ namespace tams4a
             // signToolStripMenuItem
             // 
             this.signToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.signAlertsToolStripMenuItem,
             this.signInventoryToolStripMenuItem,
-            this.supportAlertsToolStripMenuItem,
-            this.supportInventoryToolStripMenuItem});
+            this.signRecommendationsToolStripMenuItem,
+            this.supportInventoryToolStripMenuItem,
+            this.supportRecommendationsToolStripMenuItem});
             this.signToolStripMenuItem.Enabled = false;
             this.signToolStripMenuItem.Name = "signToolStripMenuItem";
             this.signToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.signToolStripMenuItem.Text = "Sign";
             // 
-            // signAlertsToolStripMenuItem
-            // 
-            this.signAlertsToolStripMenuItem.Name = "signAlertsToolStripMenuItem";
-            this.signAlertsToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.signAlertsToolStripMenuItem.Text = "Sign Alerts";
-            // 
             // signInventoryToolStripMenuItem
             // 
             this.signInventoryToolStripMenuItem.Name = "signInventoryToolStripMenuItem";
-            this.signInventoryToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.signInventoryToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.signInventoryToolStripMenuItem.Text = "Sign Inventory";
             // 
-            // supportAlertsToolStripMenuItem
+            // signRecommendationsToolStripMenuItem
             // 
-            this.supportAlertsToolStripMenuItem.Name = "supportAlertsToolStripMenuItem";
-            this.supportAlertsToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.supportAlertsToolStripMenuItem.Text = "Support Alerts";
+            this.signRecommendationsToolStripMenuItem.Name = "signRecommendationsToolStripMenuItem";
+            this.signRecommendationsToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.signRecommendationsToolStripMenuItem.Text = "Sign Recommendations";
             // 
             // supportInventoryToolStripMenuItem
             // 
             this.supportInventoryToolStripMenuItem.Name = "supportInventoryToolStripMenuItem";
-            this.supportInventoryToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.supportInventoryToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.supportInventoryToolStripMenuItem.Text = "Support Inventory";
+            // 
+            // supportRecommendationsToolStripMenuItem
+            // 
+            this.supportRecommendationsToolStripMenuItem.Name = "supportRecommendationsToolStripMenuItem";
+            this.supportRecommendationsToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.supportRecommendationsToolStripMenuItem.Text = "Support Recommendations";
             // 
             // otherToolStripMenuItem
             // 
@@ -544,7 +536,7 @@ namespace tams4a
             this.uxMap.RedrawLayersWhileResizing = false;
             this.uxMap.SelectionEnabled = true;
             this.uxMap.Size = new System.Drawing.Size(863, 752);
-            this.uxMap.TabIndex = 1;
+            this.uxMap.TabIndex = 9;
             this.uxMap.ZoomOutFartherThanMaxExtent = false;
             this.uxMap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.uxMap_KeyDown);
             this.uxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.uxMap_MouseDown);
@@ -626,11 +618,10 @@ namespace tams4a
             this.treatmentPreventative.Name = "treatmentPreventative";
             this.treatmentPreventative.ReadOnly = true;
             this.treatmentPreventative.Size = new System.Drawing.Size(136, 23);
-            this.treatmentPreventative.TabIndex = 16;
+            this.treatmentPreventative.TabIndex = 0;
             this.treatmentPreventative.Text = "Preventative";
             this.treatmentPreventative.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPreventative.Visible = false;
-            this.treatmentLegend[treatmentPreventative] = Color.Yellow;
             // 
             // treatmentRehabilitation
             // 
@@ -644,11 +635,10 @@ namespace tams4a
             this.treatmentRehabilitation.Name = "treatmentRehabilitation";
             this.treatmentRehabilitation.ReadOnly = true;
             this.treatmentRehabilitation.Size = new System.Drawing.Size(136, 23);
-            this.treatmentRehabilitation.TabIndex = 15;
+            this.treatmentRehabilitation.TabIndex = 1;
             this.treatmentRehabilitation.Text = "Rehabilitation";
             this.treatmentRehabilitation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentRehabilitation.Visible = false;
-            this.treatmentLegend[treatmentRehabilitation] = Color.Red;
             // 
             // treatmentPreventativePatching
             // 
@@ -662,11 +652,10 @@ namespace tams4a
             this.treatmentPreventativePatching.Name = "treatmentPreventativePatching";
             this.treatmentPreventativePatching.ReadOnly = true;
             this.treatmentPreventativePatching.Size = new System.Drawing.Size(136, 23);
-            this.treatmentPreventativePatching.TabIndex = 14;
+            this.treatmentPreventativePatching.TabIndex = 2;
             this.treatmentPreventativePatching.Text = "Preventative/Patching";
             this.treatmentPreventativePatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPreventativePatching.Visible = false;
-            this.treatmentLegend[treatmentPreventativePatching] = Color.Orange;
             // 
             // treatmentReconstruction
             // 
@@ -680,11 +669,10 @@ namespace tams4a
             this.treatmentReconstruction.Name = "treatmentReconstruction";
             this.treatmentReconstruction.ReadOnly = true;
             this.treatmentReconstruction.Size = new System.Drawing.Size(136, 23);
-            this.treatmentReconstruction.TabIndex = 13;
+            this.treatmentReconstruction.TabIndex = 3;
             this.treatmentReconstruction.Text = "Reconstruction";
             this.treatmentReconstruction.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentReconstruction.Visible = false;
-            this.treatmentLegend[treatmentReconstruction] = Color.DarkRed;
             // 
             // treatmentPatching
             // 
@@ -698,11 +686,10 @@ namespace tams4a
             this.treatmentPatching.Name = "treatmentPatching";
             this.treatmentPatching.ReadOnly = true;
             this.treatmentPatching.Size = new System.Drawing.Size(136, 23);
-            this.treatmentPatching.TabIndex = 12;
+            this.treatmentPatching.TabIndex = 4;
             this.treatmentPatching.Text = "Patching";
             this.treatmentPatching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentPatching.Visible = false;
-            this.treatmentLegend[treatmentPatching] = Color.LimeGreen;
             // 
             // treatmentRoutine
             // 
@@ -716,11 +703,10 @@ namespace tams4a
             this.treatmentRoutine.Name = "treatmentRoutine";
             this.treatmentRoutine.ReadOnly = true;
             this.treatmentRoutine.Size = new System.Drawing.Size(136, 23);
-            this.treatmentRoutine.TabIndex = 10;
+            this.treatmentRoutine.TabIndex = 5;
             this.treatmentRoutine.Text = "Routine";
             this.treatmentRoutine.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.treatmentRoutine.Visible = false;
-            this.treatmentLegend[treatmentRoutine] = Color.Blue;
             // 
             // rslBlue
             // 
@@ -734,10 +720,9 @@ namespace tams4a
             this.rslBlue.Name = "rslBlue";
             this.rslBlue.ReadOnly = true;
             this.rslBlue.Size = new System.Drawing.Size(59, 23);
-            this.rslBlue.TabIndex = 9;
+            this.rslBlue.TabIndex = 1;
             this.rslBlue.Text = "1 9 - 20";
             this.rslBlue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslBlue] = Color.Blue;
             // 
             // rslDeepSkyBlue
             // 
@@ -751,10 +736,9 @@ namespace tams4a
             this.rslDeepSkyBlue.Name = "rslDeepSkyBlue";
             this.rslDeepSkyBlue.ReadOnly = true;
             this.rslDeepSkyBlue.Size = new System.Drawing.Size(59, 23);
-            this.rslDeepSkyBlue.TabIndex = 8;
+            this.rslDeepSkyBlue.TabIndex = 2;
             this.rslDeepSkyBlue.Text = "16 - 18";
             this.rslDeepSkyBlue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslDeepSkyBlue] = Color.DeepSkyBlue;
             // 
             // rslGreen
             // 
@@ -768,10 +752,9 @@ namespace tams4a
             this.rslGreen.Name = "rslGreen";
             this.rslGreen.ReadOnly = true;
             this.rslGreen.Size = new System.Drawing.Size(59, 23);
-            this.rslGreen.TabIndex = 7;
+            this.rslGreen.TabIndex = 3;
             this.rslGreen.Text = "13 - 15";
             this.rslGreen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslGreen] = Color.Green;
             // 
             // rslLimeGreen
             // 
@@ -785,10 +768,9 @@ namespace tams4a
             this.rslLimeGreen.Name = "rslLimeGreen";
             this.rslLimeGreen.ReadOnly = true;
             this.rslLimeGreen.Size = new System.Drawing.Size(59, 23);
-            this.rslLimeGreen.TabIndex = 6;
+            this.rslLimeGreen.TabIndex = 4;
             this.rslLimeGreen.Text = "10 - 12";
             this.rslLimeGreen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslLimeGreen] = Color.LimeGreen;
             // 
             // rslYellow
             // 
@@ -805,7 +787,6 @@ namespace tams4a
             this.rslYellow.TabIndex = 5;
             this.rslYellow.Text = "7 - 9";
             this.rslYellow.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslYellow] = Color.Yellow;
             // 
             // rslDarkRed
             // 
@@ -819,10 +800,9 @@ namespace tams4a
             this.rslDarkRed.Name = "rslDarkRed";
             this.rslDarkRed.ReadOnly = true;
             this.rslDarkRed.Size = new System.Drawing.Size(59, 23);
-            this.rslDarkRed.TabIndex = 4;
+            this.rslDarkRed.TabIndex = 8;
             this.rslDarkRed.Text = "0";
             this.rslDarkRed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslDarkRed] = Color.DarkRed;
             // 
             // rslOrange
             // 
@@ -836,10 +816,9 @@ namespace tams4a
             this.rslOrange.Name = "rslOrange";
             this.rslOrange.ReadOnly = true;
             this.rslOrange.Size = new System.Drawing.Size(59, 23);
-            this.rslOrange.TabIndex = 3;
+            this.rslOrange.TabIndex = 6;
             this.rslOrange.Text = "4 - 6";
             this.rslOrange.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslOrange] = Color.Orange;
             // 
             // rslRed
             // 
@@ -853,10 +832,9 @@ namespace tams4a
             this.rslRed.Name = "rslRed";
             this.rslRed.ReadOnly = true;
             this.rslRed.Size = new System.Drawing.Size(59, 23);
-            this.rslRed.TabIndex = 2;
+            this.rslRed.TabIndex = 7;
             this.rslRed.Text = "1 - 3";
             this.rslRed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.rslLegend[rslRed] = Color.Red;
             // 
             // toolStrip1
             // 
@@ -1026,6 +1004,13 @@ namespace tams4a
             this.toolStripButtonSnapShot.ToolTipText = "Take Snap Shot of the Map";
             this.toolStripButtonSnapShot.Click += new System.EventHandler(this.toolStripButtonSnapShot_Click);
             // 
+            // customReportToolStripMenuItem
+            // 
+            this.customReportToolStripMenuItem.Name = "customReportToolStripMenuItem";
+            this.customReportToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.customReportToolStripMenuItem.Text = "Custom";
+            this.customReportToolStripMenuItem.Click += new System.EventHandler(this.customReportToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1058,25 +1043,7 @@ namespace tams4a
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-            //
-            // Handles Clicks on Legend for changing map display
-            //
-            /*** Comment Out This Block of Code to Edit MainWindow Design ****************************************************************************************************************************************************/
-            /**/ this.rslBlue.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslBlue); });                                              /**/
-            /**/ this.rslDeepSkyBlue.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslDeepSkyBlue); });                                /**/
-            /**/ this.rslGreen.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslGreen); });                                            /**/
-            /**/ this.rslLimeGreen.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslLimeGreen); });                                    /**/
-            /**/ this.rslYellow.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslYellow); });                                          /**/
-            /**/ this.rslOrange.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslOrange); });                                          /**/
-            /**/ this.rslRed.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslRed); });                                                /**/
-            /**/ this.rslDarkRed.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslDarkRed); });                                        /**/
-            /**/ this.treatmentRoutine.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentRoutine); });                            /**/
-            /**/ this.treatmentPreventative.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPreventative); });                  /**/
-            /**/ this.treatmentPatching.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPatching); });                          /**/
-            /**/ this.treatmentPreventativePatching.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPreventativePatching); });  /**/
-            /**/ this.treatmentRehabilitation.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentRehabilitation); });              /**/
-            /**/ this.treatmentReconstruction.MouseDown += new System.Windows.Forms.MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentReconstruction); });              /**/
-            /*****************************************************************************************************************************************************************************************************************/
+
         }
 
         #endregion
@@ -1133,10 +1100,9 @@ namespace tams4a
         //private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem analysisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem graphsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem customToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem signAlertsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem signRecommendationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem signInventoryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem supportAlertsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem supportRecommendationsToolStripMenuItem;
         //private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem supportInventoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sidewalkDistressToolStripMenuItem;
@@ -1170,6 +1136,7 @@ namespace tams4a
         private System.Windows.Forms.ToolStripMenuItem surfaceTypeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem functionalClassificationToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxFind;
+        private ToolStripMenuItem customReportToolStripMenuItem;
     }
 }
 

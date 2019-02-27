@@ -8,6 +8,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using tams4a.Controls;
 using tams4a.Forms;
+using tams4a.Classes.Signs;
+using DotSpatial.Plugins.ShapeEditor;
 
 namespace tams4a.Classes
 {
@@ -22,23 +24,27 @@ namespace tams4a.Classes
         private Dictionary<string, int> catRank;
         private bool suppressChanges = false;
         private bool inClick = false;
+        private bool movingSign = false;
+        private Color originalColor;
+        new private FormSurveyDate dateForm = new FormSurveyDate();
+
+        private SignReports reports;
 
         private const string SignSelectionSql = @"SELECT * from sign_support WHERE support_id IN ([[IDLIST]]);";
-
         private const string SignListSql = @"SELECT * from sign WHERE support_id IN ([[IDLIST]]);";
 
         public ModuleSigns(TamsProject theProject, TabPage controlPage, ToolStripMenuItem[] boundButtons) : base(theProject, controlPage, boundButtons, SignSelectionSql) {
             ModuleName = "sign";
             surveyDate = DateTime.Now;
             notes = "";
-
+            reports = new SignReports(theProject, this);
             Panel_Module_OpenShp signAdd = new Panel_Module_OpenShp("Sign");
             signAdd.Name = "SIGNADD";
             signAdd.SetHandler(new EventHandler(openFileHandler));
             Button createSigns = new Button();
             createSigns.Text = "Create Sign SHP File";
             createSigns.Size = new Size(196, 54);
-            createSigns.Location = new Point(10, 74);
+            createSigns.Location = new System.Drawing.Point(10, 74);
             createSigns.Click += newSHPFile;
             signAdd.Controls.Add(createSigns);
             signAdd.Dock = DockStyle.Fill;
@@ -75,10 +81,10 @@ namespace tams4a.Classes
             };
 
             boundButtons[0].Click += clickManageFavorites;
-            boundButtons[1].Click += failedReport;
-            boundButtons[2].Click += generateReport;
-            boundButtons[3].Click += obstructedReport;
-            boundButtons[4].Click += supportReport;
+            boundButtons[1].Click += reports.signInventory; //Sign Inventory
+            boundButtons[2].Click += reports.signRecommendations; //Sign Recommendations
+            boundButtons[3].Click += reports.supportInventory; //Support Inventory
+            boundButtons[4].Click += reports.supportRecommendations; //Support Recommendations
         }
 
         public override bool openFile(string thePath = "", string type = "point")
@@ -112,6 +118,7 @@ namespace tams4a.Classes
             ControlsPage.Controls.Add(signPanel);
 
             #region eventhandlers
+            signPanel.toolStripMoveSign.Click += moveSign;
             signPanel.setChangedHandler(controlChanged);
             signPanel.toolStripButtonSave.Click += saveHandler;
             signPanel.toolStripButtonCancel.Click += cancelChanges;
@@ -144,9 +151,12 @@ namespace tams4a.Classes
             signPanel.comboBoxReflectivity.TextChanged += signValueChanged;
             signPanel.comboBoxConditionSign.TextChanged += signValueChanged;
             signPanel.comboBoxDirection.TextChanged += signValueChanged;
+            signPanel.comboBoxSignRecommendation.TextChanged += signValueChanged;
             signPanel.textBoxPhotoFile.TextChanged += signValueChanged;
             signPanel.pictureBoxPhoto.Click += clickPhotoBox;
             signPanel.pictureBoxPost.Click += clickPostPhotoBox;
+            Project.map.MouseUp += moveSignMouseUp;
+            dateForm.FormClosing += updateSurveyDate;
             #endregion eventhandlers
 
             DataTable supportMaterials = Database.GetDataByQuery(Project.conn, "SELECT * FROM support_materials");
@@ -232,7 +242,7 @@ namespace tams4a.Classes
         /// <param name="e"></param>
         private void chooseInstallDate(object sender, EventArgs e)
         {
-            Forms.FormSurveyDate df = new Forms.FormSurveyDate();
+            FormSurveyDate df = new FormSurveyDate();
             df.Text = "Select Install Date";
             df.setText("Select the date when this sign was installed.");
             df.ShowDialog();
@@ -303,17 +313,11 @@ namespace tams4a.Classes
         /// </summary>
         override protected void setSymbolizer()
         {
+            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            selectionLayer.SelectAll();
+
             int baseWidth = 48;
-
             PointScheme sgnScheme = new PointScheme();
-            
-            PointCategory catDef = new PointCategory(Properties.Resources.empty_post, baseWidth);
-            catDef.LegendText = "No Sign Info";
-            catDef.SelectionSymbolizer.ScaleMode = ScaleMode.Geographic;
-            catDef.SelectionSymbolizer.SetOutline(Color.Cyan, baseWidth / 4);
-            catDef.Symbolizer.ScaleMode = ScaleMode.Geographic;
-            sgnScheme.AddCategory(catDef);
-
             Image[] images = { Properties.Resources.regulatory_rw, Properties.Resources.regulatory_bw, Properties.Resources.warning, Properties.Resources.regulatory_pedestrian, Properties.Resources.school_pedestrian, Properties.Resources.worker, Properties.Resources.rail, Properties.Resources.highway, Properties.Resources.locational, Properties.Resources.locational, Properties.Resources.service, Properties.Resources.recreation, Properties.Resources.empty_post};
             string[] signCats = { "regulatory_rw", "regulatory_bw", "warning", "regulatory_pedestrian", "school_pedestrian", "worker", "rail", "highway", "locational", "location_guide", "service", "recreation", "empty_post"};
 
@@ -380,7 +384,7 @@ namespace tams4a.Classes
             {
                 selectionTable.Rows[i]["TAMSSIGN"] = (i >= tamsTable.Rows.Count) ? "empty_post" : tamsTable.Rows[i]["category"];
             }
-            selectionLayer.DataSet.DataTable = selectionTable; //Is this necessary?
+            //selectionLayer.DataSet.DataTable = selectionTable; //Is this necessary?
         }
 
         /// <summary>
@@ -416,21 +420,94 @@ namespace tams4a.Classes
             Panel_Sign signControls = getSignControls();
             signControls.setTodayToolStripMenuItem.Checked = false;
             signControls.setOtherDateToolStripMenuItem.Checked = true;
+
         }
 
+        private void updateSurveyDate(object sender, EventArgs e)
+        {
+            Panel_Sign signControls = getSignControls();
+            surveyDate = dateForm.getDate();
+            string[] dateFormats = surveyDate.GetDateTimeFormats();
+            signControls.labelSurveyDate.Text = "As of " + dateFormats[58];
+            controlChanged(sender, e);            
+        }
 
         protected void resetRecordDate(object sender, EventArgs e)
         {
             surveyDate = DateTime.Now;
             Panel_Sign signControls = getSignControls();
+            string[] dateFormats = surveyDate.GetDateTimeFormats();
+            signControls.labelSurveyDate.Text = "As of " + dateFormats[58];
             signControls.setTodayToolStripMenuItem.Checked = true;
             signControls.setOtherDateToolStripMenuItem.Checked = false;
+        }
+
+
+        private void moveSign(object sender, EventArgs e)
+        {
+            Panel_Sign signControls = getSignControls();
+            if (signControls.toolStripMoveSign.BackColor == Color.LightSkyBlue)
+            {
+                movingSign = false;
+                Project.map.FunctionMode = FunctionMode.Select;
+                signControls.toolStripMoveSign.BackColor = originalColor;
+                return;
+            }
+            originalColor = signControls.toolStripMoveSign.BackColor;
+            signControls.toolStripMoveSign.BackColor = Color.LightSkyBlue;
+            IFeatureLayer selectionLayer = (IFeatureLayer)Layer;
+            MoveVertexFunction moveSign = new MoveVertexFunction(Project.map);
+            moveSign.Map = Project.map;
+            moveSign.YieldStyle = YieldStyles.LeftButton | YieldStyles.RightButton;
+            if (Project.map.MapFunctions.Contains(moveSign) == false)
+            {
+                Project.map.MapFunctions.Add(moveSign);
+            }
+            Project.map.FunctionMode = FunctionMode.None;
+            Project.map.Cursor = Cursors.Cross;
+            moveSign.DeselectFeature();
+            moveSign.Layer = selectionLayer;
+            SetSnapLayers(moveSign);
+            moveSign.Activate();
+            movingSign = true;
+        }
+
+        private void moveSignMouseUp(object sender, MouseEventArgs e)
+        {
+            if (!movingSign) return;
+            FeatureLayer selectionLayer = (FeatureLayer)Layer;
+            Properties.Settings.Default.Save();
+            selectionLayer.ClearSelection();
+            selectionLayer.DataSet.Save();
+            setSymbolizer();
+            Project.map.Invalidate();
+            Project.map.Refresh();
+            Project.map.ResetBuffer();
+            Project.map.Update();
+            Panel_Sign signControls = getSignControls();
+            if (signControls.toolStripMoveSign.BackColor != originalColor) return;
+            movingSign = false;
+            Project.map.FunctionMode = FunctionMode.Select;
+            signControls.toolStripMoveSign.BackColor = originalColor;
+        }
+
+        private void SetSnapLayers(SnappableMapFunction func)
+        {
+            func.DoSnapping = true;
+            IFeatureLayer selectionLayer = (IFeatureLayer)Layer;
+            foreach (var layer in Project.map.Layers)
+            {
+                IFeatureLayer fl = layer as IFeatureLayer;
+                if (fl != null && fl != selectionLayer && fl.DataSet.FeatureType != selectionLayer.DataSet.FeatureType)
+                    func.AddLayerToSnap(fl);
+            }
         }
 
         override public void selectionChanged()
         {    
             if (!isOpen()) { return; }
             if (UnsavedChanges){}
+            bool enableSigns = true;
             Panel_Sign signControls = getSignControls();
 
             resetSignDisplay(signControls);
@@ -443,13 +520,17 @@ namespace tams4a.Classes
                 return;
             }
 
+            if (shpSelection.Count > 1)
+            {
+                enableSigns = false;
+            }
+
             if (Project.settings.GetValue("sign_zoom") == "true")
             {
                 selectionLayer.ZoomToSelectedFeatures();
                 Project.map.ZoomOut();
                 Project.map.ZoomOut();
             }
-
 
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
             tamsids = new List<string>();
@@ -458,7 +539,7 @@ namespace tams4a.Classes
                 tamsids.Add(row[tamsidcolumn].ToString());
             }
 
-            enableControls(signControls);
+            enableControls(signControls, enableSigns);
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
             updateSignDisplay(values, signControls);
             getSigns(signControls);
@@ -498,7 +579,7 @@ namespace tams4a.Classes
             signControls.comboBoxCondition.Text = Util.DictionaryItemString(values, "condition");
             signControls.comboBoxObstruction.Text = Util.DictionaryItemString(values, "obstructions");
             signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "road_offset"));
-            signControls.comboBoxRecommendation.Text = Util.DictionaryItemString(values, "recommendation");
+            signControls.comboBoxSupportRecommendation.Text = Util.DictionaryItemString(values, "recommendation");
             signControls.textBoxPhotoPost.Text = Util.DictionaryItemString(values, "photo");
             updatePhotoPreview(signControls.pictureBoxPost, signControls.textBoxPhotoPost.Text);
             notes = Util.DictionaryItemString(values, "notes");
@@ -539,9 +620,7 @@ namespace tams4a.Classes
                 signControls.comboBoxSigns.ValueMember = "TAMSID";
                 clearSignChanges();
                 changeSign(signControls);
-                
-                determinePostCat();
-                
+                determinePostCat();   
             }
             else
             {
@@ -574,6 +653,7 @@ namespace tams4a.Classes
             signPanel.comboBoxReflectivity.Text = signChanges[index]["reflectivity"];
             signPanel.comboBoxConditionSign.Text = signChanges[index]["condition"];
             signPanel.comboBoxDirection.Text = signChanges[index]["direction"];
+            signPanel.comboBoxSignRecommendation.Text = signChanges[index]["recommendation"];
             signPanel.textBoxPhotoFile.Text = signChanges[index]["photo"];
             signPanel.buttonFavorite.BackColor = signChanges[index]["favorite"].Contains("true") ? Color.DeepPink : Control.DefaultBackColor;
             suppressChanges = false;
@@ -599,9 +679,10 @@ namespace tams4a.Classes
         /// <summary>
         /// activates the controls when a sign is selected.
         /// </summary>
-        private void enableControls(Panel_Sign signControls)
+        private void enableControls(Panel_Sign signControls, bool enableSigns)
         {
-            signControls.groupBoxSign.Enabled = true;
+            if (enableSigns) signControls.groupBoxSign.Enabled = true;
+            else disableSignDisplay(signControls);
             signControls.toolStrip.Enabled = true;
             signControls.groupBoxSupport.Enabled = true;
             signControls.toolStripButtonSurveyDate.Enabled = true;
@@ -620,7 +701,7 @@ namespace tams4a.Classes
             signControls.comboBoxCondition.SelectedIndex = 0;
             signControls.comboBoxObstruction.Text = "";
             signControls.numericUpDownOffset.Value = 0;
-            signControls.comboBoxRecommendation.Text = "";
+            signControls.comboBoxSupportRecommendation.Text = "";
             signControls.comboBoxSigns.Text = "";
             signControls.textBoxType.Text = "";
             signControls.textBoxDescription.Text = "";
@@ -634,6 +715,7 @@ namespace tams4a.Classes
             signControls.comboBoxReflectivity.SelectedIndex = 0;
             signControls.comboBoxDirection.SelectedIndex = 0;
             signControls.comboBoxConditionSign.SelectedIndex = 0;
+            signControls.comboBoxSignRecommendation.SelectedIndex = 0;
             signControls.textBoxPhotoFile.Text = "";
             signControls.textBoxPhotoPost.Text = "";
             signControls.pictureBoxPhoto.Image = null;
@@ -658,7 +740,7 @@ namespace tams4a.Classes
             Button createSigns = new Button();
             createSigns.Text = "Create Sign SHP File";
             createSigns.Size = new Size(196, 54);
-            createSigns.Location = new Point(10, 74);
+            createSigns.Location = new System.Drawing.Point(10, 74);
             signAdd.Controls.Add(createSigns);
             signAdd.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(signAdd);
@@ -667,6 +749,7 @@ namespace tams4a.Classes
         public void signValueChanged(object sender, EventArgs e)
         {
             if (suppressChanges) return;
+            controlChanged(sender, e);
             Panel_Sign signControls = getSignControls();
             int index = signControls.comboBoxSigns.SelectedIndex;
             if (index == -1) return;
@@ -684,6 +767,7 @@ namespace tams4a.Classes
             signChanges[index]["description"] = signControls.textBoxDescription.Text;
             signChanges[index]["install_date"] = signControls.textBoxInstall.Text;
             signChanges[index]["direction"] = signControls.comboBoxDirection.Text;
+            signChanges[index]["recommendation"] = signControls.comboBoxSignRecommendation.Text;
             var result = Database.GetDataByQuery(Project.conn, "SELECT category FROM mutcd_lookup WHERE mutcd_code = '" + signControls.textBoxType.Text + "';");
             signChanges[index]["category"] = result.Rows.Count > 0 ? result.Rows[0]["category"].ToString() : "empty_post";
 
@@ -717,13 +801,14 @@ namespace tams4a.Classes
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
 
             Dictionary<string, string> values = new Dictionary<string, string>();
-            values["survey_date"] = Util.SortableDate(surveyDate);
+            string[] dateFormat = surveyDate.GetDateTimeFormats();
+            values["survey_date"] = dateFormat[58];
             values["address"] = signControls.textBoxAddress.Text;
             values["material"] = signControls.comboBoxMaterial.Text;
             values["condition"] = signControls.comboBoxCondition.Text;
             values["obstructions"] = signControls.comboBoxObstruction.Text;
             values["road_offset"] = signControls.numericUpDownOffset.Value.ToString();
-            values["recommendation"] = signControls.comboBoxRecommendation.Text;
+            values["recommendation"] = signControls.comboBoxSupportRecommendation.Text;
             values["photo"] = signControls.textBoxPhotoPost.Text;
             values["notes"] = notes;
             values["category"] = postCat;
@@ -826,6 +911,35 @@ namespace tams4a.Classes
                 {
                     FormSignLookup fave = new FormSignLookup();
                     DataTable favorites = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign WHERE favorite='true'");
+                    DataRow stopSign = favorites.NewRow();
+                    DataRow streetSign = favorites.NewRow();
+                    DataRow speedSign = favorites.NewRow();
+                    stopSign["description"] = "Stop";
+                    stopSign["sign_text"] = "STOP";
+                    stopSign["height"] = 30;
+                    stopSign["width"] = 30;
+                    stopSign["mutcd_code"] = "R1-1";
+                    stopSign["category"] = "regulatory_rw";
+                    stopSign["TAMSID"] = -1;
+                    favorites.Rows.Add(stopSign);
+                    streetSign["description"] = "Street sign";
+                    streetSign["sign_text"] = "[[street]]";
+                    streetSign["height"] = 8;
+                    streetSign["width"] = 30;
+                    streetSign["mutcd_code"] = "D1-c";
+                    streetSign["category"] = "location_guide";
+                    streetSign["TAMSID"] = -2;
+                    favorites.Rows.Add(streetSign);
+                    speedSign["description"] = "Speed limit";
+                    speedSign["sign_text"] = "SPEED LIMIT 25";
+                    speedSign["height"] = 30;
+                    speedSign["width"] = 24;
+                    speedSign["mutcd_code"] = "R2-1";
+                    speedSign["category"] = "regulatory_bw";
+                    speedSign["TAMSID"] = -3;
+                    favorites.Rows.Add(speedSign);
+
+
                     if (favorites.Rows.Count == 0)
                     {
                         MessageBox.Show("You cannot create a sign from favorites because you have no favorite signs.", "No Favorite Signs");
@@ -882,6 +996,7 @@ namespace tams4a.Classes
                 return;
             }
             Panel_Sign signControls = getSignControls();
+            controlChanged(sender, e);
             int index = signControls.comboBoxSigns.SelectedIndex;
             if (signChanges[index]["favorite"].Contains("true"))
             {
@@ -899,7 +1014,7 @@ namespace tams4a.Classes
             saveHandler(sender, e);
             suppressChanges = false;
             selectionChanged();
-            setSymbolizer();        
+            setSymbolizer();
         }
 
         private void faveSign(object sender, EventArgs e)
@@ -907,7 +1022,7 @@ namespace tams4a.Classes
             Panel_Sign signControls = getSignControls();
             int index = signControls.comboBoxSigns.SelectedIndex;
             signChanges[index]["favorite"] = signChanges[index]["favorite"].Contains("true") ? "false" : "true";
-            signControls.buttonFavorite.BackColor = signChanges[index]["favorite"].Contains("true") ? Color.Pink : Control.DefaultBackColor;
+            signControls.buttonFavorite.BackColor = signChanges[index]["favorite"].Contains("true") ? Color.Red : Control.DefaultBackColor;
             controlChanged(sender, e);
         }
 
@@ -1036,371 +1151,6 @@ namespace tams4a.Classes
             FormManageFavorites faves = new FormManageFavorites(Project.conn, maxSignID);
             faves.ShowDialog();
             maxSignID += faves.virtualSignsCreated();
-        }
-
-        /// <summary>
-        /// Generates a list of all signs to export to .csv file.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void generateReport(object sender, EventArgs e)
-        {
-            DataTable data = new DataTable();
-            data.Columns.Add("ID");
-            data.Columns.Add("Sign");
-            data.Columns.Add("Address");
-            data.Columns.Add("Installed");
-            data.Columns.Add("Sheeting");
-            data.Columns.Add("Backing");
-            data.Columns.Add("Reflectivity");
-            data.Columns.Add("Condition");
-            data.Columns.Add("Recommendation");
-            try
-            {
-                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
-                if (signsTable.Rows.Count == 0)
-                {
-                    MessageBox.Show("No list could be generated because no signs where found.");
-                    return;
-                }
-                foreach (DataRow row in signsTable.Rows)
-                {
-                    DataRow nr = data.NewRow();
-                    nr["ID"] = row["TAMSID"].ToString();
-                    nr["Sign"] = row["description"].ToString();
-                    nr["Address"] = row["address"].ToString();
-                    nr["Installed"] = row["install_date"].ToString();
-                    nr["Sheeting"] = row["sheeting"].ToString();
-                    nr["Backing"] = row["backing"].ToString();
-                    nr["Reflectivity"] = row["reflectivity"].ToString();
-                    nr["Condition"] = row["condition"].ToString();
-                    int age = DateTime.Now.Year - Util.ToInt(row["install_date"].ToString().Split('-')[0]);
-                    nr["Recommendation"] = "";
-                    
-                    data.Rows.Add(nr);
-                }
-                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
-                report.Text = "Sign Report";
-                report.Show();
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show("An error occured while trying to generate the report.");
-                Log.Error("Report failed to generate." + Environment.NewLine + err.ToString());
-            }
-        }
-
-        /// <summary>
-        /// Show only signs that have faild the reflectivity tests.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void failedReport(object sender, EventArgs e)
-        {
-            DataTable data = new DataTable();
-            data.Columns.Add("ID");
-            data.Columns.Add("Sign");
-            data.Columns.Add("Address");
-            data.Columns.Add("Installed");
-            data.Columns.Add("Sheeting");
-            data.Columns.Add("Backing");
-            data.Columns.Add("Reflectivity");
-            data.Columns.Add("Condition");
-            data.Columns.Add("Comment");
-            try
-            {
-                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
-                if (signsTable.Rows.Count == 0)
-                {
-                    MessageBox.Show("No list could be generated because no signs that require attention could be found.");
-                    return;
-                }
-                signsTable = signsTable.Select("condition = 'damaged' OR condition='other' OR reflectivity='fail'").CopyToDataTable();
-                if (signsTable.Rows.Count == 0)
-                {
-                    MessageBox.Show("No list could be generated because no signs that require attention could be found.");
-                    return;
-                }
-                foreach (DataRow row in signsTable.Rows)
-                {
-                    DataRow nr = data.NewRow();
-                    nr["ID"] = row["TAMSID"].ToString();
-                    nr["Sign"] = row["description"].ToString();
-                    nr["Address"] = row["address"].ToString();
-                    nr["Installed"] = row["install_date"].ToString();
-                    nr["Sheeting"] = row["sheeting"].ToString();
-                    nr["Backing"] = row["backing"].ToString();
-                    nr["Reflectivity"] = row["reflectivity"].ToString();
-                    nr["Condition"] = row["notes"].ToString();
-                    int age = DateTime.Now.Year - Util.ToInt(row["install_date"].ToString().Split('-')[0]);
-                    data.Rows.Add(nr);
-                }
-                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
-                report.Text = "Sign Report";
-                report.Show();
-            }
-            catch (Exception err)
-            {
-                ReportErrMsg(err);
-            }
-        }
-
-        /// <summary>
-        /// lists only signs that are at least partially obstructed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void obstructedReport(object sender, EventArgs e)
-        {
-            DataTable data = new DataTable();
-            data.Columns.Add("ID");
-            data.Columns.Add("Sign");
-            data.Columns.Add("Address");
-            data.Columns.Add("Installed");
-            data.Columns.Add("Sheeting");
-            data.Columns.Add("Backing");
-            data.Columns.Add("Obstructions");
-            data.Columns.Add("Recommendation");
-            try
-            {
-                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
-                if (signsTable.Rows.Count == 0)
-                {
-                    MessageBox.Show("No list could be generated because no obstructed signs were found.");
-                    return;
-                }
-                foreach (DataRow row in signsTable.Rows)
-                {
-                    DataRow nr = data.NewRow();
-                    nr["ID"] = row["TAMSID"].ToString();
-                    nr["Sign"] = row["description"].ToString();
-                    nr["Address"] = row["address"].ToString();
-                    nr["Installed"] = row["install_date"].ToString();
-                    nr["Sheeting"] = row["sheeting"].ToString();
-                    nr["Backing"] = row["backing"].ToString();
-                    nr["Obstructions"] = row["obstructions"].ToString();
-                    if (nr["Obstructions"].ToString().Contains("partial") || nr["Obstructions"].ToString().Contains("severe"))
-                    {
-                        nr["Recommendation"] = "remove obstructions";
-                        data.Rows.Add(nr);
-                    }
-                }
-                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
-                report.Text = "Sign Report";
-                report.Show();
-            }
-            catch (Exception err)
-            {
-                ReportErrMsg(err);
-            }
-        }
-
-        /// <summary>
-        /// Show only signs that are considered old based, on the expected life sheeting type.
-        /// Old signs may still be servicable as long as they meet the reflectity guidelines.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void oldSignsReport(object sender, EventArgs e)
-        {
-            DataTable data = new DataTable();
-            data.Columns.Add("ID");
-            data.Columns.Add("Sign");
-            data.Columns.Add("Address");
-            data.Columns.Add("Installed");
-            data.Columns.Add("Sheeting");
-            data.Columns.Add("Backing");
-            data.Columns.Add("Reflectivity");
-            data.Columns.Add("Recommendation");
-            try
-            {
-                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
-                if (signsTable.Rows.Count == 0)
-                {
-                    MessageBox.Show("No list could be generated because no signs that were old or of unknown age were found.");
-                    return;
-                }
-                foreach (DataRow row in signsTable.Rows)
-                {
-                    DataRow nr = data.NewRow();
-                    nr["ID"] = row["TAMSID"].ToString();
-                    nr["Sign"] = row["description"].ToString();
-                    nr["Address"] = row["address"].ToString();
-                    nr["Installed"] = row["install_date"].ToString();
-                    nr["Sheeting"] = row["sheeting"].ToString();
-                    nr["Backing"] = row["backing"].ToString();
-                    nr["Reflectivity"] = row["reflectivity"].ToString();
-                    int age = DateTime.Now.Year - Util.ToInt(row["install_date"].ToString().Split('-')[0]);
-                    nr["Recommendation"] = "monitor";
-                    if (nr["Reflectivity"].ToString().Contains("fail"))
-                    {
-                        nr["Recommendation"] = "replace sign";
-                    }
-                    if ((age > 5 && (nr["Sheeting"].ToString().Equals("I") || nr["Sheeting"].ToString().Equals("V"))) || age > 9)
-                    {
-                        data.Rows.Add(nr);
-                    }
-                }
-                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
-                report.Text = "Sign Report";
-                report.Show();
-            }
-            catch (Exception err)
-            {
-                ReportErrMsg(err);
-            }
-        }
-
-        /// <summary>
-        /// Shows only signs that are damaged.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void brokenReport(object sender, EventArgs e)
-        {
-            DataTable data = new DataTable();
-            data.Columns.Add("ID");
-            data.Columns.Add("Sign");
-            data.Columns.Add("Address");
-            data.Columns.Add("Installed");
-            data.Columns.Add("Sheeting");
-            data.Columns.Add("Backing");
-            data.Columns.Add("Condition");
-            data.Columns.Add("Recommendation");
-            try
-            {
-                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT sign.*, sign_support.address FROM sign LEFT JOIN sign_support ON sign.support_id = sign_support.support_id");
-                if (signsTable.Rows.Count == 0)
-                {
-                    MessageBox.Show("No list could be generated because no damaged signs were found.");
-                    return;
-                }
-                foreach (DataRow row in signsTable.Rows)
-                {
-                    DataRow nr = data.NewRow();
-                    nr["ID"] = row["TAMSID"];
-                    nr["Sign"] = row["description"];
-                    nr["Address"] = row["address"];
-                    nr["Installed"] = row["install_date"];
-                    nr["Sheeting"] = row["sheeting"];
-                    nr["Backing"] = row["backing"];
-                    nr["Condition"] = row["condition"];
-                    if (!nr["Condition"].ToString().Contains("broken") && !nr["Condition"].ToString().Contains("damaged"))
-                    {
-                        continue;
-                    }
-                    if (nr["Condition"].ToString().Contains("broken"))
-                    {
-                        nr["Recommendation"] = "replace";
-                    }
-                    else
-                    {
-                        nr["Recommendaiton"] = "";
-                    }
-                    data.Rows.Add(nr);
-                }
-                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
-                report.Text = "Sign Report";
-                report.Show();
-            }
-            catch (Exception err)
-            {
-                ReportErrMsg(err);
-            }
-        }
-
-        private void supportReport(object sender, EventArgs e)
-        {
-            DataTable data = new DataTable();
-            data.Columns.Add("ID");
-            data.Columns.Add("Address");
-            data.Columns.Add("Signs");
-            data.Columns.Add("Material");
-            data.Columns.Add("Condition");
-            data.Columns.Add("Obstructions");
-            data.Columns.Add("Notes");
-            try
-            {
-                DataTable supportTable = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign_support");
-                foreach (DataRow row in supportTable.Rows)
-                {
-                    DataRow nr = data.NewRow();
-                    nr["ID"] = row["support_id"];
-                    nr["Address"] = row["address"];
-                    nr["Signs"] = Database.GetDataByQuery(Project.conn, "SELECT COUNT(support_id) FROM sign WHERE support_id = " + nr["ID"].ToString() + ";");
-                    nr["Material"] = row["material"];
-                    nr["Condition"] = row["condition"];
-                    nr["Obstructions"] = row["obstructions"];
-                    nr["Notes"] = row["notes"];
-                    data.Rows.Add(nr);
-                }
-                data.DefaultView.Sort = "Address asc, ID asc";
-                FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
-                report.Text = "Support Report";
-                report.Show();
-            }
-            catch (Exception err)
-            {
-                ReportErrMsg(err);
-            }
-        }
-
-        private void supportAttention(object sender, EventArgs e)
-        {
-            DataTable data = new DataTable();
-            data.Columns.Add("ID");
-            data.Columns.Add("Address");
-            data.Columns.Add("Signs");
-            data.Columns.Add("Material");
-            data.Columns.Add("Condition");
-            data.Columns.Add("Obstructions");
-            data.Columns.Add("Comment");
-            try
-            {
-                DataTable supportTable = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign_support");
-                if (supportTable.Rows.Count == 0)
-                {
-                    MessageBox.Show("No list could be generated because no signs that require attention could be found.");
-                    return;
-                }
-                supportTable = supportTable.Select("condition = 'damaged' OR condition='other' OR reflectivity='fail'").CopyToDataTable();
-                if (supportTable.Rows.Count == 0)
-                {
-                    MessageBox.Show("No list could be generated because no signs that require attention could be found.");
-                    return;
-                }
-                foreach (DataRow row in supportTable.Rows)
-                {
-                    DataRow nr = data.NewRow();
-                    nr["ID"] = row["support_id"];
-                    nr["Addres"] = row["address"];
-                    nr["signs"] = Database.GetDataByQuery(Project.conn, "SELECT COUNT(suppord_id) FROM sign WHERE support_id = " + nr["ID"].ToString() + ";");
-                    nr["Material"] = row["material"];
-                    nr["Condtion"] = row["condition"];
-                    nr["Obstructions"] = row["obstructions"];
-                    data.Rows.Add(nr);
-                }
-                data.DefaultView.Sort = "Address asc, ID asc, Installed asc";
-                FormOutput report = new FormOutput(Project);
-                report.dataGridViewReport.DataSource = data.DefaultView.ToTable();
-                report.Text = "Support Report";
-                report.Show();
-            }
-            catch (Exception err)
-            {
-                ReportErrMsg(err);
-            }
         }
 
         private void clickPhotoBox(object sender, EventArgs e)
