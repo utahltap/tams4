@@ -153,9 +153,54 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.panelSupportTab = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.comboBox8 = new System.Windows.Forms.ComboBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.checkBox9 = new System.Windows.Forms.CheckBox();
+            this.comboBox9 = new System.Windows.Forms.ComboBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.checkBox10 = new System.Windows.Forms.CheckBox();
+            this.comboBox10 = new System.Windows.Forms.ComboBox();
+            this.textBoxAddressComparison = new System.Windows.Forms.TextBox();
+            this.textBoxAddressValue = new System.Windows.Forms.TextBox();
+            this.numericUpDownSupportIDValue = new System.Windows.Forms.NumericUpDown();
+            this.comboBox12 = new System.Windows.Forms.ComboBox();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.textBoxMaterialComparison = new System.Windows.Forms.TextBox();
+            this.checkBox11 = new System.Windows.Forms.CheckBox();
+            this.Material = new System.Windows.Forms.CheckBox();
+            this.Address = new System.Windows.Forms.CheckBox();
+            this.SupportID = new System.Windows.Forms.CheckBox();
+            this.comboBoxMaterialValue = new System.Windows.Forms.ComboBox();
+            this.comboBoxSuppoortIDComarison = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.tabControlCustom.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panelRoadTab.SuspendLayout();
@@ -185,6 +230,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSignIDValue)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.panelSupportTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSupportIDValue)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -1810,7 +1860,7 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.textBox1);
+            this.tabPage3.Controls.Add(this.panelSupportTab);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -1818,15 +1868,6 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Support";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(12, 6);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(109, 13);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "Still in development...";
             // 
             // tabPage4
             // 
@@ -1847,6 +1888,601 @@
             this.textBox2.Size = new System.Drawing.Size(109, 13);
             this.textBox2.TabIndex = 1;
             this.textBox2.Text = "Still in development...";
+            // 
+            // panelSupportTab
+            // 
+            this.panelSupportTab.Controls.Add(this.textBox1);
+            this.panelSupportTab.Controls.Add(this.checkBox1);
+            this.panelSupportTab.Controls.Add(this.comboBox1);
+            this.panelSupportTab.Controls.Add(this.textBox3);
+            this.panelSupportTab.Controls.Add(this.checkBox2);
+            this.panelSupportTab.Controls.Add(this.comboBox2);
+            this.panelSupportTab.Controls.Add(this.textBox4);
+            this.panelSupportTab.Controls.Add(this.checkBox3);
+            this.panelSupportTab.Controls.Add(this.comboBox3);
+            this.panelSupportTab.Controls.Add(this.numericUpDown1);
+            this.panelSupportTab.Controls.Add(this.checkBox4);
+            this.panelSupportTab.Controls.Add(this.comboBox4);
+            this.panelSupportTab.Controls.Add(this.numericUpDown2);
+            this.panelSupportTab.Controls.Add(this.checkBox5);
+            this.panelSupportTab.Controls.Add(this.comboBox5);
+            this.panelSupportTab.Controls.Add(this.numericUpDown3);
+            this.panelSupportTab.Controls.Add(this.checkBox6);
+            this.panelSupportTab.Controls.Add(this.comboBox6);
+            this.panelSupportTab.Controls.Add(this.textBox5);
+            this.panelSupportTab.Controls.Add(this.checkBox7);
+            this.panelSupportTab.Controls.Add(this.comboBox7);
+            this.panelSupportTab.Controls.Add(this.textBox6);
+            this.panelSupportTab.Controls.Add(this.checkBox8);
+            this.panelSupportTab.Controls.Add(this.comboBox8);
+            this.panelSupportTab.Controls.Add(this.textBox7);
+            this.panelSupportTab.Controls.Add(this.checkBox9);
+            this.panelSupportTab.Controls.Add(this.comboBox9);
+            this.panelSupportTab.Controls.Add(this.textBox8);
+            this.panelSupportTab.Controls.Add(this.checkBox10);
+            this.panelSupportTab.Controls.Add(this.comboBox10);
+            this.panelSupportTab.Controls.Add(this.textBoxAddressComparison);
+            this.panelSupportTab.Controls.Add(this.textBoxAddressValue);
+            this.panelSupportTab.Controls.Add(this.numericUpDownSupportIDValue);
+            this.panelSupportTab.Controls.Add(this.comboBox12);
+            this.panelSupportTab.Controls.Add(this.textBox11);
+            this.panelSupportTab.Controls.Add(this.textBoxMaterialComparison);
+            this.panelSupportTab.Controls.Add(this.checkBox11);
+            this.panelSupportTab.Controls.Add(this.Material);
+            this.panelSupportTab.Controls.Add(this.Address);
+            this.panelSupportTab.Controls.Add(this.SupportID);
+            this.panelSupportTab.Controls.Add(this.comboBoxMaterialValue);
+            this.panelSupportTab.Controls.Add(this.comboBoxSuppoortIDComarison);
+            this.panelSupportTab.Controls.Add(this.label5);
+            this.panelSupportTab.Controls.Add(this.label6);
+            this.panelSupportTab.Controls.Add(this.label7);
+            this.panelSupportTab.Location = new System.Drawing.Point(0, 0);
+            this.panelSupportTab.Name = "panelSupportTab";
+            this.panelSupportTab.Size = new System.Drawing.Size(391, 434);
+            this.panelSupportTab.TabIndex = 7;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(170, 376);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(62, 20);
+            this.textBox1.TabIndex = 93;
+            this.textBox1.Text = "=";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(13, 378);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(80, 17);
+            this.checkBox1.TabIndex = 92;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Enabled = false;
+            this.comboBox1.Items.AddRange(new object[] {
+            "",
+            "True",
+            "False"});
+            this.comboBox1.Location = new System.Drawing.Point(250, 375);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(128, 21);
+            this.comboBox1.TabIndex = 91;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Enabled = false;
+            this.textBox3.Location = new System.Drawing.Point(170, 349);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(62, 20);
+            this.textBox3.TabIndex = 90;
+            this.textBox3.Text = "=";
+            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(13, 351);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(80, 17);
+            this.checkBox2.TabIndex = 89;
+            this.checkBox2.Text = "checkBox2";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.Enabled = false;
+            this.comboBox2.Items.AddRange(new object[] {
+            "",
+            "regulatory_rw",
+            "regulatory_bw",
+            "regulatory_pedestrian",
+            "rail",
+            "school_pedestrian",
+            "warning",
+            "worker",
+            "highway",
+            "location_guide",
+            "recreation",
+            "service"});
+            this.comboBox2.Location = new System.Drawing.Point(250, 348);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(128, 21);
+            this.comboBox2.TabIndex = 88;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Enabled = false;
+            this.textBox4.Location = new System.Drawing.Point(170, 322);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(62, 20);
+            this.textBox4.TabIndex = 87;
+            this.textBox4.Text = "=";
+            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(13, 324);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(80, 17);
+            this.checkBox3.TabIndex = 86;
+            this.checkBox3.Text = "checkBox3";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox3.Enabled = false;
+            this.comboBox3.Items.AddRange(new object[] {
+            "",
+            "N",
+            "NE",
+            "E",
+            "SE",
+            "S",
+            "SW",
+            "W",
+            "NW"});
+            this.comboBox3.Location = new System.Drawing.Point(250, 321);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(128, 21);
+            this.comboBox3.TabIndex = 85;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Enabled = false;
+            this.numericUpDown1.Location = new System.Drawing.Point(250, 295);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(65, 20);
+            this.numericUpDown1.TabIndex = 84;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(13, 298);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(105, 17);
+            this.checkBox4.TabIndex = 83;
+            this.checkBox4.Text = "Mount Height (ft)";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox4.Enabled = false;
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Items.AddRange(new object[] {
+            "",
+            "=",
+            ">=",
+            ">",
+            "<=",
+            "<",
+            "<>"});
+            this.comboBox4.Location = new System.Drawing.Point(170, 294);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(61, 21);
+            this.comboBox4.TabIndex = 82;
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Enabled = false;
+            this.numericUpDown2.Location = new System.Drawing.Point(250, 269);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(65, 20);
+            this.numericUpDown2.TabIndex = 81;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(13, 272);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(71, 17);
+            this.checkBox5.TabIndex = 80;
+            this.checkBox5.Text = "Width (in)";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // comboBox5
+            // 
+            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox5.Enabled = false;
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Items.AddRange(new object[] {
+            "",
+            "=",
+            ">=",
+            ">",
+            "<=",
+            "<",
+            "<>"});
+            this.comboBox5.Location = new System.Drawing.Point(170, 268);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(61, 21);
+            this.comboBox5.TabIndex = 79;
+            // 
+            // numericUpDown3
+            // 
+            this.numericUpDown3.Enabled = false;
+            this.numericUpDown3.Location = new System.Drawing.Point(250, 243);
+            this.numericUpDown3.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numericUpDown3.Name = "numericUpDown3";
+            this.numericUpDown3.Size = new System.Drawing.Size(65, 20);
+            this.numericUpDown3.TabIndex = 78;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Location = new System.Drawing.Point(13, 246);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(74, 17);
+            this.checkBox6.TabIndex = 77;
+            this.checkBox6.Text = "Height (in)";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // comboBox6
+            // 
+            this.comboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox6.Enabled = false;
+            this.comboBox6.FormattingEnabled = true;
+            this.comboBox6.Items.AddRange(new object[] {
+            "",
+            "=",
+            ">=",
+            ">",
+            "<=",
+            "<",
+            "<>"});
+            this.comboBox6.Location = new System.Drawing.Point(170, 242);
+            this.comboBox6.Name = "comboBox6";
+            this.comboBox6.Size = new System.Drawing.Size(61, 21);
+            this.comboBox6.TabIndex = 76;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Enabled = false;
+            this.textBox5.Location = new System.Drawing.Point(170, 218);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(62, 20);
+            this.textBox5.TabIndex = 75;
+            this.textBox5.Text = "=";
+            this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Location = new System.Drawing.Point(13, 220);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(80, 17);
+            this.checkBox7.TabIndex = 74;
+            this.checkBox7.Text = "checkBox7";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            // 
+            // comboBox7
+            // 
+            this.comboBox7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox7.Enabled = false;
+            this.comboBox7.Items.AddRange(new object[] {
+            "",
+            "Aluminum",
+            "Wood",
+            "Plastic",
+            "Composite",
+            "Other"});
+            this.comboBox7.Location = new System.Drawing.Point(250, 217);
+            this.comboBox7.Name = "comboBox7";
+            this.comboBox7.Size = new System.Drawing.Size(128, 21);
+            this.comboBox7.TabIndex = 73;
+            // 
+            // textBox6
+            // 
+            this.textBox6.Enabled = false;
+            this.textBox6.Location = new System.Drawing.Point(170, 165);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(62, 20);
+            this.textBox6.TabIndex = 72;
+            this.textBox6.Text = "=";
+            this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox8
+            // 
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.Location = new System.Drawing.Point(13, 167);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(80, 17);
+            this.checkBox8.TabIndex = 71;
+            this.checkBox8.Text = "checkBox8";
+            this.checkBox8.UseVisualStyleBackColor = true;
+            // 
+            // comboBox8
+            // 
+            this.comboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox8.Enabled = false;
+            this.comboBox8.Items.AddRange(new object[] {
+            "",
+            "Pass",
+            "Fail"});
+            this.comboBox8.Location = new System.Drawing.Point(250, 164);
+            this.comboBox8.Name = "comboBox8";
+            this.comboBox8.Size = new System.Drawing.Size(128, 21);
+            this.comboBox8.TabIndex = 70;
+            // 
+            // textBox7
+            // 
+            this.textBox7.Enabled = false;
+            this.textBox7.Location = new System.Drawing.Point(170, 138);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(62, 20);
+            this.textBox7.TabIndex = 69;
+            this.textBox7.Text = "=";
+            this.textBox7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.Location = new System.Drawing.Point(13, 140);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Size = new System.Drawing.Size(109, 17);
+            this.checkBox9.TabIndex = 68;
+            this.checkBox9.Text = "Recommendation";
+            this.checkBox9.UseVisualStyleBackColor = true;
+            // 
+            // comboBox9
+            // 
+            this.comboBox9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox9.Enabled = false;
+            this.comboBox9.Items.AddRange(new object[] {
+            "",
+            "Nothing",
+            "Remove",
+            "Replace",
+            "Other"});
+            this.comboBox9.Location = new System.Drawing.Point(250, 137);
+            this.comboBox9.Name = "comboBox9";
+            this.comboBox9.Size = new System.Drawing.Size(128, 21);
+            this.comboBox9.TabIndex = 67;
+            // 
+            // textBox8
+            // 
+            this.textBox8.Enabled = false;
+            this.textBox8.Location = new System.Drawing.Point(170, 111);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(62, 20);
+            this.textBox8.TabIndex = 66;
+            this.textBox8.Text = "=";
+            this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox10
+            // 
+            this.checkBox10.AutoSize = true;
+            this.checkBox10.Location = new System.Drawing.Point(13, 113);
+            this.checkBox10.Name = "checkBox10";
+            this.checkBox10.Size = new System.Drawing.Size(70, 17);
+            this.checkBox10.TabIndex = 65;
+            this.checkBox10.Text = "Condition";
+            this.checkBox10.UseVisualStyleBackColor = true;
+            // 
+            // comboBox10
+            // 
+            this.comboBox10.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox10.Enabled = false;
+            this.comboBox10.Items.AddRange(new object[] {
+            "",
+            "Good",
+            "Acceptable",
+            "Damaged",
+            "Other"});
+            this.comboBox10.Location = new System.Drawing.Point(250, 110);
+            this.comboBox10.Name = "comboBox10";
+            this.comboBox10.Size = new System.Drawing.Size(128, 21);
+            this.comboBox10.TabIndex = 64;
+            // 
+            // textBoxAddressComparison
+            // 
+            this.textBoxAddressComparison.Enabled = false;
+            this.textBoxAddressComparison.Location = new System.Drawing.Point(170, 84);
+            this.textBoxAddressComparison.Name = "textBoxAddressComparison";
+            this.textBoxAddressComparison.Size = new System.Drawing.Size(62, 20);
+            this.textBoxAddressComparison.TabIndex = 63;
+            this.textBoxAddressComparison.Text = "includes";
+            this.textBoxAddressComparison.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxAddressValue
+            // 
+            this.textBoxAddressValue.Enabled = false;
+            this.textBoxAddressValue.Location = new System.Drawing.Point(250, 84);
+            this.textBoxAddressValue.Name = "textBoxAddressValue";
+            this.textBoxAddressValue.Size = new System.Drawing.Size(128, 20);
+            this.textBoxAddressValue.TabIndex = 62;
+            // 
+            // numericUpDownSupportIDValue
+            // 
+            this.numericUpDownSupportIDValue.Enabled = false;
+            this.numericUpDownSupportIDValue.Location = new System.Drawing.Point(250, 31);
+            this.numericUpDownSupportIDValue.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numericUpDownSupportIDValue.Name = "numericUpDownSupportIDValue";
+            this.numericUpDownSupportIDValue.Size = new System.Drawing.Size(65, 20);
+            this.numericUpDownSupportIDValue.TabIndex = 54;
+            // 
+            // comboBox12
+            // 
+            this.comboBox12.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox12.Enabled = false;
+            this.comboBox12.Items.AddRange(new object[] {
+            "",
+            "I",
+            "II",
+            "III",
+            "IV",
+            "V",
+            "VI",
+            "VII",
+            "VIII",
+            "IX",
+            "X",
+            "XI"});
+            this.comboBox12.Location = new System.Drawing.Point(250, 190);
+            this.comboBox12.Name = "comboBox12";
+            this.comboBox12.Size = new System.Drawing.Size(128, 21);
+            this.comboBox12.TabIndex = 42;
+            // 
+            // textBox11
+            // 
+            this.textBox11.Enabled = false;
+            this.textBox11.Location = new System.Drawing.Point(170, 191);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(62, 20);
+            this.textBox11.TabIndex = 37;
+            this.textBox11.Text = "=";
+            this.textBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxMaterialComparison
+            // 
+            this.textBoxMaterialComparison.Enabled = false;
+            this.textBoxMaterialComparison.Location = new System.Drawing.Point(170, 57);
+            this.textBoxMaterialComparison.Name = "textBoxMaterialComparison";
+            this.textBoxMaterialComparison.Size = new System.Drawing.Size(62, 20);
+            this.textBoxMaterialComparison.TabIndex = 29;
+            this.textBoxMaterialComparison.Text = "=";
+            this.textBoxMaterialComparison.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox11
+            // 
+            this.checkBox11.AutoSize = true;
+            this.checkBox11.Location = new System.Drawing.Point(13, 193);
+            this.checkBox11.Name = "checkBox11";
+            this.checkBox11.Size = new System.Drawing.Size(86, 17);
+            this.checkBox11.TabIndex = 24;
+            this.checkBox11.Text = "checkBox11";
+            this.checkBox11.UseVisualStyleBackColor = true;
+            // 
+            // Material
+            // 
+            this.Material.AutoSize = true;
+            this.Material.Location = new System.Drawing.Point(13, 59);
+            this.Material.Name = "Material";
+            this.Material.Size = new System.Drawing.Size(63, 17);
+            this.Material.TabIndex = 23;
+            this.Material.Text = "Material";
+            this.Material.UseVisualStyleBackColor = true;
+            // 
+            // Address
+            // 
+            this.Address.AutoSize = true;
+            this.Address.Location = new System.Drawing.Point(13, 86);
+            this.Address.Name = "Address";
+            this.Address.Size = new System.Drawing.Size(64, 17);
+            this.Address.TabIndex = 19;
+            this.Address.Text = "Address";
+            this.Address.UseVisualStyleBackColor = true;
+            // 
+            // SupportID
+            // 
+            this.SupportID.AutoSize = true;
+            this.SupportID.Location = new System.Drawing.Point(13, 34);
+            this.SupportID.Name = "SupportID";
+            this.SupportID.Size = new System.Drawing.Size(77, 17);
+            this.SupportID.TabIndex = 18;
+            this.SupportID.Text = "Support ID";
+            this.SupportID.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxMaterialValue
+            // 
+            this.comboBoxMaterialValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMaterialValue.Enabled = false;
+            this.comboBoxMaterialValue.Location = new System.Drawing.Point(250, 56);
+            this.comboBoxMaterialValue.Name = "comboBoxMaterialValue";
+            this.comboBoxMaterialValue.Size = new System.Drawing.Size(128, 21);
+            this.comboBoxMaterialValue.TabIndex = 14;
+            // 
+            // comboBoxSuppoortIDComarison
+            // 
+            this.comboBoxSuppoortIDComarison.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSuppoortIDComarison.Enabled = false;
+            this.comboBoxSuppoortIDComarison.FormattingEnabled = true;
+            this.comboBoxSuppoortIDComarison.Items.AddRange(new object[] {
+            "",
+            "=",
+            ">=",
+            ">",
+            "<=",
+            "<",
+            "<>"});
+            this.comboBoxSuppoortIDComarison.Location = new System.Drawing.Point(170, 30);
+            this.comboBoxSuppoortIDComarison.Name = "comboBoxSuppoortIDComarison";
+            this.comboBoxSuppoortIDComarison.Size = new System.Drawing.Size(61, 21);
+            this.comboBoxSuppoortIDComarison.TabIndex = 12;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(247, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Value";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(168, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(62, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Comparison";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(10, 9);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(41, 13);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Sort By";
             // 
             // FormQueryBuilder
             // 
@@ -1895,9 +2531,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSign_SupportIDValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSignIDValue)).EndInit();
             this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.panelSupportTab.ResumeLayout(false);
+            this.panelSupportTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSupportIDValue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2030,7 +2671,52 @@
         private System.Windows.Forms.TextBox textBoxDirectionComparison;
         private System.Windows.Forms.CheckBox Direction;
         private System.Windows.Forms.ComboBox comboBoxDirectionValue;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Panel panelSupportTab;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.ComboBox comboBox8;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.CheckBox checkBox9;
+        private System.Windows.Forms.ComboBox comboBox9;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.CheckBox checkBox10;
+        private System.Windows.Forms.ComboBox comboBox10;
+        private System.Windows.Forms.TextBox textBoxAddressComparison;
+        private System.Windows.Forms.TextBox textBoxAddressValue;
+        private System.Windows.Forms.NumericUpDown numericUpDownSupportIDValue;
+        private System.Windows.Forms.ComboBox comboBox12;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox textBoxMaterialComparison;
+        private System.Windows.Forms.CheckBox checkBox11;
+        private System.Windows.Forms.CheckBox Material;
+        private System.Windows.Forms.CheckBox Address;
+        private System.Windows.Forms.CheckBox SupportID;
+        private System.Windows.Forms.ComboBox comboBoxMaterialValue;
+        private System.Windows.Forms.ComboBox comboBoxSuppoortIDComarison;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }
