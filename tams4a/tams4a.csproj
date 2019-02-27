@@ -148,6 +148,9 @@
       <HintPath>..\packages\DotSpatial.NetTopologySuite.1.14.4\lib\net40-client\DotSpatial.NetTopologySuite.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DotSpatial.Plugins.ShapeEditor">
+      <HintPath>..\..\..\..\.nuget\packages\DotSpatial.Plugins.ShapeEditor.1.0.1185\lib\net40-Client\DotSpatial.Plugins.ShapeEditor.dll</HintPath>
+    </Reference>
     <Reference Include="DotSpatial.Positioning, Version=1.9.0.0, Culture=neutral, PublicKeyToken=f6f66d1554473068, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Positioning.1.9\lib\net40-Client\DotSpatial.Positioning.dll</HintPath>
       <Private>True</Private>
@@ -219,17 +222,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CustomReport.cs" />
     <Compile Include="Classes\GenericModule.cs" />
     <Compile Include="Classes\ImportAccess.cs" />
     <Compile Include="Classes\Database.cs" />
     <Compile Include="Classes\Log.cs" />
-    <Compile Include="Classes\ModuleSigns.cs" />
+    <Compile Include="Classes\Signs\ModuleSigns.cs" />
     <Compile Include="Classes\ProjectSetting.cs" />
     <Compile Include="Classes\ProjectSettings.cs" />
     <Compile Include="Classes\ProjectVersion.cs" />
     <Compile Include="Classes\Roads\RoadGraphs.cs" />
     <Compile Include="Classes\Roads\RoadReports.cs" />
     <Compile Include="Classes\RoadSidewalkForm.cs" />
+    <Compile Include="Classes\Signs\SignReports.cs" />
     <Compile Include="Classes\Roads\RoadSymbols.cs" />
     <Compile Include="Classes\TamsProject.cs" />
     <Compile Include="Classes\CustomEventArgs.cs" />
@@ -295,6 +300,12 @@
     </Compile>
     <Compile Include="Controls\Panel_Sign.Designer.cs">
       <DependentUpon>Panel_Sign.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormImportReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormImportReport.Designer.cs">
+      <DependentUpon>FormImportReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormLoading.cs">
       <SubType>Form</SubType>
@@ -459,6 +470,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Panel_Sign.resx">
       <DependentUpon>Panel_Sign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormImportReport.resx">
+      <DependentUpon>FormImportReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormLoading.resx">
       <DependentUpon>FormLoading.cs</DependentUpon>

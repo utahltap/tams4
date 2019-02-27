@@ -18,6 +18,7 @@ namespace tams4a
         public TamsProject Project;
         public ModuleRoads road;
         public ModuleSigns sign;
+        private GenericModule other;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
@@ -38,6 +39,7 @@ namespace tams4a
         public MainWindow()
         {
             InitializeComponent();
+            SetUpLegendControls();
             CenterToScreen();
             setEventHandlers();
             displayChangeLog();
@@ -71,13 +73,12 @@ namespace tams4a
                 generalToolStripMenuItem,
                 potholesToolStripMenuItem,
                 analysisToolStripMenuItem,
-                customToolStripMenuItem,
                 roadToolStripMenuItem,
                 surfaceTypeToolStripMenuItem,
                 functionalClassificationToolStripMenuItem,
                 governingDistressesToolStripMenuItem,
                 rSLDistributionToolStripMenuItem };
-            ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signAlertsToolStripMenuItem, signInventoryToolStripMenuItem, supportAlertsToolStripMenuItem, supportInventoryToolStripMenuItem, signToolStripMenuItem};
+            ToolStripMenuItem[] lcsn = { favoriteSignsToolStripMenuItem, signInventoryToolStripMenuItem, signRecommendationsToolStripMenuItem, supportInventoryToolStripMenuItem, supportRecommendationsToolStripMenuItem, signToolStripMenuItem };
             ToolStripMenuItem[] lcso = { otherToolStripMenuItem,
                 sidewalkDistressToolStripMenuItem,
                 severeRoadDistressToolStripMenuItem,
@@ -89,7 +90,7 @@ namespace tams4a
             };
             road = new ModuleRoads(Project, new TabPage("Roads"), lcs);
             sign = new ModuleSigns(Project, new TabPage("Signs"), lcsn);
-            GenericModule other = new GenericModule(Project, new TabPage("Other"), lcso);
+            other = new GenericModule(Project, new TabPage("Other"), lcso);
             Project.addModule(road, "Roads", tabControlControls);
             Project.addModule(sign, "Signs", tabControlControls);
             Project.addModule(other, "Other", tabControlControls);
@@ -103,6 +104,44 @@ namespace tams4a
             CurrentMode = uxMap.FunctionMode;
             maxWidth = (int)uxMap.ViewExtents.Width + 10;
         }
+
+        private void SetUpLegendControls()
+        {
+            //
+            // Handles Clicks on Legend for changing map display
+            //
+            rslBlue.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslBlue); });
+            rslDeepSkyBlue.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslDeepSkyBlue); });
+            rslGreen.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslGreen); });
+            rslLimeGreen.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslLimeGreen); });
+            rslYellow.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslYellow); });
+            rslOrange.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslOrange); });
+            rslRed.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslRed); });
+            rslDarkRed.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.rslDarkRed); });
+            treatmentRoutine.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentRoutine); });
+            treatmentPreventative.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPreventative); });
+            treatmentPatching.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPatching); });
+            treatmentPreventativePatching.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentPreventativePatching); });
+            treatmentRehabilitation.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentRehabilitation); });
+            treatmentReconstruction.MouseDown += new MouseEventHandler(delegate (object sender, MouseEventArgs e) { highlightKey(sender, e, this.treatmentReconstruction); });
+            treatmentLegend[treatmentPreventative] = Color.Yellow;
+            treatmentLegend[treatmentRehabilitation] = Color.Red;
+            treatmentLegend[treatmentPreventativePatching] = Color.Orange;
+            treatmentLegend[treatmentReconstruction] = Color.DarkRed;
+            treatmentLegend[treatmentPatching] = Color.LimeGreen;
+            treatmentLegend[treatmentRoutine] = Color.Blue;
+            rslLegend[rslBlue] = Color.Blue;
+            rslLegend[rslDeepSkyBlue] = Color.DeepSkyBlue;
+            rslLegend[rslGreen] = Color.Green;
+            rslLegend[rslLimeGreen] = Color.LimeGreen;
+            rslLegend[rslYellow] = Color.Yellow;
+            rslLegend[rslDarkRed] = Color.DarkRed;
+            rslLegend[rslOrange] = Color.Orange;
+            rslLegend[rslRed] = Color.Red;
+        }
+
+
+
         /*
         private void createWebLayer()
         {
@@ -475,7 +514,8 @@ namespace tams4a
                 {                
                     foreach (string id in ids)
                     {
-                        if (!Int32.TryParse(id, out int x))
+                    int x;
+                        if (!Int32.TryParse(id, out x))
                         {
                             MessageBox.Show("'" + id + "' is not a valid input.\nPlease Enter a Number", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             continue;
@@ -605,7 +645,7 @@ namespace tams4a
             openCSV.Filter = "CSV Files|*.csv";
             openCSV.Title = "Select a Comma Separtated Value File";
 
-            if (openCSV.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (openCSV.ShowDialog() == DialogResult.OK)
             {
                 System.IO.StreamReader sr = null;
                 try
@@ -643,38 +683,97 @@ namespace tams4a
                     
                 }
 
-                FormOutput report = new FormOutput(Project, road);
+                FormImportReport importReport = new FormImportReport();
+                importReport.ShowDialog();
+                string reportType = importReport.comboBoxReportType.Text;
+                if (importReport.cancel) return;
+
+                string updateList = "";
+
+                if (reportType == "Road")
+                {
+                    updateList = "\n\t\t ID" +
+                        "\n\t\t Name" +
+                        "\n\t\t Speed Limit" +
+                        "\n\t\t Lanes" +
+                        "\n\t\t Width (ft)" +
+                        "\n\t\t Length (ft)" +
+                        "\n\t\t From Addres" +
+                        "\n\t\t To Address" +
+                        "\n\t\t Surface" +
+                        "\n\t\t Treatment" +
+                        "\n\t\t RSL" +
+                        "\n\t\t Functional Classification" +
+                        "\n\t\t Survey Date" +
+                        "\n\t\t Fat/Spa/Pot" +
+                        "\n\t\t Edg/Joi/Rut" +
+                        "\n\t\t Lon/Cor/X-S" +
+                        "\n\t\t Pat/Bro/Dra" +
+                        "\n\t\t Pot/Fau/Dus" +
+                        "\n\t\t Dra/Lon/Agg" +
+                        "\n\t\t Tra/Tra/Cor" +
+                        "\n\t\t Block/Crack" +
+                        "\n\t\t Rutti/Patch" +
+                        "\n\nColumns such as 'Cost' and 'Area' are computed when a table is generated. ";
+                }
+                else if (reportType == "Sign Inventory")
+                {
+                    updateList = "\n\t\t ID" +
+                        "\n\t\t Support ID" +
+                        "\n\t\t Description" +
+                        "\n\t\t Sign Text" +
+                        "\n\t\t Condition" +
+                        "\n\t\t Recommendation" +
+                        "\n\t\t Reflectivity" +
+                        "\n\t\t Sheeting" +
+                        "\n\t\t Backing" +
+                        "\n\t\t Height (in)" +
+                        "\n\t\t Width (in)" +
+                        "\n\t\t Mount Height (ft)" +
+                        "\n\t\t Direction" +
+                        "\n\t\t Category" +
+                        "\n\t\t Favorite" +
+                        "\n\t\t MUTCD Code" +
+                        "\n\t\t Install Date" +
+                        "\n\t\t Survey Date \n\n";
+                }
+                else if (reportType == "Sign Recommendations")
+                {
+                    updateList = "\n\t\t ID" +
+                        "\n\t\t Support ID" +
+                        "\n\t\t Address" +
+                        "\n\t\t Recommendation" +
+                        "\n\t\t Survey Date \n\n";
+                }
+                else if (reportType == "Support Inventory")
+                {
+                    updateList = "\n\t\t Support ID" +
+                        "\n\t\t Address" +
+                        "\n\t\t Material" +
+                        "\n\t\t Condition" +
+                        "\n\t\t Obstructions" +
+                        "\n\t\t Recommendation" +
+                        "\n\t\t Road Offset (ft)" +
+                        "\n\t\t Height (ft)" +
+                        "\n\t\t Category" +
+                        "\n\t\t Survey Date \n\n";
+                }
+                else if (reportType == "Support Recommendations")
+                {
+                    updateList = "\n\t\t Support ID" +
+                        "\n\t\t Address" +
+                        "\n\t\t Recommendation" +
+                        "\n\t\t Survey Date \n\n";
+                }
+
+                FormOutput report = new FormOutput(Project, road, reportType);
                 report.dataGridViewReport.DataSource = importedTable;
                 report.Text = "Imported Report";
                 report.Show();
                 MessageBox.Show("Check to make sure the table was imported correctly. " +
-                    "Only columns with following headings will be updated:\n" +
-                    "\n\t\t ID" +
-                    "\n\t\t Name" +
-                    "\n\t\t Speed Limit" +
-                    "\n\t\t Lanes" +
-                    "\n\t\t Width (ft)" +
-                    "\n\t\t Length (ft)" +
-                    "\n\t\t From Addres" +
-                    "\n\t\t To Address" +
-                    "\n\t\t Surface" +
-                    "\n\t\t Treatment" +
-                    "\n\t\t RSL" +
-                    "\n\t\t Functional Classification" +
-                    "\n\t\t Notes" +
-                    "\n\t\t Survey Date" +
-                    "\n\t\t Fat/Spa/Pot" +
-                    "\n\t\t Edg/Joi/Rut" +
-                    "\n\t\t Lon/Cor/X-S" +
-                    "\n\t\t Pat/Bro/Dra" +
-                    "\n\t\t Pot/Fau/Dus" +
-                    "\n\t\t Dra/Lon/Agg" +
-                    "\n\t\t Tra/Tra/Cor" +
-                    "\n\t\t Block/Crack" +
-                    "\n\t\t Rutti/Patch" +
-                    "\n\nColumns such as 'Cost' and 'Area' are computed when a table is generated." +
-                    " Save changes if you want to keep them.",
-                    "Importing CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    "Only columns with following headings will be updated:\n" + updateList +
+                    "Notes will not be updated because they would be overwritten by the abbreviated note. Save changes if you want to keep them.",
+                    "Importing " + reportType + " CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -743,6 +842,12 @@ namespace tams4a
                     box.Key.ForeColor = Color.Black;
                 }
             }
+        }
+
+        private void customReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CustomReport customReport = new CustomReport(Project, road, sign, other, this);
+            customReport.newCustomReport();
         }
     }
 }
