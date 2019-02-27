@@ -894,6 +894,29 @@ UPDATE sign SET display = description || ' (' || TAMSID || ')';";
             }
             #endregion db_update_16_immute
 
+            #region db_update_17_immute
+            if (dbVersion == 16)
+            {
+                try
+                {
+                    string cmdString = @"UPDATE sign_backing SET material = UPPER(SUBSTR(material, 1, 1)) || SUBSTR(material, 2);
+                        UPDATE support_materials SET material = UPPER(SUBSTR(material, 1, 1)) || SUBSTR(material, 2);
+                        UPDATE support_materials SET material = 'Square Steel Tube' WHERE id = 3;
+                        UPDATE support_materials SET material = 'U-Channel Post' WHERE id = 2;";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "17";
+                dbVersion = 17;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_17_immute
+
             return true;
         }
 

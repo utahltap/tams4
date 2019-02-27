@@ -356,9 +356,9 @@
             this.comboBoxObstruction.FormattingEnabled = true;
             this.comboBoxObstruction.Items.AddRange(new object[] {
             "",
-            "clear",
-            "partial",
-            "severe"});
+            "Clear",
+            "Partial",
+            "Severe"});
             this.comboBoxObstruction.Location = new System.Drawing.Point(87, 107);
             this.comboBoxObstruction.Name = "comboBoxObstruction";
             this.comboBoxObstruction.Size = new System.Drawing.Size(112, 21);
@@ -387,10 +387,10 @@
             this.comboBoxCondition.FormattingEnabled = true;
             this.comboBoxCondition.Items.AddRange(new object[] {
             "",
-            "good",
-            "acceptable",
-            "damaged",
-            "other"});
+            "Good",
+            "Acceptable",
+            "Damaged",
+            "Other"});
             this.comboBoxCondition.Location = new System.Drawing.Point(87, 82);
             this.comboBoxCondition.Name = "comboBoxCondition";
             this.comboBoxCondition.Size = new System.Drawing.Size(112, 21);
@@ -730,10 +730,10 @@
             this.comboBoxConditionSign.FormattingEnabled = true;
             this.comboBoxConditionSign.Items.AddRange(new object[] {
             "",
-            "good",
-            "acceptable",
-            "damaged",
-            "other"});
+            "Good",
+            "Acceptable",
+            "Damaged",
+            "Other"});
             this.comboBoxConditionSign.Location = new System.Drawing.Point(87, 251);
             this.comboBoxConditionSign.Name = "comboBoxConditionSign";
             this.comboBoxConditionSign.Size = new System.Drawing.Size(112, 21);
@@ -744,8 +744,8 @@
             this.comboBoxReflectivity.FormattingEnabled = true;
             this.comboBoxReflectivity.Items.AddRange(new object[] {
             "",
-            "pass",
-            "fail"});
+            "Pass",
+            "Fail"});
             this.comboBoxReflectivity.Location = new System.Drawing.Point(87, 227);
             this.comboBoxReflectivity.Name = "comboBoxReflectivity";
             this.comboBoxReflectivity.Size = new System.Drawing.Size(112, 21);
