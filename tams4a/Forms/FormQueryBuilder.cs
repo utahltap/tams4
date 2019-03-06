@@ -22,6 +22,12 @@ namespace tams4a.Forms
         private const int SIGN_TAB_CONTROL_HEIGHT = 460;
         private const int SIGN_BUTTON_Y_LOCATION = 466;
 
+        private const int SUPPORT_FORM_HEIGHT = 387;
+        private const int SUPPORT_PANEL_HEIGHT = 276;
+        private const int SUPPORT_TAB_CONTROL_HEIGHT = 302;
+        private const int SUPPORT_BUTTON_Y_LOCATION = 308;
+
+
         public FormQueryBuilder(TamsProject Project, int tab)
         {
             InitializeComponent();
@@ -33,12 +39,6 @@ namespace tams4a.Forms
             TableName = tabControlCustom.SelectedTab.Text.ToLower();
             if (TableName == "road")
             {
-                Console.WriteLine("Height = " + Height);
-                Console.WriteLine("panelRoadTab.Height = " + panelRoadTab.Height);
-                Console.WriteLine("tabControlCustom.Height = " + tabControlCustom.Height);
-                Console.WriteLine("buttonOK.Location.Y = " + buttonOK.Location.Y);
-                Console.WriteLine("buttonCancel.Location.Y = " + buttonCancel.Location.Y);
-
                 Height = ROAD_FORM_HEIGHT;
                 panelRoadTab.Height = ROAD_PANEL_HEIGHT;
                 tabControlCustom.Height = ROAD_TAB_CONTROL_HEIGHT;
@@ -62,6 +62,11 @@ namespace tams4a.Forms
             query = "SELECT * FROM " + TableName + " WHERE ";
             if (TableName == "road") query = getRoadQuery(query);
             if (TableName == "sign") query = getSignQuery(query);
+            if (TableName == "support")
+            {
+                TableName = "sign_support";
+                query = getSupportQuery("SELECT * FROM sign_support WHERE ");
+            }
 
             if (firstOption)
             {
@@ -338,6 +343,73 @@ namespace tams4a.Forms
             return query;
         }
 
+        private string getSupportQuery(string query)
+        {
+            if (SupportID.Checked && comboBoxSupportIDComparison.Text != "")
+            {
+                if (firstOption) firstOption = false;
+                query += "support_id " + comboBoxSupportIDComparison.Text + " " + numericUpDownSupportIDValue.Value.ToString();
+            }
+
+            if (Material.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "material LIKE \"" + comboBoxMaterialValue.Text + "\"";
+            }
+
+            if (Address.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "address LIKE \"%" + textBoxAddressValue.Text + "%\"";
+            }
+
+            if (SupportCondition.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "condition LIKE \"" + comboBoxSupportConditionValue.Text + "\"";
+            }
+
+            if (Obstructions.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "obstructions LIKE \"" + comboBoxObstructionsValue.Text + "\"";
+            }
+
+            if (SupportRecommendation.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "recommendation LIKE \"" + comboBoxSupportRecommendationValue.Text + "\"";
+            }
+
+            if (SupportCategory.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "category LIKE \"" + comboBoxSupportCategoryValue.Text + "\"";
+            }
+
+            if (SupportHeight.Checked && comboBoxSupportHeightComparison.Text != "")
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "height " + comboBoxSupportHeightComparison.Text + " " + numericUpDownSupportHeightValue.Value.ToString();
+            }
+
+            if (RoadOffset.Checked && comboBoxRoadOffsetComparison.Text != "")
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "road_offset " + comboBoxRoadOffsetComparison.Text + " " + numericUpDownRoadOffsetValue.Value.ToString();
+            }
+
+            return query;
+        }
+
         private void buttonOK_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
@@ -570,6 +642,15 @@ namespace tams4a.Forms
                 buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, SIGN_BUTTON_Y_LOCATION);
                 buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, SIGN_BUTTON_Y_LOCATION);
             }
+            if (TableName == "support")
+            {
+                adjustDistressHeight();
+                Height = SUPPORT_FORM_HEIGHT;
+                panelRoadTab.Height = SUPPORT_PANEL_HEIGHT;
+                tabControlCustom.Height = SUPPORT_TAB_CONTROL_HEIGHT;
+                buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, SUPPORT_BUTTON_Y_LOCATION);
+                buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, SUPPORT_BUTTON_Y_LOCATION);
+            }
         }
 
         private void adjustDistressHeight()
@@ -671,6 +752,60 @@ namespace tams4a.Forms
         {
             textBoxFavoriteComparison.Enabled = Favorite.Checked;
             comboBoxFavoriteValue.Enabled = Favorite.Checked;
+        }
+
+        private void SupportID_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxSupportIDComparison.Enabled = SupportID.Checked;
+            numericUpDownSupportIDValue.Enabled = SupportID.Checked;
+        }
+
+        private void Material_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxMaterialComparison.Enabled = Material.Checked;
+            comboBoxMaterialValue.Enabled = Material.Checked;
+        }
+
+        private void Address_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxAddressComparison.Enabled = Address.Checked;
+            textBoxAddressValue.Enabled = Address.Checked;
+        }
+
+        private void SupportCondition_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxSupportConditionComparison.Enabled = SupportCondition.Checked;
+            comboBoxSupportConditionValue.Enabled = SupportCondition.Checked;
+        }
+
+        private void Obstructions_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxObstructionsComparison.Enabled = Obstructions.Checked;
+            comboBoxObstructionsValue.Enabled = Obstructions.Checked;
+        }
+
+        private void SupportRecommendation_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxSupportRecommendationComparison.Enabled = SupportRecommendation.Checked;
+            comboBoxSupportRecommendationValue.Enabled = SupportRecommendation.Checked;
+        }
+
+        private void SupportCategory_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxSupportCategoryComparison.Enabled = SupportCategory.Checked;
+            comboBoxSupportCategoryValue.Enabled = SupportCategory.Checked;
+        }
+
+        private void SupportHeight_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxSupportHeightComparison.Enabled = SupportHeight.Checked;
+            numericUpDownSupportHeightValue.Enabled = SupportHeight.Checked;
+        }
+
+        private void RoadOffset_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxRoadOffsetComparison.Enabled = RoadOffset.Checked;
+            numericUpDownRoadOffsetValue.Enabled = RoadOffset.Checked;
         }
     }
 }

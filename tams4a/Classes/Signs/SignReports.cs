@@ -94,20 +94,7 @@ namespace tams4a.Classes.Signs
 
         public void supportInventory(object sender, EventArgs e)
         {
-            int Integer = 0;
-            Type typeInt = Integer.GetType();
-            DataTable data = new DataTable();
-            data.Columns.Add("Support ID", typeInt);
-            data.Columns.Add("Address");
-            data.Columns.Add("Material");
-            data.Columns.Add("Condition");
-            data.Columns.Add("Obstructions");
-            data.Columns.Add("Recommendation");
-            data.Columns.Add("Road Offset (ft)", typeInt);
-            data.Columns.Add("Height (ft)", typeInt);
-            data.Columns.Add("Category");
-            data.Columns.Add("Notes");
-            data.Columns.Add("Survey Date");
+            DataTable data = addSupportColumns();
             try
             {
                 DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign_support;");
@@ -119,17 +106,7 @@ namespace tams4a.Classes.Signs
                 foreach (DataRow row in signsTable.Rows)
                 {
                     DataRow nr = data.NewRow();
-                    nr["Support ID"] = row["support_id"];
-                    nr["Address"] = row["address"];
-                    nr["Material"] = row["material"];
-                    nr["Condition"] = row["condition"];
-                    nr["Obstructions"] = row["obstructions"];
-                    nr["Recommendation"] = row["recommendation"];
-                    nr["Road Offset (ft)"] = row["road_offset"];
-                    nr["Height (ft)"] = row["height"];
-                    nr["Category"] = row["category"];
-                    nr["Notes"] = truncateNote(row);
-                    nr["Survey Date"] = row["survey_date"];
+                    addSupportRows(nr, row);
                     data.Rows.Add(nr);
                 }
                 showReport(data, "Support Inventory");
@@ -253,6 +230,40 @@ namespace tams4a.Classes.Signs
             nr["Favorite"] = row["favorite"];
             nr["MUTCD Code"] = row["mutcd_code"];
             nr["Install Date"] = row["install_date"];
+            nr["Survey Date"] = row["survey_date"];
+        }
+
+        public DataTable addSupportColumns()
+        {
+            int Integer = 0;
+            Type typeInt = Integer.GetType();
+            DataTable data = new DataTable();
+            data.Columns.Add("Support ID", typeInt);
+            data.Columns.Add("Address");
+            data.Columns.Add("Material");
+            data.Columns.Add("Condition");
+            data.Columns.Add("Obstructions");
+            data.Columns.Add("Recommendation");
+            data.Columns.Add("Road Offset (ft)", typeInt);
+            data.Columns.Add("Height (ft)", typeInt);
+            data.Columns.Add("Category");
+            data.Columns.Add("Notes");
+            data.Columns.Add("Survey Date");
+            return data;
+        }
+
+        public void addSupportRows(DataRow nr, DataRow row)
+        {
+            nr["Support ID"] = row["support_id"];
+            nr["Address"] = row["address"];
+            nr["Material"] = row["material"];
+            nr["Condition"] = row["condition"];
+            nr["Obstructions"] = row["obstructions"];
+            nr["Recommendation"] = row["recommendation"];
+            nr["Road Offset (ft)"] = row["road_offset"];
+            nr["Height (ft)"] = row["height"];
+            nr["Category"] = row["category"];
+            nr["Notes"] = truncateNote(row);
             nr["Survey Date"] = row["survey_date"];
         }
     }
