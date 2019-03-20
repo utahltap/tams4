@@ -498,31 +498,32 @@ namespace tams4a
 
             string[] ids = input.Split(',').ToArray();
 
-                FeatureLayer selectionLayer = (FeatureLayer)uxMap.Layers.SelectedLayer;
-                string layerName = "";
-                if (Project.currentModuleName == "Roads") layerName = "road";
-                if (Project.currentModuleName == "Signs") layerName = "sign";
-                foreach (FeatureLayer layer in uxMap.Layers)
-                {
-                    layer.UnSelectAll();
-                    if (layer.Name.ToString() == layerName) selectionLayer = layer;
-                }
-                String tamsidcolumn = Project.settings.GetValue(selectionLayer.Name + "_f_TAMSID");
+            FeatureLayer selectionLayer = (FeatureLayer)uxMap.Layers.SelectedLayer;
+            string layerName = "";
+            if (Project.currentModuleName == "Roads") layerName = "road";
+            else if (Project.currentModuleName == "Signs") layerName = "sign";
+            else layerName = "other";
+            foreach (FeatureLayer layer in uxMap.Layers)
+            {
+                layer.UnSelectAll();
+                if (layer.Name.ToString() == layerName) selectionLayer = layer;
+            }
+            String tamsidcolumn = Project.settings.GetValue(selectionLayer.Name + "_f_TAMSID");
 
-                string searchBy = toolStripComboBoxFind.Text;
-                if (searchBy == "ID")
-                {                
-                    foreach (string id in ids)
+            string searchBy = toolStripComboBoxFind.Text;
+            if (searchBy == "ID")
+            {                
+                foreach (string id in ids)
+                {
+                int x;
+                    if (!Int32.TryParse(id, out x))
                     {
-                    int x;
-                        if (!Int32.TryParse(id, out x))
-                        {
-                            MessageBox.Show("'" + id + "' is not a valid input.\nPlease Enter a Number", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            continue;
-                        }
-                        selectionLayer.SelectByAttribute(tamsidcolumn + " = " + id, ModifySelectionMode.Append);
+                        MessageBox.Show("'" + id + "' is not a valid input.\nPlease Enter a Number", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        continue;
                     }
+                    selectionLayer.SelectByAttribute(tamsidcolumn + " = " + id, ModifySelectionMode.Append);
                 }
+            }
 
             if (searchBy == "Street")
             {
@@ -545,7 +546,7 @@ namespace tams4a
 
             if (layerName == "road") road.selectionChanged();
             if (layerName == "sign") sign.selectionChanged();
-
+            if (layerName == "other") other.selectionChanged();
         }
 
         private void toolStripButtonSnapShot_Click(object sender, EventArgs e)
@@ -607,9 +608,9 @@ namespace tams4a
         {
             string selectedTab = tabControlControls.SelectedTab.Text;
             Project.selectModule(selectedTab);
-            if (selectedTab == "Signs")
+            if (selectedTab == "Signs" || selectedTab == "Other")
             {
-                toolStripComboBoxFind.SelectedIndex = 0;
+                toolStripComboBoxFind.SelectedIndex = 0;    
                 toolStripComboBoxFind.Enabled = false;
             }
             if (selectedTab == "Roads")

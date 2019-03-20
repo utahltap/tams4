@@ -4,11 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using tams4a.Controls;
 using tams4a.Forms;
+using tams4a.Classes.Other;
 using DotSpatial.Data;
 using DotSpatial.Plugins.ShapeEditor;
 
@@ -22,18 +21,20 @@ namespace tams4a.Classes
         private Dictionary<string, string> icons;
         private bool movingLandmark = false;
         private Color originalColor;
+        private OtherReports reports;
 
         public GenericModule(TamsProject theProject, TabPage controlPage, ToolStripMenuItem[] boundButtons, string mn = "miscellaneous") : base(theProject, controlPage, boundButtons, itemSelectionSql)
         {
             ModuleName = mn;
+            reports = new OtherReports(theProject, this);
 
-            boundButtons[1].Click += SidewalkReport;
-            boundButtons[2].Click += RoadReport;
-            boundButtons[3].Click += RampReport;
-            boundButtons[4].Click += DrainageReport;
-            boundButtons[5].Click += AccidentReport;
-            boundButtons[6].Click += OtherReport;
-            boundButtons[7].Click += RoadsWithSidewalks;
+            boundButtons[1].Click += reports.SidewalkReport;
+            boundButtons[2].Click += reports.RoadReport;
+            boundButtons[3].Click += reports.RampReport;
+            boundButtons[4].Click += reports.DrainageReport;
+            boundButtons[5].Click += reports.AccidentReport;
+            boundButtons[6].Click += reports.OtherReport;
+            boundButtons[7].Click += reports.RoadsWithSidewalks;
 
             setControlPanel();
 
@@ -560,109 +561,6 @@ namespace tams4a.Classes
             Panel_Other controls = getOtherControls();
             controls.setTodayToolStripMenuItem.Checked = true;
             controls.setOtherDateToolStripMenuItem.Checked = false;
-        }
-
-        private void SidewalkReport(object sender, EventArgs e)
-        {
-            string query = "SELECT * FROM miscellaneous WHERE type='Sidewalk'";
-            Dictionary<string, string> map = new Dictionary<string, string>()
-            {
-                { "ID", "TAMSID" },
-                { "Address", "address" },
-                { "Description", "description" },
-                { "Faults", "property1" },
-                { "Breaks", "property2" },
-                { "Notes", "notes" }
-            };
-            createReport(query, map, "ID", "Sidewalks");
-        }
-
-        private void RampReport(object sender, EventArgs e)
-        {
-            string query = "SELECT * FROM miscellaneous WHERE type='ADA Ramp'";
-            Dictionary<string, string> map = new Dictionary<string, string>()
-            {
-                { "ID", "TAMSID" },
-                { "Address", "address" },
-                { "Description", "description" },
-                { "Condition", "property1" },
-                { "Compliant", "property2" },
-                { "Notes", "notes" }
-            };
-            createReport(query, map, "ID", "ADA Ramps");
-        }
-
-        private void RoadReport(object sender, EventArgs e)
-        {
-            string query = "SELECT * FROM miscellaneous WHERE type='Severe Road Distress'";
-            Dictionary<string, string> map = new Dictionary<string, string>()
-            {
-                { "ID", "TAMSID" },
-                { "Address", "address" },
-                { "Description", "description" },
-                { "Distress", "property1" },
-                { "Recommendation", "property2" },
-                { "Notes", "notes" }
-            };
-            createReport(query, map, "ID", "Extreme Distresses");
-        }
-
-        private void DrainageReport(object sender, EventArgs e)
-        {
-            string query = "SELECT * FROM miscellaneous WHERE type='Drainage'";
-            Dictionary<string, string> map = new Dictionary<string, string>()
-            {
-                { "ID", "TAMSID" },
-                { "Address", "address" },
-                { "Description", "description" },
-                { "Cause", "property1" },
-                { "Comment", "property2" },
-                { "Notes", "notes" }
-            };
-            createReport(query, map, "ID", "Drainage Problems");
-        }
-
-        private void AccidentReport(object sender, EventArgs e)
-        {
-            string query = "SELECT * FROM miscellaneous WHERE type='Accident'";
-            Dictionary<string, string> map = new Dictionary<string, string>()
-            {
-                { "ID", "TAMSID" },
-                { "Address", "address" },
-                { "Description", "description" },
-                { "Date", "property1" },
-                { "Type", "property2" },
-                { "Severity", "property3" },
-                { "Notes", "notes" }
-            };
-            createReport(query, map, "ID", "Accident Sites");
-        }
-
-        private void OtherReport(object sender, EventArgs e)
-        {
-            string query = "SELECT * FROM miscellaneous WHERE type='Other'";
-            Dictionary<string, string> map = new Dictionary<string, string>()
-            {
-                { "ID", "TAMSID" },
-                { "Address", "address" },
-                { "Description", "description" },
-                { "Property 1", "property1" },
-                { "Property 2", "property2" },
-                { "Notes", "notes" }
-            };
-            createReport(query, map, "ID", "Objects");
-        }
-
-        private void RoadsWithSidewalks(object sender, EventArgs e)
-        {
-            string query = "SELECT * FROM road_sidewalks";
-            Dictionary<string, string> map = new Dictionary<string, string>()
-            {
-                { "ID", "road_ID" },
-                { "Sidewalks", "installed" },
-                { "Comments", "comments" }
-            };
-            createReport(query, map, "ID", "Sidewalks");
         }
 
         private void deleteFeature(object sender, EventArgs e)
