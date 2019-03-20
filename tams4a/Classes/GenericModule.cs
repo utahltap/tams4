@@ -52,7 +52,7 @@ namespace tams4a.Classes
                 { "ADA Ramp", "ramp" },
                 { "Sidewalk", "sidewalk" },
                 { "Drainage", "drainage" },
-                { "Accident Hotspot", "accident" }
+                { "Accident", "accident" }
             };
 
             Project.map.ResetBuffer();
@@ -298,6 +298,10 @@ namespace tams4a.Classes
                 disableDisplay();
                 return;
             }
+
+            selectionLayer.ZoomToSelectedFeatures();
+            Project.map.ZoomOut();
+            Project.map.ZoomOut();
 
             tamsids = new List<string>();
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
@@ -620,14 +624,15 @@ namespace tams4a.Classes
 
         private void AccidentReport(object sender, EventArgs e)
         {
-            string query = "SELECT * FROM miscellaneous WHERE type='Accident Hotspot'";
+            string query = "SELECT * FROM miscellaneous WHERE type='Accident'";
             Dictionary<string, string> map = new Dictionary<string, string>()
             {
                 { "ID", "TAMSID" },
                 { "Address", "address" },
                 { "Description", "description" },
-                { "Last Accident", "property1" },
-                { "Comment", "property2" },
+                { "Date", "property1" },
+                { "Type", "property2" },
+                { "Severity", "property3" },
                 { "Notes", "notes" }
             };
             createReport(query, map, "ID", "Accident Sites");

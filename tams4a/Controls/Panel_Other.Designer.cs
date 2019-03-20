@@ -257,7 +257,7 @@
             "Sidewalk",
             "ADA Ramp",
             "Severe Road Distress",
-            "Accident Hotspot",
+            "Accident",
             "Drainage",
             "Other"});
             this.comboBoxObject.Location = new System.Drawing.Point(89, 36);
