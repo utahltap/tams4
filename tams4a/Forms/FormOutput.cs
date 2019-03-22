@@ -22,7 +22,7 @@ namespace tams4a.Forms
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
             Close();
         }
 
@@ -60,6 +60,12 @@ namespace tams4a.Forms
             else if (reportType == "Sign Recommendations") signRecommendationsReport(report);
             else if (reportType == "Support Inventory") supportInventoryReport(report);
             else if (reportType == "Support Recommendations") supportRecommendationsReport(report);
+            //else if (reportType == "Sidewalks") sidewalksReport(report);
+            //else if (reportType == "ADA Ramps") adaRampsReport(report);
+            //else if (reportType == "Extreme Distresses") extremeDistressReport(report);
+            //else if (reportType == "Drainage Problems") drainageReport(report);
+            //else if (reportType == "Accident") accidentReport(report);
+            //else if (reportType == "Objects") objectsReport(report);
 
             Cursor.Current = Cursors.Arrow;
             MessageBox.Show("Changes Saved");

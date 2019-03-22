@@ -17,7 +17,7 @@ namespace tams4a.Classes.Other
             moduleOther = other;
         }
 
-        private void createReport(string query, Dictionary<string, string> mapping, string sortKey = "ID", string things = "")
+        private void createReport(string query, Dictionary<string, string> mapping, string sortKey = "ID", string name = "")
         {
             DataTable outputTable = new DataTable();
             foreach (string key in mapping.Keys)
@@ -29,7 +29,7 @@ namespace tams4a.Classes.Other
                 DataTable results = Database.GetDataByQuery(Project.conn, query);
                 if (results.Rows.Count == 0)
                 {
-                    MessageBox.Show("No list could be generated because no " + things + " were found.");
+                    MessageBox.Show("No list could be generated because no " + name + " were found.");
                     return;
                 }
                 foreach (DataRow row in results.Rows)
@@ -42,9 +42,9 @@ namespace tams4a.Classes.Other
                     outputTable.Rows.Add(nr);
                 }
                 outputTable.DefaultView.Sort = sortKey + " asc";
-                FormOutput report = new FormOutput(Project);
+                FormOutput report = new FormOutput(Project, null, name);
                 report.dataGridViewReport.DataSource = outputTable.DefaultView.ToTable();
-                report.Text = things + " Report";
+                report.Text = name + " Report";
                 report.Show();
             }
             catch (Exception e)
