@@ -572,7 +572,7 @@ namespace tams4a.Classes
             Dictionary<string, string> values = new Dictionary<string, string>();
 
             string[] dateFormat = surveyDate.GetDateTimeFormats();
-            values["survey_date"] = dateFormat[58];
+            values["survey_date"] = dateFormat[46];
             values["name"] = roadControls.textBoxRoadName.Text;
             values["speed_limit"] = roadControls.numericUpDownSpeedLimit.Value != 0 ? roadControls.numericUpDownSpeedLimit.Value.ToString() : "";
             values["lanes"] = roadControls.numericUpDownLanes.Value != 0 ? roadControls.numericUpDownLanes.Value.ToString() : "";

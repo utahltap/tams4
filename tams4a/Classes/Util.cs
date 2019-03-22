@@ -173,8 +173,8 @@ namespace tams4a.Classes
                 System.IO.FileStream path = (System.IO.FileStream)save.OpenFile();
                 bitmap.Save(path, ImageFormat.Png);
                 path.Close();
+                Process.Start(save.FileName);
             }
-            Process.Start(save.FileName);
 
             return true;
         }
