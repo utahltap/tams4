@@ -282,7 +282,6 @@ namespace tams4a.Classes
 
         override public void selectionChanged()
         {
-
             if (!isOpen()) { return; }
 
             if (UnsavedChanges)

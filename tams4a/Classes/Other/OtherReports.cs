@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using tams4a.Forms;
 
@@ -37,7 +38,10 @@ namespace tams4a.Classes.Other
                     DataRow nr = outputTable.NewRow();
                     foreach (string key in mapping.Keys)
                     {
-                        nr[key] = row[mapping[key]];
+                        if (key == "Notes")
+                            nr[key] = truncateNote(row[mapping[key]]);
+                        else
+                            nr[key] = row[mapping[key]];
                     }
                     outputTable.Rows.Add(nr);
                 }
@@ -53,6 +57,21 @@ namespace tams4a.Classes.Other
             }
         }
 
+        private string truncateNote(Object row)
+        {
+            string note = row.ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+
+            int oldNoteLength = note.Length;
+            int maxLength = 17;
+            if (!string.IsNullOrEmpty(note))
+            {
+                note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
+
+            }
+            if (note.Length == maxLength) note += "...";
+            return note;
+        }
+
         public void SidewalkReport(object sender, EventArgs e)
         {
             string query = "SELECT * FROM miscellaneous WHERE type='Sidewalk'";
@@ -63,6 +82,7 @@ namespace tams4a.Classes.Other
                 { "Description", "description" },
                 { "Faults", "property1" },
                 { "Breaks", "property2" },
+                { "Recommendation", "property3" },
                 { "Notes", "notes" }
             };
             createReport(query, map, "ID", "Sidewalks");
@@ -78,6 +98,7 @@ namespace tams4a.Classes.Other
                 { "Description", "description" },
                 { "Condition", "property1" },
                 { "Compliant", "property2" },
+                { "Has Tiles", "property3" },
                 { "Notes", "notes" }
             };
             createReport(query, map, "ID", "ADA Ramps");
@@ -95,7 +116,7 @@ namespace tams4a.Classes.Other
                 { "Recommendation", "property2" },
                 { "Notes", "notes" }
             };
-            createReport(query, map, "ID", "Extreme Distresses");
+            createReport(query, map, "ID", "Severe Road Distresses");
         }
 
         public void DrainageReport(object sender, EventArgs e)
@@ -106,8 +127,8 @@ namespace tams4a.Classes.Other
                 { "ID", "TAMSID" },
                 { "Address", "address" },
                 { "Description", "description" },
-                { "Cause", "property1" },
-                { "Comment", "property2" },
+                { "Type", "property1" },
+                { "Recommendation", "property2" },
                 { "Notes", "notes" }
             };
             createReport(query, map, "ID", "Drainage Problems");
@@ -153,7 +174,7 @@ namespace tams4a.Classes.Other
                 { "Sidewalks", "installed" },
                 { "Comments", "comments" }
             };
-            createReport(query, map, "ID", "Sidewalks");
+            createReport(query, map, "ID", "Roads with Sidewalks");
         }
 
     }

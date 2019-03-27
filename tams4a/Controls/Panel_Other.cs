@@ -22,7 +22,7 @@ namespace tams4a.Controls
             controlSets = new Dictionary<string, List<Control>>()
             {
                 { "Sidewalk", new List<Control>() },
-                { "adA Ramp", new List<Control>() },
+                { "ADA Ramp", new List<Control>() },
                 { "Severe Road Distress", new List<Control>() },
                 { "Accident", new List<Control>() },
                 { "Drainage", new List<Control>() },
@@ -97,7 +97,7 @@ namespace tams4a.Controls
             adAcondition.Items.Add("Good");
             adAcondition.Items.Add("Acceptable");
             adAcondition.Items.Add("Bad");
-            controlSets["adA Ramp"].Add(adAcondition);
+            controlSets["ADA Ramp"].Add(adAcondition);
 
             ComboBox adAcompliant = new ComboBox();
             adAcompliant.Location = new Point(right, 48);
@@ -105,7 +105,7 @@ namespace tams4a.Controls
             adAcompliant.Items.Add("");
             adAcompliant.Items.Add("Yes");
             adAcompliant.Items.Add("No");
-            controlSets["adA Ramp"].Add(adAcompliant);
+            controlSets["ADA Ramp"].Add(adAcompliant);
 
             ComboBox tiles = new ComboBox();
             tiles.Location = new Point(right, 72);
@@ -113,28 +113,28 @@ namespace tams4a.Controls
             tiles.Items.Add("");
             tiles.Items.Add("Yes");
             tiles.Items.Add("No");
-            controlSets["adA Ramp"].Add(tiles);
+            controlSets["ADA Ramp"].Add(tiles);
 
-            controlSets["adA Ramp"].Add(notes);
+            controlSets["ADA Ramp"].Add(notes);
             Label adAconditionLabel = new Label();
             adAconditionLabel.Text = "Condition";
             adAconditionLabel.Size = new Size(70, 14);
             adAconditionLabel.Location = new Point(left, 26);
-            controlSets["adA Ramp"].Add(adAconditionLabel);
+            controlSets["ADA Ramp"].Add(adAconditionLabel);
 
             Label adAcompliantLabel = new Label();
             adAcompliantLabel.Text = "Compliant";
             adAcompliantLabel.Size = new Size(70, 14);
             adAcompliantLabel.Location = new Point(left, 50);
-            controlSets["adA Ramp"].Add(adAcompliantLabel);
+            controlSets["ADA Ramp"].Add(adAcompliantLabel);
             Label tilesLabel = new Label();
 
             tilesLabel.Text = "Has Tiles";
             tilesLabel.Size = new Size(70, 14);
             tilesLabel.Location = new Point(left, 74);
-            controlSets["adA Ramp"].Add(tilesLabel);
+            controlSets["ADA Ramp"].Add(tilesLabel);
 
-            controlSets["adA Ramp"].Add(notesLabel);
+            controlSets["ADA Ramp"].Add(notesLabel);
             #endregion ramp
 
             #region distress
@@ -170,6 +170,7 @@ namespace tams4a.Controls
 
             controlSets["Severe Road Distress"].Add(notesLabel);
             #endregion distress
+
             #region drainage
             ComboBox type = new ComboBox();
             type.Location = new Point(right, 24);

@@ -767,6 +767,51 @@ namespace tams4a
                         "\n\t\t Survey Date \n\n";
                 }
 
+                else if (reportType == "Roads with Sidewalks")
+                {
+                    updateList = "\n\t\t ID" +
+                        "\n\t\t Sidewalks" +
+                        "\n\t\t Comments \n\n";
+                }
+
+                else
+                {
+                    updateList = "\n\t\t ID" +
+                        "\n\t\t Address" +
+                        "\n\t\t Description";
+                    switch (reportType)
+                    {
+                        case "Sidewalks":
+                            updateList += "\n\t\t Faults" +
+                                "\n\t\t Breaks" +
+                                "\n\t\t Recommendation";
+                            break;
+                        case "Severe Road Distresses":
+                            updateList += "\n\t\t Distress" +
+                                "\n\t\t Recommendation";
+                            break;
+                        case "ADA Ramps":
+                            updateList += "\n\t\t Condition" +
+                                "\n\t\t Compliant" +
+                                "\n\t\t Has Tiles";
+                            break;
+                        case "Drainage Problems":
+                            updateList += "\n\t\t Type" +
+                                "\n\t\t Recommendation";
+                            break;
+                        case "Accident":
+                            updateList += "\n\t\t Date" +
+                                "\n\t\t Type" +
+                                "\n\t\t Severity";
+                            break;
+                        case "Objects":
+                            updateList += "\n\t\t Property 1" +
+                                "\n\t\t Property 2";
+                            break;
+                    }                        
+                    updateList += "\n\n";
+                }
+
                 FormOutput report = new FormOutput(Project, road, reportType);
                 report.dataGridViewReport.DataSource = importedTable;
                 report.Text = "Imported Report";
