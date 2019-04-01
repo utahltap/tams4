@@ -807,5 +807,202 @@ namespace tams4a.Forms
             comboBoxRoadOffsetComparison.Enabled = RoadOffset.Checked;
             numericUpDownRoadOffsetValue.Enabled = RoadOffset.Checked;
         }
+
+        private void comboBoxLandmarkType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            checkBoxProperty1.Visible = true;
+            checkBoxProperty2.Visible = true;
+            checkBoxProperty3.Visible = true;
+            textBoxProperty1Comparison.Visible = true;
+            textBoxProperty2Comparison.Visible = true;
+            textBoxProperty3Comparison.Visible = true;
+            comboBoxProperty1Value.Visible = true;
+            comboBoxProperty2Value.Visible = true;
+            comboBoxProperty3Value.Visible = true;
+            textBoxProperty1Value.Visible = false;
+            textBoxProperty2Value.Visible = false;
+            textBoxProperty1Comparison.Text = "=";
+            textBoxProperty2Comparison.Text = "=";
+            comboBoxProperty1Value.Items.Clear();
+            comboBoxProperty2Value.Items.Clear();
+            comboBoxProperty3Value.Items.Clear();
+
+            if (comboBoxLandmarkType.Text == "Sidewalks")
+            {
+                checkBoxProperty1.Text = "Faults";
+                comboBoxProperty1Value.Items.AddRange(new object[] {
+                    "",
+                    "Less than 0.25 in.",
+                    "0.25 - 0.5 in.",
+                    "0.5 - 1 in.",
+                    "More than 1 in."
+                });
+
+                checkBoxProperty2.Text = "Breaks";
+                comboBoxProperty2Value.Items.AddRange(new object[] {
+                    "",
+                    "Low",
+                    "Moderate",
+                    "Severe"
+                });
+
+                checkBoxProperty3.Text = "Recommendation";
+                comboBoxProperty3Value.Items.AddRange(new object[] {
+                    "",
+                    "Grind",
+                    "Replace",
+                    "Watch",
+                    "Other (see notes)"
+                });
+            }
+            if (comboBoxLandmarkType.Text == "Roads with Sidewalks")
+            {
+                checkBoxProperty1.Visible = false;
+                checkBoxProperty2.Visible = false;
+                checkBoxProperty3.Visible = false;
+                textBoxProperty1Comparison.Visible = false;
+                textBoxProperty2Comparison.Visible = false;
+                textBoxProperty3Comparison.Visible = false;
+                comboBoxProperty1Value.Visible = false;
+                comboBoxProperty2Value.Visible = false;
+                comboBoxProperty3Value.Visible = false;
+            }
+            if (comboBoxLandmarkType.Text == "Severe Road Distress")
+            {
+                checkBoxProperty1.Text = "Distress";
+                textBoxProperty1Comparison.Text = "includes";
+                comboBoxProperty1Value.Visible = false;
+                textBoxProperty1Value.Visible = true;
+
+                checkBoxProperty2.Text = "Recommendation";
+                textBoxProperty2Comparison.Text = "includes";
+                comboBoxProperty2Value.Visible = false;
+                textBoxProperty2Value.Visible = true;
+
+                checkBoxProperty3.Visible = false;
+                textBoxProperty3Comparison.Visible = false;
+                comboBoxProperty3Value.Visible = false;
+            }
+            if (comboBoxLandmarkType.Text == "ADA Ramps")
+            {
+                checkBoxProperty1.Text = "Condition";
+                comboBoxProperty1Value.Items.AddRange(new object[] {
+                    "",
+                    "Good",
+                    "Acceptable",
+                    "Bad"
+                });
+
+                checkBoxProperty2.Text = "Compliant";
+                comboBoxProperty2Value.Items.AddRange(new object[] {
+                    "",
+                    "Yes",
+                    "No"
+                });
+
+                checkBoxProperty3.Text = "Has Tiles";
+                comboBoxProperty3Value.Items.AddRange(new object[] {
+                    "",
+                    "Yes",
+                    "No"
+                });
+            }
+            if (comboBoxLandmarkType.Text == "Drainage")
+            {
+                checkBoxProperty1.Text = "Type";
+                comboBoxProperty1Value.Items.AddRange(new object[] {
+                    "",
+                    "Curb and Gutter",
+                    "Roadway Ponding",
+                    "Unpaved Shoulder",
+                    "Turf Shoulder",
+                    "Storm Grate",
+                    "Other"
+                });
+
+                checkBoxProperty2.Text = "Recommendation";
+                textBoxProperty2Comparison.Text = "includes";
+                comboBoxProperty2Value.Visible = false;
+                textBoxProperty2Value.Visible = true;
+
+                checkBoxProperty3.Visible = false;
+                textBoxProperty3Comparison.Visible = false;
+                comboBoxProperty3Value.Visible = false;
+            }
+            if (comboBoxLandmarkType.Text == "Accidents")
+            {
+                checkBoxProperty1.Text = "Date";
+                textBoxProperty1Comparison.Text = "includes";
+                comboBoxProperty1Value.Visible = false;
+                textBoxProperty1Value.Visible = true;
+
+                checkBoxProperty2.Text = "Type";
+                textBoxProperty2Comparison.Text = "includes";
+                comboBoxProperty2Value.Visible = false;
+                textBoxProperty2Value.Visible = true;
+
+                checkBoxProperty3.Text = "Severity";
+                comboBoxProperty3Value.Items.AddRange(new object[] {
+                    "",
+                    "Injury",
+                    "Death",
+                    "Property Damage"
+                });
+            }
+            if (comboBoxLandmarkType.Text == "All Others")
+            {
+                checkBoxProperty1.Text = "Property 1";
+                textBoxProperty1Comparison.Text = "includes";
+                comboBoxProperty1Value.Visible = false;
+                textBoxProperty1Value.Visible = true;
+
+                checkBoxProperty2.Text = "Property 2";
+                textBoxProperty2Comparison.Text = "includes";
+                comboBoxProperty2Value.Visible = false;
+                textBoxProperty2Value.Visible = true;
+
+                checkBoxProperty3.Visible = false;
+                textBoxProperty3Comparison.Visible = false;
+                comboBoxProperty3Value.Visible = false;
+            }
+        }
+
+        private void checkBoxOtherAddress_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxOtherAddressComparison.Enabled = checkBoxOtherAddress.Checked;
+            textBoxOtherAddressValue.Enabled = checkBoxOtherAddress.Checked;
+        }
+
+        private void checkBoxOtherDescription_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxOtherDescriptionComparison.Enabled = checkBoxOtherDescription.Checked;
+            textBoxOtherDescriptionValue.Enabled = checkBoxOtherDescription.Checked;
+        }
+
+        private void checkBoxOtherNotes_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxOtherNotesComparison.Enabled = checkBoxOtherNotes.Checked;
+            textBoxOtherNotesValue.Enabled = checkBoxOtherNotes.Checked;
+        }
+
+        private void checkBoxProperty1_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxProperty1Comparison.Enabled = checkBoxProperty1.Checked;
+            textBoxProperty1Value.Enabled = checkBoxProperty1.Checked;
+            comboBoxProperty1Value.Enabled = checkBoxProperty1.Checked;
+        }
+
+        private void checkBoxProperty2_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxProperty2Comparison.Enabled = checkBoxProperty2.Checked;
+            textBoxProperty2Value.Enabled = checkBoxProperty2.Checked;
+            comboBoxProperty2Value.Enabled = checkBoxProperty2.Checked;
+        }
+
+        private void checkBoxProperty3_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxProperty3Comparison.Enabled = checkBoxProperty3.Checked;
+            comboBoxProperty3Value.Enabled = checkBoxProperty3.Checked;
+        }
     }
 }

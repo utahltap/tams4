@@ -185,7 +185,32 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.panelOtherTab = new System.Windows.Forms.Panel();
+            this.textBoxProperty3Comparison = new System.Windows.Forms.TextBox();
+            this.checkBoxProperty3 = new System.Windows.Forms.CheckBox();
+            this.comboBoxProperty3Value = new System.Windows.Forms.ComboBox();
+            this.textBoxOtherNotesComparison = new System.Windows.Forms.TextBox();
+            this.textBoxOtherNotesValue = new System.Windows.Forms.TextBox();
+            this.checkBoxOtherNotes = new System.Windows.Forms.CheckBox();
+            this.textBoxOtherDescriptionComparison = new System.Windows.Forms.TextBox();
+            this.textBoxOtherDescriptionValue = new System.Windows.Forms.TextBox();
+            this.checkBoxOtherDescription = new System.Windows.Forms.CheckBox();
+            this.textBoxProperty2Comparison = new System.Windows.Forms.TextBox();
+            this.textBoxLandmarkType = new System.Windows.Forms.TextBox();
+            this.checkBoxProperty2 = new System.Windows.Forms.CheckBox();
+            this.comboBoxLandmarkType = new System.Windows.Forms.ComboBox();
+            this.comboBoxProperty2Value = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBoxProperty1Comparison = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.checkBoxProperty1 = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.comboBoxProperty1Value = new System.Windows.Forms.ComboBox();
+            this.textBoxOtherAddressComparison = new System.Windows.Forms.TextBox();
+            this.textBoxOtherAddressValue = new System.Windows.Forms.TextBox();
+            this.checkBoxOtherAddress = new System.Windows.Forms.CheckBox();
+            this.textBoxProperty1Value = new System.Windows.Forms.TextBox();
+            this.textBoxProperty2Value = new System.Windows.Forms.TextBox();
             this.tabControlCustom.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panelRoadTab.SuspendLayout();
@@ -219,6 +244,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSupportHeightValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSupportIDValue)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.panelOtherTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -2268,7 +2294,7 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.textBox2);
+            this.tabPage4.Controls.Add(this.panelOtherTab);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -2277,14 +2303,287 @@
             this.tabPage4.Text = "Other";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // panelOtherTab
             // 
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox2.Location = new System.Drawing.Point(12, 6);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(109, 13);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.Text = "Still in development...";
+            this.panelOtherTab.Controls.Add(this.textBoxProperty2Value);
+            this.panelOtherTab.Controls.Add(this.textBoxProperty1Value);
+            this.panelOtherTab.Controls.Add(this.textBoxProperty3Comparison);
+            this.panelOtherTab.Controls.Add(this.checkBoxProperty3);
+            this.panelOtherTab.Controls.Add(this.comboBoxProperty3Value);
+            this.panelOtherTab.Controls.Add(this.textBoxOtherNotesComparison);
+            this.panelOtherTab.Controls.Add(this.textBoxOtherNotesValue);
+            this.panelOtherTab.Controls.Add(this.checkBoxOtherNotes);
+            this.panelOtherTab.Controls.Add(this.textBoxOtherDescriptionComparison);
+            this.panelOtherTab.Controls.Add(this.textBoxOtherDescriptionValue);
+            this.panelOtherTab.Controls.Add(this.checkBoxOtherDescription);
+            this.panelOtherTab.Controls.Add(this.textBoxProperty2Comparison);
+            this.panelOtherTab.Controls.Add(this.textBoxLandmarkType);
+            this.panelOtherTab.Controls.Add(this.checkBoxProperty2);
+            this.panelOtherTab.Controls.Add(this.comboBoxLandmarkType);
+            this.panelOtherTab.Controls.Add(this.comboBoxProperty2Value);
+            this.panelOtherTab.Controls.Add(this.label10);
+            this.panelOtherTab.Controls.Add(this.textBoxProperty1Comparison);
+            this.panelOtherTab.Controls.Add(this.label9);
+            this.panelOtherTab.Controls.Add(this.checkBoxProperty1);
+            this.panelOtherTab.Controls.Add(this.label8);
+            this.panelOtherTab.Controls.Add(this.comboBoxProperty1Value);
+            this.panelOtherTab.Controls.Add(this.textBoxOtherAddressComparison);
+            this.panelOtherTab.Controls.Add(this.textBoxOtherAddressValue);
+            this.panelOtherTab.Controls.Add(this.checkBoxOtherAddress);
+            this.panelOtherTab.Location = new System.Drawing.Point(0, 0);
+            this.panelOtherTab.Name = "panelOtherTab";
+            this.panelOtherTab.Size = new System.Drawing.Size(390, 233);
+            this.panelOtherTab.TabIndex = 88;
+            // 
+            // textBoxProperty3Comparison
+            // 
+            this.textBoxProperty3Comparison.Enabled = false;
+            this.textBoxProperty3Comparison.Location = new System.Drawing.Point(170, 198);
+            this.textBoxProperty3Comparison.Name = "textBoxProperty3Comparison";
+            this.textBoxProperty3Comparison.Size = new System.Drawing.Size(62, 20);
+            this.textBoxProperty3Comparison.TabIndex = 96;
+            this.textBoxProperty3Comparison.Text = "=";
+            this.textBoxProperty3Comparison.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBoxProperty3
+            // 
+            this.checkBoxProperty3.AutoSize = true;
+            this.checkBoxProperty3.Location = new System.Drawing.Point(13, 200);
+            this.checkBoxProperty3.Name = "checkBoxProperty3";
+            this.checkBoxProperty3.Size = new System.Drawing.Size(74, 17);
+            this.checkBoxProperty3.TabIndex = 95;
+            this.checkBoxProperty3.Text = "Property 3";
+            this.checkBoxProperty3.UseVisualStyleBackColor = true;
+            this.checkBoxProperty3.CheckedChanged += new System.EventHandler(this.checkBoxProperty3_CheckedChanged);
+            // 
+            // comboBoxProperty3Value
+            // 
+            this.comboBoxProperty3Value.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProperty3Value.Enabled = false;
+            this.comboBoxProperty3Value.Location = new System.Drawing.Point(250, 197);
+            this.comboBoxProperty3Value.Name = "comboBoxProperty3Value";
+            this.comboBoxProperty3Value.Size = new System.Drawing.Size(128, 21);
+            this.comboBoxProperty3Value.TabIndex = 94;
+            // 
+            // textBoxOtherNotesComparison
+            // 
+            this.textBoxOtherNotesComparison.Enabled = false;
+            this.textBoxOtherNotesComparison.Location = new System.Drawing.Point(170, 117);
+            this.textBoxOtherNotesComparison.Name = "textBoxOtherNotesComparison";
+            this.textBoxOtherNotesComparison.Size = new System.Drawing.Size(62, 20);
+            this.textBoxOtherNotesComparison.TabIndex = 93;
+            this.textBoxOtherNotesComparison.Text = "includes";
+            this.textBoxOtherNotesComparison.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxOtherNotesValue
+            // 
+            this.textBoxOtherNotesValue.Enabled = false;
+            this.textBoxOtherNotesValue.Location = new System.Drawing.Point(250, 117);
+            this.textBoxOtherNotesValue.Name = "textBoxOtherNotesValue";
+            this.textBoxOtherNotesValue.Size = new System.Drawing.Size(128, 20);
+            this.textBoxOtherNotesValue.TabIndex = 92;
+            // 
+            // checkBoxOtherNotes
+            // 
+            this.checkBoxOtherNotes.AutoSize = true;
+            this.checkBoxOtherNotes.Location = new System.Drawing.Point(13, 119);
+            this.checkBoxOtherNotes.Name = "checkBoxOtherNotes";
+            this.checkBoxOtherNotes.Size = new System.Drawing.Size(54, 17);
+            this.checkBoxOtherNotes.TabIndex = 91;
+            this.checkBoxOtherNotes.Text = "Notes";
+            this.checkBoxOtherNotes.UseVisualStyleBackColor = true;
+            this.checkBoxOtherNotes.CheckedChanged += new System.EventHandler(this.checkBoxOtherNotes_CheckedChanged);
+            // 
+            // textBoxOtherDescriptionComparison
+            // 
+            this.textBoxOtherDescriptionComparison.Enabled = false;
+            this.textBoxOtherDescriptionComparison.Location = new System.Drawing.Point(170, 92);
+            this.textBoxOtherDescriptionComparison.Name = "textBoxOtherDescriptionComparison";
+            this.textBoxOtherDescriptionComparison.Size = new System.Drawing.Size(62, 20);
+            this.textBoxOtherDescriptionComparison.TabIndex = 90;
+            this.textBoxOtherDescriptionComparison.Text = "includes";
+            this.textBoxOtherDescriptionComparison.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxOtherDescriptionValue
+            // 
+            this.textBoxOtherDescriptionValue.Enabled = false;
+            this.textBoxOtherDescriptionValue.Location = new System.Drawing.Point(250, 92);
+            this.textBoxOtherDescriptionValue.Name = "textBoxOtherDescriptionValue";
+            this.textBoxOtherDescriptionValue.Size = new System.Drawing.Size(128, 20);
+            this.textBoxOtherDescriptionValue.TabIndex = 89;
+            // 
+            // checkBoxOtherDescription
+            // 
+            this.checkBoxOtherDescription.AutoSize = true;
+            this.checkBoxOtherDescription.Location = new System.Drawing.Point(13, 94);
+            this.checkBoxOtherDescription.Name = "checkBoxOtherDescription";
+            this.checkBoxOtherDescription.Size = new System.Drawing.Size(79, 17);
+            this.checkBoxOtherDescription.TabIndex = 88;
+            this.checkBoxOtherDescription.Text = "Description";
+            this.checkBoxOtherDescription.UseVisualStyleBackColor = true;
+            this.checkBoxOtherDescription.CheckedChanged += new System.EventHandler(this.checkBoxOtherDescription_CheckedChanged);
+            // 
+            // textBoxProperty2Comparison
+            // 
+            this.textBoxProperty2Comparison.Enabled = false;
+            this.textBoxProperty2Comparison.Location = new System.Drawing.Point(170, 171);
+            this.textBoxProperty2Comparison.Name = "textBoxProperty2Comparison";
+            this.textBoxProperty2Comparison.Size = new System.Drawing.Size(62, 20);
+            this.textBoxProperty2Comparison.TabIndex = 87;
+            this.textBoxProperty2Comparison.Text = "=";
+            this.textBoxProperty2Comparison.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxLandmarkType
+            // 
+            this.textBoxLandmarkType.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxLandmarkType.Location = new System.Drawing.Point(13, 16);
+            this.textBoxLandmarkType.Name = "textBoxLandmarkType";
+            this.textBoxLandmarkType.Size = new System.Drawing.Size(100, 13);
+            this.textBoxLandmarkType.TabIndex = 0;
+            this.textBoxLandmarkType.Text = "Landmark Type";
+            // 
+            // checkBoxProperty2
+            // 
+            this.checkBoxProperty2.AutoSize = true;
+            this.checkBoxProperty2.Location = new System.Drawing.Point(13, 173);
+            this.checkBoxProperty2.Name = "checkBoxProperty2";
+            this.checkBoxProperty2.Size = new System.Drawing.Size(74, 17);
+            this.checkBoxProperty2.TabIndex = 86;
+            this.checkBoxProperty2.Text = "Property 2";
+            this.checkBoxProperty2.UseVisualStyleBackColor = true;
+            this.checkBoxProperty2.CheckedChanged += new System.EventHandler(this.checkBoxProperty2_CheckedChanged);
+            // 
+            // comboBoxLandmarkType
+            // 
+            this.comboBoxLandmarkType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxLandmarkType.FormattingEnabled = true;
+            this.comboBoxLandmarkType.Items.AddRange(new object[] {
+            "",
+            "Sidewalks",
+            "Roads with Sidewalks",
+            "Severe Road Distress",
+            "ADA Ramps",
+            "Drainage",
+            "Accidents",
+            "All Others"});
+            this.comboBoxLandmarkType.Location = new System.Drawing.Point(170, 13);
+            this.comboBoxLandmarkType.Name = "comboBoxLandmarkType";
+            this.comboBoxLandmarkType.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxLandmarkType.TabIndex = 1;
+            this.comboBoxLandmarkType.SelectedIndexChanged += new System.EventHandler(this.comboBoxLandmarkType_SelectedIndexChanged);
+            // 
+            // comboBoxProperty2Value
+            // 
+            this.comboBoxProperty2Value.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProperty2Value.Enabled = false;
+            this.comboBoxProperty2Value.Location = new System.Drawing.Point(250, 170);
+            this.comboBoxProperty2Value.Name = "comboBoxProperty2Value";
+            this.comboBoxProperty2Value.Size = new System.Drawing.Size(128, 21);
+            this.comboBoxProperty2Value.TabIndex = 85;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(10, 45);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(41, 13);
+            this.label10.TabIndex = 70;
+            this.label10.Text = "Sort By";
+            // 
+            // textBoxProperty1Comparison
+            // 
+            this.textBoxProperty1Comparison.Enabled = false;
+            this.textBoxProperty1Comparison.Location = new System.Drawing.Point(170, 144);
+            this.textBoxProperty1Comparison.Name = "textBoxProperty1Comparison";
+            this.textBoxProperty1Comparison.Size = new System.Drawing.Size(62, 20);
+            this.textBoxProperty1Comparison.TabIndex = 84;
+            this.textBoxProperty1Comparison.Text = "=";
+            this.textBoxProperty1Comparison.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(168, 45);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(62, 13);
+            this.label9.TabIndex = 71;
+            this.label9.Text = "Comparison";
+            // 
+            // checkBoxProperty1
+            // 
+            this.checkBoxProperty1.AutoSize = true;
+            this.checkBoxProperty1.Location = new System.Drawing.Point(13, 146);
+            this.checkBoxProperty1.Name = "checkBoxProperty1";
+            this.checkBoxProperty1.Size = new System.Drawing.Size(74, 17);
+            this.checkBoxProperty1.TabIndex = 83;
+            this.checkBoxProperty1.Text = "Property 1";
+            this.checkBoxProperty1.UseVisualStyleBackColor = true;
+            this.checkBoxProperty1.CheckedChanged += new System.EventHandler(this.checkBoxProperty1_CheckedChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(247, 45);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(34, 13);
+            this.label8.TabIndex = 72;
+            this.label8.Text = "Value";
+            // 
+            // comboBoxProperty1Value
+            // 
+            this.comboBoxProperty1Value.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProperty1Value.Enabled = false;
+            this.comboBoxProperty1Value.Location = new System.Drawing.Point(250, 143);
+            this.comboBoxProperty1Value.Name = "comboBoxProperty1Value";
+            this.comboBoxProperty1Value.Size = new System.Drawing.Size(128, 21);
+            this.comboBoxProperty1Value.TabIndex = 82;
+            // 
+            // textBoxOtherAddressComparison
+            // 
+            this.textBoxOtherAddressComparison.Enabled = false;
+            this.textBoxOtherAddressComparison.Location = new System.Drawing.Point(170, 66);
+            this.textBoxOtherAddressComparison.Name = "textBoxOtherAddressComparison";
+            this.textBoxOtherAddressComparison.Size = new System.Drawing.Size(62, 20);
+            this.textBoxOtherAddressComparison.TabIndex = 81;
+            this.textBoxOtherAddressComparison.Text = "includes";
+            this.textBoxOtherAddressComparison.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxOtherAddressValue
+            // 
+            this.textBoxOtherAddressValue.Enabled = false;
+            this.textBoxOtherAddressValue.Location = new System.Drawing.Point(250, 66);
+            this.textBoxOtherAddressValue.Name = "textBoxOtherAddressValue";
+            this.textBoxOtherAddressValue.Size = new System.Drawing.Size(128, 20);
+            this.textBoxOtherAddressValue.TabIndex = 80;
+            // 
+            // checkBoxOtherAddress
+            // 
+            this.checkBoxOtherAddress.AutoSize = true;
+            this.checkBoxOtherAddress.Location = new System.Drawing.Point(13, 68);
+            this.checkBoxOtherAddress.Name = "checkBoxOtherAddress";
+            this.checkBoxOtherAddress.Size = new System.Drawing.Size(64, 17);
+            this.checkBoxOtherAddress.TabIndex = 76;
+            this.checkBoxOtherAddress.Text = "Address";
+            this.checkBoxOtherAddress.UseVisualStyleBackColor = true;
+            this.checkBoxOtherAddress.CheckedChanged += new System.EventHandler(this.checkBoxOtherAddress_CheckedChanged);
+            // 
+            // textBoxProperty1Value
+            // 
+            this.textBoxProperty1Value.Enabled = false;
+            this.textBoxProperty1Value.Location = new System.Drawing.Point(250, 144);
+            this.textBoxProperty1Value.Name = "textBoxProperty1Value";
+            this.textBoxProperty1Value.Size = new System.Drawing.Size(128, 20);
+            this.textBoxProperty1Value.TabIndex = 93;
+            this.textBoxProperty1Value.Visible = false;
+            // 
+            // textBoxProperty2Value
+            // 
+            this.textBoxProperty2Value.Enabled = false;
+            this.textBoxProperty2Value.Location = new System.Drawing.Point(250, 171);
+            this.textBoxProperty2Value.Name = "textBoxProperty2Value";
+            this.textBoxProperty2Value.Size = new System.Drawing.Size(128, 20);
+            this.textBoxProperty2Value.TabIndex = 97;
+            this.textBoxProperty2Value.Visible = false;
             // 
             // FormQueryBuilder
             // 
@@ -2339,7 +2638,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSupportHeightValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSupportIDValue)).EndInit();
             this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
+            this.panelOtherTab.ResumeLayout(false);
+            this.panelOtherTab.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2472,7 +2772,6 @@
         private System.Windows.Forms.TextBox textBoxDirectionComparison;
         private System.Windows.Forms.CheckBox Direction;
         private System.Windows.Forms.ComboBox comboBoxDirectionValue;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Panel panelSupportTab;
         private System.Windows.Forms.NumericUpDown numericUpDownRoadOffsetValue;
         private System.Windows.Forms.CheckBox RoadOffset;
@@ -2504,5 +2803,31 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBoxLandmarkType;
+        private System.Windows.Forms.TextBox textBoxLandmarkType;
+        private System.Windows.Forms.TextBox textBoxProperty2Comparison;
+        private System.Windows.Forms.CheckBox checkBoxProperty2;
+        private System.Windows.Forms.ComboBox comboBoxProperty2Value;
+        private System.Windows.Forms.TextBox textBoxProperty1Comparison;
+        private System.Windows.Forms.CheckBox checkBoxProperty1;
+        private System.Windows.Forms.ComboBox comboBoxProperty1Value;
+        private System.Windows.Forms.TextBox textBoxOtherAddressComparison;
+        private System.Windows.Forms.TextBox textBoxOtherAddressValue;
+        private System.Windows.Forms.CheckBox checkBoxOtherAddress;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Panel panelOtherTab;
+        private System.Windows.Forms.TextBox textBoxOtherDescriptionComparison;
+        private System.Windows.Forms.TextBox textBoxOtherDescriptionValue;
+        private System.Windows.Forms.CheckBox checkBoxOtherDescription;
+        private System.Windows.Forms.TextBox textBoxProperty3Comparison;
+        private System.Windows.Forms.CheckBox checkBoxProperty3;
+        private System.Windows.Forms.ComboBox comboBoxProperty3Value;
+        private System.Windows.Forms.TextBox textBoxOtherNotesComparison;
+        private System.Windows.Forms.TextBox textBoxOtherNotesValue;
+        private System.Windows.Forms.CheckBox checkBoxOtherNotes;
+        private System.Windows.Forms.TextBox textBoxProperty2Value;
+        private System.Windows.Forms.TextBox textBoxProperty1Value;
     }
 }
