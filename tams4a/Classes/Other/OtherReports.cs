@@ -72,9 +72,8 @@ namespace tams4a.Classes.Other
             return note;
         }
 
-        public void SidewalkReport(object sender, EventArgs e)
+        public void SidewalkReport(object sender, EventArgs e, string query = "SELECT * FROM miscellaneous WHERE type='Sidewalk'")
         {
-            string query = "SELECT * FROM miscellaneous WHERE type='Sidewalk'";
             Dictionary<string, string> map = new Dictionary<string, string>()
             {
                 { "ID", "TAMSID" },
@@ -88,9 +87,8 @@ namespace tams4a.Classes.Other
             createReport(query, map, "ID", "Sidewalks");
         }
 
-        public void RampReport(object sender, EventArgs e)
+        public void RampReport(object sender, EventArgs e, string query = "SELECT * FROM miscellaneous WHERE type='ADA Ramp'")
         {
-            string query = "SELECT * FROM miscellaneous WHERE type='ADA Ramp'";
             Dictionary<string, string> map = new Dictionary<string, string>()
             {
                 { "ID", "TAMSID" },
@@ -104,9 +102,8 @@ namespace tams4a.Classes.Other
             createReport(query, map, "ID", "ADA Ramps");
         }
 
-        public void RoadReport(object sender, EventArgs e)
+        public void RoadReport(object sender, EventArgs e, string query = "SELECT * FROM miscellaneous WHERE type='Severe Road Distress'")
         {
-            string query = "SELECT * FROM miscellaneous WHERE type='Severe Road Distress'";
             Dictionary<string, string> map = new Dictionary<string, string>()
             {
                 { "ID", "TAMSID" },
@@ -119,9 +116,8 @@ namespace tams4a.Classes.Other
             createReport(query, map, "ID", "Severe Road Distresses");
         }
 
-        public void DrainageReport(object sender, EventArgs e)
+        public void DrainageReport(object sender, EventArgs e, string query = "SELECT * FROM miscellaneous WHERE type='Drainage'")
         {
-            string query = "SELECT * FROM miscellaneous WHERE type='Drainage'";
             Dictionary<string, string> map = new Dictionary<string, string>()
             {
                 { "ID", "TAMSID" },
@@ -134,9 +130,8 @@ namespace tams4a.Classes.Other
             createReport(query, map, "ID", "Drainage Problems");
         }
 
-        public void AccidentReport(object sender, EventArgs e)
+        public void AccidentReport(object sender, EventArgs e, string query = "SELECT * FROM miscellaneous WHERE type='Accident'")
         {
-            string query = "SELECT * FROM miscellaneous WHERE type='Accident'";
             Dictionary<string, string> map = new Dictionary<string, string>()
             {
                 { "ID", "TAMSID" },
@@ -150,9 +145,8 @@ namespace tams4a.Classes.Other
             createReport(query, map, "ID", "Accident");
         }
 
-        public void OtherReport(object sender, EventArgs e)
+        public void OtherReport(object sender, EventArgs e, string query = "SELECT * FROM miscellaneous WHERE type='Other'")
         {
-            string query = "SELECT * FROM miscellaneous WHERE type='Other'";
             Dictionary<string, string> map = new Dictionary<string, string>()
             {
                 { "ID", "TAMSID" },
@@ -173,6 +167,22 @@ namespace tams4a.Classes.Other
                 { "ID", "road_ID" },
                 { "Sidewalks", "installed" },
                 { "Comments", "comments" }
+            };
+            createReport(query, map, "ID", "Roads with Sidewalks");
+        }
+
+        public void MiscReport(object sender, EventArgs e, string query = "SELECT * FROM miscellaneous;")
+        {
+            Dictionary<string, string> map = new Dictionary<string, string>()
+            {
+                { "ID", "TAMSID" },
+                { "Landmark Type", "type" },
+                { "Address", "address" },
+                { "Description", "description" },
+                { "Property 1", "property1" },
+                { "Property 2", "property2" },
+                { "Property 3", "property3" },
+                { "Notes", "notes" }
             };
             createReport(query, map, "ID", "Roads with Sidewalks");
         }

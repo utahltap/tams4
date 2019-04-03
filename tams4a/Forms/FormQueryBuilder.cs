@@ -27,6 +27,11 @@ namespace tams4a.Forms
         private const int SUPPORT_TAB_CONTROL_HEIGHT = 302;
         private const int SUPPORT_BUTTON_Y_LOCATION = 308;
 
+        private const int OTHER_FORM_HEIGHT = 364;
+        private const int OTHER_PANEL_HEIGHT = 253;
+        private const int OTHER_TAB_CONTROL_HEIGHT = 281;
+        private const int OTHER_BUTTON_Y_LOCATION = 285;
+
 
         public FormQueryBuilder(TamsProject Project, int tab)
         {
@@ -66,6 +71,11 @@ namespace tams4a.Forms
             {
                 TableName = "sign_support";
                 query = getSupportQuery("SELECT * FROM sign_support WHERE ");
+            }
+            if (TableName == "other")
+            {
+                TableName = "miscellaneous";
+                query = getOtherQuery("SELECT * FROM miscellaneous WHERE ");
             }
 
             if (firstOption)
@@ -410,6 +420,81 @@ namespace tams4a.Forms
             return query;
         }
 
+        private string getOtherQuery(string query)
+        {
+            if (comboBoxLandmarkType.Text != "")
+            {
+                query += "type = '" + comboBoxLandmarkType.Text + "'";
+                firstOption = false;
+            }
+
+            if (OtherID.Checked && comboBoxOtherIDComparison.Text != "")
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "TAMSID " + comboBoxOtherIDComparison.Text + " " + numericUpDownOtherID.Value.ToString();
+            }
+
+            if (OtherAddress.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "address LIKE \"%" + textBoxOtherAddressValue.Text + "%\"";
+            }
+
+            if (OtherDescription.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "description LIKE \"%" + textBoxOtherDescriptionValue.Text + "%\"";
+            }
+
+            if (OtherNotes.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "notes LIKE \"%" + textBoxOtherNotesValue.Text + "%\"";
+            }
+
+            if (Property1.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                if (comboBoxProperty1Value.Visible)
+                    query += "property1 LIKE \"" + comboBoxProperty1Value.Text + "\"";
+                else query += "property1 LIKE \"%" + textBoxProperty1Value.Text + "%\"";
+            }
+
+            if (Property2.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                if (comboBoxProperty1Value.Visible)
+                    query += "property2 LIKE \"" + comboBoxProperty2Value.Text + "\"";
+                else query += "property2 LIKE \"%" + textBoxProperty2Value.Text + "%\"";
+            }
+
+            if (Property3.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "property3 LIKE \"" + comboBoxProperty3Value.Text + "\"";
+            }
+
+            //********************************************************
+            //*          ROADS WITH SIDEWALKS NOT DONT YET           *
+            //********************************************************
+
+            Console.WriteLine(query);
+
+            return query;
+        }
+
+        public string getType()
+        {
+            return comboBoxLandmarkType.Text;
+        }
+
         private void buttonOK_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
@@ -651,6 +736,15 @@ namespace tams4a.Forms
                 buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, SUPPORT_BUTTON_Y_LOCATION);
                 buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, SUPPORT_BUTTON_Y_LOCATION);
             }
+            if (TableName == "other")
+            {
+                adjustDistressHeight();
+                Height = OTHER_FORM_HEIGHT;
+                panelRoadTab.Height = OTHER_PANEL_HEIGHT;
+                tabControlCustom.Height = OTHER_TAB_CONTROL_HEIGHT;
+                buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, OTHER_BUTTON_Y_LOCATION);
+                buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, OTHER_BUTTON_Y_LOCATION);
+            }
         }
 
         private void adjustDistressHeight()
@@ -810,9 +904,9 @@ namespace tams4a.Forms
 
         private void comboBoxLandmarkType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            checkBoxProperty1.Visible = true;
-            checkBoxProperty2.Visible = true;
-            checkBoxProperty3.Visible = true;
+            Property1.Visible = true;
+            Property2.Visible = true;
+            Property3.Visible = true;
             textBoxProperty1Comparison.Visible = true;
             textBoxProperty2Comparison.Visible = true;
             textBoxProperty3Comparison.Visible = true;
@@ -827,9 +921,9 @@ namespace tams4a.Forms
             comboBoxProperty2Value.Items.Clear();
             comboBoxProperty3Value.Items.Clear();
 
-            if (comboBoxLandmarkType.Text == "Sidewalks")
+            if (comboBoxLandmarkType.Text == "Sidewalk")
             {
-                checkBoxProperty1.Text = "Faults";
+                Property1.Text = "Faults";
                 comboBoxProperty1Value.Items.AddRange(new object[] {
                     "",
                     "Less than 0.25 in.",
@@ -838,7 +932,7 @@ namespace tams4a.Forms
                     "More than 1 in."
                 });
 
-                checkBoxProperty2.Text = "Breaks";
+                Property2.Text = "Breaks";
                 comboBoxProperty2Value.Items.AddRange(new object[] {
                     "",
                     "Low",
@@ -846,7 +940,7 @@ namespace tams4a.Forms
                     "Severe"
                 });
 
-                checkBoxProperty3.Text = "Recommendation";
+                Property3.Text = "Recommendation";
                 comboBoxProperty3Value.Items.AddRange(new object[] {
                     "",
                     "Grind",
@@ -857,9 +951,9 @@ namespace tams4a.Forms
             }
             if (comboBoxLandmarkType.Text == "Roads with Sidewalks")
             {
-                checkBoxProperty1.Visible = false;
-                checkBoxProperty2.Visible = false;
-                checkBoxProperty3.Visible = false;
+                Property1.Visible = false;
+                Property2.Visible = false;
+                Property3.Visible = false;
                 textBoxProperty1Comparison.Visible = false;
                 textBoxProperty2Comparison.Visible = false;
                 textBoxProperty3Comparison.Visible = false;
@@ -869,23 +963,23 @@ namespace tams4a.Forms
             }
             if (comboBoxLandmarkType.Text == "Severe Road Distress")
             {
-                checkBoxProperty1.Text = "Distress";
+                Property1.Text = "Distress";
                 textBoxProperty1Comparison.Text = "includes";
                 comboBoxProperty1Value.Visible = false;
                 textBoxProperty1Value.Visible = true;
 
-                checkBoxProperty2.Text = "Recommendation";
+                Property2.Text = "Recommendation";
                 textBoxProperty2Comparison.Text = "includes";
                 comboBoxProperty2Value.Visible = false;
                 textBoxProperty2Value.Visible = true;
 
-                checkBoxProperty3.Visible = false;
+                Property3.Visible = false;
                 textBoxProperty3Comparison.Visible = false;
                 comboBoxProperty3Value.Visible = false;
             }
-            if (comboBoxLandmarkType.Text == "ADA Ramps")
+            if (comboBoxLandmarkType.Text == "ADA Ramp")
             {
-                checkBoxProperty1.Text = "Condition";
+                Property1.Text = "Condition";
                 comboBoxProperty1Value.Items.AddRange(new object[] {
                     "",
                     "Good",
@@ -893,14 +987,14 @@ namespace tams4a.Forms
                     "Bad"
                 });
 
-                checkBoxProperty2.Text = "Compliant";
+                Property2.Text = "Compliant";
                 comboBoxProperty2Value.Items.AddRange(new object[] {
                     "",
                     "Yes",
                     "No"
                 });
 
-                checkBoxProperty3.Text = "Has Tiles";
+                Property3.Text = "Has Tiles";
                 comboBoxProperty3Value.Items.AddRange(new object[] {
                     "",
                     "Yes",
@@ -909,7 +1003,7 @@ namespace tams4a.Forms
             }
             if (comboBoxLandmarkType.Text == "Drainage")
             {
-                checkBoxProperty1.Text = "Type";
+                Property1.Text = "Type";
                 comboBoxProperty1Value.Items.AddRange(new object[] {
                     "",
                     "Curb and Gutter",
@@ -920,28 +1014,28 @@ namespace tams4a.Forms
                     "Other"
                 });
 
-                checkBoxProperty2.Text = "Recommendation";
+                Property2.Text = "Recommendation";
                 textBoxProperty2Comparison.Text = "includes";
                 comboBoxProperty2Value.Visible = false;
                 textBoxProperty2Value.Visible = true;
 
-                checkBoxProperty3.Visible = false;
+                Property3.Visible = false;
                 textBoxProperty3Comparison.Visible = false;
                 comboBoxProperty3Value.Visible = false;
             }
             if (comboBoxLandmarkType.Text == "Accidents")
             {
-                checkBoxProperty1.Text = "Date";
+                Property1.Text = "Date";
                 textBoxProperty1Comparison.Text = "includes";
                 comboBoxProperty1Value.Visible = false;
                 textBoxProperty1Value.Visible = true;
 
-                checkBoxProperty2.Text = "Type";
+                Property2.Text = "Type";
                 textBoxProperty2Comparison.Text = "includes";
                 comboBoxProperty2Value.Visible = false;
                 textBoxProperty2Value.Visible = true;
 
-                checkBoxProperty3.Text = "Severity";
+                Property3.Text = "Severity";
                 comboBoxProperty3Value.Items.AddRange(new object[] {
                     "",
                     "Injury",
@@ -949,19 +1043,19 @@ namespace tams4a.Forms
                     "Property Damage"
                 });
             }
-            if (comboBoxLandmarkType.Text == "All Others")
+            if (comboBoxLandmarkType.Text == "Other")
             {
-                checkBoxProperty1.Text = "Property 1";
+                Property1.Text = "Property 1";
                 textBoxProperty1Comparison.Text = "includes";
                 comboBoxProperty1Value.Visible = false;
                 textBoxProperty1Value.Visible = true;
 
-                checkBoxProperty2.Text = "Property 2";
+                Property2.Text = "Property 2";
                 textBoxProperty2Comparison.Text = "includes";
                 comboBoxProperty2Value.Visible = false;
                 textBoxProperty2Value.Visible = true;
 
-                checkBoxProperty3.Visible = false;
+                Property3.Visible = false;
                 textBoxProperty3Comparison.Visible = false;
                 comboBoxProperty3Value.Visible = false;
             }
@@ -969,40 +1063,46 @@ namespace tams4a.Forms
 
         private void checkBoxOtherAddress_CheckedChanged(object sender, EventArgs e)
         {
-            textBoxOtherAddressComparison.Enabled = checkBoxOtherAddress.Checked;
-            textBoxOtherAddressValue.Enabled = checkBoxOtherAddress.Checked;
+            textBoxOtherAddressComparison.Enabled = OtherAddress.Checked;
+            textBoxOtherAddressValue.Enabled = OtherAddress.Checked;
         }
 
         private void checkBoxOtherDescription_CheckedChanged(object sender, EventArgs e)
         {
-            textBoxOtherDescriptionComparison.Enabled = checkBoxOtherDescription.Checked;
-            textBoxOtherDescriptionValue.Enabled = checkBoxOtherDescription.Checked;
+            textBoxOtherDescriptionComparison.Enabled = OtherDescription.Checked;
+            textBoxOtherDescriptionValue.Enabled = OtherDescription.Checked;
         }
 
         private void checkBoxOtherNotes_CheckedChanged(object sender, EventArgs e)
         {
-            textBoxOtherNotesComparison.Enabled = checkBoxOtherNotes.Checked;
-            textBoxOtherNotesValue.Enabled = checkBoxOtherNotes.Checked;
+            textBoxOtherNotesComparison.Enabled = OtherNotes.Checked;
+            textBoxOtherNotesValue.Enabled = OtherNotes.Checked;
         }
 
         private void checkBoxProperty1_CheckedChanged(object sender, EventArgs e)
         {
-            textBoxProperty1Comparison.Enabled = checkBoxProperty1.Checked;
-            textBoxProperty1Value.Enabled = checkBoxProperty1.Checked;
-            comboBoxProperty1Value.Enabled = checkBoxProperty1.Checked;
+            textBoxProperty1Comparison.Enabled = Property1.Checked;
+            textBoxProperty1Value.Enabled = Property1.Checked;
+            comboBoxProperty1Value.Enabled = Property1.Checked;
         }
 
         private void checkBoxProperty2_CheckedChanged(object sender, EventArgs e)
         {
-            textBoxProperty2Comparison.Enabled = checkBoxProperty2.Checked;
-            textBoxProperty2Value.Enabled = checkBoxProperty2.Checked;
-            comboBoxProperty2Value.Enabled = checkBoxProperty2.Checked;
+            textBoxProperty2Comparison.Enabled = Property2.Checked;
+            textBoxProperty2Value.Enabled = Property2.Checked;
+            comboBoxProperty2Value.Enabled = Property2.Checked;
         }
 
         private void checkBoxProperty3_CheckedChanged(object sender, EventArgs e)
         {
-            textBoxProperty3Comparison.Enabled = checkBoxProperty3.Checked;
-            comboBoxProperty3Value.Enabled = checkBoxProperty3.Checked;
+            textBoxProperty3Comparison.Enabled = Property3.Checked;
+            comboBoxProperty3Value.Enabled = Property3.Checked;
+        }
+
+        private void checkBoxOtherID_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxOtherIDComparison.Enabled = OtherID.Checked;
+            numericUpDownOtherID.Enabled = OtherID.Checked;
         }
     }
 }

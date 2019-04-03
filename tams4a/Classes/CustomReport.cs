@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using tams4a.Forms;
 using tams4a.Classes.Roads;
 using tams4a.Classes.Signs;
+using tams4a.Classes.Other;
 
 namespace tams4a.Classes
 {
@@ -17,6 +18,7 @@ namespace tams4a.Classes
         private ModuleSigns moduleSigns;
         private SignReports signReports;
         private GenericModule moduleOther;
+        private OtherReports otherReports;
         private MainWindow window;
 
         public CustomReport(TamsProject theProject, ModuleRoads roads, ModuleSigns signs, GenericModule other, MainWindow mainWindow)
@@ -27,6 +29,7 @@ namespace tams4a.Classes
             moduleSigns = signs;
             signReports = new SignReports(Project, signs);
             moduleOther = other;
+            otherReports = new OtherReports(Project, other);
             window = mainWindow;
         }
 
@@ -51,6 +54,10 @@ namespace tams4a.Classes
                 if (tableFilters.tabControlCustom.SelectedTab.Text == "Support")
                 {
                     customSupportReport(tableFilters);
+                }
+                if (tableFilters.tabControlCustom.SelectedTab.Text == "Other")
+                {
+                    customOtherReport(tableFilters);
                 }
             }
             tableFilters.Close();
@@ -191,5 +198,28 @@ namespace tams4a.Classes
             if (selectResults) moduleSigns.selectionChanged();
         }
 
+        private void customOtherReport(FormQueryBuilder tableFilters)
+        {
+            bool selectResults = false;
+            string query = tableFilters.getQuery();
+            if (tableFilters.checkBoxSelectResults.Checked && query != "SELECT * FROM miscellaneous") selectResults = true;
+            query += " GROUP BY TAMSID ORDER BY TAMSID ASC;";
+            DataTable results = Database.GetDataByQuery(Project.conn, query);
+            if (results.Rows.Count == 0)
+            {
+                MessageBox.Show("No landmarks matching the given description were found.");
+                return;
+            }
+            string type = tableFilters.getType();
+            if (type == "Sidewalk") otherReports.SidewalkReport(null, null, query);
+            else if (type == "ADA Ramp") otherReports.RampReport(null, null, query);
+            else if (type == "Severe Road Distress") otherReports.RoadReport(null, null, query);
+            else if (type == "Drainage") otherReports.DrainageReport(null, null, query);
+            else if (type == "Accident") otherReports.AccidentReport(null, null, query);
+            else if (type == "Other") otherReports.OtherReport(null, null, query);
+            else otherReports.MiscReport(null, null, query);
+
+            if (selectResults) moduleOther.selectionChanged();
+        }
     }
 }
