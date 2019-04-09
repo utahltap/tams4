@@ -28,15 +28,13 @@ namespace tams4a.Classes
             ModuleName = mn;
             reports = new OtherReports(theProject, this);
 
-
-            ////   TODO: FIX THIS STUFF... ////
             boundButtons[1].Click += new EventHandler(delegate (object sender, EventArgs e) { reports.SidewalkReport(sender, e); });
             boundButtons[2].Click += new EventHandler(delegate (object sender, EventArgs e) { reports.RoadReport(sender, e); });
             boundButtons[3].Click += new EventHandler(delegate (object sender, EventArgs e) { reports.RampReport(sender, e); });
             boundButtons[4].Click += new EventHandler(delegate (object sender, EventArgs e) { reports.DrainageReport(sender, e); }); ;
             boundButtons[5].Click += new EventHandler(delegate (object sender, EventArgs e) { reports.AccidentReport(sender, e); });
             boundButtons[6].Click += new EventHandler(delegate (object sender, EventArgs e) { reports.OtherReport(sender, e); });
-            boundButtons[7].Click += reports.RoadsWithSidewalks;
+            boundButtons[7].Click += new EventHandler(delegate (object sender, EventArgs e) { reports.RoadsWithSidewalks(sender, e); });
 
             setControlPanel();
 

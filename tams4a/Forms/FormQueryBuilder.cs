@@ -75,7 +75,9 @@ namespace tams4a.Forms
             if (TableName == "other")
             {
                 TableName = "miscellaneous";
-                query = getOtherQuery("SELECT * FROM miscellaneous WHERE ");
+                if (comboBoxLandmarkType.Text == "Roads with Sidewalks")
+                    TableName = "road_sidewalks";
+                query = getOtherQuery("SELECT * FROM " + TableName + " WHERE ");
             }
 
             if (firstOption)
@@ -422,7 +424,7 @@ namespace tams4a.Forms
 
         private string getOtherQuery(string query)
         {
-            if (comboBoxLandmarkType.Text != "")
+            if (comboBoxLandmarkType.Text != "" && comboBoxLandmarkType.Text != "Roads with Sidewalks")
             {
                 query += "type = '" + comboBoxLandmarkType.Text + "'";
                 firstOption = false;
@@ -432,21 +434,24 @@ namespace tams4a.Forms
             {
                 if (!firstOption) query += " AND ";
                 else firstOption = false;
-                query += "TAMSID " + comboBoxOtherIDComparison.Text + " " + numericUpDownOtherID.Value.ToString();
+                if (comboBoxLandmarkType.Text == "Roads with Sidewalks") query += "road_ID " + comboBoxOtherIDComparison.Text + " " + numericUpDownOtherID.Value.ToString();
+                else query += "TAMSID " + comboBoxOtherIDComparison.Text + " " + numericUpDownOtherID.Value.ToString();
             }
 
             if (OtherAddress.Checked)
             {
                 if (!firstOption) query += " AND ";
                 else firstOption = false;
-                query += "address LIKE \"%" + textBoxOtherAddressValue.Text + "%\"";
+                if (comboBoxLandmarkType.Text == "Roads with Sidewalks") query += "installed LIKE \"%" + comboBoxInstalledValue.Text + "%\"";
+                else query += "address LIKE \"%" + textBoxOtherAddressValue.Text + "%\"";
             }
 
             if (OtherDescription.Checked)
             {
                 if (!firstOption) query += " AND ";
                 else firstOption = false;
-                query += "description LIKE \"%" + textBoxOtherDescriptionValue.Text + "%\"";
+                if (comboBoxLandmarkType.Text == "Roads with Sidewalks") query += "comments LIKE \"%" + textBoxOtherAddressValue.Text + "%\"";
+                else query += "description LIKE \"%" + textBoxOtherDescriptionValue.Text + "%\"";
             }
 
             if (OtherNotes.Checked)
@@ -480,12 +485,6 @@ namespace tams4a.Forms
                 else firstOption = false;
                 query += "property3 LIKE \"" + comboBoxProperty3Value.Text + "\"";
             }
-
-            //********************************************************
-            //*          ROADS WITH SIDEWALKS NOT DONT YET           *
-            //********************************************************
-
-            Console.WriteLine(query);
 
             return query;
         }
@@ -907,16 +906,24 @@ namespace tams4a.Forms
             Property1.Visible = true;
             Property2.Visible = true;
             Property3.Visible = true;
+            OtherNotes.Visible = true;
             textBoxProperty1Comparison.Visible = true;
             textBoxProperty2Comparison.Visible = true;
             textBoxProperty3Comparison.Visible = true;
+            textBoxOtherNotesComparison.Visible = true;
             comboBoxProperty1Value.Visible = true;
             comboBoxProperty2Value.Visible = true;
             comboBoxProperty3Value.Visible = true;
+            textBoxOtherNotesValue.Visible = true;
             textBoxProperty1Value.Visible = false;
             textBoxProperty2Value.Visible = false;
             textBoxProperty1Comparison.Text = "=";
             textBoxProperty2Comparison.Text = "=";
+            textBoxOtherAddressValue.Visible = true;
+            comboBoxInstalledValue.Visible = false;
+            OtherAddress.Text = "Address";
+            textBoxOtherAddressComparison.Text = "includes";
+            OtherDescription.Text = "Description";
             comboBoxProperty1Value.Items.Clear();
             comboBoxProperty2Value.Items.Clear();
             comboBoxProperty3Value.Items.Clear();
@@ -954,12 +961,22 @@ namespace tams4a.Forms
                 Property1.Visible = false;
                 Property2.Visible = false;
                 Property3.Visible = false;
+                OtherNotes.Visible = false;
                 textBoxProperty1Comparison.Visible = false;
                 textBoxProperty2Comparison.Visible = false;
                 textBoxProperty3Comparison.Visible = false;
+                textBoxOtherNotesComparison.Visible = false;
                 comboBoxProperty1Value.Visible = false;
                 comboBoxProperty2Value.Visible = false;
                 comboBoxProperty3Value.Visible = false;
+                textBoxOtherNotesValue.Visible = false;
+
+                textBoxOtherAddressValue.Visible = false;
+                comboBoxInstalledValue.Visible = true;
+
+                OtherAddress.Text = "Installed";
+                textBoxOtherAddressComparison.Text = "=";
+                OtherDescription.Text = "Comments";
             }
             if (comboBoxLandmarkType.Text == "Severe Road Distress")
             {
@@ -1023,7 +1040,7 @@ namespace tams4a.Forms
                 textBoxProperty3Comparison.Visible = false;
                 comboBoxProperty3Value.Visible = false;
             }
-            if (comboBoxLandmarkType.Text == "Accidents")
+            if (comboBoxLandmarkType.Text == "Accident")
             {
                 Property1.Text = "Date";
                 textBoxProperty1Comparison.Text = "includes";
@@ -1065,6 +1082,7 @@ namespace tams4a.Forms
         {
             textBoxOtherAddressComparison.Enabled = OtherAddress.Checked;
             textBoxOtherAddressValue.Enabled = OtherAddress.Checked;
+            comboBoxInstalledValue.Enabled = OtherAddress.Checked;
         }
 
         private void checkBoxOtherDescription_CheckedChanged(object sender, EventArgs e)

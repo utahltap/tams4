@@ -159,9 +159,8 @@ namespace tams4a.Classes.Other
             createReport(query, map, "ID", "Objects");
         }
 
-        public void RoadsWithSidewalks(object sender, EventArgs e)
+        public void RoadsWithSidewalks(object sender, EventArgs e, string query = "SELECT * FROM road_sidewalks;")
         {
-            string query = "SELECT * FROM road_sidewalks";
             Dictionary<string, string> map = new Dictionary<string, string>()
             {
                 { "ID", "road_ID" },

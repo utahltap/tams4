@@ -65,7 +65,7 @@ namespace tams4a.Classes
 
 
         private void customRoadReport(FormQueryBuilder tableFilters)
-        {     
+        {
             bool selectResults = false;
             string surfaceType = tableFilters.getSurface();
             string query = tableFilters.getQuery();
@@ -85,6 +85,7 @@ namespace tams4a.Classes
                 if (selectResults)
                 {
                     FeatureLayer selectionLayer = (FeatureLayer)moduleRoads.Layer;
+                    selectionLayer.ClearSelection();
                     String tamsidcolumn = Project.settings.GetValue("road_f_TAMSID");
                     selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
                 }
@@ -130,6 +131,7 @@ namespace tams4a.Classes
                 if (selectResults)
                 {
                     FeatureLayer selectionLayer = (FeatureLayer)moduleSigns.Layer;
+                    selectionLayer.ClearSelection();
                     String tamsidcolumn = Project.settings.GetValue("sign_f_TAMSID");
                     selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["support_id"], ModifySelectionMode.Append);
                 }
@@ -175,6 +177,7 @@ namespace tams4a.Classes
                 if (selectResults)
                 {
                     FeatureLayer selectionLayer = (FeatureLayer)moduleSigns.Layer;
+                    selectionLayer.ClearSelection();
                     String tamsidcolumn = Project.settings.GetValue("sign_f_TAMSID");
                     selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["support_id"], ModifySelectionMode.Append);
                 }
@@ -203,23 +206,66 @@ namespace tams4a.Classes
             bool selectResults = false;
             string query = tableFilters.getQuery();
             if (tableFilters.checkBoxSelectResults.Checked && query != "SELECT * FROM miscellaneous") selectResults = true;
-            query += " GROUP BY TAMSID ORDER BY TAMSID ASC;";
-            DataTable results = Database.GetDataByQuery(Project.conn, query);
-            if (results.Rows.Count == 0)
-            {
-                MessageBox.Show("No landmarks matching the given description were found.");
-                return;
-            }
-            string type = tableFilters.getType();
-            if (type == "Sidewalk") otherReports.SidewalkReport(null, null, query);
-            else if (type == "ADA Ramp") otherReports.RampReport(null, null, query);
-            else if (type == "Severe Road Distress") otherReports.RoadReport(null, null, query);
-            else if (type == "Drainage") otherReports.DrainageReport(null, null, query);
-            else if (type == "Accident") otherReports.AccidentReport(null, null, query);
-            else if (type == "Other") otherReports.OtherReport(null, null, query);
-            else otherReports.MiscReport(null, null, query);
 
-            if (selectResults) moduleOther.selectionChanged();
+            string type = tableFilters.getType();
+            DataTable results = Database.GetDataByQuery(Project.conn, query);
+
+            if (type == "Roads with Sidewalks")
+            {
+                query += " GROUP BY road_ID ORDER BY road_ID ASC;";
+                DataTable r = Database.GetDataByQuery(Project.conn, query);
+                if (r.Rows.Count == 0)
+                {
+                    MessageBox.Show("No landmarks matching the given description were found.");
+                    return;
+                }
+                otherReports.RoadsWithSidewalks(null, null, query);
+            }
+            else
+            {
+                query += " GROUP BY TAMSID ORDER BY TAMSID ASC;";
+                results = Database.GetDataByQuery(Project.conn, query);
+                if (results.Rows.Count == 0)
+                {
+                    MessageBox.Show("No landmarks matching the given description were found.");
+                    return;
+                }
+
+                if (type == "Sidewalk") otherReports.SidewalkReport(null, null, query);
+                else if (type == "ADA Ramp") otherReports.RampReport(null, null, query);
+                else if (type == "Severe Road Distress") otherReports.RoadReport(null, null, query);
+                else if (type == "Drainage") otherReports.DrainageReport(null, null, query);
+                else if (type == "Accident") otherReports.AccidentReport(null, null, query);
+                else if (type == "Other") otherReports.OtherReport(null, null, query);
+                else otherReports.MiscReport(null, null, query);
+            }
+
+            if (selectResults)
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    if (selectResults)
+                    {
+                        FeatureLayer selectionLayer;
+                        String tamsidcolumn;
+                        if (type == "Roads with Sidewalks")
+                        {
+                            selectionLayer = (FeatureLayer)moduleRoads.Layer;
+                            selectionLayer.ClearSelection();
+                            tamsidcolumn = Project.settings.GetValue("road_f_TAMSID");
+                            selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["road_ID"], ModifySelectionMode.Append);
+                            moduleRoads.selectionChanged();
+                            return;
+                        }
+                        selectionLayer = (FeatureLayer)moduleOther.Layer;
+                        selectionLayer.ClearSelection();
+                        tamsidcolumn = Project.settings.GetValue("miscellaneous_f_TAMSID");
+                        selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
+                    }
+                }
+                moduleOther.selectionChanged();
+            }
+            return;
         }
     }
 }

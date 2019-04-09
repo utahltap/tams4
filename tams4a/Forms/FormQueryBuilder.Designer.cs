@@ -214,6 +214,7 @@
             this.textBoxOtherAddressComparison = new System.Windows.Forms.TextBox();
             this.textBoxOtherAddressValue = new System.Windows.Forms.TextBox();
             this.OtherAddress = new System.Windows.Forms.CheckBox();
+            this.comboBoxInstalledValue = new System.Windows.Forms.ComboBox();
             this.tabControlCustom.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panelRoadTab.SuspendLayout();
@@ -2309,6 +2310,7 @@
             // 
             // panelOtherTab
             // 
+            this.panelOtherTab.Controls.Add(this.comboBoxInstalledValue);
             this.panelOtherTab.Controls.Add(this.numericUpDownOtherID);
             this.panelOtherTab.Controls.Add(this.OtherID);
             this.panelOtherTab.Controls.Add(this.comboBoxOtherIDComparison);
@@ -2634,6 +2636,21 @@
             this.OtherAddress.UseVisualStyleBackColor = true;
             this.OtherAddress.CheckedChanged += new System.EventHandler(this.checkBoxOtherAddress_CheckedChanged);
             // 
+            // comboBoxInstalledValue
+            // 
+            this.comboBoxInstalledValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxInstalledValue.Enabled = false;
+            this.comboBoxInstalledValue.Location = new System.Drawing.Point(250, 93);
+            this.comboBoxInstalledValue.Name = "comboBoxInstalledValue";
+            this.comboBoxInstalledValue.Size = new System.Drawing.Size(128, 21);
+            this.comboBoxInstalledValue.TabIndex = 101;
+            this.comboBoxInstalledValue.Items.AddRange(new object[] {
+                "",
+                "Yes",
+                "No",
+                "Partial"
+            });
+            // 
             // FormQueryBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2882,5 +2899,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownOtherID;
         private System.Windows.Forms.CheckBox OtherID;
         private System.Windows.Forms.ComboBox comboBoxOtherIDComparison;
+        private System.Windows.Forms.ComboBox comboBoxInstalledValue;
     }
 }
