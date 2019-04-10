@@ -50,6 +50,14 @@ namespace tams4a.Forms
                 buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, ROAD_BUTTON_Y_LOCATION);
                 buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, ROAD_BUTTON_Y_LOCATION);
             }
+            if (TableName == "other")
+            {
+                Height = OTHER_FORM_HEIGHT;
+                panelRoadTab.Height = OTHER_PANEL_HEIGHT;
+                tabControlCustom.Height = OTHER_TAB_CONTROL_HEIGHT;
+                buttonCancel.Location = new System.Drawing.Point(buttonCancel.Location.X, OTHER_BUTTON_Y_LOCATION);
+                buttonOK.Location = new System.Drawing.Point(buttonOK.Location.X, OTHER_BUTTON_Y_LOCATION);
+            }
         }
 
         public string getSurface()
