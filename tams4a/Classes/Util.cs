@@ -24,7 +24,6 @@ namespace tams4a.Classes
             {
                 string tempString;
                 tempString = dictionary[key].ToString();
-                //return string.Format("G2", tenpString);
                 return tempString;
             }
             catch

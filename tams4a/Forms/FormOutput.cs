@@ -22,7 +22,7 @@ namespace tams4a.Forms
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
             Close();
         }
 
@@ -60,6 +60,7 @@ namespace tams4a.Forms
             else if (reportType == "Sign Recommendations") signRecommendationsReport(report);
             else if (reportType == "Support Inventory") supportInventoryReport(report);
             else if (reportType == "Support Recommendations") supportRecommendationsReport(report);
+            else otherReport(report);
 
             Cursor.Current = Cursors.Arrow;
             MessageBox.Show("Changes Saved");
@@ -387,6 +388,129 @@ namespace tams4a.Forms
                 MessageBox.Show("Make sure the column names match each of the column names found in the 'Sign Inventory' report.", "Error: Save Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        private void otherReport(DataTable report)
+        {
+            DataTable fullDataSet = Database.GetDataByQuery(Project.conn, "SELECT * FROM miscellaneous;");
+
+            string sql = "";
+            foreach (DataColumn col in report.Columns)
+            {
+                foreach (DataRow row in report.Rows)
+                {
+                    string column = "";
+                    string thisCol = col.ToString();
+                    string table = "miscellaneous";
+                    string idName = "TAMSID";
+    
+                    if (thisCol == "ID")
+                    {
+                        column = "TAMSID";
+                        if (reportType == "Roads with Sidewalks")
+                        {
+                            table = "road_sidewalks";
+                            column = "road_ID";
+                            idName = "road_ID";
+                        }
+                    }
+                    else if (thisCol == "Address") column = "address";
+                    else if (thisCol == "Description") column = "description";
+                    //else if (thisCol == "Notes") column = "notes";
+                    else
+                    {
+                        switch (reportType)
+                        {
+                            case "Sidewalks":
+                                if (thisCol == "Faults") column = "property1";
+                                else if (thisCol == "Breaks") column = "property2";
+                                else if (thisCol == "Recommendation") column = "property3";
+                                else continue;
+                                break;
+
+                            case "Roads with Sidewalks":
+                                table = "road_sidewalks";
+                                idName = "road_ID";
+                                if (thisCol == "Sidewalks") column = "installed";
+                                else if (thisCol == "Comments") column = "comments";
+                                else continue;
+                                break;
+
+                            case "Severe Road Distresses":
+                                if (thisCol == "Distress") column = "property1";
+                                else if (thisCol == "Recommendation") column = "property2";
+                                else continue;
+                                break;
+
+                            case "ADA Ramps":
+                                if (thisCol == "Condition") column = "property1";
+                                else if (thisCol == "Compliant") column = "property2";
+                                else if (thisCol == "Has Tiles") column = "property3";
+                                else continue;
+                                break;
+
+                            case "Drainage Problems":
+                                if (thisCol == "Type") column = "property1";
+                                else if (thisCol == "Recommendation") column = "property2";
+                                else continue;
+                                break;
+
+                            case "Accident":
+                                if (thisCol == "Date") column = "property1";
+                                else if (thisCol == "Type") column = "property2";
+                                else if (thisCol == "Severity") column = "property3";
+                                else continue;
+                                break;
+
+                            case "Objects":
+                                if (thisCol == "Property 1") column = "property1";
+                                else if (thisCol == "Property 2") column = "property2";
+                                else continue;
+                                break;
+
+                            default:
+                                continue;
+                        }
+                    }
+
+                    string currentID = row["ID"].ToString();
+                    if (String.IsNullOrEmpty(currentID)) currentID = null;
+                    if (currentID == null) continue;
+
+                    string newValue = row[col].ToString();
+                    if (String.IsNullOrEmpty(newValue)) newValue = null;
+
+                    bool valuePresent = false;
+
+                    string searchDataSet = "TAMSID = null";
+                    if (!(currentID == null)) searchDataSet = "TAMSID = " + row["ID"].ToString();
+                    DataRow[] existingRow = fullDataSet.Select(searchDataSet);
+                    foreach (DataRow dr in existingRow)
+                    {
+                        string oldValue = dr[column].ToString();
+                        if (String.IsNullOrEmpty(oldValue)) oldValue = null;
+                        if (oldValue == newValue)
+                        {
+                            valuePresent = true;
+                            continue;
+                        }
+                    }
+                    if (valuePresent) continue;
+                    sql += "UPDATE " + table + " SET " + column + " = \"" + newValue + "\" WHERE " + idName + " = " + currentID + ";";
+                }
+            }
+            try
+            {
+                Console.WriteLine(sql);
+                Database.ExecuteNonQuery(Project.conn, sql);
+            }
+            catch
+            {
+                Cursor.Current = Cursors.Arrow;
+                MessageBox.Show("Make sure the column names match each of the column names found in the 'Sign Inventory' report.", "Error: Save Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            //if (reportType == "Sidwalks")...
         }
 
     }

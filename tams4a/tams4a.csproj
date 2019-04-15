@@ -223,10 +223,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\CustomReport.cs" />
-    <Compile Include="Classes\GenericModule.cs" />
+    <Compile Include="Classes\Other\GenericModule.cs" />
     <Compile Include="Classes\ImportAccess.cs" />
     <Compile Include="Classes\Database.cs" />
     <Compile Include="Classes\Log.cs" />
+    <Compile Include="Classes\Other\OtherReports.cs" />
     <Compile Include="Classes\Signs\ModuleSigns.cs" />
     <Compile Include="Classes\ProjectSetting.cs" />
     <Compile Include="Classes\ProjectSettings.cs" />
