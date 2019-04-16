@@ -303,6 +303,12 @@
     <Compile Include="Controls\Panel_Sign.Designer.cs">
       <DependentUpon>Panel_Sign.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormAnalysis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAnalysis.Designer.cs">
+      <DependentUpon>FormAnalysis.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormImportReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -483,6 +489,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Panel_Sign.resx">
       <DependentUpon>Panel_Sign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAnalysis.resx">
+      <DependentUpon>FormAnalysis.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormImportReport.resx">
       <DependentUpon>FormImportReport.cs</DependentUpon>
