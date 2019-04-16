@@ -43,7 +43,14 @@
             "Sign Inventory",
             "Sign Recommendations",
             "Support Inventory",
-            "Support Recommendations"});
+            "Support Recommendations",
+            "Sidewalks",
+            "Roads with Sidewalks",
+            "Severe Road Distresses",
+            "ADA Ramps",
+            "Drainage Problems",
+            "Accident",
+            "Objects"});
             this.comboBoxReportType.SelectedIndex = 0;
             this.comboBoxReportType.Location = new System.Drawing.Point(163, 12);
             this.comboBoxReportType.Name = "comboBoxReportType";

@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using tams4a.Classes;
 using System.Text.RegularExpressions;
+using tams4a.Forms;
 
 namespace tams4a.Controls
 {
     public partial class Panel_Other : Panel_Module
     {
         private Dictionary<string, List<Control>> controlSets;
+        private TextBox accidentDate = new TextBox();
 
         public Panel_Other()
         {
@@ -27,7 +24,7 @@ namespace tams4a.Controls
                 { "Sidewalk", new List<Control>() },
                 { "ADA Ramp", new List<Control>() },
                 { "Severe Road Distress", new List<Control>() },
-                { "Accident Hotspot", new List<Control>() },
+                { "Accident", new List<Control>() },
                 { "Drainage", new List<Control>() },
                 { "Other", new List<Control>() }
             };
@@ -93,22 +90,22 @@ namespace tams4a.Controls
             #endregion sidewalk
 
             #region ramp
-            ComboBox ADAcondition = new ComboBox();
-            ADAcondition.Location = new Point(right, 24);
-            ADAcondition.Size = new Size(112, 20);
-            ADAcondition.Items.Add("");
-            ADAcondition.Items.Add("Good");
-            ADAcondition.Items.Add("Acceptable");
-            ADAcondition.Items.Add("Bad");
-            controlSets["ADA Ramp"].Add(ADAcondition);
+            ComboBox adAcondition = new ComboBox();
+            adAcondition.Location = new Point(right, 24);
+            adAcondition.Size = new Size(112, 20);
+            adAcondition.Items.Add("");
+            adAcondition.Items.Add("Good");
+            adAcondition.Items.Add("Acceptable");
+            adAcondition.Items.Add("Bad");
+            controlSets["ADA Ramp"].Add(adAcondition);
 
-            ComboBox ADAcompliant = new ComboBox();
-            ADAcompliant.Location = new Point(right, 48);
-            ADAcompliant.Size = new Size(112, 20);
-            ADAcompliant.Items.Add("");
-            ADAcompliant.Items.Add("Yes");
-            ADAcompliant.Items.Add("No");
-            controlSets["ADA Ramp"].Add(ADAcompliant);
+            ComboBox adAcompliant = new ComboBox();
+            adAcompliant.Location = new Point(right, 48);
+            adAcompliant.Size = new Size(112, 20);
+            adAcompliant.Items.Add("");
+            adAcompliant.Items.Add("Yes");
+            adAcompliant.Items.Add("No");
+            controlSets["ADA Ramp"].Add(adAcompliant);
 
             ComboBox tiles = new ComboBox();
             tiles.Location = new Point(right, 72);
@@ -119,17 +116,17 @@ namespace tams4a.Controls
             controlSets["ADA Ramp"].Add(tiles);
 
             controlSets["ADA Ramp"].Add(notes);
-            Label ADAconditionLabel = new Label();
-            ADAconditionLabel.Text = "Condition";
-            ADAconditionLabel.Size = new Size(70, 14);
-            ADAconditionLabel.Location = new Point(left, 26);
-            controlSets["ADA Ramp"].Add(ADAconditionLabel);
+            Label adAconditionLabel = new Label();
+            adAconditionLabel.Text = "Condition";
+            adAconditionLabel.Size = new Size(70, 14);
+            adAconditionLabel.Location = new Point(left, 26);
+            controlSets["ADA Ramp"].Add(adAconditionLabel);
 
-            Label ADAcompliantLabel = new Label();
-            ADAcompliantLabel.Text = "Compliant";
-            ADAcompliantLabel.Size = new Size(70, 14);
-            ADAcompliantLabel.Location = new Point(left, 50);
-            controlSets["ADA Ramp"].Add(ADAcompliantLabel);
+            Label adAcompliantLabel = new Label();
+            adAcompliantLabel.Text = "Compliant";
+            adAcompliantLabel.Size = new Size(70, 14);
+            adAcompliantLabel.Location = new Point(left, 50);
+            controlSets["ADA Ramp"].Add(adAcompliantLabel);
             Label tilesLabel = new Label();
 
             tilesLabel.Text = "Has Tiles";
@@ -173,18 +170,19 @@ namespace tams4a.Controls
 
             controlSets["Severe Road Distress"].Add(notesLabel);
             #endregion distress
+
             #region drainage
-            ComboBox cause = new ComboBox();
-            cause.Location = new Point(right, 24);
-            cause.Size = new Size(112, 20);
-            cause.Items.Add("");
-            cause.Items.Add("Curb and Gutter");
-            cause.Items.Add("Roadway Ponding");
-            cause.Items.Add("Unpaved Shoulder");
-            cause.Items.Add("Turf Shoulder");
-            cause.Items.Add("Storm Grate");
-            cause.Items.Add("Other");
-            controlSets["Drainage"].Add(cause);
+            ComboBox type = new ComboBox();
+            type.Location = new Point(right, 24);
+            type.Size = new Size(112, 20);
+            type.Items.Add("");
+            type.Items.Add("Curb and Gutter");
+            type.Items.Add("Roadway Ponding");
+            type.Items.Add("Unpaved Shoulder");
+            type.Items.Add("Turf Shoulder");
+            type.Items.Add("Storm Grate");
+            type.Items.Add("Other");
+            controlSets["Drainage"].Add(type);
 
             controlSets["Drainage"].Add(rec2nd);
 
@@ -196,11 +194,11 @@ namespace tams4a.Controls
 
             controlSets["Drainage"].Add(notes);
 
-            Label causeLabel = new Label();
-            causeLabel.Text = "Cause";
-            causeLabel.Location = new Point(left, 26);
-            causeLabel.Size = new Size(70, 14);
-            controlSets["Drainage"].Add(causeLabel);
+            Label typeLabel = new Label();
+            typeLabel.Text = "Type";
+            typeLabel.Location = new Point(left, 26);
+            typeLabel.Size = new Size(70, 14);
+            controlSets["Drainage"].Add(typeLabel);
 
             controlSets["Drainage"].Add(rec2ndLabel);
 
@@ -208,38 +206,62 @@ namespace tams4a.Controls
             #endregion drainage
 
             #region accidents
-            TextBox lastAccident = new TextBox();
-            lastAccident.Location = new Point(right, 24);
-            lastAccident.Size = new Size(112, 20);
-            controlSets["Accident Hotspot"].Add(lastAccident);
+            accidentDate.Location = new Point(right + 23, 24);
+            accidentDate.Size = new Size(89, 20);
+            controlSets["Accident"].Add(accidentDate);
 
-            TextBox comments = new TextBox();
-            comments.Location = new Point(right, 48);
-            comments.Size = new Size(112, 20);
-            controlSets["Accident Hotspot"].Add(comments);
+            TextBox accidentType = new TextBox();
+            accidentType.Location = new Point(right, 48);
+            accidentType.Size = new Size(112, 20);
+            controlSets["Accident"].Add(accidentType);
+
+            ComboBox accidentSeverity = new ComboBox();
+            accidentSeverity.Location = new Point(right, 72);
+            accidentSeverity.Size = new Size(112, 20);
+            accidentSeverity.Items.Add("");
+            accidentSeverity.Items.Add("Injury");
+            accidentSeverity.Items.Add("Death");
+            accidentSeverity.Items.Add("Property Damage");
+            controlSets["Accident"].Add(accidentSeverity);
+
+            controlSets["Accident"].Add(notes);
 
             nonElement = new TextBox();
             nonElement.Location = new Point(right, 72);
             nonElement.Size = new Size(112, 20);
-            controlSets["Accident Hotspot"].Add(nonElement);
+            controlSets["Accident"].Add(nonElement);
             nonElement.Visible = false;
 
-            controlSets["Accident Hotspot"].Add(notes);
+            Label accidentDateLabel = new Label();
+            accidentDateLabel.Text = "Date";
+            accidentDateLabel.Location = new Point(left, 26);
+            accidentDateLabel.Size = new Size(70, 14);
+            controlSets["Accident"].Add(accidentDateLabel);
 
-            Label lastAccidentLabel = new Label();
-            lastAccidentLabel.Text = "Last Accident";
-            lastAccidentLabel.Location = new Point(left, 26);
-            lastAccidentLabel.Size = new Size(70, 14);
-            controlSets["Accident Hotspot"].Add(lastAccidentLabel);
+            Label accidentTypeLabel = new Label();
+            accidentTypeLabel.Text = "Type";
+            accidentTypeLabel.Location = new Point(left, 50);
+            accidentTypeLabel.Size = new Size(70, 14);
+            controlSets["Accident"].Add(accidentTypeLabel);
 
-            Label commentLabel = new Label();
-            commentLabel.Text = "Comment";
-            commentLabel.Location = new Point(left, 50);
-            commentLabel.Size = new Size(70, 14);
-            controlSets["Accident Hotspot"].Add(commentLabel);
+            Label accidentSeverityLabel = new Label();
+            accidentSeverityLabel.Text = "Severity";
+            accidentSeverityLabel.Location = new Point(left, 74);
+            accidentSeverityLabel.Size = new Size(70, 14);
+            controlSets["Accident"].Add(accidentSeverityLabel);
 
-            controlSets["Accident Hotspot"].Add(notesLabel);
+            Button buttonAccidentDate = new Button();
+            new ToolTip().SetToolTip(buttonAccidentDate, "Set Date of Accident");
+            buttonAccidentDate.Image = Properties.Resources.calendar;
+            buttonAccidentDate.Location = new Point(right, 23);
+            buttonAccidentDate.Name = "buttonAccidentDate";
+            buttonAccidentDate.Size = new Size(22, 22);
+            buttonAccidentDate.UseVisualStyleBackColor = true;
+            controlSets["Accident"].Add(buttonAccidentDate);
+
+            controlSets["Accident"].Add(notesLabel);
             #endregion accidents
+
             #region other
             TextBox property1 = new TextBox();
             property1.Size = new Size(112, 20);
@@ -286,22 +308,24 @@ namespace tams4a.Controls
             rec3rd.TextChanged += moduleValueChanged;
             notes.TextChanged += moduleValueChanged;
 
-            ADAcondition.TextChanged += moduleValueChanged;
-            ADAcompliant.TextChanged += moduleValueChanged;
+            adAcondition.TextChanged += moduleValueChanged;
+            adAcompliant.TextChanged += moduleValueChanged;
             tiles.TextChanged += moduleValueChanged;
 
             distress.TextChanged += moduleValueChanged;
             rec2nd.TextChanged += moduleValueChanged;
 
-            cause.TextChanged += moduleValueChanged;
+            type.TextChanged += moduleValueChanged;
 
-            lastAccident.TextChanged += moduleValueChanged;
-            comments.TextChanged += moduleValueChanged;
+            accidentDate.TextChanged += moduleValueChanged;
+            accidentType.TextChanged += moduleValueChanged;
+            accidentSeverity.TextChanged += moduleValueChanged;
 
             property1.TextChanged += moduleValueChanged;
             property2.TextChanged += moduleValueChanged;
 
             buttonNextPhoto.Click += buttonNextPhoto_Click;
+            buttonAccidentDate.Click += ButtonAccidentDate_Click;
         }
 
         public void updateDisplay(Dictionary<string, string> values)
@@ -411,5 +435,16 @@ namespace tams4a.Controls
                 return;
             }
         }
+
+        private void ButtonAccidentDate_Click(object sender, EventArgs e)
+        {
+            FormSurveyDate ad = new FormSurveyDate();
+            ad.Text = "Select Accident Date";
+            ad.setText("Select the date the accident took place.");
+            ad.ShowDialog();
+            accidentDate.Text = Util.SortableDate(ad.getDate());
+            ad.Close();
+        }
+
     }
 }
