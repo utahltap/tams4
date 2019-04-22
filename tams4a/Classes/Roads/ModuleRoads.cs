@@ -905,15 +905,15 @@ namespace tams4a.Classes
             DataTable treatments = Database.GetDataByQuery(Project.conn, treatmentSQL);
             roads.DefaultView.Sort = "rsl asc";
             treatments.DefaultView.Sort = "id asc";
-            FormBudgetEstimator budget = new FormBudgetEstimator();
-            if (budget.setData(roads.DefaultView.ToTable(), treatments.DefaultView.ToTable()))
-            {
-                budget.Show();
-            }
-            else
-            {
-                budget.Close();
-            }
+            FormAnalysis analysis = new FormAnalysis();
+            //if (analysis.setData(roads.DefaultView.ToTable(), treatments.DefaultView.ToTable()))
+            //{
+            analysis.ShowDialog();
+            //}
+            //else
+            //{
+            //    analysis.Close();
+            //}
 
         }
 
