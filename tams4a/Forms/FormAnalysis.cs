@@ -1,13 +1,88 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Windows.Forms;
+using tams4a.Classes;
 
 namespace tams4a.Forms
 {
     public partial class FormAnalysis : Form
     {
-        public FormAnalysis()
+        private DataTable roads;
+        private List<CheckBox> checkBoxes = new List<CheckBox>();
+        private List<ComboBox> comboBoxTreatments = new List<ComboBox>();
+        private Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
+        private double estBudget = 0.00;
+
+        public FormAnalysis(TamsProject Project)
         {
             InitializeComponent();
+            roads = Database.GetDataByQuery(Project.conn, "SELECT rsl, width, length FROM road;");
+            checkBoxes.Add(checkBox0);
+            checkBoxes.Add(checkBox1);
+            checkBoxes.Add(checkBox2);
+            checkBoxes.Add(checkBox3);
+            checkBoxes.Add(checkBox4);
+            checkBoxes.Add(checkBox5);
+            checkBoxes.Add(checkBox6);
+            checkBoxes.Add(checkBox7);
+            checkBoxes.Add(checkBox8);
+            checkBoxes.Add(checkBox9);
+            checkBoxes.Add(checkBox10);
+            checkBoxes.Add(checkBox11);
+            checkBoxes.Add(checkBox12);
+            checkBoxes.Add(checkBox13);
+            checkBoxes.Add(checkBox14);
+            checkBoxes.Add(checkBox15);
+            checkBoxes.Add(checkBox16);
+            checkBoxes.Add(checkBox17);
+            checkBoxes.Add(checkBox18);
+            checkBoxes.Add(checkBox19);
+            checkBoxes.Add(checkBox20);
+            comboBoxTreatments.Add(comboBoxTreatment0);
+            comboBoxTreatments.Add(comboBoxTreatment1);
+            comboBoxTreatments.Add(comboBoxTreatment2);
+            comboBoxTreatments.Add(comboBoxTreatment3);
+            comboBoxTreatments.Add(comboBoxTreatment4);
+            comboBoxTreatments.Add(comboBoxTreatment5);
+            comboBoxTreatments.Add(comboBoxTreatment6);
+            comboBoxTreatments.Add(comboBoxTreatment7);
+            comboBoxTreatments.Add(comboBoxTreatment8);
+            comboBoxTreatments.Add(comboBoxTreatment9);
+            comboBoxTreatments.Add(comboBoxTreatment10);
+            comboBoxTreatments.Add(comboBoxTreatment11);
+            comboBoxTreatments.Add(comboBoxTreatment12);
+            comboBoxTreatments.Add(comboBoxTreatment13);
+            comboBoxTreatments.Add(comboBoxTreatment14);
+            comboBoxTreatments.Add(comboBoxTreatment15);
+            comboBoxTreatments.Add(comboBoxTreatment16);
+            comboBoxTreatments.Add(comboBoxTreatment17);
+            comboBoxTreatments.Add(comboBoxTreatment18);
+            comboBoxTreatments.Add(comboBoxTreatment19);
+            comboBoxTreatments.Add(comboBoxTreatment20);
+            pricePerYard.Add("", 0.0);
+            pricePerYard.Add("Crack Seal", 0.45);
+            pricePerYard.Add("Fog Coat", 0.68);
+            pricePerYard.Add("High Mineral Asphalt Emulsion", 1.80);
+            pricePerYard.Add("Sand Seal", 0.98);
+            pricePerYard.Add("Scrub Seal", 1.50);
+            pricePerYard.Add("Single Chip Seal", 1.95);
+            pricePerYard.Add("Slurry Seal", 2.63);
+            pricePerYard.Add("Microsurfacing", 3.60);
+            pricePerYard.Add("Plant Mix Seal", 8.40);
+            pricePerYard.Add("Cold In-place Recycling (2 in. with chip seal)", 7.50);
+            pricePerYard.Add("Thin Hot Mix Overlay (<2 in.)", 10.13);
+            pricePerYard.Add("HMA (leveling) & Overlay (<2 in.)", 11.25);
+            pricePerYard.Add("Hot Surface Recycling", 7.50);
+            pricePerYard.Add("Rotomill & Overlay (<2 in.)", 12.60);
+            pricePerYard.Add("Cold In-place Recycling (2/2 in.)", 15.45);
+            pricePerYard.Add("Thick Overlay (3 in.)", 15.00);
+            pricePerYard.Add("Rotomill & Thick Overlay (3 in.)", 16.50);
+            pricePerYard.Add("Base Repair/ Pavement Replacement", 18.00);
+            pricePerYard.Add("Cold Recycling & Overlay (3/3 in.)", 16.73);
+            pricePerYard.Add("Full Depth Reclamation & Overlay (3/3 in.)", 19.88);
+            pricePerYard.Add("Base/ Pavement Replacement (3/3/6 in.)", 28.50);
+
         }
 
         private void checkBox0_CheckedChanged(object sender, EventArgs e)
@@ -267,7 +342,7 @@ namespace tams4a.Forms
                         "Scrub Seal",
                         "Single Chip Seal",
                         "Slurry Seal",
-                        "Miscrosurfacing",
+                        "Microsurfacing",
                         "Plant Mix Seal",
                         "Cold In-place Recycling (2 in. with chip seal)",
                         "Thin Hot Mix Overlay (<2 in.)",
@@ -289,7 +364,7 @@ namespace tams4a.Forms
                 {
                     comboBoxTreatment.Items.AddRange(new object[]
                     {
-                        "Miscrosurfacing"
+                        "Microsurfacing"
                     });
                 }
                 else if (comboBoxRSL.Text == "3")
@@ -328,10 +403,10 @@ namespace tams4a.Forms
                     comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("1");
                     comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Slurry Seal"); ;
                 }
-                else if (comboBoxTreatment.Text == "Miscrosurfacing")
+                else if (comboBoxTreatment.Text == "Microsurfacing")
                 {
                     comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("2");
-                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Miscrosurfacing"); ;
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Microsurfacing"); ;
                 }
                 else if (comboBoxTreatment.Text == "Plant Mix Seal")
                 {
@@ -365,6 +440,838 @@ namespace tams4a.Forms
                 }
             }
         }
+
+        private void rsl4to6Treatments(ComboBox comboBoxRSL, ComboBox comboBoxTreatment, string changed)
+        {
+            if (changed == "RSL")
+            {
+                comboBoxTreatment.Items.Clear();
+                if (comboBoxRSL.Text == "")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal",
+                        "Microsurfacing",
+                        "Plant Mix Seal",
+                        "Cold In-place Recycling (2 in. with chip seal)",
+                        "Thin Hot Mix Overlay (<2 in.)",
+                        "HMA (leveling) & Overlay (<2 in.)",
+                        "Hot Surface Recycling",
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "3")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal",
+                        "Microsurfacing"
+                    });
+                }
+                else if (comboBoxRSL.Text == "4")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Plant Mix Seal",
+                        "Cold In-place Recycling (2 in. with chip seal)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "5")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Hot Surface Recycling"
+                    });
+                }
+                else if (comboBoxRSL.Text == "6")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Thin Hot Mix Overlay (<2 in.)",
+                        "HMA (leveling) & Overlay (<2 in.)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "7")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+            }
+            else if (changed == "Treatment")
+            {
+                if (comboBoxTreatment.Text == "Scrub Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("3");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Scrub Seal");
+                }
+                else if (comboBoxTreatment.Text == "Single Chip Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("3");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Single Chip Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Slurry Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("3");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Slurry Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Microsurfacing")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("3");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Microsurfacing"); ;
+                }
+                else if (comboBoxTreatment.Text == "Plant Mix Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("4");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Plant Mix Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Cold In-place Recycling (2 in. with chip seal)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("4");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Cold In-place Recycling (2 in. with chip seal)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Thin Hot Mix Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("6");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Thin Hot Mix Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "HMA (leveling) & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("6");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("HMA (leveling) & Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Hot Surface Recycling")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Hot Surface Recycling"); ;
+                }
+                else if (comboBoxTreatment.Text == "Rotomill & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Rotomill & Overlay (<2 in.)"); ;
+                }
+            }
+        }
+
+        private void rsl7to9Treatments(ComboBox comboBoxRSL, ComboBox comboBoxTreatment, string changed)
+        {
+            if (changed == "RSL")
+            {
+                comboBoxTreatment.Items.Clear();
+                if (comboBoxRSL.Text == "")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Fog Coat",
+                        "High Mineral Asphalt Emulsion",
+                        "Sand Seal",
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal",
+                        "Microsurfacing",
+                        "Plant Mix Seal",
+                        "Cold In-place Recycling (2 in. with chip seal)",
+                        "Thin Hot Mix Overlay (<2 in.)",
+                        "HMA (leveling) & Overlay (<2 in.)",
+                        "Hot Surface Recycling",
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "1")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Fog Coat",
+                        "High Mineral Asphalt Emulsion",
+                        "Sand Seal"
+                    });
+                }
+                else if (comboBoxRSL.Text == "5")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal",
+                        "Microsurfacing",
+                        "Plant Mix Seal",
+                        "Cold In-place Recycling (2 in. with chip seal)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "7")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Thin Hot Mix Overlay (<2 in.)",
+                        "Hot Surface Recycling"
+                    });
+                }
+                else if (comboBoxRSL.Text == "8")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "HMA (leveling) & Overlay (<2 in.)",
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+            }
+            else if (changed == "Treatment")
+            {
+                if (comboBoxTreatment.Text == "Fog Coat")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("1");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Fog Coat");
+                }
+                else if (comboBoxTreatment.Text == "High Mineral Asphalt Emulsion")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("1");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("High Mineral Asphalt Emulsion"); ;
+                }
+                else if (comboBoxTreatment.Text == "Sand Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("1");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Sand Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Scrub Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Scrub Seal");
+                }
+                else if (comboBoxTreatment.Text == "Single Chip Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Single Chip Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Slurry Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Slurry Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Microsurfacing")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Microsurfacing"); ;
+                }
+                else if (comboBoxTreatment.Text == "Plant Mix Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Plant Mix Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Cold In-place Recycling (2 in. with chip seal)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Cold In-place Recycling (2 in. with chip seal)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Thin Hot Mix Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Thin Hot Mix Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "HMA (leveling) & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("HMA (leveling) & Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Hot Surface Recycling")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Hot Surface Recycling"); ;
+                }
+                else if (comboBoxTreatment.Text == "Rotomill & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Rotomill & Overlay (<2 in.)"); ;
+                }
+            }
+        }
+
+        private void rsl10to12Treatments(ComboBox comboBoxRSL, ComboBox comboBoxTreatment, string changed)
+        {
+            if (changed == "RSL")
+            {
+                comboBoxTreatment.Items.Clear();
+                if (comboBoxRSL.Text == "")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Crack Seal",
+                        "Fog Coat",
+                        "High Mineral Asphalt Emulsion",
+                        "Sand Seal",
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal",
+                        "Microsurfacing",
+                        "Plant Mix Seal",
+                        "Cold In-place Recycling (2 in. with chip seal)",
+                        "Thin Hot Mix Overlay (<2 in.)",
+                        "HMA (leveling) & Overlay (<2 in.)",
+                        "Hot Surface Recycling",
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "1")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Crack Seal",
+                        "Fog Coat"
+                    });
+                }
+                else if (comboBoxRSL.Text == "2")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "High Mineral Asphalt Emulsion",
+                        "Sand Seal"
+                    });
+                }
+                else if (comboBoxRSL.Text == "5")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal"
+                    });
+                }
+                else if (comboBoxRSL.Text == "6")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Cold In-place Recycling (2 in. with chip seal)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "7")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Microsurfacing",
+                        "Plant Mix Seal",
+                        "Thin Hot Mix Overlay (<2 in.)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "8")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "HMA (leveling) & Overlay (<2 in.)",
+                        "Hot Surface Recycling",
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+            }
+            else if (changed == "Treatment")
+            {
+                if (comboBoxTreatment.Text == "Crack Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("1");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Crack Seal");
+                }
+                else if (comboBoxTreatment.Text == "Fog Coat")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("1");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Fog Coat");
+                }
+                else if (comboBoxTreatment.Text == "High Mineral Asphalt Emulsion")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("2");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("High Mineral Asphalt Emulsion"); ;
+                }
+                else if (comboBoxTreatment.Text == "Sand Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("2");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Sand Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Scrub Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Scrub Seal");
+                }
+                else if (comboBoxTreatment.Text == "Single Chip Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Single Chip Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Slurry Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Slurry Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Microsurfacing")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Microsurfacing"); ;
+                }
+                else if (comboBoxTreatment.Text == "Plant Mix Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Plant Mix Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Cold In-place Recycling (2 in. with chip seal)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("6");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Cold In-place Recycling (2 in. with chip seal)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Thin Hot Mix Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Thin Hot Mix Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "HMA (leveling) & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("HMA (leveling) & Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Hot Surface Recycling")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Hot Surface Recycling"); ;
+                }
+                else if (comboBoxTreatment.Text == "Rotomill & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Rotomill & Overlay (<2 in.)"); ;
+                }
+            }
+        }
+
+        private void rsl13to15Treatments(ComboBox comboBoxRSL, ComboBox comboBoxTreatment, string changed)
+        {
+            if (changed == "RSL")
+            {
+                comboBoxTreatment.Items.Clear();
+                if (comboBoxRSL.Text == "")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Crack Seal",
+                        "Fog Coat",
+                        "High Mineral Asphalt Emulsion",
+                        "Sand Seal",
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal",
+                        "Microsurfacing",
+                        "Plant Mix Seal",
+                        "Cold In-place Recycling (2 in. with chip seal)",
+                        "Thin Hot Mix Overlay (<2 in.)",
+                        "HMA (leveling) & Overlay (<2 in.)",
+                        "Hot Surface Recycling",
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "2")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Crack Seal",
+                        "Fog Coat",
+                        "Sand Seal"
+                    });
+                }
+                else if (comboBoxRSL.Text == "3")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "High Mineral Asphalt Emulsion",
+                    });
+                }
+                else if (comboBoxRSL.Text == "5")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal"
+                    });
+                }
+                else if (comboBoxRSL.Text == "7")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Microsurfacing",
+                        "Plant Mix Seal",
+                        "Cold In-place Recycling (2 in. with chip seal)",
+                        "Thin Hot Mix Overlay (<2 in.)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "8")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "HMA (leveling) & Overlay (<2 in.)",
+                        "Hot Surface Recycling",
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+            }
+            else if (changed == "Treatment")
+            {
+                if (comboBoxTreatment.Text == "Crack Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("2");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Crack Seal");
+                }
+                else if (comboBoxTreatment.Text == "Fog Coat")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("2");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Fog Coat");
+                }
+                else if (comboBoxTreatment.Text == "High Mineral Asphalt Emulsion")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("3");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("High Mineral Asphalt Emulsion"); ;
+                }
+                else if (comboBoxTreatment.Text == "Sand Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("2");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Sand Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Scrub Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Scrub Seal");
+                }
+                else if (comboBoxTreatment.Text == "Single Chip Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Single Chip Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Slurry Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Slurry Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Microsurfacing")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Microsurfacing"); ;
+                }
+                else if (comboBoxTreatment.Text == "Plant Mix Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Plant Mix Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Cold In-place Recycling (2 in. with chip seal)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Cold In-place Recycling (2 in. with chip seal)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Thin Hot Mix Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Thin Hot Mix Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "HMA (leveling) & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("HMA (leveling) & Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Hot Surface Recycling")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Hot Surface Recycling"); ;
+                }
+                else if (comboBoxTreatment.Text == "Rotomill & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Rotomill & Overlay (<2 in.)"); ;
+                }
+            }
+        }
+
+        private void rsl16to18Treatments(ComboBox comboBoxRSL, ComboBox comboBoxTreatment, string changed)
+        {
+            if (changed == "RSL")
+            {
+                comboBoxTreatment.Items.Clear();
+                if (comboBoxRSL.Text == "")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Crack Seal",
+                        "Fog Coat",
+                        "High Mineral Asphalt Emulsion",
+                        "Sand Seal",
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal",
+                        "Microsurfacing",
+                        "Plant Mix Seal",
+                        "Cold In-place Recycling (2 in. with chip seal)",
+                        "Thin Hot Mix Overlay (<2 in.)",
+                        "HMA (leveling) & Overlay (<2 in.)",
+                        "Hot Surface Recycling",
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "2")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Fog Coat",
+                        "Sand Seal"
+                    });
+                }
+                else if (comboBoxRSL.Text == "3")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Crack Seal"
+                    });
+                }
+                else if (comboBoxRSL.Text == "5")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "High Mineral Asphalt Emulsion",
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal"
+                    });
+                }
+                else if (comboBoxRSL.Text == "7")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Microsurfacing",
+                        "Plant Mix Seal",
+                        "Cold In-place Recycling (2 in. with chip seal)",
+                        "Thin Hot Mix Overlay (<2 in.)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "8")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "HMA (leveling) & Overlay (<2 in.)",
+                        "Hot Surface Recycling",
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+            }
+            else if (changed == "Treatment")
+            {
+                if (comboBoxTreatment.Text == "Crack Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("3");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Crack Seal");
+                }
+                else if (comboBoxTreatment.Text == "Fog Coat")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("2");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Fog Coat");
+                }
+                else if (comboBoxTreatment.Text == "High Mineral Asphalt Emulsion")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("High Mineral Asphalt Emulsion"); ;
+                }
+                else if (comboBoxTreatment.Text == "Sand Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("2");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Sand Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Scrub Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Scrub Seal");
+                }
+                else if (comboBoxTreatment.Text == "Single Chip Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Single Chip Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Slurry Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Slurry Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Microsurfacing")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Microsurfacing"); ;
+                }
+                else if (comboBoxTreatment.Text == "Plant Mix Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Plant Mix Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Cold In-place Recycling (2 in. with chip seal)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Cold In-place Recycling (2 in. with chip seal)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Thin Hot Mix Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Thin Hot Mix Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "HMA (leveling) & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("HMA (leveling) & Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Hot Surface Recycling")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Hot Surface Recycling"); ;
+                }
+                else if (comboBoxTreatment.Text == "Rotomill & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Rotomill & Overlay (<2 in.)"); ;
+                }
+            }
+        }
+
+        private void rsl19to20Treatments(ComboBox comboBoxRSL, ComboBox comboBoxTreatment, string changed)
+        {
+            if (changed == "RSL")
+            {
+                comboBoxTreatment.Items.Clear();
+                if (comboBoxRSL.Text == "")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Crack Seal",
+                        "Fog Coat",
+                        "High Mineral Asphalt Emulsion",
+                        "Sand Seal",
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal",
+                        "Microsurfacing",
+                        "Plant Mix Seal",
+                        "Cold In-place Recycling (2 in. with chip seal)",
+                        "Thin Hot Mix Overlay (<2 in.)",
+                        "HMA (leveling) & Overlay (<2 in.)",
+                        "Hot Surface Recycling",
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "2")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Crack Seal",
+                        "Fog Coat",
+                        "Sand Seal"
+                    });
+                }
+
+                else if (comboBoxRSL.Text == "5")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "High Mineral Asphalt Emulsion",
+                        "Scrub Seal",
+                        "Single Chip Seal",
+                        "Slurry Seal"
+                    });
+                }
+                else if (comboBoxRSL.Text == "7")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "Microsurfacing",
+                        "Plant Mix Seal",
+                        "Cold In-place Recycling (2 in. with chip seal)",
+                        "Thin Hot Mix Overlay (<2 in.)"
+                    });
+                }
+                else if (comboBoxRSL.Text == "8")
+                {
+                    comboBoxTreatment.Items.AddRange(new object[]
+                    {
+                        "HMA (leveling) & Overlay (<2 in.)",
+                        "Hot Surface Recycling",
+                        "Rotomill & Overlay (<2 in.)"
+                    });
+                }
+            }
+            else if (changed == "Treatment")
+            {
+                if (comboBoxTreatment.Text == "Crack Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("2");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Crack Seal");
+                }
+                else if (comboBoxTreatment.Text == "Fog Coat")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("2");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Fog Coat");
+                }
+                else if (comboBoxTreatment.Text == "High Mineral Asphalt Emulsion")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("High Mineral Asphalt Emulsion"); ;
+                }
+                else if (comboBoxTreatment.Text == "Sand Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("2");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Sand Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Scrub Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Scrub Seal");
+                }
+                else if (comboBoxTreatment.Text == "Single Chip Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Single Chip Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Slurry Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("5");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Slurry Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Microsurfacing")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Microsurfacing"); ;
+                }
+                else if (comboBoxTreatment.Text == "Plant Mix Seal")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Plant Mix Seal"); ;
+                }
+                else if (comboBoxTreatment.Text == "Cold In-place Recycling (2 in. with chip seal)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Cold In-place Recycling (2 in. with chip seal)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Thin Hot Mix Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("7");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Thin Hot Mix Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "HMA (leveling) & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("HMA (leveling) & Overlay (<2 in.)"); ;
+                }
+                else if (comboBoxTreatment.Text == "Hot Surface Recycling")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Hot Surface Recycling"); ;
+                }
+                else if (comboBoxTreatment.Text == "Rotomill & Overlay (<2 in.)")
+                {
+                    comboBoxRSL.SelectedIndex = comboBoxRSL.FindStringExact("8");
+                    comboBoxTreatment.SelectedIndex = comboBoxTreatment.FindStringExact("Rotomill & Overlay (<2 in.)"); ;
+                }
+            }
+        }
+
+        //************************************************************************************************
 
         private void comboBox0_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -410,6 +1317,274 @@ namespace tams4a.Forms
         {
             rsl1to3Treatments(comboBox3, comboBoxTreatment3, "Treatment");
             reconstructionTreatments(comboBox3, comboBoxTreatment3, "Treatment");
+        }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl4to6Treatments(comboBox4, comboBoxTreatment4, "RSL");
+            reconstructionTreatments(comboBox4, comboBoxTreatment4, "RSL");
+        }
+
+        private void comboBoxTreatment4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl4to6Treatments(comboBox4, comboBoxTreatment4, "Treatment");
+            reconstructionTreatments(comboBox4, comboBoxTreatment4, "Treatment");
+        }
+
+        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl4to6Treatments(comboBox5, comboBoxTreatment5, "RSL");
+            reconstructionTreatments(comboBox5, comboBoxTreatment5, "RSL");
+        }
+
+        private void comboBoxTreatment5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl4to6Treatments(comboBox5, comboBoxTreatment5, "Treatment");
+            reconstructionTreatments(comboBox5, comboBoxTreatment5, "Treatment");
+        }
+
+        private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl4to6Treatments(comboBox6, comboBoxTreatment6, "RSL");
+            reconstructionTreatments(comboBox6, comboBoxTreatment6, "RSL");
+        }
+
+        private void comboBoxTreatment6_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl4to6Treatments(comboBox6, comboBoxTreatment6, "Treatment");
+            reconstructionTreatments(comboBox6, comboBoxTreatment6, "Treatment");
+        }
+
+        private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl7to9Treatments(comboBox7, comboBoxTreatment7, "RSL");
+            reconstructionTreatments(comboBox7, comboBoxTreatment7, "RSL");
+        }
+
+        private void comboBoxTreatment7_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl7to9Treatments(comboBox7, comboBoxTreatment7, "Treatment");
+            reconstructionTreatments(comboBox7, comboBoxTreatment7, "Treatment");
+        }
+
+        private void comboBox8_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl7to9Treatments(comboBox8, comboBoxTreatment8, "RSL");
+            reconstructionTreatments(comboBox8, comboBoxTreatment8, "RSL");
+        }
+
+        private void comboBoxTreatment8_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl7to9Treatments(comboBox8, comboBoxTreatment8, "Treatment");
+            reconstructionTreatments(comboBox8, comboBoxTreatment8, "Treatment");
+        }
+
+        private void comboBox9_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl7to9Treatments(comboBox9, comboBoxTreatment9, "RSL");
+            reconstructionTreatments(comboBox9, comboBoxTreatment9, "RSL");
+        }
+
+        private void comboBoxTreatment9_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl7to9Treatments(comboBox9, comboBoxTreatment9, "Treatment");
+            reconstructionTreatments(comboBox9, comboBoxTreatment9, "Treatment");
+        }
+
+        private void comboBox10_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl10to12Treatments(comboBox10, comboBoxTreatment10, "RSL");
+            reconstructionTreatments(comboBox10, comboBoxTreatment10, "RSL");
+        }
+
+        private void comboBoxTreatment10_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl10to12Treatments(comboBox10, comboBoxTreatment10, "Treatment");
+            reconstructionTreatments(comboBox10, comboBoxTreatment10, "Treatment");
+        }
+
+        private void comboBox11_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl10to12Treatments(comboBox11, comboBoxTreatment11, "RSL");
+            reconstructionTreatments(comboBox11, comboBoxTreatment11, "RSL");
+        }
+
+        private void comboBoxTreatment11_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl10to12Treatments(comboBox11, comboBoxTreatment11, "Treatment");
+            reconstructionTreatments(comboBox11, comboBoxTreatment11, "Treatment");
+        }
+
+        private void comboBox12_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl10to12Treatments(comboBox12, comboBoxTreatment12, "RSL");
+            reconstructionTreatments(comboBox12, comboBoxTreatment12, "RSL");
+        }
+
+        private void comboBoxTreatment12_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl10to12Treatments(comboBox12, comboBoxTreatment12, "Treatment");
+            reconstructionTreatments(comboBox12, comboBoxTreatment12, "Treatment");
+        }
+
+        private void comboBox13_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl13to15Treatments(comboBox13, comboBoxTreatment13, "RSL");
+            reconstructionTreatments(comboBox13, comboBoxTreatment13, "RSL");
+        }
+
+        private void comboBoxTreatment13_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl13to15Treatments(comboBox13, comboBoxTreatment13, "Treatment");
+            reconstructionTreatments(comboBox13, comboBoxTreatment13, "Treatment");
+        }
+
+        private void comboBox14_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl13to15Treatments(comboBox14, comboBoxTreatment14, "RSL");
+            reconstructionTreatments(comboBox14, comboBoxTreatment14, "RSL");
+        }
+
+        private void comboBoxTreatment14_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl13to15Treatments(comboBox14, comboBoxTreatment14, "Treatment");
+            reconstructionTreatments(comboBox14, comboBoxTreatment14, "Treatment");
+        }
+
+        private void comboBox15_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl13to15Treatments(comboBox15, comboBoxTreatment15, "RSL");
+            reconstructionTreatments(comboBox15, comboBoxTreatment15, "RSL");
+        }
+
+        private void comboBoxTreatment15_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl13to15Treatments(comboBox15, comboBoxTreatment15, "Treatment");
+            reconstructionTreatments(comboBox15, comboBoxTreatment15, "Treatment");
+        }
+
+        private void comboBox16_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl16to18Treatments(comboBox16, comboBoxTreatment16, "RSL");
+            reconstructionTreatments(comboBox16, comboBoxTreatment16, "RSL");
+        }
+
+        private void comboBoxTreatment16_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl16to18Treatments(comboBox16, comboBoxTreatment16, "Treatment");
+            reconstructionTreatments(comboBox16, comboBoxTreatment16, "Treatment");
+        }
+
+        private void comboBox17_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl16to18Treatments(comboBox17, comboBoxTreatment17, "RSL");
+            reconstructionTreatments(comboBox17, comboBoxTreatment17, "RSL");
+        }
+
+        private void comboBoxTreatment17_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl16to18Treatments(comboBox17, comboBoxTreatment17, "Treatment");
+            reconstructionTreatments(comboBox17, comboBoxTreatment17, "Treatment");
+        }
+
+        private void comboBox18_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl16to18Treatments(comboBox18, comboBoxTreatment18, "RSL");
+            reconstructionTreatments(comboBox18, comboBoxTreatment18, "RSL");
+        }
+
+        private void comboBoxTreatment18_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl16to18Treatments(comboBox18, comboBoxTreatment18, "Treatment");
+            reconstructionTreatments(comboBox18, comboBoxTreatment18, "Treatment");
+        }
+
+        private void comboBox19_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl19to20Treatments(comboBox19, comboBoxTreatment19, "RSL");
+            reconstructionTreatments(comboBox19, comboBoxTreatment19, "RSL");
+        }
+
+        private void comboBoxTreatment19_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl19to20Treatments(comboBox19, comboBoxTreatment19, "Treatment");
+            reconstructionTreatments(comboBox19, comboBoxTreatment19, "Treatment");
+        }
+
+        private void comboBox20_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl19to20Treatments(comboBox20, comboBoxTreatment20, "RSL");
+            reconstructionTreatments(comboBox20, comboBoxTreatment20, "RSL");
+        }
+
+        private void comboBoxTreatment20_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rsl19to20Treatments(comboBox20, comboBoxTreatment20, "Treatment");
+            reconstructionTreatments(comboBox20, comboBoxTreatment20, "Treatment");
+        }
+
+        private void buttonCalculate_Click(object sender, EventArgs e)
+        {
+            double totalArea = 0;
+            double totalCost = 0;
+            foreach (DataRow row in roads.Rows)
+            {
+                int i = 0;
+                foreach (CheckBox checkBox in checkBoxes)
+                {
+                    if (checkBox.Checked && Util.ToInt(row["rsl"].ToString()) == i)
+                    {
+                        double area = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
+                        totalArea += area;
+                        totalCost += pricePerYard[comboBoxTreatments[i].Text] * (area / 9);
+                    }
+                    i++;
+                }
+            }
+            double roundedCost = Math.Round(totalCost, 2);
+
+            if (roundedCost > estBudget)
+            {
+                labelOverBudget.Text = "$" + String.Format("{0:n}", (roundedCost - estBudget)) + " over budget!"; 
+                labelOverBudget.Visible = true;
+            }
+            else
+            {
+                labelOverBudget.Visible = false;
+            }
+            textBoxTotalArea.Text = String.Format("{0:n}", (Math.Round(totalArea/9, 2))) + " yd\u00b2"; 
+            textBoxTotalCost.Text = "$" + String.Format("{0:n}", roundedCost);
+        }
+
+        private void textBoxBudget_RemovePlaceholder(object sender, EventArgs e)
+        {
+            if (estBudget != 0.0)
+            {
+                textBoxBudget.Text = estBudget.ToString();
+                return;
+            }
+            textBoxBudget.Text = "";
+        }
+        private void textBoxBudget_AddPlaceholder(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBoxBudget.Text))
+            {
+                estBudget = 0.0;
+                textBoxBudget.Text = "$0.00";
+            }
+            else
+            {
+                estBudget = Util.ToDouble(textBoxBudget.Text);
+                textBoxBudget.Text = "$" + String.Format("{0:n}", estBudget);
+            }
+            buttonCalculate_Click(sender, null);
+        }
+        private void textBoxBudget_EnterPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                panelCalculator.Focus();
+            }
         }
     }
 }

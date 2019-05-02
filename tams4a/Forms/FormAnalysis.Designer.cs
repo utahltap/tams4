@@ -117,6 +117,15 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.buttonCalculate = new System.Windows.Forms.Button();
+            this.textBoxTotalArea = new System.Windows.Forms.TextBox();
+            this.textBoxTotalCost = new System.Windows.Forms.TextBox();
+            this.textBoxBudget = new System.Windows.Forms.TextBox();
+            this.labelBudget = new System.Windows.Forms.Label();
+            this.panelCalculator = new System.Windows.Forms.Panel();
+            this.labelOverBudget = new System.Windows.Forms.Label();
+            this.labelTotalCost = new System.Windows.Forms.Label();
+            this.labelArea = new System.Windows.Forms.Label();
             this.groupBoxRSL.SuspendLayout();
             this.groupBoxPrority.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown0)).BeginInit();
@@ -143,6 +152,7 @@
             this.panelRSLPriority.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBoxYearsToAdd.SuspendLayout();
+            this.panelCalculator.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxRSL
@@ -926,7 +936,7 @@
             this.panelRSLPriority.Controls.Add(this.groupBoxYearsToAdd);
             this.panelRSLPriority.Controls.Add(this.groupBoxPrority);
             this.panelRSLPriority.Controls.Add(this.groupBoxRSL);
-            this.panelRSLPriority.Location = new System.Drawing.Point(12, 131);
+            this.panelRSLPriority.Location = new System.Drawing.Point(12, 12);
             this.panelRSLPriority.Name = "panelRSLPriority";
             this.panelRSLPriority.Size = new System.Drawing.Size(435, 515);
             this.panelRSLPriority.TabIndex = 21;
@@ -985,10 +995,33 @@
             this.comboBoxTreatment20.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTreatment20.Enabled = false;
             this.comboBoxTreatment20.FormattingEnabled = true;
+            this.comboBoxTreatment20.Items.AddRange(new object[] {
+            "Crack Seal",
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment20.Location = new System.Drawing.Point(6, 479);
             this.comboBoxTreatment20.Name = "comboBoxTreatment20";
             this.comboBoxTreatment20.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment20.TabIndex = 19;
+            this.comboBoxTreatment20.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment20_SelectedIndexChanged);
             // 
             // comboBoxTreatment19
             // 
@@ -996,30 +1029,32 @@
             this.comboBoxTreatment19.Enabled = false;
             this.comboBoxTreatment19.FormattingEnabled = true;
             this.comboBoxTreatment19.Items.AddRange(new object[] {
-            "",
-            "2",
-            "5",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20",
-            "",
-            "2",
-            "5",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Crack Seal",
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment19.Location = new System.Drawing.Point(6, 456);
             this.comboBoxTreatment19.Name = "comboBoxTreatment19";
             this.comboBoxTreatment19.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment19.TabIndex = 18;
+            this.comboBoxTreatment19.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment19_SelectedIndexChanged);
             // 
             // comboBoxTreatment18
             // 
@@ -1027,21 +1062,32 @@
             this.comboBoxTreatment18.Enabled = false;
             this.comboBoxTreatment18.FormattingEnabled = true;
             this.comboBoxTreatment18.Items.AddRange(new object[] {
-            "",
-            "2",
-            "3",
-            "5",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Crack Seal",
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment18.Location = new System.Drawing.Point(6, 433);
             this.comboBoxTreatment18.Name = "comboBoxTreatment18";
             this.comboBoxTreatment18.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment18.TabIndex = 17;
+            this.comboBoxTreatment18.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment18_SelectedIndexChanged);
             // 
             // comboBoxTreatment17
             // 
@@ -1049,21 +1095,32 @@
             this.comboBoxTreatment17.Enabled = false;
             this.comboBoxTreatment17.FormattingEnabled = true;
             this.comboBoxTreatment17.Items.AddRange(new object[] {
-            "",
-            "2",
-            "3",
-            "5",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Crack Seal",
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment17.Location = new System.Drawing.Point(6, 410);
             this.comboBoxTreatment17.Name = "comboBoxTreatment17";
             this.comboBoxTreatment17.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment17.TabIndex = 16;
+            this.comboBoxTreatment17.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment17_SelectedIndexChanged);
             // 
             // comboBoxTreatment16
             // 
@@ -1071,21 +1128,32 @@
             this.comboBoxTreatment16.Enabled = false;
             this.comboBoxTreatment16.FormattingEnabled = true;
             this.comboBoxTreatment16.Items.AddRange(new object[] {
-            "",
-            "2",
-            "3",
-            "5",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Crack Seal",
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment16.Location = new System.Drawing.Point(6, 387);
             this.comboBoxTreatment16.Name = "comboBoxTreatment16";
             this.comboBoxTreatment16.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment16.TabIndex = 15;
+            this.comboBoxTreatment16.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment16_SelectedIndexChanged);
             // 
             // comboBoxTreatment15
             // 
@@ -1093,21 +1161,32 @@
             this.comboBoxTreatment15.Enabled = false;
             this.comboBoxTreatment15.FormattingEnabled = true;
             this.comboBoxTreatment15.Items.AddRange(new object[] {
-            "",
-            "2",
-            "3",
-            "5",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Crack Seal",
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment15.Location = new System.Drawing.Point(6, 364);
             this.comboBoxTreatment15.Name = "comboBoxTreatment15";
             this.comboBoxTreatment15.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment15.TabIndex = 14;
+            this.comboBoxTreatment15.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment15_SelectedIndexChanged);
             // 
             // comboBoxTreatment14
             // 
@@ -1115,21 +1194,32 @@
             this.comboBoxTreatment14.Enabled = false;
             this.comboBoxTreatment14.FormattingEnabled = true;
             this.comboBoxTreatment14.Items.AddRange(new object[] {
-            "",
-            "2",
-            "3",
-            "5",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Crack Seal",
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment14.Location = new System.Drawing.Point(6, 341);
             this.comboBoxTreatment14.Name = "comboBoxTreatment14";
             this.comboBoxTreatment14.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment14.TabIndex = 13;
+            this.comboBoxTreatment14.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment14_SelectedIndexChanged);
             // 
             // comboBoxTreatment13
             // 
@@ -1137,21 +1227,32 @@
             this.comboBoxTreatment13.Enabled = false;
             this.comboBoxTreatment13.FormattingEnabled = true;
             this.comboBoxTreatment13.Items.AddRange(new object[] {
-            "",
-            "2",
-            "3",
-            "5",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Crack Seal",
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment13.Location = new System.Drawing.Point(6, 318);
             this.comboBoxTreatment13.Name = "comboBoxTreatment13";
             this.comboBoxTreatment13.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment13.TabIndex = 12;
+            this.comboBoxTreatment13.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment13_SelectedIndexChanged);
             // 
             // comboBoxTreatment12
             // 
@@ -1159,22 +1260,32 @@
             this.comboBoxTreatment12.Enabled = false;
             this.comboBoxTreatment12.FormattingEnabled = true;
             this.comboBoxTreatment12.Items.AddRange(new object[] {
-            "",
-            "1",
-            "2",
-            "5",
-            "6",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Crack Seal",
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment12.Location = new System.Drawing.Point(6, 295);
             this.comboBoxTreatment12.Name = "comboBoxTreatment12";
             this.comboBoxTreatment12.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment12.TabIndex = 11;
+            this.comboBoxTreatment12.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment12_SelectedIndexChanged);
             // 
             // comboBoxTreatment11
             // 
@@ -1182,22 +1293,32 @@
             this.comboBoxTreatment11.Enabled = false;
             this.comboBoxTreatment11.FormattingEnabled = true;
             this.comboBoxTreatment11.Items.AddRange(new object[] {
-            "",
-            "1",
-            "2",
-            "5",
-            "6",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Crack Seal",
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment11.Location = new System.Drawing.Point(6, 272);
             this.comboBoxTreatment11.Name = "comboBoxTreatment11";
             this.comboBoxTreatment11.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment11.TabIndex = 10;
+            this.comboBoxTreatment11.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment11_SelectedIndexChanged);
             // 
             // comboBoxTreatment10
             // 
@@ -1205,22 +1326,32 @@
             this.comboBoxTreatment10.Enabled = false;
             this.comboBoxTreatment10.FormattingEnabled = true;
             this.comboBoxTreatment10.Items.AddRange(new object[] {
-            "",
-            "1",
-            "2",
-            "5",
-            "6",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Crack Seal",
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment10.Location = new System.Drawing.Point(6, 249);
             this.comboBoxTreatment10.Name = "comboBoxTreatment10";
             this.comboBoxTreatment10.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment10.TabIndex = 9;
+            this.comboBoxTreatment10.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment10_SelectedIndexChanged);
             // 
             // comboBoxTreatment9
             // 
@@ -1228,20 +1359,31 @@
             this.comboBoxTreatment9.Enabled = false;
             this.comboBoxTreatment9.FormattingEnabled = true;
             this.comboBoxTreatment9.Items.AddRange(new object[] {
-            "",
-            "1",
-            "5",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment9.Location = new System.Drawing.Point(6, 226);
             this.comboBoxTreatment9.Name = "comboBoxTreatment9";
             this.comboBoxTreatment9.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment9.TabIndex = 8;
+            this.comboBoxTreatment9.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment9_SelectedIndexChanged);
             // 
             // comboBoxTreatment8
             // 
@@ -1249,20 +1391,31 @@
             this.comboBoxTreatment8.Enabled = false;
             this.comboBoxTreatment8.FormattingEnabled = true;
             this.comboBoxTreatment8.Items.AddRange(new object[] {
-            "",
-            "1",
-            "5",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment8.Location = new System.Drawing.Point(6, 203);
             this.comboBoxTreatment8.Name = "comboBoxTreatment8";
             this.comboBoxTreatment8.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment8.TabIndex = 7;
+            this.comboBoxTreatment8.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment8_SelectedIndexChanged);
             // 
             // comboBoxTreatment7
             // 
@@ -1270,20 +1423,31 @@
             this.comboBoxTreatment7.Enabled = false;
             this.comboBoxTreatment7.FormattingEnabled = true;
             this.comboBoxTreatment7.Items.AddRange(new object[] {
-            "",
-            "1",
-            "5",
-            "7",
-            "8",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Fog Coat",
+            "High Mineral Asphalt Emulsion",
+            "Sand Seal",
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment7.Location = new System.Drawing.Point(6, 180);
             this.comboBoxTreatment7.Name = "comboBoxTreatment7";
             this.comboBoxTreatment7.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment7.TabIndex = 6;
+            this.comboBoxTreatment7.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment7_SelectedIndexChanged);
             // 
             // comboBoxTreatment6
             // 
@@ -1291,21 +1455,28 @@
             this.comboBoxTreatment6.Enabled = false;
             this.comboBoxTreatment6.FormattingEnabled = true;
             this.comboBoxTreatment6.Items.AddRange(new object[] {
-            "",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment6.Location = new System.Drawing.Point(6, 157);
             this.comboBoxTreatment6.Name = "comboBoxTreatment6";
             this.comboBoxTreatment6.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment6.TabIndex = 5;
+            this.comboBoxTreatment6.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment6_SelectedIndexChanged);
             // 
             // comboBoxTreatment5
             // 
@@ -1313,21 +1484,28 @@
             this.comboBoxTreatment5.Enabled = false;
             this.comboBoxTreatment5.FormattingEnabled = true;
             this.comboBoxTreatment5.Items.AddRange(new object[] {
-            "",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment5.Location = new System.Drawing.Point(6, 134);
             this.comboBoxTreatment5.Name = "comboBoxTreatment5";
             this.comboBoxTreatment5.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment5.TabIndex = 4;
+            this.comboBoxTreatment5.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment5_SelectedIndexChanged);
             // 
             // comboBoxTreatment4
             // 
@@ -1335,21 +1513,28 @@
             this.comboBoxTreatment4.Enabled = false;
             this.comboBoxTreatment4.FormattingEnabled = true;
             this.comboBoxTreatment4.Items.AddRange(new object[] {
-            "",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "12",
-            "14",
-            "15",
-            "16",
-            "20"});
+            "Scrub Seal",
+            "Single Chip Seal",
+            "Slurry Seal",
+            "Microsurfacing",
+            "Plant Mix Seal",
+            "Cold In-place Recycling (2 in. with chip seal)",
+            "Thin Hot Mix Overlay (<2 in.)",
+            "HMA (leveling) & Overlay (<2 in.)",
+            "Hot Surface Recycling",
+            "Rotomill & Overlay (<2 in.)",
+            "Cold In-place Recycling (2/2 in.)",
+            "Thick Overlay (3 in.)",
+            "Rotomill & Thick Overlay (3 in.)",
+            "Base Repair/ Pavement Replacement",
+            "Cold Recycling & Overlay (3/3 in.)",
+            "Full Depth Reclamation & Overlay (3/3 in.)",
+            "Base/ Pavement Replacement (3/3/6 in.)"});
             this.comboBoxTreatment4.Location = new System.Drawing.Point(6, 111);
             this.comboBoxTreatment4.Name = "comboBoxTreatment4";
             this.comboBoxTreatment4.Size = new System.Drawing.Size(220, 21);
             this.comboBoxTreatment4.TabIndex = 3;
+            this.comboBoxTreatment4.SelectedIndexChanged += new System.EventHandler(this.comboBoxTreatment4_SelectedIndexChanged);
             // 
             // comboBoxTreatment3
             // 
@@ -1360,7 +1545,7 @@
             "Scrub Seal",
             "Single Chip Seal",
             "Slurry Seal",
-            "Miscrosurfacing",
+            "Microsurfacing",
             "Plant Mix Seal",
             "Cold In-place Recycling (2 in. with chip seal)",
             "Thin Hot Mix Overlay (<2 in.)",
@@ -1389,7 +1574,7 @@
             "Scrub Seal",
             "Single Chip Seal",
             "Slurry Seal",
-            "Miscrosurfacing",
+            "Microsurfacing",
             "Plant Mix Seal",
             "Cold In-place Recycling (2 in. with chip seal)",
             "Thin Hot Mix Overlay (<2 in.)",
@@ -1418,7 +1603,7 @@
             "Scrub Seal",
             "Single Chip Seal",
             "Slurry Seal",
-            "Miscrosurfacing",
+            "Microsurfacing",
             "Plant Mix Seal",
             "Cold In-place Recycling (2 in. with chip seal)",
             "Thin Hot Mix Overlay (<2 in.)",
@@ -1506,6 +1691,7 @@
             this.comboBox20.Name = "comboBox20";
             this.comboBox20.Size = new System.Drawing.Size(57, 21);
             this.comboBox20.TabIndex = 19;
+            this.comboBox20.SelectedIndexChanged += new System.EventHandler(this.comboBox20_SelectedIndexChanged);
             // 
             // comboBox19
             // 
@@ -1527,6 +1713,7 @@
             this.comboBox19.Name = "comboBox19";
             this.comboBox19.Size = new System.Drawing.Size(57, 21);
             this.comboBox19.TabIndex = 18;
+            this.comboBox19.SelectedIndexChanged += new System.EventHandler(this.comboBox19_SelectedIndexChanged);
             // 
             // comboBox18
             // 
@@ -1549,6 +1736,7 @@
             this.comboBox18.Name = "comboBox18";
             this.comboBox18.Size = new System.Drawing.Size(57, 21);
             this.comboBox18.TabIndex = 17;
+            this.comboBox18.SelectedIndexChanged += new System.EventHandler(this.comboBox18_SelectedIndexChanged);
             // 
             // comboBox17
             // 
@@ -1571,6 +1759,7 @@
             this.comboBox17.Name = "comboBox17";
             this.comboBox17.Size = new System.Drawing.Size(57, 21);
             this.comboBox17.TabIndex = 16;
+            this.comboBox17.SelectedIndexChanged += new System.EventHandler(this.comboBox17_SelectedIndexChanged);
             // 
             // comboBox16
             // 
@@ -1593,6 +1782,7 @@
             this.comboBox16.Name = "comboBox16";
             this.comboBox16.Size = new System.Drawing.Size(57, 21);
             this.comboBox16.TabIndex = 15;
+            this.comboBox16.SelectedIndexChanged += new System.EventHandler(this.comboBox16_SelectedIndexChanged);
             // 
             // comboBox15
             // 
@@ -1615,6 +1805,7 @@
             this.comboBox15.Name = "comboBox15";
             this.comboBox15.Size = new System.Drawing.Size(57, 21);
             this.comboBox15.TabIndex = 14;
+            this.comboBox15.SelectedIndexChanged += new System.EventHandler(this.comboBox15_SelectedIndexChanged);
             // 
             // comboBox14
             // 
@@ -1637,6 +1828,7 @@
             this.comboBox14.Name = "comboBox14";
             this.comboBox14.Size = new System.Drawing.Size(57, 21);
             this.comboBox14.TabIndex = 13;
+            this.comboBox14.SelectedIndexChanged += new System.EventHandler(this.comboBox14_SelectedIndexChanged);
             // 
             // comboBox13
             // 
@@ -1659,6 +1851,7 @@
             this.comboBox13.Name = "comboBox13";
             this.comboBox13.Size = new System.Drawing.Size(57, 21);
             this.comboBox13.TabIndex = 12;
+            this.comboBox13.SelectedIndexChanged += new System.EventHandler(this.comboBox13_SelectedIndexChanged);
             // 
             // comboBox12
             // 
@@ -1682,6 +1875,7 @@
             this.comboBox12.Name = "comboBox12";
             this.comboBox12.Size = new System.Drawing.Size(57, 21);
             this.comboBox12.TabIndex = 11;
+            this.comboBox12.SelectedIndexChanged += new System.EventHandler(this.comboBox12_SelectedIndexChanged);
             // 
             // comboBox11
             // 
@@ -1705,6 +1899,7 @@
             this.comboBox11.Name = "comboBox11";
             this.comboBox11.Size = new System.Drawing.Size(57, 21);
             this.comboBox11.TabIndex = 10;
+            this.comboBox11.SelectedIndexChanged += new System.EventHandler(this.comboBox11_SelectedIndexChanged);
             // 
             // comboBox10
             // 
@@ -1728,6 +1923,7 @@
             this.comboBox10.Name = "comboBox10";
             this.comboBox10.Size = new System.Drawing.Size(57, 21);
             this.comboBox10.TabIndex = 9;
+            this.comboBox10.SelectedIndexChanged += new System.EventHandler(this.comboBox10_SelectedIndexChanged);
             // 
             // comboBox9
             // 
@@ -1749,6 +1945,7 @@
             this.comboBox9.Name = "comboBox9";
             this.comboBox9.Size = new System.Drawing.Size(57, 21);
             this.comboBox9.TabIndex = 8;
+            this.comboBox9.SelectedIndexChanged += new System.EventHandler(this.comboBox9_SelectedIndexChanged);
             // 
             // comboBox8
             // 
@@ -1770,6 +1967,7 @@
             this.comboBox8.Name = "comboBox8";
             this.comboBox8.Size = new System.Drawing.Size(57, 21);
             this.comboBox8.TabIndex = 7;
+            this.comboBox8.SelectedIndexChanged += new System.EventHandler(this.comboBox8_SelectedIndexChanged);
             // 
             // comboBox7
             // 
@@ -1791,6 +1989,7 @@
             this.comboBox7.Name = "comboBox7";
             this.comboBox7.Size = new System.Drawing.Size(57, 21);
             this.comboBox7.TabIndex = 6;
+            this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
             // 
             // comboBox6
             // 
@@ -1813,6 +2012,7 @@
             this.comboBox6.Name = "comboBox6";
             this.comboBox6.Size = new System.Drawing.Size(57, 21);
             this.comboBox6.TabIndex = 5;
+            this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
             // 
             // comboBox5
             // 
@@ -1835,6 +2035,7 @@
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(57, 21);
             this.comboBox5.TabIndex = 4;
+            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
             // comboBox4
             // 
@@ -1857,6 +2058,7 @@
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(57, 21);
             this.comboBox4.TabIndex = 3;
+            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
             // 
             // comboBox3
             // 
@@ -1924,11 +2126,103 @@
             this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // buttonCalculate
+            // 
+            this.buttonCalculate.Location = new System.Drawing.Point(7, 8);
+            this.buttonCalculate.Name = "buttonCalculate";
+            this.buttonCalculate.Size = new System.Drawing.Size(99, 23);
+            this.buttonCalculate.TabIndex = 22;
+            this.buttonCalculate.Text = "Calculate Cost";
+            this.buttonCalculate.UseVisualStyleBackColor = true;
+            this.buttonCalculate.Click += new System.EventHandler(this.buttonCalculate_Click);
+            // 
+            // textBoxTotalArea
+            // 
+            this.textBoxTotalArea.Location = new System.Drawing.Point(124, 63);
+            this.textBoxTotalArea.Name = "textBoxTotalArea";
+            this.textBoxTotalArea.ReadOnly = true;
+            this.textBoxTotalArea.Size = new System.Drawing.Size(137, 20);
+            this.textBoxTotalArea.TabIndex = 23;
+            // 
+            // textBoxTotalCost
+            // 
+            this.textBoxTotalCost.Location = new System.Drawing.Point(124, 37);
+            this.textBoxTotalCost.Name = "textBoxTotalCost";
+            this.textBoxTotalCost.ReadOnly = true;
+            this.textBoxTotalCost.Size = new System.Drawing.Size(137, 20);
+            this.textBoxTotalCost.TabIndex = 24;
+            // 
+            // textBoxBudget
+            // 
+            this.textBoxBudget.Location = new System.Drawing.Point(462, 34);
+            this.textBoxBudget.Name = "textBoxBudget";
+            this.textBoxBudget.Size = new System.Drawing.Size(144, 20);
+            this.textBoxBudget.TabIndex = 25;
+            this.textBoxBudget.Text = "$0.00";
+            this.textBoxBudget.GotFocus += new System.EventHandler(this.textBoxBudget_RemovePlaceholder);
+            this.textBoxBudget.LostFocus += new System.EventHandler(this.textBoxBudget_AddPlaceholder);
+            this.textBoxBudget.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBudget_EnterPress);
+            // 
+            // labelBudget
+            // 
+            this.labelBudget.AutoSize = true;
+            this.labelBudget.Location = new System.Drawing.Point(459, 18);
+            this.labelBudget.Name = "labelBudget";
+            this.labelBudget.Size = new System.Drawing.Size(90, 13);
+            this.labelBudget.TabIndex = 26;
+            this.labelBudget.Text = "Estimated Budget";
+            // 
+            // panelCalculator
+            // 
+            this.panelCalculator.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panelCalculator.Controls.Add(this.labelOverBudget);
+            this.panelCalculator.Controls.Add(this.labelTotalCost);
+            this.panelCalculator.Controls.Add(this.labelArea);
+            this.panelCalculator.Controls.Add(this.textBoxTotalArea);
+            this.panelCalculator.Controls.Add(this.buttonCalculate);
+            this.panelCalculator.Controls.Add(this.textBoxTotalCost);
+            this.panelCalculator.Location = new System.Drawing.Point(462, 60);
+            this.panelCalculator.Name = "panelCalculator";
+            this.panelCalculator.Size = new System.Drawing.Size(274, 280);
+            this.panelCalculator.TabIndex = 27;
+            // 
+            // labelOverBudget
+            // 
+            this.labelOverBudget.AutoSize = true;
+            this.labelOverBudget.ForeColor = System.Drawing.Color.Red;
+            this.labelOverBudget.Location = new System.Drawing.Point(122, 18);
+            this.labelOverBudget.Name = "labelOverBudget";
+            this.labelOverBudget.Size = new System.Drawing.Size(70, 13);
+            this.labelOverBudget.TabIndex = 27;
+            this.labelOverBudget.Text = "Over Budget!";
+            this.labelOverBudget.Visible = false;
+            // 
+            // labelTotalCost
+            // 
+            this.labelTotalCost.AutoSize = true;
+            this.labelTotalCost.Location = new System.Drawing.Point(11, 40);
+            this.labelTotalCost.Name = "labelTotalCost";
+            this.labelTotalCost.Size = new System.Drawing.Size(107, 13);
+            this.labelTotalCost.TabIndex = 26;
+            this.labelTotalCost.Text = "Total treatement cost";
+            // 
+            // labelArea
+            // 
+            this.labelArea.AutoSize = true;
+            this.labelArea.Location = new System.Drawing.Point(11, 66);
+            this.labelArea.Name = "labelArea";
+            this.labelArea.Size = new System.Drawing.Size(94, 13);
+            this.labelArea.TabIndex = 25;
+            this.labelArea.Text = "Area being treated";
+            // 
             // FormAnalysis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1181, 658);
+            this.ClientSize = new System.Drawing.Size(1181, 538);
+            this.Controls.Add(this.panelCalculator);
+            this.Controls.Add(this.labelBudget);
+            this.Controls.Add(this.textBoxBudget);
             this.Controls.Add(this.panelRSLPriority);
             this.Name = "FormAnalysis";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1960,7 +2254,10 @@
             this.panelRSLPriority.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBoxYearsToAdd.ResumeLayout(false);
+            this.panelCalculator.ResumeLayout(false);
+            this.panelCalculator.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -2055,5 +2352,14 @@
         private System.Windows.Forms.ComboBox comboBoxTreatment3;
         private System.Windows.Forms.ComboBox comboBoxTreatment2;
         private System.Windows.Forms.ComboBox comboBoxTreatment1;
+        private System.Windows.Forms.Button buttonCalculate;
+        private System.Windows.Forms.TextBox textBoxTotalArea;
+        private System.Windows.Forms.TextBox textBoxTotalCost;
+        private System.Windows.Forms.TextBox textBoxBudget;
+        private System.Windows.Forms.Label labelBudget;
+        private System.Windows.Forms.Panel panelCalculator;
+        private System.Windows.Forms.Label labelTotalCost;
+        private System.Windows.Forms.Label labelArea;
+        private System.Windows.Forms.Label labelOverBudget;
     }
 }
