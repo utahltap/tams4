@@ -905,7 +905,7 @@ namespace tams4a.Classes
             DataTable treatments = Database.GetDataByQuery(Project.conn, treatmentSQL);
             roads.DefaultView.Sort = "rsl asc";
             treatments.DefaultView.Sort = "id asc";
-            FormAnalysis analysis = new FormAnalysis();
+            FormAnalysis analysis = new FormAnalysis(Project);
             //if (analysis.setData(roads.DefaultView.ToTable(), treatments.DefaultView.ToTable()))
             //{
             analysis.ShowDialog();
