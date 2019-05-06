@@ -11,13 +11,14 @@ namespace tams4a.Forms
         private DataTable roads;
         private List<CheckBox> checkBoxes = new List<CheckBox>();
         private List<ComboBox> comboBoxTreatments = new List<ComboBox>();
+        private Dictionary<int, double> rslArea = new Dictionary<int, double>();
         private Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
         private double estBudget = 0.00;
 
         public FormAnalysis(TamsProject Project)
         {
             InitializeComponent();
-            roads = Database.GetDataByQuery(Project.conn, "SELECT rsl, width, length FROM road;");
+            roads = Database.GetDataByQuery(Project.conn, "SELECT rsl, width, length FROM road GROUP BY TAMSID;");
             checkBoxes.Add(checkBox0);
             checkBoxes.Add(checkBox1);
             checkBoxes.Add(checkBox2);
@@ -60,6 +61,10 @@ namespace tams4a.Forms
             comboBoxTreatments.Add(comboBoxTreatment18);
             comboBoxTreatments.Add(comboBoxTreatment19);
             comboBoxTreatments.Add(comboBoxTreatment20);
+            for (int i = 0; i <= 20; i++)
+            {
+                rslArea.Add(i, 0.0);
+            }
             pricePerYard.Add("", 0.0);
             pricePerYard.Add("Crack Seal", 0.45);
             pricePerYard.Add("Fog Coat", 0.68);
@@ -1525,6 +1530,8 @@ namespace tams4a.Forms
 
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
+            clearBudgetControlTable();
+
             double totalArea = 0;
             double totalCost = 0;
             foreach (DataRow row in roads.Rows)
@@ -1535,6 +1542,7 @@ namespace tams4a.Forms
                     if (checkBox.Checked && Util.ToInt(row["rsl"].ToString()) == i)
                     {
                         double area = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
+                        rslArea[i] += area;
                         totalArea += area;
                         totalCost += pricePerYard[comboBoxTreatments[i].Text] * (area / 9);
                     }
@@ -1545,15 +1553,54 @@ namespace tams4a.Forms
 
             if (roundedCost > estBudget)
             {
-                labelOverBudget.Text = "$" + String.Format("{0:n}", (roundedCost - estBudget)) + " over budget!"; 
+                labelOverBudget.Text = "$" + String.Format("{0:n0}", (roundedCost - estBudget)) + " over budget!"; 
                 labelOverBudget.Visible = true;
             }
             else
             {
                 labelOverBudget.Visible = false;
             }
-            textBoxTotalArea.Text = String.Format("{0:n}", (Math.Round(totalArea/9, 2))) + " yd\u00b2"; 
-            textBoxTotalCost.Text = "$" + String.Format("{0:n}", roundedCost);
+            textBoxTotalArea.Text = String.Format("{0:n0}", (Math.Round(totalArea/9, 2))) + " yds\u00b2"; 
+            textBoxTotalCost.Text = "$" + String.Format("{0:n0}", roundedCost);
+
+            foreach (int i in rslArea.Keys)
+            {
+                if (rslArea[i] > 0)
+                {
+                    RowStyle temp = tableBudgetControl.RowStyles[0];
+                    tableBudgetControl.RowCount++;
+                    tableBudgetControl.RowStyles.Add(new RowStyle(temp.SizeType, temp.Height));
+                    tableBudgetControl.Height += (int)(temp.Height - 25);
+                    tableBudgetControl.Controls.Add(new TextBox() { Text = i.ToString(), ReadOnly = true }, 0, tableBudgetControl.RowCount - 1);
+                    tableBudgetControl.Controls.Add(new NumericUpDown() { Minimum = 0, Maximum = 999999999999, Value = (decimal)(pricePerYard[comboBoxTreatments[i].Text] * (rslArea[i] / 9)) }, 1, tableBudgetControl.RowCount - 1);
+                    tableBudgetControl.Controls.Add(new NumericUpDown() { Minimum = 0, Maximum = 999999999999, Value = (decimal)(rslArea[i] / 9) }, 2, tableBudgetControl.RowCount - 1);
+                }
+            }
+            
+            for (int i = 0; i <= 20; i++)
+            {
+                rslArea[i] = 0;
+            }
+        }
+
+        private void clearBudgetControlTable()
+        {
+            tableBudgetControl.RowCount = 1;
+            tableBudgetControl.Controls.Clear();
+            tableBudgetControl.RowStyles.Clear();
+            tableBudgetControl.ColumnCount = 3;
+            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30.40541F));
+            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 69.5946F));
+            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 103F));
+            tableBudgetControl.Controls.Add(labelAreaCovered, 2, 0);
+            tableBudgetControl.Controls.Add(labelRSLx, 0, 0);
+            tableBudgetControl.Controls.Add(labelBudgetUsed, 1, 0);
+            tableBudgetControl.Location = new System.Drawing.Point(14, 95);
+            tableBudgetControl.Name = "tableBudgetControl";
+            tableBudgetControl.RowCount = 1;
+            tableBudgetControl.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableBudgetControl.Size = new System.Drawing.Size(247, 15);
+            tableBudgetControl.TabIndex = 32;
         }
 
         private void textBoxBudget_RemovePlaceholder(object sender, EventArgs e)
@@ -1565,6 +1612,7 @@ namespace tams4a.Forms
             }
             textBoxBudget.Text = "";
         }
+
         private void textBoxBudget_AddPlaceholder(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(textBoxBudget.Text))
@@ -1575,10 +1623,11 @@ namespace tams4a.Forms
             else
             {
                 estBudget = Util.ToDouble(textBoxBudget.Text);
-                textBoxBudget.Text = "$" + String.Format("{0:n}", estBudget);
+                textBoxBudget.Text = "$" + String.Format("{0:n0}", estBudget);
             }
             buttonCalculate_Click(sender, null);
         }
+
         private void textBoxBudget_EnterPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
