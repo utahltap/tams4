@@ -941,7 +941,7 @@
             this.panelRSLPriority.Controls.Add(this.groupBoxYearsToAdd);
             this.panelRSLPriority.Controls.Add(this.groupBoxPrority);
             this.panelRSLPriority.Controls.Add(this.groupBoxRSL);
-            this.panelRSLPriority.Location = new System.Drawing.Point(12, 12);
+            this.panelRSLPriority.Location = new System.Drawing.Point(12, 60);
             this.panelRSLPriority.Name = "panelRSLPriority";
             this.panelRSLPriority.Size = new System.Drawing.Size(435, 515);
             this.panelRSLPriority.TabIndex = 21;
@@ -2189,29 +2189,32 @@
             this.panelCalculator.Controls.Add(this.textBoxTotalCost);
             this.panelCalculator.Location = new System.Drawing.Point(462, 60);
             this.panelCalculator.Name = "panelCalculator";
-            this.panelCalculator.Size = new System.Drawing.Size(274, 467);
+            this.panelCalculator.Size = new System.Drawing.Size(274, 515);
             this.panelCalculator.TabIndex = 27;
             // 
             // tableBudgetControl
             // 
+            this.tableBudgetControl.AutoScroll = true;
             this.tableBudgetControl.ColumnCount = 3;
             this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.40541F));
             this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.5946F));
-            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 103F));
+            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
             this.tableBudgetControl.Controls.Add(this.labelAreaCovered, 2, 0);
             this.tableBudgetControl.Controls.Add(this.labelRSLx, 0, 0);
             this.tableBudgetControl.Controls.Add(this.labelBudgetUsed, 1, 0);
             this.tableBudgetControl.Location = new System.Drawing.Point(14, 95);
+            this.tableBudgetControl.MaximumSize = new System.Drawing.Size(247, 415);
             this.tableBudgetControl.Name = "tableBudgetControl";
             this.tableBudgetControl.RowCount = 1;
             this.tableBudgetControl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableBudgetControl.Size = new System.Drawing.Size(247, 15);
             this.tableBudgetControl.TabIndex = 32;
+            this.tableBudgetControl.Visible = false;
             // 
             // labelAreaCovered
             // 
             this.labelAreaCovered.AutoSize = true;
-            this.labelAreaCovered.Location = new System.Drawing.Point(146, 0);
+            this.labelAreaCovered.Location = new System.Drawing.Point(145, 0);
             this.labelAreaCovered.Name = "labelAreaCovered";
             this.labelAreaCovered.Size = new System.Drawing.Size(75, 13);
             this.labelAreaCovered.TabIndex = 32;
@@ -2268,7 +2271,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1181, 538);
+            this.ClientSize = new System.Drawing.Size(1181, 587);
             this.Controls.Add(this.panelCalculator);
             this.Controls.Add(this.labelBudget);
             this.Controls.Add(this.textBoxBudget);

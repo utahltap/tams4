@@ -13,6 +13,9 @@ namespace tams4a.Forms
         private List<ComboBox> comboBoxTreatments = new List<ComboBox>();
         private Dictionary<int, double> rslArea = new Dictionary<int, double>();
         private Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
+        private Dictionary<NumericUpDown, decimal> costBreakdown = new Dictionary<NumericUpDown, decimal>();
+        private Dictionary<NumericUpDown, decimal> areaBreakdown = new Dictionary<NumericUpDown, decimal>();
+ 
         private double estBudget = 0.00;
 
         public FormAnalysis(TamsProject Project)
@@ -1570,21 +1573,76 @@ namespace tams4a.Forms
                     RowStyle temp = tableBudgetControl.RowStyles[0];
                     tableBudgetControl.RowCount++;
                     tableBudgetControl.RowStyles.Add(new RowStyle(temp.SizeType, temp.Height));
-                    tableBudgetControl.Height += (int)(temp.Height - 25);
+                    tableBudgetControl.Height += (int)(temp.Height - 20);
                     tableBudgetControl.Controls.Add(new TextBox() { Text = i.ToString(), ReadOnly = true }, 0, tableBudgetControl.RowCount - 1);
-                    tableBudgetControl.Controls.Add(new NumericUpDown() { Minimum = 0, Maximum = 999999999999, Value = (decimal)(pricePerYard[comboBoxTreatments[i].Text] * (rslArea[i] / 9)) }, 1, tableBudgetControl.RowCount - 1);
-                    tableBudgetControl.Controls.Add(new NumericUpDown() { Minimum = 0, Maximum = 999999999999, Value = (decimal)(rslArea[i] / 9) }, 2, tableBudgetControl.RowCount - 1);
+                    NumericUpDown budgetUpDown = new NumericUpDown()
+                    {
+                        Increment = 100,
+                        Minimum = 0,
+                        Maximum = 999999999999,
+                        Value = (decimal)(pricePerYard[comboBoxTreatments[i].Text] * (rslArea[i] / 9)),
+                    };
+                    NumericUpDown areaUpDown = new NumericUpDown()
+                    {
+                        Increment = 100,
+                        Minimum = 0,
+                        Maximum = 999999999999,
+                        Value = (decimal)(rslArea[i] / 9)
+                    };
+                    costBreakdown[budgetUpDown] = budgetUpDown.Value;
+                    areaBreakdown[areaUpDown] = areaUpDown.Value;
+                    double costPerYard = (double)(budgetUpDown.Value / areaUpDown.Value);
+                    budgetUpDown.ValueChanged += new EventHandler(delegate (object _sender, EventArgs _e) { BudgetUpDown_ValueChanged(sender, e, costPerYard, budgetUpDown, areaUpDown); });
+                    areaUpDown.ValueChanged += new EventHandler(delegate (object _sender, EventArgs _e) { AreaUpDown_ValueChanged(sender, e, costPerYard, budgetUpDown, areaUpDown); });
+                    tableBudgetControl.Controls.Add(budgetUpDown, 1, tableBudgetControl.RowCount - 1);
+                    tableBudgetControl.Controls.Add(areaUpDown, 2, tableBudgetControl.RowCount - 1);
                 }
             }
-            
+            tableBudgetControl.Visible = true;
             for (int i = 0; i <= 20; i++)
             {
                 rslArea[i] = 0;
             }
         }
 
+        private void BudgetUpDown_ValueChanged(object sender, EventArgs e, double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown)
+        {
+            decimal newArea = (decimal)((double)budgetUpDown.Value / costPerYard);
+            areaUpDown.Value = newArea;
+            costBreakdown[budgetUpDown] = budgetUpDown.Value;
+            decimal totalCost = 0;
+            foreach(decimal price in costBreakdown.Values)
+            {
+                totalCost += price;
+            }
+            textBoxTotalCost.Text = "$" + String.Format("{0:n0}", totalCost); ;
+            if ((double)totalCost > estBudget)
+            {
+                labelOverBudget.Text = "$" + String.Format("{0:n0}", ((double)totalCost - estBudget)) + " over budget!";
+                labelOverBudget.Visible = true;
+            }
+            else
+            {
+                labelOverBudget.Visible = false;
+            }
+        }
+
+        private void AreaUpDown_ValueChanged(object sender, EventArgs e, double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown)
+        {
+            decimal newCost = (decimal)((double)areaUpDown.Value * costPerYard);
+            budgetUpDown.Value = newCost;
+            areaBreakdown[areaUpDown] = areaUpDown.Value;
+            decimal totalArea = 0;
+            foreach (decimal area in areaBreakdown.Values)
+            {
+                totalArea += area;
+            }
+            textBoxTotalArea.Text = String.Format("{0:n0}", (Math.Round(totalArea, 2))) + " yds\u00b2";
+        }
+
         private void clearBudgetControlTable()
         {
+            tableBudgetControl.Visible = false;
             tableBudgetControl.RowCount = 1;
             tableBudgetControl.Controls.Clear();
             tableBudgetControl.RowStyles.Clear();
@@ -1601,6 +1659,7 @@ namespace tams4a.Forms
             tableBudgetControl.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableBudgetControl.Size = new System.Drawing.Size(247, 15);
             tableBudgetControl.TabIndex = 32;
+            tableBudgetControl.AutoScroll = true;
         }
 
         private void textBoxBudget_RemovePlaceholder(object sender, EventArgs e)
