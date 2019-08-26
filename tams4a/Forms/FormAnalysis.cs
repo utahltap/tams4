@@ -1696,5 +1696,11 @@ namespace tams4a.Forms
                 panelCalculator.Focus();
             }
         }
+
+        private void buttonTreatmentCosts_Click(object sender, EventArgs e)
+        {
+            FormTreatmentCosts treatmentCosts = new FormTreatmentCosts();
+            treatmentCosts.ShowDialog();
+        }
     }
 }

@@ -130,6 +130,7 @@
             this.labelOverBudget = new System.Windows.Forms.Label();
             this.labelTotalCost = new System.Windows.Forms.Label();
             this.labelArea = new System.Windows.Forms.Label();
+            this.buttonTreatmentCosts = new System.Windows.Forms.Button();
             this.groupBoxRSL.SuspendLayout();
             this.groupBoxPrority.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown0)).BeginInit();
@@ -2267,11 +2268,22 @@
             this.labelArea.TabIndex = 25;
             this.labelArea.Text = "Estimated area treated";
             // 
+            // buttonTreatmentCosts
+            // 
+            this.buttonTreatmentCosts.Location = new System.Drawing.Point(326, 34);
+            this.buttonTreatmentCosts.Name = "buttonTreatmentCosts";
+            this.buttonTreatmentCosts.Size = new System.Drawing.Size(108, 23);
+            this.buttonTreatmentCosts.TabIndex = 28;
+            this.buttonTreatmentCosts.Text = "Treatment Costs";
+            this.buttonTreatmentCosts.UseVisualStyleBackColor = true;
+            this.buttonTreatmentCosts.Click += new System.EventHandler(this.buttonTreatmentCosts_Click);
+            // 
             // FormAnalysis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1181, 587);
+            this.Controls.Add(this.buttonTreatmentCosts);
             this.Controls.Add(this.panelCalculator);
             this.Controls.Add(this.labelBudget);
             this.Controls.Add(this.textBoxBudget);
@@ -2419,5 +2431,6 @@
         private System.Windows.Forms.Label labelAreaCovered;
         private System.Windows.Forms.Label labelRSLx;
         private System.Windows.Forms.Label labelBudgetUsed;
+        private System.Windows.Forms.Button buttonTreatmentCosts;
     }
 }
