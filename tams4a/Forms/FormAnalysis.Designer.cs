@@ -2143,18 +2143,18 @@
             // 
             // textBoxTotalArea
             // 
-            this.textBoxTotalArea.Location = new System.Drawing.Point(124, 63);
+            this.textBoxTotalArea.Location = new System.Drawing.Point(146, 63);
             this.textBoxTotalArea.Name = "textBoxTotalArea";
             this.textBoxTotalArea.ReadOnly = true;
-            this.textBoxTotalArea.Size = new System.Drawing.Size(137, 20);
+            this.textBoxTotalArea.Size = new System.Drawing.Size(115, 20);
             this.textBoxTotalArea.TabIndex = 23;
             // 
             // textBoxTotalCost
             // 
-            this.textBoxTotalCost.Location = new System.Drawing.Point(124, 37);
+            this.textBoxTotalCost.Location = new System.Drawing.Point(146, 37);
             this.textBoxTotalCost.Name = "textBoxTotalCost";
             this.textBoxTotalCost.ReadOnly = true;
-            this.textBoxTotalCost.Size = new System.Drawing.Size(137, 20);
+            this.textBoxTotalCost.Size = new System.Drawing.Size(115, 20);
             this.textBoxTotalCost.TabIndex = 24;
             // 
             // textBoxBudget
@@ -2173,9 +2173,9 @@
             this.labelBudget.AutoSize = true;
             this.labelBudget.Location = new System.Drawing.Point(459, 18);
             this.labelBudget.Name = "labelBudget";
-            this.labelBudget.Size = new System.Drawing.Size(90, 13);
+            this.labelBudget.Size = new System.Drawing.Size(68, 13);
             this.labelBudget.TabIndex = 26;
-            this.labelBudget.Text = "Estimated Budget";
+            this.labelBudget.Text = "Total Budget";
             // 
             // panelCalculator
             // 
@@ -2198,7 +2198,7 @@
             this.tableBudgetControl.ColumnCount = 3;
             this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.40541F));
             this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.5946F));
-            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
+            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
             this.tableBudgetControl.Controls.Add(this.labelAreaCovered, 2, 0);
             this.tableBudgetControl.Controls.Add(this.labelRSLx, 0, 0);
             this.tableBudgetControl.Controls.Add(this.labelBudgetUsed, 1, 0);
@@ -2214,7 +2214,7 @@
             // labelAreaCovered
             // 
             this.labelAreaCovered.AutoSize = true;
-            this.labelAreaCovered.Location = new System.Drawing.Point(145, 0);
+            this.labelAreaCovered.Location = new System.Drawing.Point(144, 0);
             this.labelAreaCovered.Name = "labelAreaCovered";
             this.labelAreaCovered.Size = new System.Drawing.Size(75, 13);
             this.labelAreaCovered.TabIndex = 32;
@@ -2242,7 +2242,7 @@
             // 
             this.labelOverBudget.AutoSize = true;
             this.labelOverBudget.ForeColor = System.Drawing.Color.Red;
-            this.labelOverBudget.Location = new System.Drawing.Point(122, 18);
+            this.labelOverBudget.Location = new System.Drawing.Point(143, 13);
             this.labelOverBudget.Name = "labelOverBudget";
             this.labelOverBudget.Size = new System.Drawing.Size(70, 13);
             this.labelOverBudget.TabIndex = 27;
@@ -2254,18 +2254,18 @@
             this.labelTotalCost.AutoSize = true;
             this.labelTotalCost.Location = new System.Drawing.Point(11, 40);
             this.labelTotalCost.Name = "labelTotalCost";
-            this.labelTotalCost.Size = new System.Drawing.Size(107, 13);
+            this.labelTotalCost.Size = new System.Drawing.Size(129, 13);
             this.labelTotalCost.TabIndex = 26;
-            this.labelTotalCost.Text = "Total treatement cost";
+            this.labelTotalCost.Text = "Estimated treatement cost";
             // 
             // labelArea
             // 
             this.labelArea.AutoSize = true;
             this.labelArea.Location = new System.Drawing.Point(11, 66);
             this.labelArea.Name = "labelArea";
-            this.labelArea.Size = new System.Drawing.Size(91, 13);
+            this.labelArea.Size = new System.Drawing.Size(113, 13);
             this.labelArea.TabIndex = 25;
-            this.labelArea.Text = "Total area treated";
+            this.labelArea.Text = "Estimated area treated";
             // 
             // FormAnalysis
             // 

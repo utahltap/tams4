@@ -1534,6 +1534,8 @@ namespace tams4a.Forms
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
             clearBudgetControlTable();
+            costBreakdown.Clear();
+            areaBreakdown.Clear();
 
             double totalArea = 0;
             double totalCost = 0;
