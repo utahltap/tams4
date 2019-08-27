@@ -46,42 +46,42 @@
             this.labelHighMineralAsphaltEmulsion = new System.Windows.Forms.Label();
             this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
             this.labelFogCoat = new System.Windows.Forms.Label();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.labelHighPerformanceColdPatch = new System.Windows.Forms.Label();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.labelDigoutAndHotPatch = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.labelColdPatch = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.labelCrackSeal = new System.Windows.Forms.Label();
-            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
-            this.labelBaseAndPavementReplacement = new System.Windows.Forms.Label();
-            this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
-            this.labelFullDepthReclamationAndOverlay = new System.Windows.Forms.Label();
-            this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
-            this.labelBaseRepairAndPavementReplacement = new System.Windows.Forms.Label();
-            this.numericUpDown16 = new System.Windows.Forms.NumericUpDown();
-            this.labelColdRecyclingAndThickOverlay = new System.Windows.Forms.Label();
-            this.numericUpDown17 = new System.Windows.Forms.NumericUpDown();
-            this.labelRotomillAndThickOverlay = new System.Windows.Forms.Label();
-            this.numericUpDown18 = new System.Windows.Forms.NumericUpDown();
-            this.labelThickOverlay = new System.Windows.Forms.Label();
-            this.numericUpDown19 = new System.Windows.Forms.NumericUpDown();
-            this.labelColdInPlaceRecyclingOverlay = new System.Windows.Forms.Label();
-            this.numericUpDown20 = new System.Windows.Forms.NumericUpDown();
-            this.labelRotomillAndThinOverlay = new System.Windows.Forms.Label();
-            this.numericUpDown21 = new System.Windows.Forms.NumericUpDown();
-            this.labelHotSurfaceRecycling = new System.Windows.Forms.Label();
-            this.numericUpDown22 = new System.Windows.Forms.NumericUpDown();
-            this.labelHMAandThinOverlay = new System.Windows.Forms.Label();
-            this.numericUpDown23 = new System.Windows.Forms.NumericUpDown();
-            this.labelThinHotOverlay = new System.Windows.Forms.Label();
+            this.panelDivider = new System.Windows.Forms.Panel();
             this.numericUpDown24 = new System.Windows.Forms.NumericUpDown();
-            this.labelColdInPlaceRecyclingSeal = new System.Windows.Forms.Label();
+            this.labelBaseAndPavementReplacement = new System.Windows.Forms.Label();
+            this.numericUpDown23 = new System.Windows.Forms.NumericUpDown();
+            this.labelFullDepthReclamationAndOverlay = new System.Windows.Forms.Label();
+            this.numericUpDown22 = new System.Windows.Forms.NumericUpDown();
+            this.labelBaseRepairAndPavementReplacement = new System.Windows.Forms.Label();
+            this.numericUpDown21 = new System.Windows.Forms.NumericUpDown();
+            this.labelColdRecyclingAndThickOverlay = new System.Windows.Forms.Label();
+            this.numericUpDown20 = new System.Windows.Forms.NumericUpDown();
+            this.labelRotomillAndThickOverlay = new System.Windows.Forms.Label();
+            this.numericUpDown19 = new System.Windows.Forms.NumericUpDown();
+            this.labelThickOverlay = new System.Windows.Forms.Label();
+            this.numericUpDown18 = new System.Windows.Forms.NumericUpDown();
+            this.labelColdInPlaceRecyclingOverlay = new System.Windows.Forms.Label();
+            this.numericUpDown17 = new System.Windows.Forms.NumericUpDown();
+            this.labelRotomillAndThinOverlay = new System.Windows.Forms.Label();
+            this.numericUpDown16 = new System.Windows.Forms.NumericUpDown();
+            this.labelHotSurfaceRecycling = new System.Windows.Forms.Label();
+            this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
+            this.labelHMAandThinOverlay = new System.Windows.Forms.Label();
             this.labelFormInstructions = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.panelDivider = new System.Windows.Forms.Panel();
+            this.labelColdInPlaceRecyclingSeal = new System.Windows.Forms.Label();
+            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
+            this.labelThinHotOverlay = new System.Windows.Forms.Label();
+            this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
+            this.labelColdPatch = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.labelDigoutAndHotPatch = new System.Windows.Forms.Label();
+            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.labelHighPerformanceColdPatch = new System.Windows.Forms.Label();
+            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
             this.panelTreatmentCostEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -95,22 +95,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown24)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown23)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown22)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown22)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown23)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown24)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.SuspendLayout();
             // 
             // panelTreatmentCostEditor
@@ -159,32 +159,32 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panelDivider);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown13);
-            this.splitContainer1.Panel2.Controls.Add(this.labelBaseAndPavementReplacement);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown14);
-            this.splitContainer1.Panel2.Controls.Add(this.labelFullDepthReclamationAndOverlay);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown15);
-            this.splitContainer1.Panel2.Controls.Add(this.labelBaseRepairAndPavementReplacement);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown16);
-            this.splitContainer1.Panel2.Controls.Add(this.labelColdRecyclingAndThickOverlay);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown17);
-            this.splitContainer1.Panel2.Controls.Add(this.labelRotomillAndThickOverlay);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown18);
-            this.splitContainer1.Panel2.Controls.Add(this.labelThickOverlay);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown19);
-            this.splitContainer1.Panel2.Controls.Add(this.labelColdInPlaceRecyclingOverlay);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown20);
-            this.splitContainer1.Panel2.Controls.Add(this.labelRotomillAndThinOverlay);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown21);
-            this.splitContainer1.Panel2.Controls.Add(this.labelHotSurfaceRecycling);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown22);
-            this.splitContainer1.Panel2.Controls.Add(this.labelHMAandThinOverlay);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown23);
-            this.splitContainer1.Panel2.Controls.Add(this.labelThinHotOverlay);
             this.splitContainer1.Panel2.Controls.Add(this.numericUpDown24);
+            this.splitContainer1.Panel2.Controls.Add(this.labelBaseAndPavementReplacement);
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown23);
+            this.splitContainer1.Panel2.Controls.Add(this.labelFullDepthReclamationAndOverlay);
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown22);
+            this.splitContainer1.Panel2.Controls.Add(this.labelBaseRepairAndPavementReplacement);
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown21);
+            this.splitContainer1.Panel2.Controls.Add(this.labelColdRecyclingAndThickOverlay);
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown20);
+            this.splitContainer1.Panel2.Controls.Add(this.labelRotomillAndThickOverlay);
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown19);
+            this.splitContainer1.Panel2.Controls.Add(this.labelThickOverlay);
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown18);
+            this.splitContainer1.Panel2.Controls.Add(this.labelColdInPlaceRecyclingOverlay);
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown17);
+            this.splitContainer1.Panel2.Controls.Add(this.labelRotomillAndThinOverlay);
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown16);
+            this.splitContainer1.Panel2.Controls.Add(this.labelHotSurfaceRecycling);
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown15);
+            this.splitContainer1.Panel2.Controls.Add(this.labelHMAandThinOverlay);
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown14);
+            this.splitContainer1.Panel2.Controls.Add(this.labelThinHotOverlay);
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown13);
             this.splitContainer1.Panel2.Controls.Add(this.labelColdInPlaceRecyclingSeal);
             this.splitContainer1.Size = new System.Drawing.Size(573, 318);
-            this.splitContainer1.SplitterDistance = 239;
+            this.splitContainer1.SplitterDistance = 243;
             this.splitContainer1.TabIndex = 0;
             // 
             // numericUpDown12
@@ -363,72 +363,6 @@
             this.labelFogCoat.TabIndex = 32;
             this.labelFogCoat.Text = "Fog Coat";
             // 
-            // numericUpDown4
-            // 
-            this.numericUpDown4.DecimalPlaces = 2;
-            this.numericUpDown4.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.numericUpDown4.Location = new System.Drawing.Point(163, 82);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown4.TabIndex = 31;
-            // 
-            // labelHighPerformanceColdPatch
-            // 
-            this.labelHighPerformanceColdPatch.AutoSize = true;
-            this.labelHighPerformanceColdPatch.Location = new System.Drawing.Point(3, 84);
-            this.labelHighPerformanceColdPatch.Name = "labelHighPerformanceColdPatch";
-            this.labelHighPerformanceColdPatch.Size = new System.Drawing.Size(147, 13);
-            this.labelHighPerformanceColdPatch.TabIndex = 30;
-            this.labelHighPerformanceColdPatch.Text = "High Performance Cold Patch";
-            // 
-            // numericUpDown3
-            // 
-            this.numericUpDown3.DecimalPlaces = 2;
-            this.numericUpDown3.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.numericUpDown3.Location = new System.Drawing.Point(163, 56);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown3.TabIndex = 29;
-            // 
-            // labelDigoutAndHotPatch
-            // 
-            this.labelDigoutAndHotPatch.AutoSize = true;
-            this.labelDigoutAndHotPatch.Location = new System.Drawing.Point(3, 58);
-            this.labelDigoutAndHotPatch.Name = "labelDigoutAndHotPatch";
-            this.labelDigoutAndHotPatch.Size = new System.Drawing.Size(110, 13);
-            this.labelDigoutAndHotPatch.TabIndex = 28;
-            this.labelDigoutAndHotPatch.Text = "Digout and Hot Patch";
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.DecimalPlaces = 2;
-            this.numericUpDown2.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.numericUpDown2.Location = new System.Drawing.Point(163, 31);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown2.TabIndex = 27;
-            // 
-            // labelColdPatch
-            // 
-            this.labelColdPatch.AutoSize = true;
-            this.labelColdPatch.Location = new System.Drawing.Point(3, 33);
-            this.labelColdPatch.Name = "labelColdPatch";
-            this.labelColdPatch.Size = new System.Drawing.Size(59, 13);
-            this.labelColdPatch.TabIndex = 26;
-            this.labelColdPatch.Text = "Cold Patch";
-            // 
             // numericUpDown1
             // 
             this.numericUpDown1.DecimalPlaces = 2;
@@ -451,18 +385,26 @@
             this.labelCrackSeal.TabIndex = 24;
             this.labelCrackSeal.Text = "Crack Seal";
             // 
-            // numericUpDown13
+            // panelDivider
             // 
-            this.numericUpDown13.DecimalPlaces = 2;
-            this.numericUpDown13.Increment = new decimal(new int[] {
+            this.panelDivider.BackColor = System.Drawing.SystemColors.Control;
+            this.panelDivider.Location = new System.Drawing.Point(1, 0);
+            this.panelDivider.Name = "panelDivider";
+            this.panelDivider.Size = new System.Drawing.Size(10, 318);
+            this.panelDivider.TabIndex = 72;
+            // 
+            // numericUpDown24
+            // 
+            this.numericUpDown24.DecimalPlaces = 2;
+            this.numericUpDown24.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown13.Location = new System.Drawing.Point(241, 291);
-            this.numericUpDown13.Name = "numericUpDown13";
-            this.numericUpDown13.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown13.TabIndex = 71;
+            this.numericUpDown24.Location = new System.Drawing.Point(241, 291);
+            this.numericUpDown24.Name = "numericUpDown24";
+            this.numericUpDown24.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown24.TabIndex = 71;
             // 
             // labelBaseAndPavementReplacement
             // 
@@ -473,18 +415,18 @@
             this.labelBaseAndPavementReplacement.TabIndex = 70;
             this.labelBaseAndPavementReplacement.Text = "Base and Pavement Replacement";
             // 
-            // numericUpDown14
+            // numericUpDown23
             // 
-            this.numericUpDown14.DecimalPlaces = 2;
-            this.numericUpDown14.Increment = new decimal(new int[] {
+            this.numericUpDown23.DecimalPlaces = 2;
+            this.numericUpDown23.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown14.Location = new System.Drawing.Point(241, 265);
-            this.numericUpDown14.Name = "numericUpDown14";
-            this.numericUpDown14.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown14.TabIndex = 69;
+            this.numericUpDown23.Location = new System.Drawing.Point(241, 265);
+            this.numericUpDown23.Name = "numericUpDown23";
+            this.numericUpDown23.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown23.TabIndex = 69;
             // 
             // labelFullDepthReclamationAndOverlay
             // 
@@ -495,18 +437,18 @@
             this.labelFullDepthReclamationAndOverlay.TabIndex = 68;
             this.labelFullDepthReclamationAndOverlay.Text = "Full Depth Reclamation and Overlay";
             // 
-            // numericUpDown15
+            // numericUpDown22
             // 
-            this.numericUpDown15.DecimalPlaces = 2;
-            this.numericUpDown15.Increment = new decimal(new int[] {
+            this.numericUpDown22.DecimalPlaces = 2;
+            this.numericUpDown22.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown15.Location = new System.Drawing.Point(241, 239);
-            this.numericUpDown15.Name = "numericUpDown15";
-            this.numericUpDown15.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown15.TabIndex = 67;
+            this.numericUpDown22.Location = new System.Drawing.Point(241, 239);
+            this.numericUpDown22.Name = "numericUpDown22";
+            this.numericUpDown22.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown22.TabIndex = 67;
             // 
             // labelBaseRepairAndPavementReplacement
             // 
@@ -517,18 +459,18 @@
             this.labelBaseRepairAndPavementReplacement.TabIndex = 66;
             this.labelBaseRepairAndPavementReplacement.Text = "Base Repair and Pavement Replacement";
             // 
-            // numericUpDown16
+            // numericUpDown21
             // 
-            this.numericUpDown16.DecimalPlaces = 2;
-            this.numericUpDown16.Increment = new decimal(new int[] {
+            this.numericUpDown21.DecimalPlaces = 2;
+            this.numericUpDown21.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown16.Location = new System.Drawing.Point(241, 213);
-            this.numericUpDown16.Name = "numericUpDown16";
-            this.numericUpDown16.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown16.TabIndex = 65;
+            this.numericUpDown21.Location = new System.Drawing.Point(241, 213);
+            this.numericUpDown21.Name = "numericUpDown21";
+            this.numericUpDown21.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown21.TabIndex = 65;
             // 
             // labelColdRecyclingAndThickOverlay
             // 
@@ -539,18 +481,18 @@
             this.labelColdRecyclingAndThickOverlay.TabIndex = 64;
             this.labelColdRecyclingAndThickOverlay.Text = "Cold Recycling and Thick Overlay";
             // 
-            // numericUpDown17
+            // numericUpDown20
             // 
-            this.numericUpDown17.DecimalPlaces = 2;
-            this.numericUpDown17.Increment = new decimal(new int[] {
+            this.numericUpDown20.DecimalPlaces = 2;
+            this.numericUpDown20.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown17.Location = new System.Drawing.Point(241, 187);
-            this.numericUpDown17.Name = "numericUpDown17";
-            this.numericUpDown17.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown17.TabIndex = 63;
+            this.numericUpDown20.Location = new System.Drawing.Point(241, 187);
+            this.numericUpDown20.Name = "numericUpDown20";
+            this.numericUpDown20.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown20.TabIndex = 63;
             // 
             // labelRotomillAndThickOverlay
             // 
@@ -561,18 +503,18 @@
             this.labelRotomillAndThickOverlay.TabIndex = 62;
             this.labelRotomillAndThickOverlay.Text = "Rotomill and Thick Overlay";
             // 
-            // numericUpDown18
+            // numericUpDown19
             // 
-            this.numericUpDown18.DecimalPlaces = 2;
-            this.numericUpDown18.Increment = new decimal(new int[] {
+            this.numericUpDown19.DecimalPlaces = 2;
+            this.numericUpDown19.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown18.Location = new System.Drawing.Point(241, 161);
-            this.numericUpDown18.Name = "numericUpDown18";
-            this.numericUpDown18.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown18.TabIndex = 61;
+            this.numericUpDown19.Location = new System.Drawing.Point(241, 161);
+            this.numericUpDown19.Name = "numericUpDown19";
+            this.numericUpDown19.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown19.TabIndex = 61;
             // 
             // labelThickOverlay
             // 
@@ -583,18 +525,18 @@
             this.labelThickOverlay.TabIndex = 60;
             this.labelThickOverlay.Text = "Thick Overlay (3 in.)";
             // 
-            // numericUpDown19
+            // numericUpDown18
             // 
-            this.numericUpDown19.DecimalPlaces = 2;
-            this.numericUpDown19.Increment = new decimal(new int[] {
+            this.numericUpDown18.DecimalPlaces = 2;
+            this.numericUpDown18.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown19.Location = new System.Drawing.Point(241, 135);
-            this.numericUpDown19.Name = "numericUpDown19";
-            this.numericUpDown19.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown19.TabIndex = 59;
+            this.numericUpDown18.Location = new System.Drawing.Point(241, 135);
+            this.numericUpDown18.Name = "numericUpDown18";
+            this.numericUpDown18.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown18.TabIndex = 59;
             // 
             // labelColdInPlaceRecyclingOverlay
             // 
@@ -605,18 +547,18 @@
             this.labelColdInPlaceRecyclingOverlay.TabIndex = 58;
             this.labelColdInPlaceRecyclingOverlay.Text = "Cold In-Place Recycling (2 in. w/Thin Overlay)";
             // 
-            // numericUpDown20
+            // numericUpDown17
             // 
-            this.numericUpDown20.DecimalPlaces = 2;
-            this.numericUpDown20.Increment = new decimal(new int[] {
+            this.numericUpDown17.DecimalPlaces = 2;
+            this.numericUpDown17.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown20.Location = new System.Drawing.Point(241, 109);
-            this.numericUpDown20.Name = "numericUpDown20";
-            this.numericUpDown20.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown20.TabIndex = 57;
+            this.numericUpDown17.Location = new System.Drawing.Point(241, 109);
+            this.numericUpDown17.Name = "numericUpDown17";
+            this.numericUpDown17.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown17.TabIndex = 57;
             // 
             // labelRotomillAndThinOverlay
             // 
@@ -627,18 +569,18 @@
             this.labelRotomillAndThinOverlay.TabIndex = 56;
             this.labelRotomillAndThinOverlay.Text = "Rotomill and Thin Overlay";
             // 
-            // numericUpDown21
+            // numericUpDown16
             // 
-            this.numericUpDown21.DecimalPlaces = 2;
-            this.numericUpDown21.Increment = new decimal(new int[] {
+            this.numericUpDown16.DecimalPlaces = 2;
+            this.numericUpDown16.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown21.Location = new System.Drawing.Point(241, 83);
-            this.numericUpDown21.Name = "numericUpDown21";
-            this.numericUpDown21.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown21.TabIndex = 55;
+            this.numericUpDown16.Location = new System.Drawing.Point(241, 83);
+            this.numericUpDown16.Name = "numericUpDown16";
+            this.numericUpDown16.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown16.TabIndex = 55;
             // 
             // labelHotSurfaceRecycling
             // 
@@ -649,18 +591,18 @@
             this.labelHotSurfaceRecycling.TabIndex = 54;
             this.labelHotSurfaceRecycling.Text = "Hot Surface Recycling";
             // 
-            // numericUpDown22
+            // numericUpDown15
             // 
-            this.numericUpDown22.DecimalPlaces = 2;
-            this.numericUpDown22.Increment = new decimal(new int[] {
+            this.numericUpDown15.DecimalPlaces = 2;
+            this.numericUpDown15.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown22.Location = new System.Drawing.Point(241, 57);
-            this.numericUpDown22.Name = "numericUpDown22";
-            this.numericUpDown22.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown22.TabIndex = 53;
+            this.numericUpDown15.Location = new System.Drawing.Point(241, 57);
+            this.numericUpDown15.Name = "numericUpDown15";
+            this.numericUpDown15.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown15.TabIndex = 53;
             // 
             // labelHMAandThinOverlay
             // 
@@ -670,50 +612,6 @@
             this.labelHMAandThinOverlay.Size = new System.Drawing.Size(160, 13);
             this.labelHMAandThinOverlay.TabIndex = 52;
             this.labelHMAandThinOverlay.Text = "HMA (leveling) and Thin Overlay";
-            // 
-            // numericUpDown23
-            // 
-            this.numericUpDown23.DecimalPlaces = 2;
-            this.numericUpDown23.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.numericUpDown23.Location = new System.Drawing.Point(241, 32);
-            this.numericUpDown23.Name = "numericUpDown23";
-            this.numericUpDown23.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown23.TabIndex = 51;
-            // 
-            // labelThinHotOverlay
-            // 
-            this.labelThinHotOverlay.AutoSize = true;
-            this.labelThinHotOverlay.Location = new System.Drawing.Point(13, 34);
-            this.labelThinHotOverlay.Name = "labelThinHotOverlay";
-            this.labelThinHotOverlay.Size = new System.Drawing.Size(116, 13);
-            this.labelThinHotOverlay.TabIndex = 50;
-            this.labelThinHotOverlay.Text = "Thin Hot Overlay <2 in.";
-            // 
-            // numericUpDown24
-            // 
-            this.numericUpDown24.DecimalPlaces = 2;
-            this.numericUpDown24.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.numericUpDown24.Location = new System.Drawing.Point(241, 7);
-            this.numericUpDown24.Name = "numericUpDown24";
-            this.numericUpDown24.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown24.TabIndex = 49;
-            // 
-            // labelColdInPlaceRecyclingSeal
-            // 
-            this.labelColdInPlaceRecyclingSeal.AutoSize = true;
-            this.labelColdInPlaceRecyclingSeal.Location = new System.Drawing.Point(13, 9);
-            this.labelColdInPlaceRecyclingSeal.Name = "labelColdInPlaceRecyclingSeal";
-            this.labelColdInPlaceRecyclingSeal.Size = new System.Drawing.Size(210, 13);
-            this.labelColdInPlaceRecyclingSeal.TabIndex = 48;
-            this.labelColdInPlaceRecyclingSeal.Text = "Cold In-Place Recycling (2 in. w/Chip Seal)";
             // 
             // labelFormInstructions
             // 
@@ -732,6 +630,7 @@
             this.buttonSave.TabIndex = 2;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // buttonCancel
             // 
@@ -741,14 +640,117 @@
             this.buttonCancel.TabIndex = 3;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // panelDivider
+            // labelColdInPlaceRecyclingSeal
             // 
-            this.panelDivider.BackColor = System.Drawing.SystemColors.Control;
-            this.panelDivider.Location = new System.Drawing.Point(1, 0);
-            this.panelDivider.Name = "panelDivider";
-            this.panelDivider.Size = new System.Drawing.Size(10, 318);
-            this.panelDivider.TabIndex = 72;
+            this.labelColdInPlaceRecyclingSeal.AutoSize = true;
+            this.labelColdInPlaceRecyclingSeal.Location = new System.Drawing.Point(13, 9);
+            this.labelColdInPlaceRecyclingSeal.Name = "labelColdInPlaceRecyclingSeal";
+            this.labelColdInPlaceRecyclingSeal.Size = new System.Drawing.Size(210, 13);
+            this.labelColdInPlaceRecyclingSeal.TabIndex = 48;
+            this.labelColdInPlaceRecyclingSeal.Text = "Cold In-Place Recycling (2 in. w/Chip Seal)";
+            // 
+            // numericUpDown13
+            // 
+            this.numericUpDown13.DecimalPlaces = 2;
+            this.numericUpDown13.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDown13.Location = new System.Drawing.Point(241, 7);
+            this.numericUpDown13.Name = "numericUpDown13";
+            this.numericUpDown13.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown13.TabIndex = 49;
+            // 
+            // labelThinHotOverlay
+            // 
+            this.labelThinHotOverlay.AutoSize = true;
+            this.labelThinHotOverlay.Location = new System.Drawing.Point(13, 34);
+            this.labelThinHotOverlay.Name = "labelThinHotOverlay";
+            this.labelThinHotOverlay.Size = new System.Drawing.Size(116, 13);
+            this.labelThinHotOverlay.TabIndex = 50;
+            this.labelThinHotOverlay.Text = "Thin Hot Overlay <2 in.";
+            // 
+            // numericUpDown14
+            // 
+            this.numericUpDown14.DecimalPlaces = 2;
+            this.numericUpDown14.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDown14.Location = new System.Drawing.Point(241, 32);
+            this.numericUpDown14.Name = "numericUpDown14";
+            this.numericUpDown14.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown14.TabIndex = 51;
+            // 
+            // labelColdPatch
+            // 
+            this.labelColdPatch.AutoSize = true;
+            this.labelColdPatch.Location = new System.Drawing.Point(3, 33);
+            this.labelColdPatch.Name = "labelColdPatch";
+            this.labelColdPatch.Size = new System.Drawing.Size(59, 13);
+            this.labelColdPatch.TabIndex = 26;
+            this.labelColdPatch.Text = "Cold Patch";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.DecimalPlaces = 2;
+            this.numericUpDown2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDown2.Location = new System.Drawing.Point(163, 31);
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown2.TabIndex = 27;
+            // 
+            // labelDigoutAndHotPatch
+            // 
+            this.labelDigoutAndHotPatch.AutoSize = true;
+            this.labelDigoutAndHotPatch.Location = new System.Drawing.Point(3, 58);
+            this.labelDigoutAndHotPatch.Name = "labelDigoutAndHotPatch";
+            this.labelDigoutAndHotPatch.Size = new System.Drawing.Size(110, 13);
+            this.labelDigoutAndHotPatch.TabIndex = 28;
+            this.labelDigoutAndHotPatch.Text = "Digout and Hot Patch";
+            // 
+            // numericUpDown3
+            // 
+            this.numericUpDown3.DecimalPlaces = 2;
+            this.numericUpDown3.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDown3.Location = new System.Drawing.Point(163, 56);
+            this.numericUpDown3.Name = "numericUpDown3";
+            this.numericUpDown3.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown3.TabIndex = 29;
+            // 
+            // labelHighPerformanceColdPatch
+            // 
+            this.labelHighPerformanceColdPatch.AutoSize = true;
+            this.labelHighPerformanceColdPatch.Location = new System.Drawing.Point(3, 84);
+            this.labelHighPerformanceColdPatch.Name = "labelHighPerformanceColdPatch";
+            this.labelHighPerformanceColdPatch.Size = new System.Drawing.Size(147, 13);
+            this.labelHighPerformanceColdPatch.TabIndex = 30;
+            this.labelHighPerformanceColdPatch.Text = "High Performance Cold Patch";
+            // 
+            // numericUpDown4
+            // 
+            this.numericUpDown4.DecimalPlaces = 2;
+            this.numericUpDown4.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDown4.Location = new System.Drawing.Point(163, 82);
+            this.numericUpDown4.Name = "numericUpDown4";
+            this.numericUpDown4.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown4.TabIndex = 31;
             // 
             // FormTreatmentCosts
             // 
@@ -777,22 +779,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown24)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown23)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown22)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown22)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown23)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown24)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -818,41 +820,41 @@
         private System.Windows.Forms.Label labelHighMineralAsphaltEmulsion;
         private System.Windows.Forms.NumericUpDown numericUpDown5;
         private System.Windows.Forms.Label labelFogCoat;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label labelCrackSeal;
+        private System.Windows.Forms.NumericUpDown numericUpDown24;
+        private System.Windows.Forms.Label labelBaseAndPavementReplacement;
+        private System.Windows.Forms.NumericUpDown numericUpDown23;
+        private System.Windows.Forms.Label labelFullDepthReclamationAndOverlay;
+        private System.Windows.Forms.NumericUpDown numericUpDown22;
+        private System.Windows.Forms.Label labelBaseRepairAndPavementReplacement;
+        private System.Windows.Forms.NumericUpDown numericUpDown21;
+        private System.Windows.Forms.Label labelColdRecyclingAndThickOverlay;
+        private System.Windows.Forms.NumericUpDown numericUpDown20;
+        private System.Windows.Forms.Label labelRotomillAndThickOverlay;
+        private System.Windows.Forms.NumericUpDown numericUpDown19;
+        private System.Windows.Forms.Label labelThickOverlay;
+        private System.Windows.Forms.NumericUpDown numericUpDown18;
+        private System.Windows.Forms.Label labelColdInPlaceRecyclingOverlay;
+        private System.Windows.Forms.NumericUpDown numericUpDown17;
+        private System.Windows.Forms.Label labelRotomillAndThinOverlay;
+        private System.Windows.Forms.NumericUpDown numericUpDown16;
+        private System.Windows.Forms.Label labelHotSurfaceRecycling;
+        private System.Windows.Forms.NumericUpDown numericUpDown15;
+        private System.Windows.Forms.Label labelHMAandThinOverlay;
+        private System.Windows.Forms.Label labelFormInstructions;
+        private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Panel panelDivider;
         private System.Windows.Forms.NumericUpDown numericUpDown4;
         private System.Windows.Forms.Label labelHighPerformanceColdPatch;
         private System.Windows.Forms.NumericUpDown numericUpDown3;
         private System.Windows.Forms.Label labelDigoutAndHotPatch;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.Label labelColdPatch;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label labelCrackSeal;
-        private System.Windows.Forms.NumericUpDown numericUpDown13;
-        private System.Windows.Forms.Label labelBaseAndPavementReplacement;
         private System.Windows.Forms.NumericUpDown numericUpDown14;
-        private System.Windows.Forms.Label labelFullDepthReclamationAndOverlay;
-        private System.Windows.Forms.NumericUpDown numericUpDown15;
-        private System.Windows.Forms.Label labelBaseRepairAndPavementReplacement;
-        private System.Windows.Forms.NumericUpDown numericUpDown16;
-        private System.Windows.Forms.Label labelColdRecyclingAndThickOverlay;
-        private System.Windows.Forms.NumericUpDown numericUpDown17;
-        private System.Windows.Forms.Label labelRotomillAndThickOverlay;
-        private System.Windows.Forms.NumericUpDown numericUpDown18;
-        private System.Windows.Forms.Label labelThickOverlay;
-        private System.Windows.Forms.NumericUpDown numericUpDown19;
-        private System.Windows.Forms.Label labelColdInPlaceRecyclingOverlay;
-        private System.Windows.Forms.NumericUpDown numericUpDown20;
-        private System.Windows.Forms.Label labelRotomillAndThinOverlay;
-        private System.Windows.Forms.NumericUpDown numericUpDown21;
-        private System.Windows.Forms.Label labelHotSurfaceRecycling;
-        private System.Windows.Forms.NumericUpDown numericUpDown22;
-        private System.Windows.Forms.Label labelHMAandThinOverlay;
-        private System.Windows.Forms.NumericUpDown numericUpDown23;
         private System.Windows.Forms.Label labelThinHotOverlay;
-        private System.Windows.Forms.NumericUpDown numericUpDown24;
+        private System.Windows.Forms.NumericUpDown numericUpDown13;
         private System.Windows.Forms.Label labelColdInPlaceRecyclingSeal;
-        private System.Windows.Forms.Label labelFormInstructions;
-        private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Panel panelDivider;
     }
 }
