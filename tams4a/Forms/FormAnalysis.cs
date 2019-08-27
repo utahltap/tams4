@@ -9,18 +9,20 @@ namespace tams4a.Forms
     public partial class FormAnalysis : Form
     {
         private DataTable roads;
+        private DataTable treatments;
         private List<CheckBox> checkBoxes = new List<CheckBox>();
         private List<ComboBox> comboBoxTreatments = new List<ComboBox>();
         private Dictionary<int, double> rslArea = new Dictionary<int, double>();
-        private Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
         private Dictionary<NumericUpDown, decimal> costBreakdown = new Dictionary<NumericUpDown, decimal>();
         private Dictionary<NumericUpDown, decimal> areaBreakdown = new Dictionary<NumericUpDown, decimal>();
- 
+        private TamsProject Project;
         private double estBudget = 0.00;
+        public Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
 
-        public FormAnalysis(TamsProject Project)
+        public FormAnalysis(TamsProject theProject)
         {
             InitializeComponent();
+            Project = theProject;
             roads = Database.GetDataByQuery(Project.conn, "SELECT rsl, width, length FROM road GROUP BY TAMSID;");
             checkBoxes.Add(checkBox0);
             checkBoxes.Add(checkBox1);
@@ -68,29 +70,29 @@ namespace tams4a.Forms
             {
                 rslArea.Add(i, 0.0);
             }
+            treatments = Database.GetDataByQuery(Project.conn, "SELECT id, name, cost FROM treatments;");
             pricePerYard.Add("", 0.0);
-            pricePerYard.Add("Crack Seal", 0.45);
-            pricePerYard.Add("Fog Coat", 0.68);
-            pricePerYard.Add("High Mineral Asphalt Emulsion", 1.80);
-            pricePerYard.Add("Sand Seal", 0.98);
-            pricePerYard.Add("Scrub Seal", 1.50);
-            pricePerYard.Add("Single Chip Seal", 1.95);
-            pricePerYard.Add("Slurry Seal", 2.63);
-            pricePerYard.Add("Microsurfacing", 3.60);
-            pricePerYard.Add("Plant Mix Seal", 8.40);
-            pricePerYard.Add("Cold In-place Recycling (2 in. with chip seal)", 7.50);
-            pricePerYard.Add("Thin Hot Mix Overlay (<2 in.)", 10.13);
-            pricePerYard.Add("HMA (leveling) & Overlay (<2 in.)", 11.25);
-            pricePerYard.Add("Hot Surface Recycling", 7.50);
-            pricePerYard.Add("Rotomill & Overlay (<2 in.)", 12.60);
-            pricePerYard.Add("Cold In-place Recycling (2/2 in.)", 15.45);
-            pricePerYard.Add("Thick Overlay (3 in.)", 15.00);
-            pricePerYard.Add("Rotomill & Thick Overlay (3 in.)", 16.50);
-            pricePerYard.Add("Base Repair/ Pavement Replacement", 18.00);
-            pricePerYard.Add("Cold Recycling & Overlay (3/3 in.)", 16.73);
-            pricePerYard.Add("Full Depth Reclamation & Overlay (3/3 in.)", 19.88);
-            pricePerYard.Add("Base/ Pavement Replacement (3/3/6 in.)", 28.50);
-
+            pricePerYard.Add("Crack Seal", Convert.ToDouble(treatments.Rows[0]["cost"]));
+            pricePerYard.Add("Fog Coat", Convert.ToDouble(treatments.Rows[4]["cost"]));
+            pricePerYard.Add("High Mineral Asphalt Emulsion", Convert.ToDouble(treatments.Rows[5]["cost"]));
+            pricePerYard.Add("Sand Seal", Convert.ToDouble(treatments.Rows[6]["cost"]));
+            pricePerYard.Add("Scrub Seal", Convert.ToDouble(treatments.Rows[7]["cost"]));
+            pricePerYard.Add("Single Chip Seal", Convert.ToDouble(treatments.Rows[8]["cost"]));
+            pricePerYard.Add("Slurry Seal", Convert.ToDouble(treatments.Rows[9]["cost"]));
+            pricePerYard.Add("Microsurfacing", Convert.ToDouble(treatments.Rows[10]["cost"]));
+            pricePerYard.Add("Plant Mix Seal", Convert.ToDouble(treatments.Rows[11]["cost"]));
+            pricePerYard.Add("Cold In-place Recycling (2 in. with chip seal)", Convert.ToDouble(treatments.Rows[12]["cost"]));
+            pricePerYard.Add("Thin Hot Mix Overlay (<2 in.)", Convert.ToDouble(treatments.Rows[13]["cost"]));
+            pricePerYard.Add("HMA (leveling) & Overlay (<2 in.)", Convert.ToDouble(treatments.Rows[14]["cost"]));
+            pricePerYard.Add("Hot Surface Recycling", Convert.ToDouble(treatments.Rows[15]["cost"]));
+            pricePerYard.Add("Rotomill & Overlay (<2 in.)", Convert.ToDouble(treatments.Rows[16]["cost"]));
+            pricePerYard.Add("Cold In-place Recycling (2/2 in.)", Convert.ToDouble(treatments.Rows[17]["cost"]));
+            pricePerYard.Add("Thick Overlay (3 in.)", Convert.ToDouble(treatments.Rows[18]["cost"]));
+            pricePerYard.Add("Rotomill & Thick Overlay (3 in.)", Convert.ToDouble(treatments.Rows[19]["cost"]));
+            pricePerYard.Add("Base Repair/ Pavement Replacement", Convert.ToDouble(treatments.Rows[20]["cost"]));
+            pricePerYard.Add("Full Depth Reclamation & Overlay (3/3 in.)", Convert.ToDouble(treatments.Rows[21]["cost"]));
+            pricePerYard.Add("Base/ Pavement Replacement (3/3/6 in.)", Convert.ToDouble(treatments.Rows[22]["cost"]));
+            pricePerYard.Add("Cold Recycling & Overlay (3/3 in.)", Convert.ToDouble(treatments.Rows[23]["cost"]));
         }
 
         private void checkBox0_CheckedChanged(object sender, EventArgs e)
@@ -1699,7 +1701,7 @@ namespace tams4a.Forms
 
         private void buttonTreatmentCosts_Click(object sender, EventArgs e)
         {
-            FormTreatmentCosts treatmentCosts = new FormTreatmentCosts();
+            FormTreatmentCosts treatmentCosts = new FormTreatmentCosts(Project, pricePerYard, this);
             treatmentCosts.ShowDialog();
         }
     }
