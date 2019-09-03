@@ -23,7 +23,13 @@ namespace tams4a.Classes.Other
             DataTable outputTable = new DataTable();
             foreach (string key in mapping.Keys)
             {
-                outputTable.Columns.Add(key);
+                if (key == "ID")
+                {
+                    int Integer = 0;
+                    Type typeInt = Integer.GetType();
+                    outputTable.Columns.Add(key, typeInt);
+                }
+                else outputTable.Columns.Add(key);
             }
             try
             {

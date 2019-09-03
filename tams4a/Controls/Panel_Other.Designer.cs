@@ -40,6 +40,7 @@
             this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMoveLandmark = new System.Windows.Forms.ToolStripButton();
             this.groupBoxType = new System.Windows.Forms.GroupBox();
             this.textBoxAddress = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -53,7 +54,6 @@
             this.labelObject = new System.Windows.Forms.Label();
             this.labelSurveyDate = new System.Windows.Forms.Label();
             this.groupBoxProperties = new System.Windows.Forms.GroupBox();
-            this.toolStripMoveLandmark = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             this.groupBoxType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
@@ -161,6 +161,16 @@
             this.toolStripButtonRemove.Text = "Remove Other";
             this.toolStripButtonRemove.ToolTipText = "Remove Landmark";
             // 
+            // toolStripMoveLandmark
+            // 
+            this.toolStripMoveLandmark.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripMoveLandmark.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMoveLandmark.Image")));
+            this.toolStripMoveLandmark.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripMoveLandmark.Name = "toolStripMoveLandmark";
+            this.toolStripMoveLandmark.Size = new System.Drawing.Size(23, 22);
+            this.toolStripMoveLandmark.Text = "toolStripMoveLandmark";
+            this.toolStripMoveLandmark.ToolTipText = "Move Landmark";
+            // 
             // groupBoxType
             // 
             this.groupBoxType.Controls.Add(this.textBoxAddress);
@@ -212,7 +222,7 @@
             // labelPhoto
             // 
             this.labelPhoto.AutoSize = true;
-            this.labelPhoto.Location = new System.Drawing.Point(14, 108);
+            this.labelPhoto.Location = new System.Drawing.Point(11, 108);
             this.labelPhoto.Name = "labelPhoto";
             this.labelPhoto.Size = new System.Drawing.Size(54, 13);
             this.labelPhoto.TabIndex = 22;
@@ -248,6 +258,7 @@
             this.labelDescription.Location = new System.Drawing.Point(11, 86);
             this.labelDescription.Name = "labelDescription";
             this.labelDescription.Size = new System.Drawing.Size(60, 13);
+            this.labelDescription.TabIndex = 25;
             this.labelDescription.Text = "Description";
             // 
             // comboBoxObject
@@ -292,16 +303,6 @@
             this.groupBoxProperties.TabIndex = 2;
             this.groupBoxProperties.TabStop = false;
             this.groupBoxProperties.Text = "Properties";
-            // 
-            // toolStripMoveLandmark
-            // 
-            this.toolStripMoveLandmark.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripMoveLandmark.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMoveLandmark.Image")));
-            this.toolStripMoveLandmark.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripMoveLandmark.Name = "toolStripMoveLandmark";
-            this.toolStripMoveLandmark.Size = new System.Drawing.Size(23, 22);
-            this.toolStripMoveLandmark.Text = "toolStripMoveLandmark";
-            this.toolStripMoveLandmark.ToolTipText = "Move Landmark";
             // 
             // Panel_Other
             // 

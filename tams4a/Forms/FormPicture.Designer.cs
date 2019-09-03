@@ -35,7 +35,9 @@
             // 
             // buttonOK
             // 
+            this.buttonOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonOK.Location = new System.Drawing.Point(357, 552);
+            this.buttonOK.MaximumSize = new System.Drawing.Size(101, 33);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(101, 33);
             this.buttonOK.TabIndex = 1;
@@ -45,6 +47,9 @@
             // 
             // pictureRoad
             // 
+            this.pictureRoad.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureRoad.Location = new System.Drawing.Point(0, 0);
             this.pictureRoad.Name = "pictureRoad";
             this.pictureRoad.Size = new System.Drawing.Size(854, 513);
@@ -60,7 +65,7 @@
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.pictureRoad);
             this.Name = "FormPicture";
-            this.Text = "FormPicture";
+            this.Text = "Picture";
             ((System.ComponentModel.ISupportInitialize)(this.pictureRoad)).EndInit();
             this.ResumeLayout(false);
 
