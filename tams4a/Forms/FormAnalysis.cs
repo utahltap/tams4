@@ -11,19 +11,21 @@ namespace tams4a.Forms
         private DataTable roads;
         private DataTable treatments;
         private List<CheckBox> checkBoxes = new List<CheckBox>();
+        private List<ComboBox> comboBoxFunctionalClassifications = new List<ComboBox>();
         private List<ComboBox> comboBoxTreatments = new List<ComboBox>();
         private Dictionary<int, double> rslArea = new Dictionary<int, double>();
         private Dictionary<NumericUpDown, decimal> costBreakdown = new Dictionary<NumericUpDown, decimal>();
         private Dictionary<NumericUpDown, decimal> areaBreakdown = new Dictionary<NumericUpDown, decimal>();
         private TamsProject Project;
         private double estBudget = 0.00;
+        private bool beingHandled = false;
         public Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
 
         public FormAnalysis(TamsProject theProject)
         {
             InitializeComponent();
             Project = theProject;
-            roads = Database.GetDataByQuery(Project.conn, "SELECT rsl, width, length FROM road GROUP BY TAMSID;");
+            roads = Database.GetDataByQuery(Project.conn, "SELECT rsl, width, length, type FROM road GROUP BY TAMSID;");
             checkBoxes.Add(checkBox0);
             checkBoxes.Add(checkBox1);
             checkBoxes.Add(checkBox2);
@@ -45,6 +47,27 @@ namespace tams4a.Forms
             checkBoxes.Add(checkBox18);
             checkBoxes.Add(checkBox19);
             checkBoxes.Add(checkBox20);
+            comboBoxFunctionalClassifications.Add(comboBoxType0);
+            comboBoxFunctionalClassifications.Add(comboBoxType1);
+            comboBoxFunctionalClassifications.Add(comboBoxType2);
+            comboBoxFunctionalClassifications.Add(comboBoxType3);
+            comboBoxFunctionalClassifications.Add(comboBoxType4);
+            comboBoxFunctionalClassifications.Add(comboBoxType5);
+            comboBoxFunctionalClassifications.Add(comboBoxType6);
+            comboBoxFunctionalClassifications.Add(comboBoxType7);
+            comboBoxFunctionalClassifications.Add(comboBoxType8);
+            comboBoxFunctionalClassifications.Add(comboBoxType9);
+            comboBoxFunctionalClassifications.Add(comboBoxType10);
+            comboBoxFunctionalClassifications.Add(comboBoxType11);
+            comboBoxFunctionalClassifications.Add(comboBoxType12);
+            comboBoxFunctionalClassifications.Add(comboBoxType13);
+            comboBoxFunctionalClassifications.Add(comboBoxType14);
+            comboBoxFunctionalClassifications.Add(comboBoxType15);
+            comboBoxFunctionalClassifications.Add(comboBoxType16);
+            comboBoxFunctionalClassifications.Add(comboBoxType17);
+            comboBoxFunctionalClassifications.Add(comboBoxType18);
+            comboBoxFunctionalClassifications.Add(comboBoxType19);
+            comboBoxFunctionalClassifications.Add(comboBoxType20);       
             comboBoxTreatments.Add(comboBoxTreatment0);
             comboBoxTreatments.Add(comboBoxTreatment1);
             comboBoxTreatments.Add(comboBoxTreatment2);
@@ -97,147 +120,147 @@ namespace tams4a.Forms
 
         private void checkBox0_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown0.Enabled = checkBox0.Checked;
+            comboBoxType0.Enabled = checkBox0.Checked;
             comboBox0.Enabled = checkBox0.Checked;
             comboBoxTreatment0.Enabled = checkBox0.Checked;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown1.Enabled = checkBox1.Checked;
+            comboBoxType1.Enabled = checkBox1.Checked;
             comboBox1.Enabled = checkBox1.Checked;
             comboBoxTreatment1.Enabled = checkBox1.Checked;
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown2.Enabled = checkBox2.Checked;
+            comboBoxType2.Enabled = checkBox2.Checked;
             comboBox2.Enabled = checkBox2.Checked;
             comboBoxTreatment2.Enabled = checkBox2.Checked;
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown3.Enabled = checkBox3.Checked;
+            comboBoxType3.Enabled = checkBox3.Checked;
             comboBox3.Enabled = checkBox3.Checked;
             comboBoxTreatment3.Enabled = checkBox3.Checked;
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown4.Enabled = checkBox4.Checked;
+            comboBoxType4.Enabled = checkBox4.Checked;
             comboBox4.Enabled = checkBox4.Checked;
             comboBoxTreatment4.Enabled = checkBox4.Checked;
         }
 
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown5.Enabled = checkBox5.Checked;
+            comboBoxType5.Enabled = checkBox5.Checked;
             comboBox5.Enabled = checkBox5.Checked;
             comboBoxTreatment5.Enabled = checkBox5.Checked;
         }
 
         private void checkBox6_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown6.Enabled = checkBox6.Checked;
+            comboBoxType6.Enabled = checkBox6.Checked;
             comboBox6.Enabled = checkBox6.Checked;
             comboBoxTreatment6.Enabled = checkBox6.Checked;
         }
 
         private void checkBox7_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown7.Enabled = checkBox7.Checked;
+            comboBoxType7.Enabled = checkBox7.Checked;
             comboBox7.Enabled = checkBox7.Checked;
             comboBoxTreatment7.Enabled = checkBox7.Checked;
         }
 
         private void checkBox8_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown8.Enabled = checkBox8.Checked;
+            comboBoxType8.Enabled = checkBox8.Checked;
             comboBox8.Enabled = checkBox8.Checked;
             comboBoxTreatment8.Enabled = checkBox8.Checked;
         }
 
         private void checkBox9_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown9.Enabled = checkBox9.Checked;
+            comboBoxType9.Enabled = checkBox9.Checked;
             comboBox9.Enabled = checkBox9.Checked;
             comboBoxTreatment9.Enabled = checkBox9.Checked;
         }
 
         private void checkBox10_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown10.Enabled = checkBox10.Checked;
+            comboBoxType10.Enabled = checkBox10.Checked;
             comboBox10.Enabled = checkBox10.Checked;
             comboBoxTreatment10.Enabled = checkBox10.Checked;
         }
 
         private void checkBox11_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown11.Enabled = checkBox11.Checked;
+            comboBoxType11.Enabled = checkBox11.Checked;
             comboBox11.Enabled = checkBox11.Checked;
             comboBoxTreatment11.Enabled = checkBox11.Checked;
         }
 
         private void checkBox12_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown12.Enabled = checkBox12.Checked;
+            comboBoxType12.Enabled = checkBox12.Checked;
             comboBox12.Enabled = checkBox12.Checked;
             comboBoxTreatment12.Enabled = checkBox12.Checked;
         }
 
         private void checkBox13_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown13.Enabled = checkBox13.Checked;
+            comboBoxType13.Enabled = checkBox13.Checked;
             comboBox13.Enabled = checkBox13.Checked;
             comboBoxTreatment13.Enabled = checkBox13.Checked;
         }
 
         private void checkBox14_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown14.Enabled = checkBox14.Checked;
+            comboBoxType14.Enabled = checkBox14.Checked;
             comboBox14.Enabled = checkBox14.Checked;
             comboBoxTreatment14.Enabled = checkBox14.Checked;
         }
 
         private void checkBox15_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown15.Enabled = checkBox15.Checked;
+            comboBoxType15.Enabled = checkBox15.Checked;
             comboBox15.Enabled = checkBox15.Checked;
             comboBoxTreatment15.Enabled = checkBox15.Checked;
         }
 
         private void checkBox16_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown16.Enabled = checkBox16.Checked;
+            comboBoxType16.Enabled = checkBox16.Checked;
             comboBox16.Enabled = checkBox16.Checked;
             comboBoxTreatment16.Enabled = checkBox16.Checked;
         }
 
         private void checkBox17_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown17.Enabled = checkBox17.Checked;
+            comboBoxType17.Enabled = checkBox17.Checked;
             comboBox17.Enabled = checkBox17.Checked;
             comboBoxTreatment17.Enabled = checkBox17.Checked;
         }
 
         private void checkBox18_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown18.Enabled = checkBox18.Checked;
+            comboBoxType18.Enabled = checkBox18.Checked;
             comboBox18.Enabled = checkBox18.Checked;
             comboBoxTreatment18.Enabled = checkBox18.Checked;
         }
 
         private void checkBox19_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown19.Enabled = checkBox19.Checked;
+            comboBoxType19.Enabled = checkBox19.Checked;
             comboBox19.Enabled = checkBox19.Checked;
             comboBoxTreatment19.Enabled = checkBox19.Checked;
         }
 
         private void checkBox20_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown20.Enabled = checkBox20.Checked;
+            comboBoxType20.Enabled = checkBox20.Checked;
             comboBox20.Enabled = checkBox20.Checked;
             comboBoxTreatment20.Enabled = checkBox20.Checked;
         }
@@ -1541,21 +1564,26 @@ namespace tams4a.Forms
 
             double totalArea = 0;
             double totalCost = 0;
-            foreach (DataRow row in roads.Rows)
+
+            foreach (CheckBox checkBox in checkBoxes)
             {
-                int i = 0;
-                foreach (CheckBox checkBox in checkBoxes)
+                if (!checkBox.Checked) continue;
+
+                string sql = "SELECT width, length, rsl FROM road WHERE rsl = " + checkBox.Text;
+                if (comboBoxFunctionalClassifications[Util.ToInt(checkBox.Text)].Text != "")
                 {
-                    if (checkBox.Checked && Util.ToInt(row["rsl"].ToString()) == i)
-                    {
-                        double area = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
-                        rslArea[i] += area;
-                        totalArea += area;
-                        totalCost += pricePerYard[comboBoxTreatments[i].Text] * (area / 9);
-                    }
-                    i++;
+                    sql += " AND type = '" + comboBoxFunctionalClassifications[Util.ToInt(checkBox.Text)].Text + "';";
+                }
+                DataTable rslAreas = Database.GetDataByQuery(Project.conn, sql);
+                foreach (DataRow row in rslAreas.Rows)
+                {
+                    double area = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
+                    rslArea[Util.ToInt(checkBox.Text)] += area;
+                    totalArea += area;
+                    totalCost += pricePerYard[comboBoxTreatments[Util.ToInt(checkBox.Text)].Text] * (area / 9);
                 }
             }
+            
             double roundedCost = Math.Round(totalCost, 2);
 
             if (roundedCost > estBudget)
@@ -1567,6 +1595,7 @@ namespace tams4a.Forms
             {
                 labelOverBudget.Visible = false;
             }
+
             textBoxTotalArea.Text = String.Format("{0:n0}", (Math.Round(totalArea/9, 2))) + " yds\u00b2"; 
             textBoxTotalCost.Text = "$" + String.Format("{0:n0}", roundedCost);
 
@@ -1575,31 +1604,40 @@ namespace tams4a.Forms
                 if (rslArea[i] > 0)
                 {
                     RowStyle temp = tableBudgetControl.RowStyles[0];
-                    tableBudgetControl.RowCount++;
-                    tableBudgetControl.RowStyles.Add(new RowStyle(temp.SizeType, temp.Height));
                     tableBudgetControl.Height += (int)(temp.Height - 20);
-                    tableBudgetControl.Controls.Add(new TextBox() { Text = i.ToString(), ReadOnly = true }, 0, tableBudgetControl.RowCount - 1);
+                    tableBudgetControl.RowStyles.Add(new RowStyle(temp.SizeType, temp.Height));
+                    tableBudgetControl.Controls.Add(new TextBox() { Text = i.ToString(), ReadOnly = true }, 0, tableBudgetControl.RowCount++);
                     NumericUpDown budgetUpDown = new NumericUpDown()
                     {
                         Increment = 100,
                         Minimum = 0,
-                        Maximum = 999999999999,
+                        Maximum = (decimal)(pricePerYard[comboBoxTreatments[i].Text] * (rslArea[i] / 9)),
                         Value = (decimal)(pricePerYard[comboBoxTreatments[i].Text] * (rslArea[i] / 9)),
                     };
                     NumericUpDown areaUpDown = new NumericUpDown()
                     {
                         Increment = 100,
                         Minimum = 0,
-                        Maximum = 999999999999,
+                        Maximum = (decimal)(rslArea[i] / 9),
                         Value = (decimal)(rslArea[i] / 9)
                     };
+                    NumericUpDown percentCoveredUpDown = new NumericUpDown()
+                    {
+                        Increment = 5,
+                        Minimum = 0,
+                        Maximum = 100,
+                        Value = 100
+                    };
+
                     costBreakdown[budgetUpDown] = budgetUpDown.Value;
                     areaBreakdown[areaUpDown] = areaUpDown.Value;
                     double costPerYard = (double)(budgetUpDown.Value / areaUpDown.Value);
-                    budgetUpDown.ValueChanged += new EventHandler(delegate (object _sender, EventArgs _e) { BudgetUpDown_ValueChanged(sender, e, costPerYard, budgetUpDown, areaUpDown); });
-                    areaUpDown.ValueChanged += new EventHandler(delegate (object _sender, EventArgs _e) { AreaUpDown_ValueChanged(sender, e, costPerYard, budgetUpDown, areaUpDown); });
+                    budgetUpDown.ValueChanged += new EventHandler(delegate (object _sender, EventArgs _e) { BudgetUpDown_ValueChanged(sender, e, costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown); });
+                    areaUpDown.ValueChanged += new EventHandler(delegate (object _sender, EventArgs _e) { AreaUpDown_ValueChanged(sender, e, costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown); });
+                    percentCoveredUpDown.ValueChanged += new EventHandler(delegate (object _sender, EventArgs _e) { PercentCoveredUpDown_ValueChanged(sender, e, costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown); } );
                     tableBudgetControl.Controls.Add(budgetUpDown, 1, tableBudgetControl.RowCount - 1);
                     tableBudgetControl.Controls.Add(areaUpDown, 2, tableBudgetControl.RowCount - 1);
+                    tableBudgetControl.Controls.Add(percentCoveredUpDown, 3, tableBudgetControl.RowCount - 1);
                 }
             }
             tableBudgetControl.Visible = true;
@@ -1609,13 +1647,61 @@ namespace tams4a.Forms
             }
         }
 
-        private void BudgetUpDown_ValueChanged(object sender, EventArgs e, double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown)
+        private void BudgetUpDown_ValueChanged(object sender, EventArgs e, double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown, NumericUpDown percentCoveredUpDown)
         {
-            decimal newArea = (decimal)((double)budgetUpDown.Value / costPerYard);
-            areaUpDown.Value = newArea;
+            handleNumericUpDownChanges(costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown, "budget");
+        }
+
+        private void AreaUpDown_ValueChanged(object sender, EventArgs e, double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown, NumericUpDown percentCoveredUpDown)
+        {
+            handleNumericUpDownChanges(costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown, "area");
+        }
+
+        private void PercentCoveredUpDown_ValueChanged(object sender, EventArgs e, double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown, NumericUpDown percentCoveredUpDown)
+        {
+            handleNumericUpDownChanges(costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown, "percent");
+        }
+
+        private void handleNumericUpDownChanges(double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown, NumericUpDown percentCoveredUpDown, string caller)
+        {
+            if (beingHandled) return;
+            beingHandled = true;
+
+            if (caller == "area")
+            {
+                decimal newCost = (decimal)((double)areaUpDown.Value * costPerYard);
+                decimal newPercentCovered = (decimal)(((double)areaUpDown.Value / (double)areaUpDown.Maximum) * 100);
+                budgetUpDown.Value = newCost;
+                percentCoveredUpDown.Value = newPercentCovered;
+            }
+
+            if (caller == "budget")
+            {
+                decimal newArea = (decimal)((double)budgetUpDown.Value / costPerYard);
+                decimal newPercentCovered = (decimal)(((double)newArea / (double)areaUpDown.Maximum) * 100);
+                areaUpDown.Value = newArea;
+                percentCoveredUpDown.Value = newPercentCovered;
+            }
+
+            if (caller == "percent")
+            {
+                decimal newArea = (decimal)((double)areaUpDown.Maximum * (((double)percentCoveredUpDown.Value) / 100));
+                decimal newCost = (decimal)((double)newArea * costPerYard);
+                areaUpDown.Value = newArea;
+                budgetUpDown.Value = newCost;
+            }
+
+            areaBreakdown[areaUpDown] = areaUpDown.Value;
+            decimal totalArea = 0;
+            foreach (decimal area in areaBreakdown.Values)
+            {
+                totalArea += area;
+            }
+            textBoxTotalArea.Text = String.Format("{0:n0}", (Math.Round(totalArea, 2))) + " yds\u00b2";
+
             costBreakdown[budgetUpDown] = budgetUpDown.Value;
             decimal totalCost = 0;
-            foreach(decimal price in costBreakdown.Values)
+            foreach (decimal price in costBreakdown.Values)
             {
                 totalCost += price;
             }
@@ -1629,19 +1715,8 @@ namespace tams4a.Forms
             {
                 labelOverBudget.Visible = false;
             }
-        }
 
-        private void AreaUpDown_ValueChanged(object sender, EventArgs e, double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown)
-        {
-            decimal newCost = (decimal)((double)areaUpDown.Value * costPerYard);
-            budgetUpDown.Value = newCost;
-            areaBreakdown[areaUpDown] = areaUpDown.Value;
-            decimal totalArea = 0;
-            foreach (decimal area in areaBreakdown.Values)
-            {
-                totalArea += area;
-            }
-            textBoxTotalArea.Text = String.Format("{0:n0}", (Math.Round(totalArea, 2))) + " yds\u00b2";
+            beingHandled = false;
         }
 
         private void clearBudgetControlTable()
@@ -1650,18 +1725,20 @@ namespace tams4a.Forms
             tableBudgetControl.RowCount = 1;
             tableBudgetControl.Controls.Clear();
             tableBudgetControl.RowStyles.Clear();
-            tableBudgetControl.ColumnCount = 3;
-            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30.40541F));
-            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 69.5946F));
-            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 103F));
-            tableBudgetControl.Controls.Add(labelAreaCovered, 2, 0);
+            tableBudgetControl.ColumnCount = 4;
+            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 40F));
+            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 95F));
+            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 95F));
+            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 70F));
             tableBudgetControl.Controls.Add(labelRSLx, 0, 0);
             tableBudgetControl.Controls.Add(labelBudgetUsed, 1, 0);
+            tableBudgetControl.Controls.Add(labelAreaCovered, 2, 0);
+            tableBudgetControl.Controls.Add(labelPercentConvered, 3, 0);
             tableBudgetControl.Location = new System.Drawing.Point(14, 95);
             tableBudgetControl.Name = "tableBudgetControl";
             tableBudgetControl.RowCount = 1;
             tableBudgetControl.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableBudgetControl.Size = new System.Drawing.Size(247, 15);
+            tableBudgetControl.Size = new System.Drawing.Size(300, 15);
             tableBudgetControl.TabIndex = 32;
             tableBudgetControl.AutoScroll = true;
         }
@@ -1704,5 +1781,6 @@ namespace tams4a.Forms
             FormTreatmentCosts treatmentCosts = new FormTreatmentCosts(Project, pricePerYard, this);
             treatmentCosts.ShowDialog();
         }
+
     }
 }
