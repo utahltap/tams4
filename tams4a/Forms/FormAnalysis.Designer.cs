@@ -50,28 +50,28 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.groupBoxPrority = new System.Windows.Forms.GroupBox();
-            this.numericUpDown0 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown20 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown19 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown18 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown17 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown16 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown11 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown10 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.groupBoxFunctionalClassification = new System.Windows.Forms.GroupBox();
+            this.comboBoxType0 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType20 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType19 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType18 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType17 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType16 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType15 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType14 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType13 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType12 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType11 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType10 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType9 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType8 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType7 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType6 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType5 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType4 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType3 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType1 = new System.Windows.Forms.ComboBox();
             this.panelRSLPriority = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBoxTreatment0 = new System.Windows.Forms.ComboBox();
@@ -123,37 +123,17 @@
             this.textBoxBudget = new System.Windows.Forms.TextBox();
             this.labelBudget = new System.Windows.Forms.Label();
             this.panelCalculator = new System.Windows.Forms.Panel();
-            this.tableBudgetControl = new System.Windows.Forms.TableLayoutPanel();
-            this.labelAreaCovered = new System.Windows.Forms.Label();
-            this.labelRSLx = new System.Windows.Forms.Label();
-            this.labelBudgetUsed = new System.Windows.Forms.Label();
             this.labelOverBudget = new System.Windows.Forms.Label();
             this.labelTotalCost = new System.Windows.Forms.Label();
             this.labelArea = new System.Windows.Forms.Label();
             this.buttonTreatmentCosts = new System.Windows.Forms.Button();
+            this.labelBudgetUsed = new System.Windows.Forms.Label();
+            this.labelRSLx = new System.Windows.Forms.Label();
+            this.labelAreaCovered = new System.Windows.Forms.Label();
+            this.tableBudgetControl = new System.Windows.Forms.TableLayoutPanel();
+            this.labelPercentConvered = new System.Windows.Forms.Label();
             this.groupBoxRSL.SuspendLayout();
-            this.groupBoxPrority.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown0)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.groupBoxFunctionalClassification.SuspendLayout();
             this.panelRSLPriority.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBoxYearsToAdd.SuspendLayout();
@@ -422,529 +402,424 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // groupBoxPrority
+            // groupBoxFunctionalClassification
             // 
-            this.groupBoxPrority.Controls.Add(this.numericUpDown0);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown20);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown19);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown18);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown17);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown16);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown15);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown14);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown13);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown12);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown11);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown10);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown9);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown8);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown7);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown6);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown5);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown4);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown3);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown2);
-            this.groupBoxPrority.Controls.Add(this.numericUpDown1);
-            this.groupBoxPrority.Location = new System.Drawing.Point(61, 3);
-            this.groupBoxPrority.Name = "groupBoxPrority";
-            this.groupBoxPrority.Size = new System.Drawing.Size(65, 507);
-            this.groupBoxPrority.TabIndex = 20;
-            this.groupBoxPrority.TabStop = false;
-            this.groupBoxPrority.Text = "Prority";
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType0);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType20);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType19);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType18);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType17);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType16);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType15);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType14);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType13);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType12);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType11);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType10);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType9);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType8);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType7);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType6);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType5);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType4);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType3);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType2);
+            this.groupBoxFunctionalClassification.Controls.Add(this.comboBoxType1);
+            this.groupBoxFunctionalClassification.Location = new System.Drawing.Point(61, 3);
+            this.groupBoxFunctionalClassification.Name = "groupBoxFunctionalClassification";
+            this.groupBoxFunctionalClassification.Size = new System.Drawing.Size(151, 507);
+            this.groupBoxFunctionalClassification.TabIndex = 20;
+            this.groupBoxFunctionalClassification.TabStop = false;
+            this.groupBoxFunctionalClassification.Text = "Functional Classification";
             // 
-            // numericUpDown0
+            // comboBoxType0
             // 
-            this.numericUpDown0.Enabled = false;
-            this.numericUpDown0.Location = new System.Drawing.Point(6, 20);
-            this.numericUpDown0.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown0.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown0.Name = "numericUpDown0";
-            this.numericUpDown0.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown0.TabIndex = 0;
-            this.numericUpDown0.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType0.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType0.Enabled = false;
+            this.comboBoxType0.FormattingEnabled = true;
+            this.comboBoxType0.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType0.Location = new System.Drawing.Point(7, 19);
+            this.comboBoxType0.Name = "comboBoxType0";
+            this.comboBoxType0.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType0.TabIndex = 20;
             // 
-            // numericUpDown20
+            // comboBoxType20
             // 
-            this.numericUpDown20.Enabled = false;
-            this.numericUpDown20.Location = new System.Drawing.Point(6, 480);
-            this.numericUpDown20.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown20.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown20.Name = "numericUpDown20";
-            this.numericUpDown20.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown20.TabIndex = 19;
-            this.numericUpDown20.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType20.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType20.Enabled = false;
+            this.comboBoxType20.FormattingEnabled = true;
+            this.comboBoxType20.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType20.Location = new System.Drawing.Point(7, 479);
+            this.comboBoxType20.Name = "comboBoxType20";
+            this.comboBoxType20.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType20.TabIndex = 40;
             // 
-            // numericUpDown19
+            // comboBoxType19
             // 
-            this.numericUpDown19.Enabled = false;
-            this.numericUpDown19.Location = new System.Drawing.Point(6, 457);
-            this.numericUpDown19.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown19.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown19.Name = "numericUpDown19";
-            this.numericUpDown19.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown19.TabIndex = 18;
-            this.numericUpDown19.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType19.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType19.Enabled = false;
+            this.comboBoxType19.FormattingEnabled = true;
+            this.comboBoxType19.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType19.Location = new System.Drawing.Point(7, 456);
+            this.comboBoxType19.Name = "comboBoxType19";
+            this.comboBoxType19.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType19.TabIndex = 39;
             // 
-            // numericUpDown18
+            // comboBoxType18
             // 
-            this.numericUpDown18.Enabled = false;
-            this.numericUpDown18.Location = new System.Drawing.Point(6, 434);
-            this.numericUpDown18.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown18.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown18.Name = "numericUpDown18";
-            this.numericUpDown18.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown18.TabIndex = 17;
-            this.numericUpDown18.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType18.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType18.Enabled = false;
+            this.comboBoxType18.FormattingEnabled = true;
+            this.comboBoxType18.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType18.Location = new System.Drawing.Point(7, 433);
+            this.comboBoxType18.Name = "comboBoxType18";
+            this.comboBoxType18.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType18.TabIndex = 38;
             // 
-            // numericUpDown17
+            // comboBoxType17
             // 
-            this.numericUpDown17.Enabled = false;
-            this.numericUpDown17.Location = new System.Drawing.Point(6, 411);
-            this.numericUpDown17.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown17.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown17.Name = "numericUpDown17";
-            this.numericUpDown17.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown17.TabIndex = 16;
-            this.numericUpDown17.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType17.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType17.Enabled = false;
+            this.comboBoxType17.FormattingEnabled = true;
+            this.comboBoxType17.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType17.Location = new System.Drawing.Point(7, 410);
+            this.comboBoxType17.Name = "comboBoxType17";
+            this.comboBoxType17.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType17.TabIndex = 37;
             // 
-            // numericUpDown16
+            // comboBoxType16
             // 
-            this.numericUpDown16.Enabled = false;
-            this.numericUpDown16.Location = new System.Drawing.Point(6, 388);
-            this.numericUpDown16.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown16.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown16.Name = "numericUpDown16";
-            this.numericUpDown16.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown16.TabIndex = 15;
-            this.numericUpDown16.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType16.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType16.Enabled = false;
+            this.comboBoxType16.FormattingEnabled = true;
+            this.comboBoxType16.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType16.Location = new System.Drawing.Point(7, 387);
+            this.comboBoxType16.Name = "comboBoxType16";
+            this.comboBoxType16.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType16.TabIndex = 36;
             // 
-            // numericUpDown15
+            // comboBoxType15
             // 
-            this.numericUpDown15.Enabled = false;
-            this.numericUpDown15.Location = new System.Drawing.Point(6, 365);
-            this.numericUpDown15.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown15.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown15.Name = "numericUpDown15";
-            this.numericUpDown15.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown15.TabIndex = 14;
-            this.numericUpDown15.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType15.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType15.Enabled = false;
+            this.comboBoxType15.FormattingEnabled = true;
+            this.comboBoxType15.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType15.Location = new System.Drawing.Point(7, 364);
+            this.comboBoxType15.Name = "comboBoxType15";
+            this.comboBoxType15.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType15.TabIndex = 35;
             // 
-            // numericUpDown14
+            // comboBoxType14
             // 
-            this.numericUpDown14.Enabled = false;
-            this.numericUpDown14.Location = new System.Drawing.Point(6, 342);
-            this.numericUpDown14.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown14.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown14.Name = "numericUpDown14";
-            this.numericUpDown14.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown14.TabIndex = 13;
-            this.numericUpDown14.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType14.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType14.Enabled = false;
+            this.comboBoxType14.FormattingEnabled = true;
+            this.comboBoxType14.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType14.Location = new System.Drawing.Point(7, 341);
+            this.comboBoxType14.Name = "comboBoxType14";
+            this.comboBoxType14.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType14.TabIndex = 34;
             // 
-            // numericUpDown13
+            // comboBoxType13
             // 
-            this.numericUpDown13.Enabled = false;
-            this.numericUpDown13.Location = new System.Drawing.Point(6, 319);
-            this.numericUpDown13.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown13.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown13.Name = "numericUpDown13";
-            this.numericUpDown13.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown13.TabIndex = 12;
-            this.numericUpDown13.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType13.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType13.Enabled = false;
+            this.comboBoxType13.FormattingEnabled = true;
+            this.comboBoxType13.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType13.Location = new System.Drawing.Point(7, 318);
+            this.comboBoxType13.Name = "comboBoxType13";
+            this.comboBoxType13.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType13.TabIndex = 33;
             // 
-            // numericUpDown12
+            // comboBoxType12
             // 
-            this.numericUpDown12.Enabled = false;
-            this.numericUpDown12.Location = new System.Drawing.Point(6, 296);
-            this.numericUpDown12.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown12.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown12.Name = "numericUpDown12";
-            this.numericUpDown12.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown12.TabIndex = 11;
-            this.numericUpDown12.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType12.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType12.Enabled = false;
+            this.comboBoxType12.FormattingEnabled = true;
+            this.comboBoxType12.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType12.Location = new System.Drawing.Point(7, 295);
+            this.comboBoxType12.Name = "comboBoxType12";
+            this.comboBoxType12.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType12.TabIndex = 32;
             // 
-            // numericUpDown11
+            // comboBoxType11
             // 
-            this.numericUpDown11.Enabled = false;
-            this.numericUpDown11.Location = new System.Drawing.Point(6, 273);
-            this.numericUpDown11.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown11.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown11.Name = "numericUpDown11";
-            this.numericUpDown11.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown11.TabIndex = 10;
-            this.numericUpDown11.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType11.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType11.Enabled = false;
+            this.comboBoxType11.FormattingEnabled = true;
+            this.comboBoxType11.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType11.Location = new System.Drawing.Point(7, 272);
+            this.comboBoxType11.Name = "comboBoxType11";
+            this.comboBoxType11.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType11.TabIndex = 31;
             // 
-            // numericUpDown10
+            // comboBoxType10
             // 
-            this.numericUpDown10.Enabled = false;
-            this.numericUpDown10.Location = new System.Drawing.Point(6, 250);
-            this.numericUpDown10.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown10.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown10.Name = "numericUpDown10";
-            this.numericUpDown10.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown10.TabIndex = 9;
-            this.numericUpDown10.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType10.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType10.Enabled = false;
+            this.comboBoxType10.FormattingEnabled = true;
+            this.comboBoxType10.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType10.Location = new System.Drawing.Point(7, 249);
+            this.comboBoxType10.Name = "comboBoxType10";
+            this.comboBoxType10.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType10.TabIndex = 30;
             // 
-            // numericUpDown9
+            // comboBoxType9
             // 
-            this.numericUpDown9.Enabled = false;
-            this.numericUpDown9.Location = new System.Drawing.Point(6, 227);
-            this.numericUpDown9.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown9.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown9.Name = "numericUpDown9";
-            this.numericUpDown9.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown9.TabIndex = 8;
-            this.numericUpDown9.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType9.Enabled = false;
+            this.comboBoxType9.FormattingEnabled = true;
+            this.comboBoxType9.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType9.Location = new System.Drawing.Point(7, 226);
+            this.comboBoxType9.Name = "comboBoxType9";
+            this.comboBoxType9.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType9.TabIndex = 29;
             // 
-            // numericUpDown8
+            // comboBoxType8
             // 
-            this.numericUpDown8.Enabled = false;
-            this.numericUpDown8.Location = new System.Drawing.Point(6, 204);
-            this.numericUpDown8.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown8.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown8.Name = "numericUpDown8";
-            this.numericUpDown8.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown8.TabIndex = 7;
-            this.numericUpDown8.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType8.Enabled = false;
+            this.comboBoxType8.FormattingEnabled = true;
+            this.comboBoxType8.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType8.Location = new System.Drawing.Point(7, 203);
+            this.comboBoxType8.Name = "comboBoxType8";
+            this.comboBoxType8.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType8.TabIndex = 28;
             // 
-            // numericUpDown7
+            // comboBoxType7
             // 
-            this.numericUpDown7.Enabled = false;
-            this.numericUpDown7.Location = new System.Drawing.Point(6, 181);
-            this.numericUpDown7.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown7.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown7.Name = "numericUpDown7";
-            this.numericUpDown7.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown7.TabIndex = 6;
-            this.numericUpDown7.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType7.Enabled = false;
+            this.comboBoxType7.FormattingEnabled = true;
+            this.comboBoxType7.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType7.Location = new System.Drawing.Point(7, 180);
+            this.comboBoxType7.Name = "comboBoxType7";
+            this.comboBoxType7.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType7.TabIndex = 27;
             // 
-            // numericUpDown6
+            // comboBoxType6
             // 
-            this.numericUpDown6.Enabled = false;
-            this.numericUpDown6.Location = new System.Drawing.Point(6, 158);
-            this.numericUpDown6.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown6.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown6.Name = "numericUpDown6";
-            this.numericUpDown6.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown6.TabIndex = 5;
-            this.numericUpDown6.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType6.Enabled = false;
+            this.comboBoxType6.FormattingEnabled = true;
+            this.comboBoxType6.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType6.Location = new System.Drawing.Point(7, 157);
+            this.comboBoxType6.Name = "comboBoxType6";
+            this.comboBoxType6.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType6.TabIndex = 26;
             // 
-            // numericUpDown5
+            // comboBoxType5
             // 
-            this.numericUpDown5.Enabled = false;
-            this.numericUpDown5.Location = new System.Drawing.Point(6, 135);
-            this.numericUpDown5.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown5.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown5.TabIndex = 4;
-            this.numericUpDown5.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType5.Enabled = false;
+            this.comboBoxType5.FormattingEnabled = true;
+            this.comboBoxType5.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType5.Location = new System.Drawing.Point(7, 134);
+            this.comboBoxType5.Name = "comboBoxType5";
+            this.comboBoxType5.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType5.TabIndex = 25;
             // 
-            // numericUpDown4
+            // comboBoxType4
             // 
-            this.numericUpDown4.Enabled = false;
-            this.numericUpDown4.Location = new System.Drawing.Point(6, 112);
-            this.numericUpDown4.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown4.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown4.TabIndex = 3;
-            this.numericUpDown4.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType4.Enabled = false;
+            this.comboBoxType4.FormattingEnabled = true;
+            this.comboBoxType4.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType4.Location = new System.Drawing.Point(7, 111);
+            this.comboBoxType4.Name = "comboBoxType4";
+            this.comboBoxType4.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType4.TabIndex = 24;
             // 
-            // numericUpDown3
+            // comboBoxType3
             // 
-            this.numericUpDown3.Enabled = false;
-            this.numericUpDown3.Location = new System.Drawing.Point(6, 89);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown3.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown3.TabIndex = 2;
-            this.numericUpDown3.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType3.Enabled = false;
+            this.comboBoxType3.FormattingEnabled = true;
+            this.comboBoxType3.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType3.Location = new System.Drawing.Point(7, 88);
+            this.comboBoxType3.Name = "comboBoxType3";
+            this.comboBoxType3.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType3.TabIndex = 23;
             // 
-            // numericUpDown2
+            // comboBoxType2
             // 
-            this.numericUpDown2.Enabled = false;
-            this.numericUpDown2.Location = new System.Drawing.Point(6, 66);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown2.TabIndex = 1;
-            this.numericUpDown2.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType2.Enabled = false;
+            this.comboBoxType2.FormattingEnabled = true;
+            this.comboBoxType2.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType2.Location = new System.Drawing.Point(7, 65);
+            this.comboBoxType2.Name = "comboBoxType2";
+            this.comboBoxType2.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType2.TabIndex = 22;
             // 
-            // numericUpDown1
+            // comboBoxType1
             // 
-            this.numericUpDown1.Enabled = false;
-            this.numericUpDown1.Location = new System.Drawing.Point(6, 43);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown1.TabIndex = 0;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.comboBoxType1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType1.Enabled = false;
+            this.comboBoxType1.FormattingEnabled = true;
+            this.comboBoxType1.Items.AddRange(new object[] {
+            "",
+            "Major Arterial",
+            "Minor Arterial",
+            "Major Collector",
+            "Minor Collector",
+            "Residential",
+            "Other"});
+            this.comboBoxType1.Location = new System.Drawing.Point(7, 42);
+            this.comboBoxType1.Name = "comboBoxType1";
+            this.comboBoxType1.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxType1.TabIndex = 21;
             // 
             // panelRSLPriority
             // 
             this.panelRSLPriority.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panelRSLPriority.Controls.Add(this.groupBox1);
             this.panelRSLPriority.Controls.Add(this.groupBoxYearsToAdd);
-            this.panelRSLPriority.Controls.Add(this.groupBoxPrority);
+            this.panelRSLPriority.Controls.Add(this.groupBoxFunctionalClassification);
             this.panelRSLPriority.Controls.Add(this.groupBoxRSL);
             this.panelRSLPriority.Location = new System.Drawing.Point(12, 60);
             this.panelRSLPriority.Name = "panelRSLPriority";
-            this.panelRSLPriority.Size = new System.Drawing.Size(435, 515);
+            this.panelRSLPriority.Size = new System.Drawing.Size(517, 515);
             this.panelRSLPriority.TabIndex = 21;
             // 
             // groupBox1
@@ -970,7 +845,7 @@
             this.groupBox1.Controls.Add(this.comboBoxTreatment3);
             this.groupBox1.Controls.Add(this.comboBoxTreatment2);
             this.groupBox1.Controls.Add(this.comboBoxTreatment1);
-            this.groupBox1.Location = new System.Drawing.Point(196, 3);
+            this.groupBox1.Location = new System.Drawing.Point(282, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(232, 507);
             this.groupBox1.TabIndex = 22;
@@ -1652,12 +1527,12 @@
             this.groupBoxYearsToAdd.Controls.Add(this.comboBox3);
             this.groupBoxYearsToAdd.Controls.Add(this.comboBox2);
             this.groupBoxYearsToAdd.Controls.Add(this.comboBox1);
-            this.groupBoxYearsToAdd.Location = new System.Drawing.Point(125, 3);
+            this.groupBoxYearsToAdd.Location = new System.Drawing.Point(211, 3);
             this.groupBoxYearsToAdd.Name = "groupBoxYearsToAdd";
             this.groupBoxYearsToAdd.Size = new System.Drawing.Size(72, 507);
             this.groupBoxYearsToAdd.TabIndex = 21;
             this.groupBoxYearsToAdd.TabStop = false;
-            this.groupBoxYearsToAdd.Text = "+ Years";
+            this.groupBoxYearsToAdd.Text = " + Years";
             // 
             // comboBox0
             // 
@@ -2136,7 +2011,7 @@
             // 
             this.buttonCalculate.Location = new System.Drawing.Point(7, 8);
             this.buttonCalculate.Name = "buttonCalculate";
-            this.buttonCalculate.Size = new System.Drawing.Size(99, 23);
+            this.buttonCalculate.Size = new System.Drawing.Size(119, 23);
             this.buttonCalculate.TabIndex = 22;
             this.buttonCalculate.Text = "Calculate Cost";
             this.buttonCalculate.UseVisualStyleBackColor = true;
@@ -2144,23 +2019,23 @@
             // 
             // textBoxTotalArea
             // 
-            this.textBoxTotalArea.Location = new System.Drawing.Point(146, 63);
+            this.textBoxTotalArea.Location = new System.Drawing.Point(155, 63);
             this.textBoxTotalArea.Name = "textBoxTotalArea";
             this.textBoxTotalArea.ReadOnly = true;
-            this.textBoxTotalArea.Size = new System.Drawing.Size(115, 20);
+            this.textBoxTotalArea.Size = new System.Drawing.Size(159, 20);
             this.textBoxTotalArea.TabIndex = 23;
             // 
             // textBoxTotalCost
             // 
-            this.textBoxTotalCost.Location = new System.Drawing.Point(146, 37);
+            this.textBoxTotalCost.Location = new System.Drawing.Point(155, 37);
             this.textBoxTotalCost.Name = "textBoxTotalCost";
             this.textBoxTotalCost.ReadOnly = true;
-            this.textBoxTotalCost.Size = new System.Drawing.Size(115, 20);
+            this.textBoxTotalCost.Size = new System.Drawing.Size(159, 20);
             this.textBoxTotalCost.TabIndex = 24;
             // 
             // textBoxBudget
             // 
-            this.textBoxBudget.Location = new System.Drawing.Point(462, 34);
+            this.textBoxBudget.Location = new System.Drawing.Point(535, 34);
             this.textBoxBudget.Name = "textBoxBudget";
             this.textBoxBudget.Size = new System.Drawing.Size(144, 20);
             this.textBoxBudget.TabIndex = 25;
@@ -2172,7 +2047,7 @@
             // labelBudget
             // 
             this.labelBudget.AutoSize = true;
-            this.labelBudget.Location = new System.Drawing.Point(459, 18);
+            this.labelBudget.Location = new System.Drawing.Point(532, 18);
             this.labelBudget.Name = "labelBudget";
             this.labelBudget.Size = new System.Drawing.Size(68, 13);
             this.labelBudget.TabIndex = 26;
@@ -2188,62 +2063,16 @@
             this.panelCalculator.Controls.Add(this.textBoxTotalArea);
             this.panelCalculator.Controls.Add(this.buttonCalculate);
             this.panelCalculator.Controls.Add(this.textBoxTotalCost);
-            this.panelCalculator.Location = new System.Drawing.Point(462, 60);
+            this.panelCalculator.Location = new System.Drawing.Point(535, 60);
             this.panelCalculator.Name = "panelCalculator";
-            this.panelCalculator.Size = new System.Drawing.Size(274, 515);
+            this.panelCalculator.Size = new System.Drawing.Size(331, 515);
             this.panelCalculator.TabIndex = 27;
-            // 
-            // tableBudgetControl
-            // 
-            this.tableBudgetControl.AutoScroll = true;
-            this.tableBudgetControl.ColumnCount = 3;
-            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.40541F));
-            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.5946F));
-            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
-            this.tableBudgetControl.Controls.Add(this.labelAreaCovered, 2, 0);
-            this.tableBudgetControl.Controls.Add(this.labelRSLx, 0, 0);
-            this.tableBudgetControl.Controls.Add(this.labelBudgetUsed, 1, 0);
-            this.tableBudgetControl.Location = new System.Drawing.Point(14, 95);
-            this.tableBudgetControl.MaximumSize = new System.Drawing.Size(247, 415);
-            this.tableBudgetControl.Name = "tableBudgetControl";
-            this.tableBudgetControl.RowCount = 1;
-            this.tableBudgetControl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableBudgetControl.Size = new System.Drawing.Size(247, 15);
-            this.tableBudgetControl.TabIndex = 32;
-            this.tableBudgetControl.Visible = false;
-            // 
-            // labelAreaCovered
-            // 
-            this.labelAreaCovered.AutoSize = true;
-            this.labelAreaCovered.Location = new System.Drawing.Point(144, 0);
-            this.labelAreaCovered.Name = "labelAreaCovered";
-            this.labelAreaCovered.Size = new System.Drawing.Size(75, 13);
-            this.labelAreaCovered.TabIndex = 32;
-            this.labelAreaCovered.Text = "Area  Covered";
-            // 
-            // labelRSLx
-            // 
-            this.labelRSLx.AutoSize = true;
-            this.labelRSLx.Location = new System.Drawing.Point(3, 0);
-            this.labelRSLx.Name = "labelRSLx";
-            this.labelRSLx.Size = new System.Drawing.Size(28, 13);
-            this.labelRSLx.TabIndex = 28;
-            this.labelRSLx.Text = "RSL";
-            // 
-            // labelBudgetUsed
-            // 
-            this.labelBudgetUsed.AutoSize = true;
-            this.labelBudgetUsed.Location = new System.Drawing.Point(46, 0);
-            this.labelBudgetUsed.Name = "labelBudgetUsed";
-            this.labelBudgetUsed.Size = new System.Drawing.Size(69, 13);
-            this.labelBudgetUsed.TabIndex = 31;
-            this.labelBudgetUsed.Text = "Budget Used";
             // 
             // labelOverBudget
             // 
             this.labelOverBudget.AutoSize = true;
             this.labelOverBudget.ForeColor = System.Drawing.Color.Red;
-            this.labelOverBudget.Location = new System.Drawing.Point(143, 13);
+            this.labelOverBudget.Location = new System.Drawing.Point(152, 13);
             this.labelOverBudget.Name = "labelOverBudget";
             this.labelOverBudget.Size = new System.Drawing.Size(70, 13);
             this.labelOverBudget.TabIndex = 27;
@@ -2270,7 +2099,7 @@
             // 
             // buttonTreatmentCosts
             // 
-            this.buttonTreatmentCosts.Location = new System.Drawing.Point(326, 34);
+            this.buttonTreatmentCosts.Location = new System.Drawing.Point(12, 31);
             this.buttonTreatmentCosts.Name = "buttonTreatmentCosts";
             this.buttonTreatmentCosts.Size = new System.Drawing.Size(108, 23);
             this.buttonTreatmentCosts.TabIndex = 28;
@@ -2278,11 +2107,68 @@
             this.buttonTreatmentCosts.UseVisualStyleBackColor = true;
             this.buttonTreatmentCosts.Click += new System.EventHandler(this.buttonTreatmentCosts_Click);
             // 
+            // labelBudgetUsed
+            // 
+            this.labelBudgetUsed.AutoSize = true;
+            this.labelBudgetUsed.Location = new System.Drawing.Point(43, 0);
+            this.labelBudgetUsed.Name = "labelBudgetUsed";
+            this.labelBudgetUsed.Size = new System.Drawing.Size(69, 13);
+            this.labelBudgetUsed.TabIndex = 31;
+            this.labelBudgetUsed.Text = "Budget Used";
+            // 
+            // labelRSLx
+            // 
+            this.labelRSLx.AutoSize = true;
+            this.labelRSLx.Location = new System.Drawing.Point(3, 0);
+            this.labelRSLx.Name = "labelRSLx";
+            this.labelRSLx.Size = new System.Drawing.Size(28, 13);
+            this.labelRSLx.TabIndex = 28;
+            this.labelRSLx.Text = "RSL";
+            // 
+            // labelAreaCovered
+            // 
+            this.labelAreaCovered.AutoSize = true;
+            this.labelAreaCovered.Location = new System.Drawing.Point(138, 0);
+            this.labelAreaCovered.Name = "labelAreaCovered";
+            this.labelAreaCovered.Size = new System.Drawing.Size(75, 13);
+            this.labelAreaCovered.TabIndex = 32;
+            this.labelAreaCovered.Text = "Area  Covered";
+            // 
+            // tableBudgetControl
+            // 
+            this.tableBudgetControl.AutoScroll = true;
+            this.tableBudgetControl.ColumnCount = 4;
+            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
+            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
+            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableBudgetControl.Controls.Add(this.labelAreaCovered, 2, 0);
+            this.tableBudgetControl.Controls.Add(this.labelRSLx, 0, 0);
+            this.tableBudgetControl.Controls.Add(this.labelBudgetUsed, 1, 0);
+            this.tableBudgetControl.Controls.Add(this.labelPercentConvered, 3, 0);
+            this.tableBudgetControl.Location = new System.Drawing.Point(14, 95);
+            this.tableBudgetControl.MaximumSize = new System.Drawing.Size(300, 415);
+            this.tableBudgetControl.Name = "tableBudgetControl";
+            this.tableBudgetControl.RowCount = 1;
+            this.tableBudgetControl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableBudgetControl.Size = new System.Drawing.Size(300, 15);
+            this.tableBudgetControl.TabIndex = 32;
+            this.tableBudgetControl.Visible = false;
+            // 
+            // labelPercentConvered
+            // 
+            this.labelPercentConvered.AutoSize = true;
+            this.labelPercentConvered.Location = new System.Drawing.Point(233, 0);
+            this.labelPercentConvered.Name = "labelPercentConvered";
+            this.labelPercentConvered.Size = new System.Drawing.Size(58, 13);
+            this.labelPercentConvered.TabIndex = 33;
+            this.labelPercentConvered.Text = "% Covered";
+            // 
             // FormAnalysis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1181, 587);
+            this.ClientSize = new System.Drawing.Size(880, 587);
             this.Controls.Add(this.buttonTreatmentCosts);
             this.Controls.Add(this.panelCalculator);
             this.Controls.Add(this.labelBudget);
@@ -2293,28 +2179,7 @@
             this.Text = "FormAnalysis";
             this.groupBoxRSL.ResumeLayout(false);
             this.groupBoxRSL.PerformLayout();
-            this.groupBoxPrority.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown0)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.groupBoxFunctionalClassification.ResumeLayout(false);
             this.panelRSLPriority.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBoxYearsToAdd.ResumeLayout(false);
@@ -2350,27 +2215,7 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.GroupBox groupBoxPrority;
-        private System.Windows.Forms.NumericUpDown numericUpDown20;
-        private System.Windows.Forms.NumericUpDown numericUpDown19;
-        private System.Windows.Forms.NumericUpDown numericUpDown18;
-        private System.Windows.Forms.NumericUpDown numericUpDown17;
-        private System.Windows.Forms.NumericUpDown numericUpDown16;
-        private System.Windows.Forms.NumericUpDown numericUpDown15;
-        private System.Windows.Forms.NumericUpDown numericUpDown14;
-        private System.Windows.Forms.NumericUpDown numericUpDown13;
-        private System.Windows.Forms.NumericUpDown numericUpDown12;
-        private System.Windows.Forms.NumericUpDown numericUpDown11;
-        private System.Windows.Forms.NumericUpDown numericUpDown10;
-        private System.Windows.Forms.NumericUpDown numericUpDown9;
-        private System.Windows.Forms.NumericUpDown numericUpDown8;
-        private System.Windows.Forms.NumericUpDown numericUpDown7;
-        private System.Windows.Forms.NumericUpDown numericUpDown6;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.GroupBox groupBoxFunctionalClassification;
         private System.Windows.Forms.Panel panelRSLPriority;
         private System.Windows.Forms.GroupBox groupBoxYearsToAdd;
         private System.Windows.Forms.ComboBox comboBox20;
@@ -2394,7 +2239,6 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.CheckBox checkBox0;
-        private System.Windows.Forms.NumericUpDown numericUpDown0;
         private System.Windows.Forms.ComboBox comboBox0;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox comboBoxTreatment0;
@@ -2427,10 +2271,32 @@
         private System.Windows.Forms.Label labelTotalCost;
         private System.Windows.Forms.Label labelArea;
         private System.Windows.Forms.Label labelOverBudget;
+        private System.Windows.Forms.Button buttonTreatmentCosts;
+        private System.Windows.Forms.ComboBox comboBoxType0;
+        private System.Windows.Forms.ComboBox comboBoxType20;
+        private System.Windows.Forms.ComboBox comboBoxType19;
+        private System.Windows.Forms.ComboBox comboBoxType18;
+        private System.Windows.Forms.ComboBox comboBoxType17;
+        private System.Windows.Forms.ComboBox comboBoxType16;
+        private System.Windows.Forms.ComboBox comboBoxType15;
+        private System.Windows.Forms.ComboBox comboBoxType14;
+        private System.Windows.Forms.ComboBox comboBoxType13;
+        private System.Windows.Forms.ComboBox comboBoxType12;
+        private System.Windows.Forms.ComboBox comboBoxType11;
+        private System.Windows.Forms.ComboBox comboBoxType10;
+        private System.Windows.Forms.ComboBox comboBoxType9;
+        private System.Windows.Forms.ComboBox comboBoxType8;
+        private System.Windows.Forms.ComboBox comboBoxType7;
+        private System.Windows.Forms.ComboBox comboBoxType6;
+        private System.Windows.Forms.ComboBox comboBoxType5;
+        private System.Windows.Forms.ComboBox comboBoxType4;
+        private System.Windows.Forms.ComboBox comboBoxType3;
+        private System.Windows.Forms.ComboBox comboBoxType2;
+        private System.Windows.Forms.ComboBox comboBoxType1;
         private System.Windows.Forms.TableLayoutPanel tableBudgetControl;
         private System.Windows.Forms.Label labelAreaCovered;
         private System.Windows.Forms.Label labelRSLx;
         private System.Windows.Forms.Label labelBudgetUsed;
-        private System.Windows.Forms.Button buttonTreatmentCosts;
+        private System.Windows.Forms.Label labelPercentConvered;
     }
 }
