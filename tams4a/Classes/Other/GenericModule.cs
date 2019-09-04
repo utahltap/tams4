@@ -218,7 +218,6 @@ namespace tams4a.Classes
 
         private void moveLandmark(object sender, EventArgs e)
         {
-            toggleAddFeature(sender, e);
             Panel_Other otherControls = getOtherControls();
             if (otherControls.toolStripMoveLandmark.BackColor == Color.LightSkyBlue)
             {
@@ -227,6 +226,7 @@ namespace tams4a.Classes
                 otherControls.toolStripMoveLandmark.BackColor = originalColor;
                 return;
             }
+            toggleAddFeature(sender, e);
             originalColor = otherControls.toolStripMoveLandmark.BackColor;
             otherControls.toolStripMoveLandmark.BackColor = Color.LightSkyBlue;
             IFeatureLayer selectionLayer = (IFeatureLayer)Layer;
