@@ -1,5 +1,14 @@
 # TAMS 4.1.x
 
+# Version 4.1.6.0
+CHANGES
+----------------------------------------------------
+* Adding new sign supports and landmarks is now toggled on/off
+
+BUG FIXES
+----------------------------------------------------
+* Deleting sign support option is disabled if no supports are selected
+
 # Version 4.1.5.0
 CHANGES
 ----------------------------------------------------
