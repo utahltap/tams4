@@ -20,6 +20,7 @@ namespace tams4a.Classes
         int maxTAMSID = 0;
         private Dictionary<string, string> icons;
         private bool movingLandmark = false;
+        private bool addLandmark = false;
         private Color originalColor;
         private OtherReports reports;
 
@@ -113,6 +114,7 @@ namespace tams4a.Classes
             panel.setChangedHandler(controlChanged);
             panel.toolStripButtonSave.Click += saveHandler;
             panel.toolStripButtonCancel.Click += cancelChanges;
+            panel.toolStripDropDownAddObject.Click += toggleAddFeature;
             panel.clickMapToolStripMenuItem.Click += clickMap;
             panel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
             panel.toolStripButtonRemove.Click += deleteFeature;
@@ -216,6 +218,7 @@ namespace tams4a.Classes
 
         private void moveLandmark(object sender, EventArgs e)
         {
+            toggleAddFeature(sender, e);
             Panel_Other otherControls = getOtherControls();
             if (otherControls.toolStripMoveLandmark.BackColor == Color.LightSkyBlue)
             {
@@ -496,10 +499,20 @@ namespace tams4a.Classes
 
         private void clickMap(object sender, EventArgs e)
         {
-            if (inClick) { return; }
+            Panel_Other otherControls = getOtherControls();
+
             bool hasStreetMap = false;
             bool hasSignMap = false;
-            inClick = true;
+            addLandmark = !addLandmark;
+
+            if (!addLandmark)
+            {
+                Project.map.MouseUp -= mapMouseUp;
+                otherControls.toolStripDropDownAddObject.BackColor = originalColor;
+                return;
+            }
+            otherControls.toolStripDropDownAddObject.BackColor = Color.LightSkyBlue;
+
             for (int i = 0; i < Project.map.Layers.Count; i++)
             {
                 if (((FeatureLayer)Project.map.Layers[i]).Name.Contains("road"))
@@ -514,17 +527,50 @@ namespace tams4a.Classes
                     }
                 }
             }
+
             if (Project.map.GetMaxExtent().IsEmpty() || (Layer.Extent.IsEmpty() && !hasStreetMap && !hasSignMap))
             {
                 MessageBox.Show("Map has no view extent, please open a road SHP file or add feature support by coordinates.", "No view extent", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            Project.map.Click += addFeatureByClick;
+
+            Project.map.MouseClick += new MouseEventHandler(delegate(object _sender, MouseEventArgs _e) { determineLeftClick(_sender, _e); });
+            Project.map.MouseUp += mapMouseUp;
         }
 
-        private void addFeatureByClick(object sender, EventArgs e)
+        private void toggleAddFeature(object sender, EventArgs e)
+        {
+            Panel_Other otherControls = getOtherControls();
+
+            if (otherControls.toolStripMoveLandmark.BackColor == Color.LightSkyBlue)
+            {
+                movingLandmark = false;
+                Project.map.FunctionMode = FunctionMode.Select;
+                otherControls.toolStripMoveLandmark.BackColor = originalColor;
+            }
+
+            if (otherControls.toolStripDropDownAddObject.BackColor == Color.LightSkyBlue)
+            {
+                addLandmark = true;
+                clickMap(sender, e);
+            }
+        }
+
+        private void mapMouseUp(object sender, MouseEventArgs e)
         {
             inClick = false;
+        }
+
+        private void determineLeftClick(object sender, MouseEventArgs e)
+        {
+            if (!addLandmark || inClick) return;
+            if (e.Button == MouseButtons.Right) return;
+            inClick = true;
+            addFeatureByClick();
+        }
+
+        private void addFeatureByClick()
+        {
             var clickCoords = Project.map.PixelToProj(Project.map.PointToClient(Cursor.Position));
             double[] xy = { clickCoords.X, clickCoords.Y };
             double[] z = { clickCoords.Z };
@@ -542,7 +588,6 @@ namespace tams4a.Classes
             {
                 Log.Error("something went terribly wrong: " + err.ToString());
             }
-            Project.map.Click -= addFeatureByClick;
         }
 
         protected void selectRecordDate(object sender, EventArgs e)
@@ -564,6 +609,7 @@ namespace tams4a.Classes
 
         private void deleteFeature(object sender, EventArgs e)
         {
+            toggleAddFeature(sender, e);
             string[] tables = { ModuleName };
             deleteShape(tamsids[0], tables);
         }
