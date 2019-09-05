@@ -8,6 +8,7 @@ CHANGES
 BUG FIXES
 ----------------------------------------------------
 * Deleting sign support option is disabled if no supports are selected
+* After panning when curront mode is moving a sign support/landmark the current mode returns to moving
 
 # Version 4.1.5.0
 CHANGES
@@ -16,7 +17,6 @@ CHANGES
 * Landmark reports can now be imported
 * Added sign supports to the custom report builder
 * Added landmarks to the custom report builder
-
 
 # Version 4.1.3.0
 CHANGES
