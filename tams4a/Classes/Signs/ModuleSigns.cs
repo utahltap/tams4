@@ -477,6 +477,13 @@ namespace tams4a.Classes
 
         private void moveSignMouseUp(object sender, MouseEventArgs e)
         {
+            Panel_Sign signControls = getSignControls();
+            if (e.Button == MouseButtons.Right && signControls.toolStripMoveSign.BackColor == Color.LightSkyBlue)
+            {
+                signControls.toolStripMoveSign.BackColor = originalColor;
+                moveSign(sender, e);
+                return;
+            }
             if (!movingSign) return;
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             Properties.Settings.Default.Save();
@@ -487,7 +494,6 @@ namespace tams4a.Classes
             Project.map.Refresh();
             Project.map.ResetBuffer();
             Project.map.Update();
-            Panel_Sign signControls = getSignControls();
             if (signControls.toolStripMoveSign.BackColor != originalColor) return;
             movingSign = false;
             Project.map.FunctionMode = FunctionMode.Select;

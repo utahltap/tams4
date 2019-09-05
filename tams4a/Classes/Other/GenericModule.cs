@@ -248,6 +248,13 @@ namespace tams4a.Classes
 
         private void moveLandmarkMouseUp(object sender, MouseEventArgs e)
         {
+            Panel_Other otherControls = getOtherControls();
+            if (e.Button == MouseButtons.Right && otherControls.toolStripMoveLandmark.BackColor == Color.LightSkyBlue)
+            {
+                otherControls.toolStripMoveLandmark.BackColor = originalColor;
+                moveLandmark(sender, e);
+                return;
+            }
             if (!movingLandmark) return;
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             Properties.Settings.Default.Save();
@@ -258,7 +265,6 @@ namespace tams4a.Classes
             Project.map.Refresh();
             Project.map.ResetBuffer();
             Project.map.Update();
-            Panel_Other otherControls = getOtherControls();
             if (otherControls.toolStripMoveLandmark.BackColor != originalColor) return;
             movingLandmark = false;
             Project.map.FunctionMode = FunctionMode.Select;
