@@ -114,19 +114,32 @@ namespace tams4a.Classes.Roads
             {
                 DataTable selectedResultsTable = Database.GetDataByQuery(Project.conn, thisSql);
                 double totalCost = 0;
+                double totalArea = 0;
 
                 foreach (DataRow row in selectedResultsTable.Rows)
                 {
                     DataRow nr = general.NewRow();
                     addRows(nr, row);
                     general.Rows.Add(nr);
+                    string costStr = nr["Cost"].ToString();
+                    if (costStr[costStr.Length - 1] == 'k')
+                    {
+                        totalCost += Util.ToDouble(costStr.Remove(costStr.Length - 1)) * 1000;
+                    }
+                    else if (costStr[costStr.Length - 1] == 'M')
+                    {
+                        totalCost += Util.ToDouble(costStr.Remove(costStr.Length - 1)) * 1000000;
+                    }
+                    else
+                    {
+                        totalCost += Util.ToDouble(costStr);
+                    }
+                    totalArea += Util.ToDouble(nr["Area"].ToString());
                 }
                 general.DefaultView.Sort = "Name asc, Treatment asc, From Address asc";
                 general = general.DefaultView.ToTable();
                 DataRow totals = general.NewRow();
-                totals["Surface"] = "Total";
-                totals["Governing Distress"] = "Estimated";
-                totals["Treatment"] = "Cost";
+                totals["Treatment"] = "Total";
                 if (totalCost > 1000000)
                 {
                     totals["Cost"] = Math.Round(totalCost / 1000000, 2).ToString() + "M";
@@ -139,6 +152,7 @@ namespace tams4a.Classes.Roads
                 {
                     totals["Cost"] = Math.Round(totalCost).ToString();
                 }
+                totals["Area"] = totalArea; 
                 general.Rows.Add(totals);
                 reportTable = general.DefaultView.ToTable();
                 FormOutput report = new FormOutput(Project, moduleRoads);
