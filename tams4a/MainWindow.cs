@@ -530,7 +530,7 @@ namespace tams4a
                 foreach (string name in ids)
                 {
                     Console.WriteLine(name);
-                    DataTable searchName = Database.GetDataByQuery(Project.conn, "SELECT DISTINCT TAMSID FROM road WHERE name LIKE '" + name + "';");
+                    DataTable searchName = Database.GetDataByQuery(Project.conn, "SELECT DISTINCT TAMSID FROM road WHERE name LIKE '%" + name + "%';");
                     foreach (DataRow row in searchName.Rows)
                     {
                         selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
