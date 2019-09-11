@@ -25,6 +25,7 @@ namespace tams4a.Classes
         private bool suppressChanges = false;
         private bool inClick = false;
         private bool movingSign = false;
+        private bool addNewPost = false;
         private Color originalColor;
         new private FormSurveyDate dateForm = new FormSurveyDate();
 
@@ -128,6 +129,7 @@ namespace tams4a.Classes
             signPanel.buttonRemove.Click += removeSign;
             signPanel.buttonFavorite.Click += faveSign;
             signPanel.enterCoordinatesToolStripMenuItem.Click += enterCoordinates;
+            signPanel.toolStripDropDownButtonNewPost.Click += toggleAddPost;
             signPanel.clickMapToolStripMenuItem.Click += clickMap;
             signPanel.toolStripButtonRemove.Click += deletePost;
             signPanel.toolStripButtonNotes.Click += editNotes;
@@ -453,6 +455,7 @@ namespace tams4a.Classes
                 signControls.toolStripMoveSign.BackColor = originalColor;
                 return;
             }
+            toggleAddPost(sender, e);
             originalColor = signControls.toolStripMoveSign.BackColor;
             signControls.toolStripMoveSign.BackColor = Color.LightSkyBlue;
             IFeatureLayer selectionLayer = (IFeatureLayer)Layer;
@@ -474,6 +477,13 @@ namespace tams4a.Classes
 
         private void moveSignMouseUp(object sender, MouseEventArgs e)
         {
+            Panel_Sign signControls = getSignControls();
+            if (e.Button == MouseButtons.Right && signControls.toolStripMoveSign.BackColor == Color.LightSkyBlue)
+            {
+                signControls.toolStripMoveSign.BackColor = originalColor;
+                moveSign(sender, e);
+                return;
+            }
             if (!movingSign) return;
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             Properties.Settings.Default.Save();
@@ -484,7 +494,6 @@ namespace tams4a.Classes
             Project.map.Refresh();
             Project.map.ResetBuffer();
             Project.map.Update();
-            Panel_Sign signControls = getSignControls();
             if (signControls.toolStripMoveSign.BackColor != originalColor) return;
             movingSign = false;
             Project.map.FunctionMode = FunctionMode.Select;
@@ -694,6 +703,7 @@ namespace tams4a.Classes
         /// </summary>
         private void resetSignDisplay(Panel_Sign signControls)
         {
+            signControls.toolStripButtonRemove.Enabled = false;
             suppressChanges = true;
             signControls.labelSurveyDate.Text = "";
             signControls.textBoxAddress.Text = "";
@@ -1167,11 +1177,19 @@ namespace tams4a.Classes
 
         private void clickMap(object sender, EventArgs e)
         {
-            if (inClick)
+            Panel_Sign signControls = getSignControls(); 
+
+            bool hasStreetMap = false;
+            addNewPost = !addNewPost;
+
+            if (!addNewPost)
             {
+                Project.map.MouseUp -= mapMouseUp;
+                signControls.toolStripDropDownButtonNewPost.BackColor = originalColor;
                 return;
             }
-            bool hasStreetMap = false;
+            signControls.toolStripDropDownButtonNewPost.BackColor = Color.LightSkyBlue;
+
             for (int i = 0; i < Project.map.Layers.Count; i++)
             {
                 if (((FeatureLayer)Project.map.Layers[i]).Name.Contains("road"))
@@ -1179,21 +1197,54 @@ namespace tams4a.Classes
                     hasStreetMap = true;
                 }
             }
+
             if (Project.map.GetMaxExtent().IsEmpty() || (Layer.Extent.IsEmpty() && !hasStreetMap))
             {
                 MessageBox.Show("Map has no view extent, please open a road SHP file or add sign support by coordinates.", "No view extent", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            Project.map.Click += addPostByClick;
+
+            Project.map.MouseClick += new MouseEventHandler(delegate (object _sender, MouseEventArgs _e) { determineLeftClick(_sender, _e); });
+            Project.map.MouseUp += mapMouseUp;
         }
 
-        private void addPostByClick(object sender, EventArgs e)
+        private void toggleAddPost(object sender, EventArgs e)
+        {
+            Panel_Sign signControls = getSignControls();
+
+            if (signControls.toolStripMoveSign.BackColor == Color.LightSkyBlue)
+            {
+                movingSign = false;
+                Project.map.FunctionMode = FunctionMode.Select;
+                signControls.toolStripMoveSign.BackColor = originalColor;
+            }
+
+            if (signControls.toolStripDropDownButtonNewPost.BackColor == Color.LightSkyBlue)
+            {
+                addNewPost = true;
+                clickMap(sender, e);
+            }
+        }
+
+        private void mapMouseUp(object sender, MouseEventArgs e)
+        {
+            inClick = false;
+        }
+
+        private void determineLeftClick(object sender, MouseEventArgs e)
+        {
+            if (!addNewPost || inClick) return;
+            if (e.Button == MouseButtons.Right) return;
+            inClick = true;
+            addPostByClick();
+        }
+
+        private void addPostByClick()
         {
             var clickCoords = Project.map.PixelToProj(Project.map.PointToClient(Cursor.Position));
             double[] xy = { clickCoords.X, clickCoords.Y };
             double[] z = { clickCoords.Z};
             DotSpatial.Projections.Reproject.ReprojectPoints(xy, z, Project.map.Projection, DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984, 0, 1);
-            inClick = false;
             if (double.IsInfinity(xy[0]) || double.IsInfinity(xy[1]))
             {
                 MessageBox.Show("There appears to be a problem with the projection of your shapefile. Consider reprojecting your shapefiles using ArcMap or MapWindow.");
@@ -1207,16 +1258,16 @@ namespace tams4a.Classes
             {
                 Log.Error("something went terribly wrong: " + err.ToString());
             }
-            Project.map.Click -= addPostByClick;
         }
 
         private void deletePost(object sender, EventArgs e)
         {
+            toggleAddPost(sender, e);
+            Panel_Sign signControls = getSignControls();
             if (MessageBox.Show("You are about to delete a post along with any signs on it, this action cannot be undone.", "Warning: Delete Post", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
             {
                 return;
             }
-            Panel_Sign signControls = getSignControls();
             string[] tables = { "sign_support", ModuleName };
             deleteShape(tamsids[0], tables, "support_id");
             resetSignDisplay(signControls);

@@ -445,6 +445,5 @@ namespace tams4a.Controls
             accidentDate.Text = Util.SortableDate(ad.getDate());
             ad.Close();
         }
-
     }
 }
