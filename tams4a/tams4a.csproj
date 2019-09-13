@@ -386,6 +386,12 @@
     <Compile Include="Forms\FormQueryBuilder.Designer.cs">
       <DependentUpon>FormQueryBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormSheetingInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSheetingInfo.Designer.cs">
+      <DependentUpon>FormSheetingInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormSignLookup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -510,6 +516,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormQueryBuilder.resx">
       <DependentUpon>FormQueryBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSheetingInfo.resx">
+      <DependentUpon>FormSheetingInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormSignLookup.resx">
       <DependentUpon>FormSignLookup.cs</DependentUpon>

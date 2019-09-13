@@ -107,6 +107,7 @@
             this.comboBoxSheeting = new System.Windows.Forms.ComboBox();
             this.labelSheeting = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
+            this.buttonSheetingInfo = new System.Windows.Forms.Button();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).BeginInit();
@@ -431,6 +432,7 @@
             this.labelSigns.Location = new System.Drawing.Point(10, 255);
             this.labelSigns.Name = "labelSigns";
             this.labelSigns.Size = new System.Drawing.Size(33, 13);
+            this.labelSigns.TabIndex = 53;
             this.labelSigns.Text = "Signs";
             // 
             // comboBoxSigns
@@ -531,6 +533,7 @@
             this.groupBoxSign.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxSign.Controls.Add(this.buttonSheetingInfo);
             this.groupBoxSign.Controls.Add(this.comboBoxSignRecommendation);
             this.groupBoxSign.Controls.Add(this.labelSignRecommend);
             this.groupBoxSign.Controls.Add(this.label6);
@@ -940,7 +943,7 @@
             this.comboBoxSheeting.FormattingEnabled = true;
             this.comboBoxSheeting.Location = new System.Drawing.Point(87, 65);
             this.comboBoxSheeting.Name = "comboBoxSheeting";
-            this.comboBoxSheeting.Size = new System.Drawing.Size(112, 21);
+            this.comboBoxSheeting.Size = new System.Drawing.Size(83, 21);
             this.comboBoxSheeting.TabIndex = 18;
             // 
             // labelSheeting
@@ -960,6 +963,19 @@
             this.labelType.Size = new System.Drawing.Size(73, 13);
             this.labelType.TabIndex = 0;
             this.labelType.Text = "MUTCD code";
+            // 
+            // buttonSheetingInfo
+            // 
+            this.buttonSheetingInfo.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonSheetingInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSheetingInfo.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonSheetingInfo.Image = global::tams4a.Properties.Resources.info;
+            this.buttonSheetingInfo.Location = new System.Drawing.Point(176, 63);
+            this.buttonSheetingInfo.Name = "buttonSheetingInfo";
+            this.buttonSheetingInfo.Size = new System.Drawing.Size(23, 22);
+            this.buttonSheetingInfo.TabIndex = 52;
+            this.buttonSheetingInfo.UseVisualStyleBackColor = false;
+            this.buttonSheetingInfo.Click += new System.EventHandler(this.buttonSheetingInfo_Click);
             // 
             // Panel_Sign
             // 
@@ -1066,5 +1082,6 @@
         public System.Windows.Forms.ComboBox comboBoxSignRecommendation;
         private System.Windows.Forms.Label labelSignRecommend;
         public System.Windows.Forms.ToolStripButton toolStripMoveSign;
+        public System.Windows.Forms.Button buttonSheetingInfo;
     }
 }
