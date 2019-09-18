@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using tams4a.Forms;
+using System.IO;
+using System.Diagnostics;
 
 namespace tams4a.Controls
 {
@@ -86,8 +88,9 @@ namespace tams4a.Controls
 
         private void buttonSheetingInfo_Click(object sender, EventArgs e)
         {
-            FormSheetingInfo sheetingInfo = new FormSheetingInfo();
-            sheetingInfo.ShowDialog();
+            String openPDFFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SheetingGuide.pdf";
+            File.WriteAllBytes(openPDFFile, Properties.Resources.SheetingGuide);      
+            Process.Start(openPDFFile);
         }
     }
 }
