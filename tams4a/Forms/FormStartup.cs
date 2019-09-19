@@ -106,6 +106,7 @@ namespace tams4a.Forms
             }
 
             filename = openDialog.FileName;
+            Console.WriteLine("FILE NAME: " + filename);
             openProjectFile(filename);
         }
 
@@ -124,7 +125,7 @@ namespace tams4a.Forms
         /// </summary>
         /// <param name="filename">The name of the file to be opened</param>
         /// <returns>Whether or not the operation was successful</returns>
-        private bool openProjectFile(String filename)
+        public bool openProjectFile(String filename)
         {
             if (String.IsNullOrEmpty(filename))
             {

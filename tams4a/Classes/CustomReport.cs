@@ -87,7 +87,6 @@ namespace tams4a.Classes
                 {
                     String tamsidcolumn = Project.settings.GetValue("road_f_TAMSID");
                     selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
-                    Console.WriteLine(selectionLayer.Selection.Count);
                 }
 
                 DataRow nr = outputTable.NewRow();
@@ -122,8 +121,6 @@ namespace tams4a.Classes
                 return;
             }
             DataTable outputTable = signReports.addSignColumns();
-
-            Console.WriteLine(query);
 
             FormOutput report = new FormOutput(Project, null, "Sign Inventory");
             FeatureLayer selectionLayer = (FeatureLayer)moduleSigns.Layer;
@@ -168,8 +165,6 @@ namespace tams4a.Classes
                 return;
             }
             DataTable outputTable = signReports.addSupportColumns();
-
-            Console.WriteLine(query);
 
             FormOutput report = new FormOutput(Project, null, "Support Inventory");
             FeatureLayer selectionLayer = (FeatureLayer)moduleSigns.Layer;

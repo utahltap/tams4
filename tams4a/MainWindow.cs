@@ -61,11 +61,18 @@ namespace tams4a
                     MessageBox.Show("Could not open " + file);
                 }
             }
-            
+
             while (!Project.isOpen)
             {
                 FormStartup getProject = new FormStartup(Project);
-                getProject.ShowDialog();
+                try
+                {
+                    getProject.openProjectFile(System.Reflection.Assembly.GetEntryAssembly().Location);
+                }
+                catch
+                {
+                    getProject.ShowDialog();
+                }
             }
 
             Visible = true;
