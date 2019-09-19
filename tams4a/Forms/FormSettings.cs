@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotSpatial.Symbology;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -196,6 +197,18 @@ namespace tams4a.Forms
                     if (setting.Key.ToString() == "road_labels")
                     {
                         labels = setting.getValue();
+                        FeatureLayer selectionLayer = (FeatureLayer)Project.map.Layers[0];
+                        if (setting.getValue() == "true")
+                        {
+                            selectionLayer.ShowLabels = true;
+                            Project.map.Refresh();
+                        }
+                        else
+                        {
+                            selectionLayer.ShowLabels = false;
+                            Project.map.Refresh();
+                        }
+
                         if (!String.IsNullOrEmpty(labels)) updateLabels = true;
                     }
 

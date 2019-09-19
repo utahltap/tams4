@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotSpatial.Symbology;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -97,6 +98,51 @@ namespace tams4a.Forms
             if (radioButtonOn.Checked)getLegend();
             mainWindow.road.roadColors = comboBoxRoadColors.Text;
             mainWindow.road.symbols.setSymbolizer();
+            mainWindow.Project.map.Refresh();
+        }
+
+        private void checkBoxRoad_CheckedChanged(object sender, EventArgs e)
+        {
+            FeatureLayer selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[0];
+            Console.WriteLine(mainWindow.uxMap.Layers);
+            if (!checkBoxRoad.Checked)
+            {
+                selectionLayer.UseDynamicVisibility = true;
+                selectionLayer.DynamicVisibilityMode = DynamicVisibilityMode.ZoomedIn;
+                selectionLayer.DynamicVisibilityWidth = 0;
+                selectionLayer.ShowLabels = false;
+            }
+            else
+            {
+                selectionLayer.UseDynamicVisibility = false;
+                selectionLayer.ShowLabels = true;
+            }
+            mainWindow.Project.map.Refresh();
+        }
+
+        private void checkBoxSign_CheckedChanged(object sender, EventArgs e)
+        {
+            FeatureLayer selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[1];
+            if (!checkBoxSign.Checked)
+            {
+                selectionLayer.UseDynamicVisibility = true;
+                selectionLayer.DynamicVisibilityMode = DynamicVisibilityMode.ZoomedIn;
+                selectionLayer.DynamicVisibilityWidth = 0;
+            }
+            else selectionLayer.UseDynamicVisibility = false;
+            mainWindow.Project.map.Refresh();
+        }
+
+        private void checkBoxOther_CheckedChanged(object sender, EventArgs e)
+        {
+            FeatureLayer selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[2];
+            if (!checkBoxOther.Checked)
+            {
+                selectionLayer.UseDynamicVisibility = true;
+                selectionLayer.DynamicVisibilityMode = DynamicVisibilityMode.ZoomedIn;
+                selectionLayer.DynamicVisibilityWidth = 0;
+            }
+            else selectionLayer.UseDynamicVisibility = false;
             mainWindow.Project.map.Refresh();
         }
     }

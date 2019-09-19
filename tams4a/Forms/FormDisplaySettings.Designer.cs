@@ -37,9 +37,14 @@
             this.radioButtonOff = new System.Windows.Forms.RadioButton();
             this.panelTheme = new System.Windows.Forms.Panel();
             this.panelLegend = new System.Windows.Forms.Panel();
-            this.labelRoadColors = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.labelLayers = new System.Windows.Forms.Label();
+            this.checkBoxRoad = new System.Windows.Forms.CheckBox();
+            this.checkBoxSign = new System.Windows.Forms.CheckBox();
+            this.checkBoxOther = new System.Windows.Forms.CheckBox();
             this.panelTheme.SuspendLayout();
             this.panelLegend.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // radioButtonLight
@@ -86,9 +91,9 @@
             this.comboBoxRoadColors.Items.AddRange(new object[] {
             "RSL",
             "Treatment"});
-            this.comboBoxRoadColors.Location = new System.Drawing.Point(148, 104);
+            this.comboBoxRoadColors.Location = new System.Drawing.Point(24, 80);
             this.comboBoxRoadColors.Name = "comboBoxRoadColors";
-            this.comboBoxRoadColors.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxRoadColors.Size = new System.Drawing.Size(110, 21);
             this.comboBoxRoadColors.TabIndex = 4;
             this.comboBoxRoadColors.SelectedIndexChanged += new System.EventHandler(this.comboBoxRoadColors_SelectedIndexChanged);
             // 
@@ -133,9 +138,9 @@
             this.panelTheme.Controls.Add(this.labelTheme);
             this.panelTheme.Controls.Add(this.radioButtonDark);
             this.panelTheme.Controls.Add(this.radioButtonLight);
-            this.panelTheme.Location = new System.Drawing.Point(7, 9);
+            this.panelTheme.Location = new System.Drawing.Point(321, 12);
             this.panelTheme.Name = "panelTheme";
-            this.panelTheme.Size = new System.Drawing.Size(101, 75);
+            this.panelTheme.Size = new System.Drawing.Size(90, 115);
             this.panelTheme.TabIndex = 8;
             // 
             // panelLegend
@@ -143,30 +148,80 @@
             this.panelLegend.Controls.Add(this.radioButtonOff);
             this.panelLegend.Controls.Add(this.radioButtonOn);
             this.panelLegend.Controls.Add(this.labelLegend);
-            this.panelLegend.Location = new System.Drawing.Point(124, 9);
+            this.panelLegend.Controls.Add(this.comboBoxRoadColors);
+            this.panelLegend.Location = new System.Drawing.Point(156, 12);
             this.panelLegend.Name = "panelLegend";
-            this.panelLegend.Size = new System.Drawing.Size(159, 75);
+            this.panelLegend.Size = new System.Drawing.Size(159, 115);
             this.panelLegend.TabIndex = 9;
             // 
-            // labelRoadColors
+            // panel1
             // 
-            this.labelRoadColors.AutoSize = true;
-            this.labelRoadColors.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRoadColors.Location = new System.Drawing.Point(17, 104);
-            this.labelRoadColors.Name = "labelRoadColors";
-            this.labelRoadColors.Size = new System.Drawing.Size(97, 20);
-            this.labelRoadColors.TabIndex = 10;
-            this.labelRoadColors.Text = "Road Colors";
+            this.panel1.Controls.Add(this.checkBoxOther);
+            this.panel1.Controls.Add(this.checkBoxSign);
+            this.panel1.Controls.Add(this.checkBoxRoad);
+            this.panel1.Controls.Add(this.labelLayers);
+            this.panel1.Location = new System.Drawing.Point(15, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(135, 115);
+            this.panel1.TabIndex = 10;
+            // 
+            // labelLayers
+            // 
+            this.labelLayers.AutoSize = true;
+            this.labelLayers.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelLayers.Location = new System.Drawing.Point(13, 5);
+            this.labelLayers.Name = "labelLayers";
+            this.labelLayers.Size = new System.Drawing.Size(106, 20);
+            this.labelLayers.TabIndex = 5;
+            this.labelLayers.Text = "Visible Layers";
+            // 
+            // checkBoxRoad
+            // 
+            this.checkBoxRoad.AutoSize = true;
+            this.checkBoxRoad.Checked = true;
+            this.checkBoxRoad.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxRoad.Location = new System.Drawing.Point(17, 31);
+            this.checkBoxRoad.Name = "checkBoxRoad";
+            this.checkBoxRoad.Size = new System.Drawing.Size(52, 17);
+            this.checkBoxRoad.TabIndex = 6;
+            this.checkBoxRoad.Text = "Road";
+            this.checkBoxRoad.UseVisualStyleBackColor = true;
+            this.checkBoxRoad.CheckedChanged += new System.EventHandler(this.checkBoxRoad_CheckedChanged);
+            // 
+            // checkBoxSign
+            // 
+            this.checkBoxSign.AutoSize = true;
+            this.checkBoxSign.Checked = true;
+            this.checkBoxSign.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSign.Location = new System.Drawing.Point(17, 56);
+            this.checkBoxSign.Name = "checkBoxSign";
+            this.checkBoxSign.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxSign.TabIndex = 7;
+            this.checkBoxSign.Text = "Sign";
+            this.checkBoxSign.UseVisualStyleBackColor = true;
+            this.checkBoxSign.CheckedChanged += new System.EventHandler(this.checkBoxSign_CheckedChanged);
+            // 
+            // checkBoxOther
+            // 
+            this.checkBoxOther.AutoSize = true;
+            this.checkBoxOther.Checked = true;
+            this.checkBoxOther.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOther.Location = new System.Drawing.Point(17, 81);
+            this.checkBoxOther.Name = "checkBoxOther";
+            this.checkBoxOther.Size = new System.Drawing.Size(52, 17);
+            this.checkBoxOther.TabIndex = 8;
+            this.checkBoxOther.Text = "Other";
+            this.checkBoxOther.UseVisualStyleBackColor = true;
+            this.checkBoxOther.CheckedChanged += new System.EventHandler(this.checkBoxOther_CheckedChanged);
             // 
             // FormDisplaySettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(293, 151);
-            this.Controls.Add(this.labelRoadColors);
+            this.ClientSize = new System.Drawing.Size(427, 135);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelLegend);
             this.Controls.Add(this.panelTheme);
-            this.Controls.Add(this.comboBoxRoadColors);
             this.Name = "FormDisplaySettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormDisplaySettings";
@@ -174,8 +229,9 @@
             this.panelTheme.PerformLayout();
             this.panelLegend.ResumeLayout(false);
             this.panelLegend.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -190,6 +246,10 @@
         public System.Windows.Forms.RadioButton radioButtonOff;
         private System.Windows.Forms.Panel panelTheme;
         private System.Windows.Forms.Panel panelLegend;
-        private System.Windows.Forms.Label labelRoadColors;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.CheckBox checkBoxOther;
+        private System.Windows.Forms.CheckBox checkBoxSign;
+        private System.Windows.Forms.CheckBox checkBoxRoad;
+        private System.Windows.Forms.Label labelLayers;
     }
 }
