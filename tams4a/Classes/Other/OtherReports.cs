@@ -159,13 +159,16 @@ namespace tams4a.Classes.Other
             createReport(query, map, "ID", "Objects");
         }
 
-        public void RoadsWithSidewalks(object sender, EventArgs e, string query = "SELECT * FROM road_sidewalks;")
+        public void RoadsWithSidewalks(object sender, EventArgs e, string query = "With uniqueRoad AS (SELECT * FROM road_sidewalks INNER JOIN road ON road_sidewalks.road_ID = road.TAMSID) SELECT DISTINCT road_ID, installed, comments, name, from_address, to_address FROM uniqueRoad;")
         {
             Dictionary<string, string> map = new Dictionary<string, string>()
             {
                 { "ID", "road_ID" },
                 { "Sidewalks", "installed" },
-                { "Comments", "comments" }
+                { "Comments", "comments" },
+                { "Name", "name" },
+                { "From Address", "from_address" },
+                { "To Address", "to_address" }
             };
             createReport(query, map, "ID", "Roads with Sidewalks");
         }
