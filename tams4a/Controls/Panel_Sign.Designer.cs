@@ -69,6 +69,7 @@
             this.labelSurveyDate = new System.Windows.Forms.Label();
             this.buttonFavorite = new System.Windows.Forms.Button();
             this.groupBoxSign = new System.Windows.Forms.GroupBox();
+            this.buttonSheetingInfo = new System.Windows.Forms.Button();
             this.comboBoxSignRecommendation = new System.Windows.Forms.ComboBox();
             this.labelSignRecommend = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -107,7 +108,6 @@
             this.comboBoxSheeting = new System.Windows.Forms.ComboBox();
             this.labelSheeting = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
-            this.buttonSheetingInfo = new System.Windows.Forms.Button();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).BeginInit();
@@ -580,6 +580,19 @@
             this.groupBoxSign.TabStop = false;
             this.groupBoxSign.Text = "Sign";
             // 
+            // buttonSheetingInfo
+            // 
+            this.buttonSheetingInfo.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonSheetingInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSheetingInfo.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonSheetingInfo.Image = global::tams4a.Properties.Resources.info;
+            this.buttonSheetingInfo.Location = new System.Drawing.Point(176, 63);
+            this.buttonSheetingInfo.Name = "buttonSheetingInfo";
+            this.buttonSheetingInfo.Size = new System.Drawing.Size(23, 22);
+            this.buttonSheetingInfo.TabIndex = 52;
+            this.buttonSheetingInfo.UseVisualStyleBackColor = false;
+            this.buttonSheetingInfo.Click += new System.EventHandler(this.buttonSheetingInfo_Click);
+            // 
             // comboBoxSignRecommendation
             // 
             this.comboBoxSignRecommendation.FormattingEnabled = true;
@@ -836,10 +849,10 @@
             // 
             this.numericUpDownMountHeight.DecimalPlaces = 1;
             this.numericUpDownMountHeight.Increment = new decimal(new int[] {
-            25,
+            1,
             0,
             0,
-            131072});
+            65536});
             this.numericUpDownMountHeight.Location = new System.Drawing.Point(87, 159);
             this.numericUpDownMountHeight.Name = "numericUpDownMountHeight";
             this.numericUpDownMountHeight.Size = new System.Drawing.Size(83, 20);
@@ -963,19 +976,6 @@
             this.labelType.Size = new System.Drawing.Size(73, 13);
             this.labelType.TabIndex = 0;
             this.labelType.Text = "MUTCD code";
-            // 
-            // buttonSheetingInfo
-            // 
-            this.buttonSheetingInfo.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonSheetingInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSheetingInfo.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonSheetingInfo.Image = global::tams4a.Properties.Resources.info;
-            this.buttonSheetingInfo.Location = new System.Drawing.Point(176, 63);
-            this.buttonSheetingInfo.Name = "buttonSheetingInfo";
-            this.buttonSheetingInfo.Size = new System.Drawing.Size(23, 22);
-            this.buttonSheetingInfo.TabIndex = 52;
-            this.buttonSheetingInfo.UseVisualStyleBackColor = false;
-            this.buttonSheetingInfo.Click += new System.EventHandler(this.buttonSheetingInfo_Click);
             // 
             // Panel_Sign
             // 
