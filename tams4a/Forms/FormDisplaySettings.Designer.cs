@@ -1,4 +1,6 @@
-﻿namespace tams4a.Forms
+﻿using DotSpatial.Symbology;
+
+namespace tams4a.Forms
 {
     partial class FormDisplaySettings
     {
@@ -38,10 +40,10 @@
             this.panelTheme = new System.Windows.Forms.Panel();
             this.panelLegend = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.labelLayers = new System.Windows.Forms.Label();
-            this.checkBoxRoad = new System.Windows.Forms.CheckBox();
-            this.checkBoxSign = new System.Windows.Forms.CheckBox();
             this.checkBoxOther = new System.Windows.Forms.CheckBox();
+            this.checkBoxSign = new System.Windows.Forms.CheckBox();
+            this.checkBoxRoad = new System.Windows.Forms.CheckBox();
+            this.labelLayers = new System.Windows.Forms.Label();
             this.panelTheme.SuspendLayout();
             this.panelLegend.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -165,6 +167,39 @@
             this.panel1.Size = new System.Drawing.Size(135, 115);
             this.panel1.TabIndex = 10;
             // 
+            // checkBoxOther
+            // 
+            this.checkBoxOther.AutoSize = true;
+            this.checkBoxOther.Location = new System.Drawing.Point(17, 81);
+            this.checkBoxOther.Name = "checkBoxOther";
+            this.checkBoxOther.Size = new System.Drawing.Size(52, 17);
+            this.checkBoxOther.TabIndex = 8;
+            this.checkBoxOther.Text = "Other";
+            this.checkBoxOther.UseVisualStyleBackColor = true;
+            this.checkBoxOther.CheckedChanged += new System.EventHandler(this.checkBoxOther_CheckedChanged);
+            // 
+            // checkBoxSign
+            // 
+            this.checkBoxSign.AutoSize = true;
+            this.checkBoxSign.Location = new System.Drawing.Point(17, 56);
+            this.checkBoxSign.Name = "checkBoxSign";
+            this.checkBoxSign.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxSign.TabIndex = 7;
+            this.checkBoxSign.Text = "Sign";
+            this.checkBoxSign.UseVisualStyleBackColor = true;
+            this.checkBoxSign.CheckedChanged += new System.EventHandler(this.checkBoxSign_CheckedChanged);
+            // 
+            // checkBoxRoad
+            // 
+            this.checkBoxRoad.AutoSize = true;
+            this.checkBoxRoad.Location = new System.Drawing.Point(17, 31);
+            this.checkBoxRoad.Name = "checkBoxRoad";
+            this.checkBoxRoad.Size = new System.Drawing.Size(52, 17);
+            this.checkBoxRoad.TabIndex = 6;
+            this.checkBoxRoad.Text = "Road";
+            this.checkBoxRoad.UseVisualStyleBackColor = true;
+            this.checkBoxRoad.CheckedChanged += new System.EventHandler(this.checkBoxRoad_CheckedChanged);
+            // 
             // labelLayers
             // 
             this.labelLayers.AutoSize = true;
@@ -174,45 +209,6 @@
             this.labelLayers.Size = new System.Drawing.Size(106, 20);
             this.labelLayers.TabIndex = 5;
             this.labelLayers.Text = "Visible Layers";
-            // 
-            // checkBoxRoad
-            // 
-            this.checkBoxRoad.AutoSize = true;
-            this.checkBoxRoad.Checked = true;
-            this.checkBoxRoad.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxRoad.Location = new System.Drawing.Point(17, 31);
-            this.checkBoxRoad.Name = "checkBoxRoad";
-            this.checkBoxRoad.Size = new System.Drawing.Size(52, 17);
-            this.checkBoxRoad.TabIndex = 6;
-            this.checkBoxRoad.Text = "Road";
-            this.checkBoxRoad.UseVisualStyleBackColor = true;
-            this.checkBoxRoad.CheckedChanged += new System.EventHandler(this.checkBoxRoad_CheckedChanged);
-            // 
-            // checkBoxSign
-            // 
-            this.checkBoxSign.AutoSize = true;
-            this.checkBoxSign.Checked = true;
-            this.checkBoxSign.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxSign.Location = new System.Drawing.Point(17, 56);
-            this.checkBoxSign.Name = "checkBoxSign";
-            this.checkBoxSign.Size = new System.Drawing.Size(47, 17);
-            this.checkBoxSign.TabIndex = 7;
-            this.checkBoxSign.Text = "Sign";
-            this.checkBoxSign.UseVisualStyleBackColor = true;
-            this.checkBoxSign.CheckedChanged += new System.EventHandler(this.checkBoxSign_CheckedChanged);
-            // 
-            // checkBoxOther
-            // 
-            this.checkBoxOther.AutoSize = true;
-            this.checkBoxOther.Checked = true;
-            this.checkBoxOther.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxOther.Location = new System.Drawing.Point(17, 81);
-            this.checkBoxOther.Name = "checkBoxOther";
-            this.checkBoxOther.Size = new System.Drawing.Size(52, 17);
-            this.checkBoxOther.TabIndex = 8;
-            this.checkBoxOther.Text = "Other";
-            this.checkBoxOther.UseVisualStyleBackColor = true;
-            this.checkBoxOther.CheckedChanged += new System.EventHandler(this.checkBoxOther_CheckedChanged);
             // 
             // FormDisplaySettings
             // 

@@ -1,6 +1,5 @@
 ﻿using DotSpatial.Symbology;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -14,6 +13,42 @@ namespace tams4a.Forms
         {
             mainWindow = callingForm as MainWindow;
             InitializeComponent();
+
+            FeatureLayer selectionLayer;
+            int numLayers = mainWindow.uxMap.Layers.Count;
+            if (numLayers > 0)
+            {
+                selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[0];
+                checkBoxRoad.Checked = !selectionLayer.UseDynamicVisibility;
+            }
+            else
+            {
+                checkBoxRoad.Enabled = false;
+                checkBoxRoad.Checked = false;
+            }
+
+            if (numLayers > 1)
+            {
+                selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[1];
+                checkBoxSign.Checked = !selectionLayer.UseDynamicVisibility;
+            }
+            else
+            {
+                checkBoxSign.Enabled = false;
+                checkBoxSign.Checked = false;
+            }
+
+            if (numLayers > 2)
+            {
+                selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[2];
+                checkBoxOther.Checked = !selectionLayer.UseDynamicVisibility;
+            }
+            else
+            {
+                checkBoxOther.Enabled = false;
+                checkBoxOther.Checked = false;
+            }
+
             if (mainWindow.uxMap.BackColor == Color.White) radioButtonLight.Checked = true;
             else radioButtonDark.Checked = true;
             if (mainWindow.rslBlue.Visible || mainWindow.treatmentRoutine.Visible) radioButtonOn.Checked = true;
@@ -115,6 +150,8 @@ namespace tams4a.Forms
             else
             {
                 selectionLayer.UseDynamicVisibility = false;
+
+                // TODO: Needs to pull from settings
                 selectionLayer.ShowLabels = true;
             }
             mainWindow.Project.map.Refresh();
