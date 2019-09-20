@@ -295,7 +295,10 @@ namespace tams4a.Classes
 
             if (UnsavedChanges)
             {
-                
+                DialogResult rslt = MessageBox.Show("Unsaved changes detected! Would you like to save the changes? Otherwise, they will be discared",
+                    "Unsaved Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (rslt == DialogResult.Yes) saveHandler(null, null);
+                if (rslt == DialogResult.Cancel) return;
             }
 
             resetDisplay();
