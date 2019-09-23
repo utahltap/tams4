@@ -82,6 +82,7 @@ namespace tams4a.Classes.Other
                 { "Faults", "property1" },
                 { "Breaks", "property2" },
                 { "Recommendation", "property3" },
+                { "Surface", "property4" },
                 { "Notes", "notes" }
             };
             createReport(query, map, "ID", "Sidewalks");

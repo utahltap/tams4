@@ -387,7 +387,8 @@ namespace tams4a.Classes
             values["property1"] = controls.getProperty(values["type"], 0);
             values["property2"] = controls.getProperty(values["type"], 1);
             values["property3"] = controls.getProperty(values["type"], 2);
-            values["notes"] = controls.getProperty(values["type"], 3);
+            values["property4"] = controls.getProperty(values["type"], 3);
+            values["notes"] = controls.getProperty(values["type"], 4);
 
             if (!string.IsNullOrWhiteSpace(controls.textBoxPhotoFile.Text))
             {

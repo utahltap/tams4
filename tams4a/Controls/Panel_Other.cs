@@ -29,6 +29,19 @@ namespace tams4a.Controls
                 { "Other", new List<Control>() }
             };
             int left = 11, right = 89;
+
+            ComboBox placeholder = new ComboBox();
+            placeholder.Visible = false;
+
+            TextBox notes = new TextBox();
+            notes.Location = new Point(left, 144);
+            notes.Size = new Size(193, 80);
+
+            Label notesLabel = new Label();
+            notesLabel.Text = "Notes";
+            notesLabel.Size = new Size(70, 14);
+            notesLabel.Location = new Point(left, 122);
+
             #region sidewalk
             ComboBox swFault = new ComboBox();
             swFault.Location = new Point(right, 24);
@@ -59,9 +72,18 @@ namespace tams4a.Controls
             rec3rd.Items.Add("Other (see notes)");
             controlSets["Sidewalk"].Add(rec3rd);
 
-            TextBox notes = new TextBox();
-            notes.Location = new Point(left, 120);
-            notes.Size = new Size(193, 80);
+            ComboBox swSurface = new ComboBox();
+            swSurface.Location = new Point(right, 96);
+            swSurface.Size = new Size(112, 20);
+            swSurface.Items.Add("");
+            swSurface.Items.Add("Asphalt");
+            swSurface.Items.Add("Concrete");
+            swSurface.Items.Add("Pervious");
+            swSurface.Items.Add("Not Paved");
+            swSurface.Items.Add("Multiple");
+            swSurface.Items.Add("Other");
+            controlSets["Sidewalk"].Add(swSurface);
+
             controlSets["Sidewalk"].Add(notes);
 
             Label swFaultLabel = new Label();
@@ -82,30 +104,32 @@ namespace tams4a.Controls
             rec3rdLabel.Location = new Point(left, 74);
             controlSets["Sidewalk"].Add(rec3rdLabel);
 
-            Label notesLabel = new Label();
-            notesLabel.Text = "Notes";
-            notesLabel.Size = new Size(70, 14);
-            notesLabel.Location = new Point(left, 98);
+            Label swSurfaceLabel = new Label();
+            swSurfaceLabel.Size = new Size(70, 14);
+            swSurfaceLabel.Text = "Surface";
+            swSurfaceLabel.Location = new Point(left, 98);
+            controlSets["Sidewalk"].Add(swSurfaceLabel);
+
             controlSets["Sidewalk"].Add(notesLabel);
             #endregion sidewalk
 
             #region ramp
-            ComboBox adAcondition = new ComboBox();
-            adAcondition.Location = new Point(right, 24);
-            adAcondition.Size = new Size(112, 20);
-            adAcondition.Items.Add("");
-            adAcondition.Items.Add("Good");
-            adAcondition.Items.Add("Acceptable");
-            adAcondition.Items.Add("Bad");
-            controlSets["ADA Ramp"].Add(adAcondition);
+            ComboBox adaCondition = new ComboBox();
+            adaCondition.Location = new Point(right, 24);
+            adaCondition.Size = new Size(112, 20);
+            adaCondition.Items.Add("");
+            adaCondition.Items.Add("Good");
+            adaCondition.Items.Add("Acceptable");
+            adaCondition.Items.Add("Bad");
+            controlSets["ADA Ramp"].Add(adaCondition);
 
-            ComboBox adAcompliant = new ComboBox();
-            adAcompliant.Location = new Point(right, 48);
-            adAcompliant.Size = new Size(112, 20);
-            adAcompliant.Items.Add("");
-            adAcompliant.Items.Add("Yes");
-            adAcompliant.Items.Add("No");
-            controlSets["ADA Ramp"].Add(adAcompliant);
+            ComboBox adaCompliant = new ComboBox();
+            adaCompliant.Location = new Point(right, 48);
+            adaCompliant.Size = new Size(112, 20);
+            adaCompliant.Items.Add("");
+            adaCompliant.Items.Add("Yes");
+            adaCompliant.Items.Add("No");
+            controlSets["ADA Ramp"].Add(adaCompliant);
 
             ComboBox tiles = new ComboBox();
             tiles.Location = new Point(right, 72);
@@ -115,20 +139,22 @@ namespace tams4a.Controls
             tiles.Items.Add("No");
             controlSets["ADA Ramp"].Add(tiles);
 
+            controlSets["ADA Ramp"].Add(placeholder);
             controlSets["ADA Ramp"].Add(notes);
-            Label adAconditionLabel = new Label();
-            adAconditionLabel.Text = "Condition";
-            adAconditionLabel.Size = new Size(70, 14);
-            adAconditionLabel.Location = new Point(left, 26);
-            controlSets["ADA Ramp"].Add(adAconditionLabel);
 
-            Label adAcompliantLabel = new Label();
-            adAcompliantLabel.Text = "Compliant";
-            adAcompliantLabel.Size = new Size(70, 14);
-            adAcompliantLabel.Location = new Point(left, 50);
-            controlSets["ADA Ramp"].Add(adAcompliantLabel);
+            Label adaConditionLabel = new Label();
+            adaConditionLabel.Text = "Condition";
+            adaConditionLabel.Size = new Size(70, 14);
+            adaConditionLabel.Location = new Point(left, 26);
+            controlSets["ADA Ramp"].Add(adaConditionLabel);
+
+            Label adaCompliantLabel = new Label();
+            adaCompliantLabel.Text = "Compliant";
+            adaCompliantLabel.Size = new Size(70, 14);
+            adaCompliantLabel.Location = new Point(left, 50);
+            controlSets["ADA Ramp"].Add(adaCompliantLabel);
+
             Label tilesLabel = new Label();
-
             tilesLabel.Text = "Has Tiles";
             tilesLabel.Size = new Size(70, 14);
             tilesLabel.Location = new Point(left, 74);
@@ -154,6 +180,7 @@ namespace tams4a.Controls
             controlSets["Severe Road Distress"].Add(nonElement);
             nonElement.Visible = false;
 
+            controlSets["Severe Road Distress"].Add(placeholder);
             controlSets["Severe Road Distress"].Add(notes);
 
             Label distressLabel = new Label();
@@ -192,6 +219,7 @@ namespace tams4a.Controls
             controlSets["Drainage"].Add(nonElement);
             nonElement.Visible = false;
 
+            controlSets["Drainage"].Add(placeholder);
             controlSets["Drainage"].Add(notes);
 
             Label typeLabel = new Label();
@@ -224,6 +252,7 @@ namespace tams4a.Controls
             accidentSeverity.Items.Add("Property Damage");
             controlSets["Accident"].Add(accidentSeverity);
 
+            controlSets["Accident"].Add(placeholder);
             controlSets["Accident"].Add(notes);
 
             nonElement = new TextBox();
@@ -280,6 +309,7 @@ namespace tams4a.Controls
             controlSets["Other"].Add(nonElement);
             nonElement.Visible = false;
 
+            controlSets["Other"].Add(placeholder);
             controlSets["Other"].Add(notes);
 
             Label property1Label = new Label();
@@ -303,13 +333,14 @@ namespace tams4a.Controls
             textBoxDescription.TextChanged += moduleValueChanged;
             textBoxPhotoFile.TextChanged += moduleValueChanged;
 
+            swSurface.TextChanged += moduleValueChanged;
             swFault.TextChanged += moduleValueChanged;
             swBreak.TextChanged += moduleValueChanged;
             rec3rd.TextChanged += moduleValueChanged;
             notes.TextChanged += moduleValueChanged;
 
-            adAcondition.TextChanged += moduleValueChanged;
-            adAcompliant.TextChanged += moduleValueChanged;
+            adaCondition.TextChanged += moduleValueChanged;
+            adaCompliant.TextChanged += moduleValueChanged;
             tiles.TextChanged += moduleValueChanged;
 
             distress.TextChanged += moduleValueChanged;
@@ -339,7 +370,8 @@ namespace tams4a.Controls
                 controlSets[values["type"]][0].Text = Util.DictionaryItemString(values, "property1");
                 controlSets[values["type"]][1].Text = Util.DictionaryItemString(values, "property2");
                 controlSets[values["type"]][2].Text = Util.DictionaryItemString(values, "property3");
-                controlSets[values["type"]][3].Text = Util.DictionaryItemString(values, "notes");
+                if (values["type"] == "Sidewalk") controlSets[values["type"]][3].Text = Util.DictionaryItemString(values, "property4");
+                controlSets[values["type"]][4].Text = Util.DictionaryItemString(values, "notes");
             }
         }
 
@@ -356,6 +388,7 @@ namespace tams4a.Controls
                 controlSets[propSet][1].Text = "";
                 controlSets[propSet][2].Text = "";
                 controlSets[propSet][3].Text = "";
+                controlSets[propSet][4].Text = "";
             }
             else
             {
@@ -367,6 +400,7 @@ namespace tams4a.Controls
                 controlSets["Other"][1].Text = "";
                 controlSets["Other"][2].Text = "";
                 controlSets["Other"][3].Text = "";
+                controlSets["Other"][4].Text = "";
             }
         }
 
@@ -377,7 +411,7 @@ namespace tams4a.Controls
             textBoxPhotoFile.Text = "";
             pictureBoxPhoto.ImageLocation = null;
             textBoxDescription.Text = "";
-            for (int i = 0; i < 3; i ++)
+            for (int i = 0; i < 4; i ++)
             {
                 foreach (string key in controlSets.Keys)
                 {
