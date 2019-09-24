@@ -27,10 +27,10 @@ namespace tams4a.Forms
         private const int SUPPORT_TAB_CONTROL_HEIGHT = 302;
         private const int SUPPORT_BUTTON_Y_LOCATION = 308;
 
-        private const int OTHER_FORM_HEIGHT = 364;
-        private const int OTHER_PANEL_HEIGHT = 253;
-        private const int OTHER_TAB_CONTROL_HEIGHT = 281;
-        private const int OTHER_BUTTON_Y_LOCATION = 285;
+        private const int OTHER_FORM_HEIGHT = 390;
+        private const int OTHER_PANEL_HEIGHT = 278;
+        private const int OTHER_TAB_CONTROL_HEIGHT = 306;
+        private const int OTHER_BUTTON_Y_LOCATION = 312;
 
 
         public FormQueryBuilder(TamsProject Project, int tab)
@@ -494,6 +494,13 @@ namespace tams4a.Forms
                 query += "property3 LIKE \"" + comboBoxProperty3Value.Text + "\"";
             }
 
+            if (Property4.Checked)
+            {
+                if (!firstOption) query += " AND ";
+                else firstOption = false;
+                query += "property4 LIKE \"" + comboBoxProperty4Value.Text + "\"";
+            }
+
             return query;
         }
 
@@ -914,14 +921,17 @@ namespace tams4a.Forms
             Property1.Visible = true;
             Property2.Visible = true;
             Property3.Visible = true;
+            Property4.Visible = true;
             OtherNotes.Visible = true;
             textBoxProperty1Comparison.Visible = true;
             textBoxProperty2Comparison.Visible = true;
             textBoxProperty3Comparison.Visible = true;
+            textBoxProperty4Comparison.Visible = true;
             textBoxOtherNotesComparison.Visible = true;
             comboBoxProperty1Value.Visible = true;
             comboBoxProperty2Value.Visible = true;
             comboBoxProperty3Value.Visible = true;
+            comboBoxProperty4Value.Visible = true;
             textBoxOtherNotesValue.Visible = true;
             textBoxProperty1Value.Visible = false;
             textBoxProperty2Value.Visible = false;
@@ -935,7 +945,24 @@ namespace tams4a.Forms
             comboBoxProperty1Value.Items.Clear();
             comboBoxProperty2Value.Items.Clear();
             comboBoxProperty3Value.Items.Clear();
+            comboBoxProperty4Value.Items.Clear();
 
+            if (String.IsNullOrWhiteSpace(comboBoxLandmarkType.Text))
+            {
+                Property1.Visible = false;
+                Property2.Visible = false;
+                Property3.Visible = false;
+                Property4.Visible = false;
+                textBoxProperty1Comparison.Visible = false;
+                textBoxProperty2Comparison.Visible = false;
+                textBoxProperty3Comparison.Visible = false;
+                textBoxProperty4Comparison.Visible = false;
+                comboBoxProperty1Value.Visible = false;
+                comboBoxProperty2Value.Visible = false;
+                comboBoxProperty3Value.Visible = false;
+                comboBoxProperty4Value.Visible = false;
+                comboBoxInstalledValue.Visible = false;
+            }
             if (comboBoxLandmarkType.Text == "Sidewalk")
             {
                 Property1.Text = "Faults";
@@ -963,20 +990,34 @@ namespace tams4a.Forms
                     "Watch",
                     "Other (see notes)"
                 });
+
+                Property4.Text = "Surface";
+                comboBoxProperty4Value.Items.AddRange(new object[] {
+                    "",
+                    "Asphalt",
+                    "Concrete",
+                    "Pervious",
+                    "Not Paved",
+                    "Multiple",
+                    "Other"
+                });
             }
             if (comboBoxLandmarkType.Text == "Roads with Sidewalks")
             {
                 Property1.Visible = false;
                 Property2.Visible = false;
                 Property3.Visible = false;
+                Property4.Visible = false;
                 OtherNotes.Visible = false;
                 textBoxProperty1Comparison.Visible = false;
                 textBoxProperty2Comparison.Visible = false;
                 textBoxProperty3Comparison.Visible = false;
+                textBoxProperty4Comparison.Visible = false;
                 textBoxOtherNotesComparison.Visible = false;
                 comboBoxProperty1Value.Visible = false;
                 comboBoxProperty2Value.Visible = false;
                 comboBoxProperty3Value.Visible = false;
+                comboBoxProperty4Value.Visible = false;
                 textBoxOtherNotesValue.Visible = false;
 
                 textBoxOtherAddressValue.Visible = false;
@@ -1001,6 +1042,10 @@ namespace tams4a.Forms
                 Property3.Visible = false;
                 textBoxProperty3Comparison.Visible = false;
                 comboBoxProperty3Value.Visible = false;
+
+                Property4.Visible = false;
+                textBoxProperty4Comparison.Visible = false;
+                comboBoxProperty4Value.Visible = false;
             }
             if (comboBoxLandmarkType.Text == "ADA Ramp")
             {
@@ -1025,6 +1070,10 @@ namespace tams4a.Forms
                     "Yes",
                     "No"
                 });
+
+                Property4.Visible = false;
+                textBoxProperty4Comparison.Visible = false;
+                comboBoxProperty4Value.Visible = false;
             }
             if (comboBoxLandmarkType.Text == "Drainage")
             {
@@ -1047,6 +1096,10 @@ namespace tams4a.Forms
                 Property3.Visible = false;
                 textBoxProperty3Comparison.Visible = false;
                 comboBoxProperty3Value.Visible = false;
+
+                Property4.Visible = false;
+                textBoxProperty4Comparison.Visible = false;
+                comboBoxProperty4Value.Visible = false;
             }
             if (comboBoxLandmarkType.Text == "Accident")
             {
@@ -1067,6 +1120,10 @@ namespace tams4a.Forms
                     "Death",
                     "Property Damage"
                 });
+
+                Property4.Visible = false;
+                textBoxProperty4Comparison.Visible = false;
+                comboBoxProperty4Value.Visible = false;
             }
             if (comboBoxLandmarkType.Text == "Other")
             {
@@ -1083,6 +1140,10 @@ namespace tams4a.Forms
                 Property3.Visible = false;
                 textBoxProperty3Comparison.Visible = false;
                 comboBoxProperty3Value.Visible = false;
+
+                Property4.Visible = false;
+                textBoxProperty4Comparison.Visible = false;
+                comboBoxProperty4Value.Visible = false;
             }
         }
 
@@ -1123,6 +1184,12 @@ namespace tams4a.Forms
         {
             textBoxProperty3Comparison.Enabled = Property3.Checked;
             comboBoxProperty3Value.Enabled = Property3.Checked;
+        }
+
+        private void checkBoxProperty4_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxProperty4Comparison.Enabled = Property4.Checked;
+            comboBoxProperty4Value.Enabled = Property4.Checked;
         }
 
         private void checkBoxOtherID_CheckedChanged(object sender, EventArgs e)
