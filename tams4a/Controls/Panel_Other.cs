@@ -333,6 +333,7 @@ namespace tams4a.Controls
             textBoxDescription.TextChanged += moduleValueChanged;
             textBoxPhotoFile.TextChanged += moduleValueChanged;
 
+            swFault.SelectedIndexChanged += new EventHandler(delegate (object sender, EventArgs e) { updateSidwalkRecommendation(sender, e, swFault, rec3rd); });
             swSurface.TextChanged += moduleValueChanged;
             swFault.TextChanged += moduleValueChanged;
             swBreak.TextChanged += moduleValueChanged;
@@ -357,6 +358,12 @@ namespace tams4a.Controls
 
             buttonNextPhoto.Click += buttonNextPhoto_Click;
             buttonAccidentDate.Click += ButtonAccidentDate_Click;
+        }
+
+        private void updateSidwalkRecommendation(object sender, EventArgs e, ComboBox swFault, ComboBox recommend)
+        {
+            if (swFault.SelectedItem.ToString() == "Less than 0.25 in.") recommend.SelectedIndex = 3;
+            if (swFault.SelectedItem.ToString() == "0.25 - 0.5 in.") recommend.SelectedIndex = 1;
         }
 
         public void updateDisplay(Dictionary<string, string> values)
