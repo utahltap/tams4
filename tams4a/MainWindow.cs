@@ -9,6 +9,8 @@ using tams4a.Classes;
 using tams4a.Forms;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace tams4a
 {
@@ -558,10 +560,9 @@ namespace tams4a
 
         private void toolStripButtonSnapShot_Click(object sender, EventArgs e)
         {
-            string filename;
-
             SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "Portable Network Graphic (*.png)|*.png";
+            saveDialog.Filter = "PNG Image | *.png";
+            saveDialog.Title = "Save snap shot of map as PNG";
             try
             {
                 saveDialog.InitialDirectory = Properties.Settings.Default.lastFolder;
@@ -577,9 +578,16 @@ namespace tams4a
                 return;
             }
 
-            filename = saveDialog.FileName;
-            Bitmap mapSnap = uxMap.SnapShot(1500);
-            mapSnap.Save(filename, System.Drawing.Imaging.ImageFormat.Png);
+            Bitmap mapSnap = uxMap.SnapShot();
+
+            if (saveDialog.FileName != "")
+            {
+                System.IO.FileStream path = (System.IO.FileStream)saveDialog.OpenFile();
+                mapSnap.Save(path, ImageFormat.Png);
+                path.Close();
+                Process.Start(saveDialog.FileName);
+            }
+
         }
 
         private void editTreatmentsToolStripMenuItem_Click(object sender, EventArgs e)
