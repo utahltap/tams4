@@ -258,6 +258,7 @@ namespace tams4a.Classes
             {
                 selectionLayer.ZoomToSelectedFeatures();
                 Project.map.ZoomOut();
+                Project.map.Refresh();
             }
 
             bool mulitple = false;
@@ -520,7 +521,8 @@ namespace tams4a.Classes
                 roadControls.textBoxRoadName.Enabled = false;
                 roadControls.textBoxRoadName.Text = "";
                 roadControls.labelSurveyDate.Visible = false;
-            } else
+            }
+            else
             {
                 roadControls.textBoxPhotoFile.Enabled = true;
                 roadControls.buttonNextPhoto.Enabled = true;
@@ -675,7 +677,8 @@ namespace tams4a.Classes
                 roadControls.distress6.Value > -1 ||
                 roadControls.distress7.Value > -1 ||
                 roadControls.distress8.Value > -1 ||
-                roadControls.distress9.Value > -1
+                roadControls.distress9.Value > -1 ||
+                roadControls.labelName.Text == "Multiple"
                 )
             {
 
