@@ -170,7 +170,7 @@ namespace tams4a
             {
                 if (tabControlControls.SelectedIndex == 0) road.saveHandler(sender, e);
                 if (tabControlControls.SelectedIndex == 1) sign.saveHandler(sender, e);
-                //if (tabControlControls.SelectedTab.Name == "Other") //do something
+                if (tabControlControls.SelectedIndex == 2) other.saveHandler(sender, e);
             }
         }
 

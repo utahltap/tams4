@@ -681,7 +681,6 @@ namespace tams4a.Classes
                 roadControls.labelName.Text == "Multiple"
                 )
             {
-
                 DialogResult result = MessageBox.Show("Changing road surface will delete all distress data for the selected roads. Are you sure you want to do this?" +
                 "\n\n(Note: Changes are not permanent until saved)", "Warning: Changing Road Surface", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.No)

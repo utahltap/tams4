@@ -373,11 +373,12 @@ namespace tams4a.Classes
 
         public void saveHandler(object sender, EventArgs e)
         {
+            Panel_Other controls = getOtherControls();
+            if (!controls.toolStripButtonSave.Enabled) return;
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
 
-            Panel_Other controls = getOtherControls();
             Dictionary<string, string> values = new Dictionary<string, string>();
             values["type"] = controls.comboBoxObject.Text;
             values["icon"] = Util.DictionaryItemString(icons, controls.comboBoxObject.Text);
@@ -424,8 +425,8 @@ namespace tams4a.Classes
                 row["TAMSICON"] = values["icon"];
             }
 
-            resetSaveCondition();
-
+            resetDisplay();
+            disableDisplay();
             Properties.Settings.Default.Save();
             selectionLayer.ClearSelection();
             selectionLayer.DataSet.Save();
