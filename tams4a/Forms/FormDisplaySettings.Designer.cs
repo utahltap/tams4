@@ -218,6 +218,9 @@ namespace tams4a.Forms
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelLegend);
             this.Controls.Add(this.panelTheme);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(443, 174);
+            this.MinimumSize = new System.Drawing.Size(443, 174);
             this.Name = "FormDisplaySettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormDisplaySettings";

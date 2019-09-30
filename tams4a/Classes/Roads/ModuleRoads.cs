@@ -648,9 +648,9 @@ namespace tams4a.Classes
                 }
             }
             resetSaveCondition();
-
+            resetRoadDisplay();
+            disableRoadDisplay();
             Properties.Settings.Default.Save();
-
             selectionLayer.ClearSelection();
             symbols.setSymbolizer();
             Project.map.Invalidate();
