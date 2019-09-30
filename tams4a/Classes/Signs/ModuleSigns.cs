@@ -113,7 +113,7 @@ namespace tams4a.Classes
             if (!base.openFile(thePath, type)) { return false; }
 
             ControlsPage.Controls.Remove(ControlsPage.Controls["SIGNADD"]);
-            Panel_Sign signPanel = new Panel_Sign();
+            Panel_Sign signPanel = new Panel_Sign(Project);
             signPanel.Name = "SIGNCONTROLS";
             signPanel.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(signPanel);
@@ -154,7 +154,7 @@ namespace tams4a.Classes
             signPanel.comboBoxConditionSign.TextChanged += signValueChanged;
             signPanel.comboBoxDirection.TextChanged += signValueChanged;
             signPanel.comboBoxSignRecommendation.TextChanged += signValueChanged;
-            signPanel.textBoxPhotoFile.TextChanged += signValueChanged;
+            signPanel.textBoxPhotoSign.TextChanged += signValueChanged;
             signPanel.pictureBoxPhoto.Click += clickPhotoBox;
             signPanel.pictureBoxPost.Click += clickPostPhotoBox;
             Project.map.MouseUp += moveSignMouseUp;
@@ -670,10 +670,10 @@ namespace tams4a.Classes
             signPanel.comboBoxConditionSign.Text = signChanges[index]["condition"];
             signPanel.comboBoxDirection.Text = signChanges[index]["direction"];
             signPanel.comboBoxSignRecommendation.Text = signChanges[index]["recommendation"];
-            signPanel.textBoxPhotoFile.Text = signChanges[index]["photo"];
+            signPanel.textBoxPhotoSign.Text = signChanges[index]["photo"];
             signPanel.buttonFavorite.BackColor = signChanges[index]["favorite"].Contains("true") ? Color.DeepPink : Control.DefaultBackColor;
             suppressChanges = false;
-            updatePhotoPreview(signPanel.pictureBoxPhoto, signPanel.textBoxPhotoFile.Text);
+            updatePhotoPreview(signPanel.pictureBoxPhoto, signPanel.textBoxPhotoSign.Text);
         }
 
         /// <summary>
@@ -733,7 +733,7 @@ namespace tams4a.Classes
             signControls.comboBoxDirection.SelectedIndex = 0;
             signControls.comboBoxConditionSign.SelectedIndex = 0;
             signControls.comboBoxSignRecommendation.SelectedIndex = 0;
-            signControls.textBoxPhotoFile.Text = "";
+            signControls.textBoxPhotoSign.Text = "";
             signControls.textBoxPhotoPost.Text = "";
             signControls.pictureBoxPhoto.Image = null;
             signControls.pictureBoxPost.Image = null;
@@ -779,7 +779,7 @@ namespace tams4a.Classes
             signChanges[index]["mount_height"] = signControls.numericUpDownMountHeight.Value.ToString();
             signChanges[index]["sign_text"] = signControls.textBoxText.Text;
             signChanges[index]["survey_date"] = Util.SortableDate(surveyDate);
-            signChanges[index]["photo"] = signControls.textBoxPhotoFile.Text;
+            signChanges[index]["photo"] = signControls.textBoxPhotoSign.Text;
             signChanges[index]["reflectivity"] = signControls.comboBoxReflectivity.Text;
             signChanges[index]["description"] = signControls.textBoxDescription.Text;
             signChanges[index]["install_date"] = signControls.textBoxInstall.Text;
@@ -1173,7 +1173,7 @@ namespace tams4a.Classes
         private void clickPhotoBox(object sender, EventArgs e)
         {
             Panel_Sign signControls = getSignControls();
-            enlargePicture(signControls.textBoxPhotoFile.Text);
+            enlargePicture(signControls.textBoxPhotoSign.Text);
         }
 
         private void clickPostPhotoBox(object sender, EventArgs e)

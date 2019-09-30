@@ -87,6 +87,7 @@ namespace tams4a.Controls
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAnalysis = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSidewalk = new System.Windows.Forms.ToolStripButton();
+            this.buttonPreviousPhoto = new System.Windows.Forms.Button();
             this.groupBoxDistress.SuspendLayout();
             this.groupBoxInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLanes)).BeginInit();
@@ -144,6 +145,7 @@ namespace tams4a.Controls
             this.label4.Location = new System.Drawing.Point(7, 229);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(28, 13);
+            this.label4.TabIndex = 36;
             this.label4.Text = "RSL";
             // 
             // labelSuggestedTreatment
@@ -152,6 +154,7 @@ namespace tams4a.Controls
             this.labelSuggestedTreatment.Location = new System.Drawing.Point(7, 254);
             this.labelSuggestedTreatment.Name = "labelSuggestedTreatment";
             this.labelSuggestedTreatment.Size = new System.Drawing.Size(55, 13);
+            this.labelSuggestedTreatment.TabIndex = 37;
             this.labelSuggestedTreatment.Text = "Treatment";
             // 
             // comboBoxTreatment
@@ -320,6 +323,7 @@ namespace tams4a.Controls
             // 
             // groupBoxInfo
             // 
+            this.groupBoxInfo.Controls.Add(this.buttonPreviousPhoto);
             this.groupBoxInfo.Controls.Add(this.label3);
             this.groupBoxInfo.Controls.Add(this.label2);
             this.groupBoxInfo.Controls.Add(this.label1);
@@ -462,9 +466,9 @@ namespace tams4a.Controls
             // 
             this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBoxPhoto.InitialImage = global::tams4a.Properties.Resources.nophoto;
-            this.pictureBoxPhoto.Location = new System.Drawing.Point(104, 331);
+            this.pictureBoxPhoto.Location = new System.Drawing.Point(83, 331);
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
-            this.pictureBoxPhoto.Size = new System.Drawing.Size(90, 64);
+            this.pictureBoxPhoto.Size = new System.Drawing.Size(112, 73);
             this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxPhoto.TabIndex = 32;
             this.pictureBoxPhoto.TabStop = false;
@@ -480,7 +484,7 @@ namespace tams4a.Controls
             // 
             // buttonNextPhoto
             // 
-            this.buttonNextPhoto.Location = new System.Drawing.Point(82, 305);
+            this.buttonNextPhoto.Location = new System.Drawing.Point(30, 331);
             this.buttonNextPhoto.Name = "buttonNextPhoto";
             this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
             this.buttonNextPhoto.TabIndex = 30;
@@ -489,11 +493,12 @@ namespace tams4a.Controls
             // 
             // textBoxPhotoFile
             // 
-            this.textBoxPhotoFile.Location = new System.Drawing.Point(105, 305);
+            this.textBoxPhotoFile.Location = new System.Drawing.Point(83, 305);
             this.textBoxPhotoFile.Name = "textBoxPhotoFile";
-            this.textBoxPhotoFile.Size = new System.Drawing.Size(90, 20);
+            this.textBoxPhotoFile.Size = new System.Drawing.Size(112, 20);
             this.textBoxPhotoFile.TabIndex = 31;
             this.textBoxPhotoFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBoxPhotoFile.TextChanged += new System.EventHandler(this.textBoxPhotoFile_TextChanged);
             // 
             // labelSurface
             // 
@@ -735,6 +740,16 @@ namespace tams4a.Controls
             this.toolStripButtonSidewalk.Text = "Sidewalk Data";
             this.toolStripButtonSidewalk.Visible = false;
             // 
+            // buttonPreviousPhoto
+            // 
+            this.buttonPreviousPhoto.Location = new System.Drawing.Point(9, 331);
+            this.buttonPreviousPhoto.Name = "buttonPreviousPhoto";
+            this.buttonPreviousPhoto.Size = new System.Drawing.Size(20, 20);
+            this.buttonPreviousPhoto.TabIndex = 33;
+            this.buttonPreviousPhoto.Text = "<";
+            this.buttonPreviousPhoto.UseVisualStyleBackColor = true;
+            this.buttonPreviousPhoto.Click += new System.EventHandler(this.buttonPreviousPhoto_Click);
+            // 
             // Panel_Road
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -821,5 +836,6 @@ namespace tams4a.Controls
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         public System.Windows.Forms.ToolStripButton toolStripButtonSidewalk;
         public System.Windows.Forms.ToolStripButton buttonSave;
+        public System.Windows.Forms.Button buttonPreviousPhoto;
     }
 }

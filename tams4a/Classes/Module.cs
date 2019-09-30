@@ -642,7 +642,7 @@ namespace tams4a.Classes
         /// Sets the picture of the provided picture box.
         /// </summary>
         /// <param name="preview"></param>
-        protected void updatePhotoPreview(PictureBox preview, string filePath, string subPath = @"\Photos\")
+        public void updatePhotoPreview(PictureBox preview, string filePath, string subPath = @"\Photos\")
         {
             if (!string.IsNullOrEmpty(filePath))
             {

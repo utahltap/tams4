@@ -14,8 +14,9 @@ namespace tams4a.Classes
     {
         public new const string moduleVersion = "4.0.1.1";    // string that can be converted to System.Version
         public string roadColors = "RSL";
-        public Color labelColor = Color.Black;        
+        public Color labelColor = Color.Black;
 
+        private TamsProject project;
         private RoadReports reports;
         private RoadGraphs graphs;
         public RoadSymbols symbols;
@@ -53,8 +54,8 @@ namespace tams4a.Classes
             notes = "";
             reports = new RoadReports(theProject, this);
             graphs = new RoadGraphs(theProject, this, distressAsphalt, distressGravel, distressConcrete);
-            symbols = new RoadSymbols(theProject, this); 
-
+            symbols = new RoadSymbols(theProject, this);
+            project = theProject;
             boundButtons[1].Click += reports.generalReport;
             boundButtons[2].Click += reports.potholeReport;
             boundButtons[3].Click += openBudgetTool;
@@ -148,7 +149,7 @@ namespace tams4a.Classes
             Project.map.Layers.Move(Layer, 0);
 
             ControlsPage.Controls.Remove(ControlsPage.Controls["ROADADD"]);
-            Panel_Road roadPanel = new Panel_Road();
+            Panel_Road roadPanel = new Panel_Road(project);
             roadPanel.Name = "ROADCONTROLS";
             roadPanel.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(roadPanel);

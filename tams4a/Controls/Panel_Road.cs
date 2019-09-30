@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
+using tams4a.Classes;
+using System.IO;
 
 namespace tams4a.Controls
 {
     public partial class Panel_Road : Panel_Module
     {
-        public Panel_Road()
+        private TamsProject Project;
+        private string[] fileEntries;
+        private int lastUsedPhotoIndex;
+
+        public Panel_Road(TamsProject theProject)
         {
             InitializeComponent();
-            
+            Project = theProject;
+            fileEntries = Directory.GetFiles(Project.projectFolderPath + @"\Photos\");
             numericUpDownSpeedLimit.ValueChanged += moduleValueChanged;
             numericUpDownLanes.ValueChanged += moduleValueChanged;
             textBoxFrom.TextChanged += moduleValueChanged;
@@ -97,40 +103,58 @@ namespace tams4a.Controls
 
         private void buttonNextPhoto_Click(object sender, EventArgs e)
         {
-            string oldPhoto = Properties.Settings.Default.lastPhoto;
-            if (string.IsNullOrWhiteSpace(oldPhoto))
+            updatePhotoPreview(textBoxPhotoFile, 1);
+        }
+
+        private void buttonPreviousPhoto_Click(object sender, EventArgs e)
+        {
+            updatePhotoPreview(textBoxPhotoFile, -1);
+        }
+
+        private void updatePhotoPreview(TextBox file, int direction)
+        {
+            String[] splitFile;
+            if (!String.IsNullOrWhiteSpace(file.Text))
             {
-                textBoxPhotoFile.Text = "0001";
-                return;
+                for (int i = 0; i < fileEntries.Length; i++)
+                {
+                    splitFile = fileEntries[i].Split('\\');
+                    if (file.Text == splitFile[splitFile.Length - 1])
+                    {
+                        if (direction == 1 && i == fileEntries.Length - 1) i = 0;
+                        if (direction == -1 && i == 0) i = fileEntries.Length;
+                        splitFile = fileEntries[i + direction].Split('\\');
+                        file.Text = splitFile[splitFile.Length - 1];
+                        lastUsedPhotoIndex = i + direction;
+                        return;
+                    }
+                }
             }
+            int newPhotoIndex = 0;
+            if (direction == 1 && lastUsedPhotoIndex + 1 < fileEntries.Length - 1) newPhotoIndex = lastUsedPhotoIndex + direction;
+            if (direction == -1 && lastUsedPhotoIndex - 1 >= 0) newPhotoIndex = lastUsedPhotoIndex + direction;
+            splitFile = fileEntries[newPhotoIndex].Split('\\');
+            file.Text = splitFile[splitFile.Length - 1];
+        }
 
-            string pattern = @"(.*?)(\d+)(.*)";
-            Regex rex = new Regex(pattern, RegexOptions.IgnoreCase);
-
-            Match mat = rex.Match(oldPhoto);
-            if (!mat.Success)
+        private void textBoxPhotoFile_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBoxPhotoFile.Text))
             {
-                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
-                return;
+                string imageLocation = Project.projectFolderPath + @"\Photos\" + textBoxPhotoFile.Text;
+                if (File.Exists(imageLocation))
+                {
+                    pictureBoxPhoto.ImageLocation = imageLocation;
+                }
+                else
+                {
+                    Log.Warning("Missing image file: " + imageLocation);
+                    pictureBoxPhoto.Image = Properties.Resources.error;
+                }
             }
-
-            try
+            else
             {
-                string nextPhoto = mat.Groups[1].ToString();
-                string numPart = mat.Groups[2].ToString();  
-                int num = Convert.ToInt16(numPart);
-                num++;
-                string numFormat = "D" + numPart.Length.ToString();
-                nextPhoto += num.ToString(numFormat);
-                
-                nextPhoto += mat.Groups[3].ToString();
-
-                textBoxPhotoFile.Text = nextPhoto;
-            }
-            catch 
-            {
-                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
-                return;
+                pictureBoxPhoto.Image = Properties.Resources.nophoto;
             }
         }
     }
