@@ -30,6 +30,7 @@ namespace tams4a.Controls
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Panel_Road));
             this.groupBoxDistress = new System.Windows.Forms.GroupBox();
             this.buttonSuggest = new System.Windows.Forms.Button();
             this.inputRsl = new System.Windows.Forms.TextBox();
@@ -46,6 +47,7 @@ namespace tams4a.Controls
             this.distress2 = new tams4a.Controls.DistressEntry();
             this.distress1 = new tams4a.Controls.DistressEntry();
             this.groupBoxInfo = new System.Windows.Forms.GroupBox();
+            this.buttonChangeDirectory = new System.Windows.Forms.Button();
             this.buttonPreviousPhoto = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -323,6 +325,7 @@ namespace tams4a.Controls
             // 
             // groupBoxInfo
             // 
+            this.groupBoxInfo.Controls.Add(this.buttonChangeDirectory);
             this.groupBoxInfo.Controls.Add(this.buttonPreviousPhoto);
             this.groupBoxInfo.Controls.Add(this.label3);
             this.groupBoxInfo.Controls.Add(this.label2);
@@ -361,9 +364,20 @@ namespace tams4a.Controls
             this.groupBoxInfo.TabStop = false;
             this.groupBoxInfo.Text = "Road";
             // 
+            // buttonChangeDirectory
+            // 
+            this.buttonChangeDirectory.Image = ((System.Drawing.Image)(resources.GetObject("buttonChangeDirectory.Image")));
+            this.buttonChangeDirectory.Location = new System.Drawing.Point(11, 331);
+            this.buttonChangeDirectory.Name = "buttonChangeDirectory";
+            this.buttonChangeDirectory.Size = new System.Drawing.Size(20, 20);
+            this.buttonChangeDirectory.TabIndex = 34;
+            this.toolTip.SetToolTip(this.buttonChangeDirectory, "Change directory of photos");
+            this.buttonChangeDirectory.UseVisualStyleBackColor = true;
+            this.buttonChangeDirectory.Click += new System.EventHandler(this.buttonChangeDirectory_Click);
+            // 
             // buttonPreviousPhoto
             // 
-            this.buttonPreviousPhoto.Location = new System.Drawing.Point(9, 331);
+            this.buttonPreviousPhoto.Location = new System.Drawing.Point(33, 331);
             this.buttonPreviousPhoto.Name = "buttonPreviousPhoto";
             this.buttonPreviousPhoto.Size = new System.Drawing.Size(20, 20);
             this.buttonPreviousPhoto.TabIndex = 33;
@@ -475,7 +489,7 @@ namespace tams4a.Controls
             // pictureBoxPhoto
             // 
             this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxPhoto.InitialImage = global::tams4a.Properties.Resources.nophoto;
+            this.pictureBoxPhoto.InitialImage = null;
             this.pictureBoxPhoto.Location = new System.Drawing.Point(83, 331);
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
             this.pictureBoxPhoto.Size = new System.Drawing.Size(112, 73);
@@ -486,7 +500,7 @@ namespace tams4a.Controls
             // labelPhoto
             // 
             this.labelPhoto.AutoSize = true;
-            this.labelPhoto.Location = new System.Drawing.Point(6, 308);
+            this.labelPhoto.Location = new System.Drawing.Point(8, 308);
             this.labelPhoto.Name = "labelPhoto";
             this.labelPhoto.Size = new System.Drawing.Size(54, 13);
             this.labelPhoto.TabIndex = 18;
@@ -494,7 +508,7 @@ namespace tams4a.Controls
             // 
             // buttonNextPhoto
             // 
-            this.buttonNextPhoto.Location = new System.Drawing.Point(30, 331);
+            this.buttonNextPhoto.Location = new System.Drawing.Point(54, 331);
             this.buttonNextPhoto.Name = "buttonNextPhoto";
             this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
             this.buttonNextPhoto.TabIndex = 30;
@@ -763,7 +777,7 @@ namespace tams4a.Controls
             this.MaximumSize = new System.Drawing.Size(220, 2410);
             this.MinimumSize = new System.Drawing.Size(220, 750);
             this.Name = "Panel_Road";
-            this.Size = new System.Drawing.Size(220, 740);
+            this.Size = new System.Drawing.Size(220, 754);
             this.groupBoxDistress.ResumeLayout(false);
             this.groupBoxDistress.PerformLayout();
             this.groupBoxInfo.ResumeLayout(false);
@@ -837,5 +851,6 @@ namespace tams4a.Controls
         public System.Windows.Forms.ToolStripButton toolStripButtonSidewalk;
         public System.Windows.Forms.ToolStripButton buttonSave;
         public System.Windows.Forms.Button buttonPreviousPhoto;
+        public System.Windows.Forms.Button buttonChangeDirectory;
     }
 }

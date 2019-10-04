@@ -7,7 +7,6 @@ using tams4a.Forms;
 using System.Windows.Forms;
 using System.Data;
 using DotSpatial.Symbology;
-using System.IO;
 using System.Threading;
 
 namespace tams4a.Classes
@@ -644,20 +643,7 @@ namespace tams4a.Classes
         /// <param name="preview"></param>
         public void updatePhotoPreview(PictureBox preview, string filePath, string subPath = @"\Photos\")
         {
-            if (!string.IsNullOrEmpty(filePath))
-            {
-                string imageLocation = Project.projectFolderPath + @"\Photos\" + filePath;
-                if (File.Exists(imageLocation))
-                {
-                    preview.ImageLocation = imageLocation;
-                }
-                else
-                {
-                    Log.Warning("Missing image file: " + imageLocation);
-                    preview.Image = Properties.Resources.error;
-                }
-            }
-            else
+            if (string.IsNullOrEmpty(filePath))
             {
                 preview.Image = Properties.Resources.nophoto;
             }

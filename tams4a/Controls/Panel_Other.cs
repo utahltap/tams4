@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -23,7 +22,7 @@ namespace tams4a.Controls
         {
             InitializeComponent();
             Project = theProject;
-            currentFolder = Database.GetDataByQuery(Project.conn, "SELECT other_photos FROM photo_paths;").Rows[0][0].ToString();
+            currentFolder = Project.projectFolderPath + Database.GetDataByQuery(Project.conn, "SELECT other_photos FROM photo_paths;").Rows[0][0].ToString();
             try
             {
                 fileEntries = Directory.GetFiles(currentFolder);
@@ -31,7 +30,7 @@ namespace tams4a.Controls
             }
             catch
             {
-                Console.WriteLine("YOU NEED TO SET A FOLDER WITH PHOTOS IN IT.");
+                validFolder = false;
             }
 
             controlSets = new Dictionary<string, List<Control>>()
@@ -453,28 +452,41 @@ namespace tams4a.Controls
             chooseAltProperties(comboBoxObject.Text);
         }
 
-        private void buttonNextPhoto_Click(object sender, EventArgs e)
+        private bool folderIsNotValid(object sender, EventArgs e)
         {
             if (!validFolder)
             {
+                MessageBox.Show("No folder for photos is specified.\n Please select the folder containing your photos.");
                 buttonChangeDirectory_Click(sender, e);
-                //TODO: update fileEntries
+                try
+                {
+                    fileEntries = Directory.GetFiles(currentFolder);
+                    validFolder = true;
+                }
+                catch
+                {
+                    return true;
+                }
             }
+            return false;
+        }
+
+        private void buttonNextPhoto_Click(object sender, EventArgs e)
+        {
+            if (folderIsNotValid(sender, e)) return;
             updatePhotoPreview(textBoxPhotoFile, 1);
         }
 
         private void buttonPreviousPhoto_Click(object sender, EventArgs e)
         {
-            if (!validFolder)
-            {
-                buttonChangeDirectory_Click(sender, e);
-                //TODO: update fileEntries
-            }
+            if (folderIsNotValid(sender, e)) return;
             updatePhotoPreview(textBoxPhotoFile, -1);
         }
 
         private void updatePhotoPreview(TextBox file, int direction)
         {
+            //TODO: FIX CHRASH WHEN THERE IS ONLY ONE FILE IN FOLDER
+
             String[] splitFile;
             if (!String.IsNullOrWhiteSpace(file.Text))
             {
@@ -512,10 +524,6 @@ namespace tams4a.Controls
 
         private void textBoxPhotoFile_TextChanged(object sender, EventArgs e)
         {
-            //// GETS RELATIVE PATH
-            Console.WriteLine(currentFolder.Remove(0, Project.projectFolderPath.Length));
-            ////
-
             if (!string.IsNullOrEmpty(textBoxPhotoFile.Text))
             {
                 string imageLocation = currentFolder + "\\" + textBoxPhotoFile.Text;
@@ -537,13 +545,21 @@ namespace tams4a.Controls
 
         private void buttonChangeDirectory_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog selectFolder = new FolderBrowserDialog();
-            Console.WriteLine("Current Folder: " + currentFolder);
-            try
+            RootFolderBrowserDialog selectFolder = new RootFolderBrowserDialog();
+            selectFolder.RootPath = Project.projectFolderPath;
+
+            if (!string.IsNullOrEmpty(currentFolder))
             {
-                selectFolder.SelectedPath = currentFolder;
+                try
+                {
+                    selectFolder.SelectedPath = currentFolder;
+                }
+                catch
+                {
+                    selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+                }
             }
-            catch
+            else
             {
                 selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
             }
@@ -551,7 +567,8 @@ namespace tams4a.Controls
             if (selectFolder.ShowDialog() == DialogResult.OK)
             {
                 string selectedFolder = selectFolder.SelectedPath;
-                Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET other_photos = '" + selectedFolder + "';");
+                string relativePath = selectedFolder.Remove(0, Project.projectFolderPath.Length);
+                Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET other_photos = '" + relativePath + "';");
                 currentFolder = selectedFolder;
                 fileEntries = Directory.GetFiles(currentFolder);
             }

@@ -9,13 +9,25 @@ namespace tams4a.Controls
     {
         private TamsProject Project;
         private string[] fileEntries;
+        private bool validFolder = false;
         private int lastUsedPhotoIndex;
+        private string currentFolder;
 
         public Panel_Road(TamsProject theProject)
         {
             InitializeComponent();
             Project = theProject;
-            fileEntries = Directory.GetFiles(Project.projectFolderPath + @"\Photos\");
+            currentFolder = Project.projectFolderPath + Database.GetDataByQuery(Project.conn, "SELECT road_photos FROM photo_paths;").Rows[0][0].ToString();
+            try
+            {
+                fileEntries = Directory.GetFiles(currentFolder);
+                validFolder = true;
+            }
+            catch
+            {
+                validFolder = false;
+            }
+
             numericUpDownSpeedLimit.ValueChanged += moduleValueChanged;
             numericUpDownLanes.ValueChanged += moduleValueChanged;
             textBoxFrom.TextChanged += moduleValueChanged;
@@ -101,13 +113,34 @@ namespace tams4a.Controls
         }
 
 
+        private bool folderIsNotValid(object sender, EventArgs e)
+        {
+            if (!validFolder)
+            {
+                MessageBox.Show("No folder for photos is specified.\n Please select the folder containing your photos.");
+                buttonChangeDirectory_Click(sender, e);
+                try
+                {
+                    fileEntries = Directory.GetFiles(currentFolder);
+                    validFolder = true;
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void buttonNextPhoto_Click(object sender, EventArgs e)
         {
+            if (folderIsNotValid(sender, e)) return;
             updatePhotoPreview(textBoxPhotoFile, 1);
         }
 
         private void buttonPreviousPhoto_Click(object sender, EventArgs e)
         {
+            if (folderIsNotValid(sender, e)) return;
             updatePhotoPreview(textBoxPhotoFile, -1);
         }
 
@@ -141,8 +174,7 @@ namespace tams4a.Controls
         {
             if (!string.IsNullOrEmpty(textBoxPhotoFile.Text))
             {
-                Console.WriteLine(Project.projectFolderPath);
-                string imageLocation = Project.projectFolderPath + @"\Photos\" + textBoxPhotoFile.Text;
+                string imageLocation = currentFolder + "\\" + textBoxPhotoFile.Text;
                 if (File.Exists(imageLocation))
                 {
                     pictureBoxPhoto.ImageLocation = imageLocation;
@@ -156,6 +188,37 @@ namespace tams4a.Controls
             else
             {
                 pictureBoxPhoto.Image = Properties.Resources.nophoto;
+            }
+        }
+
+        private void buttonChangeDirectory_Click(object sender, EventArgs e)
+        {
+            RootFolderBrowserDialog selectFolder = new RootFolderBrowserDialog();
+            selectFolder.RootPath = Project.projectFolderPath;
+
+            if (!string.IsNullOrEmpty(currentFolder))
+            {
+                try
+                {
+                    selectFolder.SelectedPath = currentFolder;
+                }
+                catch
+                {
+                    selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+                }
+            }
+            else
+            {
+                selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+            }
+
+            if (selectFolder.ShowDialog() == DialogResult.OK)
+            {
+                string selectedFolder = selectFolder.SelectedPath;
+                string relativePath = selectedFolder.Remove(0, Project.projectFolderPath.Length);
+                Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET road_photos = '" + relativePath + "';");
+                currentFolder = selectedFolder;
+                fileEntries = Directory.GetFiles(currentFolder);
             }
         }
     }
