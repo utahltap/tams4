@@ -46,6 +46,7 @@ namespace tams4a.Controls
             this.distress2 = new tams4a.Controls.DistressEntry();
             this.distress1 = new tams4a.Controls.DistressEntry();
             this.groupBoxInfo = new System.Windows.Forms.GroupBox();
+            this.buttonPreviousPhoto = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -87,7 +88,6 @@ namespace tams4a.Controls
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAnalysis = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSidewalk = new System.Windows.Forms.ToolStripButton();
-            this.buttonPreviousPhoto = new System.Windows.Forms.Button();
             this.groupBoxDistress.SuspendLayout();
             this.groupBoxInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLanes)).BeginInit();
@@ -118,7 +118,7 @@ namespace tams4a.Controls
             this.groupBoxDistress.Location = new System.Drawing.Point(0, 435);
             this.groupBoxDistress.MinimumSize = new System.Drawing.Size(0, 100);
             this.groupBoxDistress.Name = "groupBoxDistress";
-            this.groupBoxDistress.Size = new System.Drawing.Size(220, 324);
+            this.groupBoxDistress.Size = new System.Drawing.Size(220, 312);
             this.groupBoxDistress.TabIndex = 33;
             this.groupBoxDistress.TabStop = false;
             this.groupBoxDistress.Text = "Distresses";
@@ -360,6 +360,16 @@ namespace tams4a.Controls
             this.groupBoxInfo.TabIndex = 5;
             this.groupBoxInfo.TabStop = false;
             this.groupBoxInfo.Text = "Road";
+            // 
+            // buttonPreviousPhoto
+            // 
+            this.buttonPreviousPhoto.Location = new System.Drawing.Point(9, 331);
+            this.buttonPreviousPhoto.Name = "buttonPreviousPhoto";
+            this.buttonPreviousPhoto.Size = new System.Drawing.Size(20, 20);
+            this.buttonPreviousPhoto.TabIndex = 33;
+            this.buttonPreviousPhoto.Text = "<";
+            this.buttonPreviousPhoto.UseVisualStyleBackColor = true;
+            this.buttonPreviousPhoto.Click += new System.EventHandler(this.buttonPreviousPhoto_Click);
             // 
             // label3
             // 
@@ -740,16 +750,6 @@ namespace tams4a.Controls
             this.toolStripButtonSidewalk.Text = "Sidewalk Data";
             this.toolStripButtonSidewalk.Visible = false;
             // 
-            // buttonPreviousPhoto
-            // 
-            this.buttonPreviousPhoto.Location = new System.Drawing.Point(9, 331);
-            this.buttonPreviousPhoto.Name = "buttonPreviousPhoto";
-            this.buttonPreviousPhoto.Size = new System.Drawing.Size(20, 20);
-            this.buttonPreviousPhoto.TabIndex = 33;
-            this.buttonPreviousPhoto.Text = "<";
-            this.buttonPreviousPhoto.UseVisualStyleBackColor = true;
-            this.buttonPreviousPhoto.Click += new System.EventHandler(this.buttonPreviousPhoto_Click);
-            // 
             // Panel_Road
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -763,7 +763,7 @@ namespace tams4a.Controls
             this.MaximumSize = new System.Drawing.Size(220, 2410);
             this.MinimumSize = new System.Drawing.Size(220, 750);
             this.Name = "Panel_Road";
-            this.Size = new System.Drawing.Size(220, 762);
+            this.Size = new System.Drawing.Size(220, 740);
             this.groupBoxDistress.ResumeLayout(false);
             this.groupBoxDistress.PerformLayout();
             this.groupBoxInfo.ResumeLayout(false);

@@ -135,7 +135,7 @@
             this.toolStripMoveSign});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(224, 25);
+            this.toolStrip.Size = new System.Drawing.Size(220, 25);
             this.toolStrip.TabIndex = 12;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -288,7 +288,7 @@
             this.groupBoxSupport.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxSupport.Location = new System.Drawing.Point(0, 25);
             this.groupBoxSupport.Name = "groupBoxSupport";
-            this.groupBoxSupport.Size = new System.Drawing.Size(224, 279);
+            this.groupBoxSupport.Size = new System.Drawing.Size(220, 279);
             this.groupBoxSupport.TabIndex = 1;
             this.groupBoxSupport.TabStop = false;
             this.groupBoxSupport.Text = "Support";
@@ -591,7 +591,7 @@
             this.groupBoxSign.Controls.Add(this.labelType);
             this.groupBoxSign.Location = new System.Drawing.Point(0, 304);
             this.groupBoxSign.Name = "groupBoxSign";
-            this.groupBoxSign.Size = new System.Drawing.Size(224, 433);
+            this.groupBoxSign.Size = new System.Drawing.Size(220, 436);
             this.groupBoxSign.TabIndex = 2;
             this.groupBoxSign.TabStop = false;
             this.groupBoxSign.Text = "Sign";
@@ -1013,7 +1013,7 @@
             this.Controls.Add(this.groupBoxSupport);
             this.Controls.Add(this.toolStrip);
             this.Name = "Panel_Sign";
-            this.Size = new System.Drawing.Size(224, 740);
+            this.Size = new System.Drawing.Size(220, 740);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.groupBoxSupport.ResumeLayout(false);

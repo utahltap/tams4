@@ -141,6 +141,7 @@ namespace tams4a.Controls
         {
             if (!string.IsNullOrEmpty(textBoxPhotoFile.Text))
             {
+                Console.WriteLine(Project.projectFolderPath);
                 string imageLocation = Project.projectFolderPath + @"\Photos\" + textBoxPhotoFile.Text;
                 if (File.Exists(imageLocation))
                 {

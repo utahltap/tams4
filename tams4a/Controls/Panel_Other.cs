@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using tams4a.Classes;
-using System.Text.RegularExpressions;
 using tams4a.Forms;
 
 namespace tams4a.Controls
@@ -12,12 +13,26 @@ namespace tams4a.Controls
     {
         private Dictionary<string, List<Control>> controlSets;
         private TextBox accidentDate = new TextBox();
+        private TamsProject Project;
+        private string[] fileEntries;
+        private bool validFolder = false;
+        private int lastUsedPhotoIndex;
+        private string currentFolder;
 
-        public Panel_Other()
+        public Panel_Other(TamsProject theProject)
         {
             InitializeComponent();
-
-            new ToolTip().SetToolTip(buttonNextPhoto, "Get Next Photo");
+            Project = theProject;
+            currentFolder = Database.GetDataByQuery(Project.conn, "SELECT other_photos FROM photo_paths;").Rows[0][0].ToString();
+            try
+            {
+                fileEntries = Directory.GetFiles(currentFolder);
+                validFolder = true;
+            }
+            catch
+            {
+                Console.WriteLine("YOU NEED TO SET A FOLDER WITH PHOTOS IN IT.");
+            }
 
             controlSets = new Dictionary<string, List<Control>>()
             {
@@ -440,42 +455,50 @@ namespace tams4a.Controls
 
         private void buttonNextPhoto_Click(object sender, EventArgs e)
         {
-            string oldPhoto = Properties.Settings.Default.lastPhoto;
-            if (string.IsNullOrWhiteSpace(oldPhoto))
+            if (!validFolder)
             {
-                textBoxPhotoFile.Text = "0001";
-                return;
+                buttonChangeDirectory_Click(sender, e);
+                //TODO: update fileEntries
             }
-
-            string pattern = @"(.*?)(\d+)(.*)";
-            Regex rex = new Regex(pattern, RegexOptions.IgnoreCase);
-
-            Match mat = rex.Match(oldPhoto);
-            if (!mat.Success)
-            {
-                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
-                return;
-            }
-
-            try
-            {
-                string nextPhoto = mat.Groups[1].ToString();
-                string numPart = mat.Groups[2].ToString();
-                int num = Convert.ToInt16(numPart);
-                num++;
-                string numFormat = "D" + numPart.Length.ToString();
-                nextPhoto += num.ToString(numFormat);
-
-                nextPhoto += mat.Groups[3].ToString();
-
-                textBoxPhotoFile.Text = nextPhoto;
-            }
-            catch
-            {
-                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
-                return;
-            }
+            updatePhotoPreview(textBoxPhotoFile, 1);
         }
+
+        private void buttonPreviousPhoto_Click(object sender, EventArgs e)
+        {
+            if (!validFolder)
+            {
+                buttonChangeDirectory_Click(sender, e);
+                //TODO: update fileEntries
+            }
+            updatePhotoPreview(textBoxPhotoFile, -1);
+        }
+
+        private void updatePhotoPreview(TextBox file, int direction)
+        {
+            String[] splitFile;
+            if (!String.IsNullOrWhiteSpace(file.Text))
+            {
+                for (int i = 0; i < fileEntries.Length; i++)
+                {
+                    splitFile = fileEntries[i].Split('\\');
+                    if (file.Text == splitFile[splitFile.Length - 1])
+                    {
+                        if (direction == 1 && i == fileEntries.Length - 1) i = 0;
+                        if (direction == -1 && i == 0) i = fileEntries.Length;
+                        splitFile = fileEntries[i + direction].Split('\\');
+                        file.Text = splitFile[splitFile.Length - 1];
+                        lastUsedPhotoIndex = i + direction;
+                        return;
+                    }
+                }
+            }
+            int newPhotoIndex = 0;
+            if (direction == 1 && lastUsedPhotoIndex + 1 < fileEntries.Length - 1) newPhotoIndex = lastUsedPhotoIndex + direction;
+            if (direction == -1 && lastUsedPhotoIndex - 1 >= 0) newPhotoIndex = lastUsedPhotoIndex + direction;
+            splitFile = fileEntries[newPhotoIndex].Split('\\');
+            file.Text = splitFile[splitFile.Length - 1];
+        }
+
 
         private void ButtonAccidentDate_Click(object sender, EventArgs e)
         {
@@ -485,6 +508,53 @@ namespace tams4a.Controls
             ad.ShowDialog();
             accidentDate.Text = Util.SortableDate(ad.getDate());
             ad.Close();
+        }
+
+        private void textBoxPhotoFile_TextChanged(object sender, EventArgs e)
+        {
+            //// GETS RELATIVE PATH
+            Console.WriteLine(currentFolder.Remove(0, Project.projectFolderPath.Length));
+            ////
+
+            if (!string.IsNullOrEmpty(textBoxPhotoFile.Text))
+            {
+                string imageLocation = currentFolder + "\\" + textBoxPhotoFile.Text;
+                if (File.Exists(imageLocation))
+                {
+                    pictureBoxPhoto.ImageLocation = imageLocation;
+                }
+                else
+                {
+                    Log.Warning("Missing image file: " + imageLocation);
+                    pictureBoxPhoto.Image = Properties.Resources.error;
+                }
+            }
+            else
+            {
+                pictureBoxPhoto.Image = Properties.Resources.nophoto;
+            }
+        }
+
+        private void buttonChangeDirectory_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog selectFolder = new FolderBrowserDialog();
+            Console.WriteLine("Current Folder: " + currentFolder);
+            try
+            {
+                selectFolder.SelectedPath = currentFolder;
+            }
+            catch
+            {
+                selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+            }
+
+            if (selectFolder.ShowDialog() == DialogResult.OK)
+            {
+                string selectedFolder = selectFolder.SelectedPath;
+                Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET other_photos = '" + selectedFolder + "';");
+                currentFolder = selectedFolder;
+                fileEntries = Directory.GetFiles(currentFolder);
+            }
         }
     }
 }

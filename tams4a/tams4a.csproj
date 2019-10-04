@@ -702,6 +702,7 @@
     <None Include="Resources\question.png" />
     <None Include="Resources\pooling.png" />
     <None Include="Resources\ramp.png" />
+    <None Include="Resources\foldericon.bmp" />
     <Content Include="Resources\SatelliteSignalBar.bmp" />
     <Content Include="Resources\SatelliteViewer.bmp" />
     <None Include="Resources\sidewalk.png" />

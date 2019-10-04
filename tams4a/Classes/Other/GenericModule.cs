@@ -104,7 +104,7 @@ namespace tams4a.Classes
             if (!base.openFile(thePath, type)) { return false; }
 
             ControlsPage.Controls.Remove(ControlsPage.Controls["MODULEADD"]);
-            Panel_Other panel = new Panel_Other();
+            Panel_Other panel = new Panel_Other(Project);
             panel.Name = "OTHERCONTROLS";
             panel.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(panel);
