@@ -78,29 +78,31 @@ namespace tams4a.Forms
                 foreach (DataRow row in report.Rows)
                 {
                     string column = "";
+                    string thisCol = col.ToString();
 
-                    if (col.ToString() == "ID") column = "TAMSID";
-                    else if (col.ToString() == "Name") column = "name";
-                    else if (col.ToString() == "Speed Limit") column = "speed_limit";
-                    else if (col.ToString() == "Lanes") column = "lanes";
-                    else if (col.ToString() == "Width (ft)") column = "width";
-                    else if (col.ToString() == "Length (ft)") column = "length";
-                    else if (col.ToString() == "From Address") column = "from_address";
-                    else if (col.ToString() == "To Address") column = "to_address";
-                    else if (col.ToString() == "Surface") column = "surface";
-                    else if (col.ToString() == "Treatment") column = "suggested_treatment";
-                    else if (col.ToString() == "RSL") column = "rsl";
-                    else if (col.ToString() == "Functional Classification") column = "type";
-                    else if (col.ToString() == "Survey Date") column = "survey_date";
-                    else if (col.ToString() == "Fat/Spa/Pot") column = "distress1";
-                    else if (col.ToString() == "Edg/Joi/Rut") column = "distress2";
-                    else if (col.ToString() == "Lon/Cor/X-S") column = "distress3";
-                    else if (col.ToString() == "Pat/Bro/Dra") column = "distress4";
-                    else if (col.ToString() == "Pot/Fau/Dus") column = "distress5";
-                    else if (col.ToString() == "Dra/Lon/Agg") column = "distress6";
-                    else if (col.ToString() == "Tra/Tra/Cor") column = "distress7";
-                    else if (col.ToString() == "Block/Crack") column = "distress8";
-                    else if (col.ToString() == "Rutti/Patch") column = "distress9";
+                    if (thisCol == "ID") column = "TAMSID";
+                    else if (thisCol == "Name") column = "name";
+                    else if (thisCol == "Speed Limit") column = "speed_limit";
+                    else if (thisCol == "Lanes") column = "lanes";
+                    else if (thisCol == "Width (ft)") column = "width";
+                    else if (thisCol == "Length (ft)") column = "length";
+                    else if (thisCol == "From Address") column = "from_address";
+                    else if (thisCol == "To Address") column = "to_address";
+                    else if (thisCol == "Surface") column = "surface";
+                    else if (thisCol == "Treatment") column = "suggested_treatment";
+                    else if (thisCol == "RSL") column = "rsl";
+                    else if (thisCol == "Functional Classification") column = "type";
+                    else if (thisCol == "Survey Date") column = "survey_date";
+                    else if (thisCol == "Photo") column = "photo";
+                    else if (thisCol == "Fat/Spa/Pot") column = "distress1";
+                    else if (thisCol == "Edg/Joi/Rut") column = "distress2";
+                    else if (thisCol == "Lon/Cor/X-S") column = "distress3";
+                    else if (thisCol == "Pat/Bro/Dra") column = "distress4";
+                    else if (thisCol == "Pot/Fau/Dus") column = "distress5";
+                    else if (thisCol == "Dra/Lon/Agg") column = "distress6";
+                    else if (thisCol == "Tra/Tra/Cor") column = "distress7";
+                    else if (thisCol == "Block/Crack") column = "distress8";
+                    else if (thisCol == "Rutti/Patch") column = "distress9";
                     else continue;
 
                     string currentID = row["ID"].ToString();
@@ -151,26 +153,27 @@ namespace tams4a.Forms
                 foreach (DataRow row in report.Rows)
                 {
                     string column = "";
+                    string thisCol = col.ToString();
 
-                    if (col.ToString() == "ID") column = "TAMSID";
-                    else if (col.ToString() == "Support ID") column = "support_id";
-                    else if (col.ToString() == "Description") column = "description";
-                    else if (col.ToString() == "Sign Text") column = "sign_text";
-                    else if (col.ToString() == "Obstructions") column = "obstructions";
-                    else if (col.ToString() == "Condition") column = "condition";
-                    else if (col.ToString() == "Recommendation") column = "recommendation";
-                    else if (col.ToString() == "Reflectivity") column = "reflectivity";
-                    else if (col.ToString() == "Sheeting") column = "sheeting";
-                    else if (col.ToString() == "Backing") column = "backing";
-                    else if (col.ToString() == "Height (in)") column = "height";
-                    else if (col.ToString() == "Width (in)") column = "width";
-                    else if (col.ToString() == "Mount Height (ft)") column = "mount_height";
-                    else if (col.ToString() == "Direction") column = "direction";
-                    else if (col.ToString() == "Category") column = "category";
-                    else if (col.ToString() == "Favorite") column = "favorite";
-                    else if (col.ToString() == "MUTCD Code") column = "mutcd_code";
-                    else if (col.ToString() == "Install Date") column = "install_date";
-                    else if (col.ToString() == "Survey Date") column = "survey_date";
+                    if (thisCol == "ID") column = "TAMSID";
+                    else if (thisCol == "Support ID") column = "support_id";
+                    else if (thisCol == "Description") column = "description";
+                    else if (thisCol == "Sign Text") column = "sign_text";
+                    else if (thisCol == "Obstructions") column = "obstructions";
+                    else if (thisCol == "Condition") column = "condition";
+                    else if (thisCol == "Recommendation") column = "recommendation";
+                    else if (thisCol == "Reflectivity") column = "reflectivity";
+                    else if (thisCol == "Sheeting") column = "sheeting";
+                    else if (thisCol == "Backing") column = "backing";
+                    else if (thisCol == "Height (in)") column = "height";
+                    else if (thisCol == "Width (in)") column = "width";
+                    else if (thisCol == "Mount Height (ft)") column = "mount_height";
+                    else if (thisCol == "Direction") column = "direction";
+                    else if (thisCol == "Category") column = "category";
+                    else if (thisCol == "Favorite") column = "favorite";
+                    else if (thisCol == "MUTCD Code") column = "mutcd_code";
+                    else if (thisCol == "Install Date") column = "install_date";
+                    else if (thisCol == "Survey Date") column = "survey_date";
                     else continue;
 
                     string currentID = row["ID"].ToString();
@@ -284,17 +287,18 @@ namespace tams4a.Forms
                 foreach (DataRow row in report.Rows)
                 {
                     string column = "";
+                    string thisCol = col.ToString();
 
-                    if (col.ToString() == "Support ID") column = "support_id";
-                    else if (col.ToString() == "Address") column = "address";
-                    else if (col.ToString() == "Material") column = "material";
-                    else if (col.ToString() == "Condition") column = "condition";
-                    else if (col.ToString() == "Obstructions") column = "obstructions";
-                    else if (col.ToString() == "Recommendation") column = "recommendation";
-                    else if (col.ToString() == "Road Offset (ft)") column = "road_offset";
-                    else if (col.ToString() == "Height (ft)") column = "height";
-                    else if (col.ToString() == "Category") column = "category";
-                    else if (col.ToString() == "Survey Date") column = "survey_date";
+                    if (thisCol == "Support ID") column = "support_id";
+                    else if (thisCol == "Address") column = "address";
+                    else if (thisCol == "Material") column = "material";
+                    else if (thisCol == "Condition") column = "condition";
+                    else if (thisCol == "Obstructions") column = "obstructions";
+                    else if (thisCol == "Recommendation") column = "recommendation";
+                    else if (thisCol == "Road Offset (ft)") column = "road_offset";
+                    else if (thisCol == "Height (ft)") column = "height";
+                    else if (thisCol == "Category") column = "category";
+                    else if (thisCol == "Survey Date") column = "survey_date";
                     else continue;
 
                     string currentID = row["Support ID"].ToString();
@@ -345,11 +349,12 @@ namespace tams4a.Forms
                 foreach (DataRow row in report.Rows)
                 {
                     string column = "";
+                    string thisCol = col.ToString();
 
-                    if (col.ToString() == "Support ID") column = "support_id";
-                    else if (col.ToString() == "Address") column = "address";
-                    else if (col.ToString() == "Recommendation") column = "recommendation";
-                    else if (col.ToString() == "Survey Date") column = "survey_date";
+                    if (thisCol == "Support ID") column = "support_id";
+                    else if (thisCol == "Address") column = "address";
+                    else if (thisCol == "Recommendation") column = "recommendation";
+                    else if (thisCol == "Survey Date") column = "survey_date";
                     else continue;
 
                     string currentID = row["Support ID"].ToString();
