@@ -17,21 +17,12 @@ namespace tams4a.Controls
         private bool validFolder = false;
         private int lastUsedPhotoIndex;
         private string currentFolder;
+        private string photo_column = null;
 
         public Panel_Other(TamsProject theProject)
         {
             InitializeComponent();
             Project = theProject;
-            currentFolder = Project.projectFolderPath + Database.GetDataByQuery(Project.conn, "SELECT other_photos FROM photo_paths;").Rows[0][0].ToString();
-            try
-            {
-                fileEntries = Directory.GetFiles(currentFolder);
-                validFolder = true;
-            }
-            catch
-            {
-                validFolder = false;
-            }
 
             controlSets = new Dictionary<string, List<Control>>()
             {
@@ -485,30 +476,35 @@ namespace tams4a.Controls
 
         private void updatePhotoPreview(TextBox file, int direction)
         {
-            //TODO: FIX CHRASH WHEN THERE IS ONLY ONE FILE IN FOLDER
-
-            String[] splitFile;
-            if (!String.IsNullOrWhiteSpace(file.Text))
+            try
             {
-                for (int i = 0; i < fileEntries.Length; i++)
+                String[] splitFile;
+                if (!String.IsNullOrWhiteSpace(file.Text))
                 {
-                    splitFile = fileEntries[i].Split('\\');
-                    if (file.Text == splitFile[splitFile.Length - 1])
+                    for (int i = 0; i < fileEntries.Length; i++)
                     {
-                        if (direction == 1 && i == fileEntries.Length - 1) i = 0;
-                        if (direction == -1 && i == 0) i = fileEntries.Length;
-                        splitFile = fileEntries[i + direction].Split('\\');
-                        file.Text = splitFile[splitFile.Length - 1];
-                        lastUsedPhotoIndex = i + direction;
-                        return;
+                        splitFile = fileEntries[i].Split('\\');
+                        if (file.Text == splitFile[splitFile.Length - 1])
+                        {
+                            if (direction == 1 && i == fileEntries.Length - 1) i = -1;
+                            if (direction == -1 && i == 0) i = fileEntries.Length;
+                            splitFile = fileEntries[i + direction].Split('\\');
+                            file.Text = splitFile[splitFile.Length - 1];
+                            lastUsedPhotoIndex = i + direction;
+                            return;
+                        }
                     }
                 }
+                int newPhotoIndex = 0;
+                if (direction == 1 && lastUsedPhotoIndex + 1 < fileEntries.Length - 1) newPhotoIndex = lastUsedPhotoIndex + direction;
+                if (direction == -1 && lastUsedPhotoIndex - 1 >= 0) newPhotoIndex = lastUsedPhotoIndex + direction;
+                splitFile = fileEntries[newPhotoIndex].Split('\\');
+                file.Text = splitFile[splitFile.Length - 1];
             }
-            int newPhotoIndex = 0;
-            if (direction == 1 && lastUsedPhotoIndex + 1 < fileEntries.Length - 1) newPhotoIndex = lastUsedPhotoIndex + direction;
-            if (direction == -1 && lastUsedPhotoIndex - 1 >= 0) newPhotoIndex = lastUsedPhotoIndex + direction;
-            splitFile = fileEntries[newPhotoIndex].Split('\\');
-            file.Text = splitFile[splitFile.Length - 1];
+            catch
+            {
+                //No photos found in directory
+            }
         }
 
 
@@ -568,9 +564,38 @@ namespace tams4a.Controls
             {
                 string selectedFolder = selectFolder.SelectedPath;
                 string relativePath = selectedFolder.Remove(0, Project.projectFolderPath.Length);
-                Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET other_photos = '" + relativePath + "';");
+                Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET " + photo_column + " = '" + relativePath + "';");
                 currentFolder = selectedFolder;
                 fileEntries = Directory.GetFiles(currentFolder);
+                lastUsedPhotoIndex = 0;
+            }
+        }
+
+        private void comboBoxObject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxObject.Text == "Sidewalk") photo_column = "sidewalk_photos";
+            if (comboBoxObject.Text == "ADA Ramp") photo_column = "ada_photos";
+            if (comboBoxObject.Text == "Severe Road Distress") photo_column = "severe_distress_photos";
+            if (comboBoxObject.Text == "Accident") photo_column = "accident_photos";
+            if (comboBoxObject.Text == "Drainage") photo_column = "drainage_photos";
+            if (comboBoxObject.Text == "Other") photo_column = "other_photos";
+
+            string landmarkPhotos = Database.GetDataByQuery(Project.conn, "SELECT " + photo_column + " FROM photo_paths;").Rows[0][0].ToString();
+            currentFolder = Project.projectFolderPath + landmarkPhotos;
+
+            if (string.IsNullOrEmpty(landmarkPhotos))
+            {
+                validFolder = false;
+                return;
+            }
+            try
+            {
+                fileEntries = Directory.GetFiles(currentFolder);
+                validFolder = true;
+            }
+            catch
+            {
+                validFolder = false;
             }
         }
     }

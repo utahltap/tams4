@@ -45,8 +45,9 @@
             this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripMoveSign = new System.Windows.Forms.ToolStripButton();
             this.groupBoxSupport = new System.Windows.Forms.GroupBox();
+            this.buttonChangeSupportDirectory = new System.Windows.Forms.Button();
             this.buttonPreviousPhotoPost = new System.Windows.Forms.Button();
-            this.pictureBoxPost = new System.Windows.Forms.PictureBox();
+            this.pictureBoxPhotoPost = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonNextPhotoPost = new System.Windows.Forms.Button();
             this.textBoxPhotoPost = new System.Windows.Forms.TextBox();
@@ -70,6 +71,7 @@
             this.labelSurveyDate = new System.Windows.Forms.Label();
             this.buttonFavorite = new System.Windows.Forms.Button();
             this.groupBoxSign = new System.Windows.Forms.GroupBox();
+            this.buttonChangeSignDirectory = new System.Windows.Forms.Button();
             this.buttonPreviousPhotoSign = new System.Windows.Forms.Button();
             this.buttonSheetingInfo = new System.Windows.Forms.Button();
             this.comboBoxSignRecommendation = new System.Windows.Forms.ComboBox();
@@ -81,7 +83,7 @@
             this.buttonInstallDate = new System.Windows.Forms.Button();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.labelDescription = new System.Windows.Forms.Label();
-            this.pictureBoxPhoto = new System.Windows.Forms.PictureBox();
+            this.pictureBoxPhotoSign = new System.Windows.Forms.PictureBox();
             this.labelPhoto = new System.Windows.Forms.Label();
             this.buttonNextPhotoSign = new System.Windows.Forms.Button();
             this.textBoxPhotoSign = new System.Windows.Forms.TextBox();
@@ -112,10 +114,10 @@
             this.labelType = new System.Windows.Forms.Label();
             this.toolStrip.SuspendLayout();
             this.groupBoxSupport.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhotoPost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOffset)).BeginInit();
             this.groupBoxSign.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhotoSign)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMountHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeightSign)).BeginInit();
@@ -262,8 +264,9 @@
             // 
             // groupBoxSupport
             // 
+            this.groupBoxSupport.Controls.Add(this.buttonChangeSupportDirectory);
             this.groupBoxSupport.Controls.Add(this.buttonPreviousPhotoPost);
-            this.groupBoxSupport.Controls.Add(this.pictureBoxPost);
+            this.groupBoxSupport.Controls.Add(this.pictureBoxPhotoPost);
             this.groupBoxSupport.Controls.Add(this.label1);
             this.groupBoxSupport.Controls.Add(this.buttonNextPhotoPost);
             this.groupBoxSupport.Controls.Add(this.textBoxPhotoPost);
@@ -293,9 +296,20 @@
             this.groupBoxSupport.TabStop = false;
             this.groupBoxSupport.Text = "Support";
             // 
+            // buttonChangeSupportDirectory
+            // 
+            this.buttonChangeSupportDirectory.Image = ((System.Drawing.Image)(resources.GetObject("buttonChangeSupportDirectory.Image")));
+            this.buttonChangeSupportDirectory.Location = new System.Drawing.Point(12, 202);
+            this.buttonChangeSupportDirectory.Name = "buttonChangeSupportDirectory";
+            this.buttonChangeSupportDirectory.Size = new System.Drawing.Size(20, 20);
+            this.buttonChangeSupportDirectory.TabIndex = 55;
+            this.toolTip.SetToolTip(this.buttonChangeSupportDirectory, "Change directory of photos");
+            this.buttonChangeSupportDirectory.UseVisualStyleBackColor = true;
+            this.buttonChangeSupportDirectory.Click += new System.EventHandler(this.buttonChangeSupportDirectory_Click);
+            // 
             // buttonPreviousPhotoPost
             // 
-            this.buttonPreviousPhotoPost.Location = new System.Drawing.Point(12, 202);
+            this.buttonPreviousPhotoPost.Location = new System.Drawing.Point(33, 202);
             this.buttonPreviousPhotoPost.Name = "buttonPreviousPhotoPost";
             this.buttonPreviousPhotoPost.Size = new System.Drawing.Size(20, 20);
             this.buttonPreviousPhotoPost.TabIndex = 54;
@@ -303,16 +317,16 @@
             this.buttonPreviousPhotoPost.UseVisualStyleBackColor = true;
             this.buttonPreviousPhotoPost.Click += new System.EventHandler(this.buttonPreviousPhotoPost_Click);
             // 
-            // pictureBoxPost
+            // pictureBoxPhotoPost
             // 
-            this.pictureBoxPost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxPost.InitialImage = global::tams4a.Properties.Resources.nophoto;
-            this.pictureBoxPost.Location = new System.Drawing.Point(87, 202);
-            this.pictureBoxPost.Name = "pictureBoxPost";
-            this.pictureBoxPost.Size = new System.Drawing.Size(64, 44);
-            this.pictureBoxPost.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxPost.TabIndex = 52;
-            this.pictureBoxPost.TabStop = false;
+            this.pictureBoxPhotoPost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxPhotoPost.InitialImage = global::tams4a.Properties.Resources.nophoto;
+            this.pictureBoxPhotoPost.Location = new System.Drawing.Point(87, 202);
+            this.pictureBoxPhotoPost.Name = "pictureBoxPhotoPost";
+            this.pictureBoxPhotoPost.Size = new System.Drawing.Size(64, 44);
+            this.pictureBoxPhotoPost.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxPhotoPost.TabIndex = 52;
+            this.pictureBoxPhotoPost.TabStop = false;
             // 
             // label1
             // 
@@ -325,7 +339,7 @@
             // 
             // buttonNextPhotoPost
             // 
-            this.buttonNextPhotoPost.Location = new System.Drawing.Point(32, 202);
+            this.buttonNextPhotoPost.Location = new System.Drawing.Point(54, 202);
             this.buttonNextPhotoPost.Name = "buttonNextPhotoPost";
             this.buttonNextPhotoPost.Size = new System.Drawing.Size(20, 20);
             this.buttonNextPhotoPost.TabIndex = 10;
@@ -548,6 +562,7 @@
             this.groupBoxSign.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxSign.Controls.Add(this.buttonChangeSignDirectory);
             this.groupBoxSign.Controls.Add(this.buttonPreviousPhotoSign);
             this.groupBoxSign.Controls.Add(this.buttonSheetingInfo);
             this.groupBoxSign.Controls.Add(this.comboBoxSignRecommendation);
@@ -559,7 +574,7 @@
             this.groupBoxSign.Controls.Add(this.buttonInstallDate);
             this.groupBoxSign.Controls.Add(this.textBoxDescription);
             this.groupBoxSign.Controls.Add(this.labelDescription);
-            this.groupBoxSign.Controls.Add(this.pictureBoxPhoto);
+            this.groupBoxSign.Controls.Add(this.pictureBoxPhotoSign);
             this.groupBoxSign.Controls.Add(this.buttonFavorite);
             this.groupBoxSign.Controls.Add(this.labelPhoto);
             this.groupBoxSign.Controls.Add(this.buttonNextPhotoSign);
@@ -596,9 +611,20 @@
             this.groupBoxSign.TabStop = false;
             this.groupBoxSign.Text = "Sign";
             // 
+            // buttonChangeSignDirectory
+            // 
+            this.buttonChangeSignDirectory.Image = ((System.Drawing.Image)(resources.GetObject("buttonChangeSignDirectory.Image")));
+            this.buttonChangeSignDirectory.Location = new System.Drawing.Point(12, 358);
+            this.buttonChangeSignDirectory.Name = "buttonChangeSignDirectory";
+            this.buttonChangeSignDirectory.Size = new System.Drawing.Size(20, 20);
+            this.buttonChangeSignDirectory.TabIndex = 54;
+            this.toolTip.SetToolTip(this.buttonChangeSignDirectory, "Change directory of photos");
+            this.buttonChangeSignDirectory.UseVisualStyleBackColor = true;
+            this.buttonChangeSignDirectory.Click += new System.EventHandler(this.buttonChangeSignDirectory_Click);
+            // 
             // buttonPreviousPhotoSign
             // 
-            this.buttonPreviousPhotoSign.Location = new System.Drawing.Point(12, 358);
+            this.buttonPreviousPhotoSign.Location = new System.Drawing.Point(33, 358);
             this.buttonPreviousPhotoSign.Name = "buttonPreviousPhotoSign";
             this.buttonPreviousPhotoSign.Size = new System.Drawing.Size(20, 20);
             this.buttonPreviousPhotoSign.TabIndex = 53;
@@ -703,16 +729,16 @@
             this.labelDescription.TabIndex = 44;
             this.labelDescription.Text = "Description";
             // 
-            // pictureBoxPhoto
+            // pictureBoxPhotoSign
             // 
-            this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxPhoto.InitialImage = global::tams4a.Properties.Resources.nophoto;
-            this.pictureBoxPhoto.Location = new System.Drawing.Point(87, 358);
-            this.pictureBoxPhoto.Name = "pictureBoxPhoto";
-            this.pictureBoxPhoto.Size = new System.Drawing.Size(64, 45);
-            this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxPhoto.TabIndex = 43;
-            this.pictureBoxPhoto.TabStop = false;
+            this.pictureBoxPhotoSign.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxPhotoSign.InitialImage = global::tams4a.Properties.Resources.nophoto;
+            this.pictureBoxPhotoSign.Location = new System.Drawing.Point(87, 358);
+            this.pictureBoxPhotoSign.Name = "pictureBoxPhotoSign";
+            this.pictureBoxPhotoSign.Size = new System.Drawing.Size(64, 45);
+            this.pictureBoxPhotoSign.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxPhotoSign.TabIndex = 43;
+            this.pictureBoxPhotoSign.TabStop = false;
             // 
             // labelPhoto
             // 
@@ -725,7 +751,7 @@
             // 
             // buttonNextPhotoSign
             // 
-            this.buttonNextPhotoSign.Location = new System.Drawing.Point(32, 358);
+            this.buttonNextPhotoSign.Location = new System.Drawing.Point(53, 358);
             this.buttonNextPhotoSign.Name = "buttonNextPhotoSign";
             this.buttonNextPhotoSign.Size = new System.Drawing.Size(20, 20);
             this.buttonNextPhotoSign.TabIndex = 30;
@@ -1018,11 +1044,11 @@
             this.toolStrip.PerformLayout();
             this.groupBoxSupport.ResumeLayout(false);
             this.groupBoxSupport.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhotoPost)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOffset)).EndInit();
             this.groupBoxSign.ResumeLayout(false);
             this.groupBoxSign.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhotoSign)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMountHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeightSign)).EndInit();
@@ -1069,7 +1095,7 @@
         public System.Windows.Forms.ComboBox comboBoxDirection;
         private System.Windows.Forms.Label labelDirection;
         public System.Windows.Forms.ComboBox comboBoxConditionSign;
-        public System.Windows.Forms.PictureBox pictureBoxPhoto;
+        public System.Windows.Forms.PictureBox pictureBoxPhotoSign;
         private System.Windows.Forms.Label labelPhoto;
         public System.Windows.Forms.Button buttonNextPhotoSign;
         public System.Windows.Forms.TextBox textBoxPhotoSign;
@@ -1102,7 +1128,7 @@
         public System.Windows.Forms.ToolStripButton toolStripButtonRemove;
         public System.Windows.Forms.ComboBox comboBoxSupportRecommendation;
         private System.Windows.Forms.Label labelSupportRecommend;
-        public System.Windows.Forms.PictureBox pictureBoxPost;
+        public System.Windows.Forms.PictureBox pictureBoxPhotoPost;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Button buttonNextPhotoPost;
         public System.Windows.Forms.TextBox textBoxPhotoPost;
@@ -1113,5 +1139,7 @@
         public System.Windows.Forms.Button buttonSheetingInfo;
         public System.Windows.Forms.Button buttonPreviousPhotoPost;
         public System.Windows.Forms.Button buttonPreviousPhotoSign;
+        public System.Windows.Forms.Button buttonChangeSupportDirectory;
+        public System.Windows.Forms.Button buttonChangeSignDirectory;
     }
 }

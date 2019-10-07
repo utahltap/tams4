@@ -146,28 +146,35 @@ namespace tams4a.Controls
 
         private void updatePhotoPreview(TextBox file, int direction)
         {
-            String[] splitFile;
-            if (!String.IsNullOrWhiteSpace(file.Text))
+            try
             {
-                for (int i = 0; i < fileEntries.Length; i++)
+                String[] splitFile;
+                if (!String.IsNullOrWhiteSpace(file.Text))
                 {
-                    splitFile = fileEntries[i].Split('\\');
-                    if (file.Text == splitFile[splitFile.Length - 1])
+                    for (int i = 0; i < fileEntries.Length; i++)
                     {
-                        if (direction == 1 && i == fileEntries.Length - 1) i = 0;
-                        if (direction == -1 && i == 0) i = fileEntries.Length;
-                        splitFile = fileEntries[i + direction].Split('\\');
-                        file.Text = splitFile[splitFile.Length - 1];
-                        lastUsedPhotoIndex = i + direction;
-                        return;
+                        splitFile = fileEntries[i].Split('\\');
+                        if (file.Text == splitFile[splitFile.Length - 1])
+                        {
+                            if (direction == 1 && i == fileEntries.Length - 1) i = -1;
+                            if (direction == -1 && i == 0) i = fileEntries.Length;
+                            splitFile = fileEntries[i + direction].Split('\\');
+                            file.Text = splitFile[splitFile.Length - 1];
+                            lastUsedPhotoIndex = i + direction;
+                            return;
+                        }
                     }
                 }
+                int newPhotoIndex = 0;
+                if (direction == 1 && lastUsedPhotoIndex + 1 < fileEntries.Length - 1) newPhotoIndex = lastUsedPhotoIndex + direction;
+                if (direction == -1 && lastUsedPhotoIndex - 1 >= 0) newPhotoIndex = lastUsedPhotoIndex + direction;
+                splitFile = fileEntries[newPhotoIndex].Split('\\');
+                file.Text = splitFile[splitFile.Length - 1];
             }
-            int newPhotoIndex = 0;
-            if (direction == 1 && lastUsedPhotoIndex + 1 < fileEntries.Length - 1) newPhotoIndex = lastUsedPhotoIndex + direction;
-            if (direction == -1 && lastUsedPhotoIndex - 1 >= 0) newPhotoIndex = lastUsedPhotoIndex + direction;
-            splitFile = fileEntries[newPhotoIndex].Split('\\');
-            file.Text = splitFile[splitFile.Length - 1];
+            catch
+            {
+                //No photos found in directory
+            }
         }
 
         private void textBoxPhotoFile_TextChanged(object sender, EventArgs e)

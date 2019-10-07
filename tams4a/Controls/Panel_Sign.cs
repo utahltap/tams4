@@ -9,14 +9,60 @@ namespace tams4a.Controls
     public partial class Panel_Sign : Panel_Module
     {
         private TamsProject Project;
-        private string[] fileEntries;
-        private int lastUsedPhotoIndex;
+        private string[] fileEntriesSupport;
+        private string[] fileEntriesSign;
+        private bool validSupportFolder = false;
+        private bool validSignFolder = false;
+        private int lastUsedSupportPhotoIndex;
+        private int lastUsedSignPhotoIndex;
+        private string currentSupportFolder;
+        private string currentSignFolder;
 
         public Panel_Sign(TamsProject theProject)
         {
             InitializeComponent();
             Project = theProject;
-            fileEntries = Directory.GetFiles(Project.projectFolderPath + @"\Photos\");
+
+            string supportPhotos = Database.GetDataByQuery(Project.conn, "SELECT support_photos FROM photo_paths;").Rows[0][0].ToString();
+            currentSupportFolder = Project.projectFolderPath + supportPhotos;
+
+            if (string.IsNullOrEmpty(supportPhotos))
+            {
+                validSupportFolder = false;
+            }
+            else
+            {
+                try
+                {
+                    fileEntriesSupport = Directory.GetFiles(currentSupportFolder);
+                    validSupportFolder = true;
+                }
+                catch
+                {
+                    validSupportFolder = false;
+                }
+            }
+
+            string signPhotos = Database.GetDataByQuery(Project.conn, "SELECT sign_photos FROM photo_paths;").Rows[0][0].ToString();
+            currentSignFolder = Project.projectFolderPath + signPhotos;
+
+            if (string.IsNullOrEmpty(signPhotos))
+            {
+                validSignFolder = false;
+            }
+            else
+            {
+                try
+                {
+                    fileEntriesSign = Directory.GetFiles(currentSignFolder);
+                    validSignFolder = true;
+                }
+                catch
+                {
+                    validSignFolder = false;
+                }
+            }
+
             textBoxAddress.TextChanged += moduleValueChanged;
             comboBoxMaterial.SelectionChangeCommitted += moduleValueChanged;
             comboBoxCondition.SelectionChangeCommitted += moduleValueChanged;
@@ -61,20 +107,20 @@ namespace tams4a.Controls
         {
             if (!string.IsNullOrEmpty(textBoxPhotoPost.Text))
             {
-                string imageLocation = Project.projectFolderPath + @"\Photos\" + textBoxPhotoPost.Text;
+                string imageLocation = currentSupportFolder + "\\" + textBoxPhotoPost.Text;
                 if (File.Exists(imageLocation))
                 {
-                    pictureBoxPost.ImageLocation = imageLocation;
+                    pictureBoxPhotoPost.ImageLocation = imageLocation;
                 }
                 else
                 {
                     Log.Warning("Missing image file: " + imageLocation);
-                    pictureBoxPost.Image = Properties.Resources.error;
+                    pictureBoxPhotoPost.Image = Properties.Resources.error;
                 }
             }
             else
             {
-                pictureBoxPost.Image = Properties.Resources.nophoto;
+                pictureBoxPhotoPost.Image = Properties.Resources.nophoto;
             }
         }
 
@@ -82,68 +128,180 @@ namespace tams4a.Controls
         {
             if (!string.IsNullOrEmpty(textBoxPhotoSign.Text))
             {
-                string imageLocation = Project.projectFolderPath + @"\Photos\" + textBoxPhotoSign.Text;
+                string imageLocation = currentSignFolder + "\\" + textBoxPhotoSign.Text;
                 if (File.Exists(imageLocation))
                 {
-                    pictureBoxPhoto.ImageLocation = imageLocation;
+                    pictureBoxPhotoSign.ImageLocation = imageLocation;
                 }
                 else
                 {
                     Log.Warning("Missing image file: " + imageLocation);
-                    pictureBoxPhoto.Image = Properties.Resources.error;
+                    pictureBoxPhotoSign.Image = Properties.Resources.error;
                 }
             }
             else
             {
-                pictureBoxPhoto.Image = Properties.Resources.nophoto;
+                pictureBoxPhotoSign.Image = Properties.Resources.nophoto;
             }
+        }
+
+        private bool supportFolderIsNotValid(object sender, EventArgs e)
+        {
+            if (!validSupportFolder)
+            {
+                MessageBox.Show("No folder for photos is specified.\n Please select the folder containing your photos.");
+                buttonChangeSupportDirectory_Click(sender, e);
+                try
+                {
+                    fileEntriesSupport = Directory.GetFiles(currentSupportFolder);
+                    validSupportFolder = true;
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool signFolderIsNotValid(object sender, EventArgs e)
+        {
+            if (!validSignFolder)
+            {
+                MessageBox.Show("No folder for photos is specified.\n Please select the folder containing your photos.");
+                buttonChangeSignDirectory_Click(sender, e);
+                try
+                {
+                    fileEntriesSign = Directory.GetFiles(currentSignFolder);
+                    validSignFolder = true;
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void buttonNextPhotoPost_Click(object sender, EventArgs e)
         {
-            updatePhotoPreview(textBoxPhotoPost, 1);
+            if (supportFolderIsNotValid(sender, e)) return;
+            updatePhotoPreview(textBoxPhotoPost, 1, fileEntriesSupport, lastUsedSupportPhotoIndex);
         }
 
         private void buttonPreviousPhotoPost_Click(object sender, EventArgs e)
         {
-            updatePhotoPreview(textBoxPhotoPost, -1);
+            if (supportFolderIsNotValid(sender, e)) return;
+            updatePhotoPreview(textBoxPhotoPost, -1, fileEntriesSupport, lastUsedSupportPhotoIndex);
         }
 
         private void buttonNextPhotoSign_Click(object sender, EventArgs e)
         {
-            updatePhotoPreview(textBoxPhotoSign, 1);
+            if (signFolderIsNotValid(sender, e)) return;
+            updatePhotoPreview(textBoxPhotoSign, 1, fileEntriesSign, lastUsedSignPhotoIndex);
         }
 
         private void buttonPreviousPhotoSign_Click(object sender, EventArgs e)
         {
-            updatePhotoPreview(textBoxPhotoSign, -1);
+            if (signFolderIsNotValid(sender, e)) return;
+            updatePhotoPreview(textBoxPhotoSign, -1, fileEntriesSign, lastUsedSignPhotoIndex);
         }
 
-        private void updatePhotoPreview(TextBox file, int direction)
+        private void updatePhotoPreview(TextBox file, int direction, string[] fileEntries, int lastUsedPhotoIndex)
         {
-            String[] splitFile;
-            if (!String.IsNullOrWhiteSpace(file.Text))
+            try
             {
-                for (int i = 0; i < fileEntries.Length; i++)
+                String[] splitFile;
+                if (!String.IsNullOrWhiteSpace(file.Text))
                 {
-                    splitFile = fileEntries[i].Split('\\');
-                    if (file.Text == splitFile[splitFile.Length - 1])
+                    for (int i = 0; i < fileEntries.Length; i++)
                     {
-                        if (direction == 1 && i == fileEntries.Length - 1) i = 0;
-                        if (direction == -1 && i == 0) i = fileEntries.Length;
-                        splitFile = fileEntries[i + direction].Split('\\');
-                        file.Text = splitFile[splitFile.Length - 1];
-                        lastUsedPhotoIndex = i + direction;
-                        return;
+                        splitFile = fileEntries[i].Split('\\');
+                        if (file.Text == splitFile[splitFile.Length - 1])
+                        {
+                            if (direction == 1 && i == fileEntries.Length - 1) i = -1;
+                            if (direction == -1 && i == 0) i = fileEntries.Length;
+                            splitFile = fileEntries[i + direction].Split('\\');
+                            file.Text = splitFile[splitFile.Length - 1];
+                            lastUsedPhotoIndex = i + direction;
+                            return;
+                        }
                     }
                 }
+                int newPhotoIndex = 0;
+                if (direction == 1 && lastUsedPhotoIndex + 1 < fileEntries.Length - 1) newPhotoIndex = lastUsedPhotoIndex + direction;
+                if (direction == -1 && lastUsedPhotoIndex - 1 >= 0) newPhotoIndex = lastUsedPhotoIndex + direction;
+                splitFile = fileEntries[newPhotoIndex].Split('\\');
+                file.Text = splitFile[splitFile.Length - 1];
             }
-            int newPhotoIndex = 0;
-            if (direction == 1 && lastUsedPhotoIndex + 1 < fileEntries.Length - 1) newPhotoIndex = lastUsedPhotoIndex + direction;
-            if (direction == -1 && lastUsedPhotoIndex - 1 >= 0) newPhotoIndex = lastUsedPhotoIndex + direction;
-            splitFile = fileEntries[newPhotoIndex].Split('\\');
-            file.Text = splitFile[splitFile.Length - 1];
+            catch
+            {
+                //No photos found in directory
+            }   
         }
 
+        private void buttonChangeSupportDirectory_Click(object sender, EventArgs e)
+        {
+            RootFolderBrowserDialog selectFolder = new RootFolderBrowserDialog();
+            selectFolder.RootPath = Project.projectFolderPath;
+
+            if (!string.IsNullOrEmpty(currentSupportFolder))
+            {
+                try
+                {
+                    selectFolder.SelectedPath = currentSupportFolder;
+                }
+                catch
+                {
+                    selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+                }
+            }
+            else
+            {
+                selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+            }
+
+            if (selectFolder.ShowDialog() == DialogResult.OK)
+            {
+                string selectedFolder = selectFolder.SelectedPath;
+                string relativePath = selectedFolder.Remove(0, Project.projectFolderPath.Length);
+                Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET support_photos = '" + relativePath + "';");
+                currentSupportFolder = selectedFolder;
+                fileEntriesSupport = Directory.GetFiles(currentSupportFolder);
+                lastUsedSupportPhotoIndex = 0;
+            }
+        }
+
+        private void buttonChangeSignDirectory_Click(object sender, EventArgs e)
+        {
+            RootFolderBrowserDialog selectFolder = new RootFolderBrowserDialog();
+            selectFolder.RootPath = Project.projectFolderPath;
+
+            if (!string.IsNullOrEmpty(currentSignFolder))
+            {
+                try
+                {
+                    selectFolder.SelectedPath = currentSignFolder;
+                }
+                catch
+                {
+                    selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+                }
+            }
+            else
+            {
+                selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+            }
+
+            if (selectFolder.ShowDialog() == DialogResult.OK)
+            {
+                string selectedFolder = selectFolder.SelectedPath;
+                string relativePath = selectedFolder.Remove(0, Project.projectFolderPath.Length);
+                Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET sign_photos = '" + relativePath + "';");
+                currentSignFolder = selectedFolder;
+                fileEntriesSign = Directory.GetFiles(currentSignFolder);
+                lastUsedSignPhotoIndex = 0;
+            }
+        }
     }
 }

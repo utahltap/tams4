@@ -201,6 +201,7 @@
             this.comboBoxObject.Name = "comboBoxObject";
             this.comboBoxObject.Size = new System.Drawing.Size(112, 21);
             this.comboBoxObject.TabIndex = 2;
+            this.comboBoxObject.SelectedIndexChanged += new System.EventHandler(this.comboBoxObject_SelectedIndexChanged);
             // 
             // labelObject
             // 

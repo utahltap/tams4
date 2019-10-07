@@ -155,8 +155,8 @@ namespace tams4a.Classes
             signPanel.comboBoxDirection.TextChanged += signValueChanged;
             signPanel.comboBoxSignRecommendation.TextChanged += signValueChanged;
             signPanel.textBoxPhotoSign.TextChanged += signValueChanged;
-            signPanel.pictureBoxPhoto.Click += clickPhotoBox;
-            signPanel.pictureBoxPost.Click += clickPostPhotoBox;
+            signPanel.pictureBoxPhotoSign.Click += clickPhotoBox;
+            signPanel.pictureBoxPhotoPost.Click += clickPostPhotoBox;
             Project.map.MouseUp += moveSignMouseUp;
             dateForm.FormClosing += updateSurveyDate;
             #endregion eventhandlers
@@ -597,7 +597,7 @@ namespace tams4a.Classes
             signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "road_offset"));
             signControls.comboBoxSupportRecommendation.Text = Util.DictionaryItemString(values, "recommendation");
             signControls.textBoxPhotoPost.Text = Util.DictionaryItemString(values, "photo");
-            updatePhotoPreview(signControls.pictureBoxPost, signControls.textBoxPhotoPost.Text);
+            updatePhotoPreview(signControls.pictureBoxPhotoPost, signControls.textBoxPhotoPost.Text);
             notes = Util.DictionaryItemString(values, "notes");
             postCat = Util.DictionaryItemString(values, "category");
             if (!string.IsNullOrEmpty(notes))
@@ -673,7 +673,7 @@ namespace tams4a.Classes
             signPanel.textBoxPhotoSign.Text = signChanges[index]["photo"];
             signPanel.buttonFavorite.BackColor = signChanges[index]["favorite"].Contains("true") ? Color.DeepPink : Control.DefaultBackColor;
             suppressChanges = false;
-            updatePhotoPreview(signPanel.pictureBoxPhoto, signPanel.textBoxPhotoSign.Text);
+            updatePhotoPreview(signPanel.pictureBoxPhotoSign, signPanel.textBoxPhotoSign.Text);
         }
 
         /// <summary>
@@ -735,10 +735,10 @@ namespace tams4a.Classes
             signControls.comboBoxSignRecommendation.SelectedIndex = 0;
             signControls.textBoxPhotoSign.Text = "";
             signControls.textBoxPhotoPost.Text = "";
-            signControls.pictureBoxPhoto.Image = null;
-            signControls.pictureBoxPost.Image = null;
-            signControls.pictureBoxPhoto.ImageLocation = null;
-            signControls.pictureBoxPost.ImageLocation = null;
+            signControls.pictureBoxPhotoSign.Image = null;
+            signControls.pictureBoxPhotoPost.Image = null;
+            signControls.pictureBoxPhotoSign.ImageLocation = null;
+            signControls.pictureBoxPhotoPost.ImageLocation = null;
             suppressChanges = false;
             signControls.labelAddress.ForeColor = default(Color);
             signControls.labelAddress.BackColor = default(Color);
