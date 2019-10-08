@@ -17,6 +17,7 @@ namespace tams4a.Forms
         private Dictionary<NumericUpDown, decimal> costBreakdown = new Dictionary<NumericUpDown, decimal>();
         private Dictionary<NumericUpDown, decimal> areaBreakdown = new Dictionary<NumericUpDown, decimal>();
         private TamsProject Project;
+        private int numberOfRows = 1;
         private double estBudget = 0.00;
         private bool beingHandled = false;
         public Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
@@ -24,71 +25,73 @@ namespace tams4a.Forms
         public FormAnalysis(TamsProject theProject)
         {
             InitializeComponent();
+            AnalysisRowPanel newPanel = new AnalysisRowPanel(0);
+            panelRows.Controls.Add(newPanel);
             Project = theProject;
             roads = Database.GetDataByQuery(Project.conn, "SELECT rsl, width, length, type FROM road GROUP BY TAMSID;");
-            checkBoxes.Add(checkBox0);
-            checkBoxes.Add(checkBox1);
-            checkBoxes.Add(checkBox2);
-            checkBoxes.Add(checkBox3);
-            checkBoxes.Add(checkBox4);
-            checkBoxes.Add(checkBox5);
-            checkBoxes.Add(checkBox6);
-            checkBoxes.Add(checkBox7);
-            checkBoxes.Add(checkBox8);
-            checkBoxes.Add(checkBox9);
-            checkBoxes.Add(checkBox10);
-            checkBoxes.Add(checkBox11);
-            checkBoxes.Add(checkBox12);
-            checkBoxes.Add(checkBox13);
-            checkBoxes.Add(checkBox14);
-            checkBoxes.Add(checkBox15);
-            checkBoxes.Add(checkBox16);
-            checkBoxes.Add(checkBox17);
-            checkBoxes.Add(checkBox18);
-            checkBoxes.Add(checkBox19);
-            checkBoxes.Add(checkBox20);
-            comboBoxFunctionalClassifications.Add(comboBoxType0);
-            comboBoxFunctionalClassifications.Add(comboBoxType1);
-            comboBoxFunctionalClassifications.Add(comboBoxType2);
-            comboBoxFunctionalClassifications.Add(comboBoxType3);
-            comboBoxFunctionalClassifications.Add(comboBoxType4);
-            comboBoxFunctionalClassifications.Add(comboBoxType5);
-            comboBoxFunctionalClassifications.Add(comboBoxType6);
-            comboBoxFunctionalClassifications.Add(comboBoxType7);
-            comboBoxFunctionalClassifications.Add(comboBoxType8);
-            comboBoxFunctionalClassifications.Add(comboBoxType9);
-            comboBoxFunctionalClassifications.Add(comboBoxType10);
-            comboBoxFunctionalClassifications.Add(comboBoxType11);
-            comboBoxFunctionalClassifications.Add(comboBoxType12);
-            comboBoxFunctionalClassifications.Add(comboBoxType13);
-            comboBoxFunctionalClassifications.Add(comboBoxType14);
-            comboBoxFunctionalClassifications.Add(comboBoxType15);
-            comboBoxFunctionalClassifications.Add(comboBoxType16);
-            comboBoxFunctionalClassifications.Add(comboBoxType17);
-            comboBoxFunctionalClassifications.Add(comboBoxType18);
-            comboBoxFunctionalClassifications.Add(comboBoxType19);
-            comboBoxFunctionalClassifications.Add(comboBoxType20);       
-            comboBoxTreatments.Add(comboBoxTreatment0);
-            comboBoxTreatments.Add(comboBoxTreatment1);
-            comboBoxTreatments.Add(comboBoxTreatment2);
-            comboBoxTreatments.Add(comboBoxTreatment3);
-            comboBoxTreatments.Add(comboBoxTreatment4);
-            comboBoxTreatments.Add(comboBoxTreatment5);
-            comboBoxTreatments.Add(comboBoxTreatment6);
-            comboBoxTreatments.Add(comboBoxTreatment7);
-            comboBoxTreatments.Add(comboBoxTreatment8);
-            comboBoxTreatments.Add(comboBoxTreatment9);
-            comboBoxTreatments.Add(comboBoxTreatment10);
-            comboBoxTreatments.Add(comboBoxTreatment11);
-            comboBoxTreatments.Add(comboBoxTreatment12);
-            comboBoxTreatments.Add(comboBoxTreatment13);
-            comboBoxTreatments.Add(comboBoxTreatment14);
-            comboBoxTreatments.Add(comboBoxTreatment15);
-            comboBoxTreatments.Add(comboBoxTreatment16);
-            comboBoxTreatments.Add(comboBoxTreatment17);
-            comboBoxTreatments.Add(comboBoxTreatment18);
-            comboBoxTreatments.Add(comboBoxTreatment19);
-            comboBoxTreatments.Add(comboBoxTreatment20);
+            //checkBoxes.Add(checkBox0);
+            //checkBoxes.Add(checkBox1);
+            //checkBoxes.Add(checkBox2);
+            //checkBoxes.Add(checkBox3);
+            //checkBoxes.Add(checkBox4);
+            //checkBoxes.Add(checkBox5);
+            //checkBoxes.Add(checkBox6);
+            //checkBoxes.Add(checkBox7);
+            //checkBoxes.Add(checkBox8);
+            //checkBoxes.Add(checkBox9);
+            //checkBoxes.Add(checkBox10);
+            //checkBoxes.Add(checkBox11);
+            //checkBoxes.Add(checkBox12);
+            //checkBoxes.Add(checkBox13);
+            //checkBoxes.Add(checkBox14);
+            //checkBoxes.Add(checkBox15);
+            //checkBoxes.Add(checkBox16);
+            //checkBoxes.Add(checkBox17);
+            //checkBoxes.Add(checkBox18);
+            //checkBoxes.Add(checkBox19);
+            //checkBoxes.Add(checkBox20);
+            //comboBoxFunctionalClassifications.Add(comboBoxType0);
+            //comboBoxFunctionalClassifications.Add(comboBoxType1);
+            //comboBoxFunctionalClassifications.Add(comboBoxType2);
+            //comboBoxFunctionalClassifications.Add(comboBoxType3);
+            //comboBoxFunctionalClassifications.Add(comboBoxType4);
+            //comboBoxFunctionalClassifications.Add(comboBoxType5);
+            //comboBoxFunctionalClassifications.Add(comboBoxType6);
+            //comboBoxFunctionalClassifications.Add(comboBoxType7);
+            //comboBoxFunctionalClassifications.Add(comboBoxType8);
+            //comboBoxFunctionalClassifications.Add(comboBoxType9);
+            //comboBoxFunctionalClassifications.Add(comboBoxType10);
+            //comboBoxFunctionalClassifications.Add(comboBoxType11);
+            //comboBoxFunctionalClassifications.Add(comboBoxType12);
+            //comboBoxFunctionalClassifications.Add(comboBoxType13);
+            //comboBoxFunctionalClassifications.Add(comboBoxType14);
+            //comboBoxFunctionalClassifications.Add(comboBoxType15);
+            //comboBoxFunctionalClassifications.Add(comboBoxType16);
+            //comboBoxFunctionalClassifications.Add(comboBoxType17);
+            //comboBoxFunctionalClassifications.Add(comboBoxType18);
+            //comboBoxFunctionalClassifications.Add(comboBoxType19);
+            //comboBoxFunctionalClassifications.Add(comboBoxType20);       
+            //comboBoxTreatments.Add(comboBoxTreatment0);
+            //comboBoxTreatments.Add(comboBoxTreatment1);
+            //comboBoxTreatments.Add(comboBoxTreatment2);
+            //comboBoxTreatments.Add(comboBoxTreatment3);
+            //comboBoxTreatments.Add(comboBoxTreatment4);
+            //comboBoxTreatments.Add(comboBoxTreatment5);
+            //comboBoxTreatments.Add(comboBoxTreatment6);
+            //comboBoxTreatments.Add(comboBoxTreatment7);
+            //comboBoxTreatments.Add(comboBoxTreatment8);
+            //comboBoxTreatments.Add(comboBoxTreatment9);
+            //comboBoxTreatments.Add(comboBoxTreatment10);
+            //comboBoxTreatments.Add(comboBoxTreatment11);
+            //comboBoxTreatments.Add(comboBoxTreatment12);
+            //comboBoxTreatments.Add(comboBoxTreatment13);
+            //comboBoxTreatments.Add(comboBoxTreatment14);
+            //comboBoxTreatments.Add(comboBoxTreatment15);
+            //comboBoxTreatments.Add(comboBoxTreatment16);
+            //comboBoxTreatments.Add(comboBoxTreatment17);
+            //comboBoxTreatments.Add(comboBoxTreatment18);
+            //comboBoxTreatments.Add(comboBoxTreatment19);
+            //comboBoxTreatments.Add(comboBoxTreatment20);
             for (int i = 0; i <= 20; i++)
             {
                 rslArea.Add(i, 0.0);
@@ -118,152 +121,152 @@ namespace tams4a.Forms
             pricePerYard.Add("Cold Recycling & Overlay (3/3 in.)", Convert.ToDouble(treatments.Rows[23]["cost"]));
         }
 
-        private void checkBox0_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType0.Enabled = checkBox0.Checked;
-            comboBox0.Enabled = checkBox0.Checked;
-            comboBoxTreatment0.Enabled = checkBox0.Checked;
-        }
+        //private void checkBox0_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType0.Enabled = checkBox0.Checked;
+        //    comboBox0.Enabled = checkBox0.Checked;
+        //    comboBoxTreatment0.Enabled = checkBox0.Checked;
+        //}
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType1.Enabled = checkBox1.Checked;
-            comboBox1.Enabled = checkBox1.Checked;
-            comboBoxTreatment1.Enabled = checkBox1.Checked;
-        }
+        //private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType1.Enabled = checkBox1.Checked;
+        //    comboBox1.Enabled = checkBox1.Checked;
+        //    comboBoxTreatment1.Enabled = checkBox1.Checked;
+        //}
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType2.Enabled = checkBox2.Checked;
-            comboBox2.Enabled = checkBox2.Checked;
-            comboBoxTreatment2.Enabled = checkBox2.Checked;
-        }
+        //private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType2.Enabled = checkBox2.Checked;
+        //    comboBox2.Enabled = checkBox2.Checked;
+        //    comboBoxTreatment2.Enabled = checkBox2.Checked;
+        //}
 
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType3.Enabled = checkBox3.Checked;
-            comboBox3.Enabled = checkBox3.Checked;
-            comboBoxTreatment3.Enabled = checkBox3.Checked;
-        }
+        //private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType3.Enabled = checkBox3.Checked;
+        //    comboBox3.Enabled = checkBox3.Checked;
+        //    comboBoxTreatment3.Enabled = checkBox3.Checked;
+        //}
 
-        private void checkBox4_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType4.Enabled = checkBox4.Checked;
-            comboBox4.Enabled = checkBox4.Checked;
-            comboBoxTreatment4.Enabled = checkBox4.Checked;
-        }
+        //private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType4.Enabled = checkBox4.Checked;
+        //    comboBox4.Enabled = checkBox4.Checked;
+        //    comboBoxTreatment4.Enabled = checkBox4.Checked;
+        //}
 
-        private void checkBox5_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType5.Enabled = checkBox5.Checked;
-            comboBox5.Enabled = checkBox5.Checked;
-            comboBoxTreatment5.Enabled = checkBox5.Checked;
-        }
+        //private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType5.Enabled = checkBox5.Checked;
+        //    comboBox5.Enabled = checkBox5.Checked;
+        //    comboBoxTreatment5.Enabled = checkBox5.Checked;
+        //}
 
-        private void checkBox6_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType6.Enabled = checkBox6.Checked;
-            comboBox6.Enabled = checkBox6.Checked;
-            comboBoxTreatment6.Enabled = checkBox6.Checked;
-        }
+        //private void checkBox6_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType6.Enabled = checkBox6.Checked;
+        //    comboBox6.Enabled = checkBox6.Checked;
+        //    comboBoxTreatment6.Enabled = checkBox6.Checked;
+        //}
 
-        private void checkBox7_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType7.Enabled = checkBox7.Checked;
-            comboBox7.Enabled = checkBox7.Checked;
-            comboBoxTreatment7.Enabled = checkBox7.Checked;
-        }
+        //private void checkBox7_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType7.Enabled = checkBox7.Checked;
+        //    comboBox7.Enabled = checkBox7.Checked;
+        //    comboBoxTreatment7.Enabled = checkBox7.Checked;
+        //}
 
-        private void checkBox8_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType8.Enabled = checkBox8.Checked;
-            comboBox8.Enabled = checkBox8.Checked;
-            comboBoxTreatment8.Enabled = checkBox8.Checked;
-        }
+        //private void checkBox8_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType8.Enabled = checkBox8.Checked;
+        //    comboBox8.Enabled = checkBox8.Checked;
+        //    comboBoxTreatment8.Enabled = checkBox8.Checked;
+        //}
 
-        private void checkBox9_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType9.Enabled = checkBox9.Checked;
-            comboBox9.Enabled = checkBox9.Checked;
-            comboBoxTreatment9.Enabled = checkBox9.Checked;
-        }
+        //private void checkBox9_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType9.Enabled = checkBox9.Checked;
+        //    comboBox9.Enabled = checkBox9.Checked;
+        //    comboBoxTreatment9.Enabled = checkBox9.Checked;
+        //}
 
-        private void checkBox10_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType10.Enabled = checkBox10.Checked;
-            comboBox10.Enabled = checkBox10.Checked;
-            comboBoxTreatment10.Enabled = checkBox10.Checked;
-        }
+        //private void checkBox10_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType10.Enabled = checkBox10.Checked;
+        //    comboBox10.Enabled = checkBox10.Checked;
+        //    comboBoxTreatment10.Enabled = checkBox10.Checked;
+        //}
 
-        private void checkBox11_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType11.Enabled = checkBox11.Checked;
-            comboBox11.Enabled = checkBox11.Checked;
-            comboBoxTreatment11.Enabled = checkBox11.Checked;
-        }
+        //private void checkBox11_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType11.Enabled = checkBox11.Checked;
+        //    comboBox11.Enabled = checkBox11.Checked;
+        //    comboBoxTreatment11.Enabled = checkBox11.Checked;
+        //}
 
-        private void checkBox12_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType12.Enabled = checkBox12.Checked;
-            comboBox12.Enabled = checkBox12.Checked;
-            comboBoxTreatment12.Enabled = checkBox12.Checked;
-        }
+        //private void checkBox12_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType12.Enabled = checkBox12.Checked;
+        //    comboBox12.Enabled = checkBox12.Checked;
+        //    comboBoxTreatment12.Enabled = checkBox12.Checked;
+        //}
 
-        private void checkBox13_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType13.Enabled = checkBox13.Checked;
-            comboBox13.Enabled = checkBox13.Checked;
-            comboBoxTreatment13.Enabled = checkBox13.Checked;
-        }
+        //private void checkBox13_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType13.Enabled = checkBox13.Checked;
+        //    comboBox13.Enabled = checkBox13.Checked;
+        //    comboBoxTreatment13.Enabled = checkBox13.Checked;
+        //}
 
-        private void checkBox14_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType14.Enabled = checkBox14.Checked;
-            comboBox14.Enabled = checkBox14.Checked;
-            comboBoxTreatment14.Enabled = checkBox14.Checked;
-        }
+        //private void checkBox14_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType14.Enabled = checkBox14.Checked;
+        //    comboBox14.Enabled = checkBox14.Checked;
+        //    comboBoxTreatment14.Enabled = checkBox14.Checked;
+        //}
 
-        private void checkBox15_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType15.Enabled = checkBox15.Checked;
-            comboBox15.Enabled = checkBox15.Checked;
-            comboBoxTreatment15.Enabled = checkBox15.Checked;
-        }
+        //private void checkBox15_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType15.Enabled = checkBox15.Checked;
+        //    comboBox15.Enabled = checkBox15.Checked;
+        //    comboBoxTreatment15.Enabled = checkBox15.Checked;
+        //}
 
-        private void checkBox16_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType16.Enabled = checkBox16.Checked;
-            comboBox16.Enabled = checkBox16.Checked;
-            comboBoxTreatment16.Enabled = checkBox16.Checked;
-        }
+        //private void checkBox16_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType16.Enabled = checkBox16.Checked;
+        //    comboBox16.Enabled = checkBox16.Checked;
+        //    comboBoxTreatment16.Enabled = checkBox16.Checked;
+        //}
 
-        private void checkBox17_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType17.Enabled = checkBox17.Checked;
-            comboBox17.Enabled = checkBox17.Checked;
-            comboBoxTreatment17.Enabled = checkBox17.Checked;
-        }
+        //private void checkBox17_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType17.Enabled = checkBox17.Checked;
+        //    comboBox17.Enabled = checkBox17.Checked;
+        //    comboBoxTreatment17.Enabled = checkBox17.Checked;
+        //}
 
-        private void checkBox18_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType18.Enabled = checkBox18.Checked;
-            comboBox18.Enabled = checkBox18.Checked;
-            comboBoxTreatment18.Enabled = checkBox18.Checked;
-        }
+        //private void checkBox18_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType18.Enabled = checkBox18.Checked;
+        //    comboBox18.Enabled = checkBox18.Checked;
+        //    comboBoxTreatment18.Enabled = checkBox18.Checked;
+        //}
 
-        private void checkBox19_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType19.Enabled = checkBox19.Checked;
-            comboBox19.Enabled = checkBox19.Checked;
-            comboBoxTreatment19.Enabled = checkBox19.Checked;
-        }
+        //private void checkBox19_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType19.Enabled = checkBox19.Checked;
+        //    comboBox19.Enabled = checkBox19.Checked;
+        //    comboBoxTreatment19.Enabled = checkBox19.Checked;
+        //}
 
-        private void checkBox20_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxType20.Enabled = checkBox20.Checked;
-            comboBox20.Enabled = checkBox20.Checked;
-            comboBoxTreatment20.Enabled = checkBox20.Checked;
-        }
+        //private void checkBox20_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    comboBoxType20.Enabled = checkBox20.Checked;
+        //    comboBox20.Enabled = checkBox20.Checked;
+        //    comboBoxTreatment20.Enabled = checkBox20.Checked;
+        //}
 
         //************************************************************************************************
 
@@ -271,7 +274,7 @@ namespace tams4a.Forms
         {
             if (changed == "RSL")
             {
-                if(comboBoxRSL == comboBox0) comboBoxTreatment.Items.Clear();
+                //if(comboBoxRSL == comboBox0) comboBoxTreatment.Items.Clear();
                 if (comboBoxRSL.Text == "")
                 {
                     comboBoxTreatment.Items.AddRange(new object[]
@@ -1306,255 +1309,255 @@ namespace tams4a.Forms
 
         //************************************************************************************************
 
-        private void comboBox0_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            reconstructionTreatments(comboBox0, comboBoxTreatment0, "RSL");
-        }
+        //private void comboBox0_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    reconstructionTreatments(comboBox0, comboBoxTreatment0, "RSL");
+        //}
 
-        private void comboBoxTreatment0_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            reconstructionTreatments(comboBox0, comboBoxTreatment0, "Treatment");
-        }
+        //private void comboBoxTreatment0_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    reconstructionTreatments(comboBox0, comboBoxTreatment0, "Treatment");
+        //}
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl1to3Treatments(comboBox1, comboBoxTreatment1, "RSL");
-            reconstructionTreatments(comboBox1, comboBoxTreatment1, "RSL");
-        }
+        //private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl1to3Treatments(comboBox1, comboBoxTreatment1, "RSL");
+        //    reconstructionTreatments(comboBox1, comboBoxTreatment1, "RSL");
+        //}
 
-        private void comboBoxTreatment1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl1to3Treatments(comboBox1, comboBoxTreatment1, "Treatment");
-            reconstructionTreatments(comboBox1, comboBoxTreatment1, "Treatment");
-        }
+        //private void comboBoxTreatment1_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl1to3Treatments(comboBox1, comboBoxTreatment1, "Treatment");
+        //    reconstructionTreatments(comboBox1, comboBoxTreatment1, "Treatment");
+        //}
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl1to3Treatments(comboBox2, comboBoxTreatment2, "RSL");
-            reconstructionTreatments(comboBox2, comboBoxTreatment2, "RSL");
-        }
+        //private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl1to3Treatments(comboBox2, comboBoxTreatment2, "RSL");
+        //    reconstructionTreatments(comboBox2, comboBoxTreatment2, "RSL");
+        //}
 
-        private void comboBoxTreatment2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl1to3Treatments(comboBox2, comboBoxTreatment2, "Treatment");
-            reconstructionTreatments(comboBox2, comboBoxTreatment2, "Treatment");
-        }
+        //private void comboBoxTreatment2_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl1to3Treatments(comboBox2, comboBoxTreatment2, "Treatment");
+        //    reconstructionTreatments(comboBox2, comboBoxTreatment2, "Treatment");
+        //}
 
-        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl1to3Treatments(comboBox3, comboBoxTreatment3, "RSL");
-            reconstructionTreatments(comboBox3, comboBoxTreatment3, "RSL");
-        }
+        //private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl1to3Treatments(comboBox3, comboBoxTreatment3, "RSL");
+        //    reconstructionTreatments(comboBox3, comboBoxTreatment3, "RSL");
+        //}
 
-        private void comboBoxTreatment3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl1to3Treatments(comboBox3, comboBoxTreatment3, "Treatment");
-            reconstructionTreatments(comboBox3, comboBoxTreatment3, "Treatment");
-        }
+        //private void comboBoxTreatment3_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl1to3Treatments(comboBox3, comboBoxTreatment3, "Treatment");
+        //    reconstructionTreatments(comboBox3, comboBoxTreatment3, "Treatment");
+        //}
 
-        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl4to6Treatments(comboBox4, comboBoxTreatment4, "RSL");
-            reconstructionTreatments(comboBox4, comboBoxTreatment4, "RSL");
-        }
+        //private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl4to6Treatments(comboBox4, comboBoxTreatment4, "RSL");
+        //    reconstructionTreatments(comboBox4, comboBoxTreatment4, "RSL");
+        //}
 
-        private void comboBoxTreatment4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl4to6Treatments(comboBox4, comboBoxTreatment4, "Treatment");
-            reconstructionTreatments(comboBox4, comboBoxTreatment4, "Treatment");
-        }
+        //private void comboBoxTreatment4_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl4to6Treatments(comboBox4, comboBoxTreatment4, "Treatment");
+        //    reconstructionTreatments(comboBox4, comboBoxTreatment4, "Treatment");
+        //}
 
-        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl4to6Treatments(comboBox5, comboBoxTreatment5, "RSL");
-            reconstructionTreatments(comboBox5, comboBoxTreatment5, "RSL");
-        }
+        //private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl4to6Treatments(comboBox5, comboBoxTreatment5, "RSL");
+        //    reconstructionTreatments(comboBox5, comboBoxTreatment5, "RSL");
+        //}
 
-        private void comboBoxTreatment5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl4to6Treatments(comboBox5, comboBoxTreatment5, "Treatment");
-            reconstructionTreatments(comboBox5, comboBoxTreatment5, "Treatment");
-        }
+        //private void comboBoxTreatment5_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl4to6Treatments(comboBox5, comboBoxTreatment5, "Treatment");
+        //    reconstructionTreatments(comboBox5, comboBoxTreatment5, "Treatment");
+        //}
 
-        private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl4to6Treatments(comboBox6, comboBoxTreatment6, "RSL");
-            reconstructionTreatments(comboBox6, comboBoxTreatment6, "RSL");
-        }
+        //private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl4to6Treatments(comboBox6, comboBoxTreatment6, "RSL");
+        //    reconstructionTreatments(comboBox6, comboBoxTreatment6, "RSL");
+        //}
 
-        private void comboBoxTreatment6_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl4to6Treatments(comboBox6, comboBoxTreatment6, "Treatment");
-            reconstructionTreatments(comboBox6, comboBoxTreatment6, "Treatment");
-        }
+        //private void comboBoxTreatment6_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl4to6Treatments(comboBox6, comboBoxTreatment6, "Treatment");
+        //    reconstructionTreatments(comboBox6, comboBoxTreatment6, "Treatment");
+        //}
 
-        private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl7to9Treatments(comboBox7, comboBoxTreatment7, "RSL");
-            reconstructionTreatments(comboBox7, comboBoxTreatment7, "RSL");
-        }
+        //private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl7to9Treatments(comboBox7, comboBoxTreatment7, "RSL");
+        //    reconstructionTreatments(comboBox7, comboBoxTreatment7, "RSL");
+        //}
 
-        private void comboBoxTreatment7_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl7to9Treatments(comboBox7, comboBoxTreatment7, "Treatment");
-            reconstructionTreatments(comboBox7, comboBoxTreatment7, "Treatment");
-        }
+        //private void comboBoxTreatment7_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl7to9Treatments(comboBox7, comboBoxTreatment7, "Treatment");
+        //    reconstructionTreatments(comboBox7, comboBoxTreatment7, "Treatment");
+        //}
 
-        private void comboBox8_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl7to9Treatments(comboBox8, comboBoxTreatment8, "RSL");
-            reconstructionTreatments(comboBox8, comboBoxTreatment8, "RSL");
-        }
+        //private void comboBox8_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl7to9Treatments(comboBox8, comboBoxTreatment8, "RSL");
+        //    reconstructionTreatments(comboBox8, comboBoxTreatment8, "RSL");
+        //}
 
-        private void comboBoxTreatment8_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl7to9Treatments(comboBox8, comboBoxTreatment8, "Treatment");
-            reconstructionTreatments(comboBox8, comboBoxTreatment8, "Treatment");
-        }
+        //private void comboBoxTreatment8_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl7to9Treatments(comboBox8, comboBoxTreatment8, "Treatment");
+        //    reconstructionTreatments(comboBox8, comboBoxTreatment8, "Treatment");
+        //}
 
-        private void comboBox9_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl7to9Treatments(comboBox9, comboBoxTreatment9, "RSL");
-            reconstructionTreatments(comboBox9, comboBoxTreatment9, "RSL");
-        }
+        //private void comboBox9_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl7to9Treatments(comboBox9, comboBoxTreatment9, "RSL");
+        //    reconstructionTreatments(comboBox9, comboBoxTreatment9, "RSL");
+        //}
 
-        private void comboBoxTreatment9_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl7to9Treatments(comboBox9, comboBoxTreatment9, "Treatment");
-            reconstructionTreatments(comboBox9, comboBoxTreatment9, "Treatment");
-        }
+        //private void comboBoxTreatment9_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl7to9Treatments(comboBox9, comboBoxTreatment9, "Treatment");
+        //    reconstructionTreatments(comboBox9, comboBoxTreatment9, "Treatment");
+        //}
 
-        private void comboBox10_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl10to12Treatments(comboBox10, comboBoxTreatment10, "RSL");
-            reconstructionTreatments(comboBox10, comboBoxTreatment10, "RSL");
-        }
+        //private void comboBox10_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl10to12Treatments(comboBox10, comboBoxTreatment10, "RSL");
+        //    reconstructionTreatments(comboBox10, comboBoxTreatment10, "RSL");
+        //}
 
-        private void comboBoxTreatment10_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl10to12Treatments(comboBox10, comboBoxTreatment10, "Treatment");
-            reconstructionTreatments(comboBox10, comboBoxTreatment10, "Treatment");
-        }
+        //private void comboBoxTreatment10_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl10to12Treatments(comboBox10, comboBoxTreatment10, "Treatment");
+        //    reconstructionTreatments(comboBox10, comboBoxTreatment10, "Treatment");
+        //}
 
-        private void comboBox11_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl10to12Treatments(comboBox11, comboBoxTreatment11, "RSL");
-            reconstructionTreatments(comboBox11, comboBoxTreatment11, "RSL");
-        }
+        //private void comboBox11_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl10to12Treatments(comboBox11, comboBoxTreatment11, "RSL");
+        //    reconstructionTreatments(comboBox11, comboBoxTreatment11, "RSL");
+        //}
 
-        private void comboBoxTreatment11_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl10to12Treatments(comboBox11, comboBoxTreatment11, "Treatment");
-            reconstructionTreatments(comboBox11, comboBoxTreatment11, "Treatment");
-        }
+        //private void comboBoxTreatment11_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl10to12Treatments(comboBox11, comboBoxTreatment11, "Treatment");
+        //    reconstructionTreatments(comboBox11, comboBoxTreatment11, "Treatment");
+        //}
 
-        private void comboBox12_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl10to12Treatments(comboBox12, comboBoxTreatment12, "RSL");
-            reconstructionTreatments(comboBox12, comboBoxTreatment12, "RSL");
-        }
+        //private void comboBox12_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl10to12Treatments(comboBox12, comboBoxTreatment12, "RSL");
+        //    reconstructionTreatments(comboBox12, comboBoxTreatment12, "RSL");
+        //}
 
-        private void comboBoxTreatment12_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl10to12Treatments(comboBox12, comboBoxTreatment12, "Treatment");
-            reconstructionTreatments(comboBox12, comboBoxTreatment12, "Treatment");
-        }
+        //private void comboBoxTreatment12_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl10to12Treatments(comboBox12, comboBoxTreatment12, "Treatment");
+        //    reconstructionTreatments(comboBox12, comboBoxTreatment12, "Treatment");
+        //}
 
-        private void comboBox13_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl13to15Treatments(comboBox13, comboBoxTreatment13, "RSL");
-            reconstructionTreatments(comboBox13, comboBoxTreatment13, "RSL");
-        }
+        //private void comboBox13_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl13to15Treatments(comboBox13, comboBoxTreatment13, "RSL");
+        //    reconstructionTreatments(comboBox13, comboBoxTreatment13, "RSL");
+        //}
 
-        private void comboBoxTreatment13_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl13to15Treatments(comboBox13, comboBoxTreatment13, "Treatment");
-            reconstructionTreatments(comboBox13, comboBoxTreatment13, "Treatment");
-        }
+        //private void comboBoxTreatment13_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl13to15Treatments(comboBox13, comboBoxTreatment13, "Treatment");
+        //    reconstructionTreatments(comboBox13, comboBoxTreatment13, "Treatment");
+        //}
 
-        private void comboBox14_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl13to15Treatments(comboBox14, comboBoxTreatment14, "RSL");
-            reconstructionTreatments(comboBox14, comboBoxTreatment14, "RSL");
-        }
+        //private void comboBox14_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl13to15Treatments(comboBox14, comboBoxTreatment14, "RSL");
+        //    reconstructionTreatments(comboBox14, comboBoxTreatment14, "RSL");
+        //}
 
-        private void comboBoxTreatment14_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl13to15Treatments(comboBox14, comboBoxTreatment14, "Treatment");
-            reconstructionTreatments(comboBox14, comboBoxTreatment14, "Treatment");
-        }
+        //private void comboBoxTreatment14_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl13to15Treatments(comboBox14, comboBoxTreatment14, "Treatment");
+        //    reconstructionTreatments(comboBox14, comboBoxTreatment14, "Treatment");
+        //}
 
-        private void comboBox15_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl13to15Treatments(comboBox15, comboBoxTreatment15, "RSL");
-            reconstructionTreatments(comboBox15, comboBoxTreatment15, "RSL");
-        }
+        //private void comboBox15_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl13to15Treatments(comboBox15, comboBoxTreatment15, "RSL");
+        //    reconstructionTreatments(comboBox15, comboBoxTreatment15, "RSL");
+        //}
 
-        private void comboBoxTreatment15_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl13to15Treatments(comboBox15, comboBoxTreatment15, "Treatment");
-            reconstructionTreatments(comboBox15, comboBoxTreatment15, "Treatment");
-        }
+        //private void comboBoxTreatment15_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl13to15Treatments(comboBox15, comboBoxTreatment15, "Treatment");
+        //    reconstructionTreatments(comboBox15, comboBoxTreatment15, "Treatment");
+        //}
 
-        private void comboBox16_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl16to18Treatments(comboBox16, comboBoxTreatment16, "RSL");
-            reconstructionTreatments(comboBox16, comboBoxTreatment16, "RSL");
-        }
+        //private void comboBox16_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl16to18Treatments(comboBox16, comboBoxTreatment16, "RSL");
+        //    reconstructionTreatments(comboBox16, comboBoxTreatment16, "RSL");
+        //}
 
-        private void comboBoxTreatment16_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl16to18Treatments(comboBox16, comboBoxTreatment16, "Treatment");
-            reconstructionTreatments(comboBox16, comboBoxTreatment16, "Treatment");
-        }
+        //private void comboBoxTreatment16_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl16to18Treatments(comboBox16, comboBoxTreatment16, "Treatment");
+        //    reconstructionTreatments(comboBox16, comboBoxTreatment16, "Treatment");
+        //}
 
-        private void comboBox17_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl16to18Treatments(comboBox17, comboBoxTreatment17, "RSL");
-            reconstructionTreatments(comboBox17, comboBoxTreatment17, "RSL");
-        }
+        //private void comboBox17_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl16to18Treatments(comboBox17, comboBoxTreatment17, "RSL");
+        //    reconstructionTreatments(comboBox17, comboBoxTreatment17, "RSL");
+        //}
 
-        private void comboBoxTreatment17_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl16to18Treatments(comboBox17, comboBoxTreatment17, "Treatment");
-            reconstructionTreatments(comboBox17, comboBoxTreatment17, "Treatment");
-        }
+        //private void comboBoxTreatment17_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl16to18Treatments(comboBox17, comboBoxTreatment17, "Treatment");
+        //    reconstructionTreatments(comboBox17, comboBoxTreatment17, "Treatment");
+        //}
 
-        private void comboBox18_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl16to18Treatments(comboBox18, comboBoxTreatment18, "RSL");
-            reconstructionTreatments(comboBox18, comboBoxTreatment18, "RSL");
-        }
+        //private void comboBox18_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl16to18Treatments(comboBox18, comboBoxTreatment18, "RSL");
+        //    reconstructionTreatments(comboBox18, comboBoxTreatment18, "RSL");
+        //}
 
-        private void comboBoxTreatment18_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl16to18Treatments(comboBox18, comboBoxTreatment18, "Treatment");
-            reconstructionTreatments(comboBox18, comboBoxTreatment18, "Treatment");
-        }
+        //private void comboBoxTreatment18_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl16to18Treatments(comboBox18, comboBoxTreatment18, "Treatment");
+        //    reconstructionTreatments(comboBox18, comboBoxTreatment18, "Treatment");
+        //}
 
-        private void comboBox19_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl19to20Treatments(comboBox19, comboBoxTreatment19, "RSL");
-            reconstructionTreatments(comboBox19, comboBoxTreatment19, "RSL");
-        }
+        //private void comboBox19_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl19to20Treatments(comboBox19, comboBoxTreatment19, "RSL");
+        //    reconstructionTreatments(comboBox19, comboBoxTreatment19, "RSL");
+        //}
 
-        private void comboBoxTreatment19_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl19to20Treatments(comboBox19, comboBoxTreatment19, "Treatment");
-            reconstructionTreatments(comboBox19, comboBoxTreatment19, "Treatment");
-        }
+        //private void comboBoxTreatment19_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl19to20Treatments(comboBox19, comboBoxTreatment19, "Treatment");
+        //    reconstructionTreatments(comboBox19, comboBoxTreatment19, "Treatment");
+        //}
 
-        private void comboBox20_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl19to20Treatments(comboBox20, comboBoxTreatment20, "RSL");
-            reconstructionTreatments(comboBox20, comboBoxTreatment20, "RSL");
-        }
+        //private void comboBox20_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl19to20Treatments(comboBox20, comboBoxTreatment20, "RSL");
+        //    reconstructionTreatments(comboBox20, comboBoxTreatment20, "RSL");
+        //}
 
-        private void comboBoxTreatment20_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rsl19to20Treatments(comboBox20, comboBoxTreatment20, "Treatment");
-            reconstructionTreatments(comboBox20, comboBoxTreatment20, "Treatment");
-        }
+        //private void comboBoxTreatment20_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    rsl19to20Treatments(comboBox20, comboBoxTreatment20, "Treatment");
+        //    reconstructionTreatments(comboBox20, comboBoxTreatment20, "Treatment");
+        //}
 
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
@@ -1782,5 +1785,11 @@ namespace tams4a.Forms
             treatmentCosts.ShowDialog();
         }
 
+        private void buttonAddRow_Click(object sender, EventArgs e)
+        {
+            AnalysisRowPanel newPanel = new AnalysisRowPanel(28 * numberOfRows);
+            panelRows.Controls.Add(newPanel);
+            numberOfRows++;
+        }
     }
 }
