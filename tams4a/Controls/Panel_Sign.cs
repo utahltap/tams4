@@ -98,9 +98,16 @@ namespace tams4a.Controls
 
         private void buttonSheetingInfo_Click(object sender, EventArgs e)
         {
-            String openPDFFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SheetingGuide.pdf";
-            File.WriteAllBytes(openPDFFile, Properties.Resources.SheetingGuide);      
-            Process.Start(openPDFFile);
+            try
+            {
+                String openPDFFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SheetingGuide.pdf";
+                File.WriteAllBytes(openPDFFile, Properties.Resources.SheetingGuide);
+                Process.Start(openPDFFile);
+            }
+            catch
+            {
+                MessageBox.Show("This file is already open on your computer.", "File Already Open", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void textBoxPhotoPost_TextChanged(object sender, EventArgs e)
