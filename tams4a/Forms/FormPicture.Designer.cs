@@ -59,6 +59,8 @@
             this.ClientSize = new System.Drawing.Size(850, 597);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.pictureBox);
+            this.MaximumSize = new System.Drawing.Size(866, 636);
+            this.MinimumSize = new System.Drawing.Size(866, 636);
             this.Name = "FormPicture";
             this.Text = "FormPicture";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
