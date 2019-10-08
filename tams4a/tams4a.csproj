@@ -302,6 +302,9 @@
     <Compile Include="Controls\Panel_Sign.Designer.cs">
       <DependentUpon>Panel_Sign.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AnalysisRowPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\FormAnalysis.cs">
       <SubType>Form</SubType>
     </Compile>
