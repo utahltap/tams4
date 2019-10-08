@@ -631,9 +631,12 @@ namespace tams4a.Classes
             setSymbolizer();
         }
 
-        protected void enlargePicture(string source, string subPath = @"\Photos\") {
+        protected void enlargePicture(string source, string subPath) {
             FormPicture largePic = new FormPicture();
-            updatePhotoPreview(largePic.pictureRoad, source, subPath);
+            if (!string.IsNullOrEmpty(source))
+                largePic.pictureBox.ImageLocation = Project.projectFolderPath + "\\" + subPath + "\\" + source;
+            else
+                largePic.pictureBox.Image = Properties.Resources.nophoto;
             largePic.Show();
         }
 

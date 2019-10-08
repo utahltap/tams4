@@ -628,7 +628,16 @@ namespace tams4a.Classes
         private void clickPhotoBox(object sender, EventArgs e)
         {
             Panel_Other controls = getOtherControls();
-            enlargePicture(controls.textBoxPhotoFile.Text);
+            string photo_column = "";
+            if (controls.comboBoxObject.Text == "Sidewalk") photo_column = "sidewalk_photos";
+            else if (controls.comboBoxObject.Text == "ADA Ramp") photo_column = "ada_photos";
+            else if (controls.comboBoxObject.Text == "Severe Road Distress") photo_column = "severe_distress_photos";
+            else if (controls.comboBoxObject.Text == "Accident") photo_column = "accident_photos";
+            else if (controls.comboBoxObject.Text == "Drainage") photo_column = "drainage_photos";
+            else if (controls.comboBoxObject.Text == "Other") photo_column = "other_photos";
+
+            string subPath = Database.GetDataByQuery(Project.conn, "SELECT " + photo_column + " FROM photo_paths;").Rows[0][0].ToString();
+            enlargePicture(controls.textBoxPhotoFile.Text, subPath);
         }
     }
 }

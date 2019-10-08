@@ -1173,13 +1173,15 @@ namespace tams4a.Classes
         private void clickPhotoBox(object sender, EventArgs e)
         {
             Panel_Sign signControls = getSignControls();
-            enlargePicture(signControls.textBoxPhotoSign.Text);
+            string subPath = Database.GetDataByQuery(Project.conn, "SELECT sign_photos FROM photo_paths;").Rows[0][0].ToString();
+            enlargePicture(signControls.textBoxPhotoSign.Text, subPath);
         }
 
         private void clickPostPhotoBox(object sender, EventArgs e)
         {
             Panel_Sign signControls = getSignControls();
-            enlargePicture(signControls.textBoxPhotoPost.Text);
+            string subPath = Database.GetDataByQuery(Project.conn, "SELECT support_photos FROM photo_paths;").Rows[0][0].ToString();
+            enlargePicture(signControls.textBoxPhotoPost.Text, subPath);
         }
 
         private void clickMap(object sender, EventArgs e)

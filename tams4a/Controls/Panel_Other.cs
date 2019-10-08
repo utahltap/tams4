@@ -574,11 +574,11 @@ namespace tams4a.Controls
         private void comboBoxObject_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxObject.Text == "Sidewalk") photo_column = "sidewalk_photos";
-            if (comboBoxObject.Text == "ADA Ramp") photo_column = "ada_photos";
-            if (comboBoxObject.Text == "Severe Road Distress") photo_column = "severe_distress_photos";
-            if (comboBoxObject.Text == "Accident") photo_column = "accident_photos";
-            if (comboBoxObject.Text == "Drainage") photo_column = "drainage_photos";
-            if (comboBoxObject.Text == "Other") photo_column = "other_photos";
+            else if (comboBoxObject.Text == "ADA Ramp") photo_column = "ada_photos";
+            else if (comboBoxObject.Text == "Severe Road Distress") photo_column = "severe_distress_photos";
+            else if (comboBoxObject.Text == "Accident") photo_column = "accident_photos";
+            else if (comboBoxObject.Text == "Drainage") photo_column = "drainage_photos";
+            else if (comboBoxObject.Text == "Other") photo_column = "other_photos";
 
             string landmarkPhotos = Database.GetDataByQuery(Project.conn, "SELECT " + photo_column + " FROM photo_paths;").Rows[0][0].ToString();
             currentFolder = Project.projectFolderPath + landmarkPhotos;

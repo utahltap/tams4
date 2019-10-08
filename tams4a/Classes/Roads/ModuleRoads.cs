@@ -821,7 +821,8 @@ namespace tams4a.Classes
         private void clickPhotoBox(object sender, EventArgs e)
         { 
             Panel_Road roadControls = getRoadControls();
-            enlargePicture(roadControls.textBoxPhotoFile.Text);
+            string subPath = Database.GetDataByQuery(Project.conn, "SELECT road_photos FROM photo_paths;").Rows[0][0].ToString();
+            enlargePicture(roadControls.textBoxPhotoFile.Text, subPath);
         }
 
         private void automaticTreatmentSuggestion(object sender, EventArgs e)
