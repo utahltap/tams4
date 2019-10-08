@@ -53,10 +53,13 @@ namespace tams4a.Classes.Signs
             data.Columns.Add("Recommendation");
             data.Columns.Add("Notes");
             data.Columns.Add("Survey Date");
+            data.Columns.Add("Photo");
             try
             {
-                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign WHERE recommendation != '';");
-                DataTable signAddress = Database.GetDataByQuery(Project.conn, "SELECT address, support_id FROM sign_support;");
+                DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT s.TAMSID, s.support_id, s.recommendation, s.notes, s.survey_date, ss.address, s.photo FROM " +
+                    "(sign s JOIN sign_support ss ON s.support_id = ss.support_id) " +
+                    "WHERE s.recommendation != ''; ");
+
                 if (signsTable.Rows.Count == 0)
                 {
                     MessageBox.Show("No list could be generated because no signs where found.");
@@ -64,23 +67,14 @@ namespace tams4a.Classes.Signs
                 }
                 foreach (DataRow row in signsTable.Rows)
                 {
-                    string address = "";
-                    foreach (DataRow r in signAddress.Rows)
-                    {
-                        if (r["support_id"].ToString() == row["support_id"].ToString())
-                            {
-                                address = r["address"].ToString();
-                                break;
-                            }
-                    }
-
                     DataRow nr = data.NewRow();
                     nr["ID"] = row["TAMSID"];
                     nr["Support ID"] = row["support_id"];
-                    nr["Address"] = address;
+                    nr["Address"] = row["address"];
                     nr["Recommendation"] = row["recommendation"];
                     nr["Notes"] = truncateNote(row);
                     nr["Survey Date"] = row["survey_date"];
+                    nr["Photo"] = row["photo"];
 
                     data.Rows.Add(nr);
                 }
@@ -127,6 +121,7 @@ namespace tams4a.Classes.Signs
             data.Columns.Add("Recommendation");
             data.Columns.Add("Notes");
             data.Columns.Add("Survey Date");
+            data.Columns.Add("Photo");
             try
             {
                 DataTable signsTable = Database.GetDataByQuery(Project.conn, "SELECT * FROM sign_support WHERE recommendation != '';");
@@ -143,6 +138,8 @@ namespace tams4a.Classes.Signs
                     nr["Recommendation"] = row["recommendation"];
                     nr["Notes"] = truncateNote(row);
                     nr["Survey Date"] = row["survey_date"];
+                    nr["Photo"] = row["photo"];
+
                     data.Rows.Add(nr);
                 }
                 showReport(data, "Support Recommendations");
@@ -207,6 +204,7 @@ namespace tams4a.Classes.Signs
             data.Columns.Add("MUTCD Code");
             data.Columns.Add("Install Date");
             data.Columns.Add("Survey Date");
+            data.Columns.Add("Photo");
             return data;
         }
 
@@ -231,6 +229,7 @@ namespace tams4a.Classes.Signs
             nr["MUTCD Code"] = row["mutcd_code"];
             nr["Install Date"] = row["install_date"];
             nr["Survey Date"] = row["survey_date"];
+            nr["Photo"] = row["photo"];
         }
 
         public DataTable addSupportColumns()
@@ -249,6 +248,7 @@ namespace tams4a.Classes.Signs
             data.Columns.Add("Category");
             data.Columns.Add("Notes");
             data.Columns.Add("Survey Date");
+            data.Columns.Add("Photo");
             return data;
         }
 
@@ -265,6 +265,7 @@ namespace tams4a.Classes.Signs
             nr["Category"] = row["category"];
             nr["Notes"] = truncateNote(row);
             nr["Survey Date"] = row["survey_date"];
+            nr["Photo"] = row["photo"];
         }
     }
 }

@@ -174,6 +174,7 @@ namespace tams4a.Forms
                     else if (thisCol == "MUTCD Code") column = "mutcd_code";
                     else if (thisCol == "Install Date") column = "install_date";
                     else if (thisCol == "Survey Date") column = "survey_date";
+                    else if (thisCol == "Photo") column = "photo";
                     else continue;
 
                     string currentID = row["ID"].ToString();
@@ -216,8 +217,8 @@ namespace tams4a.Forms
 
         private void signRecommendationsReport(DataTable report)
         {
-            DataTable fullDataSet = Database.GetDataByQuery(Project.conn, "SELECT TAMSID, support_id, recommendation, notes, survey_date FROM sign;");
-            DataTable signAddresses = Database.GetDataByQuery(Project.conn, "SELECT address FROM sign_support;");
+            DataTable fullDataSet = Database.GetDataByQuery(Project.conn, "SELECT s.TAMSID, s.support_id, s.recommendation, s.notes, s.survey_date, ss.address, s.photo FROM sign s " +
+                "JOIN sign_support ss ON s.support_id = ss.support_id;");
 
             string sql = "";
             foreach (DataColumn col in report.Columns)
@@ -225,18 +226,20 @@ namespace tams4a.Forms
                 foreach (DataRow row in report.Rows)
                 {
                     string column = "";
+                    string thisCol = col.ToString();
 
-                    if (col.ToString() == "ID") column = "TAMSID";
-                    else if (col.ToString() == "Support ID") column = "support_id";
-                    else if (col.ToString() == "Address")
+                    if (thisCol == "ID") column = "TAMSID";
+                    else if (thisCol == "Support ID") column = "support_id";
+                    else if (thisCol == "Address")
                     {
                         if (String.IsNullOrEmpty(row["Support ID"].ToString())) continue;
                         column = "address";
                         sql += "UPDATE sign_support SET " + column + " = \"" + row[col].ToString() + "\" WHERE support_id = " + row["Support ID"].ToString() + ";";
                         continue;
                     }
-                    else if (col.ToString() == "Recommendation") column = "recommendation";
-                    else if (col.ToString() == "Survey Date") column = "survey_date";
+                    else if (thisCol == "Recommendation") column = "recommendation";
+                    else if (thisCol == "Survey Date") column = "survey_date";
+                    else if (thisCol == "Photo") column = "photo";
                     else continue;
 
                     string currentID = row["ID"].ToString();
@@ -299,6 +302,7 @@ namespace tams4a.Forms
                     else if (thisCol == "Height (ft)") column = "height";
                     else if (thisCol == "Category") column = "category";
                     else if (thisCol == "Survey Date") column = "survey_date";
+                    else if (thisCol == "Photo") column = "photo";
                     else continue;
 
                     string currentID = row["Support ID"].ToString();
@@ -421,7 +425,7 @@ namespace tams4a.Forms
                     }
                     else if (thisCol == "Address") column = "address";
                     else if (thisCol == "Description") column = "description";
-                    //else if (thisCol == "Notes") column = "notes";
+                    else if (thisCol == "Photo") column = "photo";
                     else
                     {
                         switch (reportType)

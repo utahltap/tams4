@@ -83,7 +83,8 @@ namespace tams4a.Classes.Other
                 { "Breaks", "property2" },
                 { "Recommendation", "property3" },
                 { "Surface", "property4" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Sidewalks");
         }
@@ -98,7 +99,8 @@ namespace tams4a.Classes.Other
                 { "Condition", "property1" },
                 { "Compliant", "property2" },
                 { "Has Tiles", "property3" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "ADA Ramps");
         }
@@ -112,7 +114,8 @@ namespace tams4a.Classes.Other
                 { "Description", "description" },
                 { "Distress", "property1" },
                 { "Recommendation", "property2" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Severe Road Distresses");
         }
@@ -126,7 +129,8 @@ namespace tams4a.Classes.Other
                 { "Description", "description" },
                 { "Type", "property1" },
                 { "Recommendation", "property2" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Drainage Problems");
         }
@@ -141,7 +145,8 @@ namespace tams4a.Classes.Other
                 { "Date", "property1" },
                 { "Type", "property2" },
                 { "Severity", "property3" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Accident");
         }
@@ -155,7 +160,8 @@ namespace tams4a.Classes.Other
                 { "Description", "description" },
                 { "Property 1", "property1" },
                 { "Property 2", "property2" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Objects");
         }
@@ -185,7 +191,8 @@ namespace tams4a.Classes.Other
                 { "Property 1", "property1" },
                 { "Property 2", "property2" },
                 { "Property 3", "property3" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Roads with Sidewalks");
         }

@@ -149,7 +149,7 @@ namespace tams4a.Controls
         {
             if (!validSupportFolder)
             {
-                MessageBox.Show("No folder for photos is specified.\n Please select the folder containing your photos.");
+                MessageBox.Show("No folder for photos is specified.\n Please select the folder containing your photos.", "Please Select Folder", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 buttonChangeSupportDirectory_Click(sender, e);
                 try
                 {
