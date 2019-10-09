@@ -323,6 +323,16 @@ namespace tams4a.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap foldericon {
+            get {
+                object obj = ResourceManager.GetObject("foldericon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap go {
             get {
                 object obj = ResourceManager.GetObject("go", resourceCulture);
@@ -687,6 +697,16 @@ namespace tams4a.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SheetingGuide {
+            get {
+                object obj = ResourceManager.GetObject("SheetingGuide", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap sidewalk {
@@ -735,56 +755,47 @@ namespace tams4a.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tams_logo1
-        {
-            get
-            {
+        internal static System.Drawing.Bitmap tams_logo1 {
+            get {
                 object obj = ResourceManager.GetObject("tams_logo1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tams_logo2
-        {
-            get
-            {
+        internal static System.Drawing.Bitmap tams_logo2 {
+            get {
                 object obj = ResourceManager.GetObject("tams_logo2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tams_logo3
-        {
-            get
-            {
+        internal static System.Drawing.Bitmap tams_logo3 {
+            get {
                 object obj = ResourceManager.GetObject("tams_logo3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tams_logo4
-        {
-            get
-            {
+        internal static System.Drawing.Bitmap tams_logo4 {
+            get {
                 object obj = ResourceManager.GetObject("tams_logo4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>

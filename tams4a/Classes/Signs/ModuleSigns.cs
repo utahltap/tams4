@@ -113,7 +113,7 @@ namespace tams4a.Classes
             if (!base.openFile(thePath, type)) { return false; }
 
             ControlsPage.Controls.Remove(ControlsPage.Controls["SIGNADD"]);
-            Panel_Sign signPanel = new Panel_Sign();
+            Panel_Sign signPanel = new Panel_Sign(Project);
             signPanel.Name = "SIGNCONTROLS";
             signPanel.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(signPanel);
@@ -154,9 +154,9 @@ namespace tams4a.Classes
             signPanel.comboBoxConditionSign.TextChanged += signValueChanged;
             signPanel.comboBoxDirection.TextChanged += signValueChanged;
             signPanel.comboBoxSignRecommendation.TextChanged += signValueChanged;
-            signPanel.textBoxPhotoFile.TextChanged += signValueChanged;
-            signPanel.pictureBoxPhoto.Click += clickPhotoBox;
-            signPanel.pictureBoxPost.Click += clickPostPhotoBox;
+            signPanel.textBoxPhotoSign.TextChanged += signValueChanged;
+            signPanel.pictureBoxPhotoSign.Click += clickPhotoBox;
+            signPanel.pictureBoxPhotoPost.Click += clickPostPhotoBox;
             Project.map.MouseUp += moveSignMouseUp;
             dateForm.FormClosing += updateSurveyDate;
             #endregion eventhandlers
@@ -515,7 +515,14 @@ namespace tams4a.Classes
         override public void selectionChanged()
         {    
             if (!isOpen()) { return; }
-            if (UnsavedChanges){}
+            if (UnsavedChanges)
+            {
+                DialogResult rslt = MessageBox.Show("Unsaved changes detected! Would you like to save the changes? Otherwise, they will be discared",
+                    "Unsaved Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (rslt == DialogResult.Yes) saveHandler(null, null);
+                if (rslt == DialogResult.Cancel) return;
+            }
+
             bool enableSigns = true;
             Panel_Sign signControls = getSignControls();
 
@@ -590,7 +597,7 @@ namespace tams4a.Classes
             signControls.numericUpDownOffset.Value = (decimal)Util.ToDouble(Util.DictionaryItemString(values, "road_offset"));
             signControls.comboBoxSupportRecommendation.Text = Util.DictionaryItemString(values, "recommendation");
             signControls.textBoxPhotoPost.Text = Util.DictionaryItemString(values, "photo");
-            updatePhotoPreview(signControls.pictureBoxPost, signControls.textBoxPhotoPost.Text);
+            updatePhotoPreview(signControls.pictureBoxPhotoPost, signControls.textBoxPhotoPost.Text);
             notes = Util.DictionaryItemString(values, "notes");
             postCat = Util.DictionaryItemString(values, "category");
             if (!string.IsNullOrEmpty(notes))
@@ -663,10 +670,10 @@ namespace tams4a.Classes
             signPanel.comboBoxConditionSign.Text = signChanges[index]["condition"];
             signPanel.comboBoxDirection.Text = signChanges[index]["direction"];
             signPanel.comboBoxSignRecommendation.Text = signChanges[index]["recommendation"];
-            signPanel.textBoxPhotoFile.Text = signChanges[index]["photo"];
+            signPanel.textBoxPhotoSign.Text = signChanges[index]["photo"];
             signPanel.buttonFavorite.BackColor = signChanges[index]["favorite"].Contains("true") ? Color.DeepPink : Control.DefaultBackColor;
             suppressChanges = false;
-            updatePhotoPreview(signPanel.pictureBoxPhoto, signPanel.textBoxPhotoFile.Text);
+            updatePhotoPreview(signPanel.pictureBoxPhotoSign, signPanel.textBoxPhotoSign.Text);
         }
 
         /// <summary>
@@ -726,12 +733,12 @@ namespace tams4a.Classes
             signControls.comboBoxDirection.SelectedIndex = 0;
             signControls.comboBoxConditionSign.SelectedIndex = 0;
             signControls.comboBoxSignRecommendation.SelectedIndex = 0;
-            signControls.textBoxPhotoFile.Text = "";
+            signControls.textBoxPhotoSign.Text = "";
             signControls.textBoxPhotoPost.Text = "";
-            signControls.pictureBoxPhoto.Image = null;
-            signControls.pictureBoxPost.Image = null;
-            signControls.pictureBoxPhoto.ImageLocation = null;
-            signControls.pictureBoxPost.ImageLocation = null;
+            signControls.pictureBoxPhotoSign.Image = null;
+            signControls.pictureBoxPhotoPost.Image = null;
+            signControls.pictureBoxPhotoSign.ImageLocation = null;
+            signControls.pictureBoxPhotoPost.ImageLocation = null;
             suppressChanges = false;
             signControls.labelAddress.ForeColor = default(Color);
             signControls.labelAddress.BackColor = default(Color);
@@ -772,7 +779,7 @@ namespace tams4a.Classes
             signChanges[index]["mount_height"] = signControls.numericUpDownMountHeight.Value.ToString();
             signChanges[index]["sign_text"] = signControls.textBoxText.Text;
             signChanges[index]["survey_date"] = Util.SortableDate(surveyDate);
-            signChanges[index]["photo"] = signControls.textBoxPhotoFile.Text;
+            signChanges[index]["photo"] = signControls.textBoxPhotoSign.Text;
             signChanges[index]["reflectivity"] = signControls.comboBoxReflectivity.Text;
             signChanges[index]["description"] = signControls.textBoxDescription.Text;
             signChanges[index]["install_date"] = signControls.textBoxInstall.Text;
@@ -1166,13 +1173,15 @@ namespace tams4a.Classes
         private void clickPhotoBox(object sender, EventArgs e)
         {
             Panel_Sign signControls = getSignControls();
-            enlargePicture(signControls.textBoxPhotoFile.Text);
+            string subPath = Database.GetDataByQuery(Project.conn, "SELECT sign_photos FROM photo_paths;").Rows[0][0].ToString();
+            enlargePicture(signControls.textBoxPhotoSign.Text, subPath);
         }
 
         private void clickPostPhotoBox(object sender, EventArgs e)
         {
             Panel_Sign signControls = getSignControls();
-            enlargePicture(signControls.textBoxPhotoPost.Text);
+            string subPath = Database.GetDataByQuery(Project.conn, "SELECT support_photos FROM photo_paths;").Rows[0][0].ToString();
+            enlargePicture(signControls.textBoxPhotoPost.Text, subPath);
         }
 
         private void clickMap(object sender, EventArgs e)

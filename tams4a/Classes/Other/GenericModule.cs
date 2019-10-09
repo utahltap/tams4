@@ -104,7 +104,7 @@ namespace tams4a.Classes
             if (!base.openFile(thePath, type)) { return false; }
 
             ControlsPage.Controls.Remove(ControlsPage.Controls["MODULEADD"]);
-            Panel_Other panel = new Panel_Other();
+            Panel_Other panel = new Panel_Other(Project);
             panel.Name = "OTHERCONTROLS";
             panel.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(panel);
@@ -295,7 +295,10 @@ namespace tams4a.Classes
 
             if (UnsavedChanges)
             {
-                
+                DialogResult rslt = MessageBox.Show("Unsaved changes detected! Would you like to save the changes? Otherwise, they will be discared",
+                    "Unsaved Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (rslt == DialogResult.Yes) saveHandler(null, null);
+                if (rslt == DialogResult.Cancel) return;
             }
 
             resetDisplay();
@@ -370,11 +373,12 @@ namespace tams4a.Classes
 
         public void saveHandler(object sender, EventArgs e)
         {
+            Panel_Other controls = getOtherControls();
+            if (!controls.toolStripButtonSave.Enabled) return;
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
             string tamsidcolumn = Project.settings.GetValue(ModuleName + "_f_TAMSID");
 
-            Panel_Other controls = getOtherControls();
             Dictionary<string, string> values = new Dictionary<string, string>();
             values["type"] = controls.comboBoxObject.Text;
             values["icon"] = Util.DictionaryItemString(icons, controls.comboBoxObject.Text);
@@ -384,7 +388,8 @@ namespace tams4a.Classes
             values["property1"] = controls.getProperty(values["type"], 0);
             values["property2"] = controls.getProperty(values["type"], 1);
             values["property3"] = controls.getProperty(values["type"], 2);
-            values["notes"] = controls.getProperty(values["type"], 3);
+            values["property4"] = controls.getProperty(values["type"], 3);
+            values["notes"] = controls.getProperty(values["type"], 4);
 
             if (!string.IsNullOrWhiteSpace(controls.textBoxPhotoFile.Text))
             {
@@ -420,8 +425,8 @@ namespace tams4a.Classes
                 row["TAMSICON"] = values["icon"];
             }
 
-            resetSaveCondition();
-
+            resetDisplay();
+            disableDisplay();
             Properties.Settings.Default.Save();
             selectionLayer.ClearSelection();
             selectionLayer.DataSet.Save();
@@ -623,7 +628,16 @@ namespace tams4a.Classes
         private void clickPhotoBox(object sender, EventArgs e)
         {
             Panel_Other controls = getOtherControls();
-            enlargePicture(controls.textBoxPhotoFile.Text);
+            string photo_column = "";
+            if (controls.comboBoxObject.Text == "Sidewalk") photo_column = "sidewalk_photos";
+            else if (controls.comboBoxObject.Text == "ADA Ramp") photo_column = "ada_photos";
+            else if (controls.comboBoxObject.Text == "Severe Road Distress") photo_column = "severe_distress_photos";
+            else if (controls.comboBoxObject.Text == "Accident") photo_column = "accident_photos";
+            else if (controls.comboBoxObject.Text == "Drainage") photo_column = "drainage_photos";
+            else if (controls.comboBoxObject.Text == "Other") photo_column = "other_photos";
+
+            string subPath = Database.GetDataByQuery(Project.conn, "SELECT " + photo_column + " FROM photo_paths;").Rows[0][0].ToString();
+            enlargePicture(controls.textBoxPhotoFile.Text, subPath);
         }
     }
 }

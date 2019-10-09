@@ -917,6 +917,49 @@ UPDATE sign SET display = description || ' (' || TAMSID || ')';";
             }
             #endregion db_update_17_immute
 
+            #region db_update_18_immute
+            if (dbVersion == 17)
+            {
+                try
+                {
+                    string cmdString = @"ALTER TABLE miscellaneous ADD COLUMN property4 TEXT;";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "18";
+                dbVersion = 18;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_18_immute
+
+            #region db_update_19_immute
+            if (dbVersion == 18)
+            {
+                try
+                {
+                    string initPath = Properties.Settings.Default.lastFolder.ToString();
+                    string cmdString = @"CREATE TABLE `photo_paths` (`road_photos` TEXT, `support_photos` TEXT, `sign_photos` TEXT,
+`sidewalk_photos` TEXT, `ada_photos` TEXT, `severe_distress_photos` TEXT, `accident_photos` TEXT, `drainage_photos` TEXT `other_photos` TEXT);
+INSERT INTO photo_paths (road_photos, sign_photos, other_photos) VALUES ('" + initPath  + "', '" + initPath + "', '" + initPath + "');";
+                    SQLiteCommand cmd = new SQLiteCommand(cmdString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to update database, check database schema: " + e.ToString());
+                }
+                Dictionary<string, string> updateDb = new Dictionary<string, string>();
+                updateDb["version"] = "19";
+                dbVersion = 19;
+                Database.UpdateRow(conn, updateDb, "db_version", "warning", "'DO_NOT_MODIFY'");
+            }
+            #endregion db_update_19_immute
+
             return true;
         }
 

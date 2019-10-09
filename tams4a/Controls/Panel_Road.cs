@@ -1,15 +1,33 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
+using tams4a.Classes;
+using System.IO;
 
 namespace tams4a.Controls
 {
     public partial class Panel_Road : Panel_Module
     {
-        public Panel_Road()
+        private TamsProject Project;
+        private string[] fileEntries;
+        private bool validFolder = false;
+        private int lastUsedPhotoIndex;
+        private string currentFolder;
+
+        public Panel_Road(TamsProject theProject)
         {
             InitializeComponent();
-            
+            Project = theProject;
+            currentFolder = Project.projectFolderPath + Database.GetDataByQuery(Project.conn, "SELECT road_photos FROM photo_paths;").Rows[0][0].ToString();
+            try
+            {
+                fileEntries = Directory.GetFiles(currentFolder);
+                validFolder = true;
+            }
+            catch
+            {
+                validFolder = false;
+            }
+
             numericUpDownSpeedLimit.ValueChanged += moduleValueChanged;
             numericUpDownLanes.ValueChanged += moduleValueChanged;
             textBoxFrom.TextChanged += moduleValueChanged;
@@ -95,42 +113,119 @@ namespace tams4a.Controls
         }
 
 
+        private bool folderIsNotValid(object sender, EventArgs e)
+        {
+            if (!validFolder)
+            {
+                MessageBox.Show("No folder for photos is specified.\n Please select the folder containing your photos.", "Please Select Folder", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                buttonChangeDirectory_Click(sender, e);
+                try
+                {
+                    fileEntries = Directory.GetFiles(currentFolder);
+                    validFolder = true;
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void buttonNextPhoto_Click(object sender, EventArgs e)
         {
-            string oldPhoto = Properties.Settings.Default.lastPhoto;
-            if (string.IsNullOrWhiteSpace(oldPhoto))
-            {
-                textBoxPhotoFile.Text = "0001";
-                return;
-            }
+            if (folderIsNotValid(sender, e)) return;
+            updatePhotoPreview(textBoxPhotoFile, 1);
+        }
 
-            string pattern = @"(.*?)(\d+)(.*)";
-            Regex rex = new Regex(pattern, RegexOptions.IgnoreCase);
+        private void buttonPreviousPhoto_Click(object sender, EventArgs e)
+        {
+            if (folderIsNotValid(sender, e)) return;
+            updatePhotoPreview(textBoxPhotoFile, -1);
+        }
 
-            Match mat = rex.Match(oldPhoto);
-            if (!mat.Success)
-            {
-                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
-                return;
-            }
-
+        private void updatePhotoPreview(TextBox file, int direction)
+        {
             try
             {
-                string nextPhoto = mat.Groups[1].ToString();
-                string numPart = mat.Groups[2].ToString();  
-                int num = Convert.ToInt16(numPart);
-                num++;
-                string numFormat = "D" + numPart.Length.ToString();
-                nextPhoto += num.ToString(numFormat);
-                
-                nextPhoto += mat.Groups[3].ToString();
-
-                textBoxPhotoFile.Text = nextPhoto;
+                String[] splitFile;
+                if (!String.IsNullOrWhiteSpace(file.Text))
+                {
+                    for (int i = 0; i < fileEntries.Length; i++)
+                    {
+                        splitFile = fileEntries[i].Split('\\');
+                        if (file.Text == splitFile[splitFile.Length - 1])
+                        {
+                            if (direction == 1 && i == fileEntries.Length - 1) i = -1;
+                            if (direction == -1 && i == 0) i = fileEntries.Length;
+                            splitFile = fileEntries[i + direction].Split('\\');
+                            file.Text = splitFile[splitFile.Length - 1];
+                            lastUsedPhotoIndex = i + direction;
+                            return;
+                        }
+                    }
+                }
+                int newPhotoIndex = 0;
+                if (direction == 1 && lastUsedPhotoIndex + 1 < fileEntries.Length - 1) newPhotoIndex = lastUsedPhotoIndex + direction;
+                if (direction == -1 && lastUsedPhotoIndex - 1 >= 0) newPhotoIndex = lastUsedPhotoIndex + direction;
+                splitFile = fileEntries[newPhotoIndex].Split('\\');
+                file.Text = splitFile[splitFile.Length - 1];
             }
-            catch 
+            catch
             {
-                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
-                return;
+                //No photos found in directory
+            }
+        }
+
+        private void textBoxPhotoFile_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBoxPhotoFile.Text))
+            {
+                string imageLocation = currentFolder + "\\" + textBoxPhotoFile.Text;
+                if (File.Exists(imageLocation))
+                {
+                    pictureBoxPhoto.ImageLocation = imageLocation;
+                }
+                else
+                {
+                    Log.Warning("Missing image file: " + imageLocation);
+                    pictureBoxPhoto.Image = Properties.Resources.error;
+                }
+            }
+            else
+            {
+                pictureBoxPhoto.Image = Properties.Resources.nophoto;
+            }
+        }
+
+        private void buttonChangeDirectory_Click(object sender, EventArgs e)
+        {
+            RootFolderBrowserDialog selectFolder = new RootFolderBrowserDialog();
+            selectFolder.RootPath = Project.projectFolderPath;
+
+            if (!string.IsNullOrEmpty(currentFolder))
+            {
+                try
+                {
+                    selectFolder.SelectedPath = currentFolder;
+                }
+                catch
+                {
+                    selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+                }
+            }
+            else
+            {
+                selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+            }
+
+            if (selectFolder.ShowDialog() == DialogResult.OK)
+            {
+                string selectedFolder = selectFolder.SelectedPath;
+                string relativePath = selectedFolder.Remove(0, Project.projectFolderPath.Length);
+                Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET road_photos = '" + relativePath + "';");
+                currentFolder = selectedFolder;
+                fileEntries = Directory.GetFiles(currentFolder);
             }
         }
     }

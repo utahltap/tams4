@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using tams4a.Classes;
-using System.Text.RegularExpressions;
 using tams4a.Forms;
 
 namespace tams4a.Controls
@@ -12,12 +12,17 @@ namespace tams4a.Controls
     {
         private Dictionary<string, List<Control>> controlSets;
         private TextBox accidentDate = new TextBox();
+        private TamsProject Project;
+        private string[] fileEntries;
+        private bool validFolder = false;
+        private int lastUsedPhotoIndex;
+        private string currentFolder;
+        private string photo_column = null;
 
-        public Panel_Other()
+        public Panel_Other(TamsProject theProject)
         {
             InitializeComponent();
-
-            new ToolTip().SetToolTip(buttonNextPhoto, "Get Next Photo");
+            Project = theProject;
 
             controlSets = new Dictionary<string, List<Control>>()
             {
@@ -29,6 +34,19 @@ namespace tams4a.Controls
                 { "Other", new List<Control>() }
             };
             int left = 11, right = 89;
+
+            ComboBox placeholder = new ComboBox();
+            placeholder.Visible = false;
+
+            TextBox notes = new TextBox();
+            notes.Location = new Point(left, 144);
+            notes.Size = new Size(193, 80);
+
+            Label notesLabel = new Label();
+            notesLabel.Text = "Notes";
+            notesLabel.Size = new Size(70, 14);
+            notesLabel.Location = new Point(left, 122);
+
             #region sidewalk
             ComboBox swFault = new ComboBox();
             swFault.Location = new Point(right, 24);
@@ -59,9 +77,18 @@ namespace tams4a.Controls
             rec3rd.Items.Add("Other (see notes)");
             controlSets["Sidewalk"].Add(rec3rd);
 
-            TextBox notes = new TextBox();
-            notes.Location = new Point(left, 120);
-            notes.Size = new Size(193, 80);
+            ComboBox swSurface = new ComboBox();
+            swSurface.Location = new Point(right, 96);
+            swSurface.Size = new Size(112, 20);
+            swSurface.Items.Add("");
+            swSurface.Items.Add("Asphalt");
+            swSurface.Items.Add("Concrete");
+            swSurface.Items.Add("Pervious");
+            swSurface.Items.Add("Not Paved");
+            swSurface.Items.Add("Multiple");
+            swSurface.Items.Add("Other");
+            controlSets["Sidewalk"].Add(swSurface);
+
             controlSets["Sidewalk"].Add(notes);
 
             Label swFaultLabel = new Label();
@@ -82,30 +109,32 @@ namespace tams4a.Controls
             rec3rdLabel.Location = new Point(left, 74);
             controlSets["Sidewalk"].Add(rec3rdLabel);
 
-            Label notesLabel = new Label();
-            notesLabel.Text = "Notes";
-            notesLabel.Size = new Size(70, 14);
-            notesLabel.Location = new Point(left, 98);
+            Label swSurfaceLabel = new Label();
+            swSurfaceLabel.Size = new Size(70, 14);
+            swSurfaceLabel.Text = "Surface";
+            swSurfaceLabel.Location = new Point(left, 98);
+            controlSets["Sidewalk"].Add(swSurfaceLabel);
+
             controlSets["Sidewalk"].Add(notesLabel);
             #endregion sidewalk
 
             #region ramp
-            ComboBox adAcondition = new ComboBox();
-            adAcondition.Location = new Point(right, 24);
-            adAcondition.Size = new Size(112, 20);
-            adAcondition.Items.Add("");
-            adAcondition.Items.Add("Good");
-            adAcondition.Items.Add("Acceptable");
-            adAcondition.Items.Add("Bad");
-            controlSets["ADA Ramp"].Add(adAcondition);
+            ComboBox adaCondition = new ComboBox();
+            adaCondition.Location = new Point(right, 24);
+            adaCondition.Size = new Size(112, 20);
+            adaCondition.Items.Add("");
+            adaCondition.Items.Add("Good");
+            adaCondition.Items.Add("Acceptable");
+            adaCondition.Items.Add("Bad");
+            controlSets["ADA Ramp"].Add(adaCondition);
 
-            ComboBox adAcompliant = new ComboBox();
-            adAcompliant.Location = new Point(right, 48);
-            adAcompliant.Size = new Size(112, 20);
-            adAcompliant.Items.Add("");
-            adAcompliant.Items.Add("Yes");
-            adAcompliant.Items.Add("No");
-            controlSets["ADA Ramp"].Add(adAcompliant);
+            ComboBox adaCompliant = new ComboBox();
+            adaCompliant.Location = new Point(right, 48);
+            adaCompliant.Size = new Size(112, 20);
+            adaCompliant.Items.Add("");
+            adaCompliant.Items.Add("Yes");
+            adaCompliant.Items.Add("No");
+            controlSets["ADA Ramp"].Add(adaCompliant);
 
             ComboBox tiles = new ComboBox();
             tiles.Location = new Point(right, 72);
@@ -115,20 +144,22 @@ namespace tams4a.Controls
             tiles.Items.Add("No");
             controlSets["ADA Ramp"].Add(tiles);
 
+            controlSets["ADA Ramp"].Add(placeholder);
             controlSets["ADA Ramp"].Add(notes);
-            Label adAconditionLabel = new Label();
-            adAconditionLabel.Text = "Condition";
-            adAconditionLabel.Size = new Size(70, 14);
-            adAconditionLabel.Location = new Point(left, 26);
-            controlSets["ADA Ramp"].Add(adAconditionLabel);
 
-            Label adAcompliantLabel = new Label();
-            adAcompliantLabel.Text = "Compliant";
-            adAcompliantLabel.Size = new Size(70, 14);
-            adAcompliantLabel.Location = new Point(left, 50);
-            controlSets["ADA Ramp"].Add(adAcompliantLabel);
+            Label adaConditionLabel = new Label();
+            adaConditionLabel.Text = "Condition";
+            adaConditionLabel.Size = new Size(70, 14);
+            adaConditionLabel.Location = new Point(left, 26);
+            controlSets["ADA Ramp"].Add(adaConditionLabel);
+
+            Label adaCompliantLabel = new Label();
+            adaCompliantLabel.Text = "Compliant";
+            adaCompliantLabel.Size = new Size(70, 14);
+            adaCompliantLabel.Location = new Point(left, 50);
+            controlSets["ADA Ramp"].Add(adaCompliantLabel);
+
             Label tilesLabel = new Label();
-
             tilesLabel.Text = "Has Tiles";
             tilesLabel.Size = new Size(70, 14);
             tilesLabel.Location = new Point(left, 74);
@@ -154,6 +185,7 @@ namespace tams4a.Controls
             controlSets["Severe Road Distress"].Add(nonElement);
             nonElement.Visible = false;
 
+            controlSets["Severe Road Distress"].Add(placeholder);
             controlSets["Severe Road Distress"].Add(notes);
 
             Label distressLabel = new Label();
@@ -192,6 +224,7 @@ namespace tams4a.Controls
             controlSets["Drainage"].Add(nonElement);
             nonElement.Visible = false;
 
+            controlSets["Drainage"].Add(placeholder);
             controlSets["Drainage"].Add(notes);
 
             Label typeLabel = new Label();
@@ -224,6 +257,7 @@ namespace tams4a.Controls
             accidentSeverity.Items.Add("Property Damage");
             controlSets["Accident"].Add(accidentSeverity);
 
+            controlSets["Accident"].Add(placeholder);
             controlSets["Accident"].Add(notes);
 
             nonElement = new TextBox();
@@ -280,6 +314,7 @@ namespace tams4a.Controls
             controlSets["Other"].Add(nonElement);
             nonElement.Visible = false;
 
+            controlSets["Other"].Add(placeholder);
             controlSets["Other"].Add(notes);
 
             Label property1Label = new Label();
@@ -303,13 +338,15 @@ namespace tams4a.Controls
             textBoxDescription.TextChanged += moduleValueChanged;
             textBoxPhotoFile.TextChanged += moduleValueChanged;
 
+            swFault.SelectedIndexChanged += new EventHandler(delegate (object sender, EventArgs e) { updateSidwalkRecommendation(sender, e, swFault, rec3rd); });
+            swSurface.TextChanged += moduleValueChanged;
             swFault.TextChanged += moduleValueChanged;
             swBreak.TextChanged += moduleValueChanged;
             rec3rd.TextChanged += moduleValueChanged;
             notes.TextChanged += moduleValueChanged;
 
-            adAcondition.TextChanged += moduleValueChanged;
-            adAcompliant.TextChanged += moduleValueChanged;
+            adaCondition.TextChanged += moduleValueChanged;
+            adaCompliant.TextChanged += moduleValueChanged;
             tiles.TextChanged += moduleValueChanged;
 
             distress.TextChanged += moduleValueChanged;
@@ -328,6 +365,12 @@ namespace tams4a.Controls
             buttonAccidentDate.Click += ButtonAccidentDate_Click;
         }
 
+        private void updateSidwalkRecommendation(object sender, EventArgs e, ComboBox swFault, ComboBox recommend)
+        {
+            if (swFault.SelectedItem.ToString() == "Less than 0.25 in.") recommend.SelectedIndex = 3;
+            if (swFault.SelectedItem.ToString() == "0.25 - 0.5 in.") recommend.SelectedIndex = 1;
+        }
+
         public void updateDisplay(Dictionary<string, string> values)
         {
             comboBoxObject.Text = Util.DictionaryItemString(values, "type");
@@ -339,7 +382,8 @@ namespace tams4a.Controls
                 controlSets[values["type"]][0].Text = Util.DictionaryItemString(values, "property1");
                 controlSets[values["type"]][1].Text = Util.DictionaryItemString(values, "property2");
                 controlSets[values["type"]][2].Text = Util.DictionaryItemString(values, "property3");
-                controlSets[values["type"]][3].Text = Util.DictionaryItemString(values, "notes");
+                if (values["type"] == "Sidewalk") controlSets[values["type"]][3].Text = Util.DictionaryItemString(values, "property4");
+                controlSets[values["type"]][4].Text = Util.DictionaryItemString(values, "notes");
             }
         }
 
@@ -356,6 +400,7 @@ namespace tams4a.Controls
                 controlSets[propSet][1].Text = "";
                 controlSets[propSet][2].Text = "";
                 controlSets[propSet][3].Text = "";
+                controlSets[propSet][4].Text = "";
             }
             else
             {
@@ -367,6 +412,7 @@ namespace tams4a.Controls
                 controlSets["Other"][1].Text = "";
                 controlSets["Other"][2].Text = "";
                 controlSets["Other"][3].Text = "";
+                controlSets["Other"][4].Text = "";
             }
         }
 
@@ -377,7 +423,7 @@ namespace tams4a.Controls
             textBoxPhotoFile.Text = "";
             pictureBoxPhoto.ImageLocation = null;
             textBoxDescription.Text = "";
-            for (int i = 0; i < 3; i ++)
+            for (int i = 0; i < 4; i ++)
             {
                 foreach (string key in controlSets.Keys)
                 {
@@ -397,44 +443,70 @@ namespace tams4a.Controls
             chooseAltProperties(comboBoxObject.Text);
         }
 
+        private bool folderIsNotValid(object sender, EventArgs e)
+        {
+            if (!validFolder)
+            {
+                MessageBox.Show("No folder for photos is specified.\n Please select the folder containing your photos.", "Please Select Folder", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                buttonChangeDirectory_Click(sender, e);
+                try
+                {
+                    fileEntries = Directory.GetFiles(currentFolder);
+                    validFolder = true;
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void buttonNextPhoto_Click(object sender, EventArgs e)
         {
-            string oldPhoto = Properties.Settings.Default.lastPhoto;
-            if (string.IsNullOrWhiteSpace(oldPhoto))
-            {
-                textBoxPhotoFile.Text = "0001";
-                return;
-            }
+            if (folderIsNotValid(sender, e)) return;
+            updatePhotoPreview(textBoxPhotoFile, 1);
+        }
 
-            string pattern = @"(.*?)(\d+)(.*)";
-            Regex rex = new Regex(pattern, RegexOptions.IgnoreCase);
+        private void buttonPreviousPhoto_Click(object sender, EventArgs e)
+        {
+            if (folderIsNotValid(sender, e)) return;
+            updatePhotoPreview(textBoxPhotoFile, -1);
+        }
 
-            Match mat = rex.Match(oldPhoto);
-            if (!mat.Success)
-            {
-                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
-                return;
-            }
-
+        private void updatePhotoPreview(TextBox file, int direction)
+        {
             try
             {
-                string nextPhoto = mat.Groups[1].ToString();
-                string numPart = mat.Groups[2].ToString();
-                int num = Convert.ToInt16(numPart);
-                num++;
-                string numFormat = "D" + numPart.Length.ToString();
-                nextPhoto += num.ToString(numFormat);
-
-                nextPhoto += mat.Groups[3].ToString();
-
-                textBoxPhotoFile.Text = nextPhoto;
+                String[] splitFile;
+                if (!String.IsNullOrWhiteSpace(file.Text))
+                {
+                    for (int i = 0; i < fileEntries.Length; i++)
+                    {
+                        splitFile = fileEntries[i].Split('\\');
+                        if (file.Text == splitFile[splitFile.Length - 1])
+                        {
+                            if (direction == 1 && i == fileEntries.Length - 1) i = -1;
+                            if (direction == -1 && i == 0) i = fileEntries.Length;
+                            splitFile = fileEntries[i + direction].Split('\\');
+                            file.Text = splitFile[splitFile.Length - 1];
+                            lastUsedPhotoIndex = i + direction;
+                            return;
+                        }
+                    }
+                }
+                int newPhotoIndex = 0;
+                if (direction == 1 && lastUsedPhotoIndex + 1 < fileEntries.Length - 1) newPhotoIndex = lastUsedPhotoIndex + direction;
+                if (direction == -1 && lastUsedPhotoIndex - 1 >= 0) newPhotoIndex = lastUsedPhotoIndex + direction;
+                splitFile = fileEntries[newPhotoIndex].Split('\\');
+                file.Text = splitFile[splitFile.Length - 1];
             }
             catch
             {
-                textBoxPhotoFile.Text = MakePictureNumbered(oldPhoto);
-                return;
+                //No photos found in directory
             }
         }
+
 
         private void ButtonAccidentDate_Click(object sender, EventArgs e)
         {
@@ -444,6 +516,87 @@ namespace tams4a.Controls
             ad.ShowDialog();
             accidentDate.Text = Util.SortableDate(ad.getDate());
             ad.Close();
+        }
+
+        private void textBoxPhotoFile_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBoxPhotoFile.Text))
+            {
+                string imageLocation = currentFolder + "\\" + textBoxPhotoFile.Text;
+                if (File.Exists(imageLocation))
+                {
+                    pictureBoxPhoto.ImageLocation = imageLocation;
+                }
+                else
+                {
+                    Log.Warning("Missing image file: " + imageLocation);
+                    pictureBoxPhoto.Image = Properties.Resources.error;
+                }
+            }
+            else
+            {
+                pictureBoxPhoto.Image = Properties.Resources.nophoto;
+            }
+        }
+
+        private void buttonChangeDirectory_Click(object sender, EventArgs e)
+        {
+            RootFolderBrowserDialog selectFolder = new RootFolderBrowserDialog();
+            selectFolder.RootPath = Project.projectFolderPath;
+
+            if (!string.IsNullOrEmpty(currentFolder))
+            {
+                try
+                {
+                    selectFolder.SelectedPath = currentFolder;
+                }
+                catch
+                {
+                    selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+                }
+            }
+            else
+            {
+                selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
+            }
+
+            if (selectFolder.ShowDialog() == DialogResult.OK)
+            {
+                string selectedFolder = selectFolder.SelectedPath;
+                string relativePath = selectedFolder.Remove(0, Project.projectFolderPath.Length);
+                Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET " + photo_column + " = '" + relativePath + "';");
+                currentFolder = selectedFolder;
+                fileEntries = Directory.GetFiles(currentFolder);
+                lastUsedPhotoIndex = 0;
+            }
+        }
+
+        private void comboBoxObject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxObject.Text == "Sidewalk") photo_column = "sidewalk_photos";
+            else if (comboBoxObject.Text == "ADA Ramp") photo_column = "ada_photos";
+            else if (comboBoxObject.Text == "Severe Road Distress") photo_column = "severe_distress_photos";
+            else if (comboBoxObject.Text == "Accident") photo_column = "accident_photos";
+            else if (comboBoxObject.Text == "Drainage") photo_column = "drainage_photos";
+            else if (comboBoxObject.Text == "Other") photo_column = "other_photos";
+
+            string landmarkPhotos = Database.GetDataByQuery(Project.conn, "SELECT " + photo_column + " FROM photo_paths;").Rows[0][0].ToString();
+            currentFolder = Project.projectFolderPath + landmarkPhotos;
+
+            if (string.IsNullOrEmpty(landmarkPhotos))
+            {
+                validFolder = false;
+                return;
+            }
+            try
+            {
+                fileEntries = Directory.GetFiles(currentFolder);
+                validFolder = true;
+            }
+            catch
+            {
+                validFolder = false;
+            }
         }
     }
 }

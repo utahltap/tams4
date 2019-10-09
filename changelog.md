@@ -1,5 +1,25 @@
 # TAMS 4.1.x
 
+# Version 4.1.7.0
+CHANGES
+----------------------------------------------------
+* Added a sheeting information guide for signs
+* TAMS projects openned from the project file should open directly now
+* Added ability to toggle the visibility of shape layers
+* Unsaved changes for signs and landmarks with prompt a warning when changing selection
+* Added a warning when changing road surface for multiple roads
+* The mount height number box now increments by 0.1 in.
+* Added 'Name,' 'From Address,' and 'To Address' to roads with sidewalks report
+* Added surface property to sidewalks
+* Certain fault values will autofill the sidewalk recommendations
+* Photos for different objects can now be stored in separate folders which are specified by the user
+* Photo file names are now present in reports
+
+BUG FIXES
+----------------------------------------------------
+* Fixed highlighting results on map for custom reports
+* Map snapshot captures the actual dimentions of the map window
+
 # Version 4.1.6.0
 CHANGES
 ----------------------------------------------------

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DotSpatial.Symbology;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -13,6 +13,42 @@ namespace tams4a.Forms
         {
             mainWindow = callingForm as MainWindow;
             InitializeComponent();
+
+            FeatureLayer selectionLayer;
+            int numLayers = mainWindow.uxMap.Layers.Count;
+            if (numLayers > 0)
+            {
+                selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[0];
+                checkBoxRoad.Checked = !selectionLayer.UseDynamicVisibility;
+            }
+            else
+            {
+                checkBoxRoad.Enabled = false;
+                checkBoxRoad.Checked = false;
+            }
+
+            if (numLayers > 1)
+            {
+                selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[1];
+                checkBoxSign.Checked = !selectionLayer.UseDynamicVisibility;
+            }
+            else
+            {
+                checkBoxSign.Enabled = false;
+                checkBoxSign.Checked = false;
+            }
+
+            if (numLayers > 2)
+            {
+                selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[2];
+                checkBoxOther.Checked = !selectionLayer.UseDynamicVisibility;
+            }
+            else
+            {
+                checkBoxOther.Enabled = false;
+                checkBoxOther.Checked = false;
+            }
+
             if (mainWindow.uxMap.BackColor == Color.White) radioButtonLight.Checked = true;
             else radioButtonDark.Checked = true;
             if (mainWindow.rslBlue.Visible || mainWindow.treatmentRoutine.Visible) radioButtonOn.Checked = true;
@@ -97,6 +133,53 @@ namespace tams4a.Forms
             if (radioButtonOn.Checked)getLegend();
             mainWindow.road.roadColors = comboBoxRoadColors.Text;
             mainWindow.road.symbols.setSymbolizer();
+            mainWindow.Project.map.Refresh();
+        }
+
+        private void checkBoxRoad_CheckedChanged(object sender, EventArgs e)
+        {
+            FeatureLayer selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[0];
+            Console.WriteLine(mainWindow.uxMap.Layers);
+            if (!checkBoxRoad.Checked)
+            {
+                selectionLayer.UseDynamicVisibility = true;
+                selectionLayer.DynamicVisibilityMode = DynamicVisibilityMode.ZoomedIn;
+                selectionLayer.DynamicVisibilityWidth = 0;
+                selectionLayer.ShowLabels = false;
+            }
+            else
+            {
+                selectionLayer.UseDynamicVisibility = false;
+
+                // TODO: Needs to pull from settings
+                selectionLayer.ShowLabels = true;
+            }
+            mainWindow.Project.map.Refresh();
+        }
+
+        private void checkBoxSign_CheckedChanged(object sender, EventArgs e)
+        {
+            FeatureLayer selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[1];
+            if (!checkBoxSign.Checked)
+            {
+                selectionLayer.UseDynamicVisibility = true;
+                selectionLayer.DynamicVisibilityMode = DynamicVisibilityMode.ZoomedIn;
+                selectionLayer.DynamicVisibilityWidth = 0;
+            }
+            else selectionLayer.UseDynamicVisibility = false;
+            mainWindow.Project.map.Refresh();
+        }
+
+        private void checkBoxOther_CheckedChanged(object sender, EventArgs e)
+        {
+            FeatureLayer selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[2];
+            if (!checkBoxOther.Checked)
+            {
+                selectionLayer.UseDynamicVisibility = true;
+                selectionLayer.DynamicVisibilityMode = DynamicVisibilityMode.ZoomedIn;
+                selectionLayer.DynamicVisibilityWidth = 0;
+            }
+            else selectionLayer.UseDynamicVisibility = false;
             mainWindow.Project.map.Refresh();
         }
     }

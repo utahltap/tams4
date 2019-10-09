@@ -63,6 +63,7 @@ namespace tams4a.Classes.Roads
             potholes.Columns.Add("Depth");
             potholes.Columns.Add("Quantity");
             potholes.Columns.Add("Treatment");
+            potholes.Columns.Add("Photo");
             string thisSql = moduleRoads.getSelectAllSQL();
             try
             {
@@ -85,7 +86,8 @@ namespace tams4a.Classes.Roads
                     nr["To Address"] = row["to_address"];
                     nr["Depth"] = (Util.ToInt(row["distress5"].ToString()) > 0 ? pd[(Util.ToInt(row["distress5"].ToString()) - 1) / 3] : "None");
                     nr["Quantity"] = (Util.ToInt(row["distress5"].ToString()) > 0 ? pq[(Util.ToInt(row["distress5"].ToString()) - 1) % 3] : "None");
-                    nr["Treatment"] = row["suggested_treatment"].ToString();
+                    nr["Treatment"] = row["suggested_treatment"];
+                    nr["Photo"] = row["photo"];
                     potholes.Rows.InsertAt(nr, potholes.Rows.Count);
                 }
                 potholes.DefaultView.Sort = "Name asc, From Address asc";
@@ -157,7 +159,7 @@ namespace tams4a.Classes.Roads
             FeatureLayer selectionLayer = (FeatureLayer)moduleRoads.Layer;
             ISelection shpSelection = selectionLayer.Selection;
             DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
-            string histring = @"SELECT * FROM road WHERE TAMSID IN (" + moduleRoads.extractTAMSIDs(selectionTable) + ") ORDER BY TAMSID ASC, survey_date DESC;";
+            string histring = @"SELECT * FROM road WHERE TAMSID IN (" + moduleRoads.extractTAMSIDs(selectionTable) + ") ORDER BY TAMSID ASC, id DESC;";
             try
             {
                 DataTable history = Database.GetDataByQuery(Project.conn, histring);
@@ -177,6 +179,7 @@ namespace tams4a.Classes.Roads
                 history.Columns["rsl"].ColumnName = "RSL";
                 history.Columns["suggested_treatment"].ColumnName = "Suggested Treatment";
                 history.Columns["notes"].ColumnName = "Notes";
+                history.Columns["photo"].ColumnName = "Photo";
 
                 int surface_id = 0;
                 string surface_type = history.Rows[0]["surface"].ToString();
@@ -230,6 +233,7 @@ namespace tams4a.Classes.Roads
             general.Columns.Add("Functional Classification");
             general.Columns.Add("Notes");
             general.Columns.Add("Survey Date");
+            general.Columns.Add("Photo");
             if (surfaceType == "")
             {
                 general.Columns.Add("Fat/Spa/Pot");
@@ -294,6 +298,7 @@ namespace tams4a.Classes.Roads
             nr["Functional Classification"] = row["type"];
             nr["Notes"] = truncateNote(row);
             nr["Survey Date"] = row["survey_date"];
+            nr["Photo"] = row["photo"];
             if (surfaceType == "")
             {
                 nr["Fat/Spa/Pot"] = row["distress1"];

@@ -78,14 +78,13 @@ namespace tams4a.Classes
                 return;
             }
             DataTable outputTable = roadReports.addColumns(surfaceType);
-
             FormOutput report = new FormOutput(Project, moduleRoads);
+            FeatureLayer selectionLayer = (FeatureLayer)moduleRoads.Layer;
+            selectionLayer.ClearSelection();
             foreach (DataRow row in results.Rows)
             {
                 if (selectResults)
                 {
-                    FeatureLayer selectionLayer = (FeatureLayer)moduleRoads.Layer;
-                    selectionLayer.ClearSelection();
                     String tamsidcolumn = Project.settings.GetValue("road_f_TAMSID");
                     selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
                 }
@@ -123,15 +122,13 @@ namespace tams4a.Classes
             }
             DataTable outputTable = signReports.addSignColumns();
 
-            Console.WriteLine(query);
-
             FormOutput report = new FormOutput(Project, null, "Sign Inventory");
+            FeatureLayer selectionLayer = (FeatureLayer)moduleSigns.Layer;
+            selectionLayer.ClearSelection();
             foreach (DataRow row in results.Rows)
             {
                 if (selectResults)
                 {
-                    FeatureLayer selectionLayer = (FeatureLayer)moduleSigns.Layer;
-                    selectionLayer.ClearSelection();
                     String tamsidcolumn = Project.settings.GetValue("sign_f_TAMSID");
                     selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["support_id"], ModifySelectionMode.Append);
                 }
@@ -169,15 +166,13 @@ namespace tams4a.Classes
             }
             DataTable outputTable = signReports.addSupportColumns();
 
-            Console.WriteLine(query);
-
             FormOutput report = new FormOutput(Project, null, "Support Inventory");
+            FeatureLayer selectionLayer = (FeatureLayer)moduleSigns.Layer;
+            selectionLayer.ClearSelection();
             foreach (DataRow row in results.Rows)
             {
                 if (selectResults)
                 {
-                    FeatureLayer selectionLayer = (FeatureLayer)moduleSigns.Layer;
-                    selectionLayer.ClearSelection();
                     String tamsidcolumn = Project.settings.GetValue("sign_f_TAMSID");
                     selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["support_id"], ModifySelectionMode.Append);
                 }
@@ -242,23 +237,23 @@ namespace tams4a.Classes
 
             if (selectResults)
             {
+                FeatureLayer selectionLayer = (FeatureLayer)moduleOther.Layer;
+                FeatureLayer roadSelectionLayer = (FeatureLayer)moduleRoads.Layer;
+                selectionLayer.ClearSelection();
+                roadSelectionLayer.ClearSelection();
                 foreach (DataRow row in results.Rows)
                 {
                     if (selectResults)
                     {
-                        FeatureLayer selectionLayer;
+
                         String tamsidcolumn;
                         if (type == "Roads with Sidewalks")
                         {
-                            selectionLayer = (FeatureLayer)moduleRoads.Layer;
-                            selectionLayer.ClearSelection();
                             tamsidcolumn = Project.settings.GetValue("road_f_TAMSID");
-                            selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["road_ID"], ModifySelectionMode.Append);
+                            roadSelectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["road_ID"], ModifySelectionMode.Append);
                             moduleRoads.selectionChanged();
-                            return;
+                            continue;
                         }
-                        selectionLayer = (FeatureLayer)moduleOther.Layer;
-                        selectionLayer.ClearSelection();
                         tamsidcolumn = Project.settings.GetValue("miscellaneous_f_TAMSID");
                         selectionLayer.SelectByAttribute(tamsidcolumn + " = " + row["TAMSID"], ModifySelectionMode.Append);
                     }

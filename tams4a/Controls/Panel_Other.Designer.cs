@@ -29,6 +29,21 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Panel_Other));
+            this.groupBoxProperties = new System.Windows.Forms.GroupBox();
+            this.groupBoxType = new System.Windows.Forms.GroupBox();
+            this.buttonChangeDirectory = new System.Windows.Forms.Button();
+            this.buttonPreviousPhoto = new System.Windows.Forms.Button();
+            this.textBoxAddress = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBoxPhoto = new System.Windows.Forms.PictureBox();
+            this.labelPhoto = new System.Windows.Forms.Label();
+            this.buttonNextPhoto = new System.Windows.Forms.Button();
+            this.textBoxPhotoFile = new System.Windows.Forms.TextBox();
+            this.textBoxDescription = new System.Windows.Forms.TextBox();
+            this.labelDescription = new System.Windows.Forms.Label();
+            this.comboBoxObject = new System.Windows.Forms.ComboBox();
+            this.labelObject = new System.Windows.Forms.Label();
+            this.labelSurveyDate = new System.Windows.Forms.Label();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
@@ -41,23 +56,170 @@
             this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripMoveLandmark = new System.Windows.Forms.ToolStripButton();
-            this.groupBoxType = new System.Windows.Forms.GroupBox();
-            this.textBoxAddress = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBoxPhoto = new System.Windows.Forms.PictureBox();
-            this.labelPhoto = new System.Windows.Forms.Label();
-            this.buttonNextPhoto = new System.Windows.Forms.Button();
-            this.textBoxPhotoFile = new System.Windows.Forms.TextBox();
-            this.textBoxDescription = new System.Windows.Forms.TextBox();
-            this.labelDescription = new System.Windows.Forms.Label();
-            this.comboBoxObject = new System.Windows.Forms.ComboBox();
-            this.labelObject = new System.Windows.Forms.Label();
-            this.labelSurveyDate = new System.Windows.Forms.Label();
-            this.groupBoxProperties = new System.Windows.Forms.GroupBox();
-            this.toolStrip.SuspendLayout();
             this.groupBoxType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
+            this.toolStrip.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // groupBoxProperties
+            // 
+            this.groupBoxProperties.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxProperties.Location = new System.Drawing.Point(0, 248);
+            this.groupBoxProperties.Name = "groupBoxProperties";
+            this.groupBoxProperties.Size = new System.Drawing.Size(220, 492);
+            this.groupBoxProperties.TabIndex = 2;
+            this.groupBoxProperties.TabStop = false;
+            this.groupBoxProperties.Text = "Properties";
+            // 
+            // groupBoxType
+            // 
+            this.groupBoxType.Controls.Add(this.buttonChangeDirectory);
+            this.groupBoxType.Controls.Add(this.buttonPreviousPhoto);
+            this.groupBoxType.Controls.Add(this.textBoxAddress);
+            this.groupBoxType.Controls.Add(this.label1);
+            this.groupBoxType.Controls.Add(this.pictureBoxPhoto);
+            this.groupBoxType.Controls.Add(this.labelPhoto);
+            this.groupBoxType.Controls.Add(this.buttonNextPhoto);
+            this.groupBoxType.Controls.Add(this.textBoxPhotoFile);
+            this.groupBoxType.Controls.Add(this.textBoxDescription);
+            this.groupBoxType.Controls.Add(this.labelDescription);
+            this.groupBoxType.Controls.Add(this.comboBoxObject);
+            this.groupBoxType.Controls.Add(this.labelObject);
+            this.groupBoxType.Controls.Add(this.labelSurveyDate);
+            this.groupBoxType.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBoxType.Location = new System.Drawing.Point(0, 25);
+            this.groupBoxType.Name = "groupBoxType";
+            this.groupBoxType.Size = new System.Drawing.Size(220, 223);
+            this.groupBoxType.TabIndex = 1;
+            this.groupBoxType.TabStop = false;
+            this.groupBoxType.Text = "Type";
+            // 
+            // buttonChangeDirectory
+            // 
+            this.buttonChangeDirectory.Image = ((System.Drawing.Image)(resources.GetObject("buttonChangeDirectory.Image")));
+            this.buttonChangeDirectory.Location = new System.Drawing.Point(14, 132);
+            this.buttonChangeDirectory.Name = "buttonChangeDirectory";
+            this.buttonChangeDirectory.Size = new System.Drawing.Size(20, 20);
+            this.buttonChangeDirectory.TabIndex = 27;
+            this.toolTip.SetToolTip(this.buttonChangeDirectory, "Change directory of photos");
+            this.buttonChangeDirectory.UseVisualStyleBackColor = true;
+            this.buttonChangeDirectory.Click += new System.EventHandler(this.buttonChangeDirectory_Click);
+            // 
+            // buttonPreviousPhoto
+            // 
+            this.buttonPreviousPhoto.Location = new System.Drawing.Point(36, 132);
+            this.buttonPreviousPhoto.Name = "buttonPreviousPhoto";
+            this.buttonPreviousPhoto.Size = new System.Drawing.Size(20, 20);
+            this.buttonPreviousPhoto.TabIndex = 26;
+            this.buttonPreviousPhoto.Text = "<";
+            this.toolTip.SetToolTip(this.buttonPreviousPhoto, "Get Previous Photo");
+            this.buttonPreviousPhoto.UseVisualStyleBackColor = true;
+            this.buttonPreviousPhoto.Click += new System.EventHandler(this.buttonPreviousPhoto_Click);
+            // 
+            // textBoxAddress
+            // 
+            this.textBoxAddress.Location = new System.Drawing.Point(89, 61);
+            this.textBoxAddress.Name = "textBoxAddress";
+            this.textBoxAddress.Size = new System.Drawing.Size(112, 20);
+            this.textBoxAddress.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 63);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 13);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "Address";
+            // 
+            // pictureBoxPhoto
+            // 
+            this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxPhoto.InitialImage = global::tams4a.Properties.Resources.nophoto;
+            this.pictureBoxPhoto.Location = new System.Drawing.Point(89, 132);
+            this.pictureBoxPhoto.Name = "pictureBoxPhoto";
+            this.pictureBoxPhoto.Size = new System.Drawing.Size(112, 78);
+            this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxPhoto.TabIndex = 23;
+            this.pictureBoxPhoto.TabStop = false;
+            // 
+            // labelPhoto
+            // 
+            this.labelPhoto.AutoSize = true;
+            this.labelPhoto.Location = new System.Drawing.Point(11, 108);
+            this.labelPhoto.Name = "labelPhoto";
+            this.labelPhoto.Size = new System.Drawing.Size(54, 13);
+            this.labelPhoto.TabIndex = 22;
+            this.labelPhoto.Text = "Photo File";
+            // 
+            // buttonNextPhoto
+            // 
+            this.buttonNextPhoto.Location = new System.Drawing.Point(58, 132);
+            this.buttonNextPhoto.Name = "buttonNextPhoto";
+            this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
+            this.buttonNextPhoto.TabIndex = 5;
+            this.buttonNextPhoto.Text = ">";
+            this.toolTip.SetToolTip(this.buttonNextPhoto, "Get Next Photo");
+            this.buttonNextPhoto.UseVisualStyleBackColor = true;
+            // 
+            // textBoxPhotoFile
+            // 
+            this.textBoxPhotoFile.Location = new System.Drawing.Point(89, 107);
+            this.textBoxPhotoFile.Name = "textBoxPhotoFile";
+            this.textBoxPhotoFile.Size = new System.Drawing.Size(112, 20);
+            this.textBoxPhotoFile.TabIndex = 6;
+            this.textBoxPhotoFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBoxPhotoFile.TextChanged += new System.EventHandler(this.textBoxPhotoFile_TextChanged);
+            // 
+            // textBoxDescription
+            // 
+            this.textBoxDescription.Location = new System.Drawing.Point(89, 84);
+            this.textBoxDescription.Name = "textBoxDescription";
+            this.textBoxDescription.Size = new System.Drawing.Size(112, 20);
+            this.textBoxDescription.TabIndex = 4;
+            // 
+            // labelDescription
+            // 
+            this.labelDescription.AutoSize = true;
+            this.labelDescription.Location = new System.Drawing.Point(11, 86);
+            this.labelDescription.Name = "labelDescription";
+            this.labelDescription.Size = new System.Drawing.Size(60, 13);
+            this.labelDescription.TabIndex = 25;
+            this.labelDescription.Text = "Description";
+            // 
+            // comboBoxObject
+            // 
+            this.comboBoxObject.FormattingEnabled = true;
+            this.comboBoxObject.Items.AddRange(new object[] {
+            "Sidewalk",
+            "ADA Ramp",
+            "Severe Road Distress",
+            "Accident",
+            "Drainage",
+            "Other"});
+            this.comboBoxObject.Location = new System.Drawing.Point(89, 36);
+            this.comboBoxObject.Name = "comboBoxObject";
+            this.comboBoxObject.Size = new System.Drawing.Size(112, 21);
+            this.comboBoxObject.TabIndex = 2;
+            this.comboBoxObject.SelectedIndexChanged += new System.EventHandler(this.comboBoxObject_SelectedIndexChanged);
+            // 
+            // labelObject
+            // 
+            this.labelObject.AutoSize = true;
+            this.labelObject.Location = new System.Drawing.Point(11, 39);
+            this.labelObject.Name = "labelObject";
+            this.labelObject.Size = new System.Drawing.Size(38, 13);
+            this.labelObject.TabIndex = 1;
+            this.labelObject.Text = "Object";
+            // 
+            // labelSurveyDate
+            // 
+            this.labelSurveyDate.AutoSize = true;
+            this.labelSurveyDate.Location = new System.Drawing.Point(11, 18);
+            this.labelSurveyDate.Name = "labelSurveyDate";
+            this.labelSurveyDate.Size = new System.Drawing.Size(62, 13);
+            this.labelSurveyDate.TabIndex = 0;
+            this.labelSurveyDate.Text = "survey date";
             // 
             // toolStrip
             // 
@@ -71,7 +233,7 @@
             this.toolStripMoveLandmark});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(224, 25);
+            this.toolStrip.Size = new System.Drawing.Size(220, 25);
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -171,139 +333,6 @@
             this.toolStripMoveLandmark.Text = "toolStripMoveLandmark";
             this.toolStripMoveLandmark.ToolTipText = "Move Landmark";
             // 
-            // groupBoxType
-            // 
-            this.groupBoxType.Controls.Add(this.textBoxAddress);
-            this.groupBoxType.Controls.Add(this.label1);
-            this.groupBoxType.Controls.Add(this.pictureBoxPhoto);
-            this.groupBoxType.Controls.Add(this.labelPhoto);
-            this.groupBoxType.Controls.Add(this.buttonNextPhoto);
-            this.groupBoxType.Controls.Add(this.textBoxPhotoFile);
-            this.groupBoxType.Controls.Add(this.textBoxDescription);
-            this.groupBoxType.Controls.Add(this.labelDescription);
-            this.groupBoxType.Controls.Add(this.comboBoxObject);
-            this.groupBoxType.Controls.Add(this.labelObject);
-            this.groupBoxType.Controls.Add(this.labelSurveyDate);
-            this.groupBoxType.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBoxType.Location = new System.Drawing.Point(0, 25);
-            this.groupBoxType.Name = "groupBoxType";
-            this.groupBoxType.Size = new System.Drawing.Size(224, 209);
-            this.groupBoxType.TabIndex = 1;
-            this.groupBoxType.TabStop = false;
-            this.groupBoxType.Text = "Type";
-            // 
-            // textBoxAddress
-            // 
-            this.textBoxAddress.Location = new System.Drawing.Point(89, 61);
-            this.textBoxAddress.Name = "textBoxAddress";
-            this.textBoxAddress.Size = new System.Drawing.Size(112, 20);
-            this.textBoxAddress.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 63);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 13);
-            this.label1.TabIndex = 24;
-            this.label1.Text = "Address";
-            // 
-            // pictureBoxPhoto
-            // 
-            this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxPhoto.InitialImage = global::tams4a.Properties.Resources.nophoto;
-            this.pictureBoxPhoto.Location = new System.Drawing.Point(111, 132);
-            this.pictureBoxPhoto.Name = "pictureBoxPhoto";
-            this.pictureBoxPhoto.Size = new System.Drawing.Size(90, 64);
-            this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxPhoto.TabIndex = 23;
-            this.pictureBoxPhoto.TabStop = false;
-            // 
-            // labelPhoto
-            // 
-            this.labelPhoto.AutoSize = true;
-            this.labelPhoto.Location = new System.Drawing.Point(14, 108);
-            this.labelPhoto.Name = "labelPhoto";
-            this.labelPhoto.Size = new System.Drawing.Size(54, 13);
-            this.labelPhoto.TabIndex = 22;
-            this.labelPhoto.Text = "Photo File";
-            // 
-            // buttonNextPhoto
-            // 
-            this.buttonNextPhoto.Location = new System.Drawing.Point(89, 107);
-            this.buttonNextPhoto.Name = "buttonNextPhoto";
-            this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
-            this.buttonNextPhoto.TabIndex = 5;
-            this.buttonNextPhoto.Text = ">";
-            this.buttonNextPhoto.UseVisualStyleBackColor = true;
-            // 
-            // textBoxPhotoFile
-            // 
-            this.textBoxPhotoFile.Location = new System.Drawing.Point(111, 107);
-            this.textBoxPhotoFile.Name = "textBoxPhotoFile";
-            this.textBoxPhotoFile.Size = new System.Drawing.Size(90, 20);
-            this.textBoxPhotoFile.TabIndex = 6;
-            this.textBoxPhotoFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // textBoxDescription
-            // 
-            this.textBoxDescription.Location = new System.Drawing.Point(89, 84);
-            this.textBoxDescription.Name = "textBoxDescription";
-            this.textBoxDescription.Size = new System.Drawing.Size(112, 20);
-            this.textBoxDescription.TabIndex = 4;
-            // 
-            // labelDescription
-            // 
-            this.labelDescription.AutoSize = true;
-            this.labelDescription.Location = new System.Drawing.Point(11, 86);
-            this.labelDescription.Name = "labelDescription";
-            this.labelDescription.Size = new System.Drawing.Size(60, 13);
-            this.labelDescription.TabIndex = 25;
-            this.labelDescription.Text = "Description";
-            // 
-            // comboBoxObject
-            // 
-            this.comboBoxObject.FormattingEnabled = true;
-            this.comboBoxObject.Items.AddRange(new object[] {
-            "Sidewalk",
-            "ADA Ramp",
-            "Severe Road Distress",
-            "Accident",
-            "Drainage",
-            "Other"});
-            this.comboBoxObject.Location = new System.Drawing.Point(89, 36);
-            this.comboBoxObject.Name = "comboBoxObject";
-            this.comboBoxObject.Size = new System.Drawing.Size(112, 21);
-            this.comboBoxObject.TabIndex = 2;
-            // 
-            // labelObject
-            // 
-            this.labelObject.AutoSize = true;
-            this.labelObject.Location = new System.Drawing.Point(11, 39);
-            this.labelObject.Name = "labelObject";
-            this.labelObject.Size = new System.Drawing.Size(38, 13);
-            this.labelObject.TabIndex = 1;
-            this.labelObject.Text = "Object";
-            // 
-            // labelSurveyDate
-            // 
-            this.labelSurveyDate.AutoSize = true;
-            this.labelSurveyDate.Location = new System.Drawing.Point(11, 18);
-            this.labelSurveyDate.Name = "labelSurveyDate";
-            this.labelSurveyDate.Size = new System.Drawing.Size(62, 13);
-            this.labelSurveyDate.TabIndex = 0;
-            this.labelSurveyDate.Text = "survey date";
-            // 
-            // groupBoxProperties
-            // 
-            this.groupBoxProperties.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBoxProperties.Location = new System.Drawing.Point(0, 227);
-            this.groupBoxProperties.Name = "groupBoxProperties";
-            this.groupBoxProperties.Size = new System.Drawing.Size(224, 442);
-            this.groupBoxProperties.TabIndex = 2;
-            this.groupBoxProperties.TabStop = false;
-            this.groupBoxProperties.Text = "Properties";
-            // 
             // Panel_Other
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -312,12 +341,12 @@
             this.Controls.Add(this.groupBoxType);
             this.Controls.Add(this.toolStrip);
             this.Name = "Panel_Other";
-            this.Size = new System.Drawing.Size(224, 669);
-            this.toolStrip.ResumeLayout(false);
-            this.toolStrip.PerformLayout();
+            this.Size = new System.Drawing.Size(220, 740);
             this.groupBoxType.ResumeLayout(false);
             this.groupBoxType.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).EndInit();
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -349,5 +378,7 @@
         public System.Windows.Forms.ToolStripMenuItem setOtherDateToolStripMenuItem;
         public System.Windows.Forms.ToolStripDropDownButton toolStripDropDownAddObject;
         public System.Windows.Forms.ToolStripButton toolStripMoveLandmark;
+        public System.Windows.Forms.Button buttonPreviousPhoto;
+        public System.Windows.Forms.Button buttonChangeDirectory;
     }
 }

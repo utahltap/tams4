@@ -14,8 +14,9 @@ namespace tams4a.Classes
     {
         public new const string moduleVersion = "4.0.1.1";    // string that can be converted to System.Version
         public string roadColors = "RSL";
-        public Color labelColor = Color.Black;        
+        public Color labelColor = Color.Black;
 
+        private TamsProject project;
         private RoadReports reports;
         private RoadGraphs graphs;
         public RoadSymbols symbols;
@@ -53,8 +54,8 @@ namespace tams4a.Classes
             notes = "";
             reports = new RoadReports(theProject, this);
             graphs = new RoadGraphs(theProject, this, distressAsphalt, distressGravel, distressConcrete);
-            symbols = new RoadSymbols(theProject, this); 
-
+            symbols = new RoadSymbols(theProject, this);
+            project = theProject;
             boundButtons[1].Click += reports.generalReport;
             boundButtons[2].Click += reports.potholeReport;
             boundButtons[3].Click += openBudgetTool;
@@ -148,7 +149,7 @@ namespace tams4a.Classes
             Project.map.Layers.Move(Layer, 0);
 
             ControlsPage.Controls.Remove(ControlsPage.Controls["ROADADD"]);
-            Panel_Road roadPanel = new Panel_Road();
+            Panel_Road roadPanel = new Panel_Road(project);
             roadPanel.Name = "ROADCONTROLS";
             roadPanel.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(roadPanel);
@@ -258,6 +259,7 @@ namespace tams4a.Classes
             {
                 selectionLayer.ZoomToSelectedFeatures();
                 Project.map.ZoomOut();
+                Project.map.Refresh();
             }
 
             bool mulitple = false;
@@ -520,7 +522,8 @@ namespace tams4a.Classes
                 roadControls.textBoxRoadName.Enabled = false;
                 roadControls.textBoxRoadName.Text = "";
                 roadControls.labelSurveyDate.Visible = false;
-            } else
+            }
+            else
             {
                 roadControls.textBoxPhotoFile.Enabled = true;
                 roadControls.buttonNextPhoto.Enabled = true;
@@ -646,9 +649,9 @@ namespace tams4a.Classes
                 }
             }
             resetSaveCondition();
-
+            resetRoadDisplay();
+            disableRoadDisplay();
             Properties.Settings.Default.Save();
-
             selectionLayer.ClearSelection();
             symbols.setSymbolizer();
             Project.map.Invalidate();
@@ -675,10 +678,10 @@ namespace tams4a.Classes
                 roadControls.distress6.Value > -1 ||
                 roadControls.distress7.Value > -1 ||
                 roadControls.distress8.Value > -1 ||
-                roadControls.distress9.Value > -1
+                roadControls.distress9.Value > -1 ||
+                roadControls.labelName.Text == "Multiple"
                 )
             {
-
                 DialogResult result = MessageBox.Show("Changing road surface will delete all distress data for the selected roads. Are you sure you want to do this?" +
                 "\n\n(Note: Changes are not permanent until saved)", "Warning: Changing Road Surface", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.No)
@@ -818,7 +821,8 @@ namespace tams4a.Classes
         private void clickPhotoBox(object sender, EventArgs e)
         { 
             Panel_Road roadControls = getRoadControls();
-            enlargePicture(roadControls.textBoxPhotoFile.Text);
+            string subPath = Database.GetDataByQuery(Project.conn, "SELECT road_photos FROM photo_paths;").Rows[0][0].ToString();
+            enlargePicture(roadControls.textBoxPhotoFile.Text, subPath);
         }
 
         private void automaticTreatmentSuggestion(object sender, EventArgs e)

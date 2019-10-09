@@ -7,7 +7,6 @@ using tams4a.Forms;
 using System.Windows.Forms;
 using System.Data;
 using DotSpatial.Symbology;
-using System.IO;
 using System.Threading;
 
 namespace tams4a.Classes
@@ -632,9 +631,12 @@ namespace tams4a.Classes
             setSymbolizer();
         }
 
-        protected void enlargePicture(string source, string subPath = @"\Photos\") {
+        protected void enlargePicture(string source, string subPath) {
             FormPicture largePic = new FormPicture();
-            updatePhotoPreview(largePic.pictureRoad, source, subPath);
+            if (!string.IsNullOrEmpty(source))
+                largePic.pictureBox.ImageLocation = Project.projectFolderPath + "\\" + subPath + "\\" + source;
+            else
+                largePic.pictureBox.Image = Properties.Resources.nophoto;
             largePic.Show();
         }
 
@@ -642,22 +644,9 @@ namespace tams4a.Classes
         /// Sets the picture of the provided picture box.
         /// </summary>
         /// <param name="preview"></param>
-        protected void updatePhotoPreview(PictureBox preview, string filePath, string subPath = @"\Photos\")
+        public void updatePhotoPreview(PictureBox preview, string filePath, string subPath = @"\Photos\")
         {
-            if (!string.IsNullOrEmpty(filePath))
-            {
-                string imageLocation = Project.projectFolderPath + @"\Photos\" + filePath;
-                if (File.Exists(imageLocation))
-                {
-                    preview.ImageLocation = imageLocation;
-                }
-                else
-                {
-                    Log.Warning("Missing image file: " + imageLocation);
-                    preview.Image = Properties.Resources.error;
-                }
-            }
-            else
+            if (string.IsNullOrEmpty(filePath))
             {
                 preview.Image = Properties.Resources.nophoto;
             }

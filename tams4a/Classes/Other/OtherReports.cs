@@ -82,7 +82,9 @@ namespace tams4a.Classes.Other
                 { "Faults", "property1" },
                 { "Breaks", "property2" },
                 { "Recommendation", "property3" },
-                { "Notes", "notes" }
+                { "Surface", "property4" },
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Sidewalks");
         }
@@ -97,7 +99,8 @@ namespace tams4a.Classes.Other
                 { "Condition", "property1" },
                 { "Compliant", "property2" },
                 { "Has Tiles", "property3" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "ADA Ramps");
         }
@@ -111,7 +114,8 @@ namespace tams4a.Classes.Other
                 { "Description", "description" },
                 { "Distress", "property1" },
                 { "Recommendation", "property2" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Severe Road Distresses");
         }
@@ -125,7 +129,8 @@ namespace tams4a.Classes.Other
                 { "Description", "description" },
                 { "Type", "property1" },
                 { "Recommendation", "property2" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Drainage Problems");
         }
@@ -140,7 +145,8 @@ namespace tams4a.Classes.Other
                 { "Date", "property1" },
                 { "Type", "property2" },
                 { "Severity", "property3" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Accident");
         }
@@ -154,18 +160,22 @@ namespace tams4a.Classes.Other
                 { "Description", "description" },
                 { "Property 1", "property1" },
                 { "Property 2", "property2" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Objects");
         }
 
-        public void RoadsWithSidewalks(object sender, EventArgs e, string query = "SELECT * FROM road_sidewalks;")
+        public void RoadsWithSidewalks(object sender, EventArgs e, string query = "With uniqueRoad AS (SELECT * FROM road_sidewalks INNER JOIN road ON road_sidewalks.road_ID = road.TAMSID) SELECT DISTINCT road_ID, installed, comments, name, from_address, to_address FROM uniqueRoad;")
         {
             Dictionary<string, string> map = new Dictionary<string, string>()
             {
                 { "ID", "road_ID" },
                 { "Sidewalks", "installed" },
-                { "Comments", "comments" }
+                { "Comments", "comments" },
+                { "Name", "name" },
+                { "From Address", "from_address" },
+                { "To Address", "to_address" }
             };
             createReport(query, map, "ID", "Roads with Sidewalks");
         }
@@ -181,7 +191,8 @@ namespace tams4a.Classes.Other
                 { "Property 1", "property1" },
                 { "Property 2", "property2" },
                 { "Property 3", "property3" },
-                { "Notes", "notes" }
+                { "Notes", "notes" },
+                { "Photo", "photo" }
             };
             createReport(query, map, "ID", "Roads with Sidewalks");
         }

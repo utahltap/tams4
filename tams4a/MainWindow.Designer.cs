@@ -76,6 +76,7 @@ namespace tams4a
             this.accidentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allOthersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -118,7 +119,6 @@ namespace tams4a
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSnapShot = new System.Windows.Forms.ToolStripButton();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.customReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.sidePanel.SuspendLayout();
@@ -472,6 +472,13 @@ namespace tams4a
             this.customOutputToolStripMenuItem.Text = "Custom Output";
             this.customOutputToolStripMenuItem.Visible = false;
             // 
+            // customReportToolStripMenuItem
+            // 
+            this.customReportToolStripMenuItem.Name = "customReportToolStripMenuItem";
+            this.customReportToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.customReportToolStripMenuItem.Text = "Custom";
+            this.customReportToolStripMenuItem.Click += new System.EventHandler(this.customReportToolStripMenuItem_Click);
+            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -548,12 +555,13 @@ namespace tams4a
             | System.Windows.Forms.AnchorStyles.Left)));
             this.sidePanel.AutoScroll = true;
             this.sidePanel.AutoScrollMinSize = new System.Drawing.Size(0, 771);
+            this.sidePanel.AutoSize = true;
             this.sidePanel.Controls.Add(this.tabControlControls);
             this.sidePanel.Location = new System.Drawing.Point(0, 35);
             this.sidePanel.Margin = new System.Windows.Forms.Padding(5);
             this.sidePanel.MaximumSize = new System.Drawing.Size(230, 2410);
             this.sidePanel.Name = "sidePanel";
-            this.sidePanel.Size = new System.Drawing.Size(230, 771);
+            this.sidePanel.Size = new System.Drawing.Size(230, 777);
             this.sidePanel.TabIndex = 0;
             // 
             // tabControlControls
@@ -564,7 +572,7 @@ namespace tams4a
             this.tabControlControls.MaximumSize = new System.Drawing.Size(226, 2410);
             this.tabControlControls.Name = "tabControlControls";
             this.tabControlControls.SelectedIndex = 0;
-            this.tabControlControls.Size = new System.Drawing.Size(220, 771);
+            this.tabControlControls.Size = new System.Drawing.Size(213, 777);
             this.tabControlControls.TabIndex = 0;
             this.tabControlControls.SelectedIndexChanged += new System.EventHandler(this.tabControlControls_SelectedIndexChanged);
             // 
@@ -573,7 +581,7 @@ namespace tams4a
             this.tabPage1.AutoScroll = true;
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(212, 745);
+            this.tabPage1.Size = new System.Drawing.Size(205, 751);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1003,13 +1011,6 @@ namespace tams4a
             this.toolStripButtonSnapShot.Text = "toolStripButtonSnapShot";
             this.toolStripButtonSnapShot.ToolTipText = "Take Snap Shot of the Map";
             this.toolStripButtonSnapShot.Click += new System.EventHandler(this.toolStripButtonSnapShot_Click);
-            // 
-            // customReportToolStripMenuItem
-            // 
-            this.customReportToolStripMenuItem.Name = "customReportToolStripMenuItem";
-            this.customReportToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.customReportToolStripMenuItem.Text = "Custom";
-            this.customReportToolStripMenuItem.Click += new System.EventHandler(this.customReportToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
