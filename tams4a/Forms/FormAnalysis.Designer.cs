@@ -30,9 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelAnalysisFilter = new System.Windows.Forms.Panel();
+            this.buttonRemoveRow = new System.Windows.Forms.Button();
+            this.panelRows = new System.Windows.Forms.Panel();
             this.buttonAddRow = new System.Windows.Forms.Button();
             this.labelTreatment = new System.Windows.Forms.Label();
-            this.labelYears = new System.Windows.Forms.Label();
             this.labelFunctionalClassification = new System.Windows.Forms.Label();
             this.labelToRSL = new System.Windows.Forms.Label();
             this.labelFromRSL = new System.Windows.Forms.Label();
@@ -42,6 +43,8 @@
             this.textBoxBudget = new System.Windows.Forms.TextBox();
             this.labelBudget = new System.Windows.Forms.Label();
             this.panelCalculator = new System.Windows.Forms.Panel();
+            this.comboBoxResultsRow = new System.Windows.Forms.ComboBox();
+            this.labelResultsRow = new System.Windows.Forms.Label();
             this.tableBudgetControl = new System.Windows.Forms.TableLayoutPanel();
             this.labelAreaCovered = new System.Windows.Forms.Label();
             this.labelRSLx = new System.Windows.Forms.Label();
@@ -52,7 +55,7 @@
             this.labelArea = new System.Windows.Forms.Label();
             this.buttonTreatmentCosts = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.panelRows = new System.Windows.Forms.Panel();
+            this.buttonFullRowData = new System.Windows.Forms.Button();
             this.panelAnalysisFilter.SuspendLayout();
             this.panelCalculator.SuspendLayout();
             this.tableBudgetControl.SuspendLayout();
@@ -61,22 +64,41 @@
             // panelAnalysisFilter
             // 
             this.panelAnalysisFilter.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panelAnalysisFilter.Controls.Add(this.buttonRemoveRow);
             this.panelAnalysisFilter.Controls.Add(this.panelRows);
             this.panelAnalysisFilter.Controls.Add(this.buttonAddRow);
             this.panelAnalysisFilter.Controls.Add(this.labelTreatment);
-            this.panelAnalysisFilter.Controls.Add(this.labelYears);
             this.panelAnalysisFilter.Controls.Add(this.labelFunctionalClassification);
             this.panelAnalysisFilter.Controls.Add(this.labelToRSL);
             this.panelAnalysisFilter.Controls.Add(this.labelFromRSL);
             this.panelAnalysisFilter.Location = new System.Drawing.Point(12, 60);
             this.panelAnalysisFilter.Name = "panelAnalysisFilter";
-            this.panelAnalysisFilter.Size = new System.Drawing.Size(601, 515);
+            this.panelAnalysisFilter.Size = new System.Drawing.Size(552, 690);
             this.panelAnalysisFilter.TabIndex = 21;
+            // 
+            // buttonRemoveRow
+            // 
+            this.buttonRemoveRow.Enabled = false;
+            this.buttonRemoveRow.Image = global::tams4a.Properties.Resources.baseremove;
+            this.buttonRemoveRow.Location = new System.Drawing.Point(494, 8);
+            this.buttonRemoveRow.Name = "buttonRemoveRow";
+            this.buttonRemoveRow.Size = new System.Drawing.Size(23, 23);
+            this.buttonRemoveRow.TabIndex = 31;
+            this.toolTip.SetToolTip(this.buttonRemoveRow, "Remove Row");
+            this.buttonRemoveRow.UseVisualStyleBackColor = true;
+            this.buttonRemoveRow.Click += new System.EventHandler(this.buttonDeleteRow_Click);
+            // 
+            // panelRows
+            // 
+            this.panelRows.Location = new System.Drawing.Point(3, 37);
+            this.panelRows.Name = "panelRows";
+            this.panelRows.Size = new System.Drawing.Size(546, 653);
+            this.panelRows.TabIndex = 30;
             // 
             // buttonAddRow
             // 
             this.buttonAddRow.Image = global::tams4a.Properties.Resources.baseadd;
-            this.buttonAddRow.Location = new System.Drawing.Point(564, 8);
+            this.buttonAddRow.Location = new System.Drawing.Point(520, 8);
             this.buttonAddRow.Name = "buttonAddRow";
             this.buttonAddRow.Size = new System.Drawing.Size(23, 23);
             this.buttonAddRow.TabIndex = 29;
@@ -87,25 +109,16 @@
             // labelTreatment
             // 
             this.labelTreatment.AutoSize = true;
-            this.labelTreatment.Location = new System.Drawing.Point(336, 13);
+            this.labelTreatment.Location = new System.Drawing.Point(292, 13);
             this.labelTreatment.Name = "labelTreatment";
             this.labelTreatment.Size = new System.Drawing.Size(55, 13);
             this.labelTreatment.TabIndex = 6;
             this.labelTreatment.Text = "Treatment";
             // 
-            // labelYears
-            // 
-            this.labelYears.AutoSize = true;
-            this.labelYears.Location = new System.Drawing.Point(278, 13);
-            this.labelYears.Name = "labelYears";
-            this.labelYears.Size = new System.Drawing.Size(40, 13);
-            this.labelYears.TabIndex = 5;
-            this.labelYears.Text = "Years+";
-            // 
             // labelFunctionalClassification
             // 
             this.labelFunctionalClassification.AutoSize = true;
-            this.labelFunctionalClassification.Location = new System.Drawing.Point(135, 13);
+            this.labelFunctionalClassification.Location = new System.Drawing.Point(149, 13);
             this.labelFunctionalClassification.Name = "labelFunctionalClassification";
             this.labelFunctionalClassification.Size = new System.Drawing.Size(120, 13);
             this.labelFunctionalClassification.TabIndex = 4;
@@ -114,7 +127,7 @@
             // labelToRSL
             // 
             this.labelToRSL.AutoSize = true;
-            this.labelToRSL.Location = new System.Drawing.Point(77, 13);
+            this.labelToRSL.Location = new System.Drawing.Point(91, 13);
             this.labelToRSL.Name = "labelToRSL";
             this.labelToRSL.Size = new System.Drawing.Size(44, 13);
             this.labelToRSL.TabIndex = 3;
@@ -123,7 +136,7 @@
             // labelFromRSL
             // 
             this.labelFromRSL.AutoSize = true;
-            this.labelFromRSL.Location = new System.Drawing.Point(14, 13);
+            this.labelFromRSL.Location = new System.Drawing.Point(28, 13);
             this.labelFromRSL.Name = "labelFromRSL";
             this.labelFromRSL.Size = new System.Drawing.Size(54, 13);
             this.labelFromRSL.TabIndex = 2;
@@ -157,7 +170,7 @@
             // 
             // textBoxBudget
             // 
-            this.textBoxBudget.Location = new System.Drawing.Point(619, 34);
+            this.textBoxBudget.Location = new System.Drawing.Point(570, 34);
             this.textBoxBudget.Name = "textBoxBudget";
             this.textBoxBudget.Size = new System.Drawing.Size(144, 20);
             this.textBoxBudget.TabIndex = 25;
@@ -169,7 +182,7 @@
             // labelBudget
             // 
             this.labelBudget.AutoSize = true;
-            this.labelBudget.Location = new System.Drawing.Point(616, 18);
+            this.labelBudget.Location = new System.Drawing.Point(567, 18);
             this.labelBudget.Name = "labelBudget";
             this.labelBudget.Size = new System.Drawing.Size(68, 13);
             this.labelBudget.TabIndex = 26;
@@ -178,6 +191,9 @@
             // panelCalculator
             // 
             this.panelCalculator.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panelCalculator.Controls.Add(this.buttonFullRowData);
+            this.panelCalculator.Controls.Add(this.comboBoxResultsRow);
+            this.panelCalculator.Controls.Add(this.labelResultsRow);
             this.panelCalculator.Controls.Add(this.tableBudgetControl);
             this.panelCalculator.Controls.Add(this.labelOverBudget);
             this.panelCalculator.Controls.Add(this.labelTotalCost);
@@ -185,10 +201,31 @@
             this.panelCalculator.Controls.Add(this.textBoxTotalArea);
             this.panelCalculator.Controls.Add(this.buttonCalculate);
             this.panelCalculator.Controls.Add(this.textBoxTotalCost);
-            this.panelCalculator.Location = new System.Drawing.Point(619, 60);
+            this.panelCalculator.Location = new System.Drawing.Point(570, 60);
             this.panelCalculator.Name = "panelCalculator";
-            this.panelCalculator.Size = new System.Drawing.Size(331, 515);
+            this.panelCalculator.Size = new System.Drawing.Size(331, 690);
             this.panelCalculator.TabIndex = 27;
+            // 
+            // comboBoxResultsRow
+            // 
+            this.comboBoxResultsRow.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxResultsRow.FormattingEnabled = true;
+            this.comboBoxResultsRow.Items.AddRange(new object[] {
+            "1"});
+            this.comboBoxResultsRow.Location = new System.Drawing.Point(155, 90);
+            this.comboBoxResultsRow.Name = "comboBoxResultsRow";
+            this.comboBoxResultsRow.Size = new System.Drawing.Size(36, 21);
+            this.comboBoxResultsRow.TabIndex = 34;
+            this.comboBoxResultsRow.SelectedIndexChanged += new System.EventHandler(this.comboBoxResultsRow_SelectedIndexChanged);
+            // 
+            // labelResultsRow
+            // 
+            this.labelResultsRow.AutoSize = true;
+            this.labelResultsRow.Location = new System.Drawing.Point(11, 93);
+            this.labelResultsRow.Name = "labelResultsRow";
+            this.labelResultsRow.Size = new System.Drawing.Size(124, 13);
+            this.labelResultsRow.TabIndex = 33;
+            this.labelResultsRow.Text = "Showing results from row";
             // 
             // tableBudgetControl
             // 
@@ -202,8 +239,8 @@
             this.tableBudgetControl.Controls.Add(this.labelRSLx, 0, 0);
             this.tableBudgetControl.Controls.Add(this.labelBudgetUsed, 1, 0);
             this.tableBudgetControl.Controls.Add(this.labelPercentConvered, 3, 0);
-            this.tableBudgetControl.Location = new System.Drawing.Point(14, 95);
-            this.tableBudgetControl.MaximumSize = new System.Drawing.Size(300, 415);
+            this.tableBudgetControl.Location = new System.Drawing.Point(14, 119);
+            this.tableBudgetControl.MaximumSize = new System.Drawing.Size(300, 565);
             this.tableBudgetControl.Name = "tableBudgetControl";
             this.tableBudgetControl.RowCount = 1;
             this.tableBudgetControl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -263,18 +300,18 @@
             this.labelTotalCost.AutoSize = true;
             this.labelTotalCost.Location = new System.Drawing.Point(11, 40);
             this.labelTotalCost.Name = "labelTotalCost";
-            this.labelTotalCost.Size = new System.Drawing.Size(129, 13);
+            this.labelTotalCost.Size = new System.Drawing.Size(107, 13);
             this.labelTotalCost.TabIndex = 26;
-            this.labelTotalCost.Text = "Estimated treatement cost";
+            this.labelTotalCost.Text = "Total treatement cost";
             // 
             // labelArea
             // 
             this.labelArea.AutoSize = true;
             this.labelArea.Location = new System.Drawing.Point(11, 66);
             this.labelArea.Name = "labelArea";
-            this.labelArea.Size = new System.Drawing.Size(113, 13);
+            this.labelArea.Size = new System.Drawing.Size(91, 13);
             this.labelArea.TabIndex = 25;
-            this.labelArea.Text = "Estimated area treated";
+            this.labelArea.Text = "Total area treated";
             // 
             // buttonTreatmentCosts
             // 
@@ -286,18 +323,22 @@
             this.buttonTreatmentCosts.UseVisualStyleBackColor = true;
             this.buttonTreatmentCosts.Click += new System.EventHandler(this.buttonTreatmentCosts_Click);
             // 
-            // panelRows
+            // buttonFullRowData
             // 
-            this.panelRows.Location = new System.Drawing.Point(6, 37);
-            this.panelRows.Name = "panelRows";
-            this.panelRows.Size = new System.Drawing.Size(595, 475);
-            this.panelRows.TabIndex = 30;
+            this.buttonFullRowData.Enabled = false;
+            this.buttonFullRowData.Location = new System.Drawing.Point(198, 90);
+            this.buttonFullRowData.Name = "buttonFullRowData";
+            this.buttonFullRowData.Size = new System.Drawing.Size(116, 23);
+            this.buttonFullRowData.TabIndex = 35;
+            this.buttonFullRowData.Text = "Full Report for Row";
+            this.buttonFullRowData.UseVisualStyleBackColor = true;
+            this.buttonFullRowData.Click += new System.EventHandler(this.buttonFullRowData_Click);
             // 
             // FormAnalysis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(962, 587);
+            this.ClientSize = new System.Drawing.Size(913, 762);
             this.Controls.Add(this.panelCalculator);
             this.Controls.Add(this.buttonTreatmentCosts);
             this.Controls.Add(this.labelBudget);
@@ -336,11 +377,14 @@
         private System.Windows.Forms.Label labelPercentConvered;
         private System.Windows.Forms.Button buttonAddRow;
         private System.Windows.Forms.Label labelTreatment;
-        private System.Windows.Forms.Label labelYears;
         private System.Windows.Forms.Label labelFunctionalClassification;
         private System.Windows.Forms.Label labelToRSL;
         private System.Windows.Forms.Label labelFromRSL;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Panel panelRows;
+        private System.Windows.Forms.Button buttonRemoveRow;
+        private System.Windows.Forms.ComboBox comboBoxResultsRow;
+        private System.Windows.Forms.Label labelResultsRow;
+        private System.Windows.Forms.Button buttonFullRowData;
     }
 }
