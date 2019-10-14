@@ -13,6 +13,7 @@ namespace tams4a.Forms
         public ComboBox comboBoxFromRSL = new ComboBox();
         public Label labelRowNumber = new Label();
         public Dictionary<int, double> rslArea = new Dictionary<int, double>();
+        public bool tableCreated = false;
 
         public AnalysisRowPanel(int location, string rowNumber)
         {
@@ -162,9 +163,9 @@ namespace tams4a.Forms
             }
         }
 
-        internal void setRSLArea(int key, double value)
+        internal void addRSLArea(int key, double value)
         {
-            rslArea[key] = value;
+            rslArea[key] += value;
         }
 
         internal Dictionary<int, double> getRSLAreas()
