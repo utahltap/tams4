@@ -305,6 +305,9 @@
     <Compile Include="Forms\AnalysisRowPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\BudgetControlTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\FormAnalysis.cs">
       <SubType>Form</SubType>
     </Compile>

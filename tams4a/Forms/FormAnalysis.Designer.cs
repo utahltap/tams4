@@ -43,22 +43,16 @@
             this.textBoxBudget = new System.Windows.Forms.TextBox();
             this.labelBudget = new System.Windows.Forms.Label();
             this.panelCalculator = new System.Windows.Forms.Panel();
+            this.buttonFullRowData = new System.Windows.Forms.Button();
             this.comboBoxResultsRow = new System.Windows.Forms.ComboBox();
             this.labelResultsRow = new System.Windows.Forms.Label();
-            this.tableBudgetControl = new System.Windows.Forms.TableLayoutPanel();
-            this.labelAreaCovered = new System.Windows.Forms.Label();
-            this.labelRSLx = new System.Windows.Forms.Label();
-            this.labelBudgetUsed = new System.Windows.Forms.Label();
-            this.labelPercentConvered = new System.Windows.Forms.Label();
             this.labelOverBudget = new System.Windows.Forms.Label();
             this.labelTotalCost = new System.Windows.Forms.Label();
             this.labelArea = new System.Windows.Forms.Label();
             this.buttonTreatmentCosts = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.buttonFullRowData = new System.Windows.Forms.Button();
             this.panelAnalysisFilter.SuspendLayout();
             this.panelCalculator.SuspendLayout();
-            this.tableBudgetControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelAnalysisFilter
@@ -194,7 +188,6 @@
             this.panelCalculator.Controls.Add(this.buttonFullRowData);
             this.panelCalculator.Controls.Add(this.comboBoxResultsRow);
             this.panelCalculator.Controls.Add(this.labelResultsRow);
-            this.panelCalculator.Controls.Add(this.tableBudgetControl);
             this.panelCalculator.Controls.Add(this.labelOverBudget);
             this.panelCalculator.Controls.Add(this.labelTotalCost);
             this.panelCalculator.Controls.Add(this.labelArea);
@@ -205,6 +198,17 @@
             this.panelCalculator.Name = "panelCalculator";
             this.panelCalculator.Size = new System.Drawing.Size(331, 690);
             this.panelCalculator.TabIndex = 27;
+            // 
+            // buttonFullRowData
+            // 
+            this.buttonFullRowData.Enabled = false;
+            this.buttonFullRowData.Location = new System.Drawing.Point(198, 90);
+            this.buttonFullRowData.Name = "buttonFullRowData";
+            this.buttonFullRowData.Size = new System.Drawing.Size(116, 23);
+            this.buttonFullRowData.TabIndex = 35;
+            this.buttonFullRowData.Text = "Full Report for Row";
+            this.buttonFullRowData.UseVisualStyleBackColor = true;
+            this.buttonFullRowData.Click += new System.EventHandler(this.buttonFullRowData_Click);
             // 
             // comboBoxResultsRow
             // 
@@ -226,63 +230,6 @@
             this.labelResultsRow.Size = new System.Drawing.Size(124, 13);
             this.labelResultsRow.TabIndex = 33;
             this.labelResultsRow.Text = "Showing results from row";
-            // 
-            // tableBudgetControl
-            // 
-            this.tableBudgetControl.AutoScroll = true;
-            this.tableBudgetControl.ColumnCount = 4;
-            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
-            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
-            this.tableBudgetControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableBudgetControl.Controls.Add(this.labelAreaCovered, 2, 0);
-            this.tableBudgetControl.Controls.Add(this.labelRSLx, 0, 0);
-            this.tableBudgetControl.Controls.Add(this.labelBudgetUsed, 1, 0);
-            this.tableBudgetControl.Controls.Add(this.labelPercentConvered, 3, 0);
-            this.tableBudgetControl.Location = new System.Drawing.Point(14, 119);
-            this.tableBudgetControl.MaximumSize = new System.Drawing.Size(300, 565);
-            this.tableBudgetControl.Name = "tableBudgetControl";
-            this.tableBudgetControl.RowCount = 1;
-            this.tableBudgetControl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableBudgetControl.Size = new System.Drawing.Size(300, 15);
-            this.tableBudgetControl.TabIndex = 32;
-            this.tableBudgetControl.Visible = false;
-            // 
-            // labelAreaCovered
-            // 
-            this.labelAreaCovered.AutoSize = true;
-            this.labelAreaCovered.Location = new System.Drawing.Point(138, 0);
-            this.labelAreaCovered.Name = "labelAreaCovered";
-            this.labelAreaCovered.Size = new System.Drawing.Size(75, 13);
-            this.labelAreaCovered.TabIndex = 32;
-            this.labelAreaCovered.Text = "Area  Covered";
-            // 
-            // labelRSLx
-            // 
-            this.labelRSLx.AutoSize = true;
-            this.labelRSLx.Location = new System.Drawing.Point(3, 0);
-            this.labelRSLx.Name = "labelRSLx";
-            this.labelRSLx.Size = new System.Drawing.Size(28, 13);
-            this.labelRSLx.TabIndex = 28;
-            this.labelRSLx.Text = "RSL";
-            // 
-            // labelBudgetUsed
-            // 
-            this.labelBudgetUsed.AutoSize = true;
-            this.labelBudgetUsed.Location = new System.Drawing.Point(43, 0);
-            this.labelBudgetUsed.Name = "labelBudgetUsed";
-            this.labelBudgetUsed.Size = new System.Drawing.Size(69, 13);
-            this.labelBudgetUsed.TabIndex = 31;
-            this.labelBudgetUsed.Text = "Budget Used";
-            // 
-            // labelPercentConvered
-            // 
-            this.labelPercentConvered.AutoSize = true;
-            this.labelPercentConvered.Location = new System.Drawing.Point(233, 0);
-            this.labelPercentConvered.Name = "labelPercentConvered";
-            this.labelPercentConvered.Size = new System.Drawing.Size(58, 13);
-            this.labelPercentConvered.TabIndex = 33;
-            this.labelPercentConvered.Text = "% Covered";
             // 
             // labelOverBudget
             // 
@@ -323,17 +270,6 @@
             this.buttonTreatmentCosts.UseVisualStyleBackColor = true;
             this.buttonTreatmentCosts.Click += new System.EventHandler(this.buttonTreatmentCosts_Click);
             // 
-            // buttonFullRowData
-            // 
-            this.buttonFullRowData.Enabled = false;
-            this.buttonFullRowData.Location = new System.Drawing.Point(198, 90);
-            this.buttonFullRowData.Name = "buttonFullRowData";
-            this.buttonFullRowData.Size = new System.Drawing.Size(116, 23);
-            this.buttonFullRowData.TabIndex = 35;
-            this.buttonFullRowData.Text = "Full Report for Row";
-            this.buttonFullRowData.UseVisualStyleBackColor = true;
-            this.buttonFullRowData.Click += new System.EventHandler(this.buttonFullRowData_Click);
-            // 
             // FormAnalysis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,8 +287,6 @@
             this.panelAnalysisFilter.PerformLayout();
             this.panelCalculator.ResumeLayout(false);
             this.panelCalculator.PerformLayout();
-            this.tableBudgetControl.ResumeLayout(false);
-            this.tableBudgetControl.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -361,20 +295,15 @@
         #endregion
         private System.Windows.Forms.Panel panelAnalysisFilter;
         private System.Windows.Forms.Button buttonCalculate;
-        private System.Windows.Forms.TextBox textBoxTotalArea;
-        private System.Windows.Forms.TextBox textBoxTotalCost;
+        public System.Windows.Forms.TextBox textBoxTotalArea;
+        public System.Windows.Forms.TextBox textBoxTotalCost;
         private System.Windows.Forms.TextBox textBoxBudget;
         private System.Windows.Forms.Label labelBudget;
         private System.Windows.Forms.Panel panelCalculator;
         private System.Windows.Forms.Label labelTotalCost;
         private System.Windows.Forms.Label labelArea;
-        private System.Windows.Forms.Label labelOverBudget;
+        public System.Windows.Forms.Label labelOverBudget;
         private System.Windows.Forms.Button buttonTreatmentCosts;
-        private System.Windows.Forms.TableLayoutPanel tableBudgetControl;
-        private System.Windows.Forms.Label labelAreaCovered;
-        private System.Windows.Forms.Label labelRSLx;
-        private System.Windows.Forms.Label labelBudgetUsed;
-        private System.Windows.Forms.Label labelPercentConvered;
         private System.Windows.Forms.Button buttonAddRow;
         private System.Windows.Forms.Label labelTreatment;
         private System.Windows.Forms.Label labelFunctionalClassification;

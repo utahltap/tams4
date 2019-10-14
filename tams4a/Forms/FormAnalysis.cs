@@ -14,12 +14,12 @@ namespace tams4a.Forms
         private List<ComboBox> comboBoxFunctionalClassifications = new List<ComboBox>();
         private List<ComboBox> comboBoxTreatments = new List<ComboBox>();
         private Dictionary<int, string> rowQueries = new Dictionary<int, string>();
-        private Dictionary<NumericUpDown, decimal> costBreakdown = new Dictionary<NumericUpDown, decimal>();
-        private Dictionary<NumericUpDown, decimal> areaBreakdown = new Dictionary<NumericUpDown, decimal>();
+        private Dictionary<int, BudgetControlTable> budgetControlTables = new Dictionary<int, BudgetControlTable>();
         private TamsProject Project;
         private int numberOfRows = 1;
         private double estBudget = 0.00;
-        private bool beingHandled = false;
+        public double totalArea = 0.00;
+        public double totalCost = 0.00;
         public Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
         private ModuleRoads moduleRoads;
 
@@ -58,15 +58,6 @@ namespace tams4a.Forms
 
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
-            clearBudgetControlTable();
-            costBreakdown.Clear();
-            areaBreakdown.Clear();
-            comboBoxResultsRow.SelectedIndex = 0;
-            buttonFullRowData.Enabled = true;
-
-            double totalArea = 0;
-            double totalCost = 0;
-
             int i = 0;
             foreach (AnalysisRowPanel rowPanel in panelRows.Controls)
             {
@@ -74,21 +65,18 @@ namespace tams4a.Forms
                 string query = "SELECT width, length, rsl FROM road WHERE rsl >= " + rowPanel.getFromRSL() + " AND rsl <= " + rowPanel.getToRSL();
                 if (!string.IsNullOrEmpty(rowPanel.getFunctionalClassification()))
                 {
-                    rowQueries[i] += " AND type = '" + rowPanel.getFunctionalClassification() + "';";
-                    query += " AND type = '" + rowPanel.getFunctionalClassification() + "';";
+                    rowQueries[i] += " AND type = '" + rowPanel.getFunctionalClassification() + "'";
+                    query += " AND type = '" + rowPanel.getFunctionalClassification() + "'";
                 }
-                else
-                {
-                    rowQueries[i] += ";";
-                    query += ";";
-                }
+                rowQueries[i] += " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC;";
+                query += " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC;";
 
                 DataTable rslAreas = Database.GetDataByQuery(Project.conn, rowQueries[i]);
                 rowPanel.initRSLAreas();
                 foreach (DataRow row in rslAreas.Rows)
                 {
                     double area = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
-                    rowPanel.setRSLArea(Util.ToInt(row["rsl"].ToString()), area);
+                    rowPanel.addRSLArea(Util.ToInt(row["rsl"].ToString()), area);
                     totalArea += area;
                     totalCost += pricePerYard[rowPanel.getTreatment()] * (area / 9);
                 }
@@ -112,164 +100,22 @@ namespace tams4a.Forms
 
             AnalysisRowPanel currentRow = (AnalysisRowPanel)panelRows.Controls[0];
             Dictionary<int, double> rslArea = currentRow.getRSLAreas();
-            renderSelectedRowResults(rslArea, currentRow, sender, e);
+            comboBoxResultsRow.SelectedIndex = 0;
+            buttonFullRowData.Enabled = true;
         }
 
         private void comboBoxResultsRow_SelectedIndexChanged(object sender, EventArgs e)
         {
-            clearBudgetControlTable();
-            costBreakdown.Clear();
-            areaBreakdown.Clear();
-            AnalysisRowPanel currentRow = (AnalysisRowPanel)panelRows.Controls[comboBoxResultsRow.SelectedIndex];
+            if(panelCalculator.Controls.Count == 10) panelCalculator.Controls.RemoveAt(9);
+            int selectedRow = comboBoxResultsRow.SelectedIndex;
+            AnalysisRowPanel currentRow = (AnalysisRowPanel)panelRows.Controls[selectedRow];
             Dictionary<int, double> rslArea = currentRow.getRSLAreas();
-            renderSelectedRowResults(rslArea, currentRow, sender, e);
-        }
-
-        private void renderSelectedRowResults(Dictionary<int, double> rslArea, AnalysisRowPanel currentRow, object sender, EventArgs e)
-        {
-
-            foreach (int i in rslArea.Keys)
+            if (!currentRow.tableCreated)
             {
-                if (rslArea[i] > 0)
-                {
-                    RowStyle temp = tableBudgetControl.RowStyles[0];
-                    tableBudgetControl.Height += (int)(temp.Height - 20);
-                    tableBudgetControl.RowStyles.Add(new RowStyle(temp.SizeType, temp.Height));
-                    tableBudgetControl.Controls.Add(new TextBox() { Text = i.ToString(), ReadOnly = true }, 0, tableBudgetControl.RowCount++);
-                    NumericUpDown budgetUpDown = new NumericUpDown()
-                    {
-                        Increment = 100,
-                        Minimum = 0,
-                        Maximum = (decimal)(pricePerYard[currentRow.getTreatment()] * (rslArea[i] / 9)),
-                        Value = (decimal)(pricePerYard[currentRow.getTreatment()] * (rslArea[i] / 9)),
-                    };
-                    NumericUpDown areaUpDown = new NumericUpDown()
-                    {
-                        Increment = 100,
-                        Minimum = 0,
-                        Maximum = (decimal)(rslArea[i] / 9),
-                        Value = (decimal)(rslArea[i] / 9)
-                    };
-                    NumericUpDown percentCoveredUpDown = new NumericUpDown()
-                    {
-                        Increment = 5,
-                        Minimum = 0,
-                        Maximum = 100,
-                        Value = 100
-                    };
-
-                    costBreakdown[budgetUpDown] = budgetUpDown.Value;
-                    areaBreakdown[areaUpDown] = areaUpDown.Value;
-                    double costPerYard = (double)(budgetUpDown.Value / areaUpDown.Value);
-                    budgetUpDown.ValueChanged += new EventHandler(delegate (object _sender, EventArgs _e) { BudgetUpDown_ValueChanged(sender, e, costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown); });
-                    areaUpDown.ValueChanged += new EventHandler(delegate (object _sender, EventArgs _e) { AreaUpDown_ValueChanged(sender, e, costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown); });
-                    percentCoveredUpDown.ValueChanged += new EventHandler(delegate (object _sender, EventArgs _e) { PercentCoveredUpDown_ValueChanged(sender, e, costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown); });
-                    tableBudgetControl.Controls.Add(budgetUpDown, 1, tableBudgetControl.RowCount - 1);
-                    tableBudgetControl.Controls.Add(areaUpDown, 2, tableBudgetControl.RowCount - 1);
-                    tableBudgetControl.Controls.Add(percentCoveredUpDown, 3, tableBudgetControl.RowCount - 1);
-                }
+                budgetControlTables[selectedRow] = new BudgetControlTable(this, estBudget);
+                budgetControlTables[selectedRow].addRowTable(pricePerYard, rslArea, currentRow);
             }
-            tableBudgetControl.Visible = true;
-            //for (int i = 0; i <= 20; i++)
-            //{
-            //    rslArea[i] = 0;
-            //}
-        }
-
-        private void BudgetUpDown_ValueChanged(object sender, EventArgs e, double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown, NumericUpDown percentCoveredUpDown)
-        {
-            handleNumericUpDownChanges(costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown, "budget");
-        }
-
-        private void AreaUpDown_ValueChanged(object sender, EventArgs e, double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown, NumericUpDown percentCoveredUpDown)
-        {
-            handleNumericUpDownChanges(costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown, "area");
-        }
-
-        private void PercentCoveredUpDown_ValueChanged(object sender, EventArgs e, double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown, NumericUpDown percentCoveredUpDown)
-        {
-            handleNumericUpDownChanges(costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown, "percent");
-        }
-
-        private void handleNumericUpDownChanges(double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown, NumericUpDown percentCoveredUpDown, string caller)
-        {
-            if (beingHandled) return;
-            beingHandled = true;
-
-            if (caller == "area")
-            {
-                decimal newCost = (decimal)((double)areaUpDown.Value * costPerYard);
-                decimal newPercentCovered = (decimal)(((double)areaUpDown.Value / (double)areaUpDown.Maximum) * 100);
-                budgetUpDown.Value = newCost;
-                percentCoveredUpDown.Value = newPercentCovered;
-            }
-
-            if (caller == "budget")
-            {
-                decimal newArea = (decimal)((double)budgetUpDown.Value / costPerYard);
-                decimal newPercentCovered = (decimal)(((double)newArea / (double)areaUpDown.Maximum) * 100);
-                areaUpDown.Value = newArea;
-                percentCoveredUpDown.Value = newPercentCovered;
-            }
-
-            if (caller == "percent")
-            {
-                decimal newArea = (decimal)((double)areaUpDown.Maximum * (((double)percentCoveredUpDown.Value) / 100));
-                decimal newCost = (decimal)((double)newArea * costPerYard);
-                areaUpDown.Value = newArea;
-                budgetUpDown.Value = newCost;
-            }
-
-            areaBreakdown[areaUpDown] = areaUpDown.Value;
-            decimal totalArea = 0;
-            foreach (decimal area in areaBreakdown.Values)
-            {
-                totalArea += area;
-            }
-            textBoxTotalArea.Text = String.Format("{0:n0}", (Math.Round(totalArea, 2))) + " yds\u00b2";
-
-            costBreakdown[budgetUpDown] = budgetUpDown.Value;
-            decimal totalCost = 0;
-            foreach (decimal price in costBreakdown.Values)
-            {
-                totalCost += price;
-            }
-            textBoxTotalCost.Text = "$" + String.Format("{0:n0}", totalCost); ;
-            if ((double)totalCost > estBudget)
-            {
-                labelOverBudget.Text = "$" + String.Format("{0:n0}", ((double)totalCost - estBudget)) + " over budget!";
-                labelOverBudget.Visible = true;
-            }
-            else
-            {
-                labelOverBudget.Visible = false;
-            }
-
-            beingHandled = false;
-        }
-
-        private void clearBudgetControlTable()
-        {
-            tableBudgetControl.Visible = false;
-            tableBudgetControl.RowCount = 1;
-            tableBudgetControl.Controls.Clear();
-            tableBudgetControl.RowStyles.Clear();
-            tableBudgetControl.ColumnCount = 4;
-            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 40F));
-            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 95F));
-            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 95F));
-            tableBudgetControl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 70F));
-            tableBudgetControl.Controls.Add(labelRSLx, 0, 0);
-            tableBudgetControl.Controls.Add(labelBudgetUsed, 1, 0);
-            tableBudgetControl.Controls.Add(labelAreaCovered, 2, 0);
-            tableBudgetControl.Controls.Add(labelPercentConvered, 3, 0);
-            tableBudgetControl.Location = new System.Drawing.Point(14, 119);
-            tableBudgetControl.Name = "tableBudgetControl";
-            tableBudgetControl.RowCount = 1;
-            tableBudgetControl.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableBudgetControl.Size = new System.Drawing.Size(300, 15);
-            tableBudgetControl.TabIndex = 32;
-            tableBudgetControl.AutoScroll = true;
+            panelCalculator.Controls.Add(budgetControlTables[selectedRow]);
         }
 
         private void textBoxBudget_RemovePlaceholder(object sender, EventArgs e)
