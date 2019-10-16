@@ -71,7 +71,7 @@ namespace tams4a.Forms
             Controls.Add(labelRSLx, 0, 0);
             Controls.Add(labelBudgetUsed, 1, 0);
             Controls.Add(labelPercentCovered, 3, 0);
-            Location = new System.Drawing.Point(14, 119);
+            Location = new System.Drawing.Point(14, 125);
             MaximumSize = new System.Drawing.Size(300, 565);
             Name = "tableBudgetControl";
             RowCount = 1;
@@ -88,7 +88,7 @@ namespace tams4a.Forms
                 if (rslArea[i] > 0)
                 {
                     rowStyle = RowStyles[0];
-                    Height += (int)(rowStyle.Height - 60);
+                    Height += (int)(rowStyle.Height - 70);
                     RowStyles.Add(new RowStyle(rowStyle.SizeType, rowStyle.Height));
                     Controls.Add(new TextBox() { Text = i.ToString(), ReadOnly = true }, 0, RowCount++);
                     NumericUpDown budgetUpDown = new NumericUpDown()
