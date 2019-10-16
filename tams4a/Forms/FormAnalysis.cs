@@ -23,6 +23,8 @@ namespace tams4a.Forms
         public Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
         private ModuleRoads moduleRoads;
 
+        internal Dictionary<int, BudgetControlTable> BudgetControlTables { get => budgetControlTables; set => budgetControlTables = value; }
+
         public FormAnalysis(TamsProject theProject, ModuleRoads modRoads)
         {
             InitializeComponent();
@@ -58,6 +60,8 @@ namespace tams4a.Forms
 
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
+            totalArea = 0.0;
+            totalCost = 0.0;
             int i = 0;
             foreach (AnalysisRowPanel rowPanel in panelRows.Controls)
             {
@@ -94,8 +98,8 @@ namespace tams4a.Forms
             {
                 labelOverBudget.Visible = false;
             }
-
-            textBoxTotalArea.Text = String.Format("{0:n0}", (Math.Round(totalArea/9, 2))) + " yds\u00b2"; 
+            totalArea /= 9;
+            textBoxTotalArea.Text = String.Format("{0:n0}", (Math.Round(totalArea, 2))) + " yds\u00b2"; 
             textBoxTotalCost.Text = "$" + String.Format("{0:n0}", roundedCost);
 
             AnalysisRowPanel currentRow = (AnalysisRowPanel)panelRows.Controls[0];
@@ -106,16 +110,20 @@ namespace tams4a.Forms
 
         private void comboBoxResultsRow_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(panelCalculator.Controls.Count == 10) panelCalculator.Controls.RemoveAt(9);
+            if (panelCalculator.Controls.Count == 10) panelCalculator.Controls.RemoveAt(9);
             int selectedRow = comboBoxResultsRow.SelectedIndex;
             AnalysisRowPanel currentRow = (AnalysisRowPanel)panelRows.Controls[selectedRow];
             Dictionary<int, double> rslArea = currentRow.getRSLAreas();
             if (!currentRow.tableCreated)
             {
-                budgetControlTables[selectedRow] = new BudgetControlTable(this, estBudget);
-                budgetControlTables[selectedRow].addRowTable(pricePerYard, rslArea, currentRow);
+                BudgetControlTables[selectedRow] = new BudgetControlTable(this, estBudget);
+                BudgetControlTables[selectedRow].addRowTable(pricePerYard, rslArea, currentRow);
             }
-            panelCalculator.Controls.Add(budgetControlTables[selectedRow]);
+            else if (!currentRow.tableValid)
+            {
+                BudgetControlTables[selectedRow].updateRowTable(pricePerYard, rslArea, currentRow);
+            }
+            panelCalculator.Controls.Add(BudgetControlTables[selectedRow]);
         }
 
         private void textBoxBudget_RemovePlaceholder(object sender, EventArgs e)

@@ -14,6 +14,7 @@ namespace tams4a.Forms
         public Label labelRowNumber = new Label();
         public Dictionary<int, double> rslArea = new Dictionary<int, double>();
         public bool tableCreated = false;
+        public bool tableValid = true;
 
         public AnalysisRowPanel(int location, string rowNumber)
         {
@@ -26,6 +27,7 @@ namespace tams4a.Forms
             comboBoxTreatment.Name = "comboBoxTreatment";
             comboBoxTreatment.Size = new System.Drawing.Size(250, 21);
             comboBoxTreatment.TabIndex = 4;
+            comboBoxTreatment.SelectedIndexChanged += new EventHandler(comboBoxTreatment_SelectedIndexChanged);
             comboBoxTreatment.Items.AddRange(new object[] {
                 "Crack Seal",
                 "Fog Coat",
@@ -58,6 +60,7 @@ namespace tams4a.Forms
             comboBoxFunctionalClassification.Name = "comboBoxFunctionalClassification";
             comboBoxFunctionalClassification.Size = new System.Drawing.Size(137, 21);
             comboBoxFunctionalClassification.TabIndex = 2;
+            comboBoxFunctionalClassification.SelectedIndexChanged += new EventHandler(comboBoxFunctionalClassification_SelectedIndexChanged);
             comboBoxFunctionalClassification.Items.AddRange(new object[] {
                 "",
                 "Major Arterial",
@@ -154,6 +157,16 @@ namespace tams4a.Forms
             TabIndex = 1;
         }
 
+        private void comboBoxTreatment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tableValid = false;
+        }
+
+        private void comboBoxFunctionalClassification_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tableValid = false;
+        }
+
         internal void initRSLAreas()
         {
             rslArea = new Dictionary<int, double>();
@@ -195,6 +208,7 @@ namespace tams4a.Forms
 
         private void comboBoxToRSL_SelectedIndexChanged(object sender, EventArgs e)
         {
+            tableValid = false;
             comboBoxTreatment.Items.Clear();
             int toRSL = Util.ToInt(comboBoxToRSL.Text);
             if (!string.IsNullOrEmpty(comboBoxFromRSL.Text))
@@ -296,6 +310,7 @@ namespace tams4a.Forms
 
         private void comboBoxFromRSL_SelectedIndexChanged(object sender, EventArgs e)
         {
+            tableValid = false;
             int fromRSL = Util.ToInt(comboBoxFromRSL.Text);
             if (!string.IsNullOrEmpty(comboBoxToRSL.Text))
             {
