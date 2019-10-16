@@ -65,15 +65,19 @@ namespace tams4a.Forms
             int i = 0;
             foreach (AnalysisRowPanel rowPanel in panelRows.Controls)
             {
-                rowQueries[i] = "SELECT * FROM road WHERE rsl >= " + rowPanel.getFromRSL() + " AND rsl <= " + rowPanel.getToRSL();
-                string query = "SELECT width, length, rsl FROM road WHERE rsl >= " + rowPanel.getFromRSL() + " AND rsl <= " + rowPanel.getToRSL();
+                string subQuery = "WHERE rsl >= " + rowPanel.getFromRSL() + " AND rsl <= " + rowPanel.getToRSL();
                 if (!string.IsNullOrEmpty(rowPanel.getFunctionalClassification()))
                 {
-                    rowQueries[i] += " AND type = '" + rowPanel.getFunctionalClassification() + "'";
-                    query += " AND type = '" + rowPanel.getFunctionalClassification() + "'";
+                    subQuery += " AND type = '" + rowPanel.getFunctionalClassification() + "'";
                 }
-                rowQueries[i] += " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC;";
-                query += " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC;";
+                subQuery += " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC";
+                string fullQuery = "CREATE VIEW newestRoads AS " + moduleRoads.getSelectAllSQL() + ";"
+                    + "CREATE VIEW filteredRoads AS SELECT * FROM newestRoads INNER JOIN ( SELECT * FROM road " + subQuery + ");"
+                    + "SELECT * FROM filteredRoads " + subQuery + ";"
+                    + "DROP VIEW newestRoads;" 
+                    + "DROP VIEW filteredRoads;";
+
+                rowQueries[i] = fullQuery;
 
                 DataTable rslAreas = Database.GetDataByQuery(Project.conn, rowQueries[i]);
                 rowPanel.initRSLAreas();
@@ -104,24 +108,23 @@ namespace tams4a.Forms
 
             AnalysisRowPanel currentRow = (AnalysisRowPanel)panelRows.Controls[0];
             Dictionary<int, double> rslArea = currentRow.getRSLAreas();
+            comboBoxResultsRow.SelectedIndex = -1;
             comboBoxResultsRow.SelectedIndex = 0;
             buttonFullRowData.Enabled = true;
         }
 
         private void comboBoxResultsRow_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (comboBoxResultsRow.SelectedIndex == -1) return;
             if (panelCalculator.Controls.Count == 10) panelCalculator.Controls.RemoveAt(9);
             int selectedRow = comboBoxResultsRow.SelectedIndex;
             AnalysisRowPanel currentRow = (AnalysisRowPanel)panelRows.Controls[selectedRow];
             Dictionary<int, double> rslArea = currentRow.getRSLAreas();
-            if (!currentRow.tableCreated)
+            if (!currentRow.tableCreated || !currentRow.tableValid)
             {
                 BudgetControlTables[selectedRow] = new BudgetControlTable(this, estBudget);
                 BudgetControlTables[selectedRow].addRowTable(pricePerYard, rslArea, currentRow);
-            }
-            else if (!currentRow.tableValid)
-            {
-                BudgetControlTables[selectedRow].updateRowTable(pricePerYard, rslArea, currentRow);
+                currentRow.tableValid = true;
             }
             panelCalculator.Controls.Add(BudgetControlTables[selectedRow]);
         }
