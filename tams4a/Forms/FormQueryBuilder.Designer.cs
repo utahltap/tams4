@@ -1161,7 +1161,8 @@
             "Minor Arterial",
             "Major Collector",
             "Minor Collector",
-            "Residential"});
+            "Residential",
+            "Other"});
             this.comboBoxFunctionalClassificationValue.Location = new System.Drawing.Point(250, 190);
             this.comboBoxFunctionalClassificationValue.Name = "comboBoxFunctionalClassificationValue";
             this.comboBoxFunctionalClassificationValue.Size = new System.Drawing.Size(128, 21);

@@ -906,15 +906,7 @@ namespace tams4a.Classes
             roads.DefaultView.Sort = "rsl asc";
             treatments.DefaultView.Sort = "id asc";
             FormAnalysis analysis = new FormAnalysis(Project, this);
-            //if (analysis.setData(roads.DefaultView.ToTable(), treatments.DefaultView.ToTable()))
-            //{
-            analysis.ShowDialog();
-            //}
-            //else
-            //{
-            //    analysis.Close();
-            //}
-
+            analysis.Show();
         }
 
         protected void toggleColors(object sender, EventArgs e)
