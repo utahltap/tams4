@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using tams4a.Classes;
+using tams4a.Classes.Roads;
 
 namespace tams4a.Forms
 {
@@ -22,6 +24,7 @@ namespace tams4a.Forms
         public double totalCost = 0.00;
         public Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
         private ModuleRoads moduleRoads;
+        private RoadReports roadReports;
 
         internal Dictionary<int, BudgetControlTable> BudgetControlTables { get => budgetControlTables; set => budgetControlTables = value; }
 
@@ -32,6 +35,7 @@ namespace tams4a.Forms
             panelRows.Controls.Add(newPanel);
             Project = theProject;
             moduleRoads = modRoads;
+            roadReports = new RoadReports(Project, moduleRoads);
             roads = Database.GetDataByQuery(Project.conn, "SELECT rsl, width, length, type FROM road GROUP BY TAMSID;");
             treatments = Database.GetDataByQuery(Project.conn, "SELECT id, name, cost FROM treatments;");
             pricePerYard.Add("", 0.0);
@@ -73,7 +77,9 @@ namespace tams4a.Forms
                 subQuery += " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC";
                 string fullQuery = "CREATE VIEW newestRoads AS " + moduleRoads.getSelectAllSQL() + ";"
                     + "CREATE VIEW filteredRoads AS SELECT * FROM newestRoads INNER JOIN ( SELECT * FROM road " + subQuery + ");"
-                    + "SELECT * FROM filteredRoads " + subQuery + ";"
+                    + "SELECT TAMSID, survey_date, name, width, length, rsl, type, speed_limit, lanes, surface, from_address, to_address, "
+                    + "photo, distress1, distress2, distress3, distress4, distress5, distress6, distress7, distress8, distress9, "
+                    + "suggested_treatment, notes FROM filteredRoads " + subQuery + ";"
                     + "DROP VIEW newestRoads;" 
                     + "DROP VIEW filteredRoads;";
 
@@ -190,8 +196,31 @@ namespace tams4a.Forms
 
         private void buttonFullRowData_Click(object sender, EventArgs e)
         {
+            DataTable results = Database.GetDataByQuery(Project.conn, rowQueries[comboBoxResultsRow.SelectedIndex]);
+            if (results.Rows.Count == 0)
+            {
+                MessageBox.Show("No roads matching the given description were found.");
+                return;
+            }
+            DataTable outputTable = roadReports.addColumns("");
+
             FormOutput report = new FormOutput(Project, moduleRoads);
-            report.dataGridViewReport.DataSource = Database.GetDataByQuery(Project.conn, rowQueries[comboBoxResultsRow.SelectedIndex]);
+            foreach (DataRow row in results.Rows)
+            {
+                DataRow nr = outputTable.NewRow();
+                string note = row["notes"].ToString().Split(new[] { '\r', '\n' }).FirstOrDefault(); //retrive most recent note
+
+                int oldNoteLength = note.Length;
+                int maxLength = 17;
+                if (!string.IsNullOrEmpty(note))
+                {
+                    note = note.Substring(0, Math.Min(oldNoteLength, maxLength));
+                    if (note.Length == maxLength) note += "...";
+                }
+                roadReports.addRows(nr, row, "");
+                outputTable.Rows.Add(nr);
+            }
+            report.dataGridViewReport.DataSource = outputTable;
             report.Text = "Full Report of Selected Row";
             report.Show();
         }

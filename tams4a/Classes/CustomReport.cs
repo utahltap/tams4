@@ -39,7 +39,7 @@ namespace tams4a.Classes
             if (window.tabControlControls.SelectedIndex == 0) selectTab = 0;
             if (window.tabControlControls.SelectedIndex == 1) selectTab = 1;
             if (window.tabControlControls.SelectedIndex == 2) selectTab = 3;
-            FormQueryBuilder tableFilters = new FormQueryBuilder(Project, selectTab);
+            FormQueryBuilder tableFilters = new FormQueryBuilder(Project, selectTab, moduleRoads);
 
             if (tableFilters.ShowDialog() == DialogResult.OK)
             {
@@ -70,7 +70,9 @@ namespace tams4a.Classes
             string surfaceType = tableFilters.getSurface();
             string query = tableFilters.getQuery();
             if (tableFilters.checkBoxSelectResults.Checked && query != "SELECT * FROM road") selectResults = true;
-            query += " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC;";
+            query += " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC;"
+                    + "DROP VIEW newestRoads;"
+                    + "DROP VIEW filteredRoads;";
             DataTable results = Database.GetDataByQuery(Project.conn, query);
             if (results.Rows.Count == 0)
             {
