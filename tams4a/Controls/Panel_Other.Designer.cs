@@ -82,6 +82,16 @@
             this.toolStripMoveLandmark.Text = "toolStripMoveLandmark";
             this.toolStripMoveLandmark.ToolTipText = "Move Landmark";
             // 
+            // toolStripMoveLandmark
+            // 
+            this.toolStripMoveLandmark.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripMoveLandmark.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMoveLandmark.Image")));
+            this.toolStripMoveLandmark.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripMoveLandmark.Name = "toolStripMoveLandmark";
+            this.toolStripMoveLandmark.Size = new System.Drawing.Size(23, 22);
+            this.toolStripMoveLandmark.Text = "toolStripMoveLandmark";
+            this.toolStripMoveLandmark.ToolTipText = "Move Landmark";
+            // 
             // groupBoxType
             // 
             this.groupBoxType.Controls.Add(this.buttonChangeDirectory);
