@@ -29,18 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Panel_Other));
-            this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
-            this.toolStripDropDownButtonDate = new System.Windows.Forms.ToolStripDropDownButton();
-            this.setTodayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.setOtherDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripDropDownAddObject = new System.Windows.Forms.ToolStripDropDownButton();
-            this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
-            this.toolStripMoveLandmark = new System.Windows.Forms.ToolStripButton();
+            this.groupBoxProperties = new System.Windows.Forms.GroupBox();
             this.groupBoxType = new System.Windows.Forms.GroupBox();
             this.buttonChangeDirectory = new System.Windows.Forms.Button();
             this.buttonPreviousPhoto = new System.Windows.Forms.Button();
@@ -55,8 +44,18 @@
             this.comboBoxObject = new System.Windows.Forms.ComboBox();
             this.labelObject = new System.Windows.Forms.Label();
             this.labelSurveyDate = new System.Windows.Forms.Label();
-            this.groupBoxProperties = new System.Windows.Forms.GroupBox();
-            this.toolStrip.SuspendLayout();
+            this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButtonDate = new System.Windows.Forms.ToolStripDropDownButton();
+            this.setTodayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setOtherDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripDropDownAddObject = new System.Windows.Forms.ToolStripDropDownButton();
+            this.clickMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enterCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMoveLandmark = new System.Windows.Forms.ToolStripButton();
             this.groupBoxType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
             this.toolStrip.SuspendLayout();
@@ -71,26 +70,6 @@
             this.groupBoxProperties.TabIndex = 2;
             this.groupBoxProperties.TabStop = false;
             this.groupBoxProperties.Text = "Properties";
-            // 
-            // toolStripMoveLandmark
-            // 
-            this.toolStripMoveLandmark.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripMoveLandmark.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMoveLandmark.Image")));
-            this.toolStripMoveLandmark.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripMoveLandmark.Name = "toolStripMoveLandmark";
-            this.toolStripMoveLandmark.Size = new System.Drawing.Size(23, 22);
-            this.toolStripMoveLandmark.Text = "toolStripMoveLandmark";
-            this.toolStripMoveLandmark.ToolTipText = "Move Landmark";
-            // 
-            // toolStripMoveLandmark
-            // 
-            this.toolStripMoveLandmark.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripMoveLandmark.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMoveLandmark.Image")));
-            this.toolStripMoveLandmark.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripMoveLandmark.Name = "toolStripMoveLandmark";
-            this.toolStripMoveLandmark.Size = new System.Drawing.Size(23, 22);
-            this.toolStripMoveLandmark.Text = "toolStripMoveLandmark";
-            this.toolStripMoveLandmark.ToolTipText = "Move Landmark";
             // 
             // groupBoxType
             // 
@@ -343,6 +322,16 @@
             this.toolStripButtonRemove.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonRemove.Text = "Remove Other";
             this.toolStripButtonRemove.ToolTipText = "Remove Landmark";
+            // 
+            // toolStripMoveLandmark
+            // 
+            this.toolStripMoveLandmark.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripMoveLandmark.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMoveLandmark.Image")));
+            this.toolStripMoveLandmark.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripMoveLandmark.Name = "toolStripMoveLandmark";
+            this.toolStripMoveLandmark.Size = new System.Drawing.Size(23, 22);
+            this.toolStripMoveLandmark.Text = "toolStripMoveLandmark";
+            this.toolStripMoveLandmark.ToolTipText = "Move Landmark";
             // 
             // Panel_Other
             // 

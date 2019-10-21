@@ -69,6 +69,13 @@ namespace tams4a.Forms
             int i = 0;
             foreach (AnalysisRowPanel rowPanel in panelRows.Controls)
             {
+                if (string.IsNullOrEmpty(rowPanel.getFromRSL().ToString())
+                    || string.IsNullOrEmpty(rowPanel.getToRSL().ToString())
+                    || string.IsNullOrEmpty(rowPanel.getFunctionalClassification()))
+                {
+                    rowQueries[i] = "none";
+                    continue;
+                }
                 string subQuery = "WHERE rsl >= " + rowPanel.getFromRSL() + " AND rsl <= " + rowPanel.getToRSL();
                 if (!string.IsNullOrEmpty(rowPanel.getFunctionalClassification()))
                 {
@@ -196,6 +203,7 @@ namespace tams4a.Forms
 
         private void buttonFullRowData_Click(object sender, EventArgs e)
         {
+            if (rowQueries[comboBoxResultsRow.SelectedIndex] == "none") return;
             DataTable results = Database.GetDataByQuery(Project.conn, rowQueries[comboBoxResultsRow.SelectedIndex]);
             if (results.Rows.Count == 0)
             {
