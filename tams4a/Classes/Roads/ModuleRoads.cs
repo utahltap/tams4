@@ -960,6 +960,7 @@ namespace tams4a.Classes
         private RadioButton asphalt;
         private RadioButton gravel;
         private RadioButton concrete;
+        private RadioButton all;
         private RadioButton[] buttons;
 
         public ChooseRoadForm(string title, string text)
@@ -976,20 +977,36 @@ namespace tams4a.Classes
             concrete = new RadioButton();
             concrete.Text = "Concrete";
             concrete.Location = new Point(240, 90);
+            all = new RadioButton();
+            all.Text = "All";
+            all.Location = new Point(240, 114);
             roadChooser.groupBoxUser.Controls.Add(asphalt);
             roadChooser.groupBoxUser.Controls.Add(gravel);
             roadChooser.groupBoxUser.Controls.Add(concrete);
-            RadioButton[] b = { asphalt, gravel, concrete};
+            roadChooser.groupBoxUser.Controls.Add(all);
+            RadioButton[] b = { asphalt, gravel, concrete, all};
             buttons = b;
             asphalt.Checked = true;
         }
 
-        public string chooseRoad()
+        public string chooseRoad(string setRoad = "")
         {
+            if (string.IsNullOrEmpty(setRoad))
+            {
+                for (int i = 0; i < buttons.Length; i++)
+                {
+                    if (buttons[i].Checked)
+                    {
+                        return buttons[i].Text;
+                    }
+                }
+                return "";
+            }
             for (int i = 0; i < buttons.Length; i++)
             {
-                if (buttons[i].Checked)
+                if (buttons[i].Text == setRoad)
                 {
+                    buttons[i].Checked = true;
                     return buttons[i].Text;
                 }
             }

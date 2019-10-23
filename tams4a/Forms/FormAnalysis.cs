@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using tams4a.Classes;
 using tams4a.Classes.Roads;
 
@@ -19,7 +21,7 @@ namespace tams4a.Forms
         private Dictionary<int, BudgetControlTable> budgetControlTables = new Dictionary<int, BudgetControlTable>();
         private TamsProject Project;
         private int numberOfRows = 1;
-        private double estBudget = 0.00;
+        public double estBudget = 0.00;
         public double totalArea = 0.00;
         public double totalCost = 0.00;
         public Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
@@ -124,6 +126,7 @@ namespace tams4a.Forms
             comboBoxResultsRow.SelectedIndex = -1;
             comboBoxResultsRow.SelectedIndex = 0;
             buttonFullRowData.Enabled = true;
+            updateCharts();
         }
 
         private void comboBoxResultsRow_SelectedIndexChanged(object sender, EventArgs e)
@@ -135,7 +138,7 @@ namespace tams4a.Forms
             Dictionary<int, double> rslArea = currentRow.getRSLAreas();
             if (!currentRow.tableCreated || !currentRow.tableValid)
             {
-                BudgetControlTables[selectedRow] = new BudgetControlTable(this, estBudget);
+                BudgetControlTables[selectedRow] = new BudgetControlTable(this);
                 BudgetControlTables[selectedRow].addRowTable(pricePerYard, rslArea, currentRow);
                 currentRow.tableValid = true;
             }
@@ -164,7 +167,6 @@ namespace tams4a.Forms
                 estBudget = Util.ToDouble(textBoxBudget.Text);
                 textBoxBudget.Text = "$" + String.Format("{0:n0}", estBudget);
             }
-            buttonCalculate_Click(sender, null);
         }
 
         private void textBoxBudget_EnterPress(object sender, KeyPressEventArgs e)
@@ -172,6 +174,7 @@ namespace tams4a.Forms
             if (e.KeyChar == (char)13)
             {
                 panelCalculator.Focus();
+                buttonCalculate_Click(sender, e);
             }
         }
 
@@ -231,6 +234,153 @@ namespace tams4a.Forms
             report.dataGridViewReport.DataSource = outputTable;
             report.Text = "Full Report of Selected Row";
             report.Show();
+        }
+
+        private void updateCharts()
+        {
+            if (rowQueries[comboBoxResultsRow.SelectedIndex] == "none") return;
+
+            string thisSql = moduleRoads.getSelectAllSQL();
+            string[] categories = { "0", "1-3", "4-6", "7-9", "10-12", "13-15", "16-18", "19-20" };
+            int[] caps = { 0, 3, 6, 9, 12, 15, 18, 20 };
+
+            DataTable currentRoadTable = Database.GetDataByQuery(Project.conn, thisSql);
+
+            Dictionary<string, double> currentRslArea = new Dictionary<string, double>();
+            double totalArea = 0.0;
+            for (int i = 0; i < categories.Length; i++)
+            {
+                currentRslArea.Add(categories[i], 0.0);
+            }
+
+            foreach (DataRow row in currentRoadTable.Rows)
+            {
+                int rsl = Util.ToInt(row["rsl"].ToString());
+                if (rsl == -1) continue;
+                
+                for (int i = 0; i < categories.Length; i++)
+                {
+                    if (rsl <= caps[i])
+                    {
+                        totalArea += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                        currentRslArea[categories[i]] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                        break;
+                    }
+                }
+            }
+
+            string[] domain = new string[categories.Length];
+            double[] range = new double[categories.Length];
+            for (int i = 0; i < categories.Length; i++)
+            {
+                domain[i] = categories[i];
+                range[i] = Math.Round(currentRslArea[categories[i]] / totalArea, 3) * 100;
+            }
+
+
+
+            DataTable projectedTreatmentsTable = Database.GetDataByQuery(Project.conn, rowQueries[comboBoxResultsRow.SelectedIndex]);
+
+            Dictionary<string, double> projectedRslArea = new Dictionary<string, double>();
+            for (int i = 0; i < categories.Length; i++)
+            {
+                projectedRslArea.Add(categories[i], 0.0);
+            }
+
+            foreach (DataRow row in currentRoadTable.Rows)
+            {
+                int rsl = Util.ToInt(row["rsl"].ToString());
+                if (rsl == -1) continue;
+                if (rsl >= 0 && rsl <= 5 && row["type"].ToString() == "Residential") rsl += 20;
+                if (rsl > 20) rsl = 20;
+
+                for (int i = 0; i < categories.Length; i++)
+                {
+                    if (rsl <= caps[i])
+                    {
+                        projectedRslArea[categories[i]] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                        break;
+                    }
+                }
+            }
+
+            string[] newDomain = new string[categories.Length];
+            double[] newRange = new double[categories.Length];
+            for (int i = 0; i < categories.Length; i++)
+            {
+                newDomain[i] = categories[i];
+                newRange[i] = Math.Round(projectedRslArea[categories[i]] / totalArea, 3) * 100;
+            }
+
+
+
+
+
+
+            Color[] colors = { Color.DarkRed, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.DeepSkyBlue, Color.Blue };
+
+            //
+            // chartCurrent
+            //
+            if (chartCurrent.Titles.Count == 0)
+            {
+                Title title = chartCurrent.Titles.Add("Current RSL Distribution");
+                title.Font = new Font("Arial", 14, FontStyle.Bold);
+            }
+            chartCurrent.Invalidate();
+            chartCurrent.Series.Clear();
+            chartCurrent.Legends.Clear();
+            chartCurrent.ChartAreas.Clear();
+            chartCurrent.Series.Add("Series");
+            chartCurrent.Series["Series"].IsValueShownAsLabel = true;
+            chartCurrent.Series["Series"].Label = "#PERCENT{P1}";
+            chartCurrent.ChartAreas.Add("Area");
+            chartCurrent.ChartAreas["Area"].AxisX.Interval = 1;
+            chartCurrent.ChartAreas["Area"].AxisX.MajorGrid.LineColor = Color.LightGray;
+            chartCurrent.ChartAreas["Area"].AxisY.MajorGrid.LineColor = Color.LightGray;
+            chartCurrent.ChartAreas["Area"].AxisY.Title = "Percent of Road Network";
+            for (int i = 0; i < domain.Length; i++)
+            {
+                chartCurrent.Series["Series"].SetDefault(true);
+                chartCurrent.Series["Series"].Enabled = true;
+                chartCurrent.Series["Series"].Points.AddXY(domain[i], range[i]);
+                chartCurrent.Series["Series"].ChartType = SeriesChartType.Column;
+                chartCurrent.Series["Series"].ChartArea = "Area";
+                chartCurrent.Series["Series"].Points[i].Color = colors[i % colors.Length];
+            }
+            chartCurrent.Show();
+
+            //
+            // chartProjection
+            //
+            if (chartProjection.Titles.Count == 0)
+            {
+                Title title = chartProjection.Titles.Add("Projected RSL Distribution");
+                title.Font = new Font("Arial", 14, FontStyle.Bold);
+            }
+            chartProjection.Invalidate();
+            chartProjection.Series.Clear();
+            chartProjection.Legends.Clear();
+            chartProjection.ChartAreas.Clear();
+            chartProjection.Series.Add("Series");
+            chartProjection.Series["Series"].IsValueShownAsLabel = true;
+            chartProjection.Series["Series"].Label = "#PERCENT{P1}";
+            chartProjection.ChartAreas.Add("Area");
+            chartProjection.ChartAreas["Area"].AxisX.Interval = 1;
+            chartProjection.ChartAreas["Area"].AxisX.MajorGrid.LineColor = Color.LightGray;
+            chartProjection.ChartAreas["Area"].AxisY.MajorGrid.LineColor = Color.LightGray;
+            chartProjection.ChartAreas["Area"].AxisY.Title = "Percent of Road Network";
+            for (int i = 0; i < domain.Length; i++)
+            {
+                chartProjection.Series["Series"].SetDefault(true);
+                chartProjection.Series["Series"].Enabled = true;
+                chartProjection.Series["Series"].Points.AddXY(newDomain[i], newRange[i]);
+                chartProjection.Series["Series"].ChartType = SeriesChartType.Column;
+                chartProjection.Series["Series"].ChartArea = "Area";
+                chartProjection.Series["Series"].Points[i].Color = colors[i % colors.Length];
+            }
+            chartProjection.Show();
+
         }
     }
 }

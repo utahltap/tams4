@@ -25,7 +25,7 @@ namespace tams4a.Forms
             comboBoxTreatment.FormattingEnabled = true;
             comboBoxTreatment.Location = new System.Drawing.Point(284, 3);
             comboBoxTreatment.Name = "comboBoxTreatment";
-            comboBoxTreatment.Size = new System.Drawing.Size(250, 21);
+            comboBoxTreatment.Size = new System.Drawing.Size(300, 21);
             comboBoxTreatment.TabIndex = 4;
             comboBoxTreatment.SelectedIndexChanged += new EventHandler(comboBoxTreatment_SelectedIndexChanged);
             comboBoxTreatment.Items.AddRange(new object[] {
@@ -153,7 +153,7 @@ namespace tams4a.Forms
             Controls.Add(labelRowNumber);
             Location = new System.Drawing.Point(5, location);
             Name = "analysisRowPanel";
-            Size = new System.Drawing.Size(545, 28);
+            Size = new System.Drawing.Size(595, 28);
             TabIndex = 1;
         }
 

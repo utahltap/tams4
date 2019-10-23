@@ -16,12 +16,10 @@ namespace tams4a.Forms
         private Dictionary<NumericUpDown, decimal> areaBreakdown = new Dictionary<NumericUpDown, decimal>();
         private bool beingHandled = false;
         private FormAnalysis formAnalysis;
-        private double estBudget;
 
-        public BudgetControlTable(FormAnalysis form, double budget)
+        public BudgetControlTable(FormAnalysis form)
         {
             formAnalysis = form;
-            estBudget = budget;
             // 
             // labelAreaCovered
             // 
@@ -263,9 +261,9 @@ namespace tams4a.Forms
             double newTotalCost = formAnalysis.totalCost - (double)maxTableCost + (double)totalTableCost;
             formAnalysis.textBoxTotalCost.Text = "$" + String.Format("{0:n0}", newTotalCost); ;
 
-            if (newTotalCost > estBudget)
+            if (newTotalCost > formAnalysis.estBudget)
             {
-                formAnalysis.labelOverBudget.Text = "$" + String.Format("{0:n0}", (newTotalCost - estBudget)) + " over budget!";
+                formAnalysis.labelOverBudget.Text = "$" + String.Format("{0:n0}", (newTotalCost - formAnalysis.estBudget)) + " over budget!";
                 formAnalysis.labelOverBudget.Visible = true;
             }
             else
