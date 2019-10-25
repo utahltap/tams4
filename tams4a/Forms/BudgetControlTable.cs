@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using tams4a.Classes;
 
 namespace tams4a.Forms
 {
@@ -70,17 +69,21 @@ namespace tams4a.Forms
             Controls.Add(labelBudgetUsed, 1, 0);
             Controls.Add(labelPercentCovered, 3, 0);
             Location = new System.Drawing.Point(14, 125);
-            MaximumSize = new System.Drawing.Size(300, 565);
+            MaximumSize = new System.Drawing.Size(300, 585);
             Name = "tableBudgetControl";
             RowCount = 1;
             RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             Size = new System.Drawing.Size(300, 15);
             TabIndex = 32;
             Visible = true;
+            formAnalysis.panelRowTotal.Visible = true;
         }
 
         public void addRowTable(Dictionary<string, double> pricePerYard, Dictionary<int, double> rslArea, AnalysisRowPanel currentRow)
         {
+            double totalRowCost = 0.0;
+            double totalRowArea = 0.0;
+
             foreach (int i in rslArea.Keys)
             {
                 if (rslArea[i] > 0)
@@ -122,8 +125,13 @@ namespace tams4a.Forms
                     Controls.Add(budgetUpDown, 1, RowCount - 1);
                     Controls.Add(areaUpDown, 2, RowCount - 1);
                     Controls.Add(percentCoveredUpDown, 3, RowCount - 1);
+                    totalRowCost += (double)budgetUpDown.Value;
+                    totalRowArea += (double)areaUpDown.Value;
                 }
             }
+            formAnalysis.textBoxRowCost.Text = "$" + String.Format("{0:n0}", totalRowCost); ;
+            formAnalysis.textBoxRowArea.Text = String.Format("{0:n0}", (Math.Round(totalRowArea, 2))) + " yds\u00b2"; ;
+            formAnalysis.textBoxRowPercent.Text = "100.00";
             currentRow.tableCreated = true;
         }
 
@@ -255,11 +263,15 @@ namespace tams4a.Forms
                 }
             }
 
+            formAnalysis.textBoxRowArea.Text = String.Format("{0:n0}", (Math.Round(totalTableArea, 2))) + " yds\u00b2";
+
             double newTotalArea = formAnalysis.totalArea - (double)maxTableArea + (double)totalTableArea;
             formAnalysis.textBoxTotalArea.Text = String.Format("{0:n0}", (Math.Round(newTotalArea, 2))) + " yds\u00b2";
 
+            formAnalysis.textBoxRowCost.Text = "$" + String.Format("{0:n0}", totalTableCost);
+
             double newTotalCost = formAnalysis.totalCost - (double)maxTableCost + (double)totalTableCost;
-            formAnalysis.textBoxTotalCost.Text = "$" + String.Format("{0:n0}", newTotalCost); ;
+            formAnalysis.textBoxTotalCost.Text = "$" + String.Format("{0:n0}", newTotalCost);
 
             if (newTotalCost > formAnalysis.estBudget)
             {

@@ -132,7 +132,7 @@ namespace tams4a.Forms
         private void comboBoxResultsRow_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxResultsRow.SelectedIndex == -1) return;
-            if (panelCalculator.Controls.Count == 10) panelCalculator.Controls.RemoveAt(9);
+            if (panelCalculator.Controls.Count == 11) panelCalculator.Controls.RemoveAt(10);
             int selectedRow = comboBoxResultsRow.SelectedIndex;
             AnalysisRowPanel currentRow = (AnalysisRowPanel)panelRows.Controls[selectedRow];
             Dictionary<int, double> rslArea = currentRow.getRSLAreas();
@@ -142,7 +142,11 @@ namespace tams4a.Forms
                 BudgetControlTables[selectedRow].addRowTable(pricePerYard, rslArea, currentRow);
                 currentRow.tableValid = true;
             }
+            int rowTotalY = BudgetControlTables[selectedRow].Size.Height + 130;
+            if (rowTotalY > 700) rowTotalY = 700;
+            panelRowTotal.Location = new Point(3, rowTotalY);
             panelCalculator.Controls.Add(BudgetControlTables[selectedRow]);
+            updateCharts(true);
         }
 
         private void textBoxBudget_RemovePlaceholder(object sender, EventArgs e)
@@ -236,7 +240,7 @@ namespace tams4a.Forms
             report.Show();
         }
 
-        private void updateCharts()
+        private void updateCharts(bool justProjection = false)
         {
             if (rowQueries[comboBoxResultsRow.SelectedIndex] == "none") return;
 
@@ -247,7 +251,7 @@ namespace tams4a.Forms
             DataTable currentRoadTable = Database.GetDataByQuery(Project.conn, thisSql);
 
             Dictionary<string, double> currentRslArea = new Dictionary<string, double>();
-            double totalArea = 0.0;
+            double totalAreaChart = 0.0;
             for (int i = 0; i < categories.Length; i++)
             {
                 currentRslArea.Add(categories[i], 0.0);
@@ -257,12 +261,12 @@ namespace tams4a.Forms
             {
                 int rsl = Util.ToInt(row["rsl"].ToString());
                 if (rsl == -1) continue;
-                
+
                 for (int i = 0; i < categories.Length; i++)
                 {
                     if (rsl <= caps[i])
                     {
-                        totalArea += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                        totalAreaChart += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
                         currentRslArea[categories[i]] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
                         break;
                     }
@@ -274,48 +278,12 @@ namespace tams4a.Forms
             for (int i = 0; i < categories.Length; i++)
             {
                 domain[i] = categories[i];
-                range[i] = Math.Round(currentRslArea[categories[i]] / totalArea, 3) * 100;
+                range[i] = Math.Round(currentRslArea[categories[i]] / totalAreaChart, 3) * 100;
             }
 
 
-
-            DataTable projectedTreatmentsTable = Database.GetDataByQuery(Project.conn, rowQueries[comboBoxResultsRow.SelectedIndex]);
-
-            Dictionary<string, double> projectedRslArea = new Dictionary<string, double>();
-            for (int i = 0; i < categories.Length; i++)
-            {
-                projectedRslArea.Add(categories[i], 0.0);
-            }
-
-            foreach (DataRow row in currentRoadTable.Rows)
-            {
-                int rsl = Util.ToInt(row["rsl"].ToString());
-                if (rsl == -1) continue;
-                if (rsl >= 0 && rsl <= 5 && row["type"].ToString() == "Residential") rsl += 20;
-                if (rsl > 20) rsl = 20;
-
-                for (int i = 0; i < categories.Length; i++)
-                {
-                    if (rsl <= caps[i])
-                    {
-                        projectedRslArea[categories[i]] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
-                        break;
-                    }
-                }
-            }
-
-            string[] newDomain = new string[categories.Length];
-            double[] newRange = new double[categories.Length];
-            for (int i = 0; i < categories.Length; i++)
-            {
-                newDomain[i] = categories[i];
-                newRange[i] = Math.Round(projectedRslArea[categories[i]] / totalArea, 3) * 100;
-            }
-
-
-
-
-
+            updateProjectionChart(currentRoadTable, totalAreaChart);
+            if (justProjection) return;
 
             Color[] colors = { Color.DarkRed, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.DeepSkyBlue, Color.Blue };
 
@@ -349,6 +317,62 @@ namespace tams4a.Forms
                 chartCurrent.Series["Series"].Points[i].Color = colors[i % colors.Length];
             }
             chartCurrent.Show();
+        }
+
+        private void updateProjectionChart(DataTable currentRoadTable, double totalAreaChart)
+        {
+            string[] categories = { "0", "1-3", "4-6", "7-9", "10-12", "13-15", "16-18", "19-20" };
+            int[] caps = { 0, 3, 6, 9, 12, 15, 18, 20 };
+
+            DataTable projectedTreatmentsTable = Database.GetDataByQuery(Project.conn, rowQueries[comboBoxResultsRow.SelectedIndex]);
+
+            Dictionary<string, double> projectedRslArea = new Dictionary<string, double>();
+            for (int i = 0; i < categories.Length; i++)
+            {
+                projectedRslArea.Add(categories[i], 0.0);
+            }
+
+
+            AnalysisRowPanel rowPanel = (AnalysisRowPanel)panelRows.Controls[comboBoxResultsRow.SelectedIndex];
+
+            int fromRSL = rowPanel.getFromRSL();
+            int toRSL = rowPanel.getToRSL();
+            string type = rowPanel.getFunctionalClassification();
+            string treatment = rowPanel.getTreatment();
+
+            Console.WriteLine("fromRSL: " + fromRSL);
+            Console.WriteLine("toRSL: " + toRSL);
+            Console.WriteLine("type: " + type);
+            Console.WriteLine("treatment: " + treatment);
+
+
+            foreach (DataRow row in currentRoadTable.Rows)
+            {
+                int rsl = Util.ToInt(row["rsl"].ToString());
+                if (rsl == -1) continue;
+                if (rsl >= fromRSL && rsl <= toRSL && row["type"].ToString() == type) rsl += adjustRSL(rsl, treatment);
+                if (rsl > 20) rsl = 20;
+
+                for (int i = 0; i < categories.Length; i++)
+                {
+                    if (rsl <= caps[i])
+                    {
+                        projectedRslArea[categories[i]] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                        break;
+                    }
+                }
+            }
+
+            string[] newDomain = new string[categories.Length];
+            double[] newRange = new double[categories.Length];
+            for (int i = 0; i < categories.Length; i++)
+            {
+                newDomain[i] = categories[i];
+                newRange[i] = Math.Round(projectedRslArea[categories[i]] / totalAreaChart, 3) * 100;
+            }
+
+
+            Color[] colors = { Color.DarkRed, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.DeepSkyBlue, Color.Blue };
 
             //
             // chartProjection
@@ -370,7 +394,7 @@ namespace tams4a.Forms
             chartProjection.ChartAreas["Area"].AxisX.MajorGrid.LineColor = Color.LightGray;
             chartProjection.ChartAreas["Area"].AxisY.MajorGrid.LineColor = Color.LightGray;
             chartProjection.ChartAreas["Area"].AxisY.Title = "Percent of Road Network";
-            for (int i = 0; i < domain.Length; i++)
+            for (int i = 0; i < newDomain.Length; i++)
             {
                 chartProjection.Series["Series"].SetDefault(true);
                 chartProjection.Series["Series"].Enabled = true;
@@ -381,6 +405,136 @@ namespace tams4a.Forms
             }
             chartProjection.Show();
 
+        }
+
+        private int adjustRSL(int currentRSL, string treatment)
+        {
+            if (treatment == "Cold In-place Recycling (2/2 in.)") return 15;
+            if (treatment == "Thick Overlay (3 in.)") return 12;
+            if (treatment == "Rotomill & Thick Overlay (3 in.)") return 12;
+            if (treatment == "Base Repair/ Pavement Replacement") return 16;
+            if (treatment == "Cold Recycling & Overlay (3/3 in.)") return 14;
+            if (treatment == "Full Depth Reclamation & Overlay (3/3 in.)") return 20;
+            if (treatment == "Base/ Pavement Replacement (3/3/6 in.)") return 20;
+
+            if (currentRSL >= 1 && currentRSL <= 3)
+            {
+                if (treatment == "Scrub Seal") return 1;
+                if (treatment == "Single Chip Seal") return 1;
+                if (treatment == "Slurry Seal") return 1;
+                if (treatment == "Microsurfacing") return 2;
+                if (treatment == "Plant Mix Seal") return 3;
+                if (treatment == "Cold In-place Recycling (2 in. with chip seal)") return 3;
+                if (treatment == "Thin Hot Mix Overlay (<2 in.)") return 4;
+                if (treatment == "HMA (leveling) & Overlay (<2 in.)") return 4;
+                if (treatment == "Hot Surface Recycling") return 3;
+                if (treatment == "Rotomill & Overlay (<2 in.)") return 4;
+            }
+
+            if (currentRSL >= 4 && currentRSL <= 6)
+            {
+                if (treatment == "Scrub Seal") return 3;
+                if (treatment == "Single Chip Seal") return 3;
+                if (treatment == "Slurry Seal") return 3;
+                if (treatment == "Microsurfacing") return 3;
+                if (treatment == "Plant Mix Seal") return 4;
+                if (treatment == "Cold In-place Recycling (2 in. with chip seal)") return 4;
+                if (treatment == "Thin Hot Mix Overlay (<2 in.)") return 6;
+                if (treatment == "HMA (leveling) & Overlay (<2 in.)") return 6;
+                if (treatment == "Hot Surface Recycling") return 5;
+                if (treatment == "Rotomill & Overlay (<2 in.)") return 7;
+            }
+
+            if (currentRSL >= 7 && currentRSL <= 9)
+            {
+                if (treatment == "Fog Coat") return 1;
+                if (treatment == "High Mineral Asphalt Emulsion") return 1;
+                if (treatment == "Sand Seal") return 1;
+                if (treatment == "Scrub Seal") return 5;
+                if (treatment == "Single Chip Seal") return 5;
+                if (treatment == "Slurry Seal") return 5;
+                if (treatment == "Microsurfacing") return 5;
+                if (treatment == "Plant Mix Seal") return 5;
+                if (treatment == "Cold In-place Recycling (2 in. with chip seal)") return 5;
+                if (treatment == "Thin Hot Mix Overlay (<2 in.)") return 7;
+                if (treatment == "HMA (leveling) & Overlay (<2 in.)") return 8;
+                if (treatment == "Hot Surface Recycling") return 7;
+                if (treatment == "Rotomill & Overlay (<2 in.)") return 8;
+            }
+
+            if (currentRSL >= 10 && currentRSL <= 12)
+            {
+                if (treatment == "Crack Seal") return 1;
+                if (treatment == "Fog Coat") return 1;
+                if (treatment == "High Mineral Asphalt Emulsion") return 2;
+                if (treatment == "Sand Seal") return 2;
+                if (treatment == "Scrub Seal") return 5;
+                if (treatment == "Single Chip Seal") return 5;
+                if (treatment == "Slurry Seal") return 5;
+                if (treatment == "Microsurfacing") return 7;
+                if (treatment == "Plant Mix Seal") return 7;
+                if (treatment == "Cold In-place Recycling (2 in. with chip seal)") return 6;
+                if (treatment == "Thin Hot Mix Overlay (<2 in.)") return 7;
+                if (treatment == "HMA (leveling) & Overlay (<2 in.)") return 8;
+                if (treatment == "Hot Surface Recycling") return 8;
+                if (treatment == "Rotomill & Overlay (<2 in.)") return 8;
+            }
+
+            if (currentRSL >= 13 && currentRSL <= 15)
+            {
+                if (treatment == "Crack Seal") return 2;
+                if (treatment == "Fog Coat") return 2;
+                if (treatment == "High Mineral Asphalt Emulsion") return 3;
+                if (treatment == "Sand Seal") return 2;
+                if (treatment == "Scrub Seal") return 5;
+                if (treatment == "Single Chip Seal") return 5;
+                if (treatment == "Slurry Seal") return 5;
+                if (treatment == "Microsurfacing") return 7;
+                if (treatment == "Plant Mix Seal") return 7;
+                if (treatment == "Cold In-place Recycling (2 in. with chip seal)") return 7;
+                if (treatment == "Thin Hot Mix Overlay (<2 in.)") return 7;
+                if (treatment == "HMA (leveling) & Overlay (<2 in.)") return 8;
+                if (treatment == "Hot Surface Recycling") return 8;
+                if (treatment == "Rotomill & Overlay (<2 in.)") return 8;
+            }
+
+            if (currentRSL >= 16 && currentRSL <= 18)
+            {
+                if (treatment == "Crack Seal") return 3;
+                if (treatment == "Fog Coat") return 2;
+                if (treatment == "High Mineral Asphalt Emulsion") return 5;
+                if (treatment == "Sand Seal") return 2;
+                if (treatment == "Scrub Seal") return 5;
+                if (treatment == "Single Chip Seal") return 5;
+                if (treatment == "Slurry Seal") return 5;
+                if (treatment == "Microsurfacing") return 7; 
+                if (treatment == "Plant Mix Seal") return 7;
+                if (treatment == "Cold In-place Recycling (2 in. with chip seal)") return 7;
+                if (treatment == "Thin Hot Mix Overlay (<2 in.)") return 7;
+                if (treatment == "HMA (leveling) & Overlay (<2 in.)") return 8;
+                if (treatment == "Hot Surface Recycling") return 8;
+                if (treatment == "Rotomill & Overlay (<2 in.)") return 8;
+            }
+
+            if (currentRSL >= 19 && currentRSL <= 20)
+            {
+                if (treatment == "Crack Seal") return 2;
+                if (treatment == "Fog Coat") return 2;
+                if (treatment == "High Mineral Asphalt Emulsion") return 5;
+                if (treatment == "Sand Seal") return 2;
+                if (treatment == "Scrub Seal") return 5;
+                if (treatment == "Single Chip Seal") return 5;
+                if (treatment == "Slurry Seal") return 5;
+                if (treatment == "Microsurfacing") return 7;
+                if (treatment == "Plant Mix Seal") return 7;
+                if (treatment == "Cold In-place Recycling (2 in. with chip seal)") return 7;
+                if (treatment == "Thin Hot Mix Overlay (<2 in.)") return 7;
+                if (treatment == "HMA (leveling) & Overlay (<2 in.)") return 8;
+                if (treatment == "Hot Surface Recycling") return 8;
+                if (treatment == "Rotomill & Overlay (<2 in.)") return 8;
+            }
+
+            return 0;
         }
     }
 }

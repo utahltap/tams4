@@ -49,6 +49,11 @@
             this.textBoxBudget = new System.Windows.Forms.TextBox();
             this.labelBudget = new System.Windows.Forms.Label();
             this.panelCalculator = new System.Windows.Forms.Panel();
+            this.panelRowTotal = new System.Windows.Forms.Panel();
+            this.textBoxRowPercent = new System.Windows.Forms.TextBox();
+            this.textBoxRowArea = new System.Windows.Forms.TextBox();
+            this.textBoxRowCost = new System.Windows.Forms.TextBox();
+            this.labelRowTotal = new System.Windows.Forms.Label();
             this.buttonFullRowData = new System.Windows.Forms.Button();
             this.comboBoxResultsRow = new System.Windows.Forms.ComboBox();
             this.labelResultsRow = new System.Windows.Forms.Label();
@@ -64,6 +69,7 @@
             this.chartCurrent = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panelAnalysisFilter.SuspendLayout();
             this.panelCalculator.SuspendLayout();
+            this.panelRowTotal.SuspendLayout();
             this.tabControlAnalysis.SuspendLayout();
             this.tabPageTreatments.SuspendLayout();
             this.tabPageProjections.SuspendLayout();
@@ -83,7 +89,7 @@
             this.panelAnalysisFilter.Controls.Add(this.labelFromRSL);
             this.panelAnalysisFilter.Location = new System.Drawing.Point(11, 39);
             this.panelAnalysisFilter.Name = "panelAnalysisFilter";
-            this.panelAnalysisFilter.Size = new System.Drawing.Size(613, 690);
+            this.panelAnalysisFilter.Size = new System.Drawing.Size(613, 730);
             this.panelAnalysisFilter.TabIndex = 21;
             // 
             // buttonRemoveRow
@@ -102,7 +108,7 @@
             // 
             this.panelRows.Location = new System.Drawing.Point(3, 37);
             this.panelRows.Name = "panelRows";
-            this.panelRows.Size = new System.Drawing.Size(607, 653);
+            this.panelRows.Size = new System.Drawing.Size(607, 692);
             this.panelRows.TabIndex = 30;
             // 
             // buttonAddRow
@@ -201,6 +207,7 @@
             // panelCalculator
             // 
             this.panelCalculator.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panelCalculator.Controls.Add(this.panelRowTotal);
             this.panelCalculator.Controls.Add(this.buttonFullRowData);
             this.panelCalculator.Controls.Add(this.comboBoxResultsRow);
             this.panelCalculator.Controls.Add(this.labelResultsRow);
@@ -212,8 +219,56 @@
             this.panelCalculator.Controls.Add(this.textBoxTotalCost);
             this.panelCalculator.Location = new System.Drawing.Point(642, 63);
             this.panelCalculator.Name = "panelCalculator";
-            this.panelCalculator.Size = new System.Drawing.Size(331, 690);
+            this.panelCalculator.Size = new System.Drawing.Size(331, 728);
             this.panelCalculator.TabIndex = 27;
+            // 
+            // panelRowTotal
+            // 
+            this.panelRowTotal.Controls.Add(this.textBoxRowPercent);
+            this.panelRowTotal.Controls.Add(this.textBoxRowArea);
+            this.panelRowTotal.Controls.Add(this.textBoxRowCost);
+            this.panelRowTotal.Controls.Add(this.labelRowTotal);
+            this.panelRowTotal.Location = new System.Drawing.Point(3, 150);
+            this.panelRowTotal.Name = "panelRowTotal";
+            this.panelRowTotal.Size = new System.Drawing.Size(325, 26);
+            this.panelRowTotal.TabIndex = 37;
+            this.panelRowTotal.Visible = false;
+            // 
+            // textBoxRowPercent
+            // 
+            this.textBoxRowPercent.BackColor = System.Drawing.SystemColors.Control;
+            this.textBoxRowPercent.Location = new System.Drawing.Point(244, 3);
+            this.textBoxRowPercent.Name = "textBoxRowPercent";
+            this.textBoxRowPercent.ReadOnly = true;
+            this.textBoxRowPercent.Size = new System.Drawing.Size(64, 20);
+            this.textBoxRowPercent.TabIndex = 39;
+            // 
+            // textBoxRowArea
+            // 
+            this.textBoxRowArea.BackColor = System.Drawing.SystemColors.Control;
+            this.textBoxRowArea.Location = new System.Drawing.Point(149, 3);
+            this.textBoxRowArea.Name = "textBoxRowArea";
+            this.textBoxRowArea.ReadOnly = true;
+            this.textBoxRowArea.Size = new System.Drawing.Size(90, 20);
+            this.textBoxRowArea.TabIndex = 38;
+            // 
+            // textBoxRowCost
+            // 
+            this.textBoxRowCost.BackColor = System.Drawing.SystemColors.Control;
+            this.textBoxRowCost.Location = new System.Drawing.Point(54, 3);
+            this.textBoxRowCost.Name = "textBoxRowCost";
+            this.textBoxRowCost.ReadOnly = true;
+            this.textBoxRowCost.Size = new System.Drawing.Size(90, 20);
+            this.textBoxRowCost.TabIndex = 37;
+            // 
+            // labelRowTotal
+            // 
+            this.labelRowTotal.AutoSize = true;
+            this.labelRowTotal.Location = new System.Drawing.Point(-2, 6);
+            this.labelRowTotal.Name = "labelRowTotal";
+            this.labelRowTotal.Size = new System.Drawing.Size(56, 13);
+            this.labelRowTotal.TabIndex = 36;
+            this.labelRowTotal.Text = "Row Total";
             // 
             // buttonFullRowData
             // 
@@ -293,7 +348,7 @@
             this.tabControlAnalysis.Location = new System.Drawing.Point(-2, 0);
             this.tabControlAnalysis.Name = "tabControlAnalysis";
             this.tabControlAnalysis.SelectedIndex = 0;
-            this.tabControlAnalysis.Size = new System.Drawing.Size(638, 769);
+            this.tabControlAnalysis.Size = new System.Drawing.Size(638, 800);
             this.tabControlAnalysis.TabIndex = 29;
             this.tabControlAnalysis.Tag = "";
             // 
@@ -305,7 +360,7 @@
             this.tabPageTreatments.Location = new System.Drawing.Point(4, 22);
             this.tabPageTreatments.Name = "tabPageTreatments";
             this.tabPageTreatments.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTreatments.Size = new System.Drawing.Size(630, 743);
+            this.tabPageTreatments.Size = new System.Drawing.Size(630, 774);
             this.tabPageTreatments.TabIndex = 0;
             this.tabPageTreatments.Text = "Treatments";
             // 
@@ -317,7 +372,7 @@
             this.tabPageProjections.Location = new System.Drawing.Point(4, 22);
             this.tabPageProjections.Name = "tabPageProjections";
             this.tabPageProjections.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProjections.Size = new System.Drawing.Size(630, 743);
+            this.tabPageProjections.Size = new System.Drawing.Size(630, 774);
             this.tabPageProjections.TabIndex = 1;
             this.tabPageProjections.Text = "Projections";
             // 
@@ -327,7 +382,7 @@
             this.chartProjection.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chartProjection.Legends.Add(legend1);
-            this.chartProjection.Location = new System.Drawing.Point(10, 377);
+            this.chartProjection.Location = new System.Drawing.Point(10, 415);
             this.chartProjection.Name = "chartProjection";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
@@ -343,7 +398,7 @@
             this.chartCurrent.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.chartCurrent.Legends.Add(legend2);
-            this.chartCurrent.Location = new System.Drawing.Point(10, 6);
+            this.chartCurrent.Location = new System.Drawing.Point(10, 49);
             this.chartCurrent.Name = "chartCurrent";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
@@ -357,7 +412,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(985, 765);
+            this.ClientSize = new System.Drawing.Size(985, 803);
             this.Controls.Add(this.panelCalculator);
             this.Controls.Add(this.tabControlAnalysis);
             this.Controls.Add(this.labelBudget);
@@ -369,6 +424,8 @@
             this.panelAnalysisFilter.PerformLayout();
             this.panelCalculator.ResumeLayout(false);
             this.panelCalculator.PerformLayout();
+            this.panelRowTotal.ResumeLayout(false);
+            this.panelRowTotal.PerformLayout();
             this.tabControlAnalysis.ResumeLayout(false);
             this.tabPageTreatments.ResumeLayout(false);
             this.tabPageProjections.ResumeLayout(false);
@@ -407,5 +464,10 @@
         private System.Windows.Forms.TabPage tabPageProjections;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartProjection;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartCurrent;
+        public System.Windows.Forms.Panel panelRowTotal;
+        public System.Windows.Forms.TextBox textBoxRowPercent;
+        public System.Windows.Forms.TextBox textBoxRowArea;
+        public System.Windows.Forms.TextBox textBoxRowCost;
+        private System.Windows.Forms.Label labelRowTotal;
     }
 }
