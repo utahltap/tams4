@@ -202,7 +202,7 @@ namespace tams4a.Forms
             handleNumericUpDownChanges(costPerYard, budgetUpDown, areaUpDown, percentCoveredUpDown, "percent");
         }
 
-        private void handleNumericUpDownChanges(double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown, NumericUpDown percentCoveredUpDown, string caller)
+        public void handleNumericUpDownChanges(double costPerYard, NumericUpDown budgetUpDown, NumericUpDown areaUpDown, NumericUpDown percentCoveredUpDown, string caller = "")
         {
             if (beingHandled) return;
             beingHandled = true;
@@ -263,12 +263,8 @@ namespace tams4a.Forms
                 }
             }
 
-            formAnalysis.textBoxRowArea.Text = String.Format("{0:n0}", (Math.Round(totalTableArea, 2))) + " yds\u00b2";
-
             double newTotalArea = formAnalysis.totalArea - (double)maxTableArea + (double)totalTableArea;
             formAnalysis.textBoxTotalArea.Text = String.Format("{0:n0}", (Math.Round(newTotalArea, 2))) + " yds\u00b2";
-
-            formAnalysis.textBoxRowCost.Text = "$" + String.Format("{0:n0}", totalTableCost);
 
             double newTotalCost = formAnalysis.totalCost - (double)maxTableCost + (double)totalTableCost;
             formAnalysis.textBoxTotalCost.Text = "$" + String.Format("{0:n0}", newTotalCost);
@@ -283,7 +279,43 @@ namespace tams4a.Forms
                 formAnalysis.labelOverBudget.Visible = false;
             }
 
+            updateRowTotals();
             beingHandled = false;
+        }
+
+        public void updateRowTotals()
+        {
+            decimal totalTableArea = 0;
+            decimal maxTableArea = 0;
+            decimal totalTableCost = 0;
+            decimal maxTableCost = 0;
+
+            foreach (decimal area in areaBreakdown.Values)
+            {
+                totalTableArea += area;
+            }
+            foreach (NumericUpDown area in areaBreakdown.Keys)
+            {
+                maxTableArea += area.Maximum;
+            }
+            foreach (decimal cost in costBreakdown.Values)
+            {
+                totalTableCost += cost;
+            }
+            foreach (NumericUpDown cost in costBreakdown.Keys)
+            {
+                maxTableCost += cost.Maximum;
+            }
+
+            formAnalysis.textBoxRowArea.Text = String.Format("{0:n0}", (Math.Round(totalTableArea, 2))) + " yds\u00b2";
+            formAnalysis.textBoxRowCost.Text = "$" + String.Format("{0:n0}", totalTableCost);
+            formAnalysis.textBoxRowPercent.Text = String.Format("{0:n2}", (Math.Round(((totalTableArea / maxTableArea) * 100), 2))) + "%";
+        }
+
+        public double getAreaAtRSL(int rsl)
+        {
+            // RETURN AREA OF ROW AT GIVEN RSL
+            return 0.0;
         }
 
     }

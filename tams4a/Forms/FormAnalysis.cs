@@ -146,6 +146,7 @@ namespace tams4a.Forms
             if (rowTotalY > 700) rowTotalY = 700;
             panelRowTotal.Location = new Point(3, rowTotalY);
             panelCalculator.Controls.Add(BudgetControlTables[selectedRow]);
+            BudgetControlTables[selectedRow].updateRowTotals();
             updateCharts(true);
         }
 
@@ -345,12 +346,26 @@ namespace tams4a.Forms
             Console.WriteLine("type: " + type);
             Console.WriteLine("treatment: " + treatment);
 
+            double[] rslAreas = new double[20];
 
             foreach (DataRow row in currentRoadTable.Rows)
             {
                 int rsl = Util.ToInt(row["rsl"].ToString());
                 if (rsl == -1) continue;
-                if (rsl >= fromRSL && rsl <= toRSL && row["type"].ToString() == type) rsl += adjustRSL(rsl, treatment);
+                if (rsl >= fromRSL && rsl <= toRSL && row["type"].ToString() == type)
+                {
+                    rslAreas[rsl] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+
+                    double maxRSLArea = budgetControlTables[Util.ToInt(comboBoxResultsRow.SelectedIndex.ToString())].getAreaAtRSL(rsl);
+                    
+                    if (rslAreas[rsl] < maxRSLArea)
+                    {
+                        rsl += adjustRSL(rsl, treatment);
+                    }
+                    
+                    //TAKE FRACTION OF maxRSLArea if it rslAreas[rsl] has gone over the limit
+
+                }
                 if (rsl > 20) rsl = 20;
 
                 for (int i = 0; i < categories.Length; i++)

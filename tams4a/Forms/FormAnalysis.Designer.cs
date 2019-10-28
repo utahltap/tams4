@@ -456,7 +456,7 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Panel panelRows;
         private System.Windows.Forms.Button buttonRemoveRow;
-        private System.Windows.Forms.ComboBox comboBoxResultsRow;
+        public System.Windows.Forms.ComboBox comboBoxResultsRow;
         private System.Windows.Forms.Label labelResultsRow;
         private System.Windows.Forms.Button buttonFullRowData;
         private System.Windows.Forms.TabControl tabControlAnalysis;
