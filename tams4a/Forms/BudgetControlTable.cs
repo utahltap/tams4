@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using tams4a.Classes;
 
 namespace tams4a.Forms
 {
@@ -309,12 +310,23 @@ namespace tams4a.Forms
 
             formAnalysis.textBoxRowArea.Text = String.Format("{0:n0}", (Math.Round(totalTableArea, 2))) + " yds\u00b2";
             formAnalysis.textBoxRowCost.Text = "$" + String.Format("{0:n0}", totalTableCost);
-            formAnalysis.textBoxRowPercent.Text = String.Format("{0:n2}", (Math.Round(((totalTableArea / maxTableArea) * 100), 2))) + "%";
+            if (maxTableArea > 0)
+            {
+                formAnalysis.textBoxRowPercent.Text = String.Format("{0:n2}", (Math.Round(((totalTableArea / maxTableArea) * 100), 2))) + "%";
+            }
         }
 
         public double getAreaAtRSL(int rsl)
         {
-            // RETURN AREA OF ROW AT GIVEN RSL
+            int i = 0;
+            foreach (Control control in Controls)
+            {
+                if (control.Text == rsl.ToString())
+                {
+                    return Util.ToDouble(Controls[i + 2].Text);
+                }
+                i++;
+            }
             return 0.0;
         }
 

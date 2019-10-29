@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panelAnalysisFilter = new System.Windows.Forms.Panel();
             this.buttonRemoveRow = new System.Windows.Forms.Button();
             this.panelRows = new System.Windows.Forms.Panel();
@@ -67,6 +67,8 @@
             this.tabPageProjections = new System.Windows.Forms.TabPage();
             this.chartProjection = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartCurrent = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.buttonRefresh = new System.Windows.Forms.Button();
+            this.buttonAllRows = new System.Windows.Forms.Button();
             this.panelAnalysisFilter.SuspendLayout();
             this.panelCalculator.SuspendLayout();
             this.panelRowTotal.SuspendLayout();
@@ -367,6 +369,8 @@
             // tabPageProjections
             // 
             this.tabPageProjections.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageProjections.Controls.Add(this.buttonAllRows);
+            this.tabPageProjections.Controls.Add(this.buttonRefresh);
             this.tabPageProjections.Controls.Add(this.chartProjection);
             this.tabPageProjections.Controls.Add(this.chartCurrent);
             this.tabPageProjections.Location = new System.Drawing.Point(4, 22);
@@ -378,35 +382,55 @@
             // 
             // chartProjection
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartProjection.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartProjection.Legends.Add(legend1);
+            chartArea7.Name = "ChartArea1";
+            this.chartProjection.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            this.chartProjection.Legends.Add(legend7);
             this.chartProjection.Location = new System.Drawing.Point(10, 415);
             this.chartProjection.Name = "chartProjection";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartProjection.Series.Add(series1);
+            series7.ChartArea = "ChartArea1";
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.chartProjection.Series.Add(series7);
             this.chartProjection.Size = new System.Drawing.Size(606, 354);
             this.chartProjection.TabIndex = 3;
             this.chartProjection.Text = "chart1";
             // 
             // chartCurrent
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartCurrent.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartCurrent.Legends.Add(legend2);
-            this.chartCurrent.Location = new System.Drawing.Point(10, 49);
+            chartArea8.Name = "ChartArea1";
+            this.chartCurrent.ChartAreas.Add(chartArea8);
+            legend8.Name = "Legend1";
+            this.chartCurrent.Legends.Add(legend8);
+            this.chartCurrent.Location = new System.Drawing.Point(10, 41);
             this.chartCurrent.Name = "chartCurrent";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartCurrent.Series.Add(series2);
+            series8.ChartArea = "ChartArea1";
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            this.chartCurrent.Series.Add(series8);
             this.chartCurrent.Size = new System.Drawing.Size(606, 354);
             this.chartCurrent.TabIndex = 2;
             this.chartCurrent.Text = "chart1";
+            // 
+            // buttonRefresh
+            // 
+            this.buttonRefresh.Location = new System.Drawing.Point(529, 429);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
+            this.buttonRefresh.TabIndex = 4;
+            this.buttonRefresh.Text = "Refresh";
+            this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
+            // 
+            // buttonAllRows
+            // 
+            this.buttonAllRows.Location = new System.Drawing.Point(448, 429);
+            this.buttonAllRows.Name = "buttonAllRows";
+            this.buttonAllRows.Size = new System.Drawing.Size(75, 23);
+            this.buttonAllRows.TabIndex = 5;
+            this.buttonAllRows.Text = "All Rows";
+            this.buttonAllRows.UseVisualStyleBackColor = true;
+            this.buttonAllRows.Click += new System.EventHandler(this.buttonAllRows_Click);
             // 
             // FormAnalysis
             // 
@@ -469,5 +493,7 @@
         public System.Windows.Forms.TextBox textBoxRowArea;
         public System.Windows.Forms.TextBox textBoxRowCost;
         private System.Windows.Forms.Label labelRowTotal;
+        private System.Windows.Forms.Button buttonRefresh;
+        private System.Windows.Forms.Button buttonAllRows;
     }
 }

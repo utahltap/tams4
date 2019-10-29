@@ -267,8 +267,9 @@ namespace tams4a.Forms
                 {
                     if (rsl <= caps[i])
                     {
-                        totalAreaChart += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
-                        currentRslArea[categories[i]] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                        double area = Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString()) / 9;
+                        totalAreaChart += area;
+                        currentRslArea[categories[i]] += area;
                         break;
                     }
                 }
@@ -346,33 +347,49 @@ namespace tams4a.Forms
             Console.WriteLine("type: " + type);
             Console.WriteLine("treatment: " + treatment);
 
-            double[] rslAreas = new double[20];
+            double[] rslAreas = new double[21];
 
             foreach (DataRow row in currentRoadTable.Rows)
             {
                 int rsl = Util.ToInt(row["rsl"].ToString());
                 if (rsl == -1) continue;
+                double rowArea = (Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString())) / 9;
+                double percentOfArea = 1.0;
                 if (rsl >= fromRSL && rsl <= toRSL && row["type"].ToString() == type)
                 {
-                    rslAreas[rsl] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                    rslAreas[rsl] += rowArea;
 
                     double maxRSLArea = budgetControlTables[Util.ToInt(comboBoxResultsRow.SelectedIndex.ToString())].getAreaAtRSL(rsl);
-                    
+
                     if (rslAreas[rsl] < maxRSLArea)
                     {
                         rsl += adjustRSL(rsl, treatment);
                     }
-                    
-                    //TAKE FRACTION OF maxRSLArea if it rslAreas[rsl] has gone over the limit
-
+                    else if (rslAreas[rsl] - rowArea < maxRSLArea)
+                    {
+                        percentOfArea =  (maxRSLArea - (rslAreas[rsl] - rowArea)) / rowArea;
+                    }
                 }
                 if (rsl > 20) rsl = 20;
 
+                bool adjusted = false;
                 for (int i = 0; i < categories.Length; i++)
                 {
-                    if (rsl <= caps[i])
+                    if (rsl <= caps[i] && percentOfArea == 1.0)
                     {
-                        projectedRslArea[categories[i]] += Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
+                        projectedRslArea[categories[i]] += rowArea;
+                        break;
+                    }
+                    else if (rsl <= caps[i] && !adjusted)
+                    {
+                        projectedRslArea[categories[i]] += (1 - percentOfArea) * rowArea;
+                        rsl += adjustRSL(rsl, treatment);
+                        if (rsl > 20) rsl = 20;
+                        adjusted = true;
+                    }
+                    else if (rsl <= caps[i] && adjusted)
+                    {
+                        projectedRslArea[categories[i]] += (1 - percentOfArea) * rowArea;
                         break;
                     }
                 }
@@ -550,6 +567,16 @@ namespace tams4a.Forms
             }
 
             return 0;
+        }
+
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            updateCharts(true);
+        }
+
+        private void buttonAllRows_Click(object sender, EventArgs e)
+        {
+            //TODO: Generate graph for all rows
         }
     }
 }
