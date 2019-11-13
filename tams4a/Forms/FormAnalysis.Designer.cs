@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panelAnalysisFilter = new System.Windows.Forms.Panel();
             this.buttonRemoveRow = new System.Windows.Forms.Button();
             this.panelRows = new System.Windows.Forms.Panel();
@@ -65,16 +65,21 @@
             this.tabControlAnalysis = new System.Windows.Forms.TabControl();
             this.tabPageTreatments = new System.Windows.Forms.TabPage();
             this.tabPageProjections = new System.Windows.Forms.TabPage();
+            this.labelLength = new System.Windows.Forms.Label();
+            this.labelProject = new System.Windows.Forms.Label();
+            this.labelSlider = new System.Windows.Forms.Label();
+            this.sliderProjectLength = new System.Windows.Forms.TrackBar();
+            this.buttonAllRows = new System.Windows.Forms.Button();
+            this.buttonRefresh = new System.Windows.Forms.Button();
             this.chartProjection = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartCurrent = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.buttonRefresh = new System.Windows.Forms.Button();
-            this.buttonAllRows = new System.Windows.Forms.Button();
             this.panelAnalysisFilter.SuspendLayout();
             this.panelCalculator.SuspendLayout();
             this.panelRowTotal.SuspendLayout();
             this.tabControlAnalysis.SuspendLayout();
             this.tabPageTreatments.SuspendLayout();
             this.tabPageProjections.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderProjectLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartProjection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartCurrent)).BeginInit();
             this.SuspendLayout();
@@ -369,6 +374,10 @@
             // tabPageProjections
             // 
             this.tabPageProjections.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageProjections.Controls.Add(this.labelLength);
+            this.tabPageProjections.Controls.Add(this.labelProject);
+            this.tabPageProjections.Controls.Add(this.labelSlider);
+            this.tabPageProjections.Controls.Add(this.sliderProjectLength);
             this.tabPageProjections.Controls.Add(this.buttonAllRows);
             this.tabPageProjections.Controls.Add(this.buttonRefresh);
             this.tabPageProjections.Controls.Add(this.chartProjection);
@@ -380,37 +389,56 @@
             this.tabPageProjections.TabIndex = 1;
             this.tabPageProjections.Text = "Projections";
             // 
-            // chartProjection
+            // labelLength
             // 
-            chartArea7.Name = "ChartArea1";
-            this.chartProjection.ChartAreas.Add(chartArea7);
-            legend7.Name = "Legend1";
-            this.chartProjection.Legends.Add(legend7);
-            this.chartProjection.Location = new System.Drawing.Point(10, 415);
-            this.chartProjection.Name = "chartProjection";
-            series7.ChartArea = "ChartArea1";
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            this.chartProjection.Series.Add(series7);
-            this.chartProjection.Size = new System.Drawing.Size(606, 354);
-            this.chartProjection.TabIndex = 3;
-            this.chartProjection.Text = "chart1";
+            this.labelLength.AutoSize = true;
+            this.labelLength.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.labelLength.Location = new System.Drawing.Point(17, 437);
+            this.labelLength.Name = "labelLength";
+            this.labelLength.Size = new System.Drawing.Size(40, 13);
+            this.labelLength.TabIndex = 9;
+            this.labelLength.Text = "Length";
             // 
-            // chartCurrent
+            // labelProject
             // 
-            chartArea8.Name = "ChartArea1";
-            this.chartCurrent.ChartAreas.Add(chartArea8);
-            legend8.Name = "Legend1";
-            this.chartCurrent.Legends.Add(legend8);
-            this.chartCurrent.Location = new System.Drawing.Point(10, 41);
-            this.chartCurrent.Name = "chartCurrent";
-            series8.ChartArea = "ChartArea1";
-            series8.Legend = "Legend1";
-            series8.Name = "Series1";
-            this.chartCurrent.Series.Add(series8);
-            this.chartCurrent.Size = new System.Drawing.Size(606, 354);
-            this.chartCurrent.TabIndex = 2;
-            this.chartCurrent.Text = "chart1";
+            this.labelProject.AutoSize = true;
+            this.labelProject.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.labelProject.Location = new System.Drawing.Point(17, 422);
+            this.labelProject.Name = "labelProject";
+            this.labelProject.Size = new System.Drawing.Size(40, 13);
+            this.labelProject.TabIndex = 8;
+            this.labelProject.Text = "Project";
+            // 
+            // labelSlider
+            // 
+            this.labelSlider.AutoSize = true;
+            this.labelSlider.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelSlider.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSlider.Location = new System.Drawing.Point(65, 439);
+            this.labelSlider.Name = "labelSlider";
+            this.labelSlider.Size = new System.Drawing.Size(109, 13);
+            this.labelSlider.TabIndex = 7;
+            this.labelSlider.Text = "0 1 2 3 4 5 6 7 8 9 10";
+            // 
+            // sliderProjectLength
+            // 
+            this.sliderProjectLength.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.sliderProjectLength.Location = new System.Drawing.Point(58, 417);
+            this.sliderProjectLength.Name = "sliderProjectLength";
+            this.sliderProjectLength.Size = new System.Drawing.Size(117, 45);
+            this.sliderProjectLength.TabIndex = 6;
+            this.sliderProjectLength.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.sliderProjectLength.Scroll += new System.EventHandler(this.sliderProjectLength_Scroll);
+            // 
+            // buttonAllRows
+            // 
+            this.buttonAllRows.Location = new System.Drawing.Point(448, 429);
+            this.buttonAllRows.Name = "buttonAllRows";
+            this.buttonAllRows.Size = new System.Drawing.Size(75, 23);
+            this.buttonAllRows.TabIndex = 5;
+            this.buttonAllRows.Text = "All Rows";
+            this.buttonAllRows.UseVisualStyleBackColor = true;
+            this.buttonAllRows.Click += new System.EventHandler(this.buttonAllRows_Click);
             // 
             // buttonRefresh
             // 
@@ -422,15 +450,37 @@
             this.buttonRefresh.UseVisualStyleBackColor = true;
             this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
-            // buttonAllRows
+            // chartProjection
             // 
-            this.buttonAllRows.Location = new System.Drawing.Point(448, 429);
-            this.buttonAllRows.Name = "buttonAllRows";
-            this.buttonAllRows.Size = new System.Drawing.Size(75, 23);
-            this.buttonAllRows.TabIndex = 5;
-            this.buttonAllRows.Text = "All Rows";
-            this.buttonAllRows.UseVisualStyleBackColor = true;
-            this.buttonAllRows.Click += new System.EventHandler(this.buttonAllRows_Click);
+            chartArea1.Name = "ChartArea1";
+            this.chartProjection.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartProjection.Legends.Add(legend1);
+            this.chartProjection.Location = new System.Drawing.Point(10, 415);
+            this.chartProjection.Name = "chartProjection";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartProjection.Series.Add(series1);
+            this.chartProjection.Size = new System.Drawing.Size(606, 354);
+            this.chartProjection.TabIndex = 3;
+            this.chartProjection.Text = "chart1";
+            // 
+            // chartCurrent
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chartCurrent.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartCurrent.Legends.Add(legend2);
+            this.chartCurrent.Location = new System.Drawing.Point(10, 41);
+            this.chartCurrent.Name = "chartCurrent";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartCurrent.Series.Add(series2);
+            this.chartCurrent.Size = new System.Drawing.Size(606, 354);
+            this.chartCurrent.TabIndex = 2;
+            this.chartCurrent.Text = "chart1";
             // 
             // FormAnalysis
             // 
@@ -453,6 +503,8 @@
             this.tabControlAnalysis.ResumeLayout(false);
             this.tabPageTreatments.ResumeLayout(false);
             this.tabPageProjections.ResumeLayout(false);
+            this.tabPageProjections.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderProjectLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartProjection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartCurrent)).EndInit();
             this.ResumeLayout(false);
@@ -495,5 +547,9 @@
         private System.Windows.Forms.Label labelRowTotal;
         private System.Windows.Forms.Button buttonRefresh;
         private System.Windows.Forms.Button buttonAllRows;
+        private System.Windows.Forms.TrackBar sliderProjectLength;
+        private System.Windows.Forms.Label labelSlider;
+        private System.Windows.Forms.Label labelLength;
+        private System.Windows.Forms.Label labelProject;
     }
 }

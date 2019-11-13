@@ -28,6 +28,7 @@ namespace tams4a.Forms
         private ModuleRoads moduleRoads;
         private RoadReports roadReports;
         private bool initCalculateCost = false;
+        private bool allRows = false;
 
         internal Dictionary<int, BudgetControlTable> BudgetControlTables { get => budgetControlTables; set => budgetControlTables = value; }
 
@@ -141,6 +142,7 @@ namespace tams4a.Forms
 
         private void comboBoxResultsRow_SelectedIndexChanged(object sender, EventArgs e)
         {
+            allRows = false;
             if (comboBoxResultsRow.SelectedIndex == -1) return;
             if (panelCalculator.Controls.Count == 11) panelCalculator.Controls.RemoveAt(10);
             int selectedRow = comboBoxResultsRow.SelectedIndex;
@@ -359,6 +361,10 @@ namespace tams4a.Forms
 
                 foreach (DataRow row in projectedTreatmentsTable.Rows)
                 {
+                    if (Util.ToInt(row["TAMSID"].ToString()) == 203)
+                    {
+                        Console.WriteLine("Break Here");
+                    }
                     foreach (DataRow fullTableRow in currentRoadTable.Rows)
                     {
                         if (fullTableRow["TAMSID"].ToString() == row["TAMSID"].ToString())
@@ -369,15 +375,15 @@ namespace tams4a.Forms
                     }
                     int rsl = Util.ToInt(row["rsl"].ToString());
                     if (rsl == -1 || String.IsNullOrEmpty(row["rsl"].ToString())) continue;
-                    double rowArea = (Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString())) / 9;
+                    double rowArea = Math.Round((Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString())) / 9);
                     double percentOfArea = 1.0;
                     if (rsl >= fromRSL && rsl <= toRSL && row["type"].ToString() == type)
                     {
                         rowRSLAreas[rsl] += rowArea;
 
-                        double maxRSLArea = budgetControlTables[currentRow].getAreaAtRSL(rsl);
+                        double maxRSLArea = budgetControlTables[currentRow].getAreaAtRSL(rsl) + 10;
 
-                        if (rowRSLAreas[rsl] < maxRSLArea)
+                        if (rowRSLAreas[rsl] <= maxRSLArea)
                         {
                             rsl += adjustRSL(rsl, treatment);
                         }
@@ -387,6 +393,18 @@ namespace tams4a.Forms
                         }
                     }
                     if (rsl > 20) rsl = 20;
+                    rsl -= sliderProjectLength.Value;
+                    if (rsl < 0) rsl = 0;
+
+
+                    ///////////////////////////////////////////////////////////////////////
+
+                    if (rsl == 0)
+                    {
+                        Console.WriteLine(row["TAMSID"]);
+                    }
+
+                    ///////////////////////////////////////////////////////////////////////
 
                     bool adjusted = false;
                     for (int i = 0; i < categories.Length; i++)
@@ -401,6 +419,8 @@ namespace tams4a.Forms
                             projectedRslArea[categories[i]] += (1 - percentOfArea) * rowArea;
                             rsl += adjustRSL(rsl, treatment);
                             if (rsl > 20) rsl = 20;
+                            rsl -= sliderProjectLength.Value;
+                            if (rsl < 0) rsl = 0;
                             adjusted = true;
                         }
                         else if (rsl <= caps[i] && adjusted)
@@ -610,12 +630,20 @@ namespace tams4a.Forms
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
+            allRows = false;
             updateCharts(true);
         }
 
         private void buttonAllRows_Click(object sender, EventArgs e)
         {
+            allRows = true;
             updateCharts(true, true);
+        }
+
+        private void sliderProjectLength_Scroll(object sender, EventArgs e)
+        {
+            if (allRows) updateCharts(true, true);
+            else updateCharts(true);
         }
     }
 }
