@@ -35,7 +35,7 @@ namespace tams4a.Classes
         static private readonly string RoadSelectionSql = @"SELECT MAX(roadinfo.id) AS max_id, roadinfo.* 
                     FROM
                     (
-                        SELECT TAMSID, MAX(survey_date) AS maxdate
+                        SELECT TAMSID, MAX(id) AS maxid
                         FROM road
                         WHERE TAMSID IN ([[IDLIST]])
                         GROUP BY TAMSID
@@ -43,7 +43,7 @@ namespace tams4a.Classes
                     JOIN road AS roadinfo
                         ON (
                                 roadinfo.TAMSID = roadids.TAMSID AND
-                                roadinfo.survey_date = roadids.maxdate
+                                roadinfo.id = roadids.maxid
                             )
                     GROUP BY roadinfo.TAMSID";
 
@@ -213,12 +213,6 @@ namespace tams4a.Classes
             resetSaveCondition();
             return true;
         }
-
-        //private void checkHotKey(object sender, KeyEventArgs e)
-        //{
-        //    Console.WriteLine("Event fired!");
-        //    if (e.KeyCode == Keys.S) saveHandler(sender, e);
-        //}
 
         private void setSideWalkInfo(object sender, EventArgs e)
         {
@@ -601,7 +595,7 @@ namespace tams4a.Classes
             {
                 Properties.Settings.Default.lastPhoto = roadControls.textBoxPhotoFile.Text;
             }
-            //  Asphalt         Unpaved         Concrete
+                                                                                                                     //  Asphalt         Unpaved         Concrete
             if (roadControls.distress1.Visible) { values["distress1"] = roadControls.distress1.Value.ToString(); }   //  Fatigue         Potholes       Spalling
             if (roadControls.distress2.Visible) { values["distress2"] = roadControls.distress2.Value.ToString(); }   //  Edge            Rutting        Joint Seals
             if (roadControls.distress3.Visible) { values["distress3"] = roadControls.distress3.Value.ToString(); }   //  Longitudional   X-section      Corners
@@ -942,15 +936,14 @@ namespace tams4a.Classes
             ControlsPage.Controls.Add(roadAdd);
         }
 
-        public string getSelectAllSQL()
+        public string getSelectAllSQL(bool fullQuery = true)
         {
-            FeatureLayer selectionLayer = (FeatureLayer)Layer;
-            selectionLayer.SelectAll();
-            ISelection shpSelection = selectionLayer.Selection;
-            DataTable selectionTable = shpSelection.ToFeatureSet().DataTable;
-            string thisSql = SelectionSql.Replace("[[IDLIST]]", extractTAMSIDs(selectionTable));
-            selectionLayer.ClearSelection();
-            return thisSql;
+            string sql = "WITH newestRoads AS (SELECT MAX(roadinfo.id) AS max_id, roadinfo.* FROM (SELECT TAMSID, MAX(id) AS maxid FROM road WHERE TAMSID IN" +
+                         "(SELECT DISTINCT TAMSID FROM road) GROUP BY TAMSID) AS roadids " +
+                         "JOIN road AS roadinfo ON(roadinfo.TAMSID = roadids.TAMSID AND roadinfo.id = roadids.maxid) GROUP BY roadinfo.TAMSID) ";
+            if (fullQuery)
+                sql += "SELECT * FROM road WHERE id IN(SELECT id FROM newestRoads) ORDER BY TAMSID;";
+            return sql;
         }        
     }
 

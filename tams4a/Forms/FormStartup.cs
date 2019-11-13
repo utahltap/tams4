@@ -106,7 +106,6 @@ namespace tams4a.Forms
             }
 
             filename = openDialog.FileName;
-            Console.WriteLine("FILE NAME: " + filename);
             openProjectFile(filename);
         }
 

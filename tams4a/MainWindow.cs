@@ -169,8 +169,8 @@ namespace tams4a
             if (e.Control && e.KeyCode == Keys.S)
             {
                 if (tabControlControls.SelectedIndex == 0) road.saveHandler(sender, e);
-                if (tabControlControls.SelectedIndex == 1) sign.saveHandler(sender, e);
-                if (tabControlControls.SelectedIndex == 2) other.saveHandler(sender, e);
+                else if (tabControlControls.SelectedIndex == 1) sign.saveHandler(sender, e);
+                else if (tabControlControls.SelectedIndex == 2) other.saveHandler(sender, e);
             }
         }
 
@@ -538,7 +538,6 @@ namespace tams4a
             {
                 foreach (string name in ids)
                 {
-                    Console.WriteLine(name);
                     DataTable searchName = Database.GetDataByQuery(Project.conn, "SELECT DISTINCT TAMSID FROM road WHERE name LIKE '%" + name + "%';");
                     foreach (DataRow row in searchName.Rows)
                     {

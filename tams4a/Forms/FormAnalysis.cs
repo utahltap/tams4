@@ -27,6 +27,7 @@ namespace tams4a.Forms
         public Dictionary<string, double> pricePerYard = new Dictionary<string, double>();
         private ModuleRoads moduleRoads;
         private RoadReports roadReports;
+        private bool initCalculateCost = false;
 
         internal Dictionary<int, BudgetControlTable> BudgetControlTables { get => budgetControlTables; set => budgetControlTables = value; }
 
@@ -83,14 +84,17 @@ namespace tams4a.Forms
                 {
                     subQuery += " AND type = '" + rowPanel.getFunctionalClassification() + "'";
                 }
-                subQuery += " GROUP BY TAMSID ORDER BY TAMSID ASC, survey_date DESC";
-                string fullQuery = "CREATE VIEW newestRoads AS " + moduleRoads.getSelectAllSQL() + ";"
-                    + "CREATE VIEW filteredRoads AS SELECT * FROM newestRoads INNER JOIN ( SELECT * FROM road " + subQuery + ");"
-                    + "SELECT TAMSID, survey_date, name, width, length, rsl, type, speed_limit, lanes, surface, from_address, to_address, "
-                    + "photo, distress1, distress2, distress3, distress4, distress5, distress6, distress7, distress8, distress9, "
-                    + "suggested_treatment, notes FROM filteredRoads " + subQuery + ";"
-                    + "DROP VIEW newestRoads;" 
-                    + "DROP VIEW filteredRoads;";
+                subQuery += " ORDER BY TAMSID ASC;";
+
+                string fullQuery = moduleRoads.getSelectAllSQL(false) + "SELECT * FROM newestRoads " + subQuery;
+                
+                //string fullQuery = "CREATE VIEW newestRoads AS " + moduleRoads.getSelectAllSQL() + ";"
+                //    + "CREATE VIEW filteredRoads AS SELECT * FROM newestRoads INNER JOIN ( SELECT * FROM road " + subQuery + ");"
+                //    + "SELECT TAMSID, survey_date, name, width, length, rsl, type, speed_limit, lanes, surface, from_address, to_address, "
+                //    + "photo, distress1, distress2, distress3, distress4, distress5, distress6, distress7, distress8, distress9, "
+                //    + "suggested_treatment, notes FROM filteredRoads " + subQuery + ";"
+                //    + "DROP VIEW newestRoads;" 
+                //    + "DROP VIEW filteredRoads;";
 
                 rowQueries[i] = fullQuery;
 
@@ -123,6 +127,12 @@ namespace tams4a.Forms
 
             AnalysisRowPanel currentRow = (AnalysisRowPanel)panelRows.Controls[0];
             Dictionary<int, double> rslArea = currentRow.getRSLAreas();
+            initCalculateCost = true;
+            for (i = 0; i < comboBoxResultsRow.Items.Count; ++i)
+            {
+                comboBoxResultsRow.SelectedIndex = i;
+            }
+            initCalculateCost = false;
             comboBoxResultsRow.SelectedIndex = -1;
             comboBoxResultsRow.SelectedIndex = 0;
             buttonFullRowData.Enabled = true;
@@ -142,12 +152,14 @@ namespace tams4a.Forms
                 BudgetControlTables[selectedRow].addRowTable(pricePerYard, rslArea, currentRow);
                 currentRow.tableValid = true;
             }
+            if (initCalculateCost) BudgetControlTables[selectedRow].Visible = false;
+            else BudgetControlTables[selectedRow].Visible = true;
             int rowTotalY = BudgetControlTables[selectedRow].Size.Height + 130;
             if (rowTotalY > 700) rowTotalY = 700;
             panelRowTotal.Location = new Point(3, rowTotalY);
             panelCalculator.Controls.Add(BudgetControlTables[selectedRow]);
             BudgetControlTables[selectedRow].updateRowTotals();
-            updateCharts(true);
+            if (!initCalculateCost) updateCharts(true);
         }
 
         private void textBoxBudget_RemovePlaceholder(object sender, EventArgs e)
@@ -241,7 +253,7 @@ namespace tams4a.Forms
             report.Show();
         }
 
-        private void updateCharts(bool justProjection = false)
+        private void updateCharts(bool justProjection = false, bool allRows = false)
         {
             if (rowQueries[comboBoxResultsRow.SelectedIndex] == "none") return;
 
@@ -261,7 +273,7 @@ namespace tams4a.Forms
             foreach (DataRow row in currentRoadTable.Rows)
             {
                 int rsl = Util.ToInt(row["rsl"].ToString());
-                if (rsl == -1) continue;
+                if (rsl == -1 || String.IsNullOrEmpty(row["rsl"].ToString())) continue;
 
                 for (int i = 0; i < categories.Length; i++)
                 {
@@ -283,8 +295,7 @@ namespace tams4a.Forms
                 range[i] = Math.Round(currentRslArea[categories[i]] / totalAreaChart, 3) * 100;
             }
 
-
-            updateProjectionChart(currentRoadTable, totalAreaChart);
+            updateProjectionChart(currentRoadTable, totalAreaChart, allRows);
             if (justProjection) return;
 
             Color[] colors = { Color.DarkRed, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.DeepSkyBlue, Color.Blue };
@@ -321,12 +332,10 @@ namespace tams4a.Forms
             chartCurrent.Show();
         }
 
-        private void updateProjectionChart(DataTable currentRoadTable, double totalAreaChart)
+        private void updateProjectionChart(DataTable currentRoadTable, double totalAreaChart, bool allRows)
         {
             string[] categories = { "0", "1-3", "4-6", "7-9", "10-12", "13-15", "16-18", "19-20" };
             int[] caps = { 0, 3, 6, 9, 12, 15, 18, 20 };
-
-            DataTable projectedTreatmentsTable = Database.GetDataByQuery(Project.conn, rowQueries[comboBoxResultsRow.SelectedIndex]);
 
             Dictionary<string, double> projectedRslArea = new Dictionary<string, double>();
             for (int i = 0; i < categories.Length; i++)
@@ -334,62 +343,90 @@ namespace tams4a.Forms
                 projectedRslArea.Add(categories[i], 0.0);
             }
 
+            for (int currentRow = 0; currentRow < comboBoxResultsRow.Items.Count; currentRow++)
+            {
+                if (!allRows) currentRow = comboBoxResultsRow.SelectedIndex;
+                AnalysisRowPanel rowPanel = (AnalysisRowPanel)panelRows.Controls[currentRow];
 
-            AnalysisRowPanel rowPanel = (AnalysisRowPanel)panelRows.Controls[comboBoxResultsRow.SelectedIndex];
+                DataTable projectedTreatmentsTable = Database.GetDataByQuery(Project.conn, rowQueries[currentRow]);
 
-            int fromRSL = rowPanel.getFromRSL();
-            int toRSL = rowPanel.getToRSL();
-            string type = rowPanel.getFunctionalClassification();
-            string treatment = rowPanel.getTreatment();
+                int fromRSL = rowPanel.getFromRSL();
+                int toRSL = rowPanel.getToRSL();
+                string type = rowPanel.getFunctionalClassification();
+                string treatment = rowPanel.getTreatment();
 
-            Console.WriteLine("fromRSL: " + fromRSL);
-            Console.WriteLine("toRSL: " + toRSL);
-            Console.WriteLine("type: " + type);
-            Console.WriteLine("treatment: " + treatment);
+                double[] rowRSLAreas = new double[21];
 
-            double[] rslAreas = new double[21];
+                foreach (DataRow row in projectedTreatmentsTable.Rows)
+                {
+                    foreach (DataRow fullTableRow in currentRoadTable.Rows)
+                    {
+                        if (fullTableRow["TAMSID"].ToString() == row["TAMSID"].ToString())
+                        {
+                            currentRoadTable.Rows.Remove(fullTableRow);
+                            break;
+                        }
+                    }
+                    int rsl = Util.ToInt(row["rsl"].ToString());
+                    if (rsl == -1 || String.IsNullOrEmpty(row["rsl"].ToString())) continue;
+                    double rowArea = (Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString())) / 9;
+                    double percentOfArea = 1.0;
+                    if (rsl >= fromRSL && rsl <= toRSL && row["type"].ToString() == type)
+                    {
+                        rowRSLAreas[rsl] += rowArea;
 
+                        double maxRSLArea = budgetControlTables[currentRow].getAreaAtRSL(rsl);
+
+                        if (rowRSLAreas[rsl] < maxRSLArea)
+                        {
+                            rsl += adjustRSL(rsl, treatment);
+                        }
+                        else if (rowRSLAreas[rsl] - rowArea < maxRSLArea)
+                        {
+                            percentOfArea = (maxRSLArea - (rowRSLAreas[rsl] - rowArea)) / rowArea;
+                        }
+                    }
+                    if (rsl > 20) rsl = 20;
+
+                    bool adjusted = false;
+                    for (int i = 0; i < categories.Length; i++)
+                    {
+                        if (rsl <= caps[i] && percentOfArea == 1.0)
+                        {
+                            projectedRslArea[categories[i]] += rowArea;
+                            break;
+                        }
+                        else if (rsl <= caps[i] && !adjusted)
+                        {
+                            projectedRslArea[categories[i]] += (1 - percentOfArea) * rowArea;
+                            rsl += adjustRSL(rsl, treatment);
+                            if (rsl > 20) rsl = 20;
+                            adjusted = true;
+                        }
+                        else if (rsl <= caps[i] && adjusted)
+                        {
+                            projectedRslArea[categories[i]] += (1 - percentOfArea) * rowArea;
+                            break;
+                        }
+                    }
+                }
+                if (!allRows) break;
+            }
+
+            int numRowsNotUsed = 0;
             foreach (DataRow row in currentRoadTable.Rows)
             {
                 int rsl = Util.ToInt(row["rsl"].ToString());
-                if (rsl == -1) continue;
+                if (rsl == -1 || String.IsNullOrEmpty(row["rsl"].ToString())) continue;
+
+                numRowsNotUsed++;
+
                 double rowArea = (Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString())) / 9;
-                double percentOfArea = 1.0;
-                if (rsl >= fromRSL && rsl <= toRSL && row["type"].ToString() == type)
-                {
-                    rslAreas[rsl] += rowArea;
-
-                    double maxRSLArea = budgetControlTables[Util.ToInt(comboBoxResultsRow.SelectedIndex.ToString())].getAreaAtRSL(rsl);
-
-                    if (rslAreas[rsl] < maxRSLArea)
-                    {
-                        rsl += adjustRSL(rsl, treatment);
-                    }
-                    else if (rslAreas[rsl] - rowArea < maxRSLArea)
-                    {
-                        percentOfArea =  (maxRSLArea - (rslAreas[rsl] - rowArea)) / rowArea;
-                    }
-                }
-                if (rsl > 20) rsl = 20;
-
-                bool adjusted = false;
                 for (int i = 0; i < categories.Length; i++)
                 {
-                    if (rsl <= caps[i] && percentOfArea == 1.0)
+                    if (rsl <= caps[i])
                     {
                         projectedRslArea[categories[i]] += rowArea;
-                        break;
-                    }
-                    else if (rsl <= caps[i] && !adjusted)
-                    {
-                        projectedRslArea[categories[i]] += (1 - percentOfArea) * rowArea;
-                        rsl += adjustRSL(rsl, treatment);
-                        if (rsl > 20) rsl = 20;
-                        adjusted = true;
-                    }
-                    else if (rsl <= caps[i] && adjusted)
-                    {
-                        projectedRslArea[categories[i]] += (1 - percentOfArea) * rowArea;
                         break;
                     }
                 }
@@ -441,6 +478,8 @@ namespace tams4a.Forms
 
         private int adjustRSL(int currentRSL, string treatment)
         {
+            /* Retrun values are determined from the 2018 Maintenance Performance Chart */
+
             if (treatment == "Cold In-place Recycling (2/2 in.)") return 15;
             if (treatment == "Thick Overlay (3 in.)") return 12;
             if (treatment == "Rotomill & Thick Overlay (3 in.)") return 12;
@@ -576,7 +615,7 @@ namespace tams4a.Forms
 
         private void buttonAllRows_Click(object sender, EventArgs e)
         {
-            //TODO: Generate graph for all rows
+            updateCharts(true, true);
         }
     }
 }

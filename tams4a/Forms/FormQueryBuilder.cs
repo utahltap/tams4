@@ -78,11 +78,7 @@ namespace tams4a.Forms
             if (TableName == "road")
             {
                 string subQuery = getRoadQuery(" WHERE ");
-                query = "CREATE VIEW newestRoads AS " + moduleRoads.getSelectAllSQL() + ";"
-                    + "CREATE VIEW filteredRoads AS SELECT * FROM newestRoads INNER JOIN ( SELECT * FROM road " + subQuery + ");"
-                    + "SELECT TAMSID, survey_date, name, width, length, rsl, type, speed_limit, lanes, surface, from_address, to_address, "
-                    + "photo, distress1, distress2, distress3, distress4, distress5, distress6, distress7, distress8, distress9, "
-                    + "suggested_treatment, notes FROM filteredRoads " + subQuery;
+                query = moduleRoads.getSelectAllSQL(false) + "SELECT * FROM newestRoads " + subQuery;
             }
             else if (TableName == "sign") query = getSignQuery(query);
             else if (TableName == "support")
