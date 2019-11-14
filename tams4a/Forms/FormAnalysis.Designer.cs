@@ -35,6 +35,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAnalysis));
             this.panelAnalysisFilter = new System.Windows.Forms.Panel();
             this.buttonRemoveRow = new System.Windows.Forms.Button();
             this.panelRows = new System.Windows.Forms.Panel();
@@ -486,12 +487,19 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(985, 803);
             this.Controls.Add(this.panelCalculator);
             this.Controls.Add(this.tabControlAnalysis);
             this.Controls.Add(this.labelBudget);
             this.Controls.Add(this.textBoxBudget);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(1001, 842);
+            this.MinimumSize = new System.Drawing.Size(1001, 842);
             this.Name = "FormAnalysis";
+            this.Opacity = 0.9D;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormAnalysis";
             this.panelAnalysisFilter.ResumeLayout(false);

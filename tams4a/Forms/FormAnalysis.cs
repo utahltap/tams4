@@ -86,17 +86,7 @@ namespace tams4a.Forms
                     subQuery += " AND type = '" + rowPanel.getFunctionalClassification() + "'";
                 }
                 subQuery += " ORDER BY TAMSID ASC;";
-
                 string fullQuery = moduleRoads.getSelectAllSQL(false) + "SELECT * FROM newestRoads " + subQuery;
-                
-                //string fullQuery = "CREATE VIEW newestRoads AS " + moduleRoads.getSelectAllSQL() + ";"
-                //    + "CREATE VIEW filteredRoads AS SELECT * FROM newestRoads INNER JOIN ( SELECT * FROM road " + subQuery + ");"
-                //    + "SELECT TAMSID, survey_date, name, width, length, rsl, type, speed_limit, lanes, surface, from_address, to_address, "
-                //    + "photo, distress1, distress2, distress3, distress4, distress5, distress6, distress7, distress8, distress9, "
-                //    + "suggested_treatment, notes FROM filteredRoads " + subQuery + ";"
-                //    + "DROP VIEW newestRoads;" 
-                //    + "DROP VIEW filteredRoads;";
-
                 rowQueries[i] = fullQuery;
 
                 DataTable rslAreas = Database.GetDataByQuery(Project.conn, rowQueries[i]);
@@ -211,7 +201,7 @@ namespace tams4a.Forms
             comboBoxResultsRow.Items.AddRange(new object[] { numberOfRows.ToString() });
             rowQueries[numberOfRows - 1] = "";
             buttonRemoveRow.Enabled = true;
-            if (numberOfRows == 23) buttonAddRow.Enabled = false;
+            if (numberOfRows == 24) buttonAddRow.Enabled = false;
         }
 
         private void buttonDeleteRow_Click(object sender, EventArgs e)
@@ -345,6 +335,12 @@ namespace tams4a.Forms
                 projectedRslArea.Add(categories[i], 0.0);
             }
 
+            Dictionary<string, bool> projectedIDs = new Dictionary<string, bool>();
+            foreach (DataRow row in currentRoadTable.Rows)
+            {
+                projectedIDs[row["TAMSID"].ToString()] = false;
+            }
+
             for (int currentRow = 0; currentRow < comboBoxResultsRow.Items.Count; currentRow++)
             {
                 if (!allRows) currentRow = comboBoxResultsRow.SelectedIndex;
@@ -361,18 +357,7 @@ namespace tams4a.Forms
 
                 foreach (DataRow row in projectedTreatmentsTable.Rows)
                 {
-                    if (Util.ToInt(row["TAMSID"].ToString()) == 203)
-                    {
-                        Console.WriteLine("Break Here");
-                    }
-                    foreach (DataRow fullTableRow in currentRoadTable.Rows)
-                    {
-                        if (fullTableRow["TAMSID"].ToString() == row["TAMSID"].ToString())
-                        {
-                            currentRoadTable.Rows.Remove(fullTableRow);
-                            break;
-                        }
-                    }
+                    projectedIDs[row["TAMSID"].ToString()] = true;
                     int rsl = Util.ToInt(row["rsl"].ToString());
                     if (rsl == -1 || String.IsNullOrEmpty(row["rsl"].ToString())) continue;
                     double rowArea = Math.Round((Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString())) / 9);
@@ -395,16 +380,6 @@ namespace tams4a.Forms
                     if (rsl > 20) rsl = 20;
                     rsl -= sliderProjectLength.Value;
                     if (rsl < 0) rsl = 0;
-
-
-                    ///////////////////////////////////////////////////////////////////////
-
-                    if (rsl == 0)
-                    {
-                        Console.WriteLine(row["TAMSID"]);
-                    }
-
-                    ///////////////////////////////////////////////////////////////////////
 
                     bool adjusted = false;
                     for (int i = 0; i < categories.Length; i++)
@@ -433,15 +408,15 @@ namespace tams4a.Forms
                 if (!allRows) break;
             }
 
-            int numRowsNotUsed = 0;
             foreach (DataRow row in currentRoadTable.Rows)
             {
+                if (projectedIDs[row["TAMSID"].ToString()]) continue;
                 int rsl = Util.ToInt(row["rsl"].ToString());
                 if (rsl == -1 || String.IsNullOrEmpty(row["rsl"].ToString())) continue;
+                rsl -= sliderProjectLength.Value;
+                if (rsl < 0) rsl = 0;
 
-                numRowsNotUsed++;
-
-                double rowArea = (Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString())) / 9;
+                double rowArea = Math.Round((Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString())) / 9);
                 for (int i = 0; i < categories.Length; i++)
                 {
                     if (rsl <= caps[i])
