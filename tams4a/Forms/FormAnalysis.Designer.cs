@@ -498,7 +498,6 @@
             this.MaximumSize = new System.Drawing.Size(1001, 842);
             this.MinimumSize = new System.Drawing.Size(1001, 842);
             this.Name = "FormAnalysis";
-            this.Opacity = 0.9D;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormAnalysis";
