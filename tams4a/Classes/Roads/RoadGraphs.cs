@@ -106,6 +106,7 @@ namespace tams4a.Classes.Roads
                     string roadType = roadChooser.chooseRoad();
                     DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
                     var roads = roadTable.Select("surface = '" + roadType + "'");
+
                     if (roads.Length == 0)
                     {
                         MessageBox.Show("No graph could be generated because there are no roads of type " + roadType + ".", "No Roads", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -192,6 +193,7 @@ namespace tams4a.Classes.Roads
                     int[] caps = { 0, 3, 6, 9, 12, 15, 18, 20 };
                     DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
                     var roads = roadTable.Select("surface = '" + roadType + "'");
+                    if (roadType == "All") roads = roadTable.Select();
                     if (roads.Length == 0)
                     {
                         MessageBox.Show("No graph could be generated because there are no roads of type " + roadType + ".", "No Roads", MessageBoxButtons.OK, MessageBoxIcon.Warning);

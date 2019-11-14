@@ -10,6 +10,7 @@ namespace tams4a.Forms
         private string TableName;
         private string query;
         private bool firstOption = true;
+        private ModuleRoads moduleRoads;
 
         private const int ROAD_FORM_HEIGHT = 465;
         private const int ROAD_PANEL_HEIGHT = 354;
@@ -33,10 +34,11 @@ namespace tams4a.Forms
         private const int OTHER_BUTTON_Y_LOCATION = 312;
 
 
-        public FormQueryBuilder(TamsProject Project, int tab)
+        public FormQueryBuilder(TamsProject Project, int tab, ModuleRoads roads)
         {
             InitializeComponent();
             CenterToScreen();
+            moduleRoads = roads;
             DataTable mutcdCodes = Database.GetDataByQuery(Project.conn, "SELECT mutcd_code FROM mutcd_lookup;");
             comboBoxMUTCDCodeValue.DataSource = mutcdCodes;
             comboBoxMUTCDCodeValue.DisplayMember = "mutcd_code";
@@ -73,14 +75,18 @@ namespace tams4a.Forms
         public string getQuery()
         {
             query = "SELECT * FROM " + TableName + " WHERE ";
-            if (TableName == "road") query = getRoadQuery(query);
-            if (TableName == "sign") query = getSignQuery(query);
-            if (TableName == "support")
+            if (TableName == "road")
+            {
+                string subQuery = getRoadQuery(" WHERE ");
+                query = moduleRoads.getSelectAllSQL(false) + "SELECT * FROM newestRoads " + subQuery;
+            }
+            else if (TableName == "sign") query = getSignQuery(query);
+            else if (TableName == "support")
             {
                 TableName = "sign_support";
                 query = getSupportQuery("SELECT * FROM sign_support WHERE ");
             }
-            if (TableName == "other")
+            else if (TableName == "other")
             {
                 TableName = "miscellaneous";
                 if (comboBoxLandmarkType.Text == "Roads with Sidewalks")

@@ -275,7 +275,6 @@ namespace tams4a.Forms
                 if (updateWidth)sql += "\nUPDATE road SET width = (SELECT " + width + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
                 if (updateStreetname)sql += "\nUPDATE road SET name = (SELECT " + streetname + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
                 if (updateTamsid)sql += "\nUPDATE road SET TAMSID = (SELECT " + tamsid + " FROM shape WHERE road.TAMSID = " + tamsid + ");";
-                Console.WriteLine(sql);
                 Database.ExecuteNonQuery(Project.conn, sql);
             }
 

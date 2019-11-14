@@ -39,7 +39,7 @@ namespace tams4a.Classes
             if (window.tabControlControls.SelectedIndex == 0) selectTab = 0;
             if (window.tabControlControls.SelectedIndex == 1) selectTab = 1;
             if (window.tabControlControls.SelectedIndex == 2) selectTab = 3;
-            FormQueryBuilder tableFilters = new FormQueryBuilder(Project, selectTab);
+            FormQueryBuilder tableFilters = new FormQueryBuilder(Project, selectTab, moduleRoads);
 
             if (tableFilters.ShowDialog() == DialogResult.OK)
             {

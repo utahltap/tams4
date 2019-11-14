@@ -139,7 +139,6 @@ namespace tams4a.Forms
         private void checkBoxRoad_CheckedChanged(object sender, EventArgs e)
         {
             FeatureLayer selectionLayer = (FeatureLayer)mainWindow.uxMap.Layers[0];
-            Console.WriteLine(mainWindow.uxMap.Layers);
             if (!checkBoxRoad.Checked)
             {
                 selectionLayer.UseDynamicVisibility = true;

@@ -114,19 +114,32 @@ namespace tams4a.Classes.Roads
             {
                 DataTable selectedResultsTable = Database.GetDataByQuery(Project.conn, thisSql);
                 double totalCost = 0;
+                double totalArea = 0;
 
                 foreach (DataRow row in selectedResultsTable.Rows)
                 {
                     DataRow nr = general.NewRow();
                     addRows(nr, row);
                     general.Rows.Add(nr);
+                    string costStr = nr["Cost"].ToString();
+                    if (costStr[costStr.Length - 1] == 'k')
+                    {
+                        totalCost += Util.ToDouble(costStr.Remove(costStr.Length - 1)) * 1000;
+                    }
+                    else if (costStr[costStr.Length - 1] == 'M')
+                    {
+                        totalCost += Util.ToDouble(costStr.Remove(costStr.Length - 1)) * 1000000;
+                    }
+                    else
+                    {
+                        totalCost += Util.ToDouble(costStr);
+                    }
+                    totalArea += Util.ToDouble(nr["Area (yds\u00b2)"].ToString());
                 }
                 general.DefaultView.Sort = "Name asc, Treatment asc, From Address asc";
                 general = general.DefaultView.ToTable();
                 DataRow totals = general.NewRow();
-                totals["Surface"] = "Total";
-                totals["Governing Distress"] = "Estimated";
-                totals["Treatment"] = "Cost";
+                totals["Treatment"] = "Total";
                 if (totalCost > 1000000)
                 {
                     totals["Cost"] = Math.Round(totalCost / 1000000, 2).ToString() + "M";
@@ -139,6 +152,7 @@ namespace tams4a.Classes.Roads
                 {
                     totals["Cost"] = Math.Round(totalCost).ToString();
                 }
+                totals["Area (yds\u00b2)"] = totalArea / 9; 
                 general.Rows.Add(totals);
                 reportTable = general.DefaultView.ToTable();
                 FormOutput report = new FormOutput(Project, moduleRoads);
@@ -222,13 +236,14 @@ namespace tams4a.Classes.Roads
             general.Columns.Add("Width (ft)", typeInt);
             general.Columns.Add("Length (ft)", typeInt);
             general.Columns.Add("Lanes", typeInt);
+            general.Columns.Add("Speed Limit", typeInt);
             general.Columns.Add("From Address");
             general.Columns.Add("To Address");
             general.Columns.Add("Surface");
             general.Columns.Add("Governing Distress");
             general.Columns.Add("Treatment");
             general.Columns.Add("Cost");
-            general.Columns.Add("Area", typeInt);
+            general.Columns.Add("Area (yds\u00b2)", typeInt);
             general.Columns.Add("RSL", typeInt);
             general.Columns.Add("Functional Classification");
             general.Columns.Add("Notes");
@@ -291,6 +306,7 @@ namespace tams4a.Classes.Roads
             nr["Width (ft)"] = row["width"];
             nr["Length (ft)"] = row["length"];
             nr["Lanes"] = row["lanes"];
+            nr["Speed Limit"] = row["speed_limit"];
             nr["From Address"] = row["from_address"];
             nr["To Address"] = row["to_address"];
             nr["Surface"] = row["surface"];
@@ -347,7 +363,7 @@ namespace tams4a.Classes.Roads
                 nr["Corrugate"] = row["distress7"];
             }
             double area = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
-            nr["Area"] = area;
+            nr["Area (yds\u00b2)"] = area / 9;
             int[] dvs = new int[9];
             for (int i = 0; i < 9; i++)
             {

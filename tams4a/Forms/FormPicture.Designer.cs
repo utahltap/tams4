@@ -35,7 +35,9 @@
             // 
             // buttonOK
             // 
+            this.buttonOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonOK.Location = new System.Drawing.Point(357, 552);
+            this.buttonOK.MaximumSize = new System.Drawing.Size(101, 33);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(101, 33);
             this.buttonOK.TabIndex = 1;
@@ -45,6 +47,9 @@
             // 
             // pictureBox
             // 
+            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox.Location = new System.Drawing.Point(0, 0);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(854, 513);
@@ -62,7 +67,7 @@
             this.MaximumSize = new System.Drawing.Size(866, 636);
             this.MinimumSize = new System.Drawing.Size(866, 636);
             this.Name = "FormPicture";
-            this.Text = "FormPicture";
+            this.Text = "Picture";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 
