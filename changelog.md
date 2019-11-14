@@ -1,5 +1,10 @@
 # TAMS 4.1.x
 
+# Version 4.1.8.0
+CHANGES
+----------------------------------------------------
+* Completely redesigned the road analysis tool
+
 # Version 4.1.7.0
 CHANGES
 ----------------------------------------------------
