@@ -579,10 +579,17 @@ namespace tams4a.Controls
             else if (comboBoxObject.Text == "Accident") photo_column = "accident_photos";
             else if (comboBoxObject.Text == "Drainage") photo_column = "drainage_photos";
             else if (comboBoxObject.Text == "Other") photo_column = "other_photos";
-
-            string landmarkPhotos = Database.GetDataByQuery(Project.conn, "SELECT " + photo_column + " FROM photo_paths;").Rows[0][0].ToString();
-            currentFolder = Project.projectFolderPath + landmarkPhotos;
-
+            string landmarkPhotos;
+            try
+            {
+                landmarkPhotos = Database.GetDataByQuery(Project.conn, "SELECT " + photo_column + " FROM photo_paths;").Rows[0][0].ToString();
+                currentFolder = Project.projectFolderPath + landmarkPhotos;
+            }
+            catch
+            {
+                landmarkPhotos = null;
+                currentFolder = null;
+            }
             if (string.IsNullOrEmpty(landmarkPhotos))
             {
                 validFolder = false;
