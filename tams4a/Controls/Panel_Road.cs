@@ -17,7 +17,14 @@ namespace tams4a.Controls
         {
             InitializeComponent();
             Project = theProject;
-            currentFolder = Project.projectFolderPath + Database.GetDataByQuery(Project.conn, "SELECT road_photos FROM photo_paths;").Rows[0][0].ToString();
+            try
+            {
+                currentFolder = Project.projectFolderPath + Database.GetDataByQuery(Project.conn, "SELECT road_photos FROM photo_paths;").Rows[0][0].ToString();
+            }
+            catch
+            {
+                currentFolder = null;
+            }
             try
             {
                 fileEntries = Directory.GetFiles(currentFolder);

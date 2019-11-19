@@ -22,10 +22,17 @@ namespace tams4a.Controls
         {
             InitializeComponent();
             Project = theProject;
-
-            string supportPhotos = Database.GetDataByQuery(Project.conn, "SELECT support_photos FROM photo_paths;").Rows[0][0].ToString();
-            currentSupportFolder = Project.projectFolderPath + supportPhotos;
-
+            string supportPhotos;
+            try
+            {
+                supportPhotos = Database.GetDataByQuery(Project.conn, "SELECT support_photos FROM photo_paths;").Rows[0][0].ToString();
+                currentSupportFolder = Project.projectFolderPath + supportPhotos;
+            }
+            catch
+            {
+                supportPhotos = null;
+                currentSupportFolder = null;
+            }
             if (string.IsNullOrEmpty(supportPhotos))
             {
                 validSupportFolder = false;
