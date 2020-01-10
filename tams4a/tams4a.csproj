@@ -195,6 +195,10 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -223,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\CustomReport.cs" />
+    <Compile Include="Classes\LTAPAnalysis.cs" />
     <Compile Include="Classes\Other\GenericModule.cs" />
     <Compile Include="Classes\ImportAccess.cs" />
     <Compile Include="Classes\Database.cs" />
@@ -453,6 +458,12 @@
     <Compile Include="Forms\FormSurveyDate.Designer.cs">
       <DependentUpon>FormSurveyDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormLTAPAnalysis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormLTAPAnalysis.Designer.cs">
+      <DependentUpon>FormLTAPAnalysis.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormTreatmentCosts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -570,6 +581,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormSurveyDate.resx">
       <DependentUpon>FormSurveyDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormLTAPAnalysis.resx">
+      <DependentUpon>FormLTAPAnalysis.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormTreatmentCosts.resx">
       <DependentUpon>FormTreatmentCosts.cs</DependentUpon>

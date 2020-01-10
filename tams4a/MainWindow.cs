@@ -909,5 +909,11 @@ namespace tams4a
             CustomReport customReport = new CustomReport(Project, road, sign, other, this);
             customReport.newCustomReport();
         }
+
+        private void ltapAnalysisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormLTAPAnalysis report = new FormLTAPAnalysis(Project, road);
+            report.ShowDialog();
+        }
     }
 }

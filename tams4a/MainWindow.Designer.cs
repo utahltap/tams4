@@ -119,6 +119,7 @@ namespace tams4a
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSnapShot = new System.Windows.Forms.ToolStripButton();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.lTAPAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.sidePanel.SuspendLayout();
@@ -247,7 +248,8 @@ namespace tams4a
             this.importRoadsToolStripMenuItem,
             this.editTreatmentsToolStripMenuItem,
             this.favoriteSignsToolStripMenuItem,
-            this.importCSVToolStripMenuItem});
+            this.importCSVToolStripMenuItem,
+            this.lTAPAnalysisToolStripMenuItem});
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.advancedToolStripMenuItem.Text = "Advanced";
@@ -256,7 +258,7 @@ namespace tams4a
             // 
             this.importRoadsToolStripMenuItem.Enabled = false;
             this.importRoadsToolStripMenuItem.Name = "importRoadsToolStripMenuItem";
-            this.importRoadsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.importRoadsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importRoadsToolStripMenuItem.Text = "Import &Roads";
             this.importRoadsToolStripMenuItem.ToolTipText = "Attempt to import road data from TAMS2 or TAMS3";
             this.importRoadsToolStripMenuItem.Click += new System.EventHandler(this.importRoadsToolStripMenuItem_Click);
@@ -264,7 +266,7 @@ namespace tams4a
             // editTreatmentsToolStripMenuItem
             // 
             this.editTreatmentsToolStripMenuItem.Name = "editTreatmentsToolStripMenuItem";
-            this.editTreatmentsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.editTreatmentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editTreatmentsToolStripMenuItem.Text = "Edit &Treatments";
             this.editTreatmentsToolStripMenuItem.ToolTipText = "Opens the treatment editor";
             this.editTreatmentsToolStripMenuItem.Click += new System.EventHandler(this.editTreatmentsToolStripMenuItem_Click);
@@ -273,14 +275,14 @@ namespace tams4a
             // 
             this.favoriteSignsToolStripMenuItem.Enabled = false;
             this.favoriteSignsToolStripMenuItem.Name = "favoriteSignsToolStripMenuItem";
-            this.favoriteSignsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.favoriteSignsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.favoriteSignsToolStripMenuItem.Text = "&Favorite Signs";
             this.favoriteSignsToolStripMenuItem.ToolTipText = "Manage your favorite signs";
             // 
             // importCSVToolStripMenuItem
             // 
             this.importCSVToolStripMenuItem.Name = "importCSVToolStripMenuItem";
-            this.importCSVToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.importCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importCSVToolStripMenuItem.Text = "Import CSV";
             this.importCSVToolStripMenuItem.Click += new System.EventHandler(this.importCSVToolStripMenuItem_Click);
             // 
@@ -1012,6 +1014,13 @@ namespace tams4a
             this.toolStripButtonSnapShot.ToolTipText = "Take Snap Shot of the Map";
             this.toolStripButtonSnapShot.Click += new System.EventHandler(this.toolStripButtonSnapShot_Click);
             // 
+            // lTAPAnalysisToolStripMenuItem
+            // 
+            this.lTAPAnalysisToolStripMenuItem.Name = "lTAPAnalysisToolStripMenuItem";
+            this.lTAPAnalysisToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lTAPAnalysisToolStripMenuItem.Text = "LTAP Analysis";
+            this.lTAPAnalysisToolStripMenuItem.Click += new System.EventHandler(this.ltapAnalysisToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1138,6 +1147,7 @@ namespace tams4a
         private System.Windows.Forms.ToolStripMenuItem functionalClassificationToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxFind;
         private ToolStripMenuItem customReportToolStripMenuItem;
+        private ToolStripMenuItem lTAPAnalysisToolStripMenuItem;
     }
 }
 
