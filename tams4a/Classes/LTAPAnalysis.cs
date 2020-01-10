@@ -36,6 +36,24 @@ namespace tams4a.Classes
 
                 document.Activate();
 
+                int count = 1;
+                foreach (InlineShape image in document.InlineShapes)
+                {
+                    Console.WriteLine(image.Title);
+                    if (image.Title == "Figure 2. Distribution of Street Network by Functional Classification")
+                    {
+                        object linkToFile = true;
+                        object saveWithDocument = false;
+                        object range = image.Range;
+
+                        image.Select();
+                        winword.Selection.Delete();
+                        winword.ActiveDocument.InlineShapes.AddPicture(@"C:\Users\A02064884\Desktop\vectorization_test.png", linkToFile, saveWithDocument, range);
+                    }
+                }
+
+
+
                 //find and replace
                 FindAndReplace(winword, "<city>", reportForm.textBoxCityName.Text);
                 FindAndReplace(winword, "<contact_date>", reportForm.dateTimePickerContactDate.Text);
@@ -43,6 +61,7 @@ namespace tams4a.Classes
                 FindAndReplace(winword, "<city_dep>", reportForm.textBoxCityDepartment.Text);
                 FindAndReplace(winword, "<survey_month>", reportForm.textBoxSurveyMonth.Text);
                 FindAndReplace(winword, "<survey_year>", reportForm.numericUpDownSurveyYear.Value);
+
 
                 int surveyYear = (int)reportForm.numericUpDownSurveyYear.Value;
                 FindAndReplace(winword, "<5yr>", surveyYear + 5);
@@ -76,10 +95,6 @@ namespace tams4a.Classes
                 double avgAsphaltRSL = Math.Round((double)rslSum / asphaltCount, 1);
                 double fiveYrEst = Math.Round((double)fiveYrSum / asphaltCount, 1);
                 double tenYrEst = Math.Round((double)tenYrSum / asphaltCount, 1);
-
-                Console.WriteLine(avgAsphaltRSL);
-                Console.WriteLine(fiveYrEst);
-                Console.WriteLine(tenYrEst);
 
                 FindAndReplace(winword, "<current_rsl>", avgAsphaltRSL);
                 FindAndReplace(winword, "<5yr_est>", fiveYrEst);
