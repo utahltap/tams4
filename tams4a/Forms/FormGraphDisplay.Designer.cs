@@ -53,7 +53,7 @@
             this.exportGraphToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(944, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1000, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -70,13 +70,13 @@
             this.graphToolStripMenuItem,
             this.tableToolStripMenuItem});
             this.exportGraphToolStripMenuItem.Name = "exportGraphToolStripMenuItem";
-            this.exportGraphToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.exportGraphToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
             this.exportGraphToolStripMenuItem.Text = "Export";
             // 
             // graphToolStripMenuItem
             // 
             this.graphToolStripMenuItem.Name = "graphToolStripMenuItem";
-            this.graphToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.graphToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.graphToolStripMenuItem.Text = "Graph";
             this.graphToolStripMenuItem.Click += new System.EventHandler(this.graphToolStripMenuItem_Click);
             // 
@@ -86,20 +86,20 @@
             this.cSVToolStripMenuItem,
             this.pNGToolStripMenuItem});
             this.tableToolStripMenuItem.Name = "tableToolStripMenuItem";
-            this.tableToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tableToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.tableToolStripMenuItem.Text = "Table";
             // 
             // cSVToolStripMenuItem
             // 
             this.cSVToolStripMenuItem.Name = "cSVToolStripMenuItem";
-            this.cSVToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cSVToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.cSVToolStripMenuItem.Text = "CSV";
             this.cSVToolStripMenuItem.Click += new System.EventHandler(this.cSVToolStripMenuItem_Click);
             // 
             // pNGToolStripMenuItem
             // 
             this.pNGToolStripMenuItem.Name = "pNGToolStripMenuItem";
-            this.pNGToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pNGToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.pNGToolStripMenuItem.Text = "PNG";
             this.pNGToolStripMenuItem.Click += new System.EventHandler(this.pNGToolStripMenuItem_Click);
             // 
@@ -116,7 +116,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart.Series.Add(series1);
-            this.chart.Size = new System.Drawing.Size(944, 470);
+            this.chart.Size = new System.Drawing.Size(1000, 470);
             this.chart.TabIndex = 1;
             this.chart.Text = "chart1";
             // 
@@ -128,14 +128,14 @@
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Location = new System.Drawing.Point(0, 24);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(944, 91);
+            this.dataGridView.Size = new System.Drawing.Size(1000, 91);
             this.dataGridView.TabIndex = 2;
             // 
             // FormGraphDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(944, 585);
+            this.ClientSize = new System.Drawing.Size(1000, 585);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.chart);
             this.Controls.Add(this.menuStrip1);

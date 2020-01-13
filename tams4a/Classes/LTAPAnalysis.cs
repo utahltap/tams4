@@ -36,7 +36,6 @@ namespace tams4a.Classes
 
                 document.Activate();
 
-                int count = 1;
                 foreach (InlineShape image in document.InlineShapes)
                 {
                     Console.WriteLine(image.Title);

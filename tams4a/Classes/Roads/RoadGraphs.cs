@@ -34,7 +34,8 @@ namespace tams4a.Classes.Roads
         public void graphRoadCategory(object sender, EventArgs e)
         {
             string[] roadTypes = { "Major Arterial", "Minor Arterial", "Major Collector", "Minor Collector", "Residential", "Other" };
-            makeTypeGraph(roadTypes, "type", "Distribution of Functional Classification");
+            Color[] c = { Color.FromArgb(88, 192, 235), Color.FromArgb(253, 231, 76), Color.FromArgb(155, 197, 61), Color.FromArgb(229, 89, 52), Color.FromArgb(250, 121, 33), Color.FromArgb(175, 110, 242) };
+            makeTypeGraph(roadTypes, "type", "Distribution of Functional Classification", c);
         }
 
         private void makeTypeGraph(string[] roadTypes, string column, string title, Color[] c = null)
