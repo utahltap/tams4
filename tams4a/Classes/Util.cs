@@ -199,6 +199,7 @@ namespace tams4a.Classes
 
         public static void ChartToPNG(System.Windows.Forms.DataVisualization.Charting.Chart chart)
         {
+
             string filename;
 
             SaveFileDialog saveDialog = new SaveFileDialog();
@@ -217,6 +218,21 @@ namespace tams4a.Classes
             }
 
             filename = saveDialog.FileName;
+            try
+            {
+                chart.SaveImage(filename, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not save image file: " + e.ToString());
+                MessageBox.Show("An error occoured while trying to export chart.");
+            }
+
+        }
+
+        public static void AutoChartToPNG(System.Windows.Forms.DataVisualization.Charting.Chart chart, string graphName)
+        {
+            string filename = Properties.Settings.Default.projectFolder + @"\Reports\" + graphName + ".png";
             try
             {
                 chart.SaveImage(filename, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);

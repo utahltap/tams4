@@ -14,35 +14,37 @@ namespace tams4a.Classes.Roads
         private string[] distressAsphalt;
         private string[] distressGravel;
         private string[] distressConcrete;
+        private LTAPAnalysis analysis;
 
-        public RoadGraphs(TamsProject theProject, ModuleRoads roads, string[] asphalt, string[] gravel, string[] concrete)
+        public RoadGraphs(TamsProject theProject, ModuleRoads roads, string[] asphalt, string[] gravel, string[] concrete, LTAPAnalysis ltapAnalysis = null)
         {
             Project = theProject;
             moduleRoads = roads;
             distressAsphalt = asphalt;
             distressGravel = gravel;
             distressConcrete = concrete;
+            analysis = ltapAnalysis;
         }
 
         public void graphRoadType(object sender, EventArgs e)
         {
             string[] roadTypes = { "asphalt", "concrete", "gravel" };
             Color[] c = { Color.Black, Color.LightGray, Color.FromArgb(150, 75, 0) };
-            makeTypeGraph(roadTypes, "surface", "Road Surface Distribution", c);
+            makeTypeGraph(roadTypes, "surface", "Road Surface Distribution", c, sender.ToString() == "Generate Graphs");
         }
 
         public void graphRoadCategory(object sender, EventArgs e)
         {
             string[] roadTypes = { "Major Arterial", "Minor Arterial", "Major Collector", "Minor Collector", "Residential", "Other" };
             Color[] c = { Color.FromArgb(88, 192, 235), Color.FromArgb(253, 231, 76), Color.FromArgb(155, 197, 61), Color.FromArgb(229, 89, 52), Color.FromArgb(250, 121, 33), Color.FromArgb(175, 110, 242) };
-            makeTypeGraph(roadTypes, "type", "Distribution of Functional Classification", c);
+            makeTypeGraph(roadTypes, "type", "Distribution of Functional Classification", c, sender.ToString() == "Generate Graphs");
         }
 
-        private void makeTypeGraph(string[] roadTypes, string column, string title, Color[] c = null)
+        private void makeTypeGraph(string[] roadTypes, string column, string title, Color[] c = null, bool suppressDisplay = false)
         {
             string thisSql = moduleRoads.getSelectAllSQL();
-            try
-            {
+            //try
+            //{
                 DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
                 if (roadTable.Rows.Count == 0)
                 {
@@ -87,13 +89,28 @@ namespace tams4a.Classes.Roads
                 }
                 results.Rows.Add(totalsRow);
                 results.Rows.Add(percentageRow);
+
                 FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, title, c);
-                graph.Show();
-            }
-            catch (Exception err)
-            {
-                Log.Error("Problem getting data from database " + err.ToString());
-            }
+                if (suppressDisplay)
+                {
+                    string graphName = "";
+                    if (column == "surface")
+                    {
+                        graphName = "SurfaceTypeGraph";
+                        analysis.setPercentConcrete(Util.ToDouble(percentageRow[2].ToString()));
+                    }
+                    else if (column == "type") graphName = "FunctionalClassificationGraph";
+                    Util.AutoChartToPNG(graph.chart, graphName);
+                }
+                else
+                {
+                    graph.Show();
+                }
+            //}
+            //catch (Exception err)
+            //{
+            //    Log.Error("Problem getting data from database " + err.ToString());
+            //}
         }
 
         public void graphGoverningDistress(object sender, EventArgs e)

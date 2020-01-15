@@ -3,14 +3,16 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using tams4a.Classes.Roads;
 using tams4a.Forms;
 
 namespace tams4a.Classes
 {
-    class LTAPAnalysis
+    public class LTAPAnalysis
     {
         private TamsProject Project;
         private ModuleRoads moduleRoads;
+        private double percentConcrete = 0;
 
         public LTAPAnalysis(TamsProject theProject, ModuleRoads modRoads)
         {
@@ -36,19 +38,37 @@ namespace tams4a.Classes
 
                 document.Activate();
 
+                RoadGraphs graphs = new RoadGraphs(Project, moduleRoads, null, null, null, this);
+                object linkToFile = true;
+                object saveWithDocument = false;
+
                 foreach (InlineShape image in document.InlineShapes)
                 {
+                    object range = image.Range;
                     Console.WriteLine(image.Title);
+
                     if (image.Title == "Figure 2. Distribution of Street Network by Functional Classification")
                     {
-                        object linkToFile = true;
-                        object saveWithDocument = false;
-                        object range = image.Range;
 
+                        object graphTrigger = "Generate Graphs";
+                        graphs.graphRoadCategory(graphTrigger, null);
+
+                        string imageLocation = Properties.Settings.Default.projectFolder + @"\Reports\FunctionalClassificationGraph.png";
                         image.Select();
                         winword.Selection.Delete();
-                        winword.ActiveDocument.InlineShapes.AddPicture(@"C:\Users\A02064884\Desktop\vectorization_test.png", linkToFile, saveWithDocument, range);
+                        winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
                     }
+                    else if (image.Title == "Figure 3. Percentages of Asphalt and Concrete Streets by Surface Area")
+                    {
+                        object graphTrigger = "Generate Graphs";
+                        graphs.graphRoadType(graphTrigger, null);
+
+                        string imageLocation = Properties.Settings.Default.projectFolder + @"\Reports\SurfaceTypeGraph.png";
+                        image.Select();
+                        winword.Selection.Delete();
+                        winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
+                    }
+                    
                 }
 
 
@@ -60,6 +80,7 @@ namespace tams4a.Classes
                 FindAndReplace(winword, "<city_dep>", reportForm.textBoxCityDepartment.Text);
                 FindAndReplace(winword, "<survey_month>", reportForm.textBoxSurveyMonth.Text);
                 FindAndReplace(winword, "<survey_year>", reportForm.numericUpDownSurveyYear.Value);
+                FindAndReplace(winword, "<percent_concrete>", percentConcrete);
 
 
                 int surveyYear = (int)reportForm.numericUpDownSurveyYear.Value;
@@ -147,6 +168,10 @@ namespace tams4a.Classes
                 ref matchControl);
         }
 
+        public void setPercentConcrete(double value)
+        {
+            percentConcrete = value;
+        }
 
     }
 }
