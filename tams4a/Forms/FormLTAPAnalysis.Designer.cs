@@ -184,6 +184,7 @@
             this.Controls.Add(this.labelCityName);
             this.Controls.Add(this.textBoxCityName);
             this.Name = "FormLTAPAnalysis";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormTAMSReport";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSurveyYear)).EndInit();
             this.ResumeLayout(false);

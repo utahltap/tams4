@@ -15,8 +15,9 @@ namespace tams4a.Classes.Roads
         private string[] distressGravel;
         private string[] distressConcrete;
         private LTAPAnalysis analysis;
+        private Color[] colorPalette = { Color.FromArgb(88, 192, 235), Color.FromArgb(253, 231, 76), Color.FromArgb(155, 197, 61), Color.FromArgb(229, 89, 52), Color.FromArgb(250, 121, 33), Color.FromArgb(175, 110, 242) };
 
-        public RoadGraphs(TamsProject theProject, ModuleRoads roads, string[] asphalt, string[] gravel, string[] concrete, LTAPAnalysis ltapAnalysis = null)
+    public RoadGraphs(TamsProject theProject, ModuleRoads roads, string[] asphalt, string[] gravel, string[] concrete, LTAPAnalysis ltapAnalysis = null)
         {
             Project = theProject;
             moduleRoads = roads;
@@ -36,15 +37,14 @@ namespace tams4a.Classes.Roads
         public void graphRoadCategory(object sender, EventArgs e)
         {
             string[] roadTypes = { "Major Arterial", "Minor Arterial", "Major Collector", "Minor Collector", "Residential", "Other" };
-            Color[] c = { Color.FromArgb(88, 192, 235), Color.FromArgb(253, 231, 76), Color.FromArgb(155, 197, 61), Color.FromArgb(229, 89, 52), Color.FromArgb(250, 121, 33), Color.FromArgb(175, 110, 242) };
-            makeTypeGraph(roadTypes, "type", "Distribution of Functional Classification", c, sender.ToString() == "Generate Graphs");
+            makeTypeGraph(roadTypes, "type", "Distribution of Functional Classification", colorPalette, sender.ToString() == "Generate Graphs");
         }
 
         private void makeTypeGraph(string[] roadTypes, string column, string title, Color[] c = null, bool suppressDisplay = false)
         {
             string thisSql = moduleRoads.getSelectAllSQL();
-            //try
-            //{
+            try
+            {
                 DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
                 if (roadTable.Rows.Count == 0)
                 {
@@ -78,14 +78,27 @@ namespace tams4a.Classes.Roads
                 DataRow percentageRow = results.NewRow();
                 totalsRow["Distribution"] = "Area (sqr. ft.)";
                 percentageRow["Distribution"] = "Percentage";
-                string[] domain = new string[roadTypes.Length];
-                double[] range = new double[roadTypes.Length];
+
+
+                int count = 0;
                 for (int i = 0; i < roadTypes.Length; i++)
                 {
+                    if (roadArea[roadTypes[i]] > 0) count++;
+                }
+
+                string[] domain = new string[count];
+                double[] range = new double[count];
+
+                int index = 0;
+                for (int i = 0; i < roadTypes.Length; i++)
+                {
+                    double percentageCovered = Math.Round(roadArea[roadTypes[i]] / totalArea, 3) * 100;
+                    if (percentageCovered == 0) continue;
+                    percentageRow[Util.UppercaseFirst(roadTypes[i])] = percentageCovered;
                     totalsRow[Util.UppercaseFirst(roadTypes[i])] = roadArea[roadTypes[i]];
-                    percentageRow[Util.UppercaseFirst(roadTypes[i])] = Math.Round(roadArea[roadTypes[i]] / totalArea, 3) * 100;
-                    domain[i] = roadTypes[i];
-                    range[i] = Math.Round(roadArea[roadTypes[i]] / totalArea, 3) * 100;
+                    domain[index] = roadTypes[i];
+                    range[index] = percentageCovered;
+                    index++;
                 }
                 results.Rows.Add(totalsRow);
                 results.Rows.Add(percentageRow);
@@ -106,22 +119,33 @@ namespace tams4a.Classes.Roads
                 {
                     graph.Show();
                 }
-            //}
-            //catch (Exception err)
-            //{
-            //    Log.Error("Problem getting data from database " + err.ToString());
-            //}
+            }
+            catch (Exception err)
+            {
+                Log.Error("Problem getting data from database " + err.ToString());
+            }
         }
 
         public void graphGoverningDistress(object sender, EventArgs e)
         {
-            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a Road Surface Type");
+            ChooseRoadForm roadChooser = null;
+            bool bypassForm = false;
+            if (sender.ToString() == "Generate Graphs")
+            {
+                bypassForm = true;
+            }
+            else
+            {
+                roadChooser = new ChooseRoadForm("What Road Type?", "Select a Road Surface Type");
+            }
             string thisSql = moduleRoads.getSelectAllSQL();
-            if (roadChooser.ShowDialog() == DialogResult.OK)
+            if (bypassForm || roadChooser.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    string roadType = roadChooser.chooseRoad();
+                    string roadType;
+                    if (bypassForm) roadType = "Asphalt";
+                    else roadType = roadChooser.chooseRoad();
                     DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
                     var roads = roadTable.Select("surface = '" + roadType + "'");
 
@@ -173,23 +197,42 @@ namespace tams4a.Classes.Roads
                     DataRow percentageRow = results.NewRow();
                     totalsRow["Distribution"] = "Area (sqr. ft.)";
                     percentageRow["Distribution"] = "Percentage";
-                    string[] domain = new string[distressGroup[roadType].Length + 1];
-                    double[] range = new double[distressGroup[roadType].Length + 1];
+
+                    int count = 1;
                     for (int i = 0; i < distressGroup[roadType].Length; i++)
                     {
+                        if (distressedArea[distressGroup[roadType][i]] > 0) count++;
+                    }
+
+                    string[] domain = new string[count];
+                    double[] range = new double[count];
+
+                    int index = 0;
+                    for (int i = 0; i < distressGroup[roadType].Length; i++)
+                    {
+                        double percentageCovered = Math.Round(distressedArea[distressGroup[roadType][i]] / totalArea, 3) * 100;
+                        if (percentageCovered == 0) continue;
                         totalsRow[distressGroup[roadType][i]] = distressedArea[distressGroup[roadType][i]];
-                        percentageRow[distressGroup[roadType][i]] = Math.Round(distressedArea[distressGroup[roadType][i]] / totalArea, 3) * 100;
-                        domain[i] = distressGroup[roadType][i];
-                        range[i] = Math.Round(distressedArea[distressGroup[roadType][i]] / totalArea, 3) * 100;
+                        percentageRow[distressGroup[roadType][i]] = percentageCovered;
+                        domain[index] = distressGroup[roadType][i];
+                        range[index] = percentageCovered;
+                        index++;
                     }
                     totalsRow["No Distress"] = noDistress;
                     percentageRow["No Distress"] = Math.Round(noDistress / totalArea, 3) * 100;
                     results.Rows.Add(totalsRow);
                     results.Rows.Add(percentageRow);
-                    domain[distressGroup[roadType].Length] = "No Distress";
-                    range[distressGroup[roadType].Length] = Math.Round(noDistress / totalArea, 3) * 100;
-                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, Util.UppercaseFirst(roadType) + " Road Governing Distress Distribution");
-                    graph.Show();
+                    domain[count - 1] = "No Distress";
+                    range[count - 1] = Math.Round(noDistress / totalArea, 3) * 100;
+                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, Util.UppercaseFirst(roadType) + " Road Governing Distresses", colorPalette);
+                    if (bypassForm)
+                    {
+                        Util.AutoChartToPNG(graph.chart, "AsphaltDistressGraph");
+                    }
+                    else
+                    {
+                        graph.Show();
+                    }
                 }
                 catch (Exception err)
                 {

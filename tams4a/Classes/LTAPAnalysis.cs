@@ -38,9 +38,10 @@ namespace tams4a.Classes
 
                 document.Activate();
 
-                RoadGraphs graphs = new RoadGraphs(Project, moduleRoads, null, null, null, this);
+                RoadGraphs graphs = new RoadGraphs(Project, moduleRoads, moduleRoads.distressAsphalt, moduleRoads.distressGravel, moduleRoads.distressConcrete, this);
                 object linkToFile = true;
                 object saveWithDocument = false;
+                object graphTrigger = "Generate Graphs";
 
                 foreach (InlineShape image in document.InlineShapes)
                 {
@@ -49,8 +50,6 @@ namespace tams4a.Classes
 
                     if (image.Title == "Figure 2. Distribution of Street Network by Functional Classification")
                     {
-
-                        object graphTrigger = "Generate Graphs";
                         graphs.graphRoadCategory(graphTrigger, null);
 
                         string imageLocation = Properties.Settings.Default.projectFolder + @"\Reports\FunctionalClassificationGraph.png";
@@ -60,7 +59,6 @@ namespace tams4a.Classes
                     }
                     else if (image.Title == "Figure 3. Percentages of Asphalt and Concrete Streets by Surface Area")
                     {
-                        object graphTrigger = "Generate Graphs";
                         graphs.graphRoadType(graphTrigger, null);
 
                         string imageLocation = Properties.Settings.Default.projectFolder + @"\Reports\SurfaceTypeGraph.png";
@@ -68,7 +66,18 @@ namespace tams4a.Classes
                         winword.Selection.Delete();
                         winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
                     }
-                    
+                    else if (image.Title == "Figure 5. Governing Distress Rating Distribution for Asphalt Roads")
+                    {
+                        graphs.graphGoverningDistress(graphTrigger, null);
+
+                        string imageLocation = Properties.Settings.Default.projectFolder + @"\Reports\AsphaltDistressGraph.png";
+                        image.Select();
+                        winword.Selection.Delete();
+                        winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
+                    }
+
+
+
                 }
 
 

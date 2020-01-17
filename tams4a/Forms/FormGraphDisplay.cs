@@ -9,6 +9,7 @@ namespace tams4a.Forms
     public partial class FormGraphDisplay : Form
     {
         private DataTable displayedTable;
+        private Color[] colorPalette = { Color.FromArgb(88, 192, 235), Color.FromArgb(253, 231, 76), Color.FromArgb(155, 197, 61), Color.FromArgb(229, 89, 52), Color.FromArgb(250, 121, 33), Color.FromArgb(175, 110, 242) };
 
         public FormGraphDisplay(DataTable dt, string[] domain, double[] range, string t = "Distribution Graph", Color[] c = null)
         {
@@ -16,9 +17,8 @@ namespace tams4a.Forms
             CenterToScreen();
             displayedTable = dt;
             dataGridView.DataSource = displayedTable;
-            Color[] colours = { Color.Green, Color.Turquoise, Color.LightBlue, Color.Blue, Color.Purple, Color.Pink, Color.Red, Color.Orange, Color.Yellow, Color.Brown };
             if (c != null) {
-                colours = c;
+                colorPalette = c;
             }
             Title title = chart.Titles.Add(t);
             title.Font = new Font("Arial", 20, FontStyle.Bold);
@@ -55,7 +55,7 @@ namespace tams4a.Forms
                 chart.Series["Series"].Points.AddXY(domain[i], range[i]);
                 chart.Series["Series"].ChartType = SeriesChartType.Column;
                 chart.Series["Series"].ChartArea = "Area";
-                chart.Series["Series"].Points[i].Color = colours[i % colours.Length];
+                chart.Series["Series"].Points[i].Color = colorPalette[i % colorPalette.Length];
                 chart.Series["Series"].Font = new Font("Arial", 12);
             }
             chart.Show();
@@ -67,10 +67,9 @@ namespace tams4a.Forms
             CenterToScreen();
             displayedTable = dt;
             dataGridView.DataSource = displayedTable;
-            Color[] colours = { Color.Green, Color.Turquoise, Color.LightBlue, Color.Blue, Color.Purple, Color.Pink, Color.Red, Color.Orange, Color.Yellow, Color.Brown };
             if (c != null)
             {
-                colours = c;
+                colorPalette = c;
             }
             chart.Invalidate();
             chart.Series.Clear();
@@ -85,7 +84,7 @@ namespace tams4a.Forms
                 chart.Series["Series"].Points.AddXY(domain[i], range[i]);
                 chart.Series["Series"].ChartType = SeriesChartType.Column;
                 chart.Series["Series"].ChartArea = "Area";
-                chart.Series["Series"].Points[i].Color = colours[i % colours.Length];
+                chart.Series["Series"].Points[i].Color = colorPalette[i % colorPalette.Length];
             }
             chart.Show();
         }
