@@ -15,6 +15,7 @@ namespace tams4a.Classes
         private double percentConcrete = 0;
         private int numberOfAsphaltDistressesPresent = 0;
         private string majorAsphaltDistress = "";
+        private const int FEET_TO_MILES = 5820;
 
         public LTAPAnalysis(TamsProject theProject, ModuleRoads modRoads)
         {
@@ -85,15 +86,23 @@ namespace tams4a.Classes
                 System.Data.DataTable roads = Database.GetDataByQuery(Project.conn, moduleRoads.getSelectAllSQL());
 
                 double feetOfRoad = 0;
+                double feetOfAsphaltRoad = 0;
                 foreach (System.Data.DataRow row in roads.Rows)
                 {
-                   feetOfRoad += Util.ToInt(row["length"].ToString());
+                    double segmentLength = Util.ToInt(row["length"].ToString());
+                    feetOfRoad += segmentLength;
+                    if (row["surface"].ToString() == "asphalt")
+                    {
+                        feetOfAsphaltRoad += segmentLength;
+                    }                   
                 }
-                int milesOfRoad = (int)Math.Round(feetOfRoad/5280);
+                int milesOfRoad = (int)Math.Round(feetOfRoad/FEET_TO_MILES);
+                double onePercentAsphalt = Math.Round((feetOfAsphaltRoad / 100) / FEET_TO_MILES, 1);
 
                 //find and replace
                 FindAndReplace(winword, "<city>", reportForm.textBoxCityName.Text);
                 FindAndReplace(winword, "<miles>", milesOfRoad);
+                FindAndReplace(winword, "<one_percent_asphalt>", onePercentAsphalt);
                 FindAndReplace(winword, "<contact_date>", reportForm.dateTimePickerContactDate.Text);
                 FindAndReplace(winword, "<proposal_date>", reportForm.dateTimePickerProposalDate.Text);
                 FindAndReplace(winword, "<city_dep>", reportForm.textBoxCityDepartment.Text);
