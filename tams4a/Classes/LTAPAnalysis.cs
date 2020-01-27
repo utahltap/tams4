@@ -13,6 +13,8 @@ namespace tams4a.Classes
         private TamsProject Project;
         private ModuleRoads moduleRoads;
         private double percentConcrete = 0;
+        private int numberOfAsphaltDistressesPresent = 0;
+        private string majorAsphaltDistress = "";
 
         public LTAPAnalysis(TamsProject theProject, ModuleRoads modRoads)
         {
@@ -80,16 +82,26 @@ namespace tams4a.Classes
 
                 }
 
+                System.Data.DataTable roads = Database.GetDataByQuery(Project.conn, moduleRoads.getSelectAllSQL());
 
+                double feetOfRoad = 0;
+                foreach (System.Data.DataRow row in roads.Rows)
+                {
+                   feetOfRoad += Util.ToInt(row["length"].ToString());
+                }
+                int milesOfRoad = (int)Math.Round(feetOfRoad/5280);
 
                 //find and replace
                 FindAndReplace(winword, "<city>", reportForm.textBoxCityName.Text);
+                FindAndReplace(winword, "<miles>", milesOfRoad);
                 FindAndReplace(winword, "<contact_date>", reportForm.dateTimePickerContactDate.Text);
                 FindAndReplace(winword, "<proposal_date>", reportForm.dateTimePickerProposalDate.Text);
                 FindAndReplace(winword, "<city_dep>", reportForm.textBoxCityDepartment.Text);
                 FindAndReplace(winword, "<survey_month>", reportForm.textBoxSurveyMonth.Text);
                 FindAndReplace(winword, "<survey_year>", reportForm.numericUpDownSurveyYear.Value);
                 FindAndReplace(winword, "<percent_concrete>", percentConcrete);
+                FindAndReplace(winword, "<number_of_asphalt_distresses>", numberOfAsphaltDistressesPresent);
+                FindAndReplace(winword, "<major_asphalt_distress>", majorAsphaltDistress);
 
 
                 int surveyYear = (int)reportForm.numericUpDownSurveyYear.Value;
@@ -131,7 +143,6 @@ namespace tams4a.Classes
 
                 // <5yr_trt>
                 // <current_est_concrete>
-                // <miles>
             }
             else
             {
@@ -180,6 +191,16 @@ namespace tams4a.Classes
         public void setPercentConcrete(double value)
         {
             percentConcrete = value;
+        }
+
+        public void setNumberOfAsphaltDistressesPresent(int value)
+        {
+            numberOfAsphaltDistressesPresent = value;
+        }
+
+        public void setMajorAsphaltDistress(string value)
+        {
+            majorAsphaltDistress = value;
         }
 
     }
