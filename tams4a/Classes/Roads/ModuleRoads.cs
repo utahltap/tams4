@@ -22,7 +22,7 @@ namespace tams4a.Classes
         public RoadSymbols symbols;
         new private FormSurveyDate dateForm = new FormSurveyDate();
 
-        public string[] distressAsphalt = { "Fatigue", "Edge Cracks", "Longitudinal", "Patches", "Potholes", "Drainage", "Transverse", "Blocking", "Rutting" };
+        public string[] distressAsphalt = { "Blocking", "Edge", "Drainage", "Fatigue", "Longitudinal", "Patches", "Potholes", "Rutting", "Transverse" };
         public string[] distressGravel = { "Potholes", "Rutting", "X-section", "Drainage", "Dust", "Aggregate", "Corrugation" };
         public string[] distressConcrete = { "Spalling", "Joint Seals", "Corners", "Breaks", "Faulting", "Longitudinal", "Transverse", "Map Cracks", "Patches" };
 
@@ -837,10 +837,11 @@ namespace tams4a.Classes
             {
                 dvs = new int[9] { roadControls.distress1.Value, roadControls.distress2.Value, roadControls.distress3.Value, roadControls.distress4.Value, roadControls.distress5.Value, roadControls.distress6.Value, roadControls.distress7.Value, roadControls.distress8.Value, roadControls.distress9.Value };
             }
-            string gd = getGoverningDistress(dvs, roadControls.comboBoxSurface.Text.ToLower());
-            if (string.IsNullOrWhiteSpace(gd)) { return; }
-            int index = data[roadControls.comboBoxSurface.Text.ToLower()][gd] - 1;
-            DataTable suggestion = Database.GetDataByQuery(Project.conn, "SELECT treatment FROM auto_suggest WHERE governing_distress='" + gd + "' AND distress_value=" + dvs[index].ToString() + ";");
+            Dictionary<int, string> gd = getGoverningDistress(dvs, roadControls.comboBoxSurface.Text.ToLower());
+            if (gd.Count <= 0) return;
+
+            int index = data[roadControls.comboBoxSurface.Text.ToLower()][gd[0]] - 1;
+            DataTable suggestion = Database.GetDataByQuery(Project.conn, "SELECT treatment FROM auto_suggest WHERE governing_distress='" + gd[0] + "' AND distress_value=" + dvs[index].ToString() + ";");
             if (suggestion.Rows.Count > 0)
             {
                 roadControls.comboBoxTreatment.Text = suggestion.Rows[0]["treatment"].ToString();
@@ -853,44 +854,52 @@ namespace tams4a.Classes
 
 
 
-        public string getGoverningDistress(int[] distValues, string surfType)
+        public Dictionary<int, string> getGoverningDistress(int[] distValues, string surfType)
         {
-            string[] seld = distressAsphalt;
+            string[] distressType = distressAsphalt;
             int distID = 1;
             int maxRSL = 20;
-            if (surfType.Contains("asphalt"))
-            {
-                distID = 1;
-                maxRSL = 20;
-                seld = distressAsphalt;
-            }
-            else if (surfType.Contains("gravel"))
+            if (surfType.Contains("gravel"))
             {
                 distID = 2;
                 maxRSL = 10;
-                seld = distressGravel;
+                distressType = distressGravel;
             }
             else if (surfType.Contains("concrete"))
             {
                 distID = 3;
-                maxRSL = 20;
-                seld = distressConcrete;
+                distressType = distressConcrete;
             }
             DataTable distresses = Database.GetDataByQuery(Project.conn, "SELECT * FROM road_distresses WHERE surface_id = " + distID.ToString());
-            string gd = "";
-            for (int i = 1; i <= distresses.Rows.Count; i++)
-            {;
-                if (distValues[i - 1] <= 0)
+            for (int i = 0; i <= distresses.Rows.Count - 1; i++)
+            {
+                if (distValues[i] <= 0)
                 {
                     continue;
                 }
-                int rsl = Util.ToInt(distresses.Rows[i - 1]["rsl" + distValues[i - 1]].ToString());
+                int rsl = Util.ToInt(distresses.Rows[i]["rsl" + distValues[i]].ToString());
                 if (rsl < maxRSL)
                 {
                     maxRSL = rsl;
-                    gd = seld[i - 1];
                 }
             }
+
+            Dictionary<int, string> gd = new Dictionary<int, string>();
+            int index = 0;
+            for (int i = 0; i <= distresses.Rows.Count - 1; i++)
+            {
+                if (distValues[i] <= 0)
+                {
+                    continue;
+                }
+                int rsl = Util.ToInt(distresses.Rows[i]["rsl" + distValues[i]].ToString());
+                if (rsl == maxRSL)
+                {
+                    gd[index] = distressType[i];
+                    index++;
+                }
+            }
+
             return gd;
         }
 

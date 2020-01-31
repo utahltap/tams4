@@ -96,7 +96,7 @@ namespace tams4a.Classes.Roads
                     if (percentageCovered == 0) continue;
                     percentageRow[Util.UppercaseFirst(roadTypes[i])] = percentageCovered;
                     totalsRow[Util.UppercaseFirst(roadTypes[i])] = roadArea[roadTypes[i]];
-                    domain[index] = roadTypes[i];
+                    domain[index] = Util.UppercaseFirst(roadTypes[i]);
                     range[index] = percentageCovered;
                     index++;
                 }
@@ -176,14 +176,17 @@ namespace tams4a.Classes.Roads
                         {
                             dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
                         }
-                        string governingDistress = moduleRoads.getGoverningDistress(dvs, row["surface"].ToString());
-                        if (string.IsNullOrEmpty(governingDistress))
+                        Dictionary<int, string> governingDistress = moduleRoads.getGoverningDistress(dvs, row["surface"].ToString());
+                        if (governingDistress.Count == 0)
                         {
                             noDistress += area;
                         }
                         else
                         {
-                            distressedArea[governingDistress] += area;
+                            foreach (string distress in governingDistress.Values)
+                            {
+                                distressedArea[distress] += area;
+                            }
                         }
                     }
                     DataTable results = new DataTable();
@@ -207,26 +210,56 @@ namespace tams4a.Classes.Roads
                     string[] domain = new string[count];
                     double[] range = new double[count];
 
+                    double maxDistress = 0;
+                    string majorDistress = "";
+                    int patchPotholeIndex = -1;
                     int index = 0;
                     for (int i = 0; i < distressGroup[roadType].Length; i++)
                     {
                         double percentageCovered = Math.Round(distressedArea[distressGroup[roadType][i]] / totalArea, 3) * 100;
                         if (percentageCovered == 0) continue;
+                        if (percentageCovered > maxDistress)
+                        {
+                            maxDistress = percentageCovered;
+                            majorDistress = distressGroup[roadType][i];
+                        }
                         totalsRow[distressGroup[roadType][i]] = distressedArea[distressGroup[roadType][i]];
                         percentageRow[distressGroup[roadType][i]] = percentageCovered;
-                        domain[index] = distressGroup[roadType][i];
-                        range[index] = percentageCovered;
-                        index++;
+                        if (distressGroup[roadType][i] == "Patch")
+                        {
+                            patchPotholeIndex = index;
+                        }
+                        if (distressGroup[roadType][i] == "Pothole")
+                        {
+                            if (patchPotholeIndex == -1)
+                            {
+                                patchPotholeIndex = index;
+                                domain[patchPotholeIndex] = distressGroup[roadType][i];
+                                index++;
+                            }
+                            else domain[patchPotholeIndex] = "Patch/Pothole";
+                            range[patchPotholeIndex] += percentageCovered;
+                        }
+                        else
+                        {
+                            domain[index] = distressGroup[roadType][i];
+                            range[index] = percentageCovered;
+                            index++;
+                        }
                     }
+                    double percentNoDistress = Math.Round(noDistress / totalArea, 3) * 100;
                     totalsRow["No Distress"] = noDistress;
-                    percentageRow["No Distress"] = Math.Round(noDistress / totalArea, 3) * 100;
+                    percentageRow["No Distress"] = percentNoDistress;
                     results.Rows.Add(totalsRow);
                     results.Rows.Add(percentageRow);
                     domain[count - 1] = "No Distress";
-                    range[count - 1] = Math.Round(noDistress / totalArea, 3) * 100;
-                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, Util.UppercaseFirst(roadType) + " Road Governing Distresses", colorPalette);
+                    range[count - 1] = percentNoDistress;
+                    string yLabel = "Percent of " + roadType + " Road Network";
+                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, Util.UppercaseFirst(roadType) + " Road Major Distresses", colorPalette, yLabel);
                     if (bypassForm)
                     {
+                        analysis.setNumberOfAsphaltDistressesPresent(index - 1);
+                        analysis.setMajorAsphaltDistress(majorDistress);
                         Util.AutoChartToPNG(graph.chart, "AsphaltDistressGraph");
                     }
                     else

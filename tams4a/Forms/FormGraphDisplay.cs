@@ -11,7 +11,7 @@ namespace tams4a.Forms
         private DataTable displayedTable;
         private Color[] colorPalette = { Color.FromArgb(88, 192, 235), Color.FromArgb(253, 231, 76), Color.FromArgb(155, 197, 61), Color.FromArgb(229, 89, 52), Color.FromArgb(250, 121, 33), Color.FromArgb(175, 110, 242) };
 
-        public FormGraphDisplay(DataTable dt, string[] domain, double[] range, string t = "Distribution Graph", Color[] c = null)
+        public FormGraphDisplay(DataTable dt, string[] domain, double[] range, string t = "Distribution Graph", Color[] c = null, string yLab = "Percent of Road Network")
         {
             InitializeComponent();
             CenterToScreen();
@@ -29,20 +29,27 @@ namespace tams4a.Forms
             chart.ChartAreas.Clear();
             chart.Series.Add("Series");
             chart.Series["Series"].IsValueShownAsLabel = true;
-            chart.Series["Series"].Label = "#PERCENT{P1}";
+            chart.Series["Series"].SmartLabelStyle.IsMarkerOverlappingAllowed = false;
+            chart.Series["Series"].LabelFormat = "#.0' %'";
             chart.ChartAreas.Add("Area");
+            chart.ChartAreas["Area"].AxisY.LabelStyle.Format = "###0\\%";
             chart.ChartAreas["Area"].AxisY.Interval = 10;
             chart.ChartAreas["Area"].AxisX.Interval = 1;
             chart.ChartAreas["Area"].AxisY.MajorGrid.LineColor = Color.LightGray;
             chart.ChartAreas["Area"].AxisY.MajorGrid.LineWidth = 2;
             chart.ChartAreas["Area"].AxisX.MajorGrid.LineWidth = 0;
-            chart.ChartAreas["Area"].AxisY.Title = "Percent of Road Network";
+            chart.ChartAreas["Area"].AxisY.Title = yLab;
             chart.ChartAreas["Area"].AxisY.TitleFont = new Font("Arial", 14);
             chart.ChartAreas["Area"].AxisY.LabelAutoFitMinFontSize = 12;
             chart.ChartAreas["Area"].AxisY.LabelAutoFitMaxFontSize = 12;
-            chart.ChartAreas["Area"].AxisX.LabelAutoFitMaxFontSize = 14;
             chart.ChartAreas["Area"].AxisY.LineWidth = 0;
             chart.ChartAreas["Area"].AxisX.LineWidth = 0;
+            chart.ChartAreas["Area"].AxisX.LabelStyle.Enabled = true;
+            chart.ChartAreas["Area"].AxisX.LabelStyle.Font = new Font("Arial", 12);
+            if (chart.Titles[0].Text == "Asphalt Road Major Distresses") { 
+                chart.ChartAreas["Area"].AxisX.IsLabelAutoFit = true;
+                chart.ChartAreas["Area"].AxisX.LabelStyle.Angle = -45;
+            }
             TickMark tickMark = new TickMark();
             tickMark.LineWidth = 0;
             chart.ChartAreas["Area"].AxisY.MajorTickMark = tickMark;
