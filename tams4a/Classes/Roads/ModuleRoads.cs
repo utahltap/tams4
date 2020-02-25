@@ -824,8 +824,8 @@ namespace tams4a.Classes
             Dictionary<string, Dictionary<string, int>> data = new Dictionary<string, Dictionary<string, int>>()
             {
                 { "asphalt", new Dictionary<string, int>() { { "Fatigue", 1 }, { "Edge Cracks", 2 }, { "Longitudinal", 3 }, {"Patches", 4 }, { "Potholes", 5 }, { "Drainage", 6 }, { "Transverse", 7 }, { "Blocking", 8 }, { "Rutting", 9 } } },
-                { "gravel", new Dictionary<string, int>() { { "Potholes", 1 }, { "Rutting", 2 }, { "X-section", 3 }, {"Drainage", 4 }, { "Dust", 5 }, { "Aggregate", 6 }, { "Corrugation", 7 } } },
-                { "concrete", new Dictionary<string, int>() { { "Spalling", 1 }, { "Joint Seals", 2 }, { "Corners", 3 }, {"Breaks", 4 }, { "Faulting", 5 }, { "Longitudinal", 6 }, { "Transverse", 7 }, { "Map Cracks", 8 }, { "Patches", 9 } } }
+                { "concrete", new Dictionary<string, int>() { { "Spalling", 1 }, { "Joint Seals", 2 }, { "Corners", 3 }, {"Breaks", 4 }, { "Faulting", 5 }, { "Longitudinal", 6 }, { "Transverse", 7 }, { "Map Cracks", 8 }, { "Patches", 9 } } },
+                { "gravel", new Dictionary<string, int>() { { "Potholes", 1 }, { "Rutting", 2 }, { "X-section", 3 }, {"Drainage", 4 }, { "Dust", 5 }, { "Aggregate", 6 }, { "Corrugation", 7 } } }
             };
             var roadControls = getRoadControls();
             int[] dvs;
@@ -959,60 +959,106 @@ namespace tams4a.Classes
     internal class ChooseRoadForm
     {
         private FormCustomMessage roadChooser;
-        private RadioButton asphalt;
-        private RadioButton gravel;
-        private RadioButton concrete;
-        private RadioButton all;
-        private RadioButton[] buttons;
+        private CheckBox asphalt;
+        private CheckBox gravel;
+        private CheckBox concrete;
+        private CheckBox[] buttons;
+        private RadioButton _asphalt;
+        private RadioButton _gravel;
+        private RadioButton _concrete;
+        private RadioButton[] _buttons;
 
-        public ChooseRoadForm(string title, string text)
+        public ChooseRoadForm(string title, string text, bool radio = false)
         {
             roadChooser = new FormCustomMessage();
             roadChooser.Text = title;
             roadChooser.labelMessage.Text = text;
-            asphalt = new RadioButton();
-            asphalt.Text = "Asphalt";
-            asphalt.Location = new Point(240, 40);
-            gravel = new RadioButton();
-            gravel.Text = "Gravel";
-            gravel.Location = new Point(240, 64);
-            concrete = new RadioButton();
-            concrete.Text = "Concrete";
-            concrete.Location = new Point(240, 90);
-            all = new RadioButton();
-            all.Text = "All";
-            all.Location = new Point(240, 114);
-            roadChooser.groupBoxUser.Controls.Add(asphalt);
-            roadChooser.groupBoxUser.Controls.Add(gravel);
-            roadChooser.groupBoxUser.Controls.Add(concrete);
-            roadChooser.groupBoxUser.Controls.Add(all);
-            RadioButton[] b = { asphalt, gravel, concrete, all};
-            buttons = b;
-            asphalt.Checked = true;
+            if (radio)
+            {
+                _asphalt = new RadioButton();
+                _asphalt.Text = "Asphalt";
+                _asphalt.Location = new Point(240, 40);
+                _concrete = new RadioButton();
+                _concrete.Text = "Concrete";
+                _concrete.Location = new Point(240, 64);
+                _gravel = new RadioButton();
+                _gravel.Text = "Gravel";
+                _gravel.Location = new Point(240, 90);
+                roadChooser.groupBoxUser.Controls.Add(_asphalt);
+                roadChooser.groupBoxUser.Controls.Add(_concrete);
+                roadChooser.groupBoxUser.Controls.Add(_gravel);
+                RadioButton[] _b = { _asphalt, _gravel, _concrete };
+                _buttons = _b;
+                _asphalt.Checked = true;
+            }
+            else
+            {
+                asphalt = new CheckBox();
+                asphalt.Text = "Asphalt";
+                asphalt.Location = new Point(240, 40);
+                concrete = new CheckBox();
+                concrete.Text = "Concrete";
+                concrete.Location = new Point(240, 64);
+                gravel = new CheckBox();
+                gravel.Text = "Gravel";
+                gravel.Location = new Point(240, 90);
+                roadChooser.groupBoxUser.Controls.Add(asphalt);
+                roadChooser.groupBoxUser.Controls.Add(concrete);
+                roadChooser.groupBoxUser.Controls.Add(gravel);
+                CheckBox[] b = { asphalt, gravel, concrete };
+                buttons = b;
+                asphalt.Checked = true;
+            }
         }
 
-        public string chooseRoad(string setRoad = "")
+        public string chooseRoad(string setRoad = "", bool radio = false)
         {
-            if (string.IsNullOrEmpty(setRoad))
+            string returnText = "";
+            if (radio)
             {
-                for (int i = 0; i < buttons.Length; i++)
+                if (string.IsNullOrEmpty(setRoad))
                 {
-                    if (buttons[i].Checked)
+                    for (int i = 0; i < _buttons.Length; i++)
                     {
-                        return buttons[i].Text;
+                        if (_buttons[i].Checked)
+                        {
+                            return _buttons[i].Text;
+                        }
+                    }
+                    return "";
+                }
+                for (int i = 0; i < _buttons.Length; i++)
+                {
+                    if (_buttons[i].Text == setRoad)
+                    {
+                        _buttons[i].Checked = true;
+                        return _buttons[i].Text;
                     }
                 }
-                return "";
             }
-            for (int i = 0; i < buttons.Length; i++)
+            else
             {
-                if (buttons[i].Text == setRoad)
+                if (string.IsNullOrEmpty(setRoad))
                 {
-                    buttons[i].Checked = true;
-                    return buttons[i].Text;
+                    for (int i = 0; i < buttons.Length; i++)
+                    {
+                        if (buttons[i].Checked)
+                        {
+                            returnText += buttons[i].Text + ',';
+                        }
+                    }
+                    return returnText;
+                }
+                for (int i = 0; i < buttons.Length; i++)
+                {
+                    if (buttons[i].Text == setRoad)
+                    {
+                        buttons[i].Checked = true;
+                        returnText += buttons[i].Text + ',';
+                    }
                 }
             }
-            return "";
+            return returnText;
         }
 
         public DialogResult ShowDialog()

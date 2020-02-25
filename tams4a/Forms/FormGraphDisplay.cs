@@ -46,7 +46,8 @@ namespace tams4a.Forms
             chart.ChartAreas["Area"].AxisX.LineWidth = 0;
             chart.ChartAreas["Area"].AxisX.LabelStyle.Enabled = true;
             chart.ChartAreas["Area"].AxisX.LabelStyle.Font = new Font("Arial", 12);
-            if (chart.Titles[0].Text == "Asphalt Road Major Distresses") { 
+            if (chart.Titles[0].Text == "Asphalt Road Major Distresses" || chart.Titles[0].Text == "Concrete Road Major Distresses")
+            { 
                 chart.ChartAreas["Area"].AxisX.IsLabelAutoFit = true;
                 chart.ChartAreas["Area"].AxisX.LabelStyle.Angle = -45;
             }

@@ -41,12 +41,14 @@
             this.textBoxSurveyMonth = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDownSurveyYear = new System.Windows.Forms.NumericUpDown();
+            this.labelOrganization = new System.Windows.Forms.Label();
+            this.textBoxOrganization = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSurveyYear)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxCityName
             // 
-            this.textBoxCityName.Location = new System.Drawing.Point(173, 31);
+            this.textBoxCityName.Location = new System.Drawing.Point(173, 35);
             this.textBoxCityName.Name = "textBoxCityName";
             this.textBoxCityName.Size = new System.Drawing.Size(100, 20);
             this.textBoxCityName.TabIndex = 0;
@@ -54,7 +56,7 @@
             // labelCityName
             // 
             this.labelCityName.AutoSize = true;
-            this.labelCityName.Location = new System.Drawing.Point(13, 34);
+            this.labelCityName.Location = new System.Drawing.Point(13, 38);
             this.labelCityName.Name = "labelCityName";
             this.labelCityName.Size = new System.Drawing.Size(55, 13);
             this.labelCityName.TabIndex = 1;
@@ -63,7 +65,7 @@
             // labelContactDate
             // 
             this.labelContactDate.AutoSize = true;
-            this.labelContactDate.Location = new System.Drawing.Point(12, 60);
+            this.labelContactDate.Location = new System.Drawing.Point(12, 64);
             this.labelContactDate.Name = "labelContactDate";
             this.labelContactDate.Size = new System.Drawing.Size(130, 13);
             this.labelContactDate.TabIndex = 3;
@@ -72,7 +74,7 @@
             // labelProposalDate
             // 
             this.labelProposalDate.AutoSize = true;
-            this.labelProposalDate.Location = new System.Drawing.Point(13, 86);
+            this.labelProposalDate.Location = new System.Drawing.Point(13, 90);
             this.labelProposalDate.Name = "labelProposalDate";
             this.labelProposalDate.Size = new System.Drawing.Size(126, 13);
             this.labelProposalDate.TabIndex = 5;
@@ -80,14 +82,14 @@
             // 
             // dateTimePickerContactDate
             // 
-            this.dateTimePickerContactDate.Location = new System.Drawing.Point(173, 57);
+            this.dateTimePickerContactDate.Location = new System.Drawing.Point(173, 61);
             this.dateTimePickerContactDate.Name = "dateTimePickerContactDate";
             this.dateTimePickerContactDate.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerContactDate.TabIndex = 6;
             // 
             // dateTimePickerProposalDate
             // 
-            this.dateTimePickerProposalDate.Location = new System.Drawing.Point(173, 83);
+            this.dateTimePickerProposalDate.Location = new System.Drawing.Point(173, 87);
             this.dateTimePickerProposalDate.Name = "dateTimePickerProposalDate";
             this.dateTimePickerProposalDate.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerProposalDate.TabIndex = 7;
@@ -95,7 +97,7 @@
             // labelCityDepartment
             // 
             this.labelCityDepartment.AutoSize = true;
-            this.labelCityDepartment.Location = new System.Drawing.Point(13, 112);
+            this.labelCityDepartment.Location = new System.Drawing.Point(13, 116);
             this.labelCityDepartment.Name = "labelCityDepartment";
             this.labelCityDepartment.Size = new System.Drawing.Size(154, 13);
             this.labelCityDepartment.TabIndex = 9;
@@ -103,7 +105,7 @@
             // 
             // textBoxCityDepartment
             // 
-            this.textBoxCityDepartment.Location = new System.Drawing.Point(173, 109);
+            this.textBoxCityDepartment.Location = new System.Drawing.Point(173, 113);
             this.textBoxCityDepartment.Name = "textBoxCityDepartment";
             this.textBoxCityDepartment.Size = new System.Drawing.Size(100, 20);
             this.textBoxCityDepartment.TabIndex = 8;
@@ -121,7 +123,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 138);
+            this.label1.Location = new System.Drawing.Point(13, 142);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(120, 13);
             this.label1.TabIndex = 12;
@@ -129,7 +131,7 @@
             // 
             // textBoxSurveyMonth
             // 
-            this.textBoxSurveyMonth.Location = new System.Drawing.Point(173, 135);
+            this.textBoxSurveyMonth.Location = new System.Drawing.Point(173, 139);
             this.textBoxSurveyMonth.Name = "textBoxSurveyMonth";
             this.textBoxSurveyMonth.Size = new System.Drawing.Size(100, 20);
             this.textBoxSurveyMonth.TabIndex = 11;
@@ -137,7 +139,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 164);
+            this.label2.Location = new System.Drawing.Point(13, 168);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 13);
             this.label2.TabIndex = 14;
@@ -145,7 +147,7 @@
             // 
             // numericUpDownSurveyYear
             // 
-            this.numericUpDownSurveyYear.Location = new System.Drawing.Point(173, 162);
+            this.numericUpDownSurveyYear.Location = new System.Drawing.Point(173, 166);
             this.numericUpDownSurveyYear.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -165,11 +167,29 @@
             0,
             0});
             // 
+            // labelOrganization
+            // 
+            this.labelOrganization.AutoSize = true;
+            this.labelOrganization.Location = new System.Drawing.Point(13, 12);
+            this.labelOrganization.Name = "labelOrganization";
+            this.labelOrganization.Size = new System.Drawing.Size(66, 13);
+            this.labelOrganization.TabIndex = 17;
+            this.labelOrganization.Text = "Organization";
+            // 
+            // textBoxOrganization
+            // 
+            this.textBoxOrganization.Location = new System.Drawing.Point(173, 9);
+            this.textBoxOrganization.Name = "textBoxOrganization";
+            this.textBoxOrganization.Size = new System.Drawing.Size(100, 20);
+            this.textBoxOrganization.TabIndex = 16;
+            // 
             // FormLTAPAnalysis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(671, 371);
+            this.Controls.Add(this.labelOrganization);
+            this.Controls.Add(this.textBoxOrganization);
             this.Controls.Add(this.numericUpDownSurveyYear);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -207,5 +227,7 @@
         public System.Windows.Forms.TextBox textBoxSurveyMonth;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.NumericUpDown numericUpDownSurveyYear;
+        private System.Windows.Forms.Label labelOrganization;
+        public System.Windows.Forms.TextBox textBoxOrganization;
     }
 }

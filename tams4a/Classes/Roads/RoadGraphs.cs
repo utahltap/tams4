@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using tams4a.Forms;
 
@@ -130,13 +131,13 @@ namespace tams4a.Classes.Roads
         {
             ChooseRoadForm roadChooser = null;
             bool bypassForm = false;
-            if (sender.ToString() == "Generate Graphs")
+            if (sender.ToString() == "Asphalt" || sender.ToString() == "Concrete")
             {
                 bypassForm = true;
             }
             else
             {
-                roadChooser = new ChooseRoadForm("What Road Type?", "Select a Road Surface Type");
+                roadChooser = new ChooseRoadForm("What Road Type?", "Select a Road Surface Type", true);
             }
             string thisSql = moduleRoads.getSelectAllSQL();
             if (bypassForm || roadChooser.ShowDialog() == DialogResult.OK)
@@ -144,11 +145,10 @@ namespace tams4a.Classes.Roads
                 try
                 {
                     string roadType;
-                    if (bypassForm) roadType = "Asphalt";
-                    else roadType = roadChooser.chooseRoad();
+                    if (bypassForm) roadType = sender.ToString();
+                    else roadType = roadChooser.chooseRoad("", true);
                     DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
                     var roads = roadTable.Select("surface = '" + roadType + "'");
-
                     if (roads.Length == 0)
                     {
                         MessageBox.Show("No graph could be generated because there are no roads of type " + roadType + ".", "No Roads", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -157,8 +157,8 @@ namespace tams4a.Classes.Roads
                     Dictionary<string, string[]> distressGroup = new Dictionary<string, string[]>()
                     {
                         {"Asphalt", distressAsphalt },
-                        {"Gravel", distressGravel },
-                        {"Concrete", distressConcrete }
+                        {"Concrete", distressConcrete },
+                        {"Gravel", distressGravel }
                     };
                     Dictionary<string, double> distressedArea = new Dictionary<string, double>();
                     double totalArea = 0.0;
@@ -258,9 +258,18 @@ namespace tams4a.Classes.Roads
                     FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, Util.UppercaseFirst(roadType) + " Road Major Distresses", colorPalette, yLabel);
                     if (bypassForm)
                     {
-                        analysis.setNumberOfAsphaltDistressesPresent(index - 1);
-                        analysis.setMajorAsphaltDistress(majorDistress);
-                        Util.AutoChartToPNG(graph.chart, "AsphaltDistressGraph");
+                        if (sender.ToString() == "Asphalt")
+                        {
+                            analysis.setNumberOfAsphaltDistressesPresent(index - 1);
+                            analysis.setMajorAsphaltDistress(majorDistress);
+                            Util.AutoChartToPNG(graph.chart, "AsphaltDistressGraph");
+                        }
+                        if (sender.ToString() == "Concrete")
+                        {
+                            analysis.setNumberOfConcreteDistressesPresent(index - 1);
+                            analysis.setMajorConcreteDistress(majorDistress);
+                            Util.AutoChartToPNG(graph.chart, "ConcreteDistressGraph");
+                        }
                     }
                     else
                     {
@@ -276,18 +285,44 @@ namespace tams4a.Classes.Roads
 
         public void graphRSL(object sender, EventArgs e)
         {
-            ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a road surface type.");
+            ChooseRoadForm roadChooser = null;
+            bool bypassForm = false;
+            if (sender.ToString() == "Asphalt," || sender.ToString() == "Concrete," || sender.ToString() == "Asphalt,Concrete,")
+            {
+                bypassForm = true;
+            }
+            else
+            {
+                roadChooser = new ChooseRoadForm("What Road Type?", "Select a Road Surface Type");
+            }
             string thisSql = moduleRoads.getSelectAllSQL();
-            if (roadChooser.ShowDialog() == DialogResult.OK)
+            if (bypassForm || roadChooser.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    string roadType = roadChooser.chooseRoad();
+                    string roadTypes;
+                    if (bypassForm) roadTypes = sender.ToString();
+                    else roadTypes = roadChooser.chooseRoad();
+                    string[] roadType = roadTypes.Split(',');
+                    roadType = roadType.Take(roadType.Length - 1).ToArray();
+
                     string[] categories = { "0", "1-3", "4-6", "7-9", "10-12", "13-15", "16-18", "19-20" };
                     int[] caps = { 0, 3, 6, 9, 12, 15, 18, 20 };
                     DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
-                    var roads = roadTable.Select("surface = '" + roadType + "'");
-                    if (roadType == "All") roads = roadTable.Select();
+                    string selectQuery = "surface = '" + roadType[0] + "'";
+                    string title = "RSL Distribution of " + roadType[0];
+                    if (roadType.Length > 1)
+                    {
+                        for (int i = 1; i < roadType.Length; ++i)
+                        {
+                            selectQuery += " OR surface = '" + roadType[i] + "'";
+                            title += " and " + roadType[i];
+                        }
+                    }
+                    if (roadType.Length == 3) title = "RSL Distribution of Full Road";
+                    title += " Network";
+
+                    var roads = roadTable.Select(selectQuery);
                     if (roads.Length == 0)
                     {
                         MessageBox.Show("No graph could be generated because there are no roads of type " + roadType + ".", "No Roads", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -340,8 +375,15 @@ namespace tams4a.Classes.Roads
                     results.Rows.Add(totalsRow);
                     results.Rows.Add(percentageRow);
                     Color[] color = { Color.DarkRed, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.DeepSkyBlue, Color.Blue };
-                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, "Road RSL Distribution", color);
-                    graph.Show();
+                    FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, title, color);
+                    if (bypassForm)
+                    {
+                        Util.AutoChartToPNG(graph.chart, "AsphaltConcreteRSLGraph");
+                    }
+                    else
+                    {
+                        graph.Show();
+                    }
                 }
                 catch (Exception err)
                 {

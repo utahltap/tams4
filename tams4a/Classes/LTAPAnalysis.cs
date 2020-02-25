@@ -13,8 +13,10 @@ namespace tams4a.Classes
         private TamsProject Project;
         private ModuleRoads moduleRoads;
         private double percentConcrete = 0;
-        private int numberOfAsphaltDistressesPresent = 0;
+        private string numberOfAsphaltDistressesPresent = "";
+        private string numberOfConcreteDistressesPresent = "";
         private string majorAsphaltDistress = "";
+        private string majorConcreteDistress = "";
         private const int FEET_TO_MILES = 5820;
 
         public LTAPAnalysis(TamsProject theProject, ModuleRoads modRoads)
@@ -69,16 +71,33 @@ namespace tams4a.Classes
                         winword.Selection.Delete();
                         winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
                     }
-                    else if (image.Title == "Figure 5. Governing Distress Rating Distribution for Asphalt Roads")
+                    else if (image.Title == "Figure 5. Major Distress Distribution for Asphalt Roads")
                     {
-                        graphs.graphGoverningDistress(graphTrigger, null);
+                        graphs.graphGoverningDistress("Asphalt", null);
 
                         string imageLocation = Properties.Settings.Default.projectFolder + @"\Reports\AsphaltDistressGraph.png";
                         image.Select();
                         winword.Selection.Delete();
                         winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
                     }
+                    else if (image.Title == "Figure 6. Major Distress Distribution for Concrete Roads")
+                    {
+                        graphs.graphGoverningDistress("Concrete", null);
 
+                        string imageLocation = Properties.Settings.Default.projectFolder + @"\Reports\ConcreteDistressGraph.png";
+                        image.Select();
+                        winword.Selection.Delete();
+                        winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
+                    }
+                    else if (image.Title == "Figure 7. Current RSL Distribution for Asphalt and Concrete Street Network")
+                    {
+                        graphs.graphRSL("Asphalt,Concrete,", null);
+
+                        string imageLocation = Properties.Settings.Default.projectFolder + @"\Reports\AsphaltConcreteRSLGraph.png";
+                        image.Select();
+                        winword.Selection.Delete();
+                        winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
+                    }
 
 
                 }
@@ -100,6 +119,7 @@ namespace tams4a.Classes
                 double onePercentAsphalt = Math.Round((feetOfAsphaltRoad / 100) / FEET_TO_MILES, 1);
 
                 //find and replace
+                FindAndReplace(winword, "<organization>", reportForm.textBoxOrganization.Text); // Not working...
                 FindAndReplace(winword, "<city>", reportForm.textBoxCityName.Text);
                 FindAndReplace(winword, "<miles>", milesOfRoad);
                 FindAndReplace(winword, "<one_percent_asphalt>", onePercentAsphalt);
@@ -111,6 +131,8 @@ namespace tams4a.Classes
                 FindAndReplace(winword, "<percent_concrete>", percentConcrete);
                 FindAndReplace(winword, "<number_of_asphalt_distresses>", numberOfAsphaltDistressesPresent);
                 FindAndReplace(winword, "<major_asphalt_distress>", majorAsphaltDistress);
+                FindAndReplace(winword, "<number_of_concrete_distresses>", numberOfConcreteDistressesPresent);
+                FindAndReplace(winword, "<major_concrete_distress>", majorConcreteDistress);
 
 
                 int surveyYear = (int)reportForm.numericUpDownSurveyYear.Value;
@@ -197,20 +219,44 @@ namespace tams4a.Classes
                 ref matchControl);
         }
 
-        public void setPercentConcrete(double value)
+        internal void setPercentConcrete(double value)
         {
             percentConcrete = value;
         }
 
-        public void setNumberOfAsphaltDistressesPresent(int value)
+        internal void setNumberOfAsphaltDistressesPresent(int value)
         {
-            numberOfAsphaltDistressesPresent = value;
+            numberOfAsphaltDistressesPresent = numToString(value);
         }
 
-        public void setMajorAsphaltDistress(string value)
+        internal void setMajorAsphaltDistress(string value)
         {
             majorAsphaltDistress = value;
         }
 
+        internal void setNumberOfConcreteDistressesPresent(int value)
+        {
+            numberOfConcreteDistressesPresent = numToString(value);
+        }
+
+        internal void setMajorConcreteDistress(string value)
+        {
+            majorConcreteDistress = value;
+        }
+
+        private string numToString(int num)
+        {
+            if (num == 0) return "zero";
+            if (num == 1) return "one";
+            if (num == 2) return "two";
+            if (num == 3) return "three";
+            if (num == 4) return "four";
+            if (num == 5) return "five";
+            if (num == 6) return "six";
+            if (num == 7) return "seven";
+            if (num == 8) return "eight";
+            if (num == 9) return "nine";
+            return "NAN";
+        }
     }
 }
