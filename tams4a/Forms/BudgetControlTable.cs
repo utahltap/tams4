@@ -138,7 +138,7 @@ namespace tams4a.Forms
 
         public void updateRowTable(Dictionary<string, double> pricePerYard, Dictionary<int, double> rslArea, AnalysisRowPanel currentRow)
         {
-            for (int i = 5; i < Controls.Count; i++)
+            for (int i = 5; i < Controls.Count; ++i)
             {
                 Controls.RemoveAt(i);
             }
@@ -325,7 +325,7 @@ namespace tams4a.Forms
                 {
                     return Util.ToDouble(Controls[i + 2].Text);
                 }
-                i++;
+                ++i;
             }
             return 0.0;
         }

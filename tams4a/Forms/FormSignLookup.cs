@@ -40,7 +40,7 @@ namespace tams4a.Forms
             foreach (DataRow row in referenceTable.Rows)
             {
                 bool exclude = false;
-                for (int i = 0; i < searchTerms.Length; i++)
+                for (int i = 0; i < searchTerms.Length; ++i)
                 {
                     if (row["mutcd_code"].ToString().Contains(searchTerms[i]) || row["category"].ToString().Contains(searchTerms[i]) || row["sign_text"].ToString().Contains(searchTerms[i]) || row["description"].ToString().Contains(searchTerms[i]))
                     {
@@ -82,7 +82,7 @@ namespace tams4a.Forms
             signTexts = new List<Label>();
             categoryIndicator = new List<PictureBox>();
             options = new List<RadioButton>();
-            for (int i = 0; i < searchTable.Rows.Count; i++)
+            for (int i = 0; i < searchTable.Rows.Count; ++i)
             {
                 options.Add(new RadioButton());
                 options[i].Text = searchTable.Rows[i]["mutcd_code"].ToString();
@@ -118,7 +118,7 @@ namespace tams4a.Forms
 
         private void radio_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < options.Count; i++)
+            for (int i = 0; i < options.Count; ++i)
             {
                 if (options[i].Checked)
                 {

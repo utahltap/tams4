@@ -98,7 +98,7 @@ namespace tams4a.Forms
                     totalArea += area;
                     totalCost += pricePerYard[rowPanel.getTreatment()] * (area / 9);
                 }
-                i++;
+                ++i;
             }
             
             double roundedCost = Math.Round(totalCost, 2);
@@ -257,7 +257,7 @@ namespace tams4a.Forms
 
             Dictionary<string, double> currentRslArea = new Dictionary<string, double>();
             double totalAreaChart = 0.0;
-            for (int i = 0; i < categories.Length; i++)
+            for (int i = 0; i < categories.Length; ++i)
             {
                 currentRslArea.Add(categories[i], 0.0);
             }
@@ -267,7 +267,7 @@ namespace tams4a.Forms
                 int rsl = Util.ToInt(row["rsl"].ToString());
                 if (rsl == -1 || String.IsNullOrEmpty(row["rsl"].ToString())) continue;
 
-                for (int i = 0; i < categories.Length; i++)
+                for (int i = 0; i < categories.Length; ++i)
                 {
                     if (rsl <= caps[i])
                     {
@@ -281,7 +281,7 @@ namespace tams4a.Forms
 
             string[] domain = new string[categories.Length];
             double[] range = new double[categories.Length];
-            for (int i = 0; i < categories.Length; i++)
+            for (int i = 0; i < categories.Length; ++i)
             {
                 domain[i] = categories[i];
                 range[i] = Math.Round(currentRslArea[categories[i]] / totalAreaChart, 3) * 100;
@@ -312,7 +312,7 @@ namespace tams4a.Forms
             chartCurrent.ChartAreas["Area"].AxisX.MajorGrid.LineColor = Color.LightGray;
             chartCurrent.ChartAreas["Area"].AxisY.MajorGrid.LineColor = Color.LightGray;
             chartCurrent.ChartAreas["Area"].AxisY.Title = "Percent of Road Network";
-            for (int i = 0; i < domain.Length; i++)
+            for (int i = 0; i < domain.Length; ++i)
             {
                 chartCurrent.Series["Series"].SetDefault(true);
                 chartCurrent.Series["Series"].Enabled = true;
@@ -330,7 +330,7 @@ namespace tams4a.Forms
             int[] caps = { 0, 3, 6, 9, 12, 15, 18, 20 };
 
             Dictionary<string, double> projectedRslArea = new Dictionary<string, double>();
-            for (int i = 0; i < categories.Length; i++)
+            for (int i = 0; i < categories.Length; ++i)
             {
                 projectedRslArea.Add(categories[i], 0.0);
             }
@@ -382,7 +382,7 @@ namespace tams4a.Forms
                     if (rsl < 0) rsl = 0;
 
                     bool adjusted = false;
-                    for (int i = 0; i < categories.Length; i++)
+                    for (int i = 0; i < categories.Length; ++i)
                     {
                         if (rsl <= caps[i] && percentOfArea == 1.0)
                         {
@@ -417,7 +417,7 @@ namespace tams4a.Forms
                 if (rsl < 0) rsl = 0;
 
                 double rowArea = Math.Round((Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString())) / 9);
-                for (int i = 0; i < categories.Length; i++)
+                for (int i = 0; i < categories.Length; ++i)
                 {
                     if (rsl <= caps[i])
                     {
@@ -429,7 +429,7 @@ namespace tams4a.Forms
 
             string[] newDomain = new string[categories.Length];
             double[] newRange = new double[categories.Length];
-            for (int i = 0; i < categories.Length; i++)
+            for (int i = 0; i < categories.Length; ++i)
             {
                 newDomain[i] = categories[i];
                 newRange[i] = Math.Round(projectedRslArea[categories[i]] / totalAreaChart, 3) * 100;
@@ -458,7 +458,7 @@ namespace tams4a.Forms
             chartProjection.ChartAreas["Area"].AxisX.MajorGrid.LineColor = Color.LightGray;
             chartProjection.ChartAreas["Area"].AxisY.MajorGrid.LineColor = Color.LightGray;
             chartProjection.ChartAreas["Area"].AxisY.Title = "Percent of Road Network";
-            for (int i = 0; i < newDomain.Length; i++)
+            for (int i = 0; i < newDomain.Length; ++i)
             {
                 chartProjection.Series["Series"].SetDefault(true);
                 chartProjection.Series["Series"].Enabled = true;

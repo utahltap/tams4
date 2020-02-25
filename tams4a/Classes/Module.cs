@@ -456,7 +456,7 @@ namespace tams4a.Classes
 
             List<String> removeKeys = new List<string>(); // keys that will be removed after processing [data]
             String thisValue;
-            for (int i = 0; i < data.Rows.Count; i++)
+            for (int i = 0; i < data.Rows.Count; ++i)
             {
                 foreach (String columnName in columnNames)
                 {
@@ -596,7 +596,7 @@ namespace tams4a.Classes
 
         public void PrepareDatatable(DataTable table, string[] columns)
         {
-            for (int i = 0; i < columns.Length; i++)
+            for (int i = 0; i < columns.Length; ++i)
             {
                 if (!table.Columns.Contains(columns[i]))
                 {
@@ -623,7 +623,7 @@ namespace tams4a.Classes
             selectionLayer.DataSet.Save();
             Project.map.Refresh();
             Project.map.ResetBuffer();
-            for (int i = 0; i < tables.Length; i++)
+            for (int i = 0; i < tables.Length; ++i)
             {
                 Database.DeleteRow(Project.conn, tables[i], column, tamsid);
             }

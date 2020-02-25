@@ -25,7 +25,7 @@ namespace tams4a.Forms
             CenterToScreen();
             totals = new Dictionary<int, decimal>();
             yearIsDiff = new bool[11];
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 10; ++i)
             {
                 comboBoxYear.Items.Add(DateTime.Now.Year + i);
                 totals.Add(DateTime.Now.Year + i, 0);
@@ -55,7 +55,7 @@ namespace tams4a.Forms
                 { "reconstruction", new List<NumericUpDown>()}
             };
             yearlyTreatment = new Dictionary<int, Dictionary<string, List<decimal>>>();
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 10; ++i)
             {
                 yearlyTreatment.Add(DateTime.Now.Year + i, new Dictionary<string, List<decimal>>()
                 {
@@ -100,7 +100,7 @@ namespace tams4a.Forms
                 nu.Size = new Size(60, 12);
                 tg[cat].Controls.Add(nu);
                 treatmentControls[cat].Add(nu);
-                for (int i = 0; i <= 10; i++)
+                for (int i = 0; i <= 10; ++i)
                 {
                     yearlyTreatment[DateTime.Now.Year + i][cat].Add(0);
                 }
@@ -118,7 +118,7 @@ namespace tams4a.Forms
             }
             decimal total = 0;
             int yr = Classes.Util.ToInt(comboBoxYear.Text);
-            for (int i = 0; i < categories.Length; i++)
+            for (int i = 0; i < categories.Length; ++i)
             {
                 for (int j = 0; j < treatmentControls[categories[i]].Count; j++)
                 {
@@ -144,7 +144,7 @@ namespace tams4a.Forms
         {
             captureEvent = true;
             int yr = Classes.Util.ToInt(comboBoxYear.Text);
-            for (int i = 0; i < categories.Length; i++)
+            for (int i = 0; i < categories.Length; ++i)
             {
                 for (int j = 0; j < yearlyTreatment[yr][categories[i]].Count; j++)
                 {
@@ -164,7 +164,7 @@ namespace tams4a.Forms
         public void resetAll()
         {
             yearIsDiff = new bool[11];
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 10; ++i)
             {
                 comboBoxYear.Items.Add(DateTime.Now.Year + i);
                 totals.Add(DateTime.Now.Year + i, 0);
@@ -172,7 +172,7 @@ namespace tams4a.Forms
             }
             foreach (string key in treatmentControls.Keys)
             {
-                for (int i = 0; i < treatmentControls[key].Count; i++)
+                for (int i = 0; i < treatmentControls[key].Count; ++i)
                 {
                     treatmentControls[key][i].Value = 0;
                 }
@@ -181,7 +181,7 @@ namespace tams4a.Forms
             {
                 foreach (string cat in yearlyTreatment[year].Keys)
                 {
-                    for (int i = 0; i < yearlyTreatment[year][cat].Count; i++)
+                    for (int i = 0; i < yearlyTreatment[year][cat].Count; ++i)
                     {
                         yearlyTreatment[year][cat][i] = 0;
                     }
@@ -194,7 +194,7 @@ namespace tams4a.Forms
             yearIsDiff[Classes.Util.ToInt(comboBoxYear.Text) - DateTime.Now.Year] = false;
             foreach (string key in treatmentControls.Keys)
             {
-                for (int i = 0; i < treatmentControls[key].Count; i++)
+                for (int i = 0; i < treatmentControls[key].Count; ++i)
                 {
                     treatmentControls[key][i].Value = 0;
                 }

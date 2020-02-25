@@ -323,7 +323,7 @@ namespace tams4a.Classes
             Image[] images = { Properties.Resources.regulatory_rw, Properties.Resources.regulatory_bw, Properties.Resources.warning, Properties.Resources.regulatory_pedestrian, Properties.Resources.school_pedestrian, Properties.Resources.worker, Properties.Resources.rail, Properties.Resources.highway, Properties.Resources.locational, Properties.Resources.locational, Properties.Resources.service, Properties.Resources.recreation, Properties.Resources.empty_post};
             string[] signCats = { "regulatory_rw", "regulatory_bw", "warning", "regulatory_pedestrian", "school_pedestrian", "worker", "rail", "highway", "locational", "location_guide", "service", "recreation", "empty_post"};
 
-            for (int i = 0; i < images.Length; i++)
+            for (int i = 0; i < images.Length; ++i)
             {
                 PointCategory cat = new PointCategory(images[i], baseWidth);
                 cat.FilterExpression = "[TAMSSIGN] = '" + signCats[i] + "'";
@@ -382,7 +382,7 @@ namespace tams4a.Classes
             DataTable tamsTable = Database.GetDataByQuery(Project.conn, postSQL);
             tamsTable.DefaultView.Sort = "support_id asc";
             tamsTable = tamsTable.DefaultView.ToTable();
-            for (int i = 0; i < selectionTable.Rows.Count; i++)
+            for (int i = 0; i < selectionTable.Rows.Count; ++i)
             {
                 selectionTable.Rows[i]["TAMSSIGN"] = (i >= tamsTable.Rows.Count) ? "empty_post" : tamsTable.Rows[i]["category"];
             }
@@ -682,7 +682,7 @@ namespace tams4a.Classes
         private void clearSignChanges()
         {
             signChanges = new List<Dictionary<string, string>>();
-            for (int i = 0; i < signsOnPost.Rows.Count; i++)
+            for (int i = 0; i < signsOnPost.Rows.Count; ++i)
             {
                 signChanges.Add(new Dictionary<string, string>());
                 foreach (DataColumn col in signsOnPost.Columns)
@@ -795,7 +795,7 @@ namespace tams4a.Classes
             postCat = "empty_post";
             if (signsOnPost == null || signsOnPost.Rows.Count == 0)return;
             postCat = signChanges[0]["category"];
-            for (int i = 0; i < signChanges.Count; i++)
+            for (int i = 0; i < signChanges.Count; ++i)
             {
                 if (catRank[postCat] > catRank[signChanges[i]["category"]])
                 {
@@ -830,7 +830,7 @@ namespace tams4a.Classes
             values["notes"] = notes;
             values["category"] = postCat;
             
-            for (int i = 0; i < signChanges.Count; i++)
+            for (int i = 0; i < signChanges.Count; ++i)
             {
                 if (!Database.ReplaceRow(Project.conn, signChanges[i], ModuleName))
                 {
@@ -856,7 +856,7 @@ namespace tams4a.Classes
                 }
             }
 
-            for (int i = 0; i < tamsids.Count; i++)
+            for (int i = 0; i < tamsids.Count; ++i)
             {
                 values["support_id"] = tamsids[i];
                 Dictionary<string, string> v = new Dictionary<string, string>();
@@ -1199,7 +1199,7 @@ namespace tams4a.Classes
             }
             signControls.toolStripDropDownButtonNewPost.BackColor = Color.LightSkyBlue;
 
-            for (int i = 0; i < Project.map.Layers.Count; i++)
+            for (int i = 0; i < Project.map.Layers.Count; ++i)
             {
                 if (((FeatureLayer)Project.map.Layers[i]).Name.Contains("road"))
                 {

@@ -55,7 +55,7 @@ namespace tams4a.Forms
             tickMark.LineWidth = 0;
             chart.ChartAreas["Area"].AxisY.MajorTickMark = tickMark;
             chart.ChartAreas["Area"].AxisX.MajorTickMark = tickMark;
-            for (int i = 0; i < domain.Length; i++)
+            for (int i = 0; i < domain.Length; ++i)
             {
                 chart.Series["Series"]["PixelPointWidth"] = "5";
                 chart.Series["Series"].SetDefault(true);
@@ -85,7 +85,7 @@ namespace tams4a.Forms
             chart.ChartAreas.Clear();
             chart.Series.Add("Series");
             chart.ChartAreas.Add("Area");
-            for (int i = 0; i < domain.Length; i++)
+            for (int i = 0; i < domain.Length; ++i)
             {
                 chart.Series["Series"].SetDefault(true);
                 chart.Series["Series"].Enabled = true;

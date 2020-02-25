@@ -53,14 +53,14 @@ namespace tams4a.Classes.Roads
                     return;
                 }
                 Dictionary<string, double> roadArea = new Dictionary<string, double>();
-                for (int i = 0; i < roadTypes.Length; i++)
+                for (int i = 0; i < roadTypes.Length; ++i)
                 {
                     roadArea.Add(roadTypes[i], 0.0);
                 }
                 double totalArea = 0.0;
                 foreach (DataRow row in roadTable.Rows)
                 {
-                    for (int i = 0; i < roadTypes.Length; i++)
+                    for (int i = 0; i < roadTypes.Length; ++i)
                     {
                         if (row[column].ToString().Contains(roadTypes[i]))
                         {
@@ -71,7 +71,7 @@ namespace tams4a.Classes.Roads
                 }
                 DataTable results = new DataTable();
                 results.Columns.Add("Distribution");
-                for (int i = 0; i < roadTypes.Length; i++)
+                for (int i = 0; i < roadTypes.Length; ++i)
                 {
                     results.Columns.Add(Util.UppercaseFirst(roadTypes[i]));
                 }
@@ -82,7 +82,7 @@ namespace tams4a.Classes.Roads
 
 
                 int count = 0;
-                for (int i = 0; i < roadTypes.Length; i++)
+                for (int i = 0; i < roadTypes.Length; ++i)
                 {
                     if (roadArea[roadTypes[i]] > 0) count++;
                 }
@@ -91,7 +91,7 @@ namespace tams4a.Classes.Roads
                 double[] range = new double[count];
 
                 int index = 0;
-                for (int i = 0; i < roadTypes.Length; i++)
+                for (int i = 0; i < roadTypes.Length; ++i)
                 {
                     double percentageCovered = Math.Round(roadArea[roadTypes[i]] / totalArea, 3) * 100;
                     if (percentageCovered == 0) continue;
@@ -163,7 +163,7 @@ namespace tams4a.Classes.Roads
                     Dictionary<string, double> distressedArea = new Dictionary<string, double>();
                     double totalArea = 0.0;
                     double noDistress = 0.0;
-                    for (int i = 0; i < distressGroup[roadType].Length; i++)
+                    for (int i = 0; i < distressGroup[roadType].Length; ++i)
                     {
                         distressedArea.Add(distressGroup[roadType][i], 0.0);
                     }
@@ -172,7 +172,7 @@ namespace tams4a.Classes.Roads
                         double area = Util.ToDouble(row["length"].ToString()) * Util.ToDouble(row["width"].ToString());
                         totalArea += area;
                         int[] dvs = new int[9];
-                        for (int i = 0; i < 9; i++)
+                        for (int i = 0; i < 9; ++i)
                         {
                             dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
                         }
@@ -191,7 +191,7 @@ namespace tams4a.Classes.Roads
                     }
                     DataTable results = new DataTable();
                     results.Columns.Add("Distribution");
-                    for (int i = 0; i < distressGroup[roadType].Length; i++)
+                    for (int i = 0; i < distressGroup[roadType].Length; ++i)
                     {
                         results.Columns.Add(distressGroup[roadType][i]);
                     }
@@ -202,7 +202,7 @@ namespace tams4a.Classes.Roads
                     percentageRow["Distribution"] = "Percentage";
 
                     int count = 1;
-                    for (int i = 0; i < distressGroup[roadType].Length; i++)
+                    for (int i = 0; i < distressGroup[roadType].Length; ++i)
                     {
                         if (distressedArea[distressGroup[roadType][i]] > 0) count++;
                     }
@@ -214,7 +214,7 @@ namespace tams4a.Classes.Roads
                     string majorDistress = "";
                     int patchPotholeIndex = -1;
                     int index = 0;
-                    for (int i = 0; i < distressGroup[roadType].Length; i++)
+                    for (int i = 0; i < distressGroup[roadType].Length; ++i)
                     {
                         double percentageCovered = Math.Round(distressedArea[distressGroup[roadType][i]] / totalArea, 3) * 100;
                         if (percentageCovered == 0) continue;
@@ -331,11 +331,13 @@ namespace tams4a.Classes.Roads
 
                     Dictionary<string, double> rslArea = new Dictionary<string, double>();
                     double totalArea = 0.0;
-                    for (int i = 0; i < categories.Length; i++)
+                    for (int i = 0; i < categories.Length; ++i)
                     {
                         rslArea.Add(categories[i], 0.0);
                     }
 
+                    double totalRSL = 0;
+                    double includedRoads = 0;
                     foreach (DataRow row in roads)
                     {
                         int rsl = Util.ToInt(row["rsl"].ToString());
@@ -343,7 +345,9 @@ namespace tams4a.Classes.Roads
                         {
                             continue;
                         }
-                        for (int i = 0; i < categories.Length; i++)
+                        totalRSL += rsl;
+                        ++includedRoads;
+                        for (int i = 0; i < categories.Length; ++i)
                         {
                             if (rsl <= caps[i])
                             {
@@ -355,7 +359,7 @@ namespace tams4a.Classes.Roads
                     }
                     DataTable results = new DataTable();
                     results.Columns.Add("Distribution");
-                    for (int i = 0; i < categories.Length; i++)
+                    for (int i = 0; i < categories.Length; ++i)
                     {
                         results.Columns.Add(categories[i]);
                     }
@@ -365,7 +369,7 @@ namespace tams4a.Classes.Roads
                     percentageRow["Distribution"] = "Percentage";
                     string[] domain = new string[categories.Length];
                     double[] range = new double[categories.Length];
-                    for (int i = 0; i < categories.Length; i++)
+                    for (int i = 0; i < categories.Length; ++i)
                     {
                         totalsRow[categories[i]] = rslArea[categories[i]];
                         percentageRow[categories[i]] = Math.Round(rslArea[categories[i]] / totalArea, 3) * 100;
@@ -378,6 +382,10 @@ namespace tams4a.Classes.Roads
                     FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, title, color);
                     if (bypassForm)
                     {
+                        Console.WriteLine(totalRSL);
+                        Console.WriteLine(includedRoads);
+                        Console.WriteLine(roads.Length);
+                        analysis.setAverageRSL(totalRSL / includedRoads);
                         Util.AutoChartToPNG(graph.chart, "AsphaltConcreteRSLGraph");
                     }
                     else

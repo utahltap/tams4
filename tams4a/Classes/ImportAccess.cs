@@ -159,7 +159,7 @@ namespace tams4a.Classes
                         {
                             values["surface"] = "asphalt";
                             string[] dvs = r["DistressValues"].ToString().Split('#');
-                            for (int i = 0; i < dvs.Length; i++)
+                            for (int i = 0; i < dvs.Length; ++i)
                             {
                                 values["distress" + (i+1).ToString()] = dvs[i];
                                 if (i >= 8)
@@ -172,7 +172,7 @@ namespace tams4a.Classes
                         {
                             values["surface"] = "gravel";
                             string[] dvs = r["DistressValues"].ToString().Split('#');
-                            for (int i = 0; i < dvs.Length; i++)
+                            for (int i = 0; i < dvs.Length; ++i)
                             {
                                 values["distress" + (i+1).ToString()] = dvs[i];
                                 if (i >= 8)
@@ -185,7 +185,7 @@ namespace tams4a.Classes
                         {
                             values["surface"] = "concrete";
                             string[] dvs = r["DistressValues"].ToString().Split('#');
-                            for (int i = 0; i < dvs.Length; i++)
+                            for (int i = 0; i < dvs.Length; ++i)
                             {
                                 values["distress" + (i + 1).ToString()] = dvs[i];
                                 if (i >= 8)

@@ -527,7 +527,7 @@ namespace tams4a.Classes
             roadControls.groupBoxDistress.Enabled = true;
             roadControls.toolStrip.Enabled = true;
             bool hasSWModule = false;
-            for (int i = 0; i < Project.map.Layers.Count; i++)
+            for (int i = 0; i < Project.map.Layers.Count; ++i)
             {
                 if (((FeatureLayer)Project.map.Layers[i]).Name == "miscellaneous") {
                     hasSWModule = true;
@@ -620,7 +620,7 @@ namespace tams4a.Classes
                 }
             }
 
-            for (int i = 0; i < tamsids.Count; i++)
+            for (int i = 0; i < tamsids.Count; ++i)
             {
                 values["TAMSID"] = tamsids[i];
                 Dictionary<string, string> v = new Dictionary<string, string>();
@@ -871,7 +871,7 @@ namespace tams4a.Classes
                 distressType = distressConcrete;
             }
             DataTable distresses = Database.GetDataByQuery(Project.conn, "SELECT * FROM road_distresses WHERE surface_id = " + distID.ToString());
-            for (int i = 0; i <= distresses.Rows.Count - 1; i++)
+            for (int i = 0; i <= distresses.Rows.Count - 1; ++i)
             {
                 if (distValues[i] <= 0)
                 {
@@ -886,7 +886,7 @@ namespace tams4a.Classes
 
             Dictionary<int, string> gd = new Dictionary<int, string>();
             int index = 0;
-            for (int i = 0; i <= distresses.Rows.Count - 1; i++)
+            for (int i = 0; i <= distresses.Rows.Count - 1; ++i)
             {
                 if (distValues[i] <= 0)
                 {
@@ -1018,7 +1018,7 @@ namespace tams4a.Classes
             {
                 if (string.IsNullOrEmpty(setRoad))
                 {
-                    for (int i = 0; i < _buttons.Length; i++)
+                    for (int i = 0; i < _buttons.Length; ++i)
                     {
                         if (_buttons[i].Checked)
                         {
@@ -1027,7 +1027,7 @@ namespace tams4a.Classes
                     }
                     return "";
                 }
-                for (int i = 0; i < _buttons.Length; i++)
+                for (int i = 0; i < _buttons.Length; ++i)
                 {
                     if (_buttons[i].Text == setRoad)
                     {
@@ -1040,7 +1040,7 @@ namespace tams4a.Classes
             {
                 if (string.IsNullOrEmpty(setRoad))
                 {
-                    for (int i = 0; i < buttons.Length; i++)
+                    for (int i = 0; i < buttons.Length; ++i)
                     {
                         if (buttons[i].Checked)
                         {
@@ -1049,7 +1049,7 @@ namespace tams4a.Classes
                     }
                     return returnText;
                 }
-                for (int i = 0; i < buttons.Length; i++)
+                for (int i = 0; i < buttons.Length; ++i)
                 {
                     if (buttons[i].Text == setRoad)
                     {

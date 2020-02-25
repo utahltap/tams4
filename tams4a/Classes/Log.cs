@@ -128,7 +128,7 @@ namespace tams4a.Classes
                 {
                     start = 0;
                 }
-                for (int i=start; i<fileLines.Length; i++)
+                for (int i=start; i<fileLines.Length; ++i)
                 {
                     returnString += fileLines[i] + "\r\n";
                 }

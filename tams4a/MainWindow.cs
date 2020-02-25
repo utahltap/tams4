@@ -489,7 +489,7 @@ namespace tams4a
             while (input[j] == ' ') j++;
             input = input.Remove(0, j);
 
-            for (int i = 0; i < input.Length; i++)
+            for (int i = 0; i < input.Length; ++i)
             {
                 if (input[i] == ',')
                 {
@@ -691,7 +691,7 @@ namespace tams4a
                 int i = -1;
                 foreach (string row in rows)
                 {
-                    i++;
+                    ++i;
                     if (i == 0) continue;
                     string[] thisRow = row.Split(',');
                     importedTable.Rows.Add(thisRow);

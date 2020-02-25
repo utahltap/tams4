@@ -104,7 +104,7 @@ namespace tams4a.Forms
         private void setBalance(Object sender, EventArgs e)
         {
             decimal totals = 0;
-            for (int i = 0; i < percentages.Length -1; i++)
+            for (int i = 0; i < percentages.Length -1; ++i)
             {
                 totals += percentages[i].Value;
             }
@@ -167,7 +167,7 @@ namespace tams4a.Forms
         private decimal[] setPercentages(List<roadData> rd)
         {
             decimal[] cp = new decimal[categoryRSL.Length];
-            for (int i = 0; i < rd.Count; i++)
+            for (int i = 0; i < rd.Count; ++i)
             {
                 for (int j = 0; j < categoryRSL.Length; j++)
                 {
@@ -178,7 +178,7 @@ namespace tams4a.Forms
                     }
                 }
             }
-            for (int i = 0; i < cp.Length; i++)
+            for (int i = 0; i < cp.Length; ++i)
             {
                 cp[i] = cp[i] / totalArea;
             }
@@ -268,7 +268,7 @@ namespace tams4a.Forms
             byBudgetResults = new DataTable();
             byBudgetResults.Columns.Add("Year");
             string[] rslLabels = getRSLlabels(categoryRSL);
-            for (int i = 0; i < rslLabels.Length; i++)
+            for (int i = 0; i < rslLabels.Length; ++i)
             {
                 byBudgetResults.Columns.Add(rslLabels[i]);
             }
@@ -300,12 +300,12 @@ namespace tams4a.Forms
             string[] rslLabels = getRSLlabels(categoryRSL);
             resetTablesForByBudget();
             List<roadData> rd = new List<roadData>();
-            for (int i = 0; i < roads.Count; i++)
+            for (int i = 0; i < roads.Count; ++i)
             {
                 rd.Add(new roadData(roads[i].area, roads[i].RSL, roads[i].recommendedTreatment));
             }
             setPlan();
-            for (int i = 0; i <= numericUpDownYear1.Value; i++)
+            for (int i = 0; i <= numericUpDownYear1.Value; ++i)
             {
                 decimal[] cp = setPercentages(rd);
                 DataRow nr = byBudgetResults.NewRow();
@@ -367,7 +367,7 @@ namespace tams4a.Forms
             chartBudgetRSL.Series.Clear();
             chartBudgetRSL.Legends.Clear();
             chartBudgetRSL.Legends.Add(new Legend("Legend"));
-            for (int i = 0; i < rslLabels.Length; i++)
+            for (int i = 0; i < rslLabels.Length; ++i)
             {
                 chartBudgetRSL.Series.Add(rslLabels[i]);
                 chartBudgetRSL.Series[rslLabels[i]].Points.DataBind(new DataView(byBudgetResults), "Year", rslLabels[i], "");
@@ -378,7 +378,7 @@ namespace tams4a.Forms
             chartBudgetRSL.Show();
             dataGridViewRSL.DataSource = byBudgetResults;
             dataGridViewMetaData.DataSource = treatmentMetaData;
-            for (int i = 0; i < dataGridViewRSL.Columns.Count; i++)
+            for (int i = 0; i < dataGridViewRSL.Columns.Count; ++i)
             {
                 dataGridViewRSL.Columns[i].Width = 1012/dataGridViewRSL.Columns.Count;
             }
@@ -395,7 +395,7 @@ namespace tams4a.Forms
         /// <returns></returns>
         private bool examineCategory(string cat, roadData rd, Dictionary<string, List<decimal>> atp, int yr, out double c)
         {
-            for (int i = 0; i < treatmentData[cat].Count; i++)
+            for (int i = 0; i < treatmentData[cat].Count; ++i)
             {
                 decimal roadPercent = (rd.area / totalArea) * 100;
                 if (rd.RSL <= treatmentData[cat][i].max_rsl && rd.RSL >= treatmentData[cat][i].min_rsl && atp[cat][i] + roadPercent < yearlyTreatment[yr][cat][i])
@@ -414,7 +414,7 @@ namespace tams4a.Forms
         {
             foreach (string key in treatment.Keys)
             {
-                for (int i = 0; i < treatment[key].Count; i++)
+                for (int i = 0; i < treatment[key].Count; ++i)
                 {
                     row[treatmentData[key][i].name] = Math.Round(treatment[key][i], 3);
                 }
@@ -429,7 +429,7 @@ namespace tams4a.Forms
         private string[] getRSLlabels(int[] rsls)
         {
             string[] rslLabels = new string[categoryRSL.Length];
-            for (int i = 0; i < rsls.Length; i++)
+            for (int i = 0; i < rsls.Length; ++i)
             {
                 if (i == 0)
                 {
@@ -468,7 +468,7 @@ namespace tams4a.Forms
             decimal totals = 0;
             foreach (string key in treatmentControls.Keys)
             {
-                for (int i = 0; i < treatmentControls[key].Count; i++)
+                for (int i = 0; i < treatmentControls[key].Count; ++i)
                 {
                     totals += treatmentControls[key][i].Value;
                     yearlyTreatment[DateTime.Now.Year][key][i] = treatmentControls[key][i].Value;
@@ -509,7 +509,7 @@ namespace tams4a.Forms
             int yr = -1;
             Dictionary<int, Dictionary<string, List<decimal>>> tp = futurePlans.getYearlyTreatments();
             bool[] cyrs = futurePlans.changedYears();
-            for (int i = 0; i < cyrs.Length; i++)
+            for (int i = 0; i < cyrs.Length; ++i)
             {
                 if (cyrs[i])
                 {
@@ -602,7 +602,7 @@ namespace tams4a.Forms
         private void buttonResetRSL_Click(object sender, EventArgs e)
         {
             string[] cat = { "routine", "preventative", "rehabilitation", "reconstruction" };
-            for (int i = 0; i < cat.Length; i++)
+            for (int i = 0; i < cat.Length; ++i)
             {
                 for (int j = 0; j < treatmentControls[cat[i]].Count; j++)
                 {
@@ -628,7 +628,7 @@ namespace tams4a.Forms
                 string[] rslLabels = getRSLlabels(categoryRSL);
                 int[] rslPercents = new int[rslLabels.Length];
                 DataRow sourceRow = byBudgetResults.Select("Year = " + numericUpDownDisplayYear.Value.ToString())[0];
-                for (int i = 0; i < rslLabels.Length; i++)
+                for (int i = 0; i < rslLabels.Length; ++i)
                 {
                     rslPercents[i] = Util.ToInt(sourceRow[rslLabels[i]].ToString());
                 }
@@ -639,7 +639,7 @@ namespace tams4a.Forms
                 chartYearlyDistribution.Series.Add("Series");
                 chartYearlyDistribution.ChartAreas.Add("Area");
                 chartYearlyDistribution.ChartAreas["Area"].AxisY.Title = "Percent of Road Network";
-                for (int i = 0; i < rslLabels.Length; i++)
+                for (int i = 0; i < rslLabels.Length; ++i)
                 {
                     chartYearlyDistribution.Series["Series"].SetDefault(true);
                     chartYearlyDistribution.Series["Series"].Enabled = true;
@@ -661,19 +661,19 @@ namespace tams4a.Forms
             Dictionary<string, double> avgBoost = new Dictionary<string, double>();
             byTargetResults = new DataTable();
             byTargetResults.Columns.Add("Year");
-            for (int i = 0; i < rslLabels.Length; i++)
+            for (int i = 0; i < rslLabels.Length; ++i)
             {
                 byTargetResults.Columns.Add(rslLabels[i]);
             }
             byTargetResults.Columns.Add("Cost");
             List<roadData> rd = new List<roadData>();
-            for (int i = 0; i < roads.Count; i++)
+            for (int i = 0; i < roads.Count; ++i)
             {
                 rd.Add(new roadData(roads[i].area, roads[i].RSL, roads[i].recommendedTreatment));
             }
             List<int> years = new List<int>();
             List<double> yearlyCost = new List<double>();
-            for (int i = 0; i < cat.Length; i++)
+            for (int i = 0; i < cat.Length; ++i)
             {
                 avgCost[cat[i]] = 0;
                 avgBoost[cat[i]] = 0;
@@ -685,7 +685,7 @@ namespace tams4a.Forms
                 avgCost[cat[i]] /= treatmentData[cat[i]].Count;
                 avgBoost[cat[i]] /= treatmentData[cat[i]].Count;
             }
-            for (int i = 0; i <= numericUpDownYear2.Value; i++)
+            for (int i = 0; i <= numericUpDownYear2.Value; ++i)
             {
                 DataRow row = byTargetResults.NewRow();
                 years.Add(DateTime.Now.Year + i);
@@ -771,7 +771,7 @@ namespace tams4a.Forms
                 byTargetResults.Rows.Add(row);
             }
             decimal[] endActauls = setPercentages(rd);
-            for (int i = 0; i < percentages.Length - 2; i++)
+            for (int i = 0; i < percentages.Length - 2; ++i)
             {
                 if (endActauls[i] * 100 > percentages[i].Value)
                 {
@@ -783,7 +783,7 @@ namespace tams4a.Forms
                 textBoxTargetsMet.BackColor = Color.LightSeaGreen;
             }
             decimal runningAVG = 0;
-            for (int i = 0; i < rd.Count; i++)
+            for (int i = 0; i < rd.Count; ++i)
             {
                 runningAVG = runningAVG * i/ (i+1) + (decimal)rd[i].RSL / (i + 1);
             }

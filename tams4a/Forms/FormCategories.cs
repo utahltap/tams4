@@ -25,7 +25,7 @@ namespace tams4a.Forms
             numericUpDownCategories.Value = 8;
             enableCategories();
             categoryInput[0].Value = 0;
-            for (int i = 1; i < 7; i++)
+            for (int i = 1; i < 7; ++i)
             {
                 categoryInput[i].Value = 3 * i;
             }
@@ -45,7 +45,7 @@ namespace tams4a.Forms
             categoryLabels = new Label[(int)numericUpDownCategories.Value];
             categoryInput = new NumericUpDown[(int)numericUpDownCategories.Value];
             int min = 0;
-            for (int i = 1; i <= numericUpDownCategories.Value; i++)
+            for (int i = 1; i <= numericUpDownCategories.Value; ++i)
             {
                 int x = 27 + 78 * ((i - 1) / 6);
                 int y = 50 + 24 * ((i - 1) % 6);
@@ -90,7 +90,7 @@ namespace tams4a.Forms
         private void setLimits(object sender, EventArgs e)
         {
             int min = 0;
-            for (int i = 0; i < numericUpDownCategories.Value; i++)
+            for (int i = 0; i < numericUpDownCategories.Value; ++i)
             {
                 categoryInput[i].Minimum = min;
                 min = (int)categoryInput[i].Value + 1;
@@ -104,7 +104,7 @@ namespace tams4a.Forms
         public int[] getRSLcategories()
         {
             int[] values = new int[(int)numericUpDownCategories.Value];
-            for (int i = 0; i < numericUpDownCategories.Value; i++)
+            for (int i = 0; i < numericUpDownCategories.Value; ++i)
             {
                 values[i] = (int)categoryInput[i].Value;
             }

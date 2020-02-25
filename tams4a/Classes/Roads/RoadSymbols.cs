@@ -49,7 +49,7 @@ namespace tams4a.Classes.Roads
             DataTable tamsTable = Database.GetDataByQuery(Project.conn, roadSQL);
             tamsTable.DefaultView.Sort = "TAMSID asc";
             tamsTable = tamsTable.DefaultView.ToTable();
-            for (int i = 0; i < selectionTable.Rows.Count; i++)
+            for (int i = 0; i < selectionTable.Rows.Count; ++i)
             {
                 selectionTable.Rows[i]["TAMSROADRSL"] = i >= tamsTable.Rows.Count ? -1 : string.IsNullOrWhiteSpace(tamsTable.Rows[i]["rsl"].ToString()) ? -1 : Util.ToInt(tamsTable.Rows[i]["rsl"].ToString());
                 selectionTable.Rows[i]["TAMSTREATMENT"] = i >= tamsTable.Rows.Count ? -1 : tamsTable.Rows[i]["suggested_treatment"];
@@ -149,7 +149,7 @@ namespace tams4a.Classes.Roads
                     treatments[28] = "Rehabilitation"; r[28] = 255; g[28] = 0; b[28] = 0;
                     treatments[29] = "Reconstruction"; r[29] = 139; g[29] = 0; b[29] = 0;
 
-                    for (int i = 0; i < treatments.Length; i++)
+                    for (int i = 0; i < treatments.Length; ++i)
                     {
 
                         // TODO: Get this to work

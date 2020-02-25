@@ -170,7 +170,7 @@ namespace tams4a.Forms
         internal void initRSLAreas()
         {
             rslArea = new Dictionary<int, double>();
-            for (int i = getFromRSL(); i <= getToRSL(); i++)
+            for (int i = getFromRSL(); i <= getToRSL(); ++i)
             {
                 rslArea.Add(i, 0.0);
             }

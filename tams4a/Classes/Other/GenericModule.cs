@@ -202,7 +202,7 @@ namespace tams4a.Classes
             };
             string[] iconNames = { "feature", "important", "question", "problem", "ramp", "sidewalk", "other", "road", "drainage", "accident"};
 
-            for (int i = 0; i < images.Length; i++)
+            for (int i = 0; i < images.Length; ++i)
             {
                 PointCategory cat = new PointCategory(images[i], baseWidth);
                 cat.FilterExpression = "[TAMSICON] = '" + iconNames[i] + "'";
@@ -396,7 +396,7 @@ namespace tams4a.Classes
                 Properties.Settings.Default.lastPhoto = controls.textBoxPhotoFile.Text;
             }
 
-            for (int i = 0; i < tamsids.Count; i++)
+            for (int i = 0; i < tamsids.Count; ++i)
             {
                 values["TAMSID"] = tamsids[i];
                 Dictionary<string, string> v = new Dictionary<string, string>();
@@ -524,7 +524,7 @@ namespace tams4a.Classes
             }
             otherControls.toolStripDropDownAddObject.BackColor = Color.LightSkyBlue;
 
-            for (int i = 0; i < Project.map.Layers.Count; i++)
+            for (int i = 0; i < Project.map.Layers.Count; ++i)
             {
                 if (((FeatureLayer)Project.map.Layers[i]).Name.Contains("road"))
                 {

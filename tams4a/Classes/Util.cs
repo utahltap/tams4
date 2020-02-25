@@ -147,7 +147,7 @@ namespace tams4a.Classes
             dgv.ClearSelection();
             dgv.Height = (dgv.RowCount + 2) * dgv.RowTemplate.Height;
             dgv.Width = 50; //width of blank column
-            for (int i = 0; i < dgv.ColumnCount; i++)
+            for (int i = 0; i < dgv.ColumnCount; ++i)
             {
                 dgv.Width += dgv.Rows[0].Cells[i].Size.Width;
             }
@@ -250,11 +250,11 @@ namespace tams4a.Classes
             DataTable data = new DataTable();
             string[] csvLines = csvText.Split('\n');
             string[] collumnNames = csvLines[0].Split('\r')[0].Split(',');
-            for (int i = 0; i < collumnNames.Length; i++)
+            for (int i = 0; i < collumnNames.Length; ++i)
             {
                 data.Columns.Add(collumnNames[i]);
             }
-            for (int i = 1; i <csvLines.Length; i++)
+            for (int i = 1; i <csvLines.Length; ++i)
             {
                 DataRow nr = data.NewRow();
                 for (int j = 0; j < collumnNames.Length; j++)

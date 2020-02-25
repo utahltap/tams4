@@ -158,7 +158,7 @@ namespace tams4a.Controls
                 String[] splitFile;
                 if (!String.IsNullOrWhiteSpace(file.Text))
                 {
-                    for (int i = 0; i < fileEntries.Length; i++)
+                    for (int i = 0; i < fileEntries.Length; ++i)
                     {
                         splitFile = fileEntries[i].Split('\\');
                         if (file.Text == splitFile[splitFile.Length - 1])

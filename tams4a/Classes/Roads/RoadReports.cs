@@ -207,7 +207,7 @@ namespace tams4a.Classes.Roads
                 if (surface_type == "concrete") surface_id = 3;
 
                 DataTable distresses = Database.GetDataByQuery(Project.conn, "SELECT name, dbkey FROM road_distresses WHERE surface_id = " + surface_id.ToString());
-                for (int i = 0; i < distresses.Rows.Count; i++)
+                for (int i = 0; i < distresses.Rows.Count; ++i)
                 {
                     string distressNumber = distresses.Rows[i]["dbkey"].ToString();
                     history.Columns[distressNumber].ColumnName = distresses.Rows[i]["name"].ToString();
@@ -365,7 +365,7 @@ namespace tams4a.Classes.Roads
             double area = Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
             nr["Area (yds\u00b2)"] = area / 9;
             int[] dvs = new int[9];
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 9; ++i)
             {
                 dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
             }

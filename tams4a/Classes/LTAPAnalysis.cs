@@ -13,6 +13,7 @@ namespace tams4a.Classes
         private TamsProject Project;
         private ModuleRoads moduleRoads;
         private double percentConcrete = 0;
+        private double averageRSL = 0;
         private string numberOfAsphaltDistressesPresent = "";
         private string numberOfConcreteDistressesPresent = "";
         private string majorAsphaltDistress = "";
@@ -133,6 +134,7 @@ namespace tams4a.Classes
                 FindAndReplace(winword, "<major_asphalt_distress>", majorAsphaltDistress);
                 FindAndReplace(winword, "<number_of_concrete_distresses>", numberOfConcreteDistressesPresent);
                 FindAndReplace(winword, "<major_concrete_distress>", majorConcreteDistress);
+                FindAndReplace(winword, "<average_rsl>", averageRSL.ToString("#.##"));
 
 
                 int surveyYear = (int)reportForm.numericUpDownSurveyYear.Value;
@@ -242,6 +244,11 @@ namespace tams4a.Classes
         internal void setMajorConcreteDistress(string value)
         {
             majorConcreteDistress = value;
+        }
+
+        internal void setAverageRSL(double value)
+        {
+            averageRSL = value;
         }
 
         private string numToString(int num)
