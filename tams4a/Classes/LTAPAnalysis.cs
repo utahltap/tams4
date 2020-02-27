@@ -12,13 +12,18 @@ namespace tams4a.Classes
     {
         private TamsProject Project;
         private ModuleRoads moduleRoads;
+        private const int NUM_RSL_CATEGORIES = 8;
         private double percentConcrete = 0;
         private double averageRSL = 0;
+        private double majorAsphaltDistressPercent = 0;
+        private double[] rslRange = new double[NUM_RSL_CATEGORIES];
         private string numberOfAsphaltDistressesPresent = "";
         private string numberOfConcreteDistressesPresent = "";
         private string majorAsphaltDistress = "";
         private string majorConcreteDistress = "";
         private const int FEET_TO_MILES = 5820;
+        private const string MAJOR_ASPHALT_DISTRESS = "<major_asphalt_distress> is the main governing distress in the majority of the streets and affects <per_major_asphalt_distress> percent (<%_major_asphalt_distress>%) of the network surface area. ";
+
 
         public LTAPAnalysis(TamsProject theProject, ModuleRoads modRoads)
         {
@@ -136,6 +141,27 @@ namespace tams4a.Classes
                 FindAndReplace(winword, "<major_concrete_distress>", majorConcreteDistress);
                 FindAndReplace(winword, "<average_rsl>", averageRSL.ToString("#.##"));
 
+                setMajorAsphaltDistressSentence(winword);
+
+                FindAndReplace(winword, "<%_rsl_0>", rslRange[0].ToString("#.##"));
+                FindAndReplace(winword, "<%_rsl_1-3>", rslRange[1].ToString("#.##"));
+                FindAndReplace(winword, "<%_rsl_4-6>", rslRange[2].ToString("#.##"));
+                FindAndReplace(winword, "<%_rsl_7-9>", rslRange[3].ToString("#.##"));
+                FindAndReplace(winword, "<%_rsl_10-12>", rslRange[4].ToString("#.##"));
+                FindAndReplace(winword, "<%_rsl_13-15>", rslRange[5].ToString("#.##"));
+                FindAndReplace(winword, "<%_rsl_16-18>", rslRange[6].ToString("#.##"));
+                FindAndReplace(winword, "<%_rsl_19-20>", rslRange[7].ToString("#.##"));
+                FindAndReplace(winword, "<%_rsl_poor>", (rslRange[1] + rslRange[2]).ToString("#.##"));
+                FindAndReplace(winword, "<%_rsl_very_good>", (rslRange[5] + rslRange[6]).ToString("#.##"));
+
+                FindAndReplace(winword, "<per_rsl_0>", capitalizeFirstLetter(numToString((int)Math.Round(rslRange[0], MidpointRounding.AwayFromZero))));
+                FindAndReplace(winword, "<per_rsl_poor>", capitalizeFirstLetter(numToString((int)Math.Round(rslRange[1] + rslRange[2], MidpointRounding.AwayFromZero))));
+                FindAndReplace(winword, "<per_rsl_7-9>", capitalizeFirstLetter(numToString((int)Math.Round(rslRange[3], MidpointRounding.AwayFromZero))));
+                FindAndReplace(winword, "<per_rsl_10-12>", capitalizeFirstLetter(numToString((int)Math.Round(rslRange[4], MidpointRounding.AwayFromZero))));
+                FindAndReplace(winword, "<per_rsl_very_good>", numToString((int)Math.Round(rslRange[5] + rslRange[6], MidpointRounding.AwayFromZero)));
+                FindAndReplace(winword, "<per_rsl_19-20>", numToString((int)Math.Round(rslRange[7], MidpointRounding.AwayFromZero)));
+
+
 
                 int surveyYear = (int)reportForm.numericUpDownSurveyYear.Value;
                 FindAndReplace(winword, "<5yr>", surveyYear + 5);
@@ -221,6 +247,27 @@ namespace tams4a.Classes
                 ref matchControl);
         }
 
+        private void setMajorAsphaltDistressSentence(Microsoft.Office.Interop.Word.Application winword)
+        {
+
+            foreach (string distress in moduleRoads.distressAsphalt)
+            {
+                if (majorAsphaltDistress == distress)
+                {
+                    FindAndReplace(winword, "<" + distress.ToLower() + "_is_major>", MAJOR_ASPHALT_DISTRESS);
+
+                    string dist = distress;
+                    if (dist == "Transverse" || dist == "Longitudinal" ||  dist == "Blocking" || dist == "Edge" || dist == "Fatigue")
+                        dist += " cracking";
+                    FindAndReplace(winword, "<major_asphalt_distress>", dist);
+                }
+                else
+                    FindAndReplace(winword, "<" + distress.ToLower() + "_is_major>", "");
+            }
+            FindAndReplace(winword, "<%_major_asphalt_distress>", majorAsphaltDistressPercent.ToString("#.##"));
+            FindAndReplace(winword, "<per_major_asphalt_distress>", numToString((int)Math.Round(majorAsphaltDistressPercent, MidpointRounding.AwayFromZero)));
+        }
+
         internal void setPercentConcrete(double value)
         {
             percentConcrete = value;
@@ -251,6 +298,16 @@ namespace tams4a.Classes
             averageRSL = value;
         }
 
+        internal void setRSLRange(double[] value)
+        {
+            rslRange = value;
+        }
+
+        internal void setMajorAsphaltDistressPercent(double value)
+        {
+            majorAsphaltDistressPercent = value;
+        }
+
         private string numToString(int num)
         {
             if (num == 0) return "zero";
@@ -263,7 +320,46 @@ namespace tams4a.Classes
             if (num == 7) return "seven";
             if (num == 8) return "eight";
             if (num == 9) return "nine";
+            if (num == 10) return "ten";
+            if (num == 11) return "eleven";
+            if (num == 12) return "twelve";
+            if (num == 13) return "thirteen";
+            if (num == 14) return "fourteen";
+            if (num == 15) return "fifteen";
+            if (num == 16) return "sixteen";
+            if (num == 17) return "seventeen";
+            if (num == 18) return "eighteen";
+            if (num == 19) return "nineteen";
+
+            string number = num.ToString();
+
+            if (number.Length == 2)
+            {
+                string numName = "";
+                if (number[0] == '2') numName += "twenty";
+                else if (number[0] == '3') numName += "thirty";
+                else if (number[0] == '4') numName += "fourty";
+                else if (number[0] == '5') numName += "fifty";
+                else if (number[0] == '6') numName += "sixty";
+                else if (number[0] == '7') numName += "seventy";
+                else if (number[0] == '8') numName += "eighty";
+                else if (number[0] == '9') numName += "ninety";
+
+                if (number[1] == 0) return numName;
+                else return numName + "-" + numToString(Util.ToInt(number[1].ToString())); 
+            }
+            if (num == 100) return "one-hundred";
+
             return "NAN";
         }
+
+        private string capitalizeFirstLetter(string str)
+        {
+            if (str.Length == 0) return "NAN";
+            else if (str.Length == 1) return str.ToUpper();
+            return char.ToUpper(str[0]) + str.Substring(1);
+        }
+
+
     }
 }

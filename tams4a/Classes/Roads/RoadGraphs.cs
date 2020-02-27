@@ -262,6 +262,7 @@ namespace tams4a.Classes.Roads
                         {
                             analysis.setNumberOfAsphaltDistressesPresent(index - 1);
                             analysis.setMajorAsphaltDistress(majorDistress);
+                            analysis.setMajorAsphaltDistressPercent(maxDistress);
                             Util.AutoChartToPNG(graph.chart, "AsphaltDistressGraph");
                         }
                         if (sender.ToString() == "Concrete")
@@ -378,7 +379,7 @@ namespace tams4a.Classes.Roads
                     }
                     results.Rows.Add(totalsRow);
                     results.Rows.Add(percentageRow);
-                    Color[] color = { Color.DarkRed, Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Green, Color.DeepSkyBlue, Color.Blue };
+                    Color[] color = { Color.Red, Color.Orange, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Blue, Color.Violet };
                     FormGraphDisplay graph = new FormGraphDisplay(results, domain, range, title, color);
                     if (bypassForm)
                     {
@@ -386,6 +387,7 @@ namespace tams4a.Classes.Roads
                         Console.WriteLine(includedRoads);
                         Console.WriteLine(roads.Length);
                         analysis.setAverageRSL(totalRSL / includedRoads);
+                        analysis.setRSLRange(range);
                         Util.AutoChartToPNG(graph.chart, "AsphaltConcreteRSLGraph");
                     }
                     else
