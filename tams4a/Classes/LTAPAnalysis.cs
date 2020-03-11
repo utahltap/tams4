@@ -124,7 +124,6 @@ namespace tams4a.Classes
                 int milesOfRoad = (int)Math.Round(feetOfRoad/FEET_TO_MILES);
                 double onePercentAsphalt = Math.Round((feetOfAsphaltRoad / 100) / FEET_TO_MILES, 1);
 
-                //find and replace
                 FindAndReplace(winword, "<organization>", reportForm.textBoxOrganization.Text); // Not working...
                 FindAndReplace(winword, "<city>", reportForm.textBoxCityName.Text);
                 FindAndReplace(winword, "<miles>", milesOfRoad);
@@ -136,7 +135,6 @@ namespace tams4a.Classes
                 FindAndReplace(winword, "<survey_year>", reportForm.numericUpDownSurveyYear.Value);
                 FindAndReplace(winword, "<percent_concrete>", percentConcrete);
                 FindAndReplace(winword, "<number_of_asphalt_distresses>", numberOfAsphaltDistressesPresent);
-                FindAndReplace(winword, "<major_asphalt_distress>", majorAsphaltDistress);
                 FindAndReplace(winword, "<number_of_concrete_distresses>", numberOfConcreteDistressesPresent);
                 FindAndReplace(winword, "<major_concrete_distress>", majorConcreteDistress);
                 FindAndReplace(winword, "<average_rsl>", averageRSL.ToString("#.##"));
