@@ -15,6 +15,7 @@ namespace tams4a.Classes
         public new const string moduleVersion = "4.0.1.1";    // string that can be converted to System.Version
         public string roadColors = "RSL";
         public Color labelColor = Color.Black;
+        public string[] listOfPhotos;
 
         private TamsProject project;
         private RoadReports reports;
@@ -91,6 +92,8 @@ namespace tams4a.Classes
             Project.map.Update();
         }
 
+        
+
         /// <summary>
         /// Must be a "line" type shapefile for roads.
         /// </summary>
@@ -149,7 +152,7 @@ namespace tams4a.Classes
             Project.map.Layers.Move(Layer, 0);
 
             ControlsPage.Controls.Remove(ControlsPage.Controls["ROADADD"]);
-            Panel_Road roadPanel = new Panel_Road(project);
+            Panel_Road roadPanel = new Panel_Road(project, this);
             roadPanel.Name = "ROADCONTROLS";
             roadPanel.Dock = DockStyle.Fill;
             ControlsPage.Controls.Add(roadPanel);
@@ -308,7 +311,14 @@ namespace tams4a.Classes
             return controls;
         }
 
-
+        private string[] parsePhotosList(String stringOfPhotos)
+        {
+            // split the list of photos based on commas and spaces(ex: "img1, img2" --> ["img1", "img2"]) 
+            char[] delimiterChars = { ',', ' ' };
+            // the StringSplitOption.RemoveEmptyEntries parameters removes any thing in the list that is an empty string
+            return stringOfPhotos.Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries);
+        }
+     
         // Sets the values of the various controls
         private void updateRoadDisplay(Dictionary<string, string> values)
         {
@@ -338,12 +348,20 @@ namespace tams4a.Classes
             roadControls.textBoxTo.Text = Util.DictionaryItemString(values, "to_address");
             roadControls.textBoxWidth.Text = Util.DictionaryItemString(values, "width");
             roadControls.textBoxLength.Text = Util.DictionaryItemString(values, "length");
-
             roadControls.comboBoxType.Text = Util.DictionaryItemString(values, "type");
             previousSurface = roadControls.comboBoxSurface.Text = Util.DictionaryItemString(values, "surface");
-            roadControls.textBoxPhotoFile.Text = Util.DictionaryItemString(values, "photo");
+            // add a method to parse the list of photos from database
+            listOfPhotos = parsePhotosList(Util.DictionaryItemString(values, "photo"));
+            foreach (string photo in listOfPhotos)
+            {
+                roadControls.comboBoxPhotoList.Items.Add(photo);
+            }
+            if(listOfPhotos.Length > 0)
+            {
+                roadControls.comboBoxPhotoList.Text = listOfPhotos[0];
+            }
             roadControls.toolTip.SetToolTip(roadControls.pictureBoxPhoto, "");
-            updatePhotoPreview(roadControls.pictureBoxPhoto, roadControls.textBoxPhotoFile.Text);
+            updatePhotoPreview(roadControls.pictureBoxPhoto, roadControls.comboBoxPhotoList.Text);
 
             // distress controls
             if (string.IsNullOrWhiteSpace(roadControls.comboBoxSurface.Text))
@@ -465,7 +483,7 @@ namespace tams4a.Classes
             roadControls.textBoxArea.Text = "";
             roadControls.comboBoxType.Text = "";
             roadControls.comboBoxSurface.Text = "";
-            roadControls.textBoxPhotoFile.Text = "";
+            roadControls.comboBoxPhotoList.Items.Clear();
             roadControls.pictureBoxPhoto.Image = null;
             roadControls.distress1.Value = -1;
             roadControls.distress2.Value = -1;
@@ -508,19 +526,12 @@ namespace tams4a.Classes
 
             if (multiple)
             {
-                roadControls.textBoxPhotoFile.Enabled = false;
-                roadControls.buttonNextPhoto.Enabled = false;
                 roadControls.labelName.ForeColor = SystemColors.HighlightText;
                 roadControls.labelName.BackColor = SystemColors.Highlight;
                 roadControls.labelName.Text = "Multiple";
                 roadControls.textBoxRoadName.Enabled = false;
                 roadControls.textBoxRoadName.Text = "";
                 roadControls.labelSurveyDate.Visible = false;
-            }
-            else
-            {
-                roadControls.textBoxPhotoFile.Enabled = true;
-                roadControls.buttonNextPhoto.Enabled = true;
             }
 
             roadControls.groupBoxInfo.Enabled = true;
@@ -578,7 +589,6 @@ namespace tams4a.Classes
             values["from_address"] = roadControls.textBoxFrom.Text;
             values["to_address"] = roadControls.textBoxTo.Text;
             values["surface"] = roadControls.comboBoxSurface.Text.ToLower();
-            values["photo"] = roadControls.textBoxPhotoFile.Text;
 
             foreach (string value in values.Values)
             {
@@ -591,10 +601,6 @@ namespace tams4a.Classes
             values["notes"] = notes;
             values["type"] = roadControls.comboBoxType.Text;
 
-            if (!string.IsNullOrWhiteSpace(roadControls.textBoxPhotoFile.Text))
-            {
-                Properties.Settings.Default.lastPhoto = roadControls.textBoxPhotoFile.Text;
-            }
                                                                                                                      //  Asphalt         Unpaved         Concrete
             if (roadControls.distress1.Visible) { values["distress1"] = roadControls.distress1.Value.ToString(); }   //  Fatigue         Potholes       Spalling
             if (roadControls.distress2.Visible) { values["distress2"] = roadControls.distress2.Value.ToString(); }   //  Edge            Rutting        Joint Seals
@@ -816,7 +822,7 @@ namespace tams4a.Classes
         { 
             Panel_Road roadControls = getRoadControls();
             string subPath = Database.GetDataByQuery(Project.conn, "SELECT road_photos FROM photo_paths;").Rows[0][0].ToString();
-            enlargePicture(roadControls.textBoxPhotoFile.Text, subPath);
+            enlargePicture(roadControls.comboBoxPhotoList.Text, subPath);
         }
 
         private void automaticTreatmentSuggestion(object sender, EventArgs e)

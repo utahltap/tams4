@@ -309,6 +309,12 @@
     <Compile Include="Forms\BudgetControlTable.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\FormAddPhoto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAddPhoto.Designer.cs">
+      <DependentUpon>FormAddPhoto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormAnalysis.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -501,6 +507,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Panel_Sign.resx">
       <DependentUpon>Panel_Sign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAddPhoto.resx">
+      <DependentUpon>FormAddPhoto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAnalysis.resx">
       <DependentUpon>FormAnalysis.cs</DependentUpon>
