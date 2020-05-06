@@ -54,7 +54,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelPictureSelect = new System.Windows.Forms.Label();
             this.buttonPrevious = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSurveyYear)).BeginInit();
             this.panel1.SuspendLayout();
@@ -245,7 +245,7 @@
             this.panel2.Controls.Add(this.pictureBox2);
             this.panel2.Controls.Add(this.pictureBox4);
             this.panel2.Controls.Add(this.pictureBox1);
-            this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.labelPictureSelect);
             this.panel2.Location = new System.Drawing.Point(12, 12);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(674, 318);
@@ -332,14 +332,14 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // label3
+            // labelPictureSelect
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 11);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Panel 2";
+            this.labelPictureSelect.AutoSize = true;
+            this.labelPictureSelect.Location = new System.Drawing.Point(38, 11);
+            this.labelPictureSelect.Name = "labelPictureSelect";
+            this.labelPictureSelect.Size = new System.Drawing.Size(314, 13);
+            this.labelPictureSelect.TabIndex = 0;
+            this.labelPictureSelect.Text = "Select an image to use as an example for FAILED road condition.";
             // 
             // buttonPrevious
             // 
@@ -407,7 +407,7 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelPictureSelect;
         private System.Windows.Forms.Button buttonNextSet;
         private System.Windows.Forms.Button buttonPreviousSet;
     }

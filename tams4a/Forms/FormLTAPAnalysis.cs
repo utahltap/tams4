@@ -15,10 +15,13 @@ namespace tams4a.Forms
         private DataTable roads;
         private Dictionary<int, PictureBox> pictureBoxes = new Dictionary<int, PictureBox>();
         private int set = 1;
-        private int count0RSL = 0;
         private string subPath;
+        private int countFailedRSL = 0;
+        private int countPoorRSL = 0;
         private Dictionary<PictureBox, bool> selectedPicture = new Dictionary<PictureBox, bool>();
-        private Dictionary<int, string> pictures0RSL = new Dictionary<int, string>();
+        private Dictionary<int, string> picturesFailedRSL = new Dictionary<int, string>();
+        private Dictionary<int, string> picturesPoorRSL = new Dictionary<int, string>();
+        private Dictionary<int, string> picturesSelection = new Dictionary<int, string>();
 
         public FormLTAPAnalysis(TamsProject theProject, ModuleRoads modRoads)
         {
@@ -38,16 +41,23 @@ namespace tams4a.Forms
                 selectedPicture[box] = false;
             }
 
-            int index0 = 0;
+            int indexFailed = 0;
+            int indexPoor = 0;
             foreach (DataRow row in roads.Rows)
             {
-                if (row["rsl"].ToString() != "0" && !string.IsNullOrEmpty(row["photo"].ToString()))
+                int rsl = Util.ToInt(row["rsl"].ToString());
+                if (rsl == 0 && !string.IsNullOrEmpty(row["photo"].ToString()))
                 {
-                    pictures0RSL[index0++] = row["photo"].ToString();   
-                    ++count0RSL;
+                    picturesFailedRSL[indexFailed++] = row["photo"].ToString();   
+                    ++countFailedRSL;
+                }
+                if (rsl >= 1 && rsl <= 20 && !string.IsNullOrEmpty(row["photo"].ToString()))
+                {
+                    picturesPoorRSL[indexPoor++] = row["photo"].ToString();
+                    ++countPoorRSL;
                 }
             }
-            if (count0RSL <= 6) buttonNextSet.Enabled = false;
+           
         }
 
         private void buttonGenerateReport_Click(object sender, EventArgs e)
@@ -61,22 +71,50 @@ namespace tams4a.Forms
 
         private void buttonNext_Click(object sender, EventArgs e)
         {
+            set = 1;
+            clearPictures();
             if (currentPanel == 1)
             {
                 panel2.BringToFront();
                 currentPanel = 2;
                 buttonPrevious.Visible = true;
+                picturesSelection = picturesFailedRSL;
+                Console.WriteLine(picturesSelection.Count);
                 getPictures();
+                if (countFailedRSL > 6) buttonNextSet.Enabled = true;
+                return;
             }
+
+            if (currentPanel == 2)
+            {
+                currentPanel = 3;
+                labelPictureSelect.Text = "Select an image to use as an example for POOR road condition.";
+                picturesSelection = picturesPoorRSL;
+                Console.WriteLine(picturesSelection.Count);
+                getPictures();
+                if (countPoorRSL > 6) buttonNextSet.Enabled = true;
+                return;
+            }
+
+
         }
 
         private void buttonPrevious_Click(object sender, EventArgs e)
         {
+            set = 1;
+            clearPictures();
             if (currentPanel == 2)
             {
                 panel1.BringToFront();
                 currentPanel = 1;
                 buttonPrevious.Visible = false;
+                if (countFailedRSL <= 6) buttonNextSet.Enabled = false;
+            }
+            if (currentPanel == 3)
+            {
+                currentPanel = 2;
+                labelPictureSelect.Text = "Select an image to use as an example for FAILED road condition.";
+                if (countPoorRSL <= 6) buttonNextSet.Enabled = false;
             }
         }
 
@@ -84,7 +122,8 @@ namespace tams4a.Forms
         {
             int pictureNum = 0;
             int setCount = set;
-            foreach (string path in pictures0RSL.Values)
+
+            foreach (string path in picturesSelection.Values)
             {
                 if (pictureNum == 6)
                 {
@@ -98,22 +137,20 @@ namespace tams4a.Forms
                 pictureBoxes[pictureNum].ImageLocation = Project.projectFolderPath + "\\" + subPath + "\\" + path;
                 ++pictureNum;
             }
-
-
-            //foreach (DataRow row in roads.Rows)
-            //{
-            //    if (row["rsl"].ToString() != "0" && !string.IsNullOrEmpty(row["photo"].ToString()))
-            //    {
-            //        pictureBoxes[pictureNum].ImageLocation = Project.projectFolderPath + "\\" + subPath + "\\" + row["photo"].ToString();
-            //    }
-            //}
         }
 
         private void buttonNextSet_Click(object sender, EventArgs e)
         {
             ++set;
+            clearPictures();
             buttonPreviousSet.Enabled = true;
-            if ((set * 6) >= count0RSL) buttonNextSet.Enabled = false;
+
+            // TODO:
+            // ************************************************************
+            // * Change countFailedRSL to current picture selection count *
+            // ************************************************************
+
+            if ((set * 6) >= countFailedRSL) buttonNextSet.Enabled = false;
             getPictures();
             clearPictureSelection();
         }
@@ -121,6 +158,7 @@ namespace tams4a.Forms
         private void buttonPreviousSet_Click(object sender, EventArgs e)
         {
             --set;
+            clearPictures();
             buttonNextSet.Enabled = true;
             if (set == 1) buttonPreviousSet.Enabled = false;
             getPictures();
@@ -168,6 +206,14 @@ namespace tams4a.Forms
             box.BorderStyle = BorderStyle.FixedSingle;
             box.BackColor = Color.LightSkyBlue;
             selectedPicture[box] = true;
+        }
+
+        private void clearPictures()
+        {
+            foreach (PictureBox box in pictureBoxes.Values)
+            {
+                box.Image = null;
+            }
         }
 
         private void clearPictureSelection()
