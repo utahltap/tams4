@@ -256,7 +256,7 @@ namespace tams4a
             // 
             this.importRoadsToolStripMenuItem.Enabled = false;
             this.importRoadsToolStripMenuItem.Name = "importRoadsToolStripMenuItem";
-            this.importRoadsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.importRoadsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.importRoadsToolStripMenuItem.Text = "Import &Roads";
             this.importRoadsToolStripMenuItem.ToolTipText = "Attempt to import road data from TAMS2 or TAMS3";
             this.importRoadsToolStripMenuItem.Click += new System.EventHandler(this.importRoadsToolStripMenuItem_Click);
@@ -264,7 +264,7 @@ namespace tams4a
             // editTreatmentsToolStripMenuItem
             // 
             this.editTreatmentsToolStripMenuItem.Name = "editTreatmentsToolStripMenuItem";
-            this.editTreatmentsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.editTreatmentsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.editTreatmentsToolStripMenuItem.Text = "Edit &Treatments";
             this.editTreatmentsToolStripMenuItem.ToolTipText = "Opens the treatment editor";
             this.editTreatmentsToolStripMenuItem.Click += new System.EventHandler(this.editTreatmentsToolStripMenuItem_Click);
@@ -273,14 +273,14 @@ namespace tams4a
             // 
             this.favoriteSignsToolStripMenuItem.Enabled = false;
             this.favoriteSignsToolStripMenuItem.Name = "favoriteSignsToolStripMenuItem";
-            this.favoriteSignsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.favoriteSignsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.favoriteSignsToolStripMenuItem.Text = "&Favorite Signs";
             this.favoriteSignsToolStripMenuItem.ToolTipText = "Manage your favorite signs";
             // 
             // importCSVToolStripMenuItem
             // 
             this.importCSVToolStripMenuItem.Name = "importCSVToolStripMenuItem";
-            this.importCSVToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.importCSVToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.importCSVToolStripMenuItem.Text = "Import CSV";
             this.importCSVToolStripMenuItem.Click += new System.EventHandler(this.importCSVToolStripMenuItem_Click);
             // 
@@ -485,7 +485,7 @@ namespace tams4a
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.toolStripProgressBar1});
-            this.statusStrip.Location = new System.Drawing.Point(0, 809);
+            this.statusStrip.Location = new System.Drawing.Point(0, 856);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1087, 22);
             this.statusStrip.TabIndex = 1;
@@ -542,7 +542,7 @@ namespace tams4a
             this.uxMap.ProjectionModeReproject = DotSpatial.Controls.ActionMode.PromptOnce;
             this.uxMap.RedrawLayersWhileResizing = false;
             this.uxMap.SelectionEnabled = true;
-            this.uxMap.Size = new System.Drawing.Size(863, 752);
+            this.uxMap.Size = new System.Drawing.Size(863, 799);
             this.uxMap.TabIndex = 9;
             this.uxMap.ZoomOutFartherThanMaxExtent = false;
             this.uxMap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.uxMap_KeyDown);
@@ -561,7 +561,7 @@ namespace tams4a
             this.sidePanel.Margin = new System.Windows.Forms.Padding(5);
             this.sidePanel.MaximumSize = new System.Drawing.Size(230, 2410);
             this.sidePanel.Name = "sidePanel";
-            this.sidePanel.Size = new System.Drawing.Size(230, 777);
+            this.sidePanel.Size = new System.Drawing.Size(230, 824);
             this.sidePanel.TabIndex = 0;
             // 
             // tabControlControls
@@ -572,7 +572,7 @@ namespace tams4a
             this.tabControlControls.MaximumSize = new System.Drawing.Size(226, 2410);
             this.tabControlControls.Name = "tabControlControls";
             this.tabControlControls.SelectedIndex = 0;
-            this.tabControlControls.Size = new System.Drawing.Size(213, 777);
+            this.tabControlControls.Size = new System.Drawing.Size(213, 824);
             this.tabControlControls.TabIndex = 0;
             this.tabControlControls.SelectedIndexChanged += new System.EventHandler(this.tabControlControls_SelectedIndexChanged);
             // 
@@ -581,7 +581,7 @@ namespace tams4a
             this.tabPage1.AutoScroll = true;
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(205, 751);
+            this.tabPage1.Size = new System.Drawing.Size(205, 798);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -611,7 +611,7 @@ namespace tams4a
             this.mapPanel.Controls.Add(this.toolStrip1);
             this.mapPanel.Location = new System.Drawing.Point(226, 35);
             this.mapPanel.Name = "mapPanel";
-            this.mapPanel.Size = new System.Drawing.Size(863, 777);
+            this.mapPanel.Size = new System.Drawing.Size(863, 824);
             this.mapPanel.TabIndex = 1;
             // 
             // treatmentPreventative
@@ -622,7 +622,7 @@ namespace tams4a
             this.treatmentPreventative.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentPreventative.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentPreventative.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.treatmentPreventative.Location = new System.Drawing.Point(713, 661);
+            this.treatmentPreventative.Location = new System.Drawing.Point(713, 708);
             this.treatmentPreventative.Name = "treatmentPreventative";
             this.treatmentPreventative.ReadOnly = true;
             this.treatmentPreventative.Size = new System.Drawing.Size(136, 23);
@@ -639,7 +639,7 @@ namespace tams4a
             this.treatmentRehabilitation.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentRehabilitation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentRehabilitation.ForeColor = System.Drawing.SystemColors.Info;
-            this.treatmentRehabilitation.Location = new System.Drawing.Point(713, 719);
+            this.treatmentRehabilitation.Location = new System.Drawing.Point(713, 766);
             this.treatmentRehabilitation.Name = "treatmentRehabilitation";
             this.treatmentRehabilitation.ReadOnly = true;
             this.treatmentRehabilitation.Size = new System.Drawing.Size(136, 23);
@@ -656,7 +656,7 @@ namespace tams4a
             this.treatmentPreventativePatching.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentPreventativePatching.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentPreventativePatching.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.treatmentPreventativePatching.Location = new System.Drawing.Point(713, 690);
+            this.treatmentPreventativePatching.Location = new System.Drawing.Point(713, 737);
             this.treatmentPreventativePatching.Name = "treatmentPreventativePatching";
             this.treatmentPreventativePatching.ReadOnly = true;
             this.treatmentPreventativePatching.Size = new System.Drawing.Size(136, 23);
@@ -673,7 +673,7 @@ namespace tams4a
             this.treatmentReconstruction.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentReconstruction.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentReconstruction.ForeColor = System.Drawing.SystemColors.Info;
-            this.treatmentReconstruction.Location = new System.Drawing.Point(713, 748);
+            this.treatmentReconstruction.Location = new System.Drawing.Point(713, 795);
             this.treatmentReconstruction.Name = "treatmentReconstruction";
             this.treatmentReconstruction.ReadOnly = true;
             this.treatmentReconstruction.Size = new System.Drawing.Size(136, 23);
@@ -690,7 +690,7 @@ namespace tams4a
             this.treatmentPatching.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentPatching.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentPatching.ForeColor = System.Drawing.SystemColors.Info;
-            this.treatmentPatching.Location = new System.Drawing.Point(713, 632);
+            this.treatmentPatching.Location = new System.Drawing.Point(713, 679);
             this.treatmentPatching.Name = "treatmentPatching";
             this.treatmentPatching.ReadOnly = true;
             this.treatmentPatching.Size = new System.Drawing.Size(136, 23);
@@ -707,7 +707,7 @@ namespace tams4a
             this.treatmentRoutine.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treatmentRoutine.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treatmentRoutine.ForeColor = System.Drawing.SystemColors.Info;
-            this.treatmentRoutine.Location = new System.Drawing.Point(713, 603);
+            this.treatmentRoutine.Location = new System.Drawing.Point(713, 650);
             this.treatmentRoutine.Name = "treatmentRoutine";
             this.treatmentRoutine.ReadOnly = true;
             this.treatmentRoutine.Size = new System.Drawing.Size(136, 23);
@@ -724,7 +724,7 @@ namespace tams4a
             this.rslBlue.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslBlue.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslBlue.ForeColor = System.Drawing.SystemColors.Info;
-            this.rslBlue.Location = new System.Drawing.Point(790, 545);
+            this.rslBlue.Location = new System.Drawing.Point(790, 592);
             this.rslBlue.Name = "rslBlue";
             this.rslBlue.ReadOnly = true;
             this.rslBlue.Size = new System.Drawing.Size(59, 23);
@@ -740,7 +740,7 @@ namespace tams4a
             this.rslDeepSkyBlue.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslDeepSkyBlue.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslDeepSkyBlue.ForeColor = System.Drawing.SystemColors.Info;
-            this.rslDeepSkyBlue.Location = new System.Drawing.Point(790, 574);
+            this.rslDeepSkyBlue.Location = new System.Drawing.Point(790, 621);
             this.rslDeepSkyBlue.Name = "rslDeepSkyBlue";
             this.rslDeepSkyBlue.ReadOnly = true;
             this.rslDeepSkyBlue.Size = new System.Drawing.Size(59, 23);
@@ -756,7 +756,7 @@ namespace tams4a
             this.rslGreen.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslGreen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslGreen.ForeColor = System.Drawing.SystemColors.Info;
-            this.rslGreen.Location = new System.Drawing.Point(790, 603);
+            this.rslGreen.Location = new System.Drawing.Point(790, 650);
             this.rslGreen.Name = "rslGreen";
             this.rslGreen.ReadOnly = true;
             this.rslGreen.Size = new System.Drawing.Size(59, 23);
@@ -772,7 +772,7 @@ namespace tams4a
             this.rslLimeGreen.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslLimeGreen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslLimeGreen.ForeColor = System.Drawing.SystemColors.Info;
-            this.rslLimeGreen.Location = new System.Drawing.Point(790, 632);
+            this.rslLimeGreen.Location = new System.Drawing.Point(790, 679);
             this.rslLimeGreen.Name = "rslLimeGreen";
             this.rslLimeGreen.ReadOnly = true;
             this.rslLimeGreen.Size = new System.Drawing.Size(59, 23);
@@ -788,7 +788,7 @@ namespace tams4a
             this.rslYellow.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslYellow.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslYellow.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rslYellow.Location = new System.Drawing.Point(790, 661);
+            this.rslYellow.Location = new System.Drawing.Point(790, 708);
             this.rslYellow.Name = "rslYellow";
             this.rslYellow.ReadOnly = true;
             this.rslYellow.Size = new System.Drawing.Size(59, 23);
@@ -804,7 +804,7 @@ namespace tams4a
             this.rslDarkRed.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslDarkRed.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslDarkRed.ForeColor = System.Drawing.SystemColors.Info;
-            this.rslDarkRed.Location = new System.Drawing.Point(790, 748);
+            this.rslDarkRed.Location = new System.Drawing.Point(790, 795);
             this.rslDarkRed.Name = "rslDarkRed";
             this.rslDarkRed.ReadOnly = true;
             this.rslDarkRed.Size = new System.Drawing.Size(59, 23);
@@ -820,7 +820,7 @@ namespace tams4a
             this.rslOrange.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslOrange.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslOrange.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.rslOrange.Location = new System.Drawing.Point(790, 690);
+            this.rslOrange.Location = new System.Drawing.Point(790, 737);
             this.rslOrange.Name = "rslOrange";
             this.rslOrange.ReadOnly = true;
             this.rslOrange.Size = new System.Drawing.Size(59, 23);
@@ -836,7 +836,7 @@ namespace tams4a
             this.rslRed.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rslRed.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rslRed.ForeColor = System.Drawing.SystemColors.Info;
-            this.rslRed.Location = new System.Drawing.Point(790, 719);
+            this.rslRed.Location = new System.Drawing.Point(790, 766);
             this.rslRed.Name = "rslRed";
             this.rslRed.ReadOnly = true;
             this.rslRed.Size = new System.Drawing.Size(59, 23);
@@ -1017,7 +1017,7 @@ namespace tams4a
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1087, 831);
+            this.ClientSize = new System.Drawing.Size(1087, 878);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.sidePanel);
             this.Controls.Add(this.mapPanel);

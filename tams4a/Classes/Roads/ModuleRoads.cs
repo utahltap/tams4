@@ -16,6 +16,7 @@ namespace tams4a.Classes
         public string roadColors = "RSL";
         public Color labelColor = Color.Black;
         public string[] listOfPhotos;
+        private string photoListString;
 
         private TamsProject project;
         private RoadReports reports;
@@ -287,6 +288,34 @@ namespace tams4a.Classes
             getRoadControls().setChangedHandler(controlChanged);
         }
 
+        public void setListOfPhotos(string[] newListOfPhotos, string newPhotoListString)
+        {
+            photoListString = newPhotoListString;
+
+            Panel_Road roadControls = getRoadControls();
+            roadControls.comboBoxPhotoList.Items.Clear();
+
+            listOfPhotos = newListOfPhotos;
+
+            foreach (string photo in listOfPhotos)
+            {
+                roadControls.comboBoxPhotoList.Items.Add(photo);
+            }
+            if (listOfPhotos.Length > 0)
+            {
+                roadControls.comboBoxPhotoList.Enabled = true;
+                roadControls.comboBoxPhotoList.Text = listOfPhotos[0];
+            }
+            else
+            {
+                roadControls.comboBoxPhotoList.Enabled = false;
+            }
+            roadControls.toolTip.SetToolTip(roadControls.pictureBoxPhoto, "");
+            updatePhotoPreview(roadControls.pictureBoxPhoto, roadControls.comboBoxPhotoList.Text);
+
+            controlChanged(null, null);
+        }
+
         private void cancelChanges(object sender, EventArgs e)
         {
             resetSaveCondition();
@@ -359,6 +388,11 @@ namespace tams4a.Classes
             if(listOfPhotos.Length > 0)
             {
                 roadControls.comboBoxPhotoList.Text = listOfPhotos[0];
+                roadControls.comboBoxPhotoList.Enabled = true;
+            }
+            else
+            {
+                roadControls.comboBoxPhotoList.Enabled = false;
             }
             roadControls.toolTip.SetToolTip(roadControls.pictureBoxPhoto, "");
             updatePhotoPreview(roadControls.pictureBoxPhoto, roadControls.comboBoxPhotoList.Text);
@@ -589,6 +623,7 @@ namespace tams4a.Classes
             values["from_address"] = roadControls.textBoxFrom.Text;
             values["to_address"] = roadControls.textBoxTo.Text;
             values["surface"] = roadControls.comboBoxSurface.Text.ToLower();
+            values["photo"] = photoListString;
 
             foreach (string value in values.Values)
             {
@@ -822,7 +857,7 @@ namespace tams4a.Classes
         { 
             Panel_Road roadControls = getRoadControls();
             string subPath = Database.GetDataByQuery(Project.conn, "SELECT road_photos FROM photo_paths;").Rows[0][0].ToString();
-            enlargePicture(roadControls.comboBoxPhotoList.Text, subPath);
+            enlargePicture(roadControls.comboBoxPhotoList.Text, subPath, listOfPhotos);
         }
 
         private void automaticTreatmentSuggestion(object sender, EventArgs e)

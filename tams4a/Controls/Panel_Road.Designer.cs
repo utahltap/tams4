@@ -46,6 +46,7 @@ namespace tams4a.Controls
             this.distress2 = new tams4a.Controls.DistressEntry();
             this.distress1 = new tams4a.Controls.DistressEntry();
             this.groupBoxInfo = new System.Windows.Forms.GroupBox();
+            this.buttonAddPhoto = new System.Windows.Forms.Button();
             this.comboBoxPhotoList = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -86,7 +87,6 @@ namespace tams4a.Controls
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAnalysis = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSidewalk = new System.Windows.Forms.ToolStripButton();
-            this.buttonAddPhoto = new System.Windows.Forms.Button();
             this.groupBoxDistress.SuspendLayout();
             this.groupBoxInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLanes)).BeginInit();
@@ -114,7 +114,7 @@ namespace tams4a.Controls
             this.groupBoxDistress.Controls.Add(this.distress3);
             this.groupBoxDistress.Controls.Add(this.distress2);
             this.groupBoxDistress.Controls.Add(this.distress1);
-            this.groupBoxDistress.Location = new System.Drawing.Point(0, 469);
+            this.groupBoxDistress.Location = new System.Drawing.Point(0, 476);
             this.groupBoxDistress.MinimumSize = new System.Drawing.Size(0, 100);
             this.groupBoxDistress.Name = "groupBoxDistress";
             this.groupBoxDistress.Size = new System.Drawing.Size(220, 308);
@@ -354,10 +354,20 @@ namespace tams4a.Controls
             this.groupBoxInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxInfo.Location = new System.Drawing.Point(0, 25);
             this.groupBoxInfo.Name = "groupBoxInfo";
-            this.groupBoxInfo.Size = new System.Drawing.Size(220, 438);
+            this.groupBoxInfo.Size = new System.Drawing.Size(220, 445);
             this.groupBoxInfo.TabIndex = 5;
             this.groupBoxInfo.TabStop = false;
             this.groupBoxInfo.Text = "Road";
+            // 
+            // buttonAddPhoto
+            // 
+            this.buttonAddPhoto.Location = new System.Drawing.Point(83, 413);
+            this.buttonAddPhoto.Name = "buttonAddPhoto";
+            this.buttonAddPhoto.Size = new System.Drawing.Size(112, 23);
+            this.buttonAddPhoto.TabIndex = 36;
+            this.buttonAddPhoto.Text = "Edit Images";
+            this.buttonAddPhoto.UseVisualStyleBackColor = true;
+            this.buttonAddPhoto.Click += new System.EventHandler(this.buttonAddPhoto_Click);
             // 
             // comboBoxPhotoList
             // 
@@ -729,16 +739,6 @@ namespace tams4a.Controls
             this.toolStripButtonSidewalk.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonSidewalk.Text = "Sidewalk Data";
             this.toolStripButtonSidewalk.Visible = false;
-            // 
-            // buttonAddPhoto
-            // 
-            this.buttonAddPhoto.Location = new System.Drawing.Point(83, 413);
-            this.buttonAddPhoto.Name = "buttonAddPhoto";
-            this.buttonAddPhoto.Size = new System.Drawing.Size(112, 23);
-            this.buttonAddPhoto.TabIndex = 36;
-            this.buttonAddPhoto.Text = "Add Image";
-            this.buttonAddPhoto.UseVisualStyleBackColor = true;
-            this.buttonAddPhoto.Click += new System.EventHandler(this.buttonAddPhoto_Click);
             // 
             // Panel_Road
             // 

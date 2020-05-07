@@ -12,30 +12,33 @@ namespace tams4a.Forms
         private int lastUsedPhotoIndex;
         private bool validFolder = false;
         private string[] fileEntries;
-        private string[] listOfPhotos;
+        public string[] listOfPhotos;
         private TamsProject Project;
-
+        private ModuleRoads moduleRoads;
+        
         //new ToolTip().SetToolTip(buttonNextPhoto, "Get Next Photo");
-        //new ToolTip().SetToolTip(buttonSuggest, "Get TAMS Suggestion");
 
-        public FormAddPhoto(Panel_Road existingPanel, TamsProject theProject, string[] theListOfPhotos)
+        public FormAddPhoto(Panel_Road existingPanel, TamsProject theProject, ModuleRoads theModuleRoads)
         {
+            moduleRoads = theModuleRoads;
             panelRoad = existingPanel;
             Project = theProject;
             InitializeComponent();
-            listOfPhotos = theListOfPhotos;
+            listOfPhotos = moduleRoads.listOfPhotos;
 
-            int rowIndex = 0;
-            foreach (string photo in listOfPhotos)
-            {
-                Console.WriteLine(photo);
-                Label newLabel = new Label();
-                newLabel.Size = new System.Drawing.Size(100, 15);
-                newLabel.Text = photo;
-                newLabel.Location = new System.Drawing.Point(5, ((rowIndex * 20) + 5));
-                panelSegmentPhotosList.Controls.Add(newLabel);
-                rowIndex++;
-            }
+            //roadControls.toolTip.SetToolTip(roadControls.pictureBoxPhoto, "");
+            new ToolTip().SetToolTip(buttonAddPhoto, "Add Photo");
+            new ToolTip().SetToolTip(buttonNextPhoto, "Next Photo");
+            new ToolTip().SetToolTip(buttonPreviousPhoto, "Previous Photo");
+            new ToolTip().SetToolTip(buttonChangeDirectory, "Change Directory");
+            new ToolTip().SetToolTip(buttonBrowseFile, "Browse Directory");
+
+            string relativePath = panelRoad.currentFolder.Remove(0, Project.projectFolderPath.Length);
+
+            labelCurrentDirectory.Text = Project.projectFolderPath[0] + ":\\...\\Databases" + relativePath;
+
+
+            populatePhotoList();
 
             try
             {
@@ -130,6 +133,7 @@ namespace tams4a.Forms
             catch
             {
                 //No photos found in directory
+                MessageBox.Show("No photos found in the directory. Add photos to this directory, or switch directories.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -162,19 +166,17 @@ namespace tams4a.Forms
                 Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET road_photos = '" + relativePath + "';");
                 panelRoad.currentFolder = selectedFolder;
                 fileEntries = Directory.GetFiles(panelRoad.currentFolder);
+                labelCurrentDirectory.Text = "C:\\...\\Databases" + relativePath;
             }
         }
 
         private void buttonBrowseDirectory_Click(object sender, EventArgs e)
         {
-            //// User select file
+            // User select file
             OpenFileDialog openDialog = new OpenFileDialog();
             openDialog.InitialDirectory = panelRoad.currentFolder;
             openDialog.Filter = "JPG Files|*.JPG|PNG Files|*.PNG";
             openDialog.Multiselect = false;
-
-            //String prettyType = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(type);
-            //if (prettyType != "") { prettyType += " "; } // add space to make it look right
 
             openDialog.Title = "Open Image";
             DialogResult openDialogResult = openDialog.ShowDialog();
@@ -183,19 +185,110 @@ namespace tams4a.Forms
             string[] pathToImage = openDialog.FileName.Split('\\');
             textBoxPhotoFile.Text = pathToImage[pathToImage.Length - 1];
                     
-            //// now try to open the file
-            //try
-            //{
-            //    openFile(openDialog.FileName, type);
-            //}
-            //catch (Exception e)
-            //{
-            //    MessageBox.Show("An error occured while trying to open the shape file. Please ensure the file is of the correct type for the module used.");
-            //    Log.Error("Could not open shape file. " + Environment.NewLine + e.ToString());
-            //    close();
-            //    return false;
-            //}
         }
 
+        private void populatePhotoList()
+        {
+            panelSegmentPhotosList.Controls.Clear();
+            int rowIndex = 0;
+            foreach (string photo in listOfPhotos)
+            {
+                PhotoListItem newItem = new PhotoListItem(this, photo, (rowIndex * 30) + 3, panelRoad.currentFolder);
+                panelSegmentPhotosList.Controls.Add(newItem);
+                rowIndex++;
+            }
+        }
+
+        public void togglePhotoListSelection(PhotoListItem clickedItem)
+        {
+            foreach(PhotoListItem listItem in panelSegmentPhotosList.Controls)
+            {
+                listItem.BorderStyle = BorderStyle.None;
+            }
+            clickedItem.BorderStyle = BorderStyle.FixedSingle;
+            textBoxPhotoFile.Text = clickedItem.labelPicture.Text;
+
+        }
+
+        private void buttonAddPhoto_Click(object sender, EventArgs e)
+        {
+            string photoName = textBoxPhotoFile.Text;
+            if(string.IsNullOrEmpty(photoName))
+            {
+                MessageBox.Show("No photo selected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string[] tempPhotoList = new string[listOfPhotos.Length + 1];
+            int i = 0;
+
+            foreach (string photo in listOfPhotos)
+            {
+                if(photoName == photo)
+                {
+                    MessageBox.Show("The Photo is already included for this road segment.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                tempPhotoList[i] = photo;
+                i++;
+            }
+            tempPhotoList[i] = photoName;
+
+            listOfPhotos = tempPhotoList;
+            populatePhotoList();
+        }
+    
+
+        public void removePhotoFromList(string photoName)
+        {
+            string[] tempPhotoList = new string[listOfPhotos.Length - 1];
+            int i = 0;
+
+            foreach (string photo in listOfPhotos)
+            {
+                // don't include the photo to remove
+                if (photoName == photo)
+                {
+                    continue;
+                }
+                tempPhotoList[i] = photo;
+                i++;
+            }
+            listOfPhotos = tempPhotoList;
+            populatePhotoList();
+        }
+
+        
+
+        private void buttonOk_Click(object sender, EventArgs e)
+        {
+            // Check if the list of photos has changed
+            if(moduleRoads.listOfPhotos == listOfPhotos)
+            {
+                Close();
+                return;
+            }
+
+            // create a comma separated string from list of photos
+            string photoListString = "";
+            int i = 0;
+            foreach (string photo in listOfPhotos)
+            {
+                photoListString += photo;
+                if (i != listOfPhotos.Length - 1)
+                {
+                    photoListString += ", ";
+                }
+                i++;
+            }
+            moduleRoads.setListOfPhotos(listOfPhotos, photoListString);
+
+            Close();
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

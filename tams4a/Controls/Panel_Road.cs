@@ -10,7 +10,6 @@ namespace tams4a.Controls
     {
         private TamsProject Project;
         public string currentFolder;
-        //public string[] listOfPhotos;
         public ModuleRoads moduleRoads;
 
         public Panel_Road(TamsProject theProject, ModuleRoads theModuleRoads)
@@ -27,7 +26,6 @@ namespace tams4a.Controls
             }
 
             moduleRoads = theModuleRoads;
-            //listOfPhotos = moduleRoads.listOfPhotos;
             
 
             numericUpDownSpeedLimit.ValueChanged += moduleValueChanged;
@@ -133,7 +131,7 @@ namespace tams4a.Controls
 
         private void buttonAddPhoto_Click(object sender, EventArgs e)
         {
-            FormAddPhoto addPhoto = new FormAddPhoto(this, Project, moduleRoads.listOfPhotos);
+            FormAddPhoto addPhoto = new FormAddPhoto(this, Project, moduleRoads);
             addPhoto.Show();
         }
     }

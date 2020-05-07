@@ -309,6 +309,9 @@
     <Compile Include="Forms\BudgetControlTable.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\PhotoListItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\FormAddPhoto.cs">
       <SubType>Form</SubType>
     </Compile>
