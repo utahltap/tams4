@@ -49,7 +49,7 @@ namespace tams4a.Forms
 
             try
             {
-                saveDialog.InitialDirectory = Properties.Settings.Default.lastFolder;
+                saveDialog.InitialDirectory = Properties.Settings.Default.lastProject;
             }
             catch
             {
@@ -89,10 +89,11 @@ namespace tams4a.Forms
             OpenFileDialog openDialog = new OpenFileDialog();
             openDialog.Filter = "TAMS Project Files (*.tams)|*.tams";
             openDialog.Multiselect = false;
+            openDialog.RestoreDirectory = true;
 
             try
             {
-                openDialog.InitialDirectory = Properties.Settings.Default.lastFolder;
+                openDialog.InitialDirectory = Properties.Settings.Default.lastProject;
             }
             catch
             {

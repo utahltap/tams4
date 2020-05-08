@@ -35,11 +35,6 @@ namespace tams4a.Forms
                 {
                     return i;
                 }
-                else
-                {
-                    Console.WriteLine("Image not in the photo list: " + item);
-                    return 0;
-                }
             }
             return 0;
         }
