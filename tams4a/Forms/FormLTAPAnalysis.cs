@@ -14,13 +14,29 @@ namespace tams4a.Forms
         private int currentPanel = 1;
         private DataTable roads;
         private Dictionary<int, PictureBox> pictureBoxes = new Dictionary<int, PictureBox>();
-        private int set = 1;
+        private int set = 0;
         private string subPath;
-        private int countFailedRSL = 0;
-        private int countPoorRSL = 0;
         private Dictionary<PictureBox, bool> selectedPicture = new Dictionary<PictureBox, bool>();
+        // dictionarys to hold the different classifications of photos
         private Dictionary<int, string> picturesFailedRSL = new Dictionary<int, string>();
         private Dictionary<int, string> picturesPoorRSL = new Dictionary<int, string>();
+        private Dictionary<int, string> picturesFairRSL = new Dictionary<int, string>();
+        private Dictionary<int, string> picturesGoodRSL = new Dictionary<int, string>();
+        private Dictionary<int, string> picturesVeryGoodRSL = new Dictionary<int, string>();
+        private Dictionary<int, string> picturesExcellentRSL = new Dictionary<int, string>();
+
+        // -1 means no picture is selected. 
+        private int selectedFailedPicture = -1;
+        private int selectedPoorPicture = -1;
+        private int selectedFairPicture = -1;
+        private int selectedGoodPicture = -1;
+        private int selectedVeryGoodPicture = -1;
+        private int selectedExcellentPicture = -1;
+        private int genericSelectedPicture = -1;
+
+
+        // Add the rest
+
         private Dictionary<int, string> picturesSelection = new Dictionary<int, string>();
 
         public FormLTAPAnalysis(TamsProject theProject, ModuleRoads modRoads)
@@ -37,27 +53,63 @@ namespace tams4a.Forms
             pictureBoxes[4] = pictureBox5;
             pictureBoxes[5] = pictureBox6;
 
+            panel1.BringToFront();
+
             foreach (PictureBox box in pictureBoxes.Values) {
                 selectedPicture[box] = false;
             }
 
-            int indexFailed = 0;
-            int indexPoor = 0;
             foreach (DataRow row in roads.Rows)
             {
-                int rsl = Util.ToInt(row["rsl"].ToString());
-                if (rsl == 0 && !string.IsNullOrEmpty(row["photo"].ToString()))
+                if(string.IsNullOrEmpty(row["rsl"].ToString()))
                 {
-                    picturesFailedRSL[indexFailed++] = row["photo"].ToString();   
-                    ++countFailedRSL;
+                    continue;
                 }
-                if (rsl >= 1 && rsl <= 20 && !string.IsNullOrEmpty(row["photo"].ToString()))
+
+                int rsl = Util.ToInt(row["rsl"].ToString());
+                string photo = row["photo"].ToString();
+                // Failed roads
+                if (rsl == 0 && !string.IsNullOrEmpty(row["photo"].ToString())) 
                 {
-                    picturesPoorRSL[indexPoor++] = row["photo"].ToString();
-                    ++countPoorRSL;
+                    savePhotosToDictionary(row, picturesFailedRSL);
+                }
+                // Poor roads
+                else if (rsl >= 1 && rsl <= 6 && !string.IsNullOrEmpty(row["photo"].ToString()))
+                {
+                    savePhotosToDictionary(row, picturesPoorRSL);
+                }
+                // Fair roads
+                else if(rsl >= 7 && rsl <= 9 && !string.IsNullOrEmpty(row["photo"].ToString()))
+                {
+                    savePhotosToDictionary(row, picturesFairRSL);
+                }
+                // Good roads
+                else if(rsl >= 10 && rsl <= 12 && !string.IsNullOrEmpty(row["photo"].ToString()))
+                {
+                    savePhotosToDictionary(row, picturesGoodRSL);
+                }
+                // Very Good roads
+                else if(rsl >= 13 && rsl <= 18 && !string.IsNullOrEmpty(row["photo"].ToString()))
+                {
+                    savePhotosToDictionary(row, picturesVeryGoodRSL);
+                }
+                // Excellent roads
+                else if(rsl >= 19 && rsl <= 20 && !string.IsNullOrEmpty(row["photo"].ToString()))
+                {
+                    savePhotosToDictionary(row, picturesExcellentRSL);
                 }
             }
-           
+        }
+
+        private void savePhotosToDictionary(DataRow row, Dictionary<int, string> pictures)
+        {
+            char[] splitListChars = { ',', ' ' };
+            string[] listOfPhotos = row["photo"].ToString().Split(splitListChars, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string photo in listOfPhotos)
+            {
+                pictures[pictures.Count] = photo;
+            }
+
         }
 
         private void buttonGenerateReport_Click(object sender, EventArgs e)
@@ -71,8 +123,12 @@ namespace tams4a.Forms
 
         private void buttonNext_Click(object sender, EventArgs e)
         {
-            set = 1;
+            // reset set when we switch to different types of photos
+            buttonPreviousSet.Enabled = false;
+            buttonNextSet.Enabled = false;
+            clearPictureSelection();
             clearPictures();
+            // Failed roads
             if (currentPanel == 1)
             {
                 panel2.BringToFront();
@@ -80,128 +136,280 @@ namespace tams4a.Forms
                 buttonPrevious.Visible = true;
                 picturesSelection = picturesFailedRSL;
                 Console.WriteLine(picturesSelection.Count);
-                getPictures();
-                if (countFailedRSL > 6) buttonNextSet.Enabled = true;
-                return;
+                genericSelectedPicture = selectedFailedPicture;
             }
-
-            if (currentPanel == 2)
+            // Poor roads
+            else if (currentPanel == 2)
             {
                 currentPanel = 3;
                 labelPictureSelect.Text = "Select an image to use as an example for POOR road condition.";
                 picturesSelection = picturesPoorRSL;
                 Console.WriteLine(picturesSelection.Count);
-                getPictures();
-                if (countPoorRSL > 6) buttonNextSet.Enabled = true;
-                return;
+                genericSelectedPicture = selectedPoorPicture;
             }
-
-
+            // Fair roads
+            else if (currentPanel == 3)
+            {
+                currentPanel = 4;
+                labelPictureSelect.Text = "Select an image to use as an example for FAIR road condition.";
+                picturesSelection = picturesFairRSL;
+                Console.WriteLine(picturesSelection.Count);
+                genericSelectedPicture = selectedFairPicture;
+            }
+            // Good roads
+            else if (currentPanel == 4)
+            {
+                currentPanel = 5;
+                labelPictureSelect.Text = "Select an image to use as an example for GOOD road condition.";
+                picturesSelection = picturesGoodRSL;
+                Console.WriteLine(picturesSelection.Count);
+                genericSelectedPicture = selectedGoodPicture;
+               
+            }
+            // Very Good roads
+            else if (currentPanel == 5)
+            {
+                currentPanel = 6;
+                labelPictureSelect.Text = "Select an image to use as an example for VERY GOOD road condition.";
+                picturesSelection = picturesVeryGoodRSL;
+                Console.WriteLine(picturesSelection.Count);
+                genericSelectedPicture = selectedVeryGoodPicture;
+                
+            }
+            // Excellent roads
+            else if (currentPanel == 6)
+            {
+                currentPanel = 7;
+                labelPictureSelect.Text = "Select an image to use as an example for EXCELLENT road condition.";
+                picturesSelection = picturesExcellentRSL;
+                Console.WriteLine(picturesSelection.Count);
+                genericSelectedPicture = selectedExcellentPicture;
+            }
+            else
+            {
+                Console.WriteLine("Figure out what happens next");
+            }
+            set = genericSelectedPicture / 6;
+            getPictures(genericSelectedPicture);
+            if (picturesSelection.Count / 6 > set) buttonNextSet.Enabled = true;
+            if (set > 0) buttonPreviousSet.Enabled = true;
         }
 
         private void buttonPrevious_Click(object sender, EventArgs e)
         {
-            set = 1;
+            buttonPreviousSet.Enabled = false;
+            buttonNextSet.Enabled = false;
+            set = 0;
+            clearPictureSelection();
             clearPictures();
+            // goto General info panel
             if (currentPanel == 2)
             {
                 panel1.BringToFront();
                 currentPanel = 1;
                 buttonPrevious.Visible = false;
-                if (countFailedRSL <= 6) buttonNextSet.Enabled = false;
             }
-            if (currentPanel == 3)
+            // goto Failed roads panel
+            else if (currentPanel == 3)
             {
                 currentPanel = 2;
+                picturesSelection = picturesFailedRSL;
+                genericSelectedPicture = selectedFailedPicture;
                 labelPictureSelect.Text = "Select an image to use as an example for FAILED road condition.";
-                if (countPoorRSL <= 6) buttonNextSet.Enabled = false;
             }
+            // goto Poor roads panel
+            else if (currentPanel == 4)
+            {
+                currentPanel = 3;
+                picturesSelection = picturesPoorRSL;
+                genericSelectedPicture = selectedPoorPicture;
+                labelPictureSelect.Text = "Select an image to use as an example for POOR road condition.";
+            }
+            // goto Fair roads panel
+            else if (currentPanel == 5)
+            {
+                currentPanel = 4;
+                picturesSelection = picturesFairRSL;
+                genericSelectedPicture = selectedFairPicture;
+                labelPictureSelect.Text = "Select an image to use as an example for FAIR road condition.";
+            }
+            // goto Good roads panel
+            else if (currentPanel == 6)
+            {
+                currentPanel = 5;
+                picturesSelection = picturesGoodRSL;
+                genericSelectedPicture = selectedGoodPicture;
+                labelPictureSelect.Text = "Select an image to use as an example for GOOD road condition.";
+            }
+            // goto Very Good roads panel
+            else if (currentPanel == 7)
+            {
+                currentPanel = 6;
+                picturesSelection = picturesVeryGoodRSL;
+                genericSelectedPicture = selectedVeryGoodPicture;
+                labelPictureSelect.Text = "Select an image to use as an example for VERY GOOD road condition.";
+            }
+            // figure out what is after the EXCELLENT panel, so we can go back to EXCELLENT panel
+            set = genericSelectedPicture / 6;
+            getPictures(genericSelectedPicture);
+            if (picturesSelection.Count / 6 > set) buttonNextSet.Enabled = true;
+            if (set > 0) buttonPreviousSet.Enabled = true;
         }
 
-        private void getPictures()
+        private void getPictures(int selectedPicture)
         {
-            int pictureNum = 0;
-            int setCount = set;
 
-            foreach (string path in picturesSelection.Values)
+            for (int i = 0; i < 6; ++i)
             {
-                if (pictureNum == 6)
+                int dictionaryIndex = (set * 6) + i;
+                if(dictionaryIndex >= picturesSelection.Count)
                 {
-                    if (setCount == 1) return;
-                    else
-                    {
-                        pictureNum = 0;
-                        --setCount;
-                    }
+                    break;
                 }
-                pictureBoxes[pictureNum].ImageLocation = Project.projectFolderPath + "\\" + subPath + "\\" + path;
-                ++pictureNum;
+                string imageName = picturesSelection[dictionaryIndex];
+                pictureBoxes[i].ImageLocation = Project.projectFolderPath + "\\" + subPath + "\\" + imageName;
+                pictureBoxes[i].Enabled = true;
+
+                if(dictionaryIndex == selectedPicture)
+                {
+                    pictureBoxes[i].BorderStyle = BorderStyle.FixedSingle;
+                    pictureBoxes[i].BackColor = Color.LightSkyBlue;
+                    this.selectedPicture[pictureBoxes[i]] = true;
+                }
             }
         }
 
         private void buttonNextSet_Click(object sender, EventArgs e)
         {
             ++set;
+            int lowerSetBound = set * 6;
+            int upperSetBound = (set + 1) * 6;
+            Console.WriteLine("Set: " + set);
             clearPictures();
             buttonPreviousSet.Enabled = true;
-
-            // TODO:
-            // ************************************************************
-            // * Change countFailedRSL to current picture selection count *
-            // ************************************************************
-
-            if ((set * 6) >= countFailedRSL) buttonNextSet.Enabled = false;
-            getPictures();
+            if (upperSetBound >= picturesSelection.Count) buttonNextSet.Enabled = false;
             clearPictureSelection();
+            getPictures(genericSelectedPicture);
+
+            if(genericSelectedPicture >= lowerSetBound && genericSelectedPicture < upperSetBound)
+            {
+                int index = genericSelectedPicture - lowerSetBound;
+                pictureBoxes[index].BorderStyle = BorderStyle.FixedSingle;
+                pictureBoxes[index].BackColor = Color.LightSkyBlue;
+                this.selectedPicture[pictureBoxes[index]] = true;
+            }
         }
 
         private void buttonPreviousSet_Click(object sender, EventArgs e)
         {
             --set;
+            int lowerSetBound = set * 6;
+            int upperSetBound = (set + 1) * 6;
+            Console.WriteLine("Set: " + set);
+
             clearPictures();
             buttonNextSet.Enabled = true;
-            if (set == 1) buttonPreviousSet.Enabled = false;
-            getPictures();
+            if (set == 0) buttonPreviousSet.Enabled = false;
             clearPictureSelection();
+            getPictures(genericSelectedPicture);
+
+            if (genericSelectedPicture >= lowerSetBound && genericSelectedPicture < upperSetBound)
+            {
+                int index = genericSelectedPicture - lowerSetBound;
+                pictureBoxes[index].BorderStyle = BorderStyle.FixedSingle;
+                pictureBoxes[index].BackColor = Color.LightSkyBlue;
+                this.selectedPicture[pictureBoxes[index]] = true;
+            }
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            handlePictureClick(pictureBox1);
+            handlePictureClick(pictureBox1, 0);
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            handlePictureClick(pictureBox2);
+            handlePictureClick(pictureBox2, 1);
         }
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
-            handlePictureClick(pictureBox3);
+            handlePictureClick(pictureBox3, 2);
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
-            handlePictureClick(pictureBox4);
+            handlePictureClick(pictureBox4, 3);
         }
 
         private void pictureBox5_Click(object sender, EventArgs e)
         {
-            handlePictureClick(pictureBox5);
+            handlePictureClick(pictureBox5, 4);
         }
 
         private void pictureBox6_Click(object sender, EventArgs e)
         {
-            handlePictureClick(pictureBox6);
+            handlePictureClick(pictureBox6, 5);
         }
 
-        private void handlePictureClick(PictureBox box)
+        private void handlePictureClick(PictureBox box, int pictureBoxIndex)
         {
             if (selectedPicture[box])
             {
+                if (currentPanel == 2)
+                {
+                    selectedFailedPicture = -1;
+                }
+                else if (currentPanel == 3)
+                {
+                    selectedPoorPicture = -1;
+                }
+                else if (currentPanel == 4)
+                {
+                    selectedFairPicture = -1;
+                }
+                else if (currentPanel == 5)
+                {
+                    selectedGoodPicture = -1;
+                }
+                else if (currentPanel == 6)
+                {
+                    selectedVeryGoodPicture = -1;
+                }
+                else if (currentPanel == 7)
+                {
+                    selectedExcellentPicture = -1;
+                }
                 clearPictureSelection();
                 return;
             }
+                     
+            if(currentPanel == 2)
+            {
+                selectedFailedPicture = (set * 6) + pictureBoxIndex;
+            }
+            else if (currentPanel == 3)
+            {
+                selectedPoorPicture = (set * 6) + pictureBoxIndex;
+            }
+            else if (currentPanel == 4)
+            {
+                selectedFairPicture = (set * 6) + pictureBoxIndex;
+            }
+            else if (currentPanel == 5)
+            {
+                selectedGoodPicture = (set * 6) + pictureBoxIndex;
+            }
+            else if (currentPanel == 6)
+            {
+                selectedVeryGoodPicture = (set * 6) + pictureBoxIndex;
+            }
+            else if(currentPanel == 7)
+            {
+                selectedExcellentPicture = (set * 6) + pictureBoxIndex;
+            }
+            genericSelectedPicture = (set * 6) + pictureBoxIndex;
+
             clearPictureSelection();
             box.BorderStyle = BorderStyle.FixedSingle;
             box.BackColor = Color.LightSkyBlue;
@@ -212,6 +420,7 @@ namespace tams4a.Forms
         {
             foreach (PictureBox box in pictureBoxes.Values)
             {
+                box.Enabled = false;
                 box.Image = null;
             }
         }
