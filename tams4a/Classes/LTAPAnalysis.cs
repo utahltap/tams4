@@ -1,5 +1,6 @@
 ﻿using Microsoft.Office.Interop.Word;
 using System;
+using System.Data;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -46,13 +47,15 @@ namespace tams4a.Classes
                     ref readOnly, ref missing, ref missing, ref missing, ref missing,
                     ref missing, ref missing, ref missing, ref missing, ref missing,
                     ref missing, ref missing, ref missing, ref missing);
-
+                
                 document.Activate();
 
                 RoadGraphs graphs = new RoadGraphs(Project, moduleRoads, moduleRoads.distressAsphalt, moduleRoads.distressGravel, moduleRoads.distressConcrete, this);
                 object linkToFile = true;
                 object saveWithDocument = false;
                 object graphTrigger = "Generate Graphs";
+                string subPath = Database.GetDataByQuery(Project.conn, "SELECT road_photos FROM photo_paths;").Rows[0][0].ToString();
+                string path = Project.projectFolderPath + "\\" + subPath + "\\";
 
                 foreach (InlineShape image in document.InlineShapes)
                 {
@@ -104,7 +107,79 @@ namespace tams4a.Classes
                         winword.Selection.Delete();
                         winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
                     }
+                    else if (image.Title == "Photo 1. Failed Condition")
+                    {
+                        string selectedImage = reportForm.getSelectedPictureByIndex("FAILED");
+                        if (selectedImage == "No Photo Selected")
+                        {
+                            continue;
+                        }
+                        string imageLocation = path + selectedImage;
+                        image.Select();
+                        winword.Selection.Delete();
+                        winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
 
+                    }
+                    else if (image.Title == "Photo 2. Poor Condition")
+                    {
+                        string selectedImage = reportForm.getSelectedPictureByIndex("POOR");
+                        if (selectedImage == "No Photo Selected")
+                        {
+                            continue;
+                        }
+                        string imageLocation = path + selectedImage;
+                        image.Select();
+                        winword.Selection.Delete();
+                        winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
+                    }
+                    else if (image.Title == "Photo 3. Fair Condition")
+                    {
+                        string selectedImage = reportForm.getSelectedPictureByIndex("FAIR");
+                        if (selectedImage == "No Photo Selected")
+                        {
+                            continue;
+                        }
+                        string imageLocation = path + selectedImage;
+                        image.Select();
+                        winword.Selection.Delete();
+                        winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
+                    }
+                    else if (image.Title == "Photo 4. Good Condition")
+                    {
+                        string selectedImage = reportForm.getSelectedPictureByIndex("GOOD");
+                        if (selectedImage == "No Photo Selected")
+                        {
+                            continue;
+                        }
+                        string imageLocation = path + selectedImage;
+                        image.Select();
+                        winword.Selection.Delete();
+                        winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
+                    }
+                    else if (image.Title == "Photo 5. Very Good Condition")
+                    {
+                        string selectedImage = reportForm.getSelectedPictureByIndex("VERY GOOD");
+                        if (selectedImage == "No Photo Selected")
+                        {
+                            continue;
+                        }
+                        string imageLocation = path + selectedImage;
+                        image.Select();
+                        winword.Selection.Delete();
+                        winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
+                    }
+                    else if (image.Title == "Photo 6. Excellent Condition")
+                    {
+                        string selectedImage = reportForm.getSelectedPictureByIndex("EXCELLENT");
+                        if (selectedImage == "No Photo Selected")
+                        {
+                            continue;
+                        }
+                        string imageLocation = path + selectedImage;
+                        image.Select();
+                        winword.Selection.Delete();
+                        winword.ActiveDocument.InlineShapes.AddPicture(imageLocation, linkToFile, saveWithDocument, range);
+                    }
 
                 }
 
@@ -119,9 +194,9 @@ namespace tams4a.Classes
                     if (row["surface"].ToString() == "asphalt")
                     {
                         feetOfAsphaltRoad += segmentLength;
-                    }                   
+                    }
                 }
-                int milesOfRoad = (int)Math.Round(feetOfRoad/FEET_TO_MILES);
+                int milesOfRoad = (int)Math.Round(feetOfRoad / FEET_TO_MILES);
                 double onePercentAsphalt = Math.Round((feetOfAsphaltRoad / 100) / FEET_TO_MILES, 1);
 
                 FindAndReplace(winword, "<organization>", reportForm.textBoxOrganization.Text); // Not working because it is in the header
@@ -158,6 +233,19 @@ namespace tams4a.Classes
                 FindAndReplace(winword, "<per_rsl_10-12>", capitalizeFirstLetter(numToString((int)Math.Round(rslRange[4], MidpointRounding.AwayFromZero))));
                 FindAndReplace(winword, "<per_rsl_very_good>", numToString((int)Math.Round(rslRange[5] + rslRange[6], MidpointRounding.AwayFromZero)));
                 FindAndReplace(winword, "<per_rsl_19-20>", numToString((int)Math.Round(rslRange[7], MidpointRounding.AwayFromZero)));
+
+                FindAndReplace(winword, "<failed_road_address>", roadAddressToString(reportForm.getSelectedRoadInfo("FAILED")));
+                FindAndReplace(winword, "<poor_road_address>", roadAddressToString(reportForm.getSelectedRoadInfo("POOR")));
+                FindAndReplace(winword, "<fair_road_address>", roadAddressToString(reportForm.getSelectedRoadInfo("FAIR")));
+                FindAndReplace(winword, "<good_road_address>", roadAddressToString(reportForm.getSelectedRoadInfo("GOOD")));
+                FindAndReplace(winword, "<very_good_road_address>", roadAddressToString(reportForm.getSelectedRoadInfo("VERY GOOD")));
+                FindAndReplace(winword, "<excellent_road_address>", roadAddressToString(reportForm.getSelectedRoadInfo("EXCELLENT")));
+
+                FindAndReplace(winword, "<poor_road_rsl>", roadRSLToString(reportForm.getSelectedRoadInfo("POOR")));
+                FindAndReplace(winword, "<fair_road_rsl>", roadRSLToString(reportForm.getSelectedRoadInfo("FAIR")));
+                FindAndReplace(winword, "<good_road_rsl>", roadRSLToString(reportForm.getSelectedRoadInfo("GOOD")));
+                FindAndReplace(winword, "<very_good_road_rsl>", roadRSLToString(reportForm.getSelectedRoadInfo("VERY GOOD")));
+                FindAndReplace(winword, "<excellent_road_rsl>", roadRSLToString(reportForm.getSelectedRoadInfo("EXCELLENT")));
 
 
 
@@ -264,6 +352,24 @@ namespace tams4a.Classes
             }
             FindAndReplace(winword, "<%_major_asphalt_distress>", majorAsphaltDistressPercent.ToString("#.##"));
             FindAndReplace(winword, "<per_major_asphalt_distress>", numToString((int)Math.Round(majorAsphaltDistressPercent, MidpointRounding.AwayFromZero)));
+        }
+
+        private string roadAddressToString(DataRow row)
+        {
+            if(row == null || row["name"] == null || row["name"] == "")
+            {
+                return "***Missing Data***";
+            }
+            return row["name"].ToString() + " from " + row["from_address"].ToString() + " to " + row["to_address"].ToString();
+        }
+
+        private string roadRSLToString(DataRow row)
+        {
+            if(row == null || row["rsl"] == null)
+            {
+                return "***Missing rsl data***";
+            }
+            return row["rsl"].ToString();
         }
 
         internal void setPercentConcrete(double value)

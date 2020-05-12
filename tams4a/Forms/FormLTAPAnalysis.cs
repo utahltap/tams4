@@ -17,7 +17,16 @@ namespace tams4a.Forms
         private int set = 0;
         private string subPath;
         private Dictionary<PictureBox, bool> selectedPicture = new Dictionary<PictureBox, bool>();
-        // dictionarys to hold the different classifications of photos
+        // dictionaries to hold the rows of the roads table corresponding to the dictionaries for the photos
+        private Dictionary<int, DataRow> failedRSLRoads = new Dictionary<int, DataRow>();
+        private Dictionary<int, DataRow> poorRSLRoads = new Dictionary<int, DataRow>();
+        private Dictionary<int, DataRow> fairRSLRoads = new Dictionary<int, DataRow>();
+        private Dictionary<int, DataRow> goodRSLRoads = new Dictionary<int, DataRow>();
+        private Dictionary<int, DataRow> veryGoodRSLRoads = new Dictionary<int, DataRow>();
+        private Dictionary<int, DataRow> excellentRSLRoads = new Dictionary<int, DataRow>();
+
+
+        // dictionaries to hold the different classifications of photos
         private Dictionary<int, string> picturesFailedRSL = new Dictionary<int, string>();
         private Dictionary<int, string> picturesPoorRSL = new Dictionary<int, string>();
         private Dictionary<int, string> picturesFairRSL = new Dictionary<int, string>();
@@ -34,8 +43,6 @@ namespace tams4a.Forms
         private int selectedExcellentPicture = -1;
         private int genericSelectedPicture = -1;
 
-
-        // Add the rest
 
         private Dictionary<int, string> picturesSelection = new Dictionary<int, string>();
 
@@ -71,42 +78,48 @@ namespace tams4a.Forms
                 // Failed roads
                 if (rsl == 0 && !string.IsNullOrEmpty(row["photo"].ToString())) 
                 {
-                    savePhotosToDictionary(row, picturesFailedRSL);
+                    savePhotosToDictionary(row, picturesFailedRSL, failedRSLRoads);
                 }
                 // Poor roads
                 else if (rsl >= 1 && rsl <= 6 && !string.IsNullOrEmpty(row["photo"].ToString()))
                 {
-                    savePhotosToDictionary(row, picturesPoorRSL);
+                    savePhotosToDictionary(row, picturesPoorRSL, poorRSLRoads);
                 }
                 // Fair roads
                 else if(rsl >= 7 && rsl <= 9 && !string.IsNullOrEmpty(row["photo"].ToString()))
                 {
-                    savePhotosToDictionary(row, picturesFairRSL);
+                    savePhotosToDictionary(row, picturesFairRSL, fairRSLRoads);
                 }
                 // Good roads
                 else if(rsl >= 10 && rsl <= 12 && !string.IsNullOrEmpty(row["photo"].ToString()))
                 {
-                    savePhotosToDictionary(row, picturesGoodRSL);
+                    savePhotosToDictionary(row, picturesGoodRSL, goodRSLRoads);
                 }
                 // Very Good roads
                 else if(rsl >= 13 && rsl <= 18 && !string.IsNullOrEmpty(row["photo"].ToString()))
                 {
-                    savePhotosToDictionary(row, picturesVeryGoodRSL);
+                    savePhotosToDictionary(row, picturesVeryGoodRSL, veryGoodRSLRoads);
                 }
                 // Excellent roads
                 else if(rsl >= 19 && rsl <= 20 && !string.IsNullOrEmpty(row["photo"].ToString()))
                 {
-                    savePhotosToDictionary(row, picturesExcellentRSL);
+                    savePhotosToDictionary(row, picturesExcellentRSL, excellentRSLRoads);
                 }
             }
         }
 
-        private void savePhotosToDictionary(DataRow row, Dictionary<int, string> pictures)
+        private void savePhotosToDictionary(DataRow row, Dictionary<int, string> pictures, Dictionary<int, DataRow> roads)
         {
-            char[] splitListChars = { ',', ' ' };
+            if (string.IsNullOrEmpty(row["name"].ToString()) || string.IsNullOrEmpty(row["from_address"].ToString()) || string.IsNullOrEmpty(row["to_address"].ToString()))
+            {
+                // don't save this road because it has missing information
+                return;
+            }
+            char[] splitListChars = { '/', ' ' };
             string[] listOfPhotos = row["photo"].ToString().Split(splitListChars, StringSplitOptions.RemoveEmptyEntries);
             foreach (string photo in listOfPhotos)
             {
+                roads[roads.Count] = row;
                 pictures[pictures.Count] = photo;
             }
 
@@ -115,10 +128,129 @@ namespace tams4a.Forms
         private void buttonGenerateReport_Click(object sender, EventArgs e)
         {
             LTAPAnalysis analysis = new LTAPAnalysis(Project, moduleRoads);
+            // update paths***
             object template = "C:\\Users\\A02064884\\Desktop\\Report_Template.docx";
             object file = "C:\\Users\\A02064884\\Desktop\\Test_Report.docx";
             analysis.CreateWordDocument(template, file, this);
             Close();
+        }
+
+        public DataRow getSelectedRoadInfo(string pictureType)
+        {
+            if (pictureType == "FAILED")
+            {
+                if (selectedFailedPicture == -1)
+                {
+                    return null;
+                }
+                return failedRSLRoads[selectedFailedPicture];
+            }
+            else if (pictureType == "POOR")
+            {
+                if (selectedPoorPicture == -1)
+                {
+                    return null;
+                }
+                return poorRSLRoads[selectedPoorPicture];
+
+            }
+            else if (pictureType == "FAIR")
+            {
+                if (selectedFairPicture == -1)
+                {
+                    return null;
+                }
+                return fairRSLRoads[selectedFairPicture];
+
+            }
+            else if (pictureType == "GOOD")
+            {
+                if (selectedGoodPicture == -1)
+                {
+                    return null;
+                }
+                return goodRSLRoads[selectedGoodPicture];
+            }
+            else if (pictureType == "VERY GOOD")
+            {
+                if (selectedVeryGoodPicture == -1)
+                {
+                    return null;
+                }
+                return veryGoodRSLRoads[selectedVeryGoodPicture];
+            }
+            else if (pictureType == "EXCELLENT")
+            {
+                if (selectedExcellentPicture == -1)
+                {
+                    return null;
+                }
+                return excellentRSLRoads[selectedExcellentPicture];
+            }
+            else
+            {
+                Console.WriteLine("Incorrect image type specified");
+                return null;
+            }
+        }
+
+        public string getSelectedPictureByIndex(string pictureType)
+        {
+            if(pictureType == "FAILED")
+            {
+                if(selectedFailedPicture == -1)
+                {
+                    return "No Photo Selected";
+                }
+                return picturesFailedRSL[selectedFailedPicture];
+            }
+            else if(pictureType == "POOR")
+            {
+                if (selectedPoorPicture == -1)
+                {
+                    return "No Photo Selected";
+                }
+                return picturesPoorRSL[selectedPoorPicture];
+
+            }
+            else if (pictureType == "FAIR")
+            {
+                if (selectedFairPicture == -1)
+                {
+                    return "No Photo Selected";
+                }
+                return picturesFairRSL[selectedFairPicture];
+
+            }
+            else if (pictureType == "GOOD")
+            {
+                if (selectedGoodPicture == -1)
+                {
+                    return "No Photo Selected";
+                }
+                return picturesGoodRSL[selectedGoodPicture];
+            }
+            else if (pictureType == "VERY GOOD")
+            {
+                if (selectedVeryGoodPicture == -1)
+                {
+                    return "No Photo Selected";
+                }
+                return picturesVeryGoodRSL[selectedVeryGoodPicture];
+            }
+            else if (pictureType == "EXCELLENT")
+            {
+                if (selectedExcellentPicture == -1)
+                {
+                    return "No Photo Selected";
+                }
+                return picturesExcellentRSL[selectedExcellentPicture];
+            }
+            else
+            {
+                Console.WriteLine("Incorrect image type specified");
+                return "";
+            }
         }
 
         private void buttonNext_Click(object sender, EventArgs e)

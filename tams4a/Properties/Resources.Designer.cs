@@ -482,6 +482,7 @@ namespace tams4a.Properties {
         internal static System.Drawing.Bitmap nophoto {
             get {
                 object obj = ResourceManager.GetObject("nophoto", resourceCulture);
+                Console.WriteLine("*****************" + obj.ToString());
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
