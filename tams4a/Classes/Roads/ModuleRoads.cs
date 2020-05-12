@@ -343,7 +343,7 @@ namespace tams4a.Classes
         private string[] parsePhotosList(String stringOfPhotos)
         {
             // split the list of photos based on commas and spaces(ex: "img1, img2" --> ["img1", "img2"]) 
-            char[] delimiterChars = { ',', ' ' };
+            char[] delimiterChars = { '/', ' ' };
             // the StringSplitOption.RemoveEmptyEntries parameters removes any thing in the list that is an empty string
             return stringOfPhotos.Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries);
         }
@@ -489,15 +489,6 @@ namespace tams4a.Classes
                 }
             }
 
-            //var treatments = Database.GetDataByQuery(Project.conn, "SELECT id, name FROM treatments WHERE road_applied='" + surface + "';");
-            //DataRow blankSurfaceRow = treatments.NewRow();      //
-            //blankSurfaceRow["id"] = 0;                          // add empty row
-            //blankSurfaceRow["name"] = "";                       //
-            //treatments.Rows.InsertAt(blankSurfaceRow, 0);       //
-            //roadControls.comboBoxTreatment.DataSource = treatments;    //
-            //roadControls.comboBoxTreatment.DisplayMember = "name";     // sets options
-            //roadControls.comboBoxTreatment.ValueMember = "id";         //
-            
         }
 
 

@@ -277,7 +277,7 @@ namespace tams4a.Forms
                 photoListString += photo;
                 if (i != listOfPhotos.Length - 1)
                 {
-                    photoListString += ", ";
+                    photoListString += "/ ";
                 }
                 i++;
             }
