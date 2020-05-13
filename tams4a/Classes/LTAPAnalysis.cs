@@ -43,11 +43,33 @@ namespace tams4a.Classes
                 object isVisible = false;
                 winword.Visible = false;
 
+                
+
+                FileStream documentToOpen = null;
+
+                try
+                {
+                    documentToOpen = File.Open(filename.ToString(), FileMode.Open, FileAccess.Read, FileShare.None);
+                    documentToOpen.Close();
+                    documentToOpen.Dispose();
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine(ex);
+                    //Process[] allProcesses = Process.GetProcessesByName("WINWORD");
+                    //foreach (Process process in allProcesses)
+                    //{
+                    //    process.Close();
+                    //    process.Dispose();
+                    //}
+                }
+
+
                 document = winword.Documents.Open(ref filename, ref missing,
                     ref readOnly, ref missing, ref missing, ref missing, ref missing,
                     ref missing, ref missing, ref missing, ref missing, ref missing,
                     ref missing, ref missing, ref missing, ref missing);
-                
+
                 document.Activate();
 
                 RoadGraphs graphs = new RoadGraphs(Project, moduleRoads, moduleRoads.distressAsphalt, moduleRoads.distressGravel, moduleRoads.distressConcrete, this);
@@ -212,20 +234,20 @@ namespace tams4a.Classes
                 FindAndReplace(winword, "<number_of_asphalt_distresses>", numberOfAsphaltDistressesPresent);
                 FindAndReplace(winword, "<number_of_concrete_distresses>", numberOfConcreteDistressesPresent);
                 FindAndReplace(winword, "<major_concrete_distress>", majorConcreteDistress);
-                FindAndReplace(winword, "<average_rsl>", averageRSL.ToString("#.##"));
+                FindAndReplace(winword, "<average_rsl>", averageRSL.ToString("N2"));
 
                 setMajorAsphaltDistressSentence(winword);
 
-                FindAndReplace(winword, "<%_rsl_0>", rslRange[0].ToString("#.##"));
-                FindAndReplace(winword, "<%_rsl_1-3>", rslRange[1].ToString("#.##"));
-                FindAndReplace(winword, "<%_rsl_4-6>", rslRange[2].ToString("#.##"));
-                FindAndReplace(winword, "<%_rsl_7-9>", rslRange[3].ToString("#.##"));
-                FindAndReplace(winword, "<%_rsl_10-12>", rslRange[4].ToString("#.##"));
-                FindAndReplace(winword, "<%_rsl_13-15>", rslRange[5].ToString("#.##"));
-                FindAndReplace(winword, "<%_rsl_16-18>", rslRange[6].ToString("#.##"));
-                FindAndReplace(winword, "<%_rsl_19-20>", rslRange[7].ToString("#.##"));
-                FindAndReplace(winword, "<%_rsl_poor>", (rslRange[1] + rslRange[2]).ToString("#.##"));
-                FindAndReplace(winword, "<%_rsl_very_good>", (rslRange[5] + rslRange[6]).ToString("#.##"));
+                FindAndReplace(winword, "<%_rsl_0>", rslRange[0].ToString("N2"));
+                FindAndReplace(winword, "<%_rsl_1-3>", rslRange[1].ToString("N2"));
+                FindAndReplace(winword, "<%_rsl_4-6>", rslRange[2].ToString("N2"));
+                FindAndReplace(winword, "<%_rsl_7-9>", rslRange[3].ToString("N2"));
+                FindAndReplace(winword, "<%_rsl_10-12>", rslRange[4].ToString("N2"));
+                FindAndReplace(winword, "<%_rsl_13-15>", rslRange[5].ToString("N2"));
+                FindAndReplace(winword, "<%_rsl_16-18>", rslRange[6].ToString("N2"));
+                FindAndReplace(winword, "<%_rsl_19-20>", rslRange[7].ToString("N2"));
+                FindAndReplace(winword, "<%_rsl_poor>", (rslRange[1] + rslRange[2]).ToString("N2"));
+                FindAndReplace(winword, "<%_rsl_very_good>", (rslRange[5] + rslRange[6]).ToString("N2"));
 
                 FindAndReplace(winword, "<per_rsl_0>", capitalizeFirstLetter(numToString((int)Math.Round(rslRange[0], MidpointRounding.AwayFromZero))));
                 FindAndReplace(winword, "<per_rsl_poor>", capitalizeFirstLetter(numToString((int)Math.Round(rslRange[1] + rslRange[2], MidpointRounding.AwayFromZero))));
@@ -249,6 +271,8 @@ namespace tams4a.Classes
 
 
 
+
+
                 int surveyYear = (int)reportForm.numericUpDownSurveyYear.Value;
                 FindAndReplace(winword, "<5yr>", surveyYear + 5);
                 FindAndReplace(winword, "<10yr>", surveyYear + 10);
@@ -259,8 +283,19 @@ namespace tams4a.Classes
                 int fiveYrSum = 0;
                 int tenYrSum = 0;
                 int asphaltCount = 0;
-                foreach (System.Data.DataRow row in allRoads.Rows)
+
+                double rsl3Percent = 0;
+                double totalArea = 0;
+                double rsl3Area = 0;
+                foreach (DataRow row in allRoads.Rows)
                 {
+                    // get area for rsl 3 for finding rsl3Percent
+                    totalArea += Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
+                    if(row["rsl"].ToString() == "3")
+                    {
+                        rsl3Area += Util.ToDouble(row["width"].ToString()) * Util.ToDouble(row["length"].ToString());
+                    }
+
                     if (row["surface"].ToString() == "asphalt" && !string.IsNullOrEmpty(row["rsl"].ToString()))
                     {
                         int rsl = Util.ToInt(row["rsl"].ToString());
@@ -278,6 +313,8 @@ namespace tams4a.Classes
                     }
                 }
 
+                rsl3Percent = Math.Round( (rsl3Area / totalArea) * 100, 2);
+
                 double avgAsphaltRSL = Math.Round((double)rslSum / asphaltCount, 1);
                 double fiveYrEst = Math.Round((double)fiveYrSum / asphaltCount, 1);
                 double tenYrEst = Math.Round((double)tenYrSum / asphaltCount, 1);
@@ -286,6 +323,7 @@ namespace tams4a.Classes
                 FindAndReplace(winword, "<5yr_est>", fiveYrEst);
                 FindAndReplace(winword, "<10yr_est>", tenYrEst);
 
+                FindAndReplace(winword, "<%_rsl_3>", rsl3Percent.ToString("N2"));
                 // <5yr_trt>
                 // <current_est_concrete>
             }

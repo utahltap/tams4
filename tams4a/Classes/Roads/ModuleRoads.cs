@@ -858,11 +858,12 @@ namespace tams4a.Classes
         {
             string[] distressType = distressAsphalt;
             int distID = 1;
-            int maxRSL = 20;
+            // minDistressScore will be the worst(min) distressScore for a road segment
+            int minDistressScore = 20;
             if (surfType.Contains("gravel"))
             {
                 distID = 2;
-                maxRSL = 10;
+                minDistressScore = 10;
                 distressType = distressGravel;
             }
             else if (surfType.Contains("concrete"))
@@ -871,19 +872,21 @@ namespace tams4a.Classes
                 distressType = distressConcrete;
             }
             DataTable distresses = Database.GetDataByQuery(Project.conn, "SELECT * FROM road_distresses WHERE surface_id = " + distID.ToString());
+            // finding the worst(min) distressScore for a road segment
             for (int i = 0; i <= distresses.Rows.Count - 1; ++i)
             {
                 if (distValues[i] <= 0)
                 {
                     continue;
                 }
-                int rsl = Util.ToInt(distresses.Rows[i]["rsl" + distValues[i]].ToString());
-                if (rsl < maxRSL)
+                int distressScore = Util.ToInt(distresses.Rows[i]["rsl" + distValues[i]].ToString());
+                if (distressScore < minDistressScore)
                 {
-                    maxRSL = rsl;
+                    minDistressScore = distressScore;
                 }
             }
 
+            // gd Dictionary is the list of distress scores that are tied for the worst value
             Dictionary<int, string> gd = new Dictionary<int, string>();
             int index = 0;
             for (int i = 0; i <= distresses.Rows.Count - 1; ++i)
@@ -893,7 +896,7 @@ namespace tams4a.Classes
                     continue;
                 }
                 int rsl = Util.ToInt(distresses.Rows[i]["rsl" + distValues[i]].ToString());
-                if (rsl == maxRSL)
+                if (rsl == minDistressScore)
                 {
                     gd[index] = distressType[i];
                     index++;

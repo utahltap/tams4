@@ -1,5 +1,6 @@
 ﻿using DotSpatial.Symbology;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -369,7 +370,22 @@ namespace tams4a.Classes.Roads
             {
                 dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
             }
-            nr["Governing Distress"] = moduleRoads.getGoverningDistress(dvs, row["surface"].ToString());
+
+            Dictionary<int, string> govDistresses = moduleRoads.getGoverningDistress(dvs, row["surface"].ToString());
+            string govDistressesString = "";
+            foreach (string distress in govDistresses.Values)
+            {
+                if (distress == govDistresses[govDistresses.Count-1])
+                {
+                    govDistressesString += distress;
+                }
+                else
+                {
+                    govDistressesString += distress + "/";
+                }
+
+            }
+            nr["Governing Distress"] = govDistressesString;
             nr["Cost"] = 0;
             if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))
             {
