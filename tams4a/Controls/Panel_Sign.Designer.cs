@@ -224,20 +224,20 @@
             // clickMapToolStripMenuItem
             // 
             this.clickMapToolStripMenuItem.Name = "clickMapToolStripMenuItem";
-            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.clickMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clickMapToolStripMenuItem.Text = "Click Map";
             // 
             // enterCoordinatesToolStripMenuItem
             // 
             this.enterCoordinatesToolStripMenuItem.Name = "enterCoordinatesToolStripMenuItem";
-            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.enterCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.enterCoordinatesToolStripMenuItem.Text = "Enter Coordinates";
             // 
             // readGPSToolStripMenuItem
             // 
             this.readGPSToolStripMenuItem.Enabled = false;
             this.readGPSToolStripMenuItem.Name = "readGPSToolStripMenuItem";
-            this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.readGPSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.readGPSToolStripMenuItem.Text = "Read GPS";
             this.readGPSToolStripMenuItem.Visible = false;
             // 

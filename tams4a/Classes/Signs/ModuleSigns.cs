@@ -159,6 +159,17 @@ namespace tams4a.Classes
             signPanel.pictureBoxPhotoPost.Click += clickPostPhotoBox;
             Project.map.MouseUp += moveSignMouseUp;
             dateForm.FormClosing += updateSurveyDate;
+
+            signPanel.Click += toggleAddPost;
+            foreach(Control item in signPanel.Controls)
+            {
+                item.Click += toggleAddPost;
+                foreach (Control childItem in item.Controls)
+                {
+                    childItem.Click += toggleAddPost;
+                }
+            }
+
             #endregion eventhandlers
 
             DataTable supportMaterials = Database.GetDataByQuery(Project.conn, "SELECT * FROM support_materials");

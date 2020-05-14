@@ -620,6 +620,15 @@ namespace tams4a
 
         private void tabControlControls_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //foreach(Control childControl in tabControlControls.Controls)
+            //{
+            //    if(childControl == tabControlControls.SelectedTab)
+            //    {
+            //        continue;
+            //    }
+            //    childControl.Enabled = false;
+            //}
+
             string selectedTab = tabControlControls.SelectedTab.Text;
             Project.selectModule(selectedTab);
             if (selectedTab == "Signs" || selectedTab == "Other")

@@ -317,5 +317,8 @@ namespace tams4a.Controls
                 lastUsedSignPhotoIndex = 0;
             }
         }
+
+      
+
     }
 }
