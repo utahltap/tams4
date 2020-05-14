@@ -30,7 +30,6 @@ namespace tams4a.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Panel_Road));
             this.groupBoxDistress = new System.Windows.Forms.GroupBox();
             this.buttonSuggest = new System.Windows.Forms.Button();
             this.inputRsl = new System.Windows.Forms.TextBox();
@@ -47,8 +46,8 @@ namespace tams4a.Controls
             this.distress2 = new tams4a.Controls.DistressEntry();
             this.distress1 = new tams4a.Controls.DistressEntry();
             this.groupBoxInfo = new System.Windows.Forms.GroupBox();
-            this.buttonChangeDirectory = new System.Windows.Forms.Button();
-            this.buttonPreviousPhoto = new System.Windows.Forms.Button();
+            this.buttonAddPhoto = new System.Windows.Forms.Button();
+            this.comboBoxPhotoList = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -62,8 +61,6 @@ namespace tams4a.Controls
             this.textBoxRoadName = new System.Windows.Forms.TextBox();
             this.pictureBoxPhoto = new System.Windows.Forms.PictureBox();
             this.labelPhoto = new System.Windows.Forms.Label();
-            this.buttonNextPhoto = new System.Windows.Forms.Button();
-            this.textBoxPhotoFile = new System.Windows.Forms.TextBox();
             this.labelSurface = new System.Windows.Forms.Label();
             this.comboBoxSurface = new System.Windows.Forms.ComboBox();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
@@ -117,10 +114,10 @@ namespace tams4a.Controls
             this.groupBoxDistress.Controls.Add(this.distress3);
             this.groupBoxDistress.Controls.Add(this.distress2);
             this.groupBoxDistress.Controls.Add(this.distress1);
-            this.groupBoxDistress.Location = new System.Drawing.Point(0, 435);
+            this.groupBoxDistress.Location = new System.Drawing.Point(0, 476);
             this.groupBoxDistress.MinimumSize = new System.Drawing.Size(0, 100);
             this.groupBoxDistress.Name = "groupBoxDistress";
-            this.groupBoxDistress.Size = new System.Drawing.Size(220, 312);
+            this.groupBoxDistress.Size = new System.Drawing.Size(220, 308);
             this.groupBoxDistress.TabIndex = 33;
             this.groupBoxDistress.TabStop = false;
             this.groupBoxDistress.Text = "Distresses";
@@ -128,7 +125,7 @@ namespace tams4a.Controls
             // buttonSuggest
             // 
             this.buttonSuggest.Image = global::tams4a.Properties.Resources.suggest;
-            this.buttonSuggest.Location = new System.Drawing.Point(78, 221);
+            this.buttonSuggest.Location = new System.Drawing.Point(79, 245);
             this.buttonSuggest.Name = "buttonSuggest";
             this.buttonSuggest.Size = new System.Drawing.Size(24, 23);
             this.buttonSuggest.TabIndex = 34;
@@ -136,7 +133,7 @@ namespace tams4a.Controls
             // 
             // inputRsl
             // 
-            this.inputRsl.Location = new System.Drawing.Point(104, 222);
+            this.inputRsl.Location = new System.Drawing.Point(105, 246);
             this.inputRsl.Name = "inputRsl";
             this.inputRsl.Size = new System.Drawing.Size(90, 20);
             this.inputRsl.TabIndex = 35;
@@ -144,7 +141,7 @@ namespace tams4a.Controls
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 229);
+            this.label4.Location = new System.Drawing.Point(8, 253);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(28, 13);
             this.label4.TabIndex = 36;
@@ -153,7 +150,7 @@ namespace tams4a.Controls
             // labelSuggestedTreatment
             // 
             this.labelSuggestedTreatment.AutoSize = true;
-            this.labelSuggestedTreatment.Location = new System.Drawing.Point(7, 254);
+            this.labelSuggestedTreatment.Location = new System.Drawing.Point(8, 278);
             this.labelSuggestedTreatment.Name = "labelSuggestedTreatment";
             this.labelSuggestedTreatment.Size = new System.Drawing.Size(55, 13);
             this.labelSuggestedTreatment.TabIndex = 37;
@@ -173,7 +170,7 @@ namespace tams4a.Controls
             "Preventative with Patching",
             "Rehabilitation",
             "Reconstruction"});
-            this.comboBoxTreatment.Location = new System.Drawing.Point(82, 248);
+            this.comboBoxTreatment.Location = new System.Drawing.Point(83, 272);
             this.comboBoxTreatment.Name = "comboBoxTreatment";
             this.comboBoxTreatment.Size = new System.Drawing.Size(112, 21);
             this.comboBoxTreatment.TabIndex = 36;
@@ -186,7 +183,7 @@ namespace tams4a.Controls
             this.distress9.Description = "";
             this.distress9.IllustrationName = null;
             this.distress9.Label = "Distress Type";
-            this.distress9.Location = new System.Drawing.Point(4, 193);
+            this.distress9.Location = new System.Drawing.Point(5, 217);
             this.distress9.Margin = new System.Windows.Forms.Padding(1);
             this.distress9.MaxDistress = 0;
             this.distress9.Name = "distress9";
@@ -202,7 +199,7 @@ namespace tams4a.Controls
             this.distress8.Description = "";
             this.distress8.IllustrationName = null;
             this.distress8.Label = "Distress Type";
-            this.distress8.Location = new System.Drawing.Point(4, 171);
+            this.distress8.Location = new System.Drawing.Point(5, 195);
             this.distress8.Margin = new System.Windows.Forms.Padding(1);
             this.distress8.MaxDistress = 0;
             this.distress8.Name = "distress8";
@@ -218,7 +215,7 @@ namespace tams4a.Controls
             this.distress7.Description = "";
             this.distress7.IllustrationName = null;
             this.distress7.Label = "Distress Type";
-            this.distress7.Location = new System.Drawing.Point(4, 149);
+            this.distress7.Location = new System.Drawing.Point(5, 173);
             this.distress7.Margin = new System.Windows.Forms.Padding(1);
             this.distress7.MaxDistress = 0;
             this.distress7.Name = "distress7";
@@ -234,7 +231,7 @@ namespace tams4a.Controls
             this.distress6.Description = "";
             this.distress6.IllustrationName = null;
             this.distress6.Label = "Distress Type";
-            this.distress6.Location = new System.Drawing.Point(4, 127);
+            this.distress6.Location = new System.Drawing.Point(5, 151);
             this.distress6.Margin = new System.Windows.Forms.Padding(1);
             this.distress6.MaxDistress = 0;
             this.distress6.Name = "distress6";
@@ -250,7 +247,7 @@ namespace tams4a.Controls
             this.distress5.Description = "";
             this.distress5.IllustrationName = null;
             this.distress5.Label = "Distress Type";
-            this.distress5.Location = new System.Drawing.Point(4, 105);
+            this.distress5.Location = new System.Drawing.Point(5, 129);
             this.distress5.Margin = new System.Windows.Forms.Padding(1);
             this.distress5.MaxDistress = 0;
             this.distress5.Name = "distress5";
@@ -266,7 +263,7 @@ namespace tams4a.Controls
             this.distress4.Description = "";
             this.distress4.IllustrationName = null;
             this.distress4.Label = "Distress Type";
-            this.distress4.Location = new System.Drawing.Point(4, 83);
+            this.distress4.Location = new System.Drawing.Point(5, 107);
             this.distress4.Margin = new System.Windows.Forms.Padding(1);
             this.distress4.MaxDistress = 0;
             this.distress4.Name = "distress4";
@@ -282,7 +279,7 @@ namespace tams4a.Controls
             this.distress3.Description = "";
             this.distress3.IllustrationName = null;
             this.distress3.Label = "Distress Type";
-            this.distress3.Location = new System.Drawing.Point(4, 61);
+            this.distress3.Location = new System.Drawing.Point(5, 85);
             this.distress3.Margin = new System.Windows.Forms.Padding(1);
             this.distress3.MaxDistress = 0;
             this.distress3.Name = "distress3";
@@ -298,7 +295,7 @@ namespace tams4a.Controls
             this.distress2.Description = "";
             this.distress2.IllustrationName = null;
             this.distress2.Label = "Distress Type";
-            this.distress2.Location = new System.Drawing.Point(4, 39);
+            this.distress2.Location = new System.Drawing.Point(5, 63);
             this.distress2.Margin = new System.Windows.Forms.Padding(1);
             this.distress2.MaxDistress = 0;
             this.distress2.Name = "distress2";
@@ -314,7 +311,7 @@ namespace tams4a.Controls
             this.distress1.Description = "";
             this.distress1.IllustrationName = null;
             this.distress1.Label = "Distress Type";
-            this.distress1.Location = new System.Drawing.Point(4, 17);
+            this.distress1.Location = new System.Drawing.Point(5, 41);
             this.distress1.Margin = new System.Windows.Forms.Padding(1);
             this.distress1.MaxDistress = 0;
             this.distress1.Name = "distress1";
@@ -325,8 +322,8 @@ namespace tams4a.Controls
             // 
             // groupBoxInfo
             // 
-            this.groupBoxInfo.Controls.Add(this.buttonChangeDirectory);
-            this.groupBoxInfo.Controls.Add(this.buttonPreviousPhoto);
+            this.groupBoxInfo.Controls.Add(this.buttonAddPhoto);
+            this.groupBoxInfo.Controls.Add(this.comboBoxPhotoList);
             this.groupBoxInfo.Controls.Add(this.label3);
             this.groupBoxInfo.Controls.Add(this.label2);
             this.groupBoxInfo.Controls.Add(this.label1);
@@ -340,8 +337,6 @@ namespace tams4a.Controls
             this.groupBoxInfo.Controls.Add(this.textBoxRoadName);
             this.groupBoxInfo.Controls.Add(this.pictureBoxPhoto);
             this.groupBoxInfo.Controls.Add(this.labelPhoto);
-            this.groupBoxInfo.Controls.Add(this.buttonNextPhoto);
-            this.groupBoxInfo.Controls.Add(this.textBoxPhotoFile);
             this.groupBoxInfo.Controls.Add(this.labelSurface);
             this.groupBoxInfo.Controls.Add(this.comboBoxSurface);
             this.groupBoxInfo.Controls.Add(this.comboBoxType);
@@ -359,31 +354,30 @@ namespace tams4a.Controls
             this.groupBoxInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxInfo.Location = new System.Drawing.Point(0, 25);
             this.groupBoxInfo.Name = "groupBoxInfo";
-            this.groupBoxInfo.Size = new System.Drawing.Size(220, 410);
+            this.groupBoxInfo.Size = new System.Drawing.Size(220, 445);
             this.groupBoxInfo.TabIndex = 5;
             this.groupBoxInfo.TabStop = false;
             this.groupBoxInfo.Text = "Road";
             // 
-            // buttonChangeDirectory
+            // buttonAddPhoto
             // 
-            this.buttonChangeDirectory.Image = ((System.Drawing.Image)(resources.GetObject("buttonChangeDirectory.Image")));
-            this.buttonChangeDirectory.Location = new System.Drawing.Point(11, 331);
-            this.buttonChangeDirectory.Name = "buttonChangeDirectory";
-            this.buttonChangeDirectory.Size = new System.Drawing.Size(20, 20);
-            this.buttonChangeDirectory.TabIndex = 34;
-            this.toolTip.SetToolTip(this.buttonChangeDirectory, "Change directory of photos");
-            this.buttonChangeDirectory.UseVisualStyleBackColor = true;
-            this.buttonChangeDirectory.Click += new System.EventHandler(this.buttonChangeDirectory_Click);
+            this.buttonAddPhoto.Location = new System.Drawing.Point(83, 413);
+            this.buttonAddPhoto.Name = "buttonAddPhoto";
+            this.buttonAddPhoto.Size = new System.Drawing.Size(112, 23);
+            this.buttonAddPhoto.TabIndex = 36;
+            this.buttonAddPhoto.Text = "Edit Images";
+            this.buttonAddPhoto.UseVisualStyleBackColor = true;
+            this.buttonAddPhoto.Click += new System.EventHandler(this.buttonAddPhoto_Click);
             // 
-            // buttonPreviousPhoto
+            // comboBoxPhotoList
             // 
-            this.buttonPreviousPhoto.Location = new System.Drawing.Point(33, 331);
-            this.buttonPreviousPhoto.Name = "buttonPreviousPhoto";
-            this.buttonPreviousPhoto.Size = new System.Drawing.Size(20, 20);
-            this.buttonPreviousPhoto.TabIndex = 33;
-            this.buttonPreviousPhoto.Text = "<";
-            this.buttonPreviousPhoto.UseVisualStyleBackColor = true;
-            this.buttonPreviousPhoto.Click += new System.EventHandler(this.buttonPreviousPhoto_Click);
+            this.comboBoxPhotoList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPhotoList.FormattingEnabled = true;
+            this.comboBoxPhotoList.Location = new System.Drawing.Point(82, 308);
+            this.comboBoxPhotoList.Name = "comboBoxPhotoList";
+            this.comboBoxPhotoList.Size = new System.Drawing.Size(113, 21);
+            this.comboBoxPhotoList.TabIndex = 35;
+            this.comboBoxPhotoList.SelectedIndexChanged += new System.EventHandler(this.comboBoxPhotoList_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -490,9 +484,9 @@ namespace tams4a.Controls
             // 
             this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBoxPhoto.InitialImage = null;
-            this.pictureBoxPhoto.Location = new System.Drawing.Point(83, 331);
+            this.pictureBoxPhoto.Location = new System.Drawing.Point(82, 335);
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
-            this.pictureBoxPhoto.Size = new System.Drawing.Size(112, 73);
+            this.pictureBoxPhoto.Size = new System.Drawing.Size(113, 71);
             this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxPhoto.TabIndex = 32;
             this.pictureBoxPhoto.TabStop = false;
@@ -505,24 +499,6 @@ namespace tams4a.Controls
             this.labelPhoto.Size = new System.Drawing.Size(54, 13);
             this.labelPhoto.TabIndex = 18;
             this.labelPhoto.Text = "Photo File";
-            // 
-            // buttonNextPhoto
-            // 
-            this.buttonNextPhoto.Location = new System.Drawing.Point(54, 331);
-            this.buttonNextPhoto.Name = "buttonNextPhoto";
-            this.buttonNextPhoto.Size = new System.Drawing.Size(20, 20);
-            this.buttonNextPhoto.TabIndex = 30;
-            this.buttonNextPhoto.Text = ">";
-            this.buttonNextPhoto.UseVisualStyleBackColor = true;
-            // 
-            // textBoxPhotoFile
-            // 
-            this.textBoxPhotoFile.Location = new System.Drawing.Point(83, 305);
-            this.textBoxPhotoFile.Name = "textBoxPhotoFile";
-            this.textBoxPhotoFile.Size = new System.Drawing.Size(112, 20);
-            this.textBoxPhotoFile.TabIndex = 31;
-            this.textBoxPhotoFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.textBoxPhotoFile.TextChanged += new System.EventHandler(this.textBoxPhotoFile_TextChanged);
             // 
             // labelSurface
             // 
@@ -549,7 +525,7 @@ namespace tams4a.Controls
             this.comboBoxType.FormattingEnabled = true;
             this.comboBoxType.Location = new System.Drawing.Point(82, 246);
             this.comboBoxType.Name = "comboBoxType";
-            this.comboBoxType.Size = new System.Drawing.Size(112, 21);
+            this.comboBoxType.Size = new System.Drawing.Size(113, 21);
             this.comboBoxType.TabIndex = 28;
             this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.comboBoxTypeChanged);
             // 
@@ -777,7 +753,7 @@ namespace tams4a.Controls
             this.MaximumSize = new System.Drawing.Size(220, 2410);
             this.MinimumSize = new System.Drawing.Size(220, 750);
             this.Name = "Panel_Road";
-            this.Size = new System.Drawing.Size(220, 754);
+            this.Size = new System.Drawing.Size(220, 784);
             this.groupBoxDistress.ResumeLayout(false);
             this.groupBoxDistress.PerformLayout();
             this.groupBoxInfo.ResumeLayout(false);
@@ -816,8 +792,6 @@ namespace tams4a.Controls
         public System.Windows.Forms.ComboBox comboBoxType;
         public System.Windows.Forms.ComboBox comboBoxSurface;
         private System.Windows.Forms.Label labelSurface;
-        public System.Windows.Forms.TextBox textBoxPhotoFile;
-        public System.Windows.Forms.Button buttonNextPhoto;
         private System.Windows.Forms.Label labelPhoto;
         public System.Windows.Forms.PictureBox pictureBoxPhoto;
         public System.Windows.Forms.TextBox textBoxRoadName;
@@ -850,7 +824,7 @@ namespace tams4a.Controls
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         public System.Windows.Forms.ToolStripButton toolStripButtonSidewalk;
         public System.Windows.Forms.ToolStripButton buttonSave;
-        public System.Windows.Forms.Button buttonPreviousPhoto;
-        public System.Windows.Forms.Button buttonChangeDirectory;
+        public System.Windows.Forms.ComboBox comboBoxPhotoList;
+        private System.Windows.Forms.Button buttonAddPhoto;
     }
 }

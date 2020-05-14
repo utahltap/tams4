@@ -33,6 +33,7 @@ namespace tams4a.Classes
             // could also do different things for different levels if needed.
             switch (level)
             {
+                case "dev":
                 case "error":
                 case "warning":
                 case "note":

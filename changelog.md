@@ -1,4 +1,12 @@
 # TAMS 4.1.x
+# Version 4.2.1.0
+CHANGES
+----------------------------------------------------
+* Added ability to add multiple photos to road segments
+ 
+BUG FIXES 
+----------------------------------------------------
+* Fixed maximizing screen when viewing enlarged image
 
 # Version 4.2.0.0
 CHANGES

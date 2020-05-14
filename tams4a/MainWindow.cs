@@ -67,6 +67,11 @@ namespace tams4a
             while (!Project.isOpen)
             {
                 FormStartup getProject = new FormStartup(Project);
+                string logMessage = "";
+                logMessage += "GetEntryAssembly().Location Startup: " + System.Reflection.Assembly.GetEntryAssembly().Location + "\n";
+                logMessage += "GetExecutingAssembly().CodeBase: " + System.Reflection.Assembly.GetExecutingAssembly().CodeBase + "\n";
+                logMessage += "Environment.CurrentDirectory " + Environment.CurrentDirectory + "\n";
+                Classes.Log.Add(logMessage, "dev");
                 try
                 {
                     getProject.openProjectFile(System.Reflection.Assembly.GetEntryAssembly().Location);

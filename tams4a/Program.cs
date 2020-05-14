@@ -19,7 +19,7 @@ namespace tams4a
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
+
             try
             {
                 cmdArgs = Environment.GetCommandLineArgs().Skip(1).ToArray();

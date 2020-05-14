@@ -2,18 +2,17 @@
 using System.Windows.Forms;
 using tams4a.Classes;
 using System.IO;
+using tams4a.Forms;
 
 namespace tams4a.Controls
 {
     public partial class Panel_Road : Panel_Module
     {
         private TamsProject Project;
-        private string[] fileEntries;
-        private bool validFolder = false;
-        private int lastUsedPhotoIndex;
-        private string currentFolder;
+        public string currentFolder;
+        public ModuleRoads moduleRoads;
 
-        public Panel_Road(TamsProject theProject)
+        public Panel_Road(TamsProject theProject, ModuleRoads theModuleRoads)
         {
             InitializeComponent();
             Project = theProject;
@@ -25,15 +24,9 @@ namespace tams4a.Controls
             {
                 currentFolder = null;
             }
-            try
-            {
-                fileEntries = Directory.GetFiles(currentFolder);
-                validFolder = true;
-            }
-            catch
-            {
-                validFolder = false;
-            }
+
+            moduleRoads = theModuleRoads;
+            
 
             numericUpDownSpeedLimit.ValueChanged += moduleValueChanged;
             numericUpDownLanes.ValueChanged += moduleValueChanged;
@@ -43,16 +36,12 @@ namespace tams4a.Controls
             comboBoxSurface.TextChanged += moduleValueChanged;
             comboBoxType.TextChanged += moduleValueChanged;
             comboBoxTreatment.TextChanged += moduleValueChanged;
-            textBoxPhotoFile.TextChanged += moduleValueChanged;
             inputRsl.TextChanged += moduleValueChanged;
             textBoxWidth.TextChanged += widthChanged;
             textBoxLength.TextChanged += lengthChanged;
-            buttonNextPhoto.Click += buttonNextPhoto_Click;
 
             checkDistressValues();
 
-            new ToolTip().SetToolTip(buttonNextPhoto, "Get Next Photo");
-            new ToolTip().SetToolTip(buttonSuggest, "Get TAMS Suggestion");
 
             AutoScroll = true;
         }
@@ -119,76 +108,11 @@ namespace tams4a.Controls
             }
         }
 
-
-        private bool folderIsNotValid(object sender, EventArgs e)
+        private void comboBoxPhotoList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!validFolder)
+            if (!string.IsNullOrEmpty(comboBoxPhotoList.Text))
             {
-                MessageBox.Show("No folder for photos is specified.\n Please select the folder containing your photos.", "Please Select Folder", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                buttonChangeDirectory_Click(sender, e);
-                try
-                {
-                    fileEntries = Directory.GetFiles(currentFolder);
-                    validFolder = true;
-                }
-                catch
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private void buttonNextPhoto_Click(object sender, EventArgs e)
-        {
-            if (folderIsNotValid(sender, e)) return;
-            updatePhotoPreview(textBoxPhotoFile, 1);
-        }
-
-        private void buttonPreviousPhoto_Click(object sender, EventArgs e)
-        {
-            if (folderIsNotValid(sender, e)) return;
-            updatePhotoPreview(textBoxPhotoFile, -1);
-        }
-
-        private void updatePhotoPreview(TextBox file, int direction)
-        {
-            try
-            {
-                String[] splitFile;
-                if (!String.IsNullOrWhiteSpace(file.Text))
-                {
-                    for (int i = 0; i < fileEntries.Length; i++)
-                    {
-                        splitFile = fileEntries[i].Split('\\');
-                        if (file.Text == splitFile[splitFile.Length - 1])
-                        {
-                            if (direction == 1 && i == fileEntries.Length - 1) i = -1;
-                            if (direction == -1 && i == 0) i = fileEntries.Length;
-                            splitFile = fileEntries[i + direction].Split('\\');
-                            file.Text = splitFile[splitFile.Length - 1];
-                            lastUsedPhotoIndex = i + direction;
-                            return;
-                        }
-                    }
-                }
-                int newPhotoIndex = 0;
-                if (direction == 1 && lastUsedPhotoIndex + 1 < fileEntries.Length - 1) newPhotoIndex = lastUsedPhotoIndex + direction;
-                if (direction == -1 && lastUsedPhotoIndex - 1 >= 0) newPhotoIndex = lastUsedPhotoIndex + direction;
-                splitFile = fileEntries[newPhotoIndex].Split('\\');
-                file.Text = splitFile[splitFile.Length - 1];
-            }
-            catch
-            {
-                //No photos found in directory
-            }
-        }
-
-        private void textBoxPhotoFile_TextChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(textBoxPhotoFile.Text))
-            {
-                string imageLocation = currentFolder + "\\" + textBoxPhotoFile.Text;
+                string imageLocation = currentFolder + "\\" + comboBoxPhotoList.Text;
                 if (File.Exists(imageLocation))
                 {
                     pictureBoxPhoto.ImageLocation = imageLocation;
@@ -205,35 +129,10 @@ namespace tams4a.Controls
             }
         }
 
-        private void buttonChangeDirectory_Click(object sender, EventArgs e)
+        private void buttonAddPhoto_Click(object sender, EventArgs e)
         {
-            RootFolderBrowserDialog selectFolder = new RootFolderBrowserDialog();
-            selectFolder.RootPath = Project.projectFolderPath;
-
-            if (!string.IsNullOrEmpty(currentFolder))
-            {
-                try
-                {
-                    selectFolder.SelectedPath = currentFolder;
-                }
-                catch
-                {
-                    selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
-                }
-            }
-            else
-            {
-                selectFolder.SelectedPath = Properties.Settings.Default.lastFolder;
-            }
-
-            if (selectFolder.ShowDialog() == DialogResult.OK)
-            {
-                string selectedFolder = selectFolder.SelectedPath;
-                string relativePath = selectedFolder.Remove(0, Project.projectFolderPath.Length);
-                Database.ExecuteNonQuery(Project.conn, "UPDATE photo_paths SET road_photos = '" + relativePath + "';");
-                currentFolder = selectedFolder;
-                fileEntries = Directory.GetFiles(currentFolder);
-            }
+            FormAddPhoto addPhoto = new FormAddPhoto(this, Project, moduleRoads);
+            addPhoto.Show();
         }
     }
 }

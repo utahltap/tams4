@@ -631,10 +631,11 @@ namespace tams4a.Classes
             setSymbolizer();
         }
 
-        protected void enlargePicture(string source, string subPath) {
-            FormPicture largePic = new FormPicture();
+        protected void enlargePicture(string source, string subPath, string[] listOfPhotos = null) {
+            string folderPath = Project.projectFolderPath + "\\" + subPath + "\\";
+            FormPicture largePic = new FormPicture(listOfPhotos, source, folderPath);
             if (!string.IsNullOrEmpty(source))
-                largePic.pictureBox.ImageLocation = Project.projectFolderPath + "\\" + subPath + "\\" + source;
+                largePic.pictureBox.ImageLocation = folderPath + source;
             else
                 largePic.pictureBox.Image = Properties.Resources.nophoto;
             largePic.Show();
