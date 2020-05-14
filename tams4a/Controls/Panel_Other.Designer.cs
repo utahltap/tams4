@@ -189,6 +189,7 @@
             // 
             // comboBoxObject
             // 
+            this.comboBoxObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxObject.FormattingEnabled = true;
             this.comboBoxObject.Items.AddRange(new object[] {
             "Sidewalk",
@@ -197,6 +198,7 @@
             "Accident",
             "Drainage",
             "Other"});
+            this.comboBoxObject.SelectedIndex = 5; 
             this.comboBoxObject.Location = new System.Drawing.Point(89, 36);
             this.comboBoxObject.Name = "comboBoxObject";
             this.comboBoxObject.Size = new System.Drawing.Size(112, 21);

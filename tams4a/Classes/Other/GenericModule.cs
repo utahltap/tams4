@@ -68,7 +68,7 @@ namespace tams4a.Classes
             controls.groupBoxType.Enabled = true;
             controls.toolStrip.Enabled = true;
             controls.groupBoxProperties.Enabled = true;
-            controls.toolStripButtonRemove.Enabled = tamsids.Count == 1;
+            controls.toolStripButtonRemove.Enabled = tamsids.Count >= 1;
         }
 
         private void newSHPFile(object sender, EventArgs e)
@@ -622,7 +622,7 @@ namespace tams4a.Classes
         {
             toggleAddFeature(sender, e);
             string[] tables = { ModuleName };
-            deleteShape(tamsids[0], tables);
+            deleteShape(tamsids, tables);
         }
 
         private void clickPhotoBox(object sender, EventArgs e)

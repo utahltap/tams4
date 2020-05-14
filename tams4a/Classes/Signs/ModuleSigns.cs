@@ -589,6 +589,7 @@ namespace tams4a.Classes
         private void updateSignDisplay(Dictionary<string, string> values, Panel_Sign signControls)
         {
             suppressChanges = true;
+            signControls.toolStripButtonRemove.Enabled = (tamsids.Count >= 1);
             signControls.labelSurveyDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
             signControls.textBoxAddress.Text = Util.DictionaryItemString(values, "address");
             signControls.comboBoxMaterial.Text = Util.DictionaryItemString(values, "material");
@@ -630,7 +631,6 @@ namespace tams4a.Classes
                 signControls.buttonAdd.Enabled = true;
                 signControls.buttonRemove.Enabled = (signsOnPost.Rows.Count > 0);
                 signControls.buttonFavorite.Enabled = (signsOnPost.Rows.Count > 0);
-                signControls.toolStripButtonRemove.Enabled = (tamsids.Count == 1);
                 signControls.comboBoxSigns.DataSource = signsOnPost;
                 signControls.comboBoxSigns.DisplayMember = "display";
                 signControls.comboBoxSigns.ValueMember = "TAMSID";
@@ -1278,7 +1278,9 @@ namespace tams4a.Classes
                 return;
             }
             string[] tables = { "sign_support", ModuleName };
-            deleteShape(tamsids[0], tables, "support_id");
+
+            deleteShape(tamsids, tables, "support_id");
+
             resetSignDisplay(signControls);
             disableSignDisplay(signControls);
             Project.map.Update();

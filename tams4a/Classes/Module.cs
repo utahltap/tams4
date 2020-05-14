@@ -610,22 +610,27 @@ namespace tams4a.Classes
 
         }
 
-        protected void deleteShape(string id, string[] tables, string column = "TAMSID")
+        protected void deleteShape(List<string> tamsid, string[] tables, string column = "TAMSID")
         {
-            string tamsid = id;
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
-            IFeature feature = selectionLayer.Selection.ToFeatureList()[0];
+            List<IFeature> features = selectionLayer.Selection.ToFeatureList();
             selectionLayer.ClearSelection();
-            selectionLayer.DataSet.Features.Remove(feature);
+            foreach(IFeature item in features)
+            {
+                selectionLayer.DataSet.Features.Remove(item);
+            }
             selectionLayer.DataSet.UpdateExtent();
             selectionLayer.DataSet.InitializeVertices();
             selectionLayer.AssignFastDrawnStates();
             selectionLayer.DataSet.Save();
             Project.map.Refresh();
             Project.map.ResetBuffer();
-            for (int i = 0; i < tables.Length; i++)
+            foreach(string id in tamsid)
             {
-                Database.DeleteRow(Project.conn, tables[i], column, tamsid);
+                for (int i = 0; i < tables.Length; i++)
+                {
+                    Database.DeleteRow(Project.conn, tables[i], column, id);
+                }
             }
             selectionLayer.DataSet.Save();
             setSymbolizer();
