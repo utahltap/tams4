@@ -42,7 +42,11 @@ namespace tams4a.Forms
                 bool exclude = false;
                 for (int i = 0; i < searchTerms.Length; i++)
                 {
-                    if (row["mutcd_code"].ToString().Contains(searchTerms[i]) || row["category"].ToString().Contains(searchTerms[i]) || row["sign_text"].ToString().Contains(searchTerms[i]) || row["description"].ToString().Contains(searchTerms[i]))
+                    searchTerms[i] = searchTerms[i].ToLower();
+                    if (row["mutcd_code"].ToString().ToLower().Contains(searchTerms[i]) 
+                        || row["category"].ToString().ToLower().Contains(searchTerms[i]) 
+                        || row["sign_text"].ToString().ToLower().Contains(searchTerms[i]) 
+                        || row["description"].ToString().ToLower().Contains(searchTerms[i]))
                     {
                         continue;
                     }
