@@ -614,17 +614,14 @@ namespace tams4a.Classes
             values["from_address"] = roadControls.textBoxFrom.Text;
             values["to_address"] = roadControls.textBoxTo.Text;
             values["surface"] = roadControls.comboBoxSurface.Text.ToLower();
-            var derekTest = roadControls.comboBoxPhotoList.Items;
+            var allPhotos = roadControls.comboBoxPhotoList.Items;
             string result = "";
-            foreach (string photo in derekTest)
+            foreach (string photo in allPhotos)
             {
                 result += photo;
                 result += "/";
             }
-
-
             values["photo"] = result;
-            //values["photo"] = photoListString;
 
             foreach (string value in values.Values)
             {
