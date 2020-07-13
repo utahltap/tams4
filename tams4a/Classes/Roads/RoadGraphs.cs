@@ -39,7 +39,7 @@ namespace tams4a.Classes.Roads
 
         private void makeTypeGraph(string[] roadTypes, string column, string title, Color[] c = null)
         {
-            string thisSql = moduleRoads.getSelectAllSQL();
+            string thisSql = moduleRoads.GetSelectAllSQL();
             try
             {
                 DataTable roadTable = Database.GetDataByQuery(Project.conn, thisSql);
@@ -98,7 +98,7 @@ namespace tams4a.Classes.Roads
         public void graphGoverningDistress(object sender, EventArgs e)
         {
             ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a Road Surface Type");
-            string thisSql = moduleRoads.getSelectAllSQL();
+            string thisSql = moduleRoads.GetSelectAllSQL();
             if (roadChooser.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -134,7 +134,7 @@ namespace tams4a.Classes.Roads
                         {
                             dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
                         }
-                        string governingDistress = moduleRoads.getGoverningDistress(dvs, row["surface"].ToString());
+                        string governingDistress = moduleRoads.GetGoverningDistress(dvs, row["surface"].ToString());
                         if (string.IsNullOrEmpty(governingDistress))
                         {
                             noDistress += area;
@@ -183,7 +183,7 @@ namespace tams4a.Classes.Roads
         public void graphRSL(object sender, EventArgs e)
         {
             ChooseRoadForm roadChooser = new ChooseRoadForm("What Road Type?", "Select a road surface type.");
-            string thisSql = moduleRoads.getSelectAllSQL();
+            string thisSql = moduleRoads.GetSelectAllSQL();
             if (roadChooser.ShowDialog() == DialogResult.OK)
             {
                 try

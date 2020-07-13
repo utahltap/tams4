@@ -23,7 +23,7 @@ namespace tams4a.Classes.Roads
         public void generalReport(object sender, EventArgs e)
         {
             DataTable general = addColumns();
-            string thisSql = moduleRoads.getSelectAllSQL();
+            string thisSql = moduleRoads.GetSelectAllSQL();
             try
             {
                 DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
@@ -64,7 +64,7 @@ namespace tams4a.Classes.Roads
             potholes.Columns.Add("Quantity");
             potholes.Columns.Add("Treatment");
             potholes.Columns.Add("Photo");
-            string thisSql = moduleRoads.getSelectAllSQL();
+            string thisSql = moduleRoads.GetSelectAllSQL();
             try
             {
                 DataTable resultsTable = Database.GetDataByQuery(Project.conn, thisSql);
@@ -369,7 +369,7 @@ namespace tams4a.Classes.Roads
             {
                 dvs[i] = Util.ToInt(row["distress" + (i + 1).ToString()].ToString());
             }
-            nr["Governing Distress"] = moduleRoads.getGoverningDistress(dvs, row["surface"].ToString());
+            nr["Governing Distress"] = moduleRoads.GetGoverningDistress(dvs, row["surface"].ToString());
             nr["Cost"] = 0;
             if (!row["suggested_treatment"].ToString().Contains("null") && !string.IsNullOrWhiteSpace(row["suggested_treatment"].ToString()))
             {
