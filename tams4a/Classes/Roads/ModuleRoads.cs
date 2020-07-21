@@ -615,14 +615,19 @@ namespace tams4a.Classes
             values["to_address"] = roadControls.textBoxTo.Text;
             values["surface"] = roadControls.comboBoxSurface.Text.ToLower();
             var allPhotos = roadControls.comboBoxPhotoList.Items;
+
+            // Save the combo box array in a format for the database
             string result = "";
             foreach (string photo in allPhotos)
             {
                 result += photo;
                 result += "/";
             }
+
+            // save the photo string to the array that will be save in the database
             values["photo"] = result;
 
+            // Check if any of the values to save haven't been set.
             foreach (string value in values.Values)
             {
                 if (string.IsNullOrEmpty(value))
