@@ -31,8 +31,6 @@ namespace tams4a.Forms
                 index = getIndexFromPhotoList(sourcePhoto);
             }
 
-
-
             CenterToScreen();
         }
 
