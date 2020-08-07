@@ -14,10 +14,22 @@ namespace tams4a.Forms
             listOfPhotos = theListOfPhotos;
             sourcePhoto = source;
             folderPath = theFolderPath;
-            index = getIndexFromPhotoList(sourcePhoto);
-
 
             InitializeComponent();
+
+            // Temporary fix for the other tab, that only has one photo.
+            if (theListOfPhotos == null)
+            {
+                this.buttonNextPhoto.Enabled = false;
+                this.buttonPreviousPhoto.Enabled = false;
+            }
+            // This case is for the roads tab, for roads that have multiple photos.
+            else
+            {
+                this.buttonNextPhoto.Enabled = true;
+                this.buttonPreviousPhoto.Enabled = true;
+                index = getIndexFromPhotoList(sourcePhoto);
+            }
 
             CenterToScreen();
         }
@@ -41,7 +53,7 @@ namespace tams4a.Forms
 
         private void buttonNextPhoto_Click(object sender, EventArgs e)
         {
-            if(index + 1== listOfPhotos.Length)
+            if(index + 1 == listOfPhotos.Length)
             {
                 index = 0;
             }
