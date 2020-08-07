@@ -258,8 +258,6 @@ namespace tams4a.Forms
             populatePhotoList();
         }
 
-        
-
         private void buttonOk_Click(object sender, EventArgs e)
         {
             // Check if the list of photos has changed
@@ -269,7 +267,7 @@ namespace tams4a.Forms
                 return;
             }
 
-            // create a comma separated string from list of photos
+            // create a forward slash separated string from list of photos
             string photoListString = "";
             int i = 0;
             foreach (string photo in listOfPhotos)
@@ -281,12 +279,12 @@ namespace tams4a.Forms
                 }
                 i++;
             }
-            moduleRoads.setListOfPhotos(listOfPhotos, photoListString);
+            moduleRoads.SetListOfPhotos(listOfPhotos, photoListString);
 
             Close();
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             Close();
         }

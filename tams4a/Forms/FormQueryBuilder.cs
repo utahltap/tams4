@@ -78,7 +78,7 @@ namespace tams4a.Forms
             if (TableName == "road")
             {
                 string subQuery = getRoadQuery(" WHERE ");
-                query = moduleRoads.getSelectAllSQL(false) + "SELECT * FROM newestRoads " + subQuery;
+                query = moduleRoads.GetSelectAllSQL(false) + "SELECT * FROM newestRoads " + subQuery;
             }
             else if (TableName == "sign") query = getSignQuery(query);
             else if (TableName == "support")

@@ -86,7 +86,7 @@ namespace tams4a.Forms
                     subQuery += " AND type = '" + rowPanel.getFunctionalClassification() + "'";
                 }
                 subQuery += " ORDER BY TAMSID ASC;";
-                string fullQuery = moduleRoads.getSelectAllSQL(false) + "SELECT * FROM newestRoads " + subQuery;
+                string fullQuery = moduleRoads.GetSelectAllSQL(false) + "SELECT * FROM newestRoads " + subQuery;
                 rowQueries[i] = fullQuery;
 
                 DataTable rslAreas = Database.GetDataByQuery(Project.conn, rowQueries[i]);
@@ -249,7 +249,7 @@ namespace tams4a.Forms
         {
             if (rowQueries[comboBoxResultsRow.SelectedIndex] == "none") return;
 
-            string thisSql = moduleRoads.getSelectAllSQL();
+            string thisSql = moduleRoads.GetSelectAllSQL();
             string[] categories = { "0", "1-3", "4-6", "7-9", "10-12", "13-15", "16-18", "19-20" };
             int[] caps = { 0, 3, 6, 9, 12, 15, 18, 20 };
 

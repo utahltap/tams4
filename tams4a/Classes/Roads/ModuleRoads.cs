@@ -60,7 +60,7 @@ namespace tams4a.Classes
             project = theProject;
             boundButtons[1].Click += reports.generalReport;
             boundButtons[2].Click += reports.potholeReport;
-            boundButtons[3].Click += openBudgetTool;
+            boundButtons[3].Click += OpenBudgetTool;
 
             boundButtons[5].Click += graphs.graphRoadType;
             boundButtons[6].Click += graphs.graphRoadCategory;
@@ -162,12 +162,12 @@ namespace tams4a.Classes
             //roadPanel.KeyDown += new KeyEventHandler(checkHotKey);
             roadPanel.buttonSave.Click += saveHandler;
             roadPanel.buttonReset.Click += cancelChanges;
-            roadPanel.pictureBoxPhoto.Click += clickPhotoBox;
+            roadPanel.pictureBoxPhoto.Click += ClickPhotoBox;
             roadPanel.toolStripButtonAnalysis.Click += reports.reportSelected;
             roadPanel.toolStripButtonSidewalk.Click += setSideWalkInfo;
 
-            roadPanel.btnNotes.Click += editNotes;
-            roadPanel.buttonSuggest.Click += automaticTreatmentSuggestion;
+            roadPanel.btnNotes.Click += EditNotes;
+            roadPanel.buttonSuggest.Click += AutomaticTreatmentSuggestion;
 
             roadPanel.comboBoxSurface.SelectionChangeCommitted += surfaceChanged;
             //roadPanel.setChangedHandler(controlChanged);
@@ -183,9 +183,9 @@ namespace tams4a.Classes
             roadPanel.distress9.ValueChanged += distressChanged;
 
             roadPanel.buttonHistory.Click += reports.showHistory;
-            roadPanel.setOtherDateToolStripMenuItem.Click += selectRecordDate;
-            roadPanel.setTodayToolStripMenuItem.Click += resetRecordDate;
-            dateForm.FormClosing += updateSurveyDate;
+            roadPanel.setOtherDateToolStripMenuItem.Click += SelectRecordDate;
+            roadPanel.setTodayToolStripMenuItem.Click += ResetRecordDate;
+            dateForm.FormClosing += UpdateSurveyDate;
             #endregion eventhandlers
 
             #region road controls settings
@@ -268,7 +268,7 @@ namespace tams4a.Classes
             //Note: Pulls data from most recent survey_date, not highest id.
             Dictionary<string, string> values = setSegmentValues(selectionLayer.Selection.ToFeatureSet().DataTable);
 
-            updateRoadDisplay(values);
+            UpdateRoadDisplay(values);
 
             if (values.ContainsKey("TAMSID") && !string.IsNullOrWhiteSpace(values["TAMSID"]))
             {
@@ -285,14 +285,14 @@ namespace tams4a.Classes
                 tamsids.Add(row[tamsidcolumn].ToString());
             }
 
-            getRoadControls().setChangedHandler(controlChanged);
+            GetRoadControls().setChangedHandler(controlChanged);
         }
 
-        public void setListOfPhotos(string[] newListOfPhotos, string newPhotoListString)
+        public void SetListOfPhotos(string[] newListOfPhotos, string newPhotoListString)
         {
             photoListString = newPhotoListString;
 
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
             roadControls.comboBoxPhotoList.Items.Clear();
 
             listOfPhotos = newListOfPhotos;
@@ -324,7 +324,7 @@ namespace tams4a.Classes
 
         // returns the ROADCONTROLS collection of controls.
         // does not include the toolstrip
-        public Panel_Road getRoadControls()
+        public Panel_Road GetRoadControls()
         {
             Panel_Road controls;
 
@@ -340,18 +340,18 @@ namespace tams4a.Classes
             return controls;
         }
 
-        private string[] parsePhotosList(String stringOfPhotos)
+        private string[] ParsePhotosList(string stringOfPhotos)
         {
-            // split the list of photos based on commas and spaces(ex: "img1, img2" --> ["img1", "img2"]) 
+            // split the list of photos based on slashes and spaces(ex: "img1/ img2" --> ["img1", "img2"]) 
             char[] delimiterChars = { '/', ' ' };
             // the StringSplitOption.RemoveEmptyEntries parameters removes any thing in the list that is an empty string
             return stringOfPhotos.Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries);
         }
      
         // Sets the values of the various controls
-        private void updateRoadDisplay(Dictionary<string, string> values)
+        private void UpdateRoadDisplay(Dictionary<string, string> values)
         {
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
 
             roadControls.textBoxRoadName.Text = Util.DictionaryItemString(values, "name");
             roadControls.labelSurveyDate.Text = "As of " + Util.DictionaryItemString(values, "survey_date");
@@ -380,7 +380,7 @@ namespace tams4a.Classes
             roadControls.comboBoxType.Text = Util.DictionaryItemString(values, "type");
             previousSurface = roadControls.comboBoxSurface.Text = Util.DictionaryItemString(values, "surface");
             // add a method to parse the list of photos from database
-            listOfPhotos = parsePhotosList(Util.DictionaryItemString(values, "photo"));
+            listOfPhotos = ParsePhotosList(Util.DictionaryItemString(values, "photo"));
             foreach (string photo in listOfPhotos)
             {
                 roadControls.comboBoxPhotoList.Items.Add(photo);
@@ -432,7 +432,7 @@ namespace tams4a.Classes
         private void resetSaveCondition()
         {
             UnsavedChanges = false;
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
 
             // resets the save button since we've just reset the values
             roadControls.buttonSave.Enabled = false;
@@ -443,7 +443,7 @@ namespace tams4a.Classes
         // sets the various distress controls based on the surface
         private void updateDistressControls(string surface)
         {
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
 
             // hide all controls
             foreach (Control control in roadControls.groupBoxDistress.Controls)
@@ -495,7 +495,7 @@ namespace tams4a.Classes
         // clears the road module controls
         private void resetRoadDisplay()
         {
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
 
             roadControls.textBoxRoadName.Text = "";
             roadControls.labelSurveyDate.Text = "";
@@ -534,7 +534,7 @@ namespace tams4a.Classes
         // disables controls of the road panel
         private void disableRoadDisplay()
         {
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
             resetSaveCondition();
             roadControls.setChangedHandler(null);
             roadControls.groupBoxInfo.Enabled = false;
@@ -547,7 +547,7 @@ namespace tams4a.Classes
         // some controls depend on whether we've selected multiple items, so optional parameter
         private void enableControls(bool multiple)
         {
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
 
             if (multiple)
             {
@@ -577,7 +577,7 @@ namespace tams4a.Classes
         protected override void controlChanged(object sender, EventArgs e)
         {
             if (selectionCount <= 0) return;
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
 
             roadControls.buttonSave.Enabled = true;
             roadControls.buttonSave.BackColor = Color.Red;
@@ -596,7 +596,7 @@ namespace tams4a.Classes
         /// <param name="e"></param>
         public void saveHandler(object sender, EventArgs e)
         {
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
             if (!roadControls.buttonSave.Enabled) return;
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             ISelection shpSelection = selectionLayer.Selection;
@@ -614,8 +614,20 @@ namespace tams4a.Classes
             values["from_address"] = roadControls.textBoxFrom.Text;
             values["to_address"] = roadControls.textBoxTo.Text;
             values["surface"] = roadControls.comboBoxSurface.Text.ToLower();
-            values["photo"] = photoListString;
+            var allPhotos = roadControls.comboBoxPhotoList.Items;
 
+            // Save the combo box array in a format for the database
+            string result = "";
+            foreach (string photo in allPhotos)
+            {
+                result += photo;
+                result += "/";
+            }
+
+            // save the photo string to the array that will be save in the database
+            values["photo"] = result;
+
+            // Check if any of the values to save haven't been set.
             foreach (string value in values.Values)
             {
                 if (string.IsNullOrEmpty(value))
@@ -694,7 +706,7 @@ namespace tams4a.Classes
         /// <param name="e"></param>
         private void surfaceChanged(object sender, EventArgs e)
         {
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
 
             if (roadControls.distress1.Value > -1 ||
                 roadControls.distress2.Value > -1 ||
@@ -729,7 +741,7 @@ namespace tams4a.Classes
         /// <param name="e"></param>
         public void distressChanged(object sender, CustomEventArgs e)
         {
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
             controlChanged(sender, e);
             if (roadControls.comboBoxSurface.Text != "")
             {
@@ -741,7 +753,7 @@ namespace tams4a.Classes
         // calculates RSL from values in the (enabled) distress controls
         private int calcRsl()
         {
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
             List<DistressEntry> distresses = new List<DistressEntry>()
             {   roadControls.distress1, roadControls.distress2, roadControls.distress3,
                 roadControls.distress4, roadControls.distress5, roadControls.distress6,
@@ -800,7 +812,7 @@ namespace tams4a.Classes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void editNotes(object sender, EventArgs e)
+        private void EditNotes(object sender, EventArgs e)
         {
             FormNotes noteForm = new FormNotes();
             noteForm.Value = notes;
@@ -808,7 +820,7 @@ namespace tams4a.Classes
 
             if (result == DialogResult.OK)
             {
-                Panel_Road roadControls = getRoadControls();
+                Panel_Road roadControls = GetRoadControls();
                 roadControls.btnNotes.Checked = true;
                 controlChanged(sender, e);
 
@@ -817,41 +829,41 @@ namespace tams4a.Classes
             noteForm.Close();
         }
 
-        protected void selectRecordDate(object sender, EventArgs e)
+        protected void SelectRecordDate(object sender, EventArgs e)
         {
             dateForm.Show();
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
             roadControls.setTodayToolStripMenuItem.Checked = false;
             roadControls.setOtherDateToolStripMenuItem.Checked = true;
         }
 
-        private void updateSurveyDate(object sender, EventArgs e)
+        private void UpdateSurveyDate(object sender, EventArgs e)
         {
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
             surveyDate = dateForm.getDate();
             string[] dateFormats = surveyDate.GetDateTimeFormats();
             roadControls.labelSurveyDate.Text = "As of " + dateFormats[58];
             controlChanged(sender, e);
         }
 
-        protected void resetRecordDate(object sender, EventArgs e)
+        protected void ResetRecordDate(object sender, EventArgs e)
         {
             surveyDate = DateTime.Now;
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
             string[] dateFormats = surveyDate.GetDateTimeFormats();
             roadControls.labelSurveyDate.Text = "As of " + dateFormats[58];
             roadControls.setTodayToolStripMenuItem.Checked = true;
             roadControls.setOtherDateToolStripMenuItem.Checked = false;
         }
 
-        private void clickPhotoBox(object sender, EventArgs e)
+        private void ClickPhotoBox(object sender, EventArgs e)
         { 
-            Panel_Road roadControls = getRoadControls();
+            Panel_Road roadControls = GetRoadControls();
             string subPath = Database.GetDataByQuery(Project.conn, "SELECT road_photos FROM photo_paths;").Rows[0][0].ToString();
             enlargePicture(roadControls.comboBoxPhotoList.Text, subPath, listOfPhotos);
         }
 
-        private void automaticTreatmentSuggestion(object sender, EventArgs e)
+        private void AutomaticTreatmentSuggestion(object sender, EventArgs e)
         {
             Dictionary<string, Dictionary<string, int>> data = new Dictionary<string, Dictionary<string, int>>()
             {
@@ -859,7 +871,7 @@ namespace tams4a.Classes
                 { "gravel", new Dictionary<string, int>() { { "Potholes", 1 }, { "Rutting", 2 }, { "X-section", 3 }, {"Drainage", 4 }, { "Dust", 5 }, { "Aggregate", 6 }, { "Corrugation", 7 } } },
                 { "concrete", new Dictionary<string, int>() { { "Spalling", 1 }, { "Joint Seals", 2 }, { "Corners", 3 }, {"Breaks", 4 }, { "Faulting", 5 }, { "Longitudinal", 6 }, { "Transverse", 7 }, { "Map Cracks", 8 }, { "Patches", 9 } } }
             };
-            var roadControls = getRoadControls();
+            var roadControls = GetRoadControls();
             int[] dvs;
             if (roadControls.comboBoxSurface.Text.ToLower().Contains("gravel"))
             {
@@ -869,7 +881,7 @@ namespace tams4a.Classes
             {
                 dvs = new int[9] { roadControls.distress1.Value, roadControls.distress2.Value, roadControls.distress3.Value, roadControls.distress4.Value, roadControls.distress5.Value, roadControls.distress6.Value, roadControls.distress7.Value, roadControls.distress8.Value, roadControls.distress9.Value };
             }
-            string gd = getGoverningDistress(dvs, roadControls.comboBoxSurface.Text.ToLower());
+            string gd = GetGoverningDistress(dvs, roadControls.comboBoxSurface.Text.ToLower());
             if (string.IsNullOrWhiteSpace(gd)) { return; }
             int index = data[roadControls.comboBoxSurface.Text.ToLower()][gd] - 1;
             DataTable suggestion = Database.GetDataByQuery(Project.conn, "SELECT treatment FROM auto_suggest WHERE governing_distress='" + gd + "' AND distress_value=" + dvs[index].ToString() + ";");
@@ -885,7 +897,7 @@ namespace tams4a.Classes
 
 
 
-        public string getGoverningDistress(int[] distValues, string surfType)
+        public string GetGoverningDistress(int[] distValues, string surfType)
         {
             string[] seld = distressAsphalt;
             int distID = 1;
@@ -926,10 +938,10 @@ namespace tams4a.Classes
             return gd;
         }
 
-        protected void openBudgetTool(object sender, EventArgs e)
+        protected void OpenBudgetTool(object sender, EventArgs e)
         {
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
-            string roadSQL = getSelectAllSQL();
+            string roadSQL = GetSelectAllSQL();
             string treatmentSQL = "SELECT * FROM treatments";
             DataTable roads = Database.GetDataByQuery(Project.conn, roadSQL);
             DataTable treatments = Database.GetDataByQuery(Project.conn, treatmentSQL);
@@ -939,7 +951,7 @@ namespace tams4a.Classes
             analysis.Show();
         }
 
-        protected void toggleColors(object sender, EventArgs e)
+        protected void ToggleColors(object sender, EventArgs e)
         {
             FeatureLayer selectionLayer = (FeatureLayer)Layer;
             bool reselect = false;
@@ -968,7 +980,7 @@ namespace tams4a.Classes
             ControlsPage.Controls.Add(roadAdd);
         }
 
-        public string getSelectAllSQL(bool fullQuery = true)
+        public string GetSelectAllSQL(bool fullQuery = true)
         {
             string sql = "WITH newestRoads AS (SELECT MAX(roadinfo.id) AS max_id, roadinfo.* FROM (SELECT TAMSID, MAX(id) AS maxid FROM road WHERE TAMSID IN" +
                          "(SELECT DISTINCT TAMSID FROM road) GROUP BY TAMSID) AS roadids " +

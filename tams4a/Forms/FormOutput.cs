@@ -69,7 +69,7 @@ namespace tams4a.Forms
 
         private void roadReport(DataTable report)
         {
-            string thisSql = moduleRoads.getSelectAllSQL();
+            string thisSql = moduleRoads.GetSelectAllSQL();
             DataTable fullDataSet = Database.GetDataByQuery(Project.conn, thisSql);
 
             string sql = "";
