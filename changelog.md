@@ -1,4 +1,11 @@
 # TAMS 4.1.x
+# Version 4.2.2.0
+CHANGES
+----------------------------------------------------
+* Fixed issue with saving photos
+* Fixed issue with other tab enlarging photos
+* Small refactoring
+
 # Version 4.2.1.0
 CHANGES
 ----------------------------------------------------
